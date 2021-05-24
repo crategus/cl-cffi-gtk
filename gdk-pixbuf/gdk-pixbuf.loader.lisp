@@ -195,7 +195,7 @@
 
 (defun gdk-pixbuf-loader-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
+ "@version{*2021-5-23}
   @return{A newly-created @class{gdk-pixbuf-loader} object.}
   @short{Creates a new pixbuf loader object.}
   @see-class{gdk-pixbuf-loader}"
@@ -294,9 +294,9 @@
 
 (defun gdk-pixbuf-loader-write (loader buffer count)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
+ "@version{*2021-5-23}
   @argument[loader]{a @class{gdk-pixbuf-loader} object}
-  @argument[buffer]{a pointer to the buffer for image data}
+  @argument[buffer]{a Lisp array for image data}
   @argument[count]{an integer with the length of @arg{buffer} in bytes}
   @begin{return}
     @em{True} if the write was successful, or @em{false} if the loader cannot
@@ -306,9 +306,26 @@
     This will cause a pixbuf loader to parse the next count bytes of an image.
   @end{short}
   It will return @em{true} if the data was loaded successfully, and @em{false}
-  if an error occurred. In the latter case, the loader will be closed, and will
-  not accept further writes. If @em{false} is returned, error will be set to an
-  error from the @code{GDK_PIXBUF_ERROR} or @code{G_FILE_ERROR domains}.
+  if an error occurred.
+  @begin[Example]{dictionary}
+    A code fragment, which writes data into the pixbuf loader:
+    @begin{pre}
+;; Create the image stream and the GdkPixbufLoader
+(setf stream
+      (open (sys-path \"alphatest.png\")
+            :element-type '(unsigned-byte 8)))
+(setf loader (gdk-pixbuf-loader-new))
+
+...
+
+(let* ((buffer (make-array 128 :element-type '(unsigned-byte 8)))
+       (len (read-sequence buffer stream)))
+  ...
+  ;; Load the buffer into GdkPixbufLoader
+  (gdk-pixbuf-loader-write loader buffer 128)
+  ... )
+    @end{pre}
+  @end{dictionary}
   @see-class{gdk-pixbuf-loader}"
   (with-g-error (err)
     (let ((buf (foreign-alloc :uchar :initial-contents buffer)))
@@ -382,7 +399,7 @@
 (defcfun ("gdk_pixbuf_loader_get_pixbuf" gdk-pixbuf-loader-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
+ "@version{*2021-5-23}
   @argument[loader]{a @class{gdk-pixbuf-loader} object}
   @begin{return}
     The @class{gdk-pixbuf} object that the loader is creating, or @code{nil} if
@@ -393,18 +410,18 @@
     creating.
   @end{short}
   In general it only makes sense to call this function after the
-  \"area-prepared\" signal has been emitted by the loader; this means that
+  \"area-prepared\" signal has been emitted by the loader. This means that
   enough data has been read to know the size of the image that will be
   allocated. If the loader has not received enough data via the function
   @fun{gdk-pixbuf-loader-write}, then this function returns @code{nil}. The
   returned pixbuf will be the same in all future calls to the loader.
   Additionally, if the loader is an animation, it will return the
   \"static image\" of the animation, see the function
-  @fun{gdk-pixbuf-animation-get-static-image}.
+  @fun{gdk-pixbuf-animation-static-image}.
   @see-class{gdk-pixbuf-loader}
   @see-class{gdk-pixbuf}
   @see-function{gdk-pixbuf-loader-write}
-  @see-function{gdk-pixbuf-animation-get-static-image}"
+  @see-function{gdk-pixbuf-animation-static-image}"
   (loader (g-object gdk-pixbuf-loader)))
 
 (export 'gdk-pixbuf-loader-pixbuf)
@@ -442,11 +459,11 @@
 
 (defcfun ("gdk_pixbuf_loader_close" %gdk-pixbuf-loader-close) :boolean
   (loader (g-object gdk-pixbuf-loader))
-  (error :pointer))
+  (err :pointer))
 
 (defun gdk-pixbuf-loader-close (loader)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
+ "@version{*2021-5-23}
   @argument[loader]{a @class{gdk-pixbuf-loader} object}
   @begin{return}
     @em{True} if all image data written so far was successfully passed out via
@@ -457,10 +474,7 @@
     @fun{gdk-pixbuf-loader-write} will occur, so that it can free its internal
     loading structures.
   @end{short}
-  Also, tries to parse any data that has not yet been parsed; if the remaining
-  data is partial or corrupt, an error will be returned. If @em{false} is
-  returned, error will be set to an error from the @code{GDK_PIXBUF_ERROR} or
-  @code{G_FILE_ERROR} domains.
+  Also, tries to parse any data that has not yet been parsed.
   @see-class{gdk-pixbuf-loader}
   @see-function{gdk-pixbuf-loader-write}"
   (with-g-error (err)

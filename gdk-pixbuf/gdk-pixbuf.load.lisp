@@ -69,26 +69,24 @@
 (defcfun ("gdk_pixbuf_new_from_file" %gdk-pixbuf-new-from-file)
     (g-object gdk-pixbuf :already-referenced)
   (filename :string)
-  (error :pointer))
+  (err :pointer))
 
 (defun gdk-pixbuf-new-from-file (filename)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-30}
+ "@version{*2021-5-23}
   @argument[filename]{a string with the name of a file to load, in the GLib
     file name encoding}
   @begin{return}
     A newly-created @class{gdk-pixbuf} object with a reference count of 1, or
     @code{nil} if any of several error conditions occurred: the file could not
-    be opened, there was no loader for the file's format, there was not enough
-    memory to allocate the image buffer, or the image file contained invalid
-    data.
+    be opened, there was no loader for the format of the file, there was not
+    enough memory to allocate the image buffer, or the image file contained
+    invalid data.
   @end{return}
   @begin{short}
     Creates a new pixbuf by loading an image from a file.
   @end{short}
-  The file format is detected automatically. If @code{nil} is returned, then an
-  error will be set. Possible errors are in the @code{GDK_PIXBUF_ERROR} and
-  @code{G_FILE_ERROR} domains.
+  The file format is detected automatically.
   @see-class{gdk-pixbuf}"
   (with-ignore-g-error (err)
     (%gdk-pixbuf-new-from-file filename err)))

@@ -176,13 +176,13 @@
 
 (defcfun ("gdk_pixbuf_fill" gdk-pixbuf-fill) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
+ "@version{*2021-5-23}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @argument[pixel]{an unsigned integer with the RGBA pixel to clear to,
     @code{#xffffffff} is opaque white, @code{#x00000000} transparent black}
   @begin{short}
     Clears a pixbuf to the given RGBA value, converting the RGBA value
-    into the pixbuf's pixel format.
+    into the pixel format of the pixbuf.
   @end{short}
   The alpha will be ignored if the pixbuf does not have an alpha channel.
   @see-class{gdk-pixbuf}"
