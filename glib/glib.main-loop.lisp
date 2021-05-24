@@ -283,8 +283,8 @@
 
 (defconstant +g-source-continue+ t
  #+cl-cffi-gtk-documentation
- "@version{*2021-4-9}
-  @variable-value{t}
+ "@version{*2021-5-23}
+  @variable-value{@em{true}}
   @begin{short}
     Use this constant as the return value of a @symbol{g-source-func} callback
     function to leave the @type{g-source} instance in the main loop.
@@ -304,8 +304,8 @@
 
 (defconstant +g-source-remove+ nil
  #+cl-cffi-gtk-documentation
- "@version{2021-4-9}
-  @variable-value{nil}
+ "@version{*2021-5-23}
+  @variable-value{@em{false}}
   @begin{short}
     Use this constant as the return value of a @symbol{g-source-func} callback
     function to remove the @type{g-source} instance from the main loop.
