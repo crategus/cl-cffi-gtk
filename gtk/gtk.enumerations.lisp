@@ -214,9 +214,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-justification atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-justification atdoc:*external-symbols*)
- "@version{2021-3-21}
+ "@version{*2021-5-23}
   @begin{short}
     Used for justifying the text inside a @class{gtk-label} widget. See also
     the @class{gtk-alignment} widget.
@@ -377,12 +377,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-position-type atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-position-type atdoc:*external-symbols*)
- "@version{2021-3-21}
+ "@version{2021-5-20}
   @begin{short}
     Describes which edge of a widget a certain feature is positioned at, e.g.
-    the tabs of a @class{gtk-notebook} or the label of a @class{gtk-scale}.
+    the tabs of a @class{gtk-notebook} widget or the label of a
+    @class{gtk-scale} widget.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkPositionType\" gtk-position-type
@@ -588,9 +589,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-shadow-type atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-shadow-type atdoc:*external-symbols*)
- "@version{2021-3-19}
+ "@version{*2021-5-23}
   @begin{short}
     Used to change the appearance of an outline typically provided by a
     @class{gtk-frame} widget.

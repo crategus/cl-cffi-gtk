@@ -528,7 +528,7 @@
 
 (defcfun ("gtk_grid_get_child_at" gtk-grid-child-at) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-23}
+ "@version{*2021-5-20}
   @argument[grid]{a @class{gtk-grid} widget}
   @argument[left]{an integer with the left edge of the cell}
   @argument[top]{an integer with the top edge of the cell}

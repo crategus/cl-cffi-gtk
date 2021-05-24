@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.link-button.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -206,7 +206,7 @@
 
 (defun gtk-link-button-new (uri)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-12}
+ "@version{*2021-5-20}
   @argument[uri]{a string with a valid URI}
   @return{A new @class{gtk-link-button} widget.}
   @begin{short}
@@ -227,7 +227,7 @@
 
 (defun gtk-link-button-new-with-label (uri label)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-12}
+ "@version{*2021-5-20}
   @argument[uri]{a string with a valid URI}
   @argument[label]{a string with the text of the button}
   @return{A new @class{gtk-link-button} widget.}

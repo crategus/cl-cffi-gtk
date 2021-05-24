@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.entry.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -560,37 +560,38 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-entry 'type)
- "@version{2020-5-29}
+ "@version{*2021-5-21}
   @begin{short}
-    The @sym{gtk-entry} widget is a single line text entry widget. A fairly
-    large set of key bindings are supported by default. If the entered text is
-    longer than the allocation of the widget, the widget will scroll so that
-    the cursor position is visible.
+    The @sym{gtk-entry} widget is a single line text entry widget.
   @end{short}
+  A fairly large set of key bindings are supported by default. If the entered
+  text is longer than the allocation of the widget, the widget will scroll so
+  that the cursor position is visible.
 
   @image[entry]{}
 
   When using an entry for passwords and other sensitive information, it can be
   put into \"password mode\" using the function @fun{gtk-entry-visibility}. In
   this mode, entered text is displayed using a 'invisible' character. By
-  default, GTK+ picks the best invisible character that is available in the
+  default, GTK picks the best invisible character that is available in the
   current font, but it can be changed with the function
-  @fun{gtk-entry-invisible-char}. GTK+ displays a warning when Caps Lock or
+  @fun{gtk-entry-invisible-char}. GTK displays a warning when Caps Lock or
   input methods might interfere with entering text in a password entry. The
   warning can be turned off with the @slot[gtk-entry]{caps-lock-warning}
   property.
 
-  @sym{gtk-entry} has the ability to display progress or activity information
-  behind the text. To make an entry display such information, use the functions
-  @fun{gtk-entry-progress-fraction} or @fun{gtk-entry-progress-pulse-step}.
+  The @sym{gtk-entry} widget has the ability to display progress or activity
+  information behind the text. To make an entry display such information, use
+  the functions @fun{gtk-entry-progress-fraction} or
+  @fun{gtk-entry-progress-pulse-step}.
 
-  Additionally, @sym{gtk-entry} can show icons at either side of the entry.
-  These icons can be activatable by clicking, can be set up as drag source and
-  can have tooltips. To add an icon, use the function
-  @fun{gtk-entry-set-icon-from-gicon} or one of the various other functions that
-  set an icon from a stock ID, an icon name or a pixbuf. To trigger an action
-  when the user clicks an icon, connect to the \"icon-press\" signal. To allow
-  DND operations from an icon, use the function
+  Additionally, the @sym{gtk-entry} widget can show icons at either side of the
+  entry. These icons can be activatable by clicking, can be set up as drag
+  source and can have tooltips. To add an icon, use the function
+  @fun{gtk-entry-set-icon-from-gicon} or one of the various other functions
+  that set an icon from a stock ID, an icon name or a pixbuf. To trigger an
+  action when the user clicks an icon, connect to the \"icon-press\" signal.
+  To allow DND operations from an icon, use the function
   @fun{gtk-entry-set-icon-drag-source}. To set a tooltip on an icon, use the
   function @fun{gtk-entry-icon-tooltip-text} or the corresponding function
   for markup.
@@ -610,8 +611,7 @@
         @em{Warning:} The @code{icon-prelight} style property has been
         deprecated since version 3.20 and should not be used in newly-written
         code. Use CSS to control the appearance of prelighted icons. The value
-        of this style property is ignored. @br{}
-        Default value: @em{true}
+        of this style property is ignored.
       @end{entry}
       @begin[inner-border]{entry}
         The @code{inner-border} style property of type @class{gtk-border} (Read)
@@ -628,7 +628,7 @@
         @br{}
         The invisible character is used when masking entry contents in
         \"password mode\". When it is not explicitly set with the
-        @code{invisible-char} property, GTK+ determines the character to use
+        @code{invisible-char} property, GTK determines the character to use
         from a list of possible candidates, depending on availability in the
         current font. This style property allows the theme to prepend a
         character to the list of candidates. @br{}
@@ -649,7 +649,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
       A keybinding signal which gets emitted when the user activates the entry.
       Applications should not connect to it, but may emit it with the function
@@ -661,109 +661,107 @@
       @end{table}
     @subheading{The \"backspace\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
-      The \"backspace\" signal is a keybinding signal which gets emitted when
-      the user asks for it. The default bindings for this signal are Backspace
-      and Shift-Backspace.
+      A keybinding signal which gets emitted when the user asks for it. The
+      default bindings for this signal are Backspace and Shift-Backspace.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
     @subheading{The \"copy-clipboard\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
-      The \"copy-clipboard\" signal is a keybinding signal which gets emitted
-      to copy the selection to the clipboard. The default bindings for this
-      signal are Ctrl-c and Ctrl-Insert.
+      A keybinding signal which gets emitted to copy the selection to the
+      clipboard. The default bindings for this signal are Ctrl-c and
+      Ctrl-Insert.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
     @subheading{The \"cut-clipboard\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
-      The \"cut-clipboard\" signal is a keybinding signal which gets emitted to
-      cut the selection to the clipboard. The default bindings for this signal
-      are Ctrl-x and Shift-Delete.
+      A keybinding signal which gets emitted to cut the selection to the
+      clipboard. The default bindings for this signal are Ctrl-x and
+      Shift-Delete.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
     @subheading{The \"delete-from-cursor\" signal}
       @begin{pre}
- lambda (entry type count)    : Action
+ lambda (entry type count)    :action
       @end{pre}
-      The \"delete-from-cursor\" signal is a keybinding signal which gets
-      emitted when the user initiates a text deletion. If the type is
-      @code{:chars} of the @symbol{gtk-delete-type} enumeration, GTK+ deletes
-      the selection if there is one, otherwise it deletes the requested number
-      of characters. The default bindings for this signal are Delete for
-      deleting a character and Ctrl-Delete for deleting a word.
+      A keybinding signal which gets emitted when the user initiates a text
+      deletion. If the type is @code{:chars} of the @symbol{gtk-delete-type}
+      enumeration, GTK deletes the selection if there is one, otherwise it
+      deletes the requested number of characters. The default bindings for this
+      signal are Delete for deleting a character and Ctrl-Delete for deleting a
+      word.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
-        @entry[type]{The granularity of the deletion, as a
+        @entry[type]{The granularity of the deletion, as a value of the
           @symbol{gtk-delete-type} enumeration.}
         @entry[count]{An integer with the number of type units to delete.}
       @end{table}
     @subheading{The \"icon-press\" signal}
       @begin{pre}
- lambda (entry icon-pos event)    : Run Last
+ lambda (entry pos event)    :run-last
       @end{pre}
-      The \"icon-press\" signal is emitted when an activatable icon is clicked.
+      The signal is emitted when an activatable icon is clicked.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget on which the signal is
           emitted.}
-        @entry[icon-pos]{The position of type @symbol{gtk-entry-icon-position}
-          of the clicked icon.}
-        @entry[event]{The button press event of type @class{gdk-event}.}
+        @entry[pos]{The position of the clicked icon as a value of the
+          @symbol{gtk-entry-icon-position} enumeration.}
+        @entry[event]{The @class{gdk-event} button press event.}
       @end{table}
     @subheading{The \"icon-release\" signal}
       @begin{pre}
- lambda (entry icon-pos event)    : Run Last
+ lambda (entry pos event)    :run-last
       @end{pre}
-      The \"icon-release\" signal is emitted on the button release from a mouse
-      click over an activatable icon.
+      The signal is emitted on the button release from a mouse click over an
+      activatable icon.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget on which the signal is
           emitted.}
-        @entry[icon-pos]{The position of type @symbol{gtk-entry-icon-position}
-          of the clicked icon.}
-        @entry[event]{The button release event of type @class{gdk-event}.}
+        @entry[pos]{The position of the clicked icon as a value of the
+          @symbol{gtk-entry-icon-position} enumeration.}
+        @entry[event]{The @class{gdk-event} button release event.}
       @end{table}
     @subheading{The \"insert-at-cursor\" signal}
       @begin{pre}
- lambda (entry string)    : Action
+ lambda (entry string)    :action
       @end{pre}
-      The \"insert-at-cursor\" signal is a keybinding signal which gets emitted
-      when the user initiates the insertion of a fixed string at the cursor.
-      This signal has no default bindings.
+      A keybinding signal which gets emitted when the user initiates the
+      insertion of a fixed string at the cursor. This signal has no default
+      bindings.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
         @entry[string]{The string to insert.}
       @end{table}
     @subheading{The \"insert-emoji\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
-      The \"insert-emoji\" signal is a keybinding signal which gets emitted to
-      present the Emoji chooser for the entry. The default bindings for this
-      signal are Ctrl-. and Ctrl-; Since 3.22
+      A keybinding signal which gets emitted to present the Emoji chooser for
+      the entry. The default bindings for this signal are Ctrl-. and Ctrl-;
+      Since 3.22
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (entry step count extend-selection)    : Action
+ lambda (entry step count extend)    :action
       @end{pre}
-      The \"move-cursor\" signal is a keybinding signal which gets emitted when
-      the user initiates a cursor movement. If the cursor is not visible in
-      entry, this signal causes the viewport to be moved instead. Applications
-      should not connect to it, but may emit it with the function
-      @fun{g-signal-emit} if they need to control the cursor programmatically.
-      The default bindings for this signal come in two variants, the variant
-      with the Shift modifier extends the selection, the variant without the
-      Shift modifer does not. There are too many key combinations to list them
-      all here.
+      A keybinding signal which gets emitted when the user initiates a cursor
+      movement. If the cursor is not visible in the entry, this signal causes
+      the viewport to be moved instead. Applications should not connect to it,
+      but may emit it with the function @fun{g-signal-emit} if they need to
+      control the cursor programmatically. The default bindings for this signal
+      come in two variants, the variant with the Shift modifier extends the
+      selection, the variant without the Shift modifer does not. There are too
+      many key combinations to list them all here.
       @begin{itemize}
         @item{Arrow keys move by individual characters/lines.}
         @item{Ctrl-arrow key combinations move by words/paragraphs.}
@@ -771,34 +769,32 @@
       @end{itemize}
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
-        @entry[step]{The granularity of the move, as a
-          @symbol{gtk-movement-step}.}
+        @entry[step]{The granularity of the move, as a value of the
+          @symbol{gtk-movement-step} enumeration.}
         @entry[count]{An integer with the number of step units to move.}
-        @entry[extend-selection]{@em{True} if the move should extend the
-          selection.}
+        @entry[extend]{@em{True} if the move should extend the selection.}
       @end{table}
     @subheading{The \"paste-clipboard\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
-      The \"paste-clipboard\" signal is a keybinding signal which gets emitted
-      to paste the contents of the clipboard into the text view. The default
-      bindings for this signal are Ctrl-v and Shift-Insert.
+      A keybinding signal which gets emitted to paste the contents of the
+      clipboard into the text view. The default bindings for this signal are
+      Ctrl-v and Shift-Insert.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
     @subheading{The \"populate-popup\" signal}
       @begin{pre}
- lambda (entry menu)    : Run Last
+ lambda (entry widget)    :run-last
       @end{pre}
-      The \"populate-popup\" signal gets emitted before showing the context menu
-      of the entry. If you need to add items to the context menu, connect to
-      this signal and append your items to the widget, which will be a
-      @class{gtk-menu} in this case. If the @code{populate-all} property is
-      @em{true}, this signal will also be emitted to populate touch popups. In
-      this case, widget will be a different container, e.g. a
-      @class{gtk-toolbar}. The signal handler should not make assumptions about
-      the type of the widget.
+      The signal gets emitted before showing the context menu of the entry. If
+      you need to add items to the context menu, connect to this signal and
+      append your items to the widget, which will be a @class{gtk-menu} widget
+      in this case. If the @code{populate-all} property is @em{true}, this
+      signal will also be emitted to populate touch popups. In this case, widget
+      will be a different container, e.g. a @class{gtk-toolbar} widget. The
+      signal handler should not make assumptions about the type of the widget.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget on which the signal is
           emitted.}
@@ -807,7 +803,7 @@
       @end{table}
     @subheading{The \"preedit-changed\" signal}
       @begin{pre}
- lambda (entry preedit)    : Action
+ lambda (entry preedit)    :action
       @end{pre}
       If an input method is used, the typed text will not immediately be
       committed to the buffer. So if you are interested in the text, connect to
@@ -818,11 +814,10 @@
       @end{table}
     @subheading{The \"toggle-overwrite\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
-      The \"toggle-overwrite\" signal is a keybinding signal which gets emitted
-      to toggle the overwrite mode of the entry. The default bindings for this
-      signal is Insert.
+      A keybinding signal which gets emitted to toggle the overwrite mode of
+      the entry. The default bindings for this signal is Insert.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
@@ -1304,7 +1299,7 @@
  "The @code{invisible-char} property of type @code{:uint} (Read / Write) @br{}
   The invisible character is used when masking entry contents in \"password
   mode\". When it is not explicitly set with the @code{invisible-char} property,
-  GTK+ determines the character to use from a list of possible candidates,
+  GTK determines the character to use from a list of possible candidates,
   depending on availability in the current font. This style property allows the
   theme to prepend a character to the list of candidates. @br{}
   Default value: \"*\"")
@@ -1331,7 +1326,7 @@
   to set text visibility to @em{false}.
 
   I.e. this is the character used in \"password mode\" to show the user how
-  many characters have been typed. By default, GTK+ picks the best invisible
+  many characters have been typed. By default, GTK picks the best invisible
   char available in the current font. If you set the invisible char to 0, then
   the user will get no feedback at all. There will be no text on the screen as
   they type.
@@ -1538,7 +1533,7 @@
                                                 'gtk-entry) 't)
  "The @code{primary-icon-activatable} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether the primary icon is activatable. GTK+ emits the \"icon-press\" and
+  Whether the primary icon is activatable. GTK emits the \"icon-press\" and
   \"icon-release\" signals only on sensitive, activatable icons. Sensitive, but
   non-activatable icons can be used for purely informational purposes. @br{}
   Default value: @em{true}")
@@ -1557,7 +1552,7 @@
     @class{gtk-entry} class.
   @end{short}
 
-  Whether the primary icon is activatable. GTK+ emits the \"icon-press\" and
+  Whether the primary icon is activatable. GTK emits the \"icon-press\" and
   \"icon-release\" signals only on sensitive, activatable icons. Sensitive, but
   non-activatable icons can be used for purely informational purposes.
   @see-class{gtk-entry}
@@ -1652,7 +1647,7 @@
  "The @code{primary-icon-sensitive} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the primary icon is sensitive. An insensitive icon appears grayed out.
-  GTK+ does not emit the \"icon-press\" and \"icon-release\" signals and does
+  GTK does not emit the \"icon-press\" and \"icon-release\" signals and does
   not allow DND from insensitive icons. An icon should be set insensitive if
   the action that would trigger when clicked is currently not available. @br{}
   Default value: @em{true}")
@@ -1672,7 +1667,7 @@
   @end{short}
 
   Whether the primary icon is sensitive. An insensitive icon appears grayed out.
-  GTK+ does not emit the \"icon-press\" and \"icon-release\" signals and does
+  GTK does not emit the \"icon-press\" and \"icon-release\" signals and does
   not allow DND from insensitive icons. An icon should be set insensitive if
   the action that would trigger when clicked is currently not available.
   @see-class{gtk-entry}
@@ -1905,7 +1900,7 @@
                                                'gtk-entry) 't)
  "The @code{secondary-icon-activatable} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether the secondary icon is activatable. GTK+ emits the \"icon-press\" and
+  Whether the secondary icon is activatable. GTK emits the \"icon-press\" and
   \"icon-release\" signals only on sensitive, activatable icons. Sensitive, but
   non-activatable icons can be used for purely informational purposes. @br{}
   Default value: @em{true}")
@@ -1925,7 +1920,7 @@
     @class{gtk-entry} class.
   @end{short}
 
-  Whether the secondary icon is activatable. GTK+ emits the \"icon-press\" and
+  Whether the secondary icon is activatable. GTK emits the \"icon-press\" and
   \"icon-release\" signals only on sensitive, activatable icons. Sensitive, but
   non-activatable icons can be used for purely informational purposes.
   @see-class{gtk-entry}
@@ -2022,7 +2017,7 @@
  "The @code{secondary-icon-sensitive} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the secondary icon is sensitive. An insensitive icon appears grayed
-  out. GTK+ does not emit the \"icon-press\" and \"icon-release\" signals and
+  out. GTK does not emit the \"icon-press\" and \"icon-release\" signals and
   does not allow DND from insensitive icons. An icon should be set insensitive
   if the action that would trigger when clicked is currently not available.@br{}
   Default value: @em{true}")
@@ -2042,7 +2037,7 @@
   @end{short}
 
   Whether the secondary icon is sensitive. An insensitive icon appears grayed
-  out. GTK+ does not emit the \"icon-press\" and \"icon-release\" signals and
+  out. GTK does not emit the \"icon-press\" and \"icon-release\" signals and
   does not allow DND from insensitive icons. An icon should be set insensitive
   if the action that would trigger when clicked is currently not available.
   @see-class{gtk-entry}
@@ -2424,7 +2419,7 @@
   invisible char, and will also appear that way when the text in the entry
   widget is copied elsewhere.
 
-  By default, GTK+ picks the best invisible character available in the current
+  By default, GTK picks the best invisible character available in the current
   font, but it can be changed with the function @fun{gtk-entry-invisible-char}.
   @see-class{gtk-entry}
   @see-function{gtk-entry-invisible-char}")
@@ -2498,7 +2493,7 @@
 
 (defun gtk-entry-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-30}
+ "@version{*2021-5-21}
   @return{A new @class{gtk-entry} widget.}
   @short{Creates a new entry.}
   @see-class{gtk-entry}"
@@ -3317,7 +3312,7 @@
   @argument[actions]{a bitmask of type @symbol{gdk-drag-action} of the allowed
     drag actions}
   @begin{short}
-    Sets up the icon at the given position so that GTK+ will start a drag
+    Sets up the icon at the given position so that GTK will start a drag
     operation when the user clicks and drags the icon.
   @end{short}
 
@@ -3326,7 +3321,7 @@
   function @fun{gtk-entry-current-icon-drag-source} in your signal handler
   to find out if the drag was started from an icon.
 
-  By default, GTK+ uses the icon as the drag icon. You can use the
+  By default, GTK uses the icon as the drag icon. You can use the
   \"drag-begin\" signal to set a different icon. Note that you have to use the
   function @fun{g-signal-connect-after} to ensure that your signal handler gets
   executed after the default handler.

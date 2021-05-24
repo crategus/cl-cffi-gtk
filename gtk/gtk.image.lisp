@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.image.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -105,7 +105,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;;; CairoSurface represents a cairo-surface-t, but we need a boxed type in GTK+.
+;;; CairoSurface represents a cairo-surface-t, but we need a boxed type in GTK.
 
 (define-g-boxed-opaque cairo-surface "CairoSurface"
   :alloc (error "CairoSurface cannot be created from the Lisp side."))
@@ -116,7 +116,7 @@
       (documentation 'cairo-surface 'type)
  "@version{2021-4-5}
   @begin{short}
-    The @sym{cairo-surface} structure represents a Cairo surface in GTK+.
+    The @sym{cairo-surface} structure represents a Cairo surface in GTK.
   @end{short}
   See the documentation of the @symbol{cairo-surface-t} structure for more
   information.
@@ -281,7 +281,7 @@
   signals on the event box.
 
   Sometimes an application will want to avoid depending on external data files,
-  such as image files. GTK+ comes with a program to avoid this, called
+  such as image files. GTK comes with a program to avoid this, called
   @code{gdk-pixbuf-csource}. This library allows you to convert an image into a
   C variable declaration, which can then be loaded into a @class{gdk-pixbuf}
   object using the function @fun{gdk-pixbuf-new-from-inline}.
@@ -352,7 +352,7 @@
  "@version{2020-4-17}
   @syntax[]{(gtk-image-file object) => filename}
   @syntax[]{(setf (gtk-image-file object) filename)}
-  @argument[object]{a @class{gtk-image} object}
+  @argument[object]{a @class{gtk-image} widget}
   @argument[filename]{a string with the name of the file to load and display}
   @begin{short}
     Accessor of the @slot[gtk-image]{file} slot of the @class{gtk-image} class.
@@ -376,7 +376,7 @@
  "@version{2020-4-17}
   @syntax[]{(gtk-image-gicon object) => gicon}
   @syntax[]{(setf (gtk-image-gicon object) gicon)}
-  @argument[object]{a @class{gtk-image} object}
+  @argument[object]{a @class{gtk-image} widget}
   @argument[gicon]{a icon of type @class{g-icon}}
   @begin{short}
     Accessor of the @slot[gtk-image]{gicon} slot of the @class{gtk-image} class.
@@ -404,7 +404,7 @@
  "@version{2020-4-17}
   @syntax[]{(gtk-image-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-image-icon-name object) icon-name)}
-  @argument[object]{a @class{gtk-image} object}
+  @argument[object]{a @class{gtk-image} widget}
   @argument[icon-name]{a string with the name of the icon}
   @begin{short}
     Accessor of the @slot[gtk-image]{icon-name} slot of the @class{gtk-image}
@@ -433,7 +433,7 @@
  "@version{2020-4-17}
   @syntax[]{(gtk-image-icon-set object) => icon-set}
   @syntax[]{(setf (gtk-image-icon-set object) icon-set)}
-  @argument[object]{a @class{gtk-image} object}
+  @argument[object]{a @class{gtk-image} widget}
   @argument[icon-set]{a icon set of type @class{gtk-icon-set}}
   @begin{short}
     Accessor of the @slot[gtk-image]{icon-set} slot of the @class{gtk-image}
@@ -466,7 +466,7 @@
  "@version{2020-4-17}
   @syntax[]{(gtk-image-icon-size object) => icon-size}
   @syntax[]{(setf (gtk-image-icon-size object) icon-size)}
-  @argument[object]{a @class{gtk-image} object}
+  @argument[object]{a @class{gtk-image} widget}
   @argument[icon-set]{an integer with the icon size}
   @begin{short}
     Accessor of the @slot[gtk-image]{icon-size} slot of the @class{gtk-image}
@@ -492,7 +492,7 @@
 (setf (gethash 'gtk-image-pixbuf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-pixbuf 'function)
- "@version{2020-4-17}
+ "@version{*2021-5-23}
   @syntax[]{(gtk-image-pixbuf object) => pixbuf}
   @syntax[]{(setf (gtk-image-pixbuf object) pixbuf)}
   @argument[object]{a @class{gtk-image} widget}
@@ -502,9 +502,9 @@
     class.
   @end{short}
 
-  The slot access function @sym{gtk-image-pixbuf} gets the @class{gdk-pixbuf}
-  object being displayed by the image. The slot access function
-  @sym{(setf gtk-image-pixbuf)} sets the @class{gdk-pixbuf} object.
+  The slot access function @sym{gtk-image-pixbuf} gets the pixbuf being
+  displayed by the image. The slot access function @sym{(setf gtk-image-pixbuf)}
+  sets the pixbuf.
 
   The @symbol{gtk-image-type} storage type of the image must be @code{:empty}
   or @code{:pixbuf}, see the function @fun{gtk-image-storage-type}.
@@ -804,7 +804,7 @@
 (defun gtk-image-get-icon-name (image)
  #+cl-cffi-gtk-documentation
  "@version{2020-4-17}
-  @argument[image]{a @class{gtk-image} object}
+  @argument[image]{a @class{gtk-image} widget}
   @begin{return}
     @code{icon-name} -- an icon name @br{}
     @code{size} -- an icon size of type @symbol{gtk-icon-size}
@@ -892,7 +892,7 @@
  "@version{2020-4-17}
   @argument[icon-set]{a @class{gtk-icon-set} structure}
   @argument[icon-size]{a icon size of type @symbol{gtk-icon-size}}
-  @return{A new @class{gtk-image} object.}
+  @return{A new @class{gtk-image} widget.}
   @begin{short}
     Creates an image displaying an icon set.
   @end{short}
@@ -925,17 +925,16 @@
 (defcfun ("gtk_image_new_from_pixbuf" gtk-image-new-from-pixbuf)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{*2021-5-23}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
-  @return{A new @class{gtk-image} object.}
+  @return{A new @class{gtk-image} widget.}
   @begin{short}
     Creates an image displaying @arg{pixbuf}.
   @end{short}
 
-  Note that this function just creates an @class{gtk-image} object from the
-  pixbuf. The @class{gtk-image} object created will not react to state changes.
-  Should you want that, you should use the function
-  @fun{gtk-image-new-from-icon-name}.
+  Note that this function just creates an image from the pixbuf. The image
+  created will not react to state changes. Should you want that, you should use
+  the function @fun{gtk-image-new-from-icon-name}.
   @see-class{gtk-image}
   @see-class{gdk-pixbuf}
   @see-function{gtk-image-new-from-icon-name}"
@@ -1034,10 +1033,11 @@
 (defcfun ("gtk_image_new_from_gicon" gtk-image-new-from-gicon)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
-  @argument[icon]{an icon of type @class{g-icon}}
-  @argument[size]{an icon size of type @symbol{gtk-icon-size}}
-  @return{A new @class{gtk-image} displaying the themed icon.}
+ "@version{*2021-5-23}
+  @argument[icon]{a @class{g-icon} object}
+  @argument[size]{an icon size as a value of the @symbol{gtk-icon-size}
+    enumeration}
+  @return{A new @class{gtk-image} widget displaying the themed icon.}
   @begin{short}
     Creates an image displaying an icon from the current icon theme.
   @end{short}
@@ -1097,7 +1097,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-4-17}
   @argument[surface]{a @symbol{cairo-surface-t} instance}
-  @return{A new @class{gtk-image} object.}
+  @return{A new @class{gtk-image} widget.}
   @begin{short}
     Creates a new image displaying @arg{surface}.
   @end{short}
@@ -1208,7 +1208,7 @@
 (defcfun ("gtk_image_set_from_animation" gtk-image-set-from-animation) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-4-17}
-  @argument[image]{a @class{gtk-image} object}
+  @argument[image]{a @class{gtk-image} widget}
   @argument[animation]{the @class{gdk-pixbuf-animation} object}
   @begin{short}
     Causes the image to display the given animation, or display nothing, if you

@@ -204,7 +204,7 @@
   the list will be used in the button when the current value is the lowest
   value, the second item for the highest value. All the subsequent icons will
   be used for all the other values, spread evenly over the range of values.
-  If there is only one icon name in the icons array, it will be used for all
+  If there is only one icon name in the icons list, it will be used for all
   the values. If only two icon names are in the icons array, the first one
   will be used for the bottom 50% of the scale, and the second one for the
   top 50%. It is recommended to use at least 3 icons so that the scale button
@@ -232,7 +232,7 @@
   the list will be used in the button when the current value is the lowest
   value, the second item for the highest value. All the subsequent icons will
   be used for all the other values, spread evenly over the range of values.
-  If there is only one icon name in the icons array, it will be used for all
+  If there is only one icon name in the icons list, it will be used for all
   the values. If only two icon names are in the icons array, the first one
   will be used for the bottom 50% of the scale, and the second one for the
   top 50%. It is recommended to use at least 3 icons so that the scale button

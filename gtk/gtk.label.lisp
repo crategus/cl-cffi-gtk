@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.label.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -325,15 +325,15 @@
   of \"width-for-height\" geometry management.
 
   @subheading{Links}
-  GTK+ supports markup for clickable hyperlinks in addition to regular Pango
+  GTK supports markup for clickable hyperlinks in addition to regular Pango
   markup. The markup for links is borrowed from HTML, using the @code{a} with
-  href and title attributes. GTK+ renders links similar to the way they appear
+  href and title attributes. GTK renders links similar to the way they appear
   in web browsers, with colored, underlined text. The title attribute is
   displayed as a tooltip on the link. An example looks like this:
   @begin{pre}
  (gtk-label-set-markup label
                       \"Go to the <span style=\"color: red\">
-                                    <a>GTK+ website</a></span> for more...\")
+                                    <a>GTK website</a></span> for more...\")
   @end{pre}
   It is possible to implement custom handling for links and their tooltips
   with the \"activate-link\" signal and the function
@@ -1347,7 +1347,7 @@
   size.
 
   Note that setting line wrapping to @em{true} does not make the label wrap at
-  its parent container's width, because GTK+ widgets conceptually cannot make
+  its parent container's width, because GTK widgets conceptually cannot make
   their requisition depend on the parent container's size. For a label that
   wraps at a specific position, set the label's width using the function
   @fun{gtk-widget-size-request}.

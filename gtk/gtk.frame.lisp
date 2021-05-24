@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.frame.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -103,7 +103,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-frame 'type)
- "@version{2020-9-5}
+ "@version{*2021-5-23}
   @begin{short}
     The frame widget is a @class{gtk-bin} widget that surrounds its child with
     a decorative frame and an optional label.
@@ -115,13 +115,13 @@
   position of the label can be controlled with the function
   @fun{gtk-frame-label-align}.
   @begin[GtkFrame as GtkBuildable]{dictionary}
-    The @sym{gtk-frame} implementation of the @class{gtk-buildable} interface
-    supports placing a child in the label position by specifying
+    The @sym{gtk-frame} widget implementation of the @class{gtk-buildable}
+    interface supports placing a child in the label position by specifying
     @code{\"label\"} as the @code{type} attribute of a @code{<child>}
     element. A normal content child can be specified without specifying a
     @code{<child>} type attribute.
 
-    @b{Example:} A UI definition fragment with @sym{gtk-frame}
+    @b{Example:} A UI definition fragment with a @sym{gtk-frame} widget
     @begin{pre}
  <object class=\"GtkFrame\">
   <child type=\"label\">
@@ -140,15 +140,15 @@
  ├── <label widget>
  ╰── <child>
     @end{pre}
-    @sym{gtk-frame} has a main CSS node named @code{frame} and a subnode named
-    @code{border}. The @code{border} node is used to draw the visible border.
-    You can set the appearance of the border using CSS properties like
-    @code{border-style} on the @code{border} node.
+    The @sym{gtk-frame} widget has a main CSS node named @code{frame} and a
+    subnode named @code{border}. The @code{border} node is used to draw the
+    visible border. You can set the appearance of the border using CSS
+    properties like @code{border-style} on the @code{border} node.
 
-    The border node can be given the style class @code{.flat}, which is used by
-    themes to disable drawing of the border. To do this from code, call the
-    @fun{gtk-frame-shadow-type} slot access function with @code{:none} to add
-    the @code{.flat} class or any other shadow type to remove it.
+    The @code{border} node can be given the style class @code{.flat}, which is
+    used by themes to disable drawing of the border. To do this from code, call
+    the function @fun{gtk-frame-shadow-type} with @code{:none} to add the
+    @code{.flat} class or any other shadow type to remove it.
   @end{dictionary}
   @see-slot{gtk-frame-label}
   @see-slot{gtk-frame-label-widget}

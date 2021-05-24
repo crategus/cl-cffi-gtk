@@ -770,17 +770,17 @@
 
 (defun gtk-button-new-with-mnemonic (label)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-20}
+ "@version{*2021-5-20}
   @argument[label]{a string with the text of the button, with an underscore in
     front of the mnemonic character}
   @return{A new @class{gtk-button} widget.}
   @begin{short}
     Creates a new button widget containing a label with a mnemonic.
   @end{short}
-  If characters in label are preceded by an underscore, they are underlined.
-  If you need a literal underscore character in a label, use '__' (two
-  underscores). The first underlined character represents a keyboard accelerator
-  called a mnemonic. Pressing Alt and that key activates the button.
+  If characters in @arg{label} are preceded by an underscore, they are
+  underlined. If you need a literal underscore character in a label, use
+  '__' (two underscores). The first underlined character represents a keyboard
+  accelerator called a mnemonic. Pressing Alt and that key activates the button.
   @see-class{gtk-button}
   @see-function{gtk-button-new}
   @see-function{gtk-button-new-with-label}
@@ -800,26 +800,25 @@
 (defcfun ("gtk_button_new_from_icon_name" gtk-button-new-from-icon-name)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-10}
+ "@version{*2021-5-20}
   @argument[button]{a @class{gtk-button} widget}
-  @argument[icon-name]{a string with the icon name}
-  @argument[icon-size]{an icon size of type @symbol{gtk-icon-size}}
+  @argument[name]{a string with the icon name}
+  @argument[size]{a value of the @symbol{gtk-icon-size} enumeration}
   @return{A new @class{gtk-button} widget displaying the themed icon.}
   @begin{short}
     Creates a new button containing an icon from the current icon theme.
   @end{short}
-
   If the icon name is not known, a \"broken image\" icon will be displayed
   instead. If the current icon theme is changed, the icon will be updated
   appropriately.
 
-  This function is a convenience wrapper around @fun{gtk-button-new} and
-  @fun{gtk-button-image}.
+  This function is a convenience wrapper around the functions
+  @fun{gtk-button-new} and @fun{gtk-button-image}.
   @see-class{gtk-button}
   @see-symbol{gtk-icon-size}
   @see-function{gtk-button-new}
   @see-function{gtk-button-image}"
-  (icon-name g-string)
+  (name g-string)
   (size gtk-icon-size))
 
 (export 'gtk-button-new-from-icon-name)
