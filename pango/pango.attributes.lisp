@@ -997,9 +997,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-attr-list atdoc:*class-name-alias*)
-      "Boxed CStruct"
+      "GBoxed"
       (documentation 'pango-attr-list 'type)
- "@version{2021-1-17}
+ "@version{2021-5-21}
   @begin{short}
     The @sym{pango-attr-list} structure represents a list of attributes that
     apply to a section of text.
@@ -1011,8 +1011,8 @@
 
   Since the @sym{pango-attr-list} structure is stored as a linear list, it is
   not suitable for storing attributes for large amounts of text. In general,
-  you should not use a single @sym{pango-attr-list} for more than one paragraph
-  of text.
+  you should not use a single @sym{pango-attr-list} instance for more than one
+  paragraph of text.
   @see-class{pango-attr-iterator}
   @see-function{pango-attr-list-change}")
 
