@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.handle-box.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -104,64 +104,69 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-handle-box 'type)
- "@version{2020-1-20}
+ "@version{2021-5-25}
   @begin{short}
     The @sym{gtk-handle-box} widget allows a portion of a window to be
     \"torn off\".
   @end{short}
   It is a bin widget which displays its child and a handle that the user can
-  drag to tear off a separate window (the float window) containing the child
-  widget. A thin ghost is drawn in the original location of the handlebox. By
+  drag to tear off a separate window, the float window, containing the child
+  widget. A thin ghost is drawn in the original location of the handle box. By
   dragging the separate window back to its original location, it can be
   reattached.
 
   When reattaching, the ghost and float window must be aligned along one of
   the edges, the snap edge. This either can be specified by the application
-  programmer explicitely, or GTK+ will pick a reasonable default based on the
+  programmer explicitely, or GTK will pick a reasonable default based on the
   handle position.
 
-  To make detaching and reattaching the handlebox as minimally confusing as
+  To make detaching and reattaching the handle box as minimally confusing as
   possible to the user, it is important to set the snap edge so that the snap
-  edge does not move when the handlebox is deattached. For instance, if the
-  handlebox is packed at the bottom of a vertical @class{gtk-box}, then when
-  the handlebox is detached, the bottom edge of the handlebox's allocation will
-  remain fixed as the height of the handlebox shrinks, so the snap edge should
-  be set to @code{:bottom}.
+  edge does not move when the handle box is deattached. For instance, if the
+  handle box is packed at the bottom of a vertical @class{gtk-box} widget, then
+  when the handle box is detached, the bottom edge of the allocation of the
+  handle box will remain fixed as the height of the handle box shrinks, so the
+  snap edge should be set to @code{:bottom}.
   @begin[Warning]{dictionary}
-    @sym{gtk-handle-box} has been deprecated since GTK+ 3.4. It is very
-    specialized, lacks features to make it useful and most importantly does not
-    fit well into modern application design. Do not use it. There is no
-    replacement.
+    The @sym{gtk-handle-box} widget has been deprecated since GTK 3.4. It is
+    very specialized, lacks features to make it useful and most importantly
+    does not fit well into modern application design. Do not use it. There is
+    no replacement.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"child-attached\" signal}
       @begin{pre}
- lambda (handlebox widget)    : Run First
+ lambda (handlebox widget)    :run-first
       @end{pre}
-      This signal is emitted when the contents of the handle box are reattached
+      The signal is emitted when the contents of the handle box are reattached
       to the main window.
       @begin[code]{table}
-        @entry[handlebox]{The object which received the signal.}
-        @entry[widget]{The child widget of the handlebox. This argument provides
-          no extra information and is here only for backwards-compatibility.}
+        @entry[handlebox]{The @sym{gtk-handle-box} widget which received the
+          signal.}
+        @entry[widget]{The child widget of the handle box. This argument
+          provides no extra information and is here only for backwards
+          compatibility.}
       @end{table}
     @subheading{The \"child-detached\" signal}
       @begin{pre}
- lambda (handlebox widget)    : Run First
+ lambda (handlebox widget)    :run-first
       @end{pre}
-      This signal is emitted when the contents of the handle box are detached
+      The signal is emitted when the contents of the handle box are detached
       from the main window.
       @begin[code]{table}
-        @entry[handlebox]{The object which received the signal.}
-        @entry[widget]{The child widget of the handlebox. This argument provides
-          no extra information and is here only for backwards-compatibility.}
+        @entry[handlebox]{The @sym{gtk-handle-box} widget which received the
+          signal.}
+        @entry[widget]{The child widget of the handle box. This argument
+          provides no extra information and is here only for backwards
+          compatibility.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-handle-box-child-detached}
   @see-slot{gtk-handle-box-handle-position}
   @see-slot{gtk-handle-box-shadow-type}
   @see-slot{gtk-handle-box-snap-edge}
-  @see-slot{gtk-handle-box-snap-edge-set}")
+  @see-slot{gtk-handle-box-snap-edge-set}
+  @see-class{gtk-bin}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -173,7 +178,7 @@
 (setf (documentation (atdoc:get-slot-from-name "child-detached"
                                                'gtk-handle-box) 't)
  "The @code{child-detached} property of type @code{:boolean} (Read) @br{}
-  A boolean value indicating whether the handlebox's child is attached or
+  A boolean value indicating whether the child of the handle box is attached or
   detached. @br{}
   Default value: @em{false}")
 
@@ -181,15 +186,20 @@
 (setf (gethash 'gtk-handle-box-child-detached atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-child-detached 'function)
- "@version{2020-1-20}
+ "@version{2021-5-25}
+  @syntax[]{(gtk-handle-box-child-detached object) => detached}
+  @argument[object]{a @class{gtk-handle-box} widget}
+  @argument[detached]{a boolean whether the child is detached}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{child-detached} slot of the
     @class{gtk-handle-box} class.
   @end{short}
+
+  Returns whether the child of the handle box is currently detached.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-child-detached} has been deprecated since
-    version 3.4 and should not be used in newly-written code.
-    @class{gtk-handle-box} has been deprecated.
+    version 3.4 and should not be used in newly-written code. The
+    @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
   @see-class{gtk-handle-box}")
 
@@ -207,17 +217,26 @@
 (setf (gethash 'gtk-handle-box-handle-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-handle-position 'function)
- "@version{2020-1-20}
+ "@version{2021-5-25}
+  @syntax[]{(gtk-handle-box-handle-position object) => position}
+  @syntax[]{(setf (gtk-handle-box-handle-position object) position)}
+  @argument[object]{a @class{gtk-handle-box} widget}
+  @argument[position]{a value of the @symbol{gtk-position-type} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{handle-position} slot of the
     @class{gtk-handle-box} class.
   @end{short}
+
+  The slot access function @sym{gtk-handle-box-handle-position} gets the side
+  of the handle box where the handle should be drawn. The slot access function
+  @sym{(setf gtk-handle-box-handle-position)} sets the handle position.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-handle-position} has been deprecated since
-    version 3.4 and should not be used in newly-written code.
-    @class{gtk-handle-box} has been deprecated.
+    version 3.4 and should not be used in newly-written code. The
+    @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
-  @see-class{gtk-handle-box}")
+  @see-class{gtk-handle-box}
+  @see-symbol{gtk-position-type}")
 
 ;;; --- gtk-handle-box-shadow-type ---------------------------------------------
 
@@ -226,24 +245,33 @@
                                                'gtk-handle-box) 't)
  "The @code{shadow-type} property of type @symbol{gtk-shadow-type}
   (Read / Write) @br{}
-  Appearance of the shadow that surrounds the container. @br{}
+  Appearance of the shadow that surrounds the handle box. @br{}
   Default value: @code{:out}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-handle-box-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-shadow-type 'function)
- "@version{2020-1-20}
+ "@version{2021-5-25}
+  @syntax[]{(gtk-handle-box-shadow-type object) => shadow-type}
+  @syntax[]{(setf (gtk-handle-box-shadow-type object) shadow-type)}
+  @argument[object]{a @class{gtk-handle-box} widget}
+  @argument[shadow-type]{a value of the @symbol{gtk-shadow-type} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{shadow-type} slot of the
     @class{gtk-handle-box} class.
   @end{short}
+
+  The function @sym{gtk-handle-box-shadow-type} gets the type of shadow drawn
+  around the handle box. The function @sym{(setf gtk-handle-box-shadow-type)}
+  sets the type of shadow.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-shadow-type} has been deprecated since
-    version 3.4 and should not be used in newly-written code.
-    @class{gtk-handle-box} has been deprecated.
+    version 3.4 and should not be used in newly-written code. The
+    @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
-  @see-class{gtk-handle-box}")
+  @see-class{gtk-handle-box}
+  @see-symbol{gtk-shadow-type}")
 
 ;;; --- gtk-handle-box-snap-edge -----------------------------------------------
 
@@ -251,25 +279,43 @@
 (setf (documentation (atdoc:get-slot-from-name "snap-edge" 'gtk-handle-box) 't)
  "The @code{snap-edge} property of type @symbol{gtk-position-type}
   (Read / Write) @br{}
-  Side of the handlebox that's lined up with the docking point to dock the
-  handlebox. @br{}
+  Side of the handle box that is lined up with the docking point to dock the
+  handle box. @br{}
   Default value: @code{:top}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-handle-box-snap-edge atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge 'function)
- "@version{2020-1-20}
+ "@version{2021-5-25}
+  @syntax[]{(gtk-handle-box-snap-edge object) => edge}
+  @syntax[]{(setf (gtk-handle-box-snap-edge object) edge)}
+  @argument[object]{a @class{gtk-handle-box} widget}
+  @argument[edge]{a value of the @symbol{gtk-position-type} enumeration}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{snap-edge} slot of the
     @class{gtk-handle-box} class.
   @end{short}
+
+  The slot access function @sym{gtk-handle-box-snap-edge} gets the edge used
+  for determining reattachment of the handle box. The slot access function
+  @sym{(setf gtk-handle-box-snap-edge)} sets the snap edge.
+
+  The snap edge is the edge of the detached child that must be aligned with the
+  corresponding edge of the \"ghost\" left behind when the child was detached
+  to reattach the torn-off window. Usually, the snap edge should be chosen so
+  that it stays in the same place on the screen when the handle box is torn off.
+
+  If the snap edge is not set, then an appropriate value will be guessed from
+  the handle position. If the handle position is @code{:right} or @code{:left},
+  then the snap edge will be @code{:top}, otherwise it will be @code{:left}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-snap-edge} has been deprecated since
-    version 3.4 and should not be used in newly-written code.
-    @class{gtk-handle-box} has been deprecated.
+    version 3.4 and should not be used in newly-written code. The
+    @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
-  @see-class{gtk-handle-box}")
+  @see-class{gtk-handle-box}
+  @see-symbol{gtk-position-type}")
 
 ;;; --- gtk-handle-box-snap-edge-set -------------------------------------------
 
@@ -285,185 +331,49 @@
 (setf (gethash 'gtk-handle-box-snap-edge-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge-set 'function)
- "@version{2020-1-20}
+ "@version{2021-5-25}
+  @syntax[]{(gtk-handle-box-snap-edge-set object) => setting}
+  @syntax[]{(setf (gtk-handle-box-snap-edge-set object) setting)}
+  @argument[object]{a @class{gtk-handle-box} widget}
+  @argument[setting]{a boolean whether to use the value from the
+    @slot[gtk-handle-box]{snap-edge} property}
   @begin{short}
     Accessor of the @slot[gtk-handle-box]{snap-edge-set} slot of the
     @class{gtk-handle-box} class.
   @end{short}
+
+  Whether to use the value from the @slot[gtk-handle-box]{snap-edge} property
+  or a value derived from the @slot[gtk-handle-box]{handle-position} property.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-snap-edge-set} has been deprecated since
-    version 3.4 and should not be used in newly-written code.
-    @class{gtk-handle-box} has been deprecated.
+    version 3.4 and should not be used in newly-written code. The
+    @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
-  @see-class{gtk-handle-box}")
+  @see-class{gtk-handle-box}
+  @see-function{gtk-handle-box-snap-edge}
+  @see-function{gtk-handle-box-handle-position}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_handle_box_new ()
-;;;
-;;; GtkWidget * gtk_handle_box_new (void);
-;;;
-;;; Warning
-;;;
-;;; gtk_handle_box_new has been deprecated since version 3.4 and should not be
-;;; used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; Create a new handle box.
-;;;
-;;; Returns :
-;;;     a new GtkHandleBox.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_handle_box_set_shadow_type ()
-;;;
-;;; void gtk_handle_box_set_shadow_type (GtkHandleBox *handle_box,
-;;;                                      GtkShadowType type);
-;;;
-;;; Warning
-;;;
-;;; gtk_handle_box_set_shadow_type has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; Sets the type of shadow to be drawn around the border of the handle box.
-;;;
-;;; handle_box :
-;;;     a GtkHandleBox
-;;;
-;;; type :
-;;;     the shadow type.
-;;; ----------------------------------------------------------------------------
+(declaim (inline gtk-handle-box-new))
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_handle_box_set_handle_position ()
-;;;
-;;; void gtk_handle_box_set_handle_position (GtkHandleBox *handle_box,
-;;;                                          GtkPositionType position);
-;;;
-;;; Warning
-;;;
-;;; gtk_handle_box_set_handle_position has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; Sets the side of the handlebox where the handle is drawn.
-;;;
-;;; handle_box :
-;;;     a GtkHandleBox
-;;;
-;;; position :
-;;;     the side of the handlebox where the handle should be drawn.
-;;; ----------------------------------------------------------------------------
+(defun gtk-handle-box-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2021-5-25}
+  @return{A new @class{gtk-handle-box} widget.}
+  @begin{short}
+    Create a new handle box.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-handle-box-new} has been deprecated since version 3.4
+    and should not be used in newly-written code. The @class{gtk-handle-box}
+    widget has been deprecated.
+  @end{dictionary}
+  @see-class{gtk-handle-box}"
+  (make-instance 'gtk-handle-box))
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_handle_box_set_snap_edge ()
-;;;
-;;; void gtk_handle_box_set_snap_edge (GtkHandleBox *handle_box,
-;;;                                    GtkPositionType edge);
-;;;
-;;; Warning
-;;;
-;;; gtk_handle_box_set_snap_edge has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; Sets the snap edge of a handlebox. The snap edge is the edge of the detached
-;;; child that must be aligned with the corresponding edge of the "ghost" left
-;;; behind when the child was detached to reattach the torn-off window. Usually,
-;;; the snap edge should be chosen so that it stays in the same place on the
-;;; screen when the handlebox is torn off.
-;;;
-;;; If the snap edge is not set, then an appropriate value will be guessed from
-;;; the handle position. If the handle position is GTK_POS_RIGHT or
-;;; GTK_POS_LEFT, then the snap edge will be GTK_POS_TOP, otherwise it will be
-;;; GTK_POS_LEFT.
-;;;
-;;; handle_box :
-;;;     a GtkHandleBox
-;;;
-;;; edge :
-;;;     the snap edge, or -1 to unset the value; in which case GTK+ will try to
-;;;     guess an appropriate value in the future.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_handle_box_get_handle_position ()
-;;;
-;;; GtkPositionType gtk_handle_box_get_handle_position
-;;;                                                  (GtkHandleBox *handle_box);
-;;;
-;;; Warning
-;;;
-;;; gtk_handle_box_get_handle_position has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; Gets the handle position of the handle box. See
-;;; gtk_handle_box_set_handle_position().
-;;;
-;;; handle_box :
-;;;     a GtkHandleBox
-;;;
-;;; Returns :
-;;;     the current handle position.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_handle_box_get_shadow_type ()
-;;;
-;;; GtkShadowType gtk_handle_box_get_shadow_type (GtkHandleBox *handle_box);
-;;;
-;;; Warning
-;;;
-;;; gtk_handle_box_get_shadow_type has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; Gets the type of shadow drawn around the handle box. See
-;;; gtk_handle_box_set_shadow_type().
-;;;
-;;; handle_box :
-;;;     a GtkHandleBox
-;;;
-;;; Returns :
-;;;     the type of shadow currently drawn around the handle box.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_handle_box_get_snap_edge ()
-;;;
-;;; GtkPositionType gtk_handle_box_get_snap_edge (GtkHandleBox *handle_box);
-;;;
-;;; Warning
-;;;
-;;; gtk_handle_box_get_snap_edge has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; Gets the edge used for determining reattachment of the handle box. See
-;;; gtk_handle_box_set_snap_edge().
-;;;
-;;; handle_box :
-;;;     a GtkHandleBox
-;;;
-;;; Returns :
-;;;     the edge used for determining reattachment, or (GtkPositionType)-1 if
-;;;     this is determined (as per default) from the handle position.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_handle_box_get_child_detached ()
-;;;
-;;; gboolean gtk_handle_box_get_child_detached (GtkHandleBox *handle_box);
-;;;
-;;; Warning
-;;;
-;;; gtk_handle_box_get_child_detached has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; Whether the handlebox's child is currently detached.
-;;;
-;;; handle_box :
-;;;     a GtkHandleBox
-;;;
-;;; Returns :
-;;;     TRUE if the child is currently detached, otherwise FALSE
-;;;
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
+(export 'gtk-handle-box-new)
 
 ;;; --- gtk.handle-box.lisp ----------------------------------------------------
