@@ -88,20 +88,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-bin 'type)
- "@version{2020-6-1}
+ "@version{2025-5-25}
   @begin{short}
     The @sym{gtk-bin} widget is a container with just one child.
   @end{short}
   It is not very useful itself, but it is useful for deriving subclasses, since
   it provides common code needed for handling a single child widget.
 
-  Many GTK+ widgets are subclasses of @sym{gtk-bin}, including
-  @class{gtk-window}, @class{gtk-button}, @class{gtk-frame},
-  @class{gtk-handle-box} or @class{gtk-scrolled-window}.
+  Many GTK widgets are subclasses of the @sym{gtk-bin} class, including the
+  @class{gtk-window}, @class{gtk-button}, @class{gtk-frame}, or
+  @class{gtk-scrolled-window} classes.
   @see-class{gtk-window}
   @see-class{gtk-button}
   @see-class{gtk-frame}
-  @see-class{gtk-handle-box}
   @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------

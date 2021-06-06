@@ -2516,17 +2516,17 @@
 
 (defcfun ("gtk_render_handle" gtk-render-handle) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-8}
+ "@version{2021-5-21}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[x]{a @code{:double} with a x origin of the rectangle}
-  @argument[y]{a @code{:double} with a y origin of the rectangle}
-  @argument[width]{a @code{:double} with a rectangle width}
-  @argument[height]{a @code{:double} with a rectangle height}
+  @argument[x]{a double float with a x origin of the rectangle}
+  @argument[y]{a double float with a y origin of the rectangle}
+  @argument[width]{a double float with a rectangle width}
+  @argument[height]{a double float with a rectangle height}
   @begin{short}
-    Renders a handle as in @class{gtk-handle-box}, @class{gtk-paned} and
-    @class{gtk-window}'s resize grip, in the rectangle determined by x, y,
-    width, height.
+    Renders a handle, as the resize grip of the @class{gtk-paned} and
+    @class{gtk-window} widgets, in the rectangle determined by @arg{x}, @arg{y},
+    @arg{width}, @arg{height}.
   @end{short}
   @see-class{gtk-style-context}
   @see-symbol{cairo-t}"

@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.package.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -43,8 +43,8 @@
 (in-package :gtk)
 
 #|
-;;; Loading of the GTK+ library is moved to gdk.package.lisp,
-;;; because we need the version info from GTK+ when compiling GDK.
+;;; Loading of the GTK library is moved to gdk.package.lisp,
+;;; because we need the version info from GTK when compiling GDK.
 (glib::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library gtk
@@ -69,11 +69,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gtk) t)
- "This is the API documentation of a Lisp binding to GTK+.
-  GTK+ is a library for creating graphical user interfaces. It works on many
-  UNIX-like platforms, Windows, and OS X. GTK+ is released under the GNU Library
+ "This is the API documentation of a Lisp binding to GTK.
+  GTK is a library for creating graphical user interfaces. It works on many
+  UNIX-like platforms, Windows, and OS X. GTK is released under the GNU Library
   General Public License (GNU LGPL), which allows for flexible licensing of
-  client applications. GTK+ has a C-based object-oriented architecture that
+  client applications. GTK has a C-based object-oriented architecture that
   allows for maximum flexibility. Bindings for many other languages have been
   written, including C++, Objective-C, Guile/Scheme, Perl, Python, TOM, Ada95,
   Free Pascal, and Eiffel.
@@ -660,6 +660,7 @@
     @begin[GtkNotebook]{subsection}
       A tabbed notebook container.
 
+      @about-symbol{gtk-notebook-tab}
       @about-class{gtk-notebook}
       @about-generic{gtk-notebook-enable-popup}
       @about-generic{gtk-notebook-group-name}
@@ -1250,13 +1251,13 @@
   @end{section}
   @begin[Multiline Text Editor]{section}
     @subheading{Conceptual Overview}
-    GTK+ has an powerful framework for multiline text editing. The primary
+    GTK has an powerful framework for multiline text editing. The primary
     objects involved in the process are the @class{gtk-text-buffer} object,
     which represents the text being edited, and the @class{gtk-text-view}
     widget, a widget which can display a @class{gtk-text-buffer} object. Each
     text buffer can be displayed by any number of views.
 
-    One of the important things to remember about text in GTK+ is that it is
+    One of the important things to remember about text in GTK is that it is
     in the UTF-8 encoding. This means that one character can be encoded as
     multiple bytes. Character counts are usually referred to as offsets, while
     byte counts are called indexes. If you confuse these two, things will work
@@ -1400,7 +1401,7 @@
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
     @end{pre}
-    The gtk-demo application that comes with GTK+ contains more example code
+    The gtk-demo application that comes with GTK contains more example code
     for the @class{gtk-text-view} widget.
 
     @begin[GtkTextIter]{subsection}
@@ -1785,7 +1786,7 @@
     Overview of @class{gtk-tree-model}, @class{gtk-tree-view}, and friends.
 
     @subheading{Overview}
-      To create a tree or list in GTK+, use the @class{gtk-tree-model} interface
+      To create a tree or list in GTK, use the @class{gtk-tree-model} interface
       in conjunction with the @class{gtk-tree-view} widget. This widget is
       designed around a Model/View/Controller design and consists of four major
       parts:
@@ -1809,7 +1810,7 @@
       rendered as a checkbox?
 
     @subheading{Creating a model}
-      GTK+ provides two simple models that can be used: the
+      GTK provides two simple models that can be used: the
       @class{gtk-list-store} and the @class{gtk-tree-store}.
       @class{gtk-list-store} is used to model list widgets, while the
       @class{gtk-tree-store} models trees. It is possible to develop a new type
@@ -1910,7 +1911,7 @@ Columns and cell renderers
       how to display the model. It does this with columns and cell renderers.
 
       Cell renderers are used to draw the data in the tree model in a way. There
-      are a number of cell renderers that come with GTK+ 2.x, including the
+      are a number of cell renderers that come with GTK 2.x, including the
       @class{gtk-cell-renderer-text}, @class{gtk-cell-renderer-pixbuf} and the
       @class{gtk-cell-renderer-toggle}. It is relatively easy to write a custom
       renderer.
@@ -2044,7 +2045,7 @@ setup_tree (void)
                                                       NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 
-   /* Now we can manipulate the view just like any other GTK+ widget */
+   /* Now we can manipulate the view just like any other GTK widget */
    ...
 @}
       @end{pre}
@@ -4484,21 +4485,21 @@ setup_tree (void)
       @about-function{gtk-pad-controller-set-action}
     @end{subsection}
   @end{section}
-  @begin[GTK+ Core Reference]{section}
+  @begin[GTK Core Reference]{section}
     @begin[Main loop and Events]{subsection}
       Library initialization, main event loop, and events.
 
-      Before using GTK+, it needs to be initialized. Initialization connects to
+      Before using GTK, it needs to be initialized. Initialization connects to
       the window system display, and parses some standard command line
-      arguments. In the C library the macro @code{gtk_init()} initializes GTK+.
-      In the Lisp binding to GTK+, GTK+ is initialized, when loading the
+      arguments. In the C library the macro @code{gtk_init()} initializes GTK.
+      In the Lisp binding to GTK, GTK is initialized, when loading the
       @code{cl-cffi-gtk} library. Therefore, no functions are exported, which
-      initialize GTK+.
+      initialize GTK.
 
-      Like all GUI toolkits, GTK+ uses an event-driven programming model. When
-      the user is doing nothing, GTK+ sits in the main loop and waits for input.
+      Like all GUI toolkits, GTK uses an event-driven programming model. When
+      the user is doing nothing, GTK sits in the main loop and waits for input.
       If the user performs some action - say, a mouse click - then the main loop
-      \"wakes up\" and delivers an event to GTK+. GTK+ forwards the event to one
+      \"wakes up\" and delivers an event to GTK. GTK forwards the event to one
       or more widgets.
 
       In the C library the main loop is executed with the function
@@ -4516,10 +4517,10 @@ setup_tree (void)
 
       When your callbacks are invoked, you would typically take some action -
       for example, when an Open button is clicked you might display a
-      @class{gtk-file-chooser-dialog} window. After a callback finishes, GTK+
+      @class{gtk-file-chooser-dialog} window. After a callback finishes, GTK
       will return to the main loop and await more user input.
 
-      @b{Example:} Typical main function in Lisp for a GTK+ application.
+      @b{Example:} Typical main function in Lisp for a GTK application.
       @begin{pre}
 (defun main ()
   (within-main-loop
@@ -4568,7 +4569,7 @@ setup_tree (void)
       @about-function{gtk-propagate-event}
     @end{subsection}
     @begin[Version Information]{subsection}
-      GTK+ provides version information, primarily useful in configure checks
+      GTK provides version information, primarily useful in configure checks
       for builds that have a configure script. Applications will not typically
       use the features described here.
 
@@ -4673,8 +4674,8 @@ setup_tree (void)
       @about-function{gtk-clipboard-selection}
     @end{subsection}
     @begin[Drag and drop handling]{subsection}
-      GTK+ has a rich set of functions for doing inter-process communication via
-      the drag-and-drop metaphor. GTK+ can do drag-and-drop (DND) via multiple
+      GTK has a rich set of functions for doing inter-process communication via
+      the drag-and-drop metaphor. GTK can do drag-and-drop (DND) via multiple
       protocols. The currently supported protocols are the Xdnd and Motif
       protocols.
 
@@ -4831,7 +4832,7 @@ setup_tree (void)
       not implemented
     @end{subsection}
     @begin[Standard Enumerations]{subsection}
-      Public enumerated types used throughout GTK+.
+      Public enumerated types used throughout GTK.
 
       @about-symbol{gtk-baseline-position}
       @about-symbol{gtk-delete-type}
@@ -4934,7 +4935,7 @@ setup_tree (void)
       @about-function{gtk-show-uri}
     @end{subsection}
   @end{section}
-  @begin[Theming in GTK+]{section}
+  @begin[Theming in GTK]{section}
     @begin[GtkStyleContext]{subsection}
       Rendering UI elements
 
@@ -5155,11 +5156,11 @@ setup_tree (void)
     @end{subsection}
   @end{section}
   @begin[Deprecated]{section}
-    @begin[Deprecated since GTK+ 3.0]{subsection}@end{subsection}
+    @begin[Deprecated since GTK 3.0]{subsection}@end{subsection}
     @begin[Resource Files]{subsection}
       Deprecated routines for handling resource files.
 
-      In GTK+ 3.0, resource files have been deprecated and replaced by CSS-like
+      In GTK 3.0, resource files have been deprecated and replaced by CSS-like
       style sheets, which are understood by the @class{gtk-css-provider} object.
       In the Lisp binding the implementation was never very complete. The few
       symbols are not exported.
@@ -5167,179 +5168,182 @@ setup_tree (void)
     @begin[GtkStyle]{subsection}
       Deprecated object that holds style information for widgets.
 
-      In GTK+ 3.0, GtkStyle has been deprecated and replaced by
-      @class{gtk-style-context}. In the Lisp binding the implementation was
-      never very complete. The few symbols are not exported.
+      In GTK 3.0, the GtkStyle object has been deprecated and replaced by the
+      @class{gtk-style-context} object. In the Lisp binding the implementation
+      was never very complete. The few symbols are not exported.
     @end{subsection}
 
-    @begin[Deprecated since GTK+ 3.2]{subsection}@end{subsection}
+    @begin[Deprecated since GTK 3.2]{subsection}@end{subsection}
     @begin[GtkHBox]{subsection}
       A deprecated horizontal container box.
 
-      GtkHBox has been deprecated since GTK+ 3.2. You can use @class{gtk-box}
-      with the value @code{:horizontal} for the
-      @slot[gtk-orientable]{orientation} property instead, which is a very
-      quick and easy change. If you have derived your own classes from GtkHBox,
-      you can simply change the inheritance to derive directly from
-      @class{gtk-box}. No further changes are needed, since the default value of
-      the @slot[gtk-orientable]{orientation} property is @code{:horizontal}.
+      The GtkHBox widget has been deprecated since GTK 3.2. You can use the
+      @class{gtk-box} widget with the value @code{:horizontal} for the
+      @slot[gtk-orientable]{orientation} property instead, which is a very quick
+      and easy change. If you have derived your own classes from the GtkHBox
+      class, you can simply change the inheritance to derive directly from the
+      @class{gtk-box} class. No further changes are needed, since the default
+      value of the @slot[gtk-orientable]{orientation} property is
+      @code{:horizontal}.
 
       If you want your code to be future-proof, the recommendation is to switch
-      to @class{gtk-grid}, since @class{gtk-box} is going to be deprecated in
-      favor of the more flexible grid widget eventually.
+      to the @class{gtk-grid} widget, since the @class{gtk-box} widget is going
+      to be deprecated in favor of the more flexible grid widget eventually.
 
-      In the Lisp binding the symbols and functions for GtkHBox are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkHBox widget are
+      not exported.
     @end{subsection}
     @begin[GtkVBox]{subsection}
       A deprecated vertical container box.
 
-      GtkVBox has been deprecated since GTK+ 3.2. You can use @class{gtk-box}
-      instead, which is a very quick and easy change. If you have derived your
-      own classes from GtkVBox, you can simply change the inheritance to derive
-      directly from @class{gtk-box}, and set the
-      @slot[gtk-orientable]{orientation} property to @code{:vertical} in your
-      instance init function.
+      The GtkVBox widget has been deprecated since GTK 3.2. You can use the
+      @class{gtk-box} widget instead, which is a very quick and easy change. If
+      you have derived your own classes from the GtkVBox class, you can simply
+      change the inheritance to derive directly from the @class{gtk-box} class,
+      and set the @slot[gtk-orientable]{orientation} property to
+      @code{:vertical} in your instance init function.
 
       If you want your code to be future-proof, the recommendation is to switch
-      to @class{gtk-grid}, since @class{gtk-box} is going to be deprecated in
-      favor of the more flexible grid widget eventually.
+      to the @class{gtk-grid} widget, since the @class{gtk-box} widget is going
+      to be deprecated in favor of the more flexible grid widget eventually.
 
-      In the Lisp binding the symbols and functions for GtkVBox are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkVBox widget are
+      not exported.
     @end{subsection}
     @begin[GtkHButtonBox]{subsection}
       A deprecated container for arranging buttons horizontally.
 
-      GtkHButtonBox has been deprecated since GTK+ 3.2 and should not be used
-      in newly-written code. Use @class{gtk-button-box} with the value
-      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
-      instead.
+      The GtkHButtonBox widget has been deprecated since GTK 3.2 and should not
+      be used in newly-written code. Use the @class{gtk-button-box} widget with
+      the value @code{:horizontal} for the @slot[gtk-orientable]{orientation}
+      property instead.
 
-      In the Lisp binding the symbols and functions for GtkHButtonBox are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkHButtonBox widget
+      are not exported.
     @end{subsection}
     @begin[GtkVButtonBox]{subsection}
       A deprecated container for arranging buttons vertically.
 
-      GtkVButtonBox has been deprecated since GTK+ 3.2 and should not be used
-      in newly-written code. Use @class{gtk-button-box} with the value
-      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
-      instead.
+      The GtkVButtonBox widget has been deprecated since GTK 3.2 and should not
+      be used in newly-written code. Use the @class{gtk-button-box} widget with
+      the value @code{:vertical} for the @slot[gtk-orientable]{orientation}
+      property instead.
 
-      In the Lisp binding the symbols and functions of GtkVButtonBox are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkVButtonBox widget
+      are not exported.
     @end{subsection}
     @begin[GtkHPaned]{subsection}
       A deprecated container with two panes arranged horizontally.
 
-      GtkHPaned has been deprecated since GTK+ 3.2 and should not be used
-      in newly-written code. Use @class{gtk-paned} with the value
-      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
-      instead.
+      The GtkHPaned widget has been deprecated since GTK 3.2 and should not be
+      used in newly-written code. Use the @class{gtk-paned} widget with the
+      value @code{:horizontal} for the @slot[gtk-orientable]{orientation}
+      property instead.
 
-      In the Lisp binding the symbols and functions for GtkHPaned are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkHPaned widget are
+      not exported.
     @end{subsection}
     @begin[GtkVPaned]{subsection}
       A deprecated container with two panes arranged vertically.
 
-      GtkVPaned has been deprecated since GTK+ 3.2 and should not be used
-      in newly-written code. Use @class{gtk-paned} with the value
-      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
+      The GtkVPaned widget has been deprecated since GTK 3.2 and should not be
+      used in newly-written code. Use the @class{gtk-paned} widget with the
+      value @code{:vertical} for the @slot[gtk-orientable]{orientation} property
       instead.
 
-      In the Lisp binding the symbols and functions for GtkVPaned are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkVPaned widget are
+      not exported.
     @end{subsection}
     @begin[GtkHScale]{subsection}
       A deprecated horizontal slider widget for selecting a value from a range.
 
-      GtkHScale has been deprecated since GTK+ 3.2 and should not be
-      used in newly written code. Use @class{gtk-scale} with the value
-      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
-      instead.
+      The GtkHScale widget has been deprecated since GTK 3.2 and should not be
+      used in newly written code. Use the @class{gtk-scale} widget with the
+      value @code{:horizontal} for the @slot[gtk-orientable]{orientation}
+      property instead.
 
-      In the Lisp binding the symbols and functions for GtkHScale are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkHScale widget are
+      not exported.
     @end{subsection}
     @begin[GtkVScale]{subsection}
       A deprecated vertical slider widget for selecting a value from a range.
 
-      GtkVScale has been deprecated since GTK+ 3.2 and should not be
-      used in newly written code. Use @class{gtk-scale} with the value
-      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
+      The GtkVScale widget has been deprecated since GTK 3.2 and should not be
+      used in newly written code. Use the @class{gtk-scale} widget with the
+      value @code{:vertical} for the @slot[gtk-orientable]{orientation} property
       instead.
 
-      In the Lisp binding the symbols and functions for GtkVScale are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkVScale widget are
+      not exported.
     @end{subsection}
     @begin[GtkHSeparator]{subsection}
       A deprecated horizontal separator widget.
 
-      GtkHSeparator has been deprecated since GTK+ 3.2 and should not be
-      used in newly written code. Use @class{gtk-separator} with the value
-      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
-      instead.
+      The GtkHSeparator widget has been deprecated since GTK 3.2 and should not
+      be used in newly written code. Use the @class{gtk-separator} widget with
+      the value @code{:horizontal} for the @slot[gtk-orientable]{orientation}
+      property instead.
 
-      In the Lisp binding the symbols and functions for GtkHSeparator are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkHSeparator widget
+      are not exported.
     @end{subsection}
     @begin[GtkVSeparator]{subsection}
       A deprecated vertical separator widget.
 
-      GtkVSeparator has been deprecated since GTK+ 3.2 and should not be
-      used in newly written code. Use @class{gtk-separator} with the value
-      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
-      instead.
+      The GtkVSeparator widget has been deprecated since GTK 3.2 and should not
+      be used in newly written code. Use the @class{gtk-separator} widget with
+      the value @code{:vertical} for the @slot[gtk-orientable]{orientation}
+      property instead.
 
-      In the Lisp binding the symbols and functions for GtkVSeparator are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkVSeparator widget
+      are not exported.
     @end{subsection}
     @begin[GtkHScrollbar]{subsection}
       A deprecated horizontal scrollbar.
 
-      GtkHScrollbar has been deprecated since GTK+ 3.2 and should not be
-      used in newly written code. Use @class{gtk-scrollbar} with the value
-      @code{:horizontal} for the @slot[gtk-orientable]{orientation} property
-      instead.
+      The GtkHScrollbar widget has been deprecated since GTK 3.2 and should not
+      be used in newly written code. Use the @class{gtk-scrollbar} widget with
+      the value @code{:horizontal} for the @slot[gtk-orientable]{orientation}
+      property instead.
 
-      In the Lisp binding the symbols and functions for GtkHScrollbar are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkHScrollbar widget
+      are not exported.
     @end{subsection}
     @begin[GtkVScrollbar]{subsection}
       A deprecated vertical scrollbar.
 
-      GtkVScrollbar has been deprecated since GTK+ 3.2 and should not be
-      used in newly written code. Use @class{gtk-scrollbar} with the value
-      @code{:vertical} for the @slot[gtk-orientable]{orientation} property
-      instead.
+      The GtkVScrollbar widget has been deprecated since GTK 3.2 and should not
+      be used in newly written code. Use the @class{gtk-scrollbar} widget with
+      the value @code{:vertical} for the @slot[gtk-orientable]{orientation}
+      property instead.
 
-      In the Lisp binding the symbols and functions for GtkVScrollbar are not
-      exported.
+      In the Lisp binding the symbols and functions for the GtkVScrollbar widget
+      are not exported.
     @end{subsection}
     @begin[GtkFontSelection]{subsection}
       Deprecated widget for selecting fonts.
 
-      GtkFontSelection is deprecated since GTK+ 3.2 and should not be used in
-      newly written code. Use @class{gtk-font-chooser} instead.
+      The GtkFontSelection widget is deprecated since GTK 3.2 and should not be
+      used in newly written code. Use the widgets that implement the
+      @class{gtk-font-chooser} interface instead.
 
-      In the Lisp binding the symbols and functions for GtkFontSelection are
-      not exported.
+      In the Lisp binding the symbols and functions for the GtkFontSelection
+      widget are not exported.
     @end{subsection}
     @begin[GtkFontSelectionDialog]{subsection}
       Deprecated dialog box for selecting fonts.
 
-      GtkFontSelectionDialog is deprecated since GTK+ 3.2 and should not be
-      used in newly written code. Use @class{gtk-font-chooser-dialog} instead.
+      The GtkFontSelectionDialog widget is deprecated since GTK 3.2 and should
+      not be used in newly written code. Use the @class{gtk-font-chooser-dialog}
+      widget instead.
 
-      In the Lisp binding the symbols and functions for GtkFontSelectionDialog
-      are not exported.
+      In the Lisp binding the symbols and functions for the
+      GtkFontSelectionDialog widget are not exported.
     @end{subsection}
 
-    @begin[Deprecated since GTK+ 3.4]{subsection}@end{subsection}
+    @begin[Deprecated since GTK 3.4]{subsection}@end{subsection}
     @begin[GtkHandleBox]{subsection}
-      A depreacted widget for detachable window portions.
+      A deprecated widget for detachable window portions.
 
       @about-class{gtk-handle-box}
       @about-generic{gtk-handle-box-child-detached}
@@ -5371,17 +5375,10 @@ setup_tree (void)
       @about-function{gtk-table-resize}
       @about-function{gtk-table-size}
       @about-function{gtk-table-attach}
-      @about-function{gtk-table-attach-defaults}
       @about-function{gtk-table-set-row-spacing}
       @about-function{gtk-table-set-col-spacing}
-      @about-function{gtk-table-set-row-spacings}
-      @about-function{gtk-table-set-col-spacings}
-      @about-function{gtk-table-set-homogeneous}
-      @about-function{gtk-table-get-default-row-spacing}
-      @about-function{gtk-table-get-homogeneous}
       @about-function{gtk-table-get-row-spacing}
       @about-function{gtk-table-get-col-spacing}
-      @about-function{gtk-table-get-default-col-spacing}
     @end{subsection}
     @begin[GtkTearoffMenuItem]{subsection}
       A deprecated menu item used to tear off and reattach its menu.
@@ -5398,18 +5395,10 @@ setup_tree (void)
       @about-generic{gtk-color-selection-current-rgba}
       @about-generic{gtk-color-selection-has-opacity-control}
       @about-generic{gtk-color-selection-has-palette}
-      @about-function{gtk-color-selection-child-expand}
-      @about-function{gtk-color-selection-child-fill}
-      @about-function{gtk-color-selection-child-padding}
-      @about-function{gtk-color-selection-child-pack-type}
-      @about-function{gtk-color-selection-child-position}
       @about-function{gtk-color-selection-new}
-      @about-function{gtk-color-selection-get-previous-alpha}
-      @about-function{gtk-color-selection-set-previous-alpha}
-      @about-function{gtk-color-selection-get-previous-color}
-      @about-function{gtk-color-selection-set-previous-color}
-      @about-function{gtk-color-selection-get-previous-rgba}
-      @about-function{gtk-color-selection-set-previous-rgba}
+      @about-function{gtk-color-selection-previous-alpha}
+      @about-function{gtk-color-selection-previous-color}
+      @about-function{gtk-color-selection-previous-rgba}
       @about-function{gtk-color-selection-is-adjusting}
       @about-function{gtk-color-selection-palette-from-string}
       @about-function{gtk-color-selection-palette-to-string}
@@ -5439,10 +5428,10 @@ setup_tree (void)
       @about-function{gtk-rgb-to-hsv}
     @end{subsection}
 
-    @begin[Deprecated since GTK+ 3.8]{subsection}@end{subsection}
+    @begin[Deprecated since GTK 3.8]{subsection}@end{subsection}
     @begin[GtkSymbolicColor]{subsection}
       GtkSymbolicColor is deprecated since version 3.8. Symbolic colors are
-      considered an implementation detail of GTK+. In the Lisp binding no
+      considered an implementation detail of GTK. In the Lisp binding no
       symbols or functions of GtkSymbolicColor are implemented.
     @end{subsection}
     @begin[GtkGradient]{subsection}
@@ -5453,7 +5442,7 @@ setup_tree (void)
       no symbols or functions of GtkGradient are implemented.
     @end{subsection}
 
-    @begin[Deprecated since GTK+ 3.10]{subsection}@end{subsection}
+    @begin[Deprecated since GTK 3.10]{subsection}@end{subsection}
     @begin[GtkUIManager]{subsection}
       Constructing menus and toolbars from an XML description.
 
@@ -5464,11 +5453,11 @@ setup_tree (void)
       @about-function{gtk-ui-manager-new}
       @about-function{gtk-ui-manager-insert-action-group}
       @about-function{gtk-ui-manager-remove-action-group}
-      @about-function{gtk-ui-manager-get-action-groups}
-      @about-function{gtk-ui-manager-get-accel-group}
-      @about-function{gtk-ui-manager-get-widget}
-      @about-function{gtk-ui-manager-get-toplevels}
-      @about-function{gtk-ui-manager-get-action}
+      @about-function{gtk-ui-manager-action-groups}
+      @about-function{gtk-ui-manager-accel-group}
+      @about-function{gtk-ui-manager-widget}
+      @about-function{gtk-ui-manager-toplevels}
+      @about-function{gtk-ui-manager-action}
       @about-function{gtk-ui-manager-add-ui-from-resource}
       @about-function{gtk-ui-manager-add-ui-from-string}
       @about-function{gtk-ui-manager-add-ui-from-file}
@@ -5604,14 +5593,14 @@ setup_tree (void)
     @begin[Stock items]{subsection}
       Prebuilt common menu/toolbar items and corresponding icons.
 
-      Since GTK+ 3.10, stock items are deprecated. You should instead set up
+      Since GTK 3.10, stock items are deprecated. You should instead set up
       whatever labels and/or icons you need using normal widget API, rather
-      than relying on GTK+ providing ready-made combinations of these.
+      than relying on GTK providing ready-made combinations of these.
 
       Stock items represent commonly-used menu or toolbar items such as \"Open\"
       or \"Exit\". Each stock item is identified by a stock ID; stock IDs are
       just strings like \"gtk-open\" or \"gtk-exit\". Applications can register
-      their own stock items in addition to those built-in to GTK+.
+      their own stock items in addition to those built-in to GTK.
 
       Each stock ID can be associated with a @code{GtkStockItem}, which contains
       the user-visible label, keyboard accelerator, and translation domain of
@@ -5626,7 +5615,7 @@ setup_tree (void)
       Only the function @fun{gtk-stock-list-ids} is in the Lisp binding
       implemented. For more information see
       @url[https://developer.gnome.org/gtk3/stable/gtk3-Stock-Items.html]{Stock Items}
-      in the GTK+ documentation.
+      in the GTK documentation.
 
       @about-class{gtk-stock-item}
       @about-function{gtk-stock-add}
@@ -5688,7 +5677,7 @@ setup_tree (void)
       @about-function{gtk-icon-source-set-state-wildcarded}
     @end{subsection}
 
-    @begin[Deprecated since GTK+ 3.14]{subsection}@end{subsection}
+    @begin[Deprecated since GTK 3.14]{subsection}@end{subsection}
     @begin[GtkNumerableIcon]{subsection}
       A deprecated @class{g-icon} that allows numbered emblems.
 
@@ -5790,7 +5779,7 @@ setup_tree (void)
       @about-function{gtk-alignment-get-padding}
       @about-function{gtk-alignment-set-padding}
     @end{subsection}
-    @begin[Deprecated since GTK+ 3.16]{subsection}@end{subsection}
+    @begin[Deprecated since GTK 3.16]{subsection}@end{subsection}
     @begin[GtkStyleProperties]{subsection}
       Deprecated store for style property information.
 
