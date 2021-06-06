@@ -1309,24 +1309,22 @@ get_device_settings (GdkDevice *device)
 
 (defcfun ("gdk_device_warp" gdk-device-warp) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-5}
+ "@version{2021-5-27}
   @argument[device]{the @class{gdk-device} object to warp}
   @argument[screen]{the @class{gdk-screen} object to warp @arg{device} to}
   @argument[x]{an integer with the x coordinate of the destination}
   @argument[y]{an integer with the y coordinate of the destination}
   @begin{short}
-    Warps the device in display to the point x,y on the screen, unless the
-    device is confined to a window by a grab, in which case it will be moved
-    as far as allowed by the grab.
+    Warps the device to the point @arg{x},@arg{y} on the screen.
   @end{short}
-  Warping the pointer creates events as if the user had moved the mouse
-  instantaneously to the destination.
+  Unless the device is confined to a window by a grab, in which case it will be
+  moved as far as allowed by the grab. Warping the pointer creates events as if
+  the user had moved the mouse instantaneously to the destination.
 
   Note that the pointer should normally be under the control of the user. This
-  function was added to cover some rare use cases like keyboard navigation
-  support for the color picker in the @class{gtk-color-selection-dialog}.
+  function was added to cover some rare use cases.
   @see-class{gdk-device}
-  @see-class{gtk-color-selection-dialog}"
+  @see-class{gdk-screen}"
   (device (g-object gdk-device))
   (screen (g-object gdk-screen))
   (x :int)

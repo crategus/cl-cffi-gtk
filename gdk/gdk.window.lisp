@@ -776,9 +776,10 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   (:dnd 13))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-window-type-hint atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-window-type-hint atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gdk-window-type-hint atdoc:*external-symbols*)
- "@version{2020-9-6}
+ "@version{2021-5-27}
   @begin{short}
     These are hints for the window manager that indicate what type of function
     the window has.
@@ -810,8 +811,8 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @begin[code]{table}
     @entry[:normal]{Normal toplevel window.}
     @entry[:dialog]{Dialog window.}
-    @entry[:menu]{Window used to implement a menu. GTK+ uses this hint only for
-      torn-off menus, see @class{gtk-tearoff-menu-item}.}
+    @entry[:menu]{Window used to implement a menu. GTK uses this hint only for
+      the deprecated torn-off menus.}
     @entry[:toolbar]{Window used to implement toolbars.}
     @entry[:splashscreen]{Window used to display a splash screen during
       application startup.}
@@ -820,16 +821,15 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
     @entry[:dock]{Used for creating dock or panel windows.}
     @entry[:desktop]{Used for creating the desktop background window.}
     @entry[:dropdown-menu]{A menu that belongs to a menubar.}
-    @entry[:popup-menu]{A menu that does not belong to a menubar,
-      e.g. a context menu.}
+    @entry[:popup-menu]{A menu that does not belong to a menubar, e.g. a context
+      menu.}
     @entry[:tooltip]{A tooltip.}
     @entry[:notification]{A notification - typically a \"bubble\" that belongs
       to a status icon.}
     @entry[:combo]{A popup from a combo box.}
     @entry[:dnd]{A window that is used to implement a DND cursor.}
   @end{table}
-  @see-class{gdk-window}
-  @see-class{gtk-tearoff-menu-item}")
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkWindowAttr
