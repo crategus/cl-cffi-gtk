@@ -1,12 +1,12 @@
-;;;; Status Bar
+;;;; Example Statusbar (2021-5-28)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun example-statusbar ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
-                                  :title "Example Status Bar"
+                                  :title "Example Statusbar"
                                   :default-width 300
                                   :border-width 12))
            (vbox (make-instance 'gtk-box
@@ -14,7 +14,7 @@
                                 :homogeneous nil
                                 :spacing 3))
            (statusbar (make-instance 'gtk-statusbar))
-           (id (gtk-statusbar-context-id statusbar "Example Status Bar"))
+           (id (gtk-statusbar-context-id statusbar "Example Statusbar"))
            (count 0))
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -36,4 +36,3 @@
         (gtk-box-pack-start vbox button :expand t :fill t :padding 3))
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
-

@@ -1,6 +1,6 @@
-;;;; Aspect Frames
+;;;; Example Aspect Frame (2021-5-28)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun example-aspect-frame ()
   (within-main-loop
@@ -8,10 +8,11 @@
                                  :type :toplevel
                                  :title "Example Aspect Frame"
                                  :default-width 300
-                                 :default-height 250
+                                 :default-height 240
                                  :border-width 12))
           (frame (make-instance 'gtk-aspect-frame
                                 :label "Ratio 2 x 1"
+                                :label-yalign 1.0
                                 :xalign 0.5
                                 :yalign 0.5
                                 :ratio 2
@@ -26,4 +27,3 @@
       (gtk-container-add window frame)
       (gtk-container-add frame area)
       (gtk-widget-show-all window))))
-

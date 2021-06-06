@@ -1,6 +1,25 @@
-;;;; Examples for GtkDialog
+;;;; Example Dialog Windows (2021-6-1)
 
 (in-package :gtk-example)
+
+(defun license-text ()
+  (format nil
+          "This program is free software: you can redistribute it and/or ~
+          modify it under the terms of the GNU Lesser General Public ~
+          License for Lisp as published by the Free Software Foundation, ~
+          either version 3 of the License, or (at your option) any later ~
+          version and with a preamble to the GNU Lesser General Public ~
+          License that clarifies the terms for use with Lisp programs and ~
+          is referred as the LLGPL.~%~% ~
+          This program is distributed in the hope that it will be useful, ~
+          but WITHOUT ANY WARRANTY; without even the implied warranty of ~
+          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the ~
+          GNU Lesser General Public License for more details. ~%~% ~
+          You should have received a copy of the GNU Lesser General Public ~
+          License along with this program and the preamble to the Gnu ~
+          Lesser General Public License.  If not, see ~
+          <http://www.gnu.org/licenses/> and ~
+          <http://opensource.franz.com/preamble.html>."))
 
 (defun create-dialog ()
   (let ((dialog (make-instance 'gtk-dialog
@@ -29,20 +48,47 @@
     (gtk-dialog-add-button dialog "gtk-no" :no)
     (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
     (gtk-dialog-set-default-response dialog :cancel)
-    ;; Create a button
-    (let ((button (gtk-button-new-with-label "User Button")))
-      (gtk-container-add (gtk-dialog-action-area dialog) button)
-      (gtk-widget-show button)
-      (g-signal-connect button "clicked"
-                               (lambda (widget)
-                                 (declare (ignore widget))
-                                 (gtk-dialog-response dialog 9))))
     ;; Change the order of the buttons
     (gtk-dialog-set-alternative-button-order dialog
                                              (list :yes :cancel :no))
     ;; Run the dialog and print the message on the console
     (format t "Response was: ~S~%" (gtk-dialog-run dialog))
     ;; Destroy the dialog
+    (gtk-widget-destroy dialog)))
+
+(defun create-message-dialog ()
+  (let ((dialog (make-instance 'gtk-message-dialog
+                               :message-type :info
+                               :buttons :ok
+                               :text "Info Message Dialog"
+                               :secondary-text
+                               (format nil
+                                       "This is a message dialog of type ~
+                                        :info with a secondary text."))))
+    ;; Run the message dialog
+    (gtk-dialog-run dialog)
+    ;; Destroy the message dialog
+    (gtk-widget-destroy dialog)))
+
+(defun create-about-dialog ()
+  (let ((dialog (make-instance 'gtk-about-dialog
+                               :program-name "Example Dialog"
+                               :version "0.00"
+                               :copyright "(c) Dieter Kaiser"
+                               :website
+                               "github.com/crategus/cl-cffi-gtk"
+                               :website-label "Project web site"
+                               :license (license-text)
+                               :authors '("Kalyanov Dmitry"
+                                          "Dieter Kaiser")
+                               :documenters '("Dieter Kaiser")
+                               :artists '("None")
+                               :logo-icon-name
+                               "applications-development"
+                               :wrap-license t)))
+    ;; Run the about dialog
+    (gtk-dialog-run dialog)
+    ;; Destroy the about dialog
     (gtk-widget-destroy dialog)))
 
 (defun example-dialog ()
@@ -68,6 +114,22 @@
              (declare (ignore widget))
              ;; Create and show the dialog
              (create-dialog))))
+      (let ((button (make-instance 'gtk-button
+                                   :label "Open a Message Dialog")))
+        (gtk-box-pack-start vbox button)
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             ;; Create and show the message dialog
+             (create-message-dialog))))
+      (let ((button (make-instance 'gtk-button
+                                   :label "Open an About Dialog")))
+        (gtk-box-pack-start vbox button)
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             ;; Create and show the about dialog
+             (create-about-dialog))))
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-separator
                                          :orientation :horizontal))
@@ -80,63 +142,4 @@
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start vbox button))
       (gtk-widget-show-all window))))
-
-
-(defun example-dialog-new ()
-  (let ((response))
-    (within-main-loop
-      (let ((dialog (gtk-dialog-new)))
-        ;; Signal handler for the dialog to handle the signal "destroy".
-        (g-signal-connect dialog "destroy"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (leave-gtk-main)))
-        ;; Signal handler for the dialog to handle the signal "response".
-        (g-signal-connect dialog "response"
-                          (lambda (dialog response-id)
-                            (setf response response-id)
-                            (gtk-widget-destroy dialog)))
-        ;; Set a title and a size for the window.
-        (setf (gtk-window-title dialog) "Example Dialog New")
-        (setf (gtk-window-default-size dialog) '(300 200))
-        ;; Show the dialog
-        (gtk-widget-show-all dialog)))
-    (join-gtk-main)
-    (format t "Back from message dialog with response-id : ~A~%" response)))
-
-(defun example-dialog-new-with-buttons ()
-  (let ((response))
-    (within-main-loop
-      (let ((dialog (gtk-dialog-new-with-buttons "Example Dialog New with Buttons"
-                                                 nil
-                                                 '(:modal)
-                                                 "gtk-ok" :accept
-                                                 "gtk-cancel" :reject)))
-        ;; Signal handler for the dialog to handle the signal "destroy".
-        (g-signal-connect dialog "destroy"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (leave-gtk-main)))
-        ;; Signal handler for the dialog to handle the signal "response".
-        (g-signal-connect dialog "response"
-                          (lambda (dialog response-id)
-                            (setf response response-id)
-                            (gtk-widget-destroy dialog)))
-        ;; Set a size for the window.
-        (setf (gtk-window-default-size dialog) '(350 200))
-        ;; Show the dialog
-        (gtk-widget-show-all dialog)))
-    (join-gtk-main)
-    (format t "Back from message dialog with response-id : ~A~%" response)))
-
-(defun example-dialog-ui ()
-  (within-main-loop
-    (let ((builder (make-instance 'gtk-builder)))
-      (gtk-builder-add-from-file builder (sys-path "dialog.ui"))
-      (let ((dialog (gtk-builder-object builder "dialog")))
-        (g-signal-connect dialog "destroy"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (leave-gtk-main)))
-      (gtk-widget-show-all dialog)))))
 

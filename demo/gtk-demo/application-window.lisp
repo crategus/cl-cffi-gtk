@@ -266,18 +266,18 @@
       (gtk-ui-manager-insert-action-group ui-info action-group 0)
 
       (gtk-window-add-accel-group window
-        (gtk-ui-manager-get-accel-group ui-info))
+        (gtk-ui-manager-accel-group ui-info))
 
       (let ((ui-id (gtk-ui-manager-add-ui-from-string ui-info *ui-info*)))
         (when (= 0 ui-id)
           (error "building menus failed")))
 
-      (let ((bar (gtk-ui-manager-get-widget ui-info "/MenuBar")))
+      (let ((bar (gtk-ui-manager-widget ui-info "/MenuBar")))
         (gtk-widget-show bar)
         (setf (gtk-widget-halign bar) :fill)
         (gtk-grid-attach table bar 0 0 1 1))
 
-      (let ((bar (gtk-ui-manager-get-widget ui-info "/ToolBar")))
+      (let ((bar (gtk-ui-manager-widget ui-info "/ToolBar")))
         (gtk-widget-show bar)
         (setf (gtk-widget-halign bar) :fill)
         (gtk-grid-attach table bar 0 1 1 1))

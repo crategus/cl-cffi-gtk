@@ -1,10 +1,10 @@
-;;;; A demo for GtkFrame
+;;;; Example Frame Widget (2021-5-28)
 ;;;;
-;;;; This demo allows to change interactively the appearance of the frame.
+;;;; This example allows to change interactively the appearance of the frame.
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
-(defun demo-frame ()
+(defun example-frame-properties ()
   (within-main-loop
     (let* (;; Create a toplevel window.
            (window (make-instance 'gtk-window
@@ -178,4 +178,3 @@
       (gtk-container-add window content)
       ;; Show the window.
       (gtk-widget-show-all window))))
-

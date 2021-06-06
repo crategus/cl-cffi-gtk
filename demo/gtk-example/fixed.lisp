@@ -1,4 +1,4 @@
-;;;; Fixed Container
+;;;; Example Fixed Container (2021-5-28)
 ;;;;
 ;;;; In this example, three buttons are placed in the fixed container with the
 ;;;; function gtk-fixed-put. When pressed, the buttons are moved randomly with
@@ -8,7 +8,7 @@
 ;;;; functions gtk-widget-allocated-width and gtk-widget-allocated-height are
 ;;;; used.
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun move-button (fixed button)
   (let ((width (- (gtk-widget-allocated-width fixed)
@@ -38,5 +38,3 @@
           (gtk-fixed-put fixed button (random 250) (random 180))))
       (gtk-container-add window fixed)
       (gtk-widget-show-all window))))
-
-;;; 2021-2-9

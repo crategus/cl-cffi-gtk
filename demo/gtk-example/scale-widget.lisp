@@ -1,12 +1,12 @@
-;;;; Scale Widgets
+;;;; Example Scale Widget (2021-5-28)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
-(defun example-scale-widgets ()
+(defun example-scale-widget ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
-                                  :title "Example Scale Widgets"))
+                                  :title "Example Scale Widget"))
            (box1 (make-instance 'gtk-box
                                 :orientation :vertical
                                 :homogeneous nil
@@ -159,23 +159,4 @@
                             :expand nil :fill nil)
         (gtk-box-pack-start box scale)
         (gtk-box-pack-start box1 box))
-      ;; Add a separator
-      (gtk-box-pack-start box1
-                          (make-instance 'gtk-separator
-                                         :orientation :horizontal)
-                          :expand nil :fill t)
-      ;; Create the quit button.
-      (let ((box (make-instance 'gtk-box
-                                :orientation :vertical
-                                :homogeneous nil
-                                :spacing 12
-                                :border-width 12))
-            (button (make-instance 'gtk-button :label "Quit")))
-        (g-signal-connect button "clicked"
-                          (lambda (button)
-                            (declare (ignore button))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start box button)
-        (gtk-box-pack-start box1 box :expand nil))
       (gtk-widget-show-all window))))
-

@@ -1,10 +1,10 @@
-;;;; Color Button
+;;;; Example Color Button (2021-6-5)
 ;;;;
 ;;;; The example shows a color button. The button is initialized with the color
 ;;;; "Blue". The handler for the "color-set" signal prints the selected color
 ;;;; on the console.
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun example-color-button ()
   (within-main-loop
@@ -25,5 +25,3 @@
              (format t "Selected color is ~A~%" (gdk-rgba-to-string rgba)))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
-
-;;; 2021-2-3

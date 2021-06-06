@@ -101,7 +101,7 @@
                                               "gchararray" ; CSS Definition
                                               ))))
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Theming in GTK+")))
+                                            "Theming in GTK")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "CSS Basics"
                                 "css-basics.lisp"
@@ -142,8 +142,8 @@
                                 "simple-message.lisp"
                                 "EXAMPLE-SIMPLE-MESSAGE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Dialogs"
-                                "dialogs.lisp"
+                                "Dialog Windows"
+                                "../gtk-example/dialog.lisp"
                                 "EXAMPLE-DIALOG")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Assistant"
@@ -170,7 +170,7 @@
                                 "EXAMPLE-IMAGE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Info Bar"
-                                "info-bar.lisp"
+                                "../gtk-example/info-bar.lisp"
                                 "EXAMPLE-INFO-BAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Progress Bar"
@@ -182,7 +182,7 @@
                                 "EXAMPLE-LEVEL-BAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Statusbar"
-                                "statusbar.lisp"
+                                "../gtk-example/statusbar.lisp"
                                 "EXAMPLE-STATUSBAR")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
@@ -227,9 +227,9 @@
                                 "entry-completion.lisp"
                                 "EXAMPLE-ENTRY-COMPLETION")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Scale Widgets"
-                                "scale-widgets.lisp"
-                                "EXAMPLE-SCALE-WIDGETS")
+                                "Scale Widget"
+                                "../gtk-example/scale-widget.lisp"
+                                "EXAMPLE-SCALE-WIDGET")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Spin Button"
                                 "spin-button.lisp"
@@ -239,46 +239,46 @@
                                              "Multiline Text Editor")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Text View"
-                                "../../tutorial/src/text-view-simple.lisp"
+                                "../gtk-example/text-view-simple.lisp"
                                 "EXAMPLE-TEXT-VIEW-SIMPLE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Attributes"
-                                "../../tutorial/src/text-view-attributes.lisp"
+                                "../gtk-example/text-view-attributes.lisp"
                                 "EXAMPLE-TEXT-VIEW-ATTRIBUTES")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Tags"
-                                "../../tutorial/src/text-view-tags.lisp"
+                                "../gtk-example/text-view-tags.lisp"
                                 "EXAMPLE-TEXT-VIEW-TAGS")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Search"
-                                "../../tutorial/src/text-view-find-next.lisp"
+                                "../gtk-example/text-view-find-next.lisp"
                                 "EXAMPLE-TEXT-VIEW-FIND-NEXT")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Insert"
-                                "../../tutorial/src/text-view-insert.lisp"
+                                "../gtk-example/text-view-insert.lisp"
                                 "EXAMPLE-TEXT-VIEW-INSERT")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Insert Image"
-                                "../../tutorial/src/text-view-insert-image.lisp"
+                                "../gtk-example/text-view-insert-image.lisp"
                                 "EXAMPLE-TEXT-VIEW-INSERT-IMAGE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Insert Widget"
-                                "../../tutorial/src/text-view-insert-widget.lisp"
+                                "../gtk-example/text-view-insert-widget.lisp"
                                 "EXAMPLE-TEXT-VIEW-INSERT-WIDGET")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text View Tooltip"
-                                "../../tutorial/src/text-view-tooltip.lisp"
+                                "../gtk-example/text-view-tooltip.lisp"
                                 "EXAMPLE-TEXT-VIEW-TOOLTIP")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Tree, List and Icon Grid Widgets")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Tree View"
-                                "../../tutorial/src/tree-view-simple.lisp"
+                                "../gtk-example/tree-view-simple.lisp"
                                 "EXAMPLE-TREE-VIEW-SIMPLE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Tree View Path"
-                                "../../tutorial/src/tree-view-path.lisp"
+                                "../gtk-example/tree-view-path.lisp"
                                 "EXAMPLE-TREE-VIEW-PATH")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
@@ -309,11 +309,11 @@
                                             "Selectors (Color/File/Font)")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Button"
-                                "color-button.lisp"
+                                "../gtk-example/color-button.lisp"
                                 "EXAMPLE-COLOR-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Button Label"
-                                "../../tutorial/src/color-button-label.lisp"
+                                "../gtk-example/color-button-label.lisp"
                                 "EXAMPLE-COLOR-BUTTON-LABEL")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Chooser Widget"
@@ -321,7 +321,7 @@
                                 "EXAMPLE-COLOR-CHOOSER-WIDGET")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Chooser Dialog"
-                                "../../tutorial/src/color-chooser-dialog.lisp"
+                                "../gtk-example/color-chooser-dialog.lisp"
                                 "EXAMPLE-COLOR-CHOOSER-DIALOG")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Color Chooser Palette"
@@ -329,7 +329,7 @@
                                 "EXAMPLE-COLOR-CHOOSER-PALETTE")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "File Chooser Button"
-                                "../../tutorial/src/file-chooser-button.lisp"
+                                "../gtk-example/file-chooser-button.lisp"
                                 "EXAMPLE-FILE-CHOOSER-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                  "File Chooser Dialog"
@@ -353,7 +353,7 @@
                                 "EXAMPLE-FONT-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Font Button Label"
-                                "../../tutorial/src/font-button-label.lisp"
+                                "../gtk-example/font-button-label.lisp"
                                 "EXAMPLE-FONT-BUTTON-LABEL")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
@@ -367,13 +367,18 @@
                                 "../gtk-example/box-packing.lisp"
                                 "EXAMPLE-BOX-PACKING")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Table packing"
-                                "table-packing.lisp"
-                                "EXAMPLE-TABLE-PACKING")
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Grid packing"
                                 "../gtk-example/grid-packing.lisp"
                                 "EXAMPLE-GRID-PACKING")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Button Boxes"
+                                "../gtk-example/button-box.lisp"
+                                "EXAMPLE-BUTTON-BOX")
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Paned Window"
+                                "../gtk-example/paned-window.lisp"
+                                "EXAMPLE-PANED-WINDOW")
+
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Revealer"
                                 "../gtk-example/revealer.lisp"
@@ -384,32 +389,24 @@
                                 "EXAMPLE-REVEALER-ICON"
                                 "../gtk-example/revealer-icon.ui")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Button Boxes"
-                                "../gtk-example/button-box.lisp"
-                                "EXAMPLE-BUTTON-BOX")
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Alignment"
                                 "alignment.lisp"
                                 "DEMO-ALIGNMENT")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Fixed Container"
-                                "fixed.lisp"
+                                "../gtk-example/fixed.lisp"
                                 "EXAMPLE-FIXED")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Frame Container"
-                                "frame.lisp"
-                                "DEMO-FRAME")
+                                "Frame Widget"
+                                "../gtk-example/frame.lisp"
+                                "EXAMPLE-FRAME")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Aspect Frame"
-                                "aspect-frame.lisp"
+                                "../gtk-example/aspect-frame.lisp"
                                 "EXAMPLE-ASPECT-FRAME")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Paned Window"
-                                "paned-window.lisp"
-                                "EXAMPLE-PANED-WINDOW")
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Notebook"
-                                "notebook.lisp"
+                                "../gtk-example/notebook.lisp"
                                 "EXAMPLE-NOTEBOOK")
     )
     ;; Scrolling
@@ -611,6 +608,56 @@
                                   "More Labels"
                                   "../gtk-example/label-more.lisp"
                                   "EXAMPLE-LABEL-MORE")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Images"
+                                  "../gtk-example/image.lisp"
+                                  "EXAMPLE-IMAGE")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Info Bar"
+                                  "../gtk-example/info-bar.lisp"
+                                  "EXAMPLE-INFO-BAR")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Progress Bar"
+                                  "../gtk-example/progress-bar.lisp"
+                                  "EXAMPLE-PROGRESS-BAR")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Statusbar"
+                                  "../gtk-example/statusbar.lisp"
+                                  "EXAMPLE-STATUSBAR")
+        )
+      ;; Chapter: Layout Widgets
+      (let ((chapter (gtk-tree-store-set model
+                                         (gtk-tree-store-append model parent)
+                                         "Chapter: Layout Widgets")))
+
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Button Boxes"
+                                  "../gtk-example/button-box.lisp"
+                                  "EXAMPLE-BUTTON-BOX")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Paned Window"
+                                  "../gtk-example/paned-window.lisp"
+                                  "EXAMPLE-PANED-WINDOW")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Layout Widget"
+                                  "../gtk-example/layout.lisp"
+                                  "EXAMPLE-LAYOUT")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Notebook"
+                                  "../gtk-example/notebook.lisp"
+                                  "EXAMPLE-NOTEBOOK")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Frame Widget"
+                                  "../gtk-example/frame.lisp"
+                                  "EXAMPLE-FRAME")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Aspect Frame"
+                                  "../gtk-example/aspect-frame.lisp"
+                                  "EXAMPLE-ASPECT-FRAME")
+        (gtk-tree-store-set model (gtk-tree-store-append model chapter)
+                                  "Fixed Container"
+                                  "../gtk-example/fixed.lisp"
+                                  "EXAMPLE-FIXED")
         ))
     model))
 
@@ -659,7 +706,7 @@
     (let ((window (make-instance 'gtk-application-window
                                  :application application
                                  :type :toplevel
-                                 :title "GTK+ Lisp Code Demos"
+                                 :title "GTK Lisp Code Demos"
                                  :default-width 1000
                                  :default-height 800))
           ;; A horizontal pane
