@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.hsv.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -79,29 +79,40 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hsv 'type)
- "@version{2020-1-22}
+ "@version{2021-5-30}
   @begin{short}
-    @sym{gtk-hsv} is the \"color wheel\" part of a complete color selector
-    widget.
+    The @sym{gtk-hsv} widget is the \"color wheel\" part of a complete color
+    selector widget.
   @end{short}
   It allows to select a color by determining its HSV components in an intuitive
   way. Moving the selection around the outer ring changes the hue, and moving
   the selection point inside the inner triangle changes value and saturation.
   @begin[Warning]{dictionary}
-    @sym{gtk-hsv} has been deprecated since GTK+ 3.4 together with
-    @class{gtk-color-selection}, where it was used.
+    The @sym{gtk-hsv} widget has been deprecated since GTK 3.4 together with
+    the @class{gtk-color-selection} widget, where it was used.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (hsv)    : Run First
+ lambda (hsv)    :run-first
       @end{pre}
-
+      @begin[code]{table}
+        @entry[hsv]{The @sym{gtk-color-selection-dialog} widget which received
+          the signal.}
+      @end{table}
     @subheading{The \"move\" signal}
       @begin{pre}
- lambda (hsv arg)    : Action
+ lambda (hsv direction)    :action
       @end{pre}
-  @end{dictionary}")
+      @begin[code]{table}
+        @entry[hsv]{The @sym{gtk-color-selection-dialog} widget which received
+          the signal.}
+        @entry[direction]{A value of the @symbol{gtk-direction-type}
+          enumeration.}
+      @end{table}
+  @end{dictionary}
+  @see-class{gtk-color-selection}
+  @see-symbol{gtk-direction-type}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_new ()
@@ -111,8 +122,8 @@
 
 (defun gtk-hsv-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-1-22}
-  @return{A newly-created @class{gtk-hsv} color selector.}
+ "@version{2021-5-30}
+  @return{A newly-created @class{gtk-hsv} widget.}
   @begin{short}
     Creates a new HSV color selector.
   @end{short}
@@ -131,11 +142,11 @@
 
 (defcfun ("gtk_hsv_set_color" gtk-hsv-set-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[hsv]{a @class{gtk-hsv} color selector}
-  @argument[h]{hue of type @code{:double}}
-  @argument[s]{saturation of type @code{:double}}
-  @argument[v]{value of type @code{:double}}
+ "@version{2021-5-30}
+  @argument[hsv]{a @class{gtk-hsv} widget}
+  @argument[h]{a double float hue component}
+  @argument[s]{a double float saturation component}
+  @argument[v]{a double float value component}
   @begin{short}
     Sets the current color in an HSV color selector.
   @end{short}
@@ -164,12 +175,12 @@
 
 (defun gtk-hsv-get-color (hsv)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[hsv]{a @class{gtk-hsv} color selector}
+ "@version{2021-5-30}
+  @argument[hsv]{a @class{gtk-hsv} widget}
   @begin{return}
-    @code{h} -- the hue of type @code{:double} @br{}
-    @code{s} -- the saturation of type @code{:double} @br{}
-    @code{v} -- the value of type @code{:double}
+    @code{h} -- a double float hue component @br{}
+    @code{s} -- a double float saturation component @br{}
+    @code{v} -- a double float value component
   @end{return}
   @begin{short}
     Queries the current color in an HSV color selector.
@@ -192,10 +203,10 @@
 
 (defcfun ("gtk_hsv_set_metrics" gtk-hsv-set-metrics) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[hsv]{a @class{gtk-hsv} color selector}
-  @argument[size]{diameter of type @code{:int} for the hue ring}
-  @argument[ring-width]{width of type @code{:int} of the hue ring}
+ "@version{2021-5-30}
+  @argument[hsv]{a @class{gtk-hsv} widget}
+  @argument[size]{an integer with the diameter for the hue ring}
+  @argument[width]{an integer with the width of the hue ring}
   @short{Sets the size and ring width of an HSV color selector.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-hsv-set-metrics} is deprecated since version 3.4 and
@@ -204,7 +215,7 @@
   @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv))
   (size :int)
-  (ring-width :int))
+  (width :int))
 
 (export 'gtk-hsv-set-metrics)
 
@@ -215,15 +226,15 @@
 (defcfun ("gtk_hsv_get_metrics" %gtk-hsv-get-metrics) :void
   (hsv (g-object gtk-hsv))
   (size (:pointer :int))
-  (ring-width (:pointer :int)))
+  (width (:pointer :int)))
 
 (defun gtk-hsv-get-metrics (hsv)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[hsv]{a @class{gtk-hsv} color selector}
+ "@version{2021-5-30}
+  @argument[hsv]{a @class{gtk-hsv} widget}
   @begin{return}
-    @code{size} -- the diameter of type @code{:int} of the hue ring @br{}
-    @code{ring-width} -- the width of type @code{:int} of the hue ring
+    @code{size} -- an integer with the diameter of the hue ring @br{}
+    @code{ring-width} -- an integer with the width of the hue ring
   @end{return}
   @short{Queries the size and ring width of an HSV color selector.}
   @begin[Warning]{dictionary}
@@ -231,9 +242,9 @@
     should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-hsv}"
-  (with-foreign-objects ((size :int) (ring-width :int))
-    (%gtk-hsv-get-metrics hsv size ring-width)
-    (values (mem-ref size :int) (mem-ref ring-width :int))))
+  (with-foreign-objects ((size :int) (width :int))
+    (%gtk-hsv-get-metrics hsv size width)
+    (values (mem-ref size :int) (mem-ref width :int))))
 
 (export 'gtk-hsv-get-metrics)
 
@@ -243,8 +254,8 @@
 
 (defcfun ("gtk_hsv_is_adjusting" gtk-hsv-is-adjusting) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[hsv]{a @class{gtk-hsv} color selector}
+ "@version{2021-5-30}
+  @argument[hsv]{a @class{gtk-hsv} widget}
   @begin{return}
     @em{True} if clients can ignore changes to the color value, since they may
     be transitory, or @em{false} if they should consider the color value status
@@ -280,18 +291,18 @@
 
 (defun gtk-hsv-to-rgb (h s v)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[h]{hue of type @code{:double}}
-  @argument[s]{saturation of type @code{:double}}
-  @argument[v]{value of type @code{:double}}
+ "@version{2021-5-30}
+  @argument[h]{a double float hue component}
+  @argument[s]{a double float saturation component}
+  @argument[v]{a double float value component}
   @begin{return}
-    @code{r} -- the red component of type @code{:double} @br{}
-    @code{g} -- the green component of type @code{:double} @br{}
-    @code{b} -- the blue component of type @code{:double}
+    @code{r} -- a double float red component @br{}
+    @code{g} -- a double float green component @br{}
+    @code{b} -- a double float blue component
   @end{return}
   @begin{short}
     Converts a color from HSV space to RGB. Input values must be in the
-    [0.0, 1.0] range; output values will be in the same range.
+    [0.0, 1.0] range, output values will be in the same range.
   @end{short}
   @see-class{gtk-hsv}
   @see-function{gtk-rgb-to-hsv}"
@@ -315,14 +326,14 @@
 
 (defun gtk-rgb-to-hsv (r g b)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-24}
-  @argument[r]{red of type @code{:double}}
-  @argument[g]{green of type @code{:double}}
-  @argument[b]{blue of type @code{:double}}
+ "@version{2021-5-30}
+  @argument[r]{a double float red component}
+  @argument[g]{a double float green component}
+  @argument[b]{a double float blue component}
   @begin{return}
-    @code{h} -- the hue component of type @code{:double} @br{}
-    @code{s} -- the saturation component of type @code{:double} @br{}
-    @code{v} -- the value component of type @code{:double}
+    @code{h} -- the double float hue component @br{}
+    @code{s} -- the double float saturation component @br{}
+    @code{v} -- the double float value component
   @end{return}
   @begin{short}
     Converts a color from RGB space to HSV. Input values must be in the
