@@ -181,7 +181,7 @@
 (setf (gethash 'gdk-visibility-state atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-visibility-state atdoc:*external-symbols*)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
     Specifies the visiblity status of a window for a
     @class{gdk-event-visibility} event.
@@ -197,7 +197,7 @@
   @begin[code]{table}
     @entry[:unobscured]{The window is completely visible.}
     @entry[:partial]{The window is partially visible.}
-    @entry[:obscured]{The window is not visible at all.}
+    @entry[:fully-obscured]{The window is not visible at all.}
   @end{table}
   @see-class{gdk-event-visibility}")
 
@@ -472,7 +472,7 @@
 (setf (gethash 'gdk-owner-change atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-owner-change atdoc:*external-symbols*)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @short{Specifies why a selection ownership was changed.}
   @begin{pre}
 (define-g-enum \"GdkOwnerChange\" gdk-owner-change
@@ -483,7 +483,7 @@
   (:close 2))
   @end{pre}
   @begin[code]{table}
-    @entry[:owner]{Some other application claimed the ownership.}
+    @entry[:new-owner]{Some other application claimed the ownership.}
     @entry[:destroy]{The window was destroyed.}
     @entry[:close]{The client was closed.}
   @end{table}
@@ -560,7 +560,7 @@
 (setf (gethash 'gdk-event-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-event-type atdoc:*external-symbols*)
- "@version{*2021-4-25}
+ "@version{*2021-6-8}
   @short{Specifies the type of a @struct{gdk-event} instance.}
 
   Do not confuse these events with the signals that GTK widgets emit.
@@ -691,7 +691,7 @@
     @entry[:touchpad-pinch]{A touchpad pinch gesture event, the current state is
       determined by its phase field. Since 3.18}
     @entry[:pad-button-press]{A tablet pad button press event. Since 3.22}
-    @entry{:pad-button-release]{A tablet pad button release event.Since 3.22}
+    @entry[:pad-button-release]{A tablet pad button release event.Since 3.22}
     @entry[:pad-ring]{A tablet pad axis event from a \"ring\". Since 3.22}
     @entry[:pad-strip]{A tablet pad axis event from a \"strip\". Since 3.22}
     @entry[:pad-group-mode]{A tablet pad group mode change. Since 3.22}
@@ -846,7 +846,7 @@
 (setf (gethash 'gdk-event-mask atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gdk-event-mask atdoc:*external-symbols*)
- "@version{*2021-5-13}
+ "@version{*2021-6-8}
   @begin{short}
     A set of bit-flags to indicate which events a window is to receive.
   @end{short}
@@ -900,9 +900,7 @@
   (:scroll-mask              #.(ash 1 21))
   (:touch-mask               #.(ash 1 22))
   (:smooth-scroll-mask       #.(ash 1 23))
-  #+gdk-3-18
   (:touchpad-gesture-maske   #.(ash 1 24))
-  #+gdk-3-22
   (:tabled-pad-mask          #.(ash 1 25))
   (:all-events-mask #x3FFFFFE))
   @end{pre}
@@ -1172,7 +1170,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
     The @sym{gdk-event} structure contains a union of all of the event
     structures, and allows access to the data fields in a number of ways.
@@ -1182,8 +1180,7 @@
   can always be accessed with the following code, no matter what type of event
   it is:
   @begin{pre}
-* (let ((event (make-gdk-event-button :type :button-press)))
-    (gdk-event-type event))
+(let ((event (gdk-event-new :button-press))) (gdk-event-type event))
 => :BUTTON-PRESS
   @end{pre}
   To access other fields of the event structures, the appropriate event
@@ -1191,8 +1188,7 @@
   @code{:button-press} then the x coordinate of the button press can be
   accessed with:
   @begin{pre}
-* (let ((event (make-gdk-event-button :type :button-press :x 10.0)))
-    (gdk-event-button-x event))
+(let ((event (gdk-event-new :button-press :x 10.0))) (gdk-event-button-x event))
 => 10.0
   @end{pre}
   The complete variant structure which contains all event structures is as
@@ -1492,7 +1488,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-key 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @short{Describes a key press or key release event.}
   Possible event types are @code{:key-press} or @code{:key-release}.
   @begin{pre}
@@ -1519,29 +1515,30 @@
       values @code{:key-press}, @code{:key-release}.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
-    @entry[time]{The time of the event in milliseconds.}
+    @entry[time]{An unsigned integer with the time of the event in
+      milliseconds.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
       state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
       buttons.}
     @entry[keyval]{The key that was pressed or released. See the
-      <gdk/gdkkeysyms.h> header file for a complete list of GDK key codes.}
-    @entry[length]{The length of @code{string}.}
+      @file{gdk/gdkkeysyms.h} header file for a complete list of GDK key codes.}
+    @entry[length]{An integer with the length of the @code{string} field.}
     @entry[string]{A string containing an approximation of the text that would
-      result from this keypress. The only correct way to handle text input of
-      text is using input methods, see the @class{gtk-im-context} API, so this
-      field is deprecated and should never be used. The function
+      result from this keypress. The only correct way to handle text input is
+      using input methods, see the @class{gtk-im-context} API, so this field is
+      deprecated and should never be used. The function
       @fun{gdk-unicode-to-keyval} provides a non-deprecated way of getting an
-      approximate translation for a key. The argument @code{string} is encoded
+      approximate translation for a key. The @code{string} field is encoded
       in the encoding of the current locale. Note this for backwards
       compatibility: strings in GTK and GDK are typically in UTF-8 and
       @code{NUL}-terminated. In some cases, the translation of the key code will
       be a single @code{NUL} byte, in which case looking at length is necessary
       to distinguish it from an empty translation.}
-    @entry[hardware-keycode]{The raw code of the key that was pressed or
-      released.}
-    @entry[group]{The keyboard group.}
-    @entry[is-modifier]{A flag that indicates if @code{hardware-keycode} is
-      mapped to a modifier.}
+    @entry[hardware-keycode]{An unsigned integer with the raw code of the key
+      that was pressed or released.}
+    @entry[group]{An unsigned integer with the keyboard group.}
+    @entry[is-modifier]{A flag that indicates if the @code{hardware-keycode}
+      field is mapped to a modifier.}
   @end{table}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
@@ -1586,11 +1583,13 @@
 (setf (gethash 'gdk-event-key-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-state 'function)
- "@version{2021-4-3}
+ "@version{2021-6-8}
   @syntax[]{(gdk-event-key-state instance) => state}
   @syntax[]{(setf (gdk-event-key-state instance) state)}
   @argument[instance]{a @class{gdk-event-key} instance}
-  @argument[state]{a @symbol{gdk-modifier-state} value}
+  @argument[state]{a @symbol{gdk-modifier-type} bit-mask representing the
+      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
+      buttons.}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-key} structure.
   @end{short}
@@ -1624,15 +1623,16 @@
 (setf (gethash 'gdk-event-key-length atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-length 'function)
- "@version{2021-4-3}
+ "@version{2021-6-8}
   @syntax[]{(gdk-event-key-length instance) => length}
   @syntax[]{(setf (gdk-event-key-length instance) length)}
   @argument[instance]{a @class{gdk-event-key} instance}
-  @argument[length]{an integer with the length of the @code{string} slot}
+  @argument[length]{an integer with the length of the @code{string} field}
   @begin{short}
     Accessor of the @code{length} slot of the @class{gdk-event-key} structure.
   @end{short}
-  @see-class{gdk-event-key}")
+  @see-class{gdk-event-key}
+  @see-function{gdk-event-key-string}")
 
 (export 'gdk-event-key-length)
 
@@ -1681,11 +1681,11 @@
 (setf (gethash 'gdk-event-key-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-group 'function)
- "@version{2021-4-3}
+ "@version{2021-6-8}
   @syntax[]{(gdk-event-key-group instance) => group}
   @syntax[]{(setf (gdk-event-key-group instance) group)}
   @argument[instance]{a @class{gdk-event-key} instance}
-  @argument[group]{an unsigned integer with keyboard group}
+  @argument[group]{an unsigned integer with the keyboard group}
   @begin{short}
     Accessor of the @code{group} slot of the @class{gdk-event-key} structure.
   @end{short}
@@ -1699,17 +1699,18 @@
 (setf (gethash 'gdk-event-key-is-modifier atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-is-modifier 'function)
- "@version{2021-4-3}
+ "@version{2021-6-8}
   @syntax[]{(gdk-event-key-is-modifier instance) => is-modifier}
   @syntax[]{(setf (gdk-event-key-is-modifier instance) is-modifier)}
   @argument[instance]{a @class{gdk-event-key} instance}
   @argument[is-modifier]{a flag that indicates if the @code{hardware-keycode}
-    slot is mapped to a modifier}
+    field is mapped to a modifier}
   @begin{short}
     Accessor of the @code{is-modifier} slot of the @class{gdk-event-key}
     structure.
   @end{short}
-  @see-class{gdk-event-key}")
+  @see-class{gdk-event-key}
+  @see-function{gdk-event-key-hardware-keycode}")
 
 (export 'gdk-event-key-is-modifier)
 
@@ -1719,11 +1720,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-button 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @short{Used for button press and button release events.}
   The type field will be one of the values @code{:button-press},
-  @code{:2button-press}, @code{3button-press}, @code{:triple-button-press},
-  or @code{:button-release}.
+  @code{:double-button-press}, @code{triple-button-press}, or
+  @code{:button-release}.
 
   Double and triple-clicks result in a sequence of events being received. For
   double-clicks the order of events will be:
@@ -1731,24 +1732,24 @@
  :button-press
  :button-release
  :button-press
- :2button-press
+ :double-button-press
  :button-release
   @end{pre}
   Note that the first click is received just like a normal button press, while
-  the second click results in a @code{:2button-press} event being received just
-  after the @code{:button-press} event.
+  the second click results in a @code{:double-button-press} event being received
+  just after the @code{:button-press} event.
 
   Triple-clicks are very similar to double-clicks, except that the
-  @code{:3button-press} event is inserted after the third click. The order of
-  the events is:
+  @code{:triple-button-press} event is inserted after the third click. The order
+  of the events is:
   @begin{pre}
  :button-press
  :button-release
  :button-press
- :2button-press
+ :double-button-press
  :button-release
  :button-press
- :3button-press
+ :triple-button-press
  :button-release
   @end{pre}
   For a double click to occur, the second button press must occur within 1/4
@@ -1786,22 +1787,25 @@
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[time]{The time of the event in milliseconds.}
-    @entry[x]{The x coordinate of the pointer relative to the window.}
-    @entry[y]{The y coordinate of the pointer relative to the window.}
-    @entry[axes]{@arg{x}, @arg{y} translated to the axes of @arg{device},
-      or @code{nil} if @arg{device} is the mouse.}
+    @entry[x]{The double float x coordinate of the pointer relative to the
+      window.}
+    @entry[y]{The double float y coordinate of the pointer relative to the
+      window.}
+    @entry[axes]{The @arg{x}, @arg{y} fields translated to the axes of the
+      device.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
       state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
       buttons.}
-    @entry[button]{The button which was pressed or released, numbered from 1 to
-      5. Normally button 1 is the left mouse button, 2 is the middle button,
-      and 3 is the right button. On 2-button mice, the middle button can often
-      be simulated by pressing both mouse buttons together.}
+    @entry[button]{An unsigned integer with the button which was pressed or
+      released, numbered from 1 to 5. Normally button 1 is the left mouse
+      button, 2 is the middle button, and 3 is the right button. On 2-button
+      mice, the middle button can often be simulated by pressing both mouse
+      buttons together.}
     @entry[device]{The @class{gdk-device} object where the event originated.}
-    @entry[x-root]{The x coordinate of the pointer relative to the root of the
-      screen.}
-    @entry[y-root]{The y coordinate of the pointer relative to the root of the
-      screen.}
+    @entry[x-root]{The double float x coordinate of the pointer relative to the
+      root of the screen.}
+    @entry[y-root]{The double float y coordinate of the pointer relative to the
+      root of the screen.}
   @end{table}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
@@ -1847,12 +1851,12 @@
 (setf (gethash 'gdk-event-button-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-x 'function)
- "@version{*2021-5-13}
+ "@version{*2021-6-8}
   @syntax[]{(gdk-event-button-x instance) => x}
   @syntax[]{(setf (gdk-event-button-x instance) x)}
   @argument[instance]{a @class{gdk-event-button} instance}
-  @argument[x]{a double with the x coordinate of the pointer relative to the
-    window}
+  @argument[x]{a double float with the x coordinate of the pointer relative to
+    the window}
   @begin{short}
     Accessor of the @code{x} slot of the @class{gdk-event-button} structure.
   @end{short}
@@ -1866,12 +1870,12 @@
 (setf (gethash 'gdk-event-button-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-y 'function)
- "@version{*2021-5-13}
+ "@version{*2021-6-8}
   @syntax[]{(gdk-event-button-y instance) => y}
   @syntax[]{(setf (gdk-event-button-y instance) y)}
   @argument[instance]{a @class{gdk-event-button} instance}
-  @argument[y]{a double with the y coordinate of the pointer relative to the
-    window}
+  @argument[y]{a double float with the y coordinate of the pointer relative to
+    the window}
   @begin{short}
     Accessor of the @code{y} slot of the @class{gdk-event-button} structure.
   @end{short}
@@ -2012,7 +2016,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-touch 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
     Used for touch events.
   @end{short}
@@ -2054,11 +2058,14 @@
       @code{:touch-cancel}.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
-    @entry[time]{The time of the event in milliseconds.}
-    @entry[x]{The x coordinate of the pointer relative to the window.}
-    @entry[y]{The y coordinate of the pointer relative to the window.}
-    @entry[axes]{@arg{x}, @arg{y} translated to the axes of @arg{device},
-      or @code{nil} if @arg{device} is the mouse.}
+    @entry[time]{An unsigned integer with the time of the event in
+      milliseconds.}
+    @entry[x]{The double float x coordinate of the pointer relative to the
+      window.}
+    @entry[y]{The double float y coordinate of the pointer relative to the
+      window.}
+    @entry[axes]{The @arg{x}, @arg{y} fields translated to the axes of the
+      device.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
       state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
       buttons.}
@@ -2066,12 +2073,11 @@
       event belongs to.}
     @entry[emulating-pointer]{Whether the event should be used for emulating
       pointer event.}
-    @entry[device]{The device of type @class{gdk-device} where the event
-      originated.}
-    @entry[x-root]{The x coordinate of the pointer relative to the root of the
-      screen.}
-    @entry[y-root]{The y coordinate of the pointer relative to the root of the
-      screen.}
+    @entry[device]{The @class{gdk-device} object where the event originated.}
+    @entry[x-root]{The double float x coordinate of the pointer relative to the
+      root of the screen.}
+    @entry[y-root]{The double float y coordinate of the pointer relative to the
+      root of the screen.}
   @end{table}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
@@ -2298,7 +2304,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-scroll 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
     Generated from button presses for the buttons 4 to 7.
   @end{short}
@@ -2332,9 +2338,12 @@
     @entry[type]{The @symbol{gdk-event-type} type of the scroll event.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
-    @entry[time]{The time of the event in milliseconds.}
-    @entry[x]{The x coordinate of the pointer relative to the window.}
-    @entry[y]{The y coordinate of the pointer relative to the window.}
+    @entry[time]{An unsigned integer with the time of the event in
+      milliseconds.}
+    @entry[x]{The double float x coordinate of the pointer relative to the
+      window.}
+    @entry[y]{The double float y coordinate of the pointer relative to the
+      window.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
       state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
       buttons.}
@@ -2342,12 +2351,12 @@
       one of @code{:up}, @code{:down}, @code{:left}, @code{:right} or
       @code{:smooth}.}
     @entry[device]{The @class{gdk-device} object where the event originated.}
-    @entry[x-root]{The x coordinate of the pointer relative to the root
-      of the screen.}
-    @entry[y-root]{The y coordinate of the pointer relative to the root
-      of the screen.}
-    @entry[delta-x]{The x coordinate of the scroll delta.}
-    @entry[delta-y]{The y coordinate of the scroll delta.}
+    @entry[x-root]{The double float x coordinate of the pointer relative to the
+      root of the screen.}
+    @entry[y-root]{The double float y coordinate of the pointer relative to the
+      root of the screen.}
+    @entry[delta-x]{The double float x coordinate of the scroll delta.}
+    @entry[delta-y]{The double float y coordinate of the scroll delta.}
   @end{table}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
@@ -2606,7 +2615,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-motion 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
     Generated when the pointer moves.
   @end{short}
@@ -2633,21 +2642,25 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[type]{The @symbol{gdk-event-type} type of the event.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
-    @entry[time]{The time of the event in milliseconds.}
-    @entry[x]{The x coordinate of the pointer relative to the window.}
-    @entry[y]{The y coordinate of the pointer relative to the window.}
-    @entry[axes]{@arg{x}, @arg{y} translated to the axes of @arg{device},
-      or @code{nil} if @arg{device} is the mouse.}
+    @entry[time]{An unsigned integer with the time of the event in
+      milliseconds.}
+    @entry[x]{The double float x coordinate of the pointer relative to the
+      window.}
+    @entry[y]{The double float y coordinate of the pointer relative to the
+      window.}
+    @entry[axes]{The @arg{x}, @arg{y} fields translated to the axes of the
+      device.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
       state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
       buttons.}
     @entry[is-hint]{Set to 1 if this event is just a hint, see the
-      @code{:pointer-motion-hint-mask} value of @symbol{gdk-event-mask}.}
-    @entry[device]{The device where the event originated.}
-    @entry[x-root]{The x coordinate of the pointer relative to the root
-      of the screen.}
-    @entry[y-root]{The y coordinate of the pointer relative to the root
-      of the screen.}
+      @code{:pointer-motion-hint-mask} value of the @symbol{gdk-event-mask}
+      flags.}
+    @entry[device]{The @class{gdk-device} object where the event originated.}
+    @entry[x-root]{The double float x coordinate of the pointer relative to the
+      root of the screen.}
+    @entry[y-root]{The double float y coordinate of the pointer relative to the
+      root of the screen.}
   @end{table}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
@@ -2769,12 +2782,13 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-is-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-is-hint 'function)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @syntax[]{(gdk-event-motion-is-hint instance) => is-hint}
   @syntax[]{(setf (gdk-event-motion-is-hint instance) is-hint)}
   @argument[instance]{a @class{gdk-event-motion} instance}
-  @argument[is-hint]{Set to 1 if this event is just a hint, see the
-      @code{:pointer-motion-hint-mask} value of @symbol{gdk-event-mask}.}
+  @argument[is-hint]{set to 1 if this event is just a hint, see the
+      @code{:pointer-motion-hint-mask} value of the @symbol{gdk-event-mask}
+      flags}
   @begin{short}
     Accessor of the @code{is-hint} slot of the @class{gdk-event-motion}
     structure.
@@ -2852,7 +2866,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-expose 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
     Generated when all or part of a window becomes visible and needs to be
     redrawn.
@@ -2874,10 +2888,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[type]{The @symbol{gdk-event-type} type of the event.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
-    @entry[area]{Bounding @symbol{gdk-rectangle} box of @arg{region}.}
+    @entry[area]{Bounding @symbol{gdk-rectangle} box of the region.}
     @entry[region]{The region of type @symbol{cairo-region-t} that needs to be
       redrawn.}
-    @entry[count]{The number of contiguous expoxse events following this one.
+    @entry[count]{The number of contiguous expose events following this one.
       The only use for this is \"exposure compression\", i.e. handling all
       contiguous expose events in one go, though GDK performs some exposure
       compression so this is not normally needed.}
@@ -2889,6 +2903,9 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
   @see-slot{gdk-event-expose-region}
   @see-slot{gdk-event-expose-count}
   @see-class{gdk-event}
+  @see-class{gdk-window}
+  @see-class{gdk-rectangle}
+  @see-symbol{cairo-region-t}
   @see-symbol{gdk-event-type}")
 
 (export 'gdk-event-expose)
@@ -2991,7 +3008,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[type]{The @symbol{gdk-event-type} type of the event.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
-    @entry[state]{The new @symbol{gdk-visibility-state} state, posible values
+    @entry[state]{The new @symbol{gdk-visibility-state} state, possible values
       are @code{:fully-obscured}, @code{:partial} or @code{:unobscured}.}
   @end{table}
   @see-slot{gdk-event-type}
@@ -3030,7 +3047,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-crossing 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @short{Generated when the pointer enters or leaves a window.}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
@@ -3057,13 +3074,16 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[subwindow]{The @class{gdk-window} object that was entered or left.}
-    @entry[time]{The time of the event in milliseconds.}
-    @entry[x]{The x coordinate of the pointer relative to the window.}
-    @entry[y]{The y coordinate of the pointer relative to the window.}
-    @entry[x-root]{The x coordinate of the pointer relative to the root
-      of the screen.}
-    @entry[y-root]{The y coordinate of the pointer relative to the root
-      of the screen.}
+    @entry[time]{An unsigned integer with the time of the event in
+      milliseconds.}
+    @entry[x]{The double float x coordinate of the pointer relative to the
+      window.}
+    @entry[y]{The double float y coordinate of the pointer relative to the
+      window.}
+    @entry[x-root]{The double float x coordinate of the pointer relative to the
+      root of the screen.}
+    @entry[y-root]{The double float y coordinate of the pointer relative to the
+      root of the screen.}
     @entry[mode]{The @symbol{gdk-crossing-mode} value.}
     @entry[detail]{The @symbol{gdk-notify-type} kind of crossing that happened.}
     @entry[focus]{@em{True} if @arg{window} is the focus window or an inferior.}
@@ -3294,7 +3314,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-focus 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @short{Describes a change of keyboard focus.}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
@@ -3311,7 +3331,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[type]{The @symbol{gdk-event-type} type of the event.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
-    @entry[in]{@em{True} if the window has gained the keyboard focus, @code{nil}
+    @entry[in]{@em{True} if the window has gained the keyboard focus, @em{false}
       if it has lost the focus.}
   @end{table}
   @see-slot{gdk-event-type}
@@ -3370,10 +3390,12 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[type]{The @symbol{gdk-event-type} type of the event.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
-    @entry[x]{The new x coordinate of the window, relative to its parent.}
-    @entry[y]{The new y coordinate of the window, relative to its parent.}
-    @entry[width]{The new width of the window.}
-    @entry[height]{The new height of the window.}
+    @entry[x]{The new integer x coordinate of the window, relative to its
+      parent.}
+    @entry[y]{The new integer y coordinate of the window, relative to its
+      parent.}
+    @entry[width]{The new integer width of the window.}
+    @entry[height]{The new integer height of the window.}
   @end{table}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
@@ -3808,11 +3830,11 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-dnd-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-dnd-time 'function)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @syntax[]{(gdk-event-dnd-time instance) => time}
   @syntax[]{(setf (gdk-event-dnd-time instance) time)}
   @argument[instance]{a @class{gdk-event-dnd} instance}
-  @argument[context]{an unsigned integer with the time of the event in
+  @argument[time]{an unsigned integer with the time of the event in
     milliseconds}
   @begin{short}
     Accessor of the @code{time} slot of the @class{gdk-event-dnd}
@@ -3866,15 +3888,16 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-proximity 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
-    Proximity events are generated when using GDK's wrapper for the XInput
-    extension.
+    Proximity events are generated when using the wrapper for the XInput
+    extension for GDK.
   @end{short}
   The XInput extension is an add-on for standard X that allows you to use
   nonstandard devices such as graphics tablets. A proximity event indicates
   that the stylus has moved in or out of contact with the tablet, or perhaps
-  that the user's finger has moved in or out of contact with a touch screen.
+  that the finger of the user has moved in or out of contact with a touch
+  screen.
 
   This event type will be used pretty rarely. It only is important for XInput
   aware programs that are drawing their own cursor.
@@ -4276,7 +4299,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event-grab-broken 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
     Generated when a pointer or keyboard grab is broken.
   @end{short}
@@ -4305,8 +4328,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
       pointer grab was broken.}
     @entry[implicit]{@code{True} if the broken grab was implicit.}
     @entry[grab-window]{If this event is caused by another grab in the same
-      application, @arg{grab-window} contains the new grab window. Otherwise
-      @arg{grab-window} is @code{nil}.}
+      application, @arg{grab-window} contains the new @class{gdk-window} grab
+      window. Otherwise @arg{grab-window} is @code{nil}.}
   @end{table}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
@@ -4387,7 +4410,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+(and gdk-3-18 cl-cffi-gtk-documentation)
 (setf (documentation 'gdk-event-touchpad-swipe 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
     Generated during touchpad swipe gestures.
   @end{short}
@@ -4416,17 +4439,21 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
       @code{:touchpad-swipe}.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
-    @entry[phase]{The current phase of the gesture.}
-    @entry[n-fingers]{The number of fingers triggering the swipe.}
-    @entry[time]{The time of the event in milliseconds.}
-    @entry[x]{The x coordinate of the pointer.}
-    @entry[y]{The y coordinate of the pointer.}
-    @entry[dx]{Movement delta in the x axis of the swipe focal point.}
-    @entry[dy]{Movement delta in the y axis of the swipe focal point.}
-    @entry[x-root]{The x coordinate of the pointer, relative to the root of the
-      screen.}
-    @entry[y-root]{The y coordinate of the pointer, relative to the root of the
-      screen.}
+    @entry[phase]{An integer with the current phase of the gesture.}
+    @entry[n-fingers]{An integer with the number of fingers triggering the
+      swipe.}
+    @entry[time]{An unsigned integer with the time of the event in
+      milliseconds.}
+    @entry[x]{The double float x coordinate of the pointer.}
+    @entry[y]{The double float y coordinate of the pointer.}
+    @entry[dx]{A double float with the movement delta in the x axis of the
+      swipe focal point.}
+    @entry[dy]{A double float with the movement delta in the y axis of the
+      swipe focal point.}
+    @entry[x-root]{The double float x coordinate of the pointer, relative to
+      the root of the screen.}
+    @entry[y-root]{The double float y coordinate of the pointer, relative to
+      the root of the screen.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
       state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
       buttons.}
@@ -4654,7 +4681,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+(and gdk-3-18 cl-cffi-gtk-documentation)
 (setf (documentation 'gdk-event-touchpad-pinch 'type)
- "@version{2021-4-25}
+ "@version{2021-6-8}
   @begin{short}
     Generated during touchpad swipe gestures.
   @end{short}
@@ -4688,19 +4715,22 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[phase]{The current phase of the gesture.}
     @entry[n-fingers]{The number of fingers triggering the swipe.}
-    @entry[time]{The time of the event in milliseconds.}
-    @entry[x]{The x coordinate of the pointer.}
-    @entry[y]{The y coordinate of the pointer.}
-    @entry[dx]{Movement delta in the x axis of the swipe focal point.}
-    @entry[dy]{Movement delta in the y axis of the swipe focal point.}
-    @entry[angle-delta]{The angle change in radians, negative angles denote
-      counter-clockwise movements.}
-    @entry[scale]{The current scale, relative to that at the time of the
-      corresponding @code{:touchpad-gesture-phase-begin} event.}
-    @entry[x-root]{The x coordinate of the pointer, relative to the root of the
-      screen.}
-    @entry[y-root]{The y coordinate of the pointer, relative to the root of the
-      screen.}
+    @entry[time]{An unsigned integer with the time of the event in
+      milliseconds.}
+    @entry[x]{The double float x coordinate of the pointer.}
+    @entry[y]{The double float y coordinate of the pointer.}
+    @entry[dx]{A double float movement delta in the x axis of the swipe focal
+      point.}
+    @entry[dy]{A double float movement delta in the y axis of the swipe focal
+      point.}
+    @entry[angle-delta]{A double float with the angle change in radians,
+      negative angles denote counter-clockwise movements.}
+    @entry[scale]{A double float with the current scale, relative to that at
+      the time of the corresponding @code{:touchpad-gesture-phase-begin} event.}
+    @entry[x-root]{The double float x coordinate of the pointer, relative to
+      the root of the screen.}
+    @entry[y-root]{The double float y coordinate of the pointer, relative to
+      the root of the screen.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
       state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
       buttons.}
