@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.arrow.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -83,30 +83,31 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-arrow 'type)
- "@version{2020-1-18}
+ "@version{2021-6-11}
   @begin{short}
-    @sym{gtk-arrow} should be used to draw simple arrows that need to point in
-    one of the four cardinal directions: up, down, left, or right.
+    The @sym{gtk-arrow} widget should be used to draw simple arrows that need
+    to point in one of the four cardinal directions: up, down, left, or right.
   @end{short}
   The style of the arrow can be one of shadow in, shadow out, etched in, or
   etched out. Note that these directions and style types may be ammended in
-  versions of GTK+ to come.
+  versions of GTK to come.
 
-  @sym{gtk-arrow} will fill any space alloted to it, but since it is inherited
-  from @class{gtk-misc}, it can be padded and/or aligned, to fill exactly the
-  space the programmer desires.
+  The @sym{gtk-arrow} widget will fill any space alloted to it, but since it is
+  inherited from the @class{gtk-misc} class, it can be padded and/or aligned,
+  to fill exactly the space the programmer desires.
 
   Arrows are created with a call to the function @fun{gtk-arrow-new}. The
   direction or style of an arrow can be changed after creation by using the
   function @fun{gtk-arrow-set}.
   @begin[Warning]{dictionary}
-    @sym{gtk-arrow} has been deprecated; you can simply use a @class{gtk-image}
-    with a suitable icon name, such as \"pan-down-symbolic\". When replacing
-    @class{gtk-arrow} by an image, pay attention to the fact that
-    @class{gtk-arrow} is doing automatic flipping between @code{:left} and
-    @code{:right}, depending on the text direction. To get the same effect with
-    an image, use the icon names \"pan-start-symbolic\" and
-    \"pan-end-symbolic\", which react to the text direction.
+    The @sym{gtk-arrow} widget has been deprecated. You can simply use a
+    @class{gtk-image} widget with a suitable icon name, such as
+    \"pan-down-symbolic\". When replacing the @sym{gtk-arrow} widget by an
+    image, pay attention to the fact that the @sym{gtk-arrow} widget is doing
+    automatic flipping between @code{:left} and @code{:right}, depending on the
+    text direction. To get the same effect with an image, use the icon names
+    \"pan-start-symbolic\" and \"pan-end-symbolic\", which react to the text
+    direction.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
@@ -121,9 +122,8 @@
   @end{dictionary}
   @see-slot{gtk-arrow-arrow-type}
   @see-slot{gtk-arrow-shadow-type}
-  @see-function{gtk-arrow-new}
-  @see-function{gtk-arrow-set}
-  @see-class{gtk-misc}")
+  @see-class{gtk-misc}
+  @see-class{gtk-image}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -142,11 +142,25 @@
 (setf (gethash 'gtk-arrow-arrow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-arrow-arrow-type 'function)
- "@version{2013-8-16}
-  Accessor of the @slot[gtk-arrow]{arrow-type} slot of the @class{gtk-arrow}
-  class.
+ "@version{2021-6-11}
+  @syntax[]{(gtk-arrow-arrow-type object) => arrow-type}
+  @syntax[]{(setf (gtk-arrow-arrow-type object) arrow-type)}
+  @argument[object]{a @class{gtk-arrow} widget}
+  @argument[arrow-type]{a value of the @symbol{gtk-arrow-type} enumeration}
+  @begin{short}
+    Accessor of the @slot[gtk-arrow]{arrow-type} slot of the @class{gtk-arrow}
+    class.
+  @end{short}
+
+  The direction the arrow should point.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-arrow-arrow-type} has been deprecated since version
+    3.14 and should not be used in newly-written code. Use a @class{gtk-image}
+    widget with a suitable icon.
+  @end{dictionary}
   @see-class{gtk-arrow}
-  @see-function{gtk-arrow-set}")
+  @see-class{gtk-image}
+  @see-symbol{gtk-arrow-type}")
 
 ;;; --- gtk-arrow-shadow-type --------------------------------------------------
 
@@ -161,11 +175,25 @@
 (setf (gethash 'gtk-arrow-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-arrow-shadow-type 'function)
- "@version{2013-8-16}
-  Accessor of the @slot[gtk-arrow]{shadow-type} slot of the @class{gtk-arrow}
-  class.
+ "@version{2021-6-11}
+  @syntax[]{(gtk-arrow-shadow-type object) => shadow-type}
+  @syntax[]{(setf (gtk-arrow-shadow-type object) shadow-type)}
+  @argument[object]{a @class{gtk-arrow} widget}
+  @argument[shadow-type]{a value of the @symbol{gtk-shadow-type} enumeration}
+  @begin{short}
+    Accessor of the @slot[gtk-arrow]{shadow-type} slot of the @class{gtk-arrow}
+    class.
+  @end{short}
+
+  Appearance of the shadow surrounding the arrow.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-arrow-shadow-type} has been deprecated since version
+    3.14 and should not be used in newly-written code. Use a @class{gtk-image}
+    widget with a suitable icon.
+  @end{dictionary}
   @see-class{gtk-arrow}
-  @see-function{gtk-arrow-set}")
+  @see-class{gtk-image}
+  @see-symbol{gtk-shadow-type}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_arrow_new ()
@@ -175,15 +203,15 @@
 
 (defun gtk-arrow-new (arrow-type shadow-type)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-18}
-  @argument[arrow-type]{a valid @symbol{gtk-arrow-type}}
-  @argument[shadow-type]{a valid @symbol{gtk-shadow-type}}
+ "@version{2021-6-11}
+  @argument[arrow-type]{a value of the @symbol{gtk-arrow-type} enumeration}
+  @argument[shadow-type]{a value of the @symbol{gtk-shadow-type} enumeration}
   @return{The new @class{gtk-arrow} widget.}
   @short{Creates a new @class{gtk-arrow} widget.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-arrow-new} has been deprecated since version 3.14 and
-    should not be used in newly-written code. Use a @class{gtk-image} with a
-    suitable icon.
+    should not be used in newly-written code. Use a @class{gtk-image} widget
+    with a suitable icon.
   @end{dictionary}
   @see-class{gtk-arrow}
   @see-class{gtk-image}
@@ -203,15 +231,15 @@
 
 (defun gtk-arrow-set (arrow arrow-type shadow-type)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-18}
-  @argument[arrow]{a widget of type @class{gtk-arrow}}
-  @argument[arrow-type]{a valid @symbol{gtk-arrow-type}}
-  @argument[shadow-type]{a valid @symbol{gtk-shadow-type}}
+ "@version{2021-6-11}
+  @argument[arrow]{a @class{gtk-arrow} widget}
+  @argument[arrow-type]{a value of the @symbol{gtk-arrow-type} enumeration}
+  @argument[shadow-type]{a value of the @symbol{gtk-shadow-type} enumeration}
   @short{Sets the direction and style of the @class{gtk-arrow} widget.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-arrow-set} has been deprecated since version 3.14 and
-    should not be used in newly-written code. Use a @class{gtk-image} with a
-    suitable icon.
+    should not be used in newly-written code. Use a @class{gtk-image} widget
+    with a suitable icon.
   @end{dictionary}
   @see-class{gtk-arrow}
   @see-class{gtk-image}
