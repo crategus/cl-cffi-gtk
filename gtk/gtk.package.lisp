@@ -3726,9 +3726,7 @@ setup_tree (void)
       Displays a calendar and allows the user to select a date.
 
       @about-symbol{gtk-calendar-display-options}
-
       @about-class{gtk-calendar}
-
       @about-generic{gtk-calendar-day}
       @about-generic{gtk-calendar-detail-height-rows}
       @about-generic{gtk-calendar-detail-width-chars}
@@ -3739,7 +3737,6 @@ setup_tree (void)
       @about-generic{gtk-calendar-show-heading}
       @about-generic{gtk-calendar-show-week-numbers}
       @about-generic{gtk-calendar-year}
-
       @about-function{gtk-calendar-new}
       @about-function{gtk-calendar-select-month}
       @about-function{gtk-calendar-select-day}
@@ -3749,6 +3746,7 @@ setup_tree (void)
       @about-function{gtk-calendar-clear-marks}
       @about-function{gtk-calendar-display-options}
       @about-function{gtk-calendar-date}
+      @about-symbol{gtk-calendar-detail-func}
       @about-function{gtk-calendar-set-detail-func}
     @end{subsection}
     @begin[GtkDrawingArea]{subsection}
@@ -5694,6 +5692,8 @@ setup_tree (void)
       Displays an arrow.
 
       @about-class{gtk-arrow}
+      @about-generic{gtk-arrow-arrow-type}
+      @about-generic{gtk-arrow-shadow-type}
       @about-function{gtk-arrow-new}
       @about-function{gtk-arrow-set}
     @end{subsection}
