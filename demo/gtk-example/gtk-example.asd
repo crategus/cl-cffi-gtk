@@ -10,6 +10,7 @@
                (:file "alignment")
                (:file "alignment-new")
                (:file "application-simple")
+               (:file "arrow-button")
                (:file "aspect-frame")                  ; Layout Widgets
                (:file "bloat-pad")
                (:file "box-packing")                   ; Packing Widgets
@@ -17,6 +18,7 @@
                (:file "button-box")                    ; Layout Widgets
                (:file "button-image")                  ; Button Widgets
                (:file "button-more")                   ; Button Widgets
+               (:file "calendar")
                (:file "color-button")
                (:file "color-button-label")            ; Selecting Colors, ...
                (:file "color-chooser-dialog")          ; Selecting Colors, ...
@@ -30,9 +32,15 @@
                (:file "drag-and-drop-simple")
                (:file "drawing-area")
                (:file "drawing-area-input")            ; Getting started
+               (:file "event-box")
                (:file "event-handler")
                (:file "file-chooser-button")           ; Selecting Colors, ...
+               (:file "file-chooser-custom-filter")
+               (:file "file-chooser-dialog")
+               (:file "file-chooser-preview")
+               (:file "file-chooser-widget")
                (:file "fixed")                         ; Layout Widgets
+               (:file "font-button")
                (:file "font-button-label")             ; Selecting Colors, ...
                (:file "frame")                         ; Layout Widgets
                (:file "frame-properties")              ; Layout Widgets
@@ -75,9 +83,12 @@
                (:file "scale-widget")
                (:file "scrolled-window")
                (:file "show-about-dialog")
+               (:file "spin-button")
                (:file "statusbar")                     ; Display Widgets
                (:file "switch")                        ; Button widgets
-               (:file "toggle-buttons")                ; Button Widgets
+               (:file "text-entry")
+               (:file "text-entry-buffer")
+               (:file "text-entry-completion")
                (:file "text-view-attributes")          ; Multiline Text Widget
                (:file "text-view-find-next")           ; Multiline Text Widget
                (:file "text-view-insert")              ; Multiline Text Widget
@@ -87,6 +98,7 @@
                (:file "text-view-simple")              ; Multiline Text Widget
                (:file "text-view-tags")                ; Multiline Text Widget
                (:file "text-view-tooltip")             ; Multiline Text Widget
+               (:file "toggle-buttons")                ; Button Widgets
                (:file "tool-palette")
                (:file "toolbar-by-hand")
                (:file "tree-view-path")                ; Tree and List Widgets

@@ -216,23 +216,23 @@
                                             "Numeric/Text Data Entry")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text Entry"
-                                "text-entry.lisp"
+                                "../gtk-example/text-entry.lisp"
                                 "EXAMPLE-TEXT-ENTRY")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text Entry Buffer"
-                                "entry-buffer.lisp"
-                                "EXAMPLE-ENTRY-BUFFER")
+                                "../gtk-example/text-entry-buffer.lisp"
+                                "EXAMPLE-TEXT-ENTRY-BUFFER")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text Entry Completion"
-                                "entry-completion.lisp"
-                                "EXAMPLE-ENTRY-COMPLETION")
+                                "../gtk-example/text-entry-completion.lisp"
+                                "EXAMPLE-TEXT-ENTRY-COMPLETION")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Scale Widget"
                                 "../gtk-example/scale-widget.lisp"
                                 "EXAMPLE-SCALE-WIDGET")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Spin Button"
-                                "spin-button.lisp"
+                                "../gtk-example/spin-button.lisp"
                                 "EXAMPLE-SPIN-BUTTON")
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
@@ -333,23 +333,23 @@
                                 "EXAMPLE-FILE-CHOOSER-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                  "File Chooser Dialog"
-                                 "file-chooser-dialog.lisp"
+                                 "../gtk-example/file-chooser-dialog.lisp"
                                  "CREATE-FILE-CHOOSER-DIALOG")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                  "File Chooser Preview"
-                                 "file-chooser-preview.lisp"
+                                 "../gtk-example/file-chooser-preview.lisp"
                                  "CREATE-FILE-CHOOSER-PREVIEW")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                  "File Chooser Widget"
-                                 "file-chooser-widget.lisp"
+                                 "../gtk-example/file-chooser-widget.lisp"
                                  "CREATE-FILE-CHOOSER-WIDGET")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                  "File Chooser Custom Filter"
-                                 "file-chooser-custom-filter.lisp"
+                                 "../gtk-example/file-chooser-custom-filter.lisp"
                                  "CREATE-FILE-CHOOSER-CUSTOM-FILTER")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Font Button"
-                                "font-button.lisp"
+                                "../gtk-example/font-button.lisp"
                                 "EXAMPLE-FONT-BUTTON")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Font Button Label"
@@ -485,12 +485,8 @@
                                 "../gtk-example/drawing-area-input.lisp"
                                 "EXAMPLE-DRAWING-AREA-INPUT")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Arrows"
-                                "arrows.lisp"
-                                "EXAMPLE-ARROWS")
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Calendar"
-                                "calendar.lisp"
+                                "../gtk-example/calendar.lisp"
                                 "EXAMPLE-CALENDAR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Cursor"
@@ -498,7 +494,7 @@
                                 "DEMO-CURSOR")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Event Box"
-                                "event-box.lisp"
+                                "../gtk-example/event-box.lisp"
                                 "EXAMPLE-EVENT-BOX")
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Demo Pixbufs"
@@ -659,6 +655,14 @@
                                   "../gtk-example/fixed.lisp"
                                   "EXAMPLE-FIXED")
         ))
+    ;; Deprecated
+    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
+                                            "Decprecated")))
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Arrow Button"
+                                "../gtk-example/arrow-button.lisp"
+                                "EXAMPLE-ARROW-BUTTON")
+    )
     model))
 
 (defun create-view-and-model ()

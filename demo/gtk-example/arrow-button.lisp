@@ -1,6 +1,6 @@
-;;;; Arrows
+;;;; Example Arrow button (2021-6-10)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun create-arrow-button (arrow-type shadow-type)
   (let (;; Create a button
@@ -20,14 +20,14 @@
           (format nil "Arrow of type ~A" (symbol-name arrow-type)))
     button))
 
-(defun example-arrows ()
+(defun example-arrow-button ()
   (within-main-loop
     (let ((;; Create the main window
            window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "Example Arrow Buttons"
-                                 :default-width 275
-                                 :default-height 125
+                                 :title "Example Arrow Button"
+                                 :default-width 280
+                                 :default-height 120
                                  :border-width 12))
           ;; Create a grid for the buttons
           (grid (make-instance 'gtk-grid
@@ -47,4 +47,3 @@
       (gtk-container-add window grid)
       ;; Show the window
       (gtk-widget-show-all window))))
-

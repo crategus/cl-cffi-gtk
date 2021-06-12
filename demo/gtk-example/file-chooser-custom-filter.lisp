@@ -1,6 +1,6 @@
-;;;; File Chooser Custom Filter
+;;;; Example File Chooser Custom Filter (2021-6-6)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun custom-file-filter (filter-info)
   ;; Select files with upcase characters in the display name
@@ -31,5 +31,3 @@
       (format t "Open the file ~A~%"
                 (gtk-file-chooser-filename dialog)))
     (gtk-widget-destroy dialog)))
-
-;;; 2021-2-11

@@ -1,13 +1,14 @@
-;;;; Text Entry
+;;;; Example Text Entry (2021-6-11)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun example-text-entry ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :title "Example Text Entry"
-                                  :default-width 250))
+                                  :default-width 250
+                                  :default-height 120))
            (vbox (make-instance 'gtk-box :orientation :vertical))
            (hbox (make-instance 'gtk-box :orientation :horizontal))
            (entry (make-instance 'gtk-entry
@@ -42,12 +43,5 @@
                    (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (gtk-box-pack-start vbox hbox)
-      (let ((button (gtk-button-new-with-label "Close")))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start vbox button))
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
-

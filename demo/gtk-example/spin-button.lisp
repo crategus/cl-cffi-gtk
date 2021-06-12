@@ -1,6 +1,6 @@
-;;;; Spin Button
+;;;; Example Spin Button (2021-6-11)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun example-spin-button ()
   (within-main-loop
@@ -253,15 +253,5 @@
                             :expand nil)
           (gtk-box-pack-start vbox label)
           (gtk-box-pack-start vbox hbox)))
-
-      (let ((button (make-instance 'gtk-button
-                                   :label "Close")))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start vbox button))
-
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
-

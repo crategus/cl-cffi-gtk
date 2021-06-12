@@ -1,10 +1,10 @@
-;;;; Entry Buffer
+;;;; Example Text Entry Buffer (2021-6-11)
 ;;;;
 ;;;; GtkEntryBuffer provides the text content in a GtkEntry.
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
-(defun example-entry-buffer ()
+(defun example-text-entry-buffer ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
@@ -52,7 +52,7 @@
                                         :margin-top 12
                                         :margin-left 12
                                         :label
-                                        (format nil 
+                                        (format nil
                                                 "Both entries have the same ~%~
                                                  entry buffer object.~%~%~
                                                  Typ in some text in one of ~%~
@@ -60,4 +60,3 @@
                                                  effect.")))
       (gtk-container-add window hbox)
       (gtk-widget-show-all window))))
-

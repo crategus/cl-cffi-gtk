@@ -1,6 +1,6 @@
-;;;; Font Chooser Button
+;;;; Font Chooser Button (2021-6-10)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun font-filter (family face)
   (declare (ignore face))
@@ -41,5 +41,3 @@
                      (gtk-font-chooser-font-size button))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
-
-;;; 2020-1-20

@@ -1,6 +1,6 @@
-;;;; Calendar
+;;;; Calendar Widget (2021-6-10)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun calendar-detail (calendar year month day)
   (declare (ignore calendar year month))

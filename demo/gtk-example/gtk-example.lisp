@@ -7,12 +7,14 @@
            #:do-print-operation
            #:example-alignment
            #:example-alignment-new
+           #:example-arrow-button
            #:example-aspect-frame                      ; Layout Widgets
            #:example-box-packing                       ; Packing Widgets
            #:example-box-simple                        ; Packing Widgets
            #:example-button-box                        ; Layout Widgets
            #:example-button-image                      ; Button Widgets
            #:example-button-more                       ; Button Widgets
+           #:example-calendar
            #:example-color-button
            #:example-color-button-label                ; Selecting Colors, ...
            #:example-color-chooser-dialog              ; Selecting Colors, ...
@@ -29,11 +31,14 @@
            #:example-drag-and-drop-simple
            #:example-drawing-area
            #:example-drawing-area-input                ; Getting started
+           #:example-event-box
            #:example-file-chooser-button               ; Selecting Colors, ...
            #:example-fixed                             ; Layout Widgets
+           #:example-font-button
            #:example-font-button-label                 ; Selecting Colors, ...
            #:example-frame                             ; Layout Widgets
            #:example-frame-properties                  ; Layout Widgets
+           #:example-file-chooser-button
            #:example-file-chooser-custom-filter
            #:example-file-chooser-dialog
            #:example-file-chooser-preview
@@ -83,9 +88,12 @@
            #:example-scrolled-window
            #:example-show-about-dialog
            #:example-simple-list-store
+           #:example-spin-button
            #:example-statusbar                         ; Display Widgets
            #:example-switch                            ; Button Widgets
-           #:example-toggle-buttons                    ; Button Widgets
+           #:example-text-entry
+           #:example-text-entry-buffer
+           #:example-text-entry-completion
            #:example-text-view-attributes              ; Multiline Text Widget
            #:example-text-view-find-next               ; Multiline Text Widget
            #:example-text-view-insert                  ; Multiline Text Widget
@@ -95,6 +103,7 @@
            #:example-text-view-simple                  ; Multiline Text Widget
            #:example-text-view-tags                    ; Multiline Text Widget
            #:example-text-view-tooltip                 ; Multiline Text Widget
+           #:example-toggle-buttons                    ; Button Widgets
            #:example-tool-palette
            #:example-toolbar-by-hand
            #:example-tree-view-path                    ; Tree and List Widgets

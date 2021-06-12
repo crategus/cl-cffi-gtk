@@ -1,6 +1,6 @@
-;;;; File Chooser Preview
+;;;; Example File Chooser Preview (2021-6-6)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun create-file-chooser-preview ()
   (let ((response nil)
@@ -36,5 +36,3 @@
                 (gtk-file-chooser-filename chooser)))
     (gtk-widget-destroy chooser)
     response))
-
-;;; 2021-2-4

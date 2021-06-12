@@ -1,4 +1,4 @@
-;;;; Event Box
+;;;; Example Event Box (2021-6-11)
 ;;;;
 ;;;; Example Event Box demonstrates both uses of a GtkEventBox widget - a label
 ;;;; is created that is clipped to a small box, and set up so that a mouse-click
@@ -17,7 +17,7 @@
 ;;;; This cursor is associated to the GdkWindow with the function
 ;;;; gdk-window-cursor.
 
-(in-package :gtk-demo)
+(in-package :gtk-example)
 
 (defun example-event-box ()
   (within-main-loop
@@ -52,4 +52,3 @@
             (gdk-cursor-new-from-name (gdk-display-default) "pointer"))
       ;; Show the window
       (gtk-widget-show-all window))))
-

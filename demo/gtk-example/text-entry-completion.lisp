@@ -1,9 +1,9 @@
-;;;; Entry Completion
+;;;; Example Text Entry Completion
 ;;;;
 ;;;; GtkEntryCompletion provides a mechanism for adding support for completion
 ;;;; in GtkEntry.
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun create-completion-model ()
   (let ((store (make-instance 'gtk-list-store
@@ -16,7 +16,7 @@
 ;; TODO: There is a problem with a popup-completion
 ;; The popup does not get the correct height to show the completions.
 
-(defun example-entry-completion ()
+(defun example-text-entry-completion ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
@@ -55,9 +55,8 @@
                                         :margin-top 12
                                         :margin-left 12
                                         :label
-                                        (format nil 
+                                        (format nil
                                                 "Try writing <b>total</b> or ~%~
                                                  <b>Gnome</b> for example.~%~%")))
       (gtk-container-add window hbox)
       (gtk-widget-show-all window))))
-

@@ -1,6 +1,6 @@
-;;;; File Chooser Dialog
+;;;; Example File Chooser Dialog (2021-6-6)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun create-file-chooser-dialog ()
   (let ((dialog (gtk-file-chooser-dialog-new "Example File Chooser Dialog"
@@ -12,5 +12,3 @@
       (format t "Save to file ~A~%"
                 (gtk-file-chooser-filename dialog)))
     (gtk-widget-destroy dialog)))
-
-;;; 2021-2-11
