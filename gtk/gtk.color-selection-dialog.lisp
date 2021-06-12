@@ -89,7 +89,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-selection-dialog 'type)
- "@version{2021-5-27}
+ "@version{2021-6-13}
   @begin{short}
     The @sym{gtk-color-selection-dialog} widget provides a standard dialog
     which allows the user to select a color much like the
@@ -100,7 +100,7 @@
   Use the function @fun{gtk-color-selection-dialog-color-selection} to get the
   @class{gtk-color-selection} widget contained within the dialog. Use this
   widget and its function @fun{gtk-color-selection-current-color} to gain
-  access to the selected color. Connect a handler for th \"color-changed\"
+  access to the selected color. Connect a handler for the \"color-changed\"
   signal of the widget to be notified when the color changes.
   @begin[GtkColorSelectionDialog as GtkBuildable]{dictionary}
     The @sym{gtk-color-selection-dialog} implementation of the
@@ -162,19 +162,20 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-dialog-color-selection 'function)
- "@version{2021-5-30}
+ "@version{2021-6-13}
   @begin{short}
     Accessor of the @slot[gtk-color-selection-dialog]{color-selection} slot of
     the @class{gtk-color-selection-dialog} class.
   @end{short}
 
-  The @sym{gtk-color-selection-dialog-color-selection} slot access function
+  The slot access function @sym{gtk-color-selection-dialog-color-selection}
   retrieves the @class{gtk-color-selection} widget embedded in the dialog.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-dialog-color-selection} is deprecated
     and should not be used in newly-written code.
   @end{dictionary}
-  @see-class{gtk-color-selection-dialog}")
+  @see-class{gtk-color-selection-dialog}
+  @see-class{gtk-color-selection}")
 
 ;;; --- gtk-color-selection-dialog-help-button ---------------------------------
 

@@ -230,11 +230,11 @@
 
 (defun gtk-hsv-get-metrics (hsv)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-30}
+ "@version{2021-6-13}
   @argument[hsv]{a @class{gtk-hsv} widget}
   @begin{return}
     @code{size} -- an integer with the diameter of the hue ring @br{}
-    @code{ring-width} -- an integer with the width of the hue ring
+    @code{width} -- an integer with the width of the hue ring
   @end{return}
   @short{Queries the size and ring width of an HSV color selector.}
   @begin[Warning]{dictionary}

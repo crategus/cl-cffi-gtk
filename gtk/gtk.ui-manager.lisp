@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -544,9 +544,9 @@
 
 (defun gtk-ui-manager-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-5-30}
+ "@version{2021-6-13}
   @return{A new @class{gtk-ui-manager} object.}
-  @short{Creates a new ui manager object.}
+  @short{Creates a new UI manager object.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-ui-manager-new} has been deprecated since version
     3.10 and should not be used in newly-written code.
@@ -620,16 +620,16 @@
 (defcfun ("gtk_ui_manager_get_action_groups" gtk-ui-manager-action-groups)
     (g-list g-object :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-30}
+ "@version{2021-6-13}
   @argument[manager]{a @class{gtk-ui-manager} object}
-  @return{A list of @class{gtk-action} objects.}
+  @return{A list of @class{gtk-action-group} objects.}
   @short{Returns the list of action groups associated with the UI manager.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-ui-manager-action-groups} has been deprecated since
     version 3.10 and should not be used in newly-written code.
   @end{dictionary}
   @see-class{gtk-ui-manager}
-  @see-class{gtk-action}"
+  @see-class{gtk-action-group}"
   (manager (g-object gtk-ui-manager)))
 
 (export 'gtk-ui-manager-action-groups)
