@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.menu-button.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -93,9 +93,10 @@
   (:none 4))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-arrow-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-arrow-type atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-arrow-type atdoc:*external-symbols*)
- "@version{2020-5-12}
+ "@version{2021-6-11}
   @begin{short}
     Used to indicate the direction in which an arrow should point in a
     @class{gtk-menu-button} widget.
