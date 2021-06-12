@@ -59,13 +59,33 @@
                  url='&api;gdk_class_gdk-color.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gdk-color</code></ulink>">
 
-<!ENTITY gdk-cursor                          "&api;gdk_class_gdk-cursor.html">
-<!ENTITY gdk-cursor-new                      "&api;gdk_fun_gdk-cursor-new.html">
-<!ENTITY gdk-cursor-new-from-name            "&api;gdk_fun_gdk-cursor-new-from-name.html">
+<!-- ... GDK-CUROSOR ..................................................................................... -->
 
-<!ENTITY gdk-cursor-type                     "&api;gdk_sym_gdk-cursor-type.html">
+<!ENTITY gdk-cursor
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_class_gdk-cursor.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-cursor</code></ulink>">
+<!ENTITY gdk-cursor-type
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_sym_gdk-cursor-type.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-cursor-type</code></ulink>">
+<!ENTITY gdk-cursor-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_fun_gdk-cursor-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-cursor-new</code></ulink>">
+<!ENTITY gdk-cursor-new-from-name
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_fun_gdk-cursor-new-from-name.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-cursor-new-from-name</code></ulink>">
 
-<!ENTITY gdk-display                         "&api;gdk_class_gdk-display.html">
+<!-- ... GDK-DISPLAY ..................................................................................... -->
+
+<!ENTITY gdk-display
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_class_gdk-display.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-display</code></ulink>">
+
+<!-- ... GDK-EVENTS ...................................................................................... -->
 
 <!ENTITY gdk-event-propagate
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -124,13 +144,16 @@
                  url='&api;gdk_fun_gdk-rgba-to-string.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gdk-rgba-to-string</code></ulink>">
 
+<!-- ... GDK-WINDOW ...................................................................................... -->
+
 <!ENTITY gdk-window
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gdk_class_gdk-window.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gdk-window</code></ulink>">
-
-<!ENTITY gdk-window-cursor                   "&api;gdk_fun_gdk-window-cursor.html">
-
+<!ENTITY gdk-window-cursor
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gdk_fun_gdk-window-cursor.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gdk-window-cursor</code></ulink>">
 <!ENTITY gdk-window-origin
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gdk_fun_gdk-window-origin.html'>
@@ -243,11 +266,24 @@
 <!ENTITY gtk-application-window              "&api;gtk_class_gtk-application-window.html">
 <!ENTITY show-menubar                        "&api;gtk_class_gtk-application-window.html#gtk_slot_gtk-application-window-show-menubar">
 
-<!ENTITY gtk-arrow                           "&api;gtk_class_gtk-arrow.html">
-<!ENTITY gtk-arrow-new                       "&api;gtk_fun_gtk-arrow-new.html">
-<!ENTITY gtk-arrow-set                       "&api;gtk_fun_gtk-arrow-set.html">
+<!-- ... GTK-ARROW ....................................................................................... -->
 
-<!ENTITY gtk-arrow-type                      "&api;gtk_sym_gtk-arrow-type.html">
+<!ENTITY gtk-arrow
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-arrow.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-arrow</code></ulink>">
+<!ENTITY gtk-arrow-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-arrow-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-arrow-new</code></ulink>">
+<!ENTITY gtk-arrow-set
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-arrow-set.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-arrow-set</code></ulink>">
+<!ENTITY gtk-arrow-type
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_sym_gtk-arrow-type.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-arrow-type</code></ulink>">
 
 <!-- ... GTK-ASPECT-FRAME ................................................................................ -->
 
@@ -434,16 +470,46 @@
 
 <!-- ... GTK-CALENDAR .................................................................................... -->
 
-<!ENTITY gtk-calendar                        "&api;gtk_class_gtk-calendar.html">
-<!ENTITY gtk-calendar-clear-marks            "&api;gtk_fun_gtk-calendar-clear-marks.html">
-<!ENTITY gtk-calendar-date                   "&api;gtk_fun_gtk-calendar-date.html">
-<!ENTITY gtk-calendar-display-options        "&api;gtk_fun_gtk-calendar-display-options.html">
-<!ENTITY gtk-calendar-mark-day               "&api;gtk_fun_gtk-calendar-mark-day.html">
-<!ENTITY gtk-calendar-new                    "&api;gtk_fun_gtk-calendar-new.html">
-<!ENTITY gtk-calendar-select-day             "&api;gtk_fun_gtk-calendar-select-day.html">
-<!ENTITY gtk-calendar-select-month           "&api;gtk_fun_gtk-calendar-select-month.html">
-<!ENTITY gtk-calendar-set-detail-func        "&api;gtk_fun_gtk-calendar-set-detail-func.html">
-<!ENTITY gtk-calendar-unmark-day             "&api;gtk_fun_gtk-calendar-unmark-day.html">
+<!ENTITY gtk-calendar
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-calendar.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar</code></ulink>">
+<!ENTITY gtk-calendar-clear-marks
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-calendar-clear-marks.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar-clear-marks</code></ulink>">
+<!ENTITY gtk-calendar-date
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-calendar-date.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar-date</code></ulink>">
+<!ENTITY gtk-calendar-display-options
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-calendar-display-options.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar-date</code></ulink>">
+<!ENTITY gtk-calendar-mark-day
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-calendar-mark-day.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar-mark-day</code></ulink>">
+<!ENTITY gtk-calendar-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-calendar-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar-new</code></ulink>">
+<!ENTITY gtk-calendar-select-day
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-calendar-select-day.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar-select-day</code></ulink>">
+<!ENTITY gtk-calendar-select-month
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-calendar-select-month.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar-select-month</code></ulink>">
+<!ENTITY gtk-calendar-set-detail-func
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-calendar-set-detail-func.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar-set-detail-func</code></ulink>">
+<!ENTITY gtk-calendar-unmark-day
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-calendar-unmark-day.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-calendar-unmark-day</code></ulink>">
 
 <!-- ... GTK-CELL-EDITABLE ............................................................................... -->
 
@@ -659,10 +725,14 @@
                  url='&api;gtk_fun_gtk-check-button-new-with-mnemonic.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-check-button-new-with-mnemonic</code></ulink>">
 
+<!-- ... GTK-CHECK-MENU-ITEM ............................................................................. -->
+
 <!ENTITY gtk-check-menu-item
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-check-menu-item.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-check-menu-item</code></ulink>">
+
+<!-- ... GTK-CSS-PROVIDER ................................................................................ -->
 
 <!ENTITY gtk-css-provider-load-from-data
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -709,22 +779,39 @@
 
 <!-- ... GTK-EDITABLE .................................................................................... -->
 
-<!ENTITY gtk-editable                        "&api;gtk_class_gtk-editable.html">
-<!ENTITY gtk-editable-editable               "&api;gtk_fun_gtk-editable-editable.html">
-<!ENTITY gtk-editable-select-region          "&api;gtk_fun_gtk-editable-select-region.html">
+<!ENTITY gtk-editable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_class_gtk-editable.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-editable</code></ulink>">
+<!ENTITY gtk-editable-editable
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-editable-editable.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-editable-editable</code></ulink>">
+<!ENTITY gtk-editable-select-region
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-editable-select-region.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-editable-select-region</code></ulink>">
 
-<!-- ... gtk-entry ....................................................................................... -->
+<!-- ... GTK-ENTRY ....................................................................................... -->
 
 <!ENTITY gtk-entry
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-entry.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-entry</code></ulink>">
+<!ENTITY gtk-entry-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-entry-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-entry-new</code></ulink>">
+<!ENTITY gtk-entry-text
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-entry-text.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-entry-text</code></ulink>">
+<!ENTITY gtk-entry-visibility
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-entry-visibility.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-entry-visibility</code></ulink>">
 
-<!ENTITY gtk-entry-new                       "&api;gtk_fun_gtk-entry-new.html">
-<!ENTITY gtk-entry-text                      "&api;gtk_fun_gtk-entry-text.html">
-<!ENTITY gtk-entry-visibility                "&api;gtk_fun_gtk-entry-visibility.html">
-
-<!--     gtk-entry-completion     -->
+<!-- ... GTK-ENTRY-COMPLETION ............................................................................ -->
 
 <!ENTITY gtk-entry-completion
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -737,8 +824,10 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-event-box.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-event-box</code></ulink>">
-
-<!ENTITY gtk-event-box-new                   "&api;gtk_fun_gtk-event-box-new.html">
+<!ENTITY gtk-event-box-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-event-box-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-event-box-new</code></ulink>">
 
 <!-- ... GTK-FILE-CHOOSER ................................................................................ -->
 
@@ -787,10 +876,14 @@
                  url='&api;gtk_class_gtk-file-chooser-widget.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-file-chooser-widget</code></ulink>">
 
+<!-- ... GTK-FONT-BUTTON ................................................................................. -->
+
 <!ENTITY gtk-font-button
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-font-button.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-font-button</code></ulink>">
+
+<!-- ... GTK-FONT-CHOOSER ................................................................................ -->
 
 <!ENTITY gtk-font-chooser
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -809,6 +902,8 @@
                  url='&api;gtk_fun_gtk-font-chooser-preview-text.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-font-chooser-preview-text</code></ulink>">
 
+<!-- ... GTK-FONT-CHOOSER-DIALOG ......................................................................... -->
+
 <!ENTITY gtk-font-chooser-dialog
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-font-chooser-dialog.html'>
@@ -817,6 +912,8 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-font-chooser-widget.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-font-chooser-widget</code></ulink>">
+
+<!-- ... GTK-FIXED ....................................................................................... -->
 
 <!ENTITY gtk-fixed
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -1743,25 +1840,60 @@
                  url='&api;gtk_fun_gtk-show-uri.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-show-uri</code></ulink>">
 
-<!--     gtk-spin-button     -->
+<!-- ... GTK-SPIN-BUTTON ................................................................................. -->
 
 <!ENTITY gtk-spin-button
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-spin-button.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button</code></ulink>">
-
-<!ENTITY gtk-spin-button-adjustment          "&api;gtk_fun_gtk-spin-button-adjustment.html">
-<!ENTITY gtk-spin-button-configure           "&api;gtk_fun_gtk-spin-button-configure.html">
-<!ENTITY gtk-spin-button-digits              "&api;gtk_fun_gtk-spin-button-digits.html">
-<!ENTITY gtk-spin-button-new                 "&api;gtk_fun_gtk-spin-button-new.html">
-<!ENTITY gtk-spin-button-numeric             "&api;gtk_fun_gtk-spin-button-numeric.html">
-<!ENTITY gtk-spin-button-snap-to-ticks       "&api;gtk_fun_gtk-spin-button-snap-to-ticks.html">
-<!ENTITY gtk-spin-button-spin                "&api;gtk_fun_gtk-spin-button-spin.html">
-<!ENTITY gtk-spin-button-update              "&api;gtk_fun_gtk-spin-button-update.html">
-<!ENTITY gtk-spin-button-update-policy       "&api;gtk_fun_gtk-spin-button-update-policy.html">
-<!ENTITY gtk-spin-button-value               "&api;gtk_fun_gtk-spin-button-value.html">
-<!ENTITY gtk-spin-button-value-as-int        "&api;gtk_fun_gtk-spin-button-value-as-int.html">
-<!ENTITY gtk-spin-button-wrap                "&api;gtk_fun_gtk-spin-button-wrap.html">
+<!ENTITY gtk-spin-button-adjustment
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-adjustment.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-adjustment</code></ulink>">
+<!ENTITY gtk-spin-button-configure
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-configure.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-configure</code></ulink>">
+<!ENTITY gtk-spin-button-digits
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-digits.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-digits</code></ulink>">
+<!ENTITY gtk-spin-button-new
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-new.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-new</code></ulink>">
+<!ENTITY gtk-spin-button-numeric
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-numeric.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-numeric</code></ulink>">
+<!ENTITY gtk-spin-button-snap-to-ticks
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-snap-to-ticks.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-snap-to-ticks</code></ulink>">
+<!ENTITY gtk-spin-button-spin
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-spin.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-spin</code></ulink>">
+<!ENTITY gtk-spin-button-update
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-update.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-update</code></ulink>">
+<!ENTITY gtk-spin-button-update-policy
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-update-policy.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-update-policy</code></ulink>">
+<!ENTITY gtk-spin-button-value
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-value.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-value</code></ulink>">
+<!ENTITY gtk-spin-button-value-as-int
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-value-as-int.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-value-as-int</code></ulink>">
+<!ENTITY gtk-spin-button-wrap
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-spin-button-wrap.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-spin-button-wrap</code></ulink>">
 
 <!-- ... GTK-STATUSBAR ................................................................................... -->
 
@@ -1789,7 +1921,6 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-statusbar-remove.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-statusbar-remove</code></ulink>">
-
 
 <!-- ... GTK-STYLE-CONTEXT ............................................................................... -->
 
@@ -2154,7 +2285,7 @@
                  url='&api;gtk_sym_gtk-text-window-type.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-window-type</code></ulink>">
 
-<!--     gtk-text-tag     -->
+<!-- ... GTK-TEXT-TAG .................................................................................... -->
 
 <!ENTITY gtk-text-tag
          "<ulink xmlns='http://docbook.org/ns/docbook'
@@ -2165,6 +2296,8 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-text-tag-table.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-tag-table</code></ulink>">
+
+<!-- ... GTK-TOGGLE-ACTION ............................................................................... -->
 
 <!ENTITY gtk-toggle-action                   "&api;gtk_class_gtk-toggle-action.html">
 
@@ -2634,7 +2767,6 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-hexpand'>
           <code xmlns='http://docbook.org/ns/docbook'>hexpand</code></ulink>">
-
 <!ENTITY gtk_widget_margin
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin'>
@@ -2655,7 +2787,6 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-margin-top'>
           <code xmlns='http://docbook.org/ns/docbook'>margin-top</code></ulink>">
-
 <!ENTITY gtk_widget_valign
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_class_gtk-widget.html#gtk_slot_gtk-widget-valign'>
@@ -2677,24 +2808,22 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-widget-destroy.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-destroy</code></ulink>">
-
-<!ENTITY gtk-widget-events                   "&api;gtk_fun_gtk-widget-events.html">
-
+<!ENTITY gtk-widget-events
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-widget-events.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-events</code></ulink>">
 <!ENTITY gtk-widget-height-request
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-widget-height-request.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-height-request</code></ulink>">
-
-<!ENTITY gtk-widget-allocation               "&api;gtk_fun_gtk-widget-allocation.html">
-<!ENTITY gtk-widget-override-font            "&api;gtk_fun_gtk-widget-override-font.html">
-
 <!ENTITY gtk-widget-queue-draw
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-widget-queue-draw.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-queue-draw</code></ulink>">
-
-<!ENTITY gtk-widget-realize                  "&api;gtk_fun_gtk-widget-realize.html">
-
+<!ENTITY gtk-widget-realize
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-widget-realize.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-realize</code></ulink>">
 <!ENTITY gtk-widget-show
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-widget-show.html'>
@@ -2703,16 +2832,18 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-widget-show-all.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-show-all</code></ulink>">
-
-<!ENTITY gtk-widget-size-request             "&api;gtk_fun_gtk-widget-size-request.html">
-<!ENTITY gtk-widget-tooltip-text             "&api;gtk_fun_gtk-widget-tooltip-text.html">
-
+<!ENTITY gtk-widget-tooltip-text
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-widget-tooltip-text.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-tooltip-text</code></ulink>">
 <!ENTITY gtk-widget-width-request
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-widget-width-request.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-width-request</code></ulink>">
-
-<!ENTITY gtk-widget-window                   "&api;gtk_fun_gtk-widget-window.html">
+<!ENTITY gtk-widget-window
+         "<ulink xmlns='http://docbook.org/ns/docbook'
+                 url='&api;gtk_fun_gtk-widget-window.html'>
+          <code xmlns='http://docbook.org/ns/docbook'>gtk-widget-window</code></ulink>">
 
 <!-- ... GTK-WINDOW ...................................................................................... -->
 

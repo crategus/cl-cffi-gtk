@@ -6529,8 +6529,14 @@ lambda (buffer location text len)
    </section>
   </section>
 
-  <section id="Selecting_Fonts" revision="2021-2-11">
+  <section id="Selecting_Fonts" revision="2021-6-10">
    <title>Selecting Fonts</title>
+   <para>
+    The &gtk-font-chooser-widget; widget lists the available fonts, styles and sizes, allowing the user to
+    select a font. It is used in the &gtk-font-chooser-dialog; widget to provide a dialog box for selecting
+    fonts. It implements the &gtk-font-chooser; interface.
+   </para>
+
    <figure id="figure-font-chooser-dialog">
     <title>Font Chooser Dialog</title>
     <mediaobject>
@@ -6539,16 +6545,13 @@ lambda (buffer location text len)
      </imageobject>
     </mediaobject>
    </figure>
+
    <para>
-    The &gtk-font-chooser-widget; widget lists the available fonts, styles and sizes, allowing the user to
-    select a font. It is used in the &gtk-font-chooser-dialog; widget to provide a dialog box for selecting
-    fonts. It implements the &gtk-font-chooser; interface.
-   </para>
-   <para>
-    To set or get the font which is initially selected, use the slot access functions &gtk-font-chooser-font;
-    or &gtk-font-chooser-font-desc;. To change the text which is shown in the preview area, use the function
+    To set or get the font which is initially selected, use the functions &gtk-font-chooser-font; or
+    &gtk-font-chooser-font-desc;. To change the text which is shown in the preview area, use the function
     &gtk-font-chooser-preview-text;.
    </para>
+
    <figure id="figure-font-button">
     <title>Font Button</title>
     <mediaobject>
@@ -6557,13 +6560,15 @@ lambda (buffer location text len)
      </imageobject>
     </mediaobject>
    </figure>
+
    <para>
-    The &gtk-font-button; is a button which displays the currently selected font and allows to open a font
-    chooser dialog to change the font. It is a suitable widget for selecting a font in a preference dialog.
-    The example <link linkend="example-font-button">Font Button</link> shows how to retrieve the Pango font
-    description from the font chooser dialog with the function &gtk-font-chooser-font-desc; and to use it to
-    change the font of a label with CSS.
+    The &gtk-font-button; widget is a button which displays the currently selected font and allows to open a
+    font chooser dialog to change the font. It is a suitable widget for selecting a font in a preference
+    dialog. <xref linkend="example-font-button"/> shows how to retrieve the Pango font description from the
+    font chooser dialog with the function &gtk-font-chooser-font-desc; and to use it to change the font of a
+    label with CSS.
    </para>
+
    <example id="example-font-button">
     <title>Font Button with a filter to select fonts</title>
      <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
@@ -7070,231 +7075,74 @@ lambda (buffer location text len)
  <chapter id="Miscellaneous Widgets">
   <title>Miscellaneous Widgets</title>
 
-  <section id="Arrows">
-   <title>Arrows</title>
-   <figure id="figure-arrows">
-    <title>Arrows</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/arrow-buttons.gif" format="gif"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <para>
-    The arrow widget draws an arrowhead, facing in a number of possible directions and having a number of
-    possible styles.  It can be very useful when placed on a button.  Like the label widget, the arrow
-    widget emits no signals. There are only two functions for manipulating an arrow widget
-    <ulink url="&gtk-arrow-new;"><code>gtk-arrow-new</code></ulink> and <ulink url="&gtk-arrow-set;">
-    <code>gtk-arrow-set</code></ulink>.  The first function creates a new arrow widget with the indicated
-    type and appearance.  The second function allows these values to be altered retrospectively.  The type
-    of an arrow can be one of of the values of the enumeration type <ulink url="&gtk-arrow-type;">
-    <code>gtk-arrow-type</code></ulink>. Possible values are <code>:up</code>, <code>:down</code>,
-    <code>:left</code> and <code>:right</code>.  These values obviously indicate the direction in which the
-    arrow will point.
-   </para>
-   <para>
-    The shadow type argument is of the enumeration type &gtk-shadow-type;
-    and may take one of the the values <code>:none</code>,
-    <code>:in</code>, <code>:etched-in</code> and <code>:etched-out</code>.
-   </para>
-   <para>
-    The amount of space used by the arrow is controlled by the style property <code>arrow-scaling</code>.
-    The style property <code>arrow-scaling</code> takes values of type <code>double</code> in a range of
-    <code>[0,1]</code>.  The default value is <code>0.7</code>.
-   </para>
-   <para>
-    Example <link linkend="example-arrows">Arrows</link> shows a brief example to illustrate the use of
-    arrows in buttons.  In addition, this example introduces the function
-    <ulink url="&gtk-widget-tooltip-text;"><code>gtk-widget-tooltip-text</code></ulink>, which attaches a
-    tooltip to the button widget.  The tooltip pops up, when the mouse is over the button.
-   </para>
-   <example id="example-arrows">
-    <title>Buttons with Arrows</title>
-    <programlisting>
-(defun create-arrow-button (arrow-type shadow-type)
-  (let (;; Create a button
-        (button (make-instance 'gtk-button
-                               ;; Add a small margin around the button
-                               :margin 3
-                               ;; Make big buttons of size 75 x 75
-                               :width-request 75
-                               :height-request 75)))
-    ;; Add an arrow to the button
-    (gtk-container-add button
-                       (make-instance 'gtk-arrow
-                                      :arrow-type arrow-type
-                                      :shadow-type shadow-type))
-    ;; Add a tooltip to the button
-    (setf (gtk-widget-tooltip-text button)
-          (format nil "Arrow of type ~A" (symbol-name arrow-type)))
-    button))
-
-(defun example-arrows ()
-  (within-main-loop
-    (let ((;; Create the main window
-           window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Arrow Buttons"
-                                 :default-width 275
-                                 :default-height 125
-                                 :border-width 12))
-          ;; Create a grid for the buttons
-          (grid (make-instance 'gtk-grid
-                               :orientation :horizontal
-                               :column-homogeneous t)))
-      ;; Connect a signal handler to the window
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Create buttons with an arrow and add the buttons to the grid
-      (gtk-container-add grid (create-arrow-button :up :in))
-      (gtk-container-add grid (create-arrow-button :down :out))
-      (gtk-container-add grid (create-arrow-button :left :etched-in))
-      (gtk-container-add grid (create-arrow-button :right :etched-out))
-      ;; Add the grid to the window
-      (gtk-container-add window grid)
-      ;; Show the window
-      (gtk-widget-show-all window))))
-    </programlisting>
-   </example>
-  </section>
-
-  <section id="Calendar">
+  <section id="Calendar" revision="2021-6-10">
    <title>Calendar</title>
+   <para>
+    The &gtk-calendar; widget displays a Gregorian calendar, one month at a time. It can be created with the
+    function &gtk-calendar-new;.
+   </para>
+
    <figure id="figure-calendar">
     <title>Calendar</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/calendar.gif" format="gif"></imagedata>
+      <imagedata fileref="figures/calendar.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
+
    <para>
-    The <ulink url="&gtk-calendar;"><code>gtk-calendar</code></ulink> widget displays a Gregorian calendar,
-    one month at a time.  It can be created with the function <ulink url="&gtk-calendar-new;">
-    <code>gtk-calendar-new</code></ulink>.
+    The month and year currently displayed can be altered with the function &gtk-calendar-select-month;. The
+    exact day can be selected from the displayed month using the function &gtk-calendar-select-day;.
    </para>
    <para>
-    The month and year currently displayed can be altered with the function
-    <ulink url="&gtk-calendar-select-month;"><code>gtk-calendar-select-month</code></ulink>.  The exact day
-    can be selected from the displayed month using the function <ulink url="&gtk-calendar-select-day;">
-    <code>gtk-calendar-select-day</code></ulink>.
-   </para>
-   <para>
-    To place a visual marker on a particular day, use the function <ulink url="&gtk-calendar-mark-day;">
-    <code>gtk-calendar-mark-day</code></ulink> and to remove the marker the function
-    <ulink url="&gtk-calendar-unmark-day;"><code>gtk-calendar-unmark-day</code></ulink>.  Alternative, all
-    marks can be cleared with the function <ulink url="&gtk-calendar-clear-marks;">
-    <code>gtk-calendar-clear-marks</code></ulink>.
+    To place a visual marker on a particular day, use the function &gtk-calendar-mark-day; and to remove the
+    marker the function &gtk-calendar-unmark-day;. Alternative, all marks can be cleared with the function
+    &gtk-calendar-clear-marks;.
    </para>
    <para>
     The way in which the calendar itself is displayed can be altered using the function
-    <ulink url="&gtk-calendar-display-options;"><code>gtk-calendar-display-options</code></ulink>.
+    &gtk-calendar-display-options;.
    </para>
    <para>
-    The selected date can be retrieved from a <ulink url="&gtk-calendar;"><code>gtk-calendar</code></ulink>
-    using the function <ulink url="&gtk-calendar-date;"><code>gtk-calendar-date</code></ulink>.
+    The selected date can be retrieved from a &gtk-calendar; widget using the function &gtk-calendar-date;.
    </para>
    <para>
     Users should be aware that, although the Gregorian calendar is the legal calendar in most countries, it
-    was adopted progressively between 1582 and 1929.  Display before these dates is likely to be historically
+    was adopted progressively between 1582 and 1929. Display before these dates is likely to be historically
     incorrect.
    </para>
    <para>
-    Example <link linkend="example-calendar">Calendar</link> shows a brief example of the calendar widget.
-    It is possible to set a special function with the function <ulink url="&gtk-calendar-set-detail-func;">
-    <code>gtk-calendar-set-detail-func</code></ulink>.  The example uses this to show a tooltip
+    <xref linkend="example-calendar"/> shows a brief example of the calendar widget. It is possible to set a
+    special function with the function &gtk-calendar-set-detail-func;. The example uses this to show a tooltip
     whenever the 12th day of a month is selected.
    </para>
+
    <example id="example-calendar">
     <title>Calendar</title>
-    <programlisting>
-(defun example-calendar ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Calendar"
-                                 :type :toplevel
-                                 :border-width 24
-                                 :default-width 250
-                                 :default-height 100))
-          (frame (make-instance 'gtk-frame))
-          (calendar (make-instance 'gtk-calendar
-                                   :show-details nil)))
-      ;; Connect a signal handler to the window
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Connect a signal handler to print the selected day
-      (g-signal-connect calendar "day-selected"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (format t "selected: year ~A month ~A day ~A~%"
-                                  (gtk-calendar-year calendar)
-                                  (gtk-calendar-month calendar)
-                                  (gtk-calendar-day calendar))))
-      ;; Install a calendar detail function
-      (gtk-calendar-set-detail-func calendar
-                                    (lambda (calendar year month day)
-                                      (declare (ignore calendar year month))
-                                      (when (= day 12)
-                                        "This day has a tooltip.")))
-      ;; Mark a day
-      (gtk-calendar-mark-day calendar 6)
-      ;; Put the calendar into the frame and the frame into the window.
-      (gtk-container-add frame calendar)
-      (gtk-container-add window frame)
-      (gtk-widget-show-all window))))
-    </programlisting>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/calendar.lisp" parse="text"/>
+   </programlisting>
    </example>
   </section>
 
-  <section id="Event_Box">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Event_Box">
-      <primary>GtkEventBox</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>event-box, gtk-event-box</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>event-box-new, gtk-event-box-new</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>widget-events, gtk-widget-events</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>widget-realize, gtk-widget-realize</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>GdkWindow</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>window, gdk-window</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>GdkCursor</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>cursor, gdk-cursor</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>cursor-new-from-name, gdk-cursor-new-from-name</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>widget-window, gtk-widget-window</primary>
-     </indexterm>
-     <indexterm zone="Event_Box">
-      <primary>window-cursor, gdk-window-cursor</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
-
+  <section id="Event_Box" revision="2021-6-11">
    <title>Event Box</title>
+   <para>
+    Some GTK widgets do not have associated X windows, so these widgets just draw on their parents. Because
+    of this, they cannot receive events and if they are incorrectly sized, they do not clip so you can get
+    messy overwriting. If you require more from these widgets, the &gtk-event-box; widget is for you.
+   </para>
+   <para>
+    At first glance, the &gtk-event-box; widget might appear to be totally useless. It draws nothing on the
+    screen and responds to no events. However, it does serve a function - it provides an X window for its
+    child widget. This is important as many GTK widgets do not have an associated X window. Not having an X
+    window saves memory and improves performance, but also has some drawbacks. A widget without an X window
+    cannot receive events, and does not perform any clipping on its contents. Although the name
+    &gtk-event-box; emphasizes the event-handling function, the widget can also be used for clipping.
+   </para>
 
-   <figure id="figure-event-box-2">
+   <figure id="figure-event-box">
     <title>Event Box</title>
     <mediaobject>
      <imageobject>
@@ -7304,221 +7152,117 @@ lambda (buffer location text len)
    </figure>
 
    <para>
-    Some GTK widgets do not have associated X windows, so these widgets just draw on their parents.  Because
-    of this, they cannot receive events and if they are incorrectly sized, they do not clip so you can get
-    messy overwriting.  If you require more from these widgets, the &gtk-event-box;
-     widget is for you.
+    To create a new &gtk-event-box; widget, use the call <code>(make-instance 'gtk-event-box)</code> or the
+    function &gtk-event-box-new;. A child widget can then be added to this event box with the function
+    &gtk-container-add;. With the function &gtk-widget-events; the events are set for the event box which can
+    be connected to a signal handler. To create the resources associated with an event box, the function
+    &gtk-widget-realize; has to be called explicitly for the &gtk-event-box; widget.
+   </para>
+
+   <para>
+    <xref linkend="example-event-box"/> demonstrates both uses of a &gtk-event-box; widget - a label is
+    created that is clipped to a small box, and set up so that a mouse-click on the label causes the program
+    to exit. Resizing the window reveals varying amounts of the label.
    </para>
    <para>
-    At first glance, the &gtk-event-box; widget might appear
-    to be totally useless. It draws nothing on the screen and responds to no events. However, it does serve
-    a function - it provides an X window for its child widget. This is important as many GTK widgets do not
-    have an associated X window. Not having an X window saves memory and improves performance, but also has
-    some drawbacks. A widget without an X window cannot receive events, and does not perform any clipping on
-    its contents. Although the name &gtk-event-box;
-    emphasizes the event-handling function, the widget can also be used for clipping.
+    In addition, <xref linkend="example-event-box"/> shows how to change the cursor over a window. Every
+    widget has an associated &gdk-window; GDK window, which can be get with the function &gtk-widget-window;.
+    The function &gdk-window-cursor; sets a cursor for this &gdk-window; GDK window. A new cursor is created
+    with the function &gdk-cursor-new-from-name;. The function takes two arguments. The first argument is the
+    &gdk-display; object for which the cursor will be created. The second argument is a string with the name
+    of the cursor. Look at the documentation of the function &gdk-cursor-new-from-name; for available cursor
+    names. In example <xref linkend="example-event-box"/> the cursor with the name "pointer" is choosen. This
+    cursor is associated to the &gdk-window; GDK window with the function &gdk-window-cursor;.
    </para>
-   <para>
-    To create a new &gtk-event-box; widget, use the call
-    <code>(make-instance 'gtk-event-box)</code> or the function <ulink url="&gtk-event-box-new;">
-    <code>gtk-event-box-new</code></ulink>. A child widget can then be added to this event box with the
-    function &gtk-container-add;. With the function
-    <ulink url="&gtk-widget-events;"><code>gtk-widget-events</code></ulink> the events are set for the event
-    box which can be connected to a signal handler. To create the resources associated with an event box,
-    the function <ulink url="&gtk-widget-realize;"><code>gtk-widget-realize</code></ulink> has to be called
-    explicitly for the &gtk-event-box; widget.
-   </para>
-   <para>
-    Example <link linkend="example-event-box">Event Box</link> demonstrates both uses of a
-    &gtk-event-box; widget - a label is created that is
-    clipped to a small box, and set up so that a mouse-click on the label causes the program to exit.
-    Resizing the window reveals varying amounts of the label.
-   </para>
-   <para>
-    In addition, example <link linkend="example-event-box">Event Box</link> shows how to change the cursor
-    over a window. Every widget has an associated window of type &gdk-window;,
-    which can be get with the function <ulink url="&gtk-widget-window;">
-    <code>gtk-widget-window</code></ulink>. The function <ulink url="&gdk-window-cursor;">
-    <code>gdk-window-cursor</code></ulink> sets a cursor for this &gdk-window;.
-    A new cursor is created with the function
-    <ulink url="&gdk-cursor-new-from-name;"><code>gdk-cursor-new-from-name</code></ulink>. The function
-    takes two arguments. The first argument is the <ulink url="&gdk-display;">
-    <code>gdk-display</code></ulink> object for which the cursor will be created. The second argument is a
-    string with the name of the cursor. Look at the documentation of the function
-    <ulink url="&gdk-cursor-new-from-name;"><code>gdk-cursor-new-from-name</code></ulink> for available
-    cursor names. In example <link linkend="example-event-box">Event Box</link> the cursor with the name
-    "pointer" is choosen. This cursor is associated to the &gdk-window;
-    with the function <ulink url="&gdk-window-cursor;">
-    <code>gdk-window-cursor</code></ulink>.
-   </para>
+
    <example id="example-event-box">
     <title>Event Box</title>
-    <programlisting>
-(defun example-event-box ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Event Box"
-                                 :default-height 150
-                                 :border-width 24))
-          (eventbox (make-instance 'gtk-event-box))
-          (label (make-instance 'gtk-label
-                                :ellipsize :end
-                                :label
-                                "Click here to quit this Example Event Box.")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      ;; Set the available events for the event box
-      (setf (gtk-widget-events eventbox) :button-press-mask)
-      ;; Connect a signal handler to the eventbox
-      (g-signal-connect eventbox "button-press-event"
-                        (lambda (widget event)
-                          (declare (ignore widget event))
-                          (gtk-widget-destroy window)))
-      ;; Add the label to the event box and the event box to the window
-      (gtk-container-add eventbox label)
-      (gtk-container-add window eventbox)
-      ;; Realize the event box
-      (gtk-widget-realize eventbox)
-      ;; Set a new cursor for the event box
-      (setf (gdk-window-cursor (gtk-widget-window eventbox))
-            (gdk-cursor-new-from-name (gdk-display-default) "pointer"))
-      ;; Show the window
-      (gtk-widget-show-all window))))
-    </programlisting>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/event-box.lisp" parse="text"/>
+   </programlisting>
    </example>
   </section>
 
-  <section id="Text_Entries">
+  <section id="Text_Entries" revision="2021-6-11">
    <title>Text Entries</title>
+   <para>
+    The entry widget allows text to be typed and displayed in a single line text box. The text may be set
+    with function calls that allow new text to replace, prepend or append the current contents of the entry
+    widget.
+   </para>
 
    <figure id="figure-text-entry">
     <title>Text Entry</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/text-entry256x106.gif" format="gif"></imagedata>
+      <imagedata fileref="figures/text-entry.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
 
    <para>
-    The entry widget allows text to be typed and displayed in a single line text box.  The text may be set
-    with function calls that allow new text to replace, prepend or append the current contents of the Entry
-    widget.
-   </para>
-   <para>
-    Create a new Entry widget with the function <ulink url="&gtk-entry-new;">
-    <code>gtk-entry-new</code></ulink>.  The generic function <ulink url="&gtk-entry-text;">
-    <code>gtk-entry-text</code></ulink> alters the text which is currently within the entry widget.  The
-    function <ulink url="&gtk-entry-text;"><code>gtk-entry-text</code></ulink> sets the contents of the entry   
-    widget, replacing the current contents.  Note that the class entry implements the editable interface
+    Create a new entry widget with the function &gtk-entry-new;. The function &gtk-entry-text; alters the text
+    which is currently within the entry widget. The function &gtk-entry-text; sets the contents of the entry
+    widget, replacing the current contents. Note that the class entry implements the editable interface
     which contains some more functions for manipulating the contents.
    </para>
    <para>
-    The contents of the entry can be retrieved by using a call to the function <ulink url="&gtk-entry-text;">
-    <code>gtk-entry-text</code></ulink>.  This is useful in the callback functions described below.
+    The contents of the entry can be retrieved by using a call to the function &gtk-entry-text;. This is
+    useful in the callback functions described below.
    </para>
    <para>
     If we do not want the contents of the entry to be changed by someone typing into it, we can change its
-    editable state with the function <ulink url="&gtk-editable-editable;">
-    <code>gtk-editable-editable</code></ulink>.  This function allows us to toggle the editable state of the
-    entry widget by passing in a <code>T</code> or <code>NIL</code> value for the editable argument.
+    editable state with the function &gtk-editable-editable;. This function allows us to toggle the editable
+    state of the entry widget by passing in a <emphasis>true</emphasis> or <emphasis>false</emphasis> value
+    for the editable argument.
    </para>
    <para>
     If we are using the entry where we do not want the text entered to be visible, for example when a
-    password is being entered, we can use the function <ulink url="&gtk-entry-visibility;">
-    <code>gtk-entry-visibility</code></ulink>, which also takes a boolean flag.
+    password is being entered, we can use the function &gtk-entry-visibility;, which also takes a boolean
+    flag.
    </para>
    <para>
-    A region of the text may be set as selected by using the function
-    <ulink url="&gtk-editable-select-region;"><code>gtk-editable-select-region</code></ulink>.  This would
+    A region of the text may be set as selected by using the function &gtk-editable-select-region;. This would
     most often be used after setting some default text in an Entry, making it easy for the user to remove it.
    </para>
    <para>
     If we want to catch when the user has entered text, we can connect to the activate or changed signal.
-    Activate is raised when the user hits the enter key within the entry widget.  Changed is raised when the
+    Activate is raised when the user hits the enter key within the entry widget. Changed is raised when the
     text changes at all, e.g., for every character entered or removed.
    </para>
    <para>
-    Example <link linkend="example-text-entry">Text Entry</link> is an example of using an entry widget.
+    <xref linkend="example-text-entry"/> is an example of using an entry widget.
    </para>
+
    <example id="example-text-entry">
     <title>Text Entry</title>
-    <programlisting>
-(defun example-text-entry ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :type :toplevel
-                                  :title "Example Text Entry"
-                                  :default-width 250))
-           (vbox (make-instance 'gtk-box :orientation :vertical))
-           (hbox (make-instance 'gtk-box :orientation :horizontal))
-           (entry (make-instance 'gtk-entry
-                                 :text "Hello"
-                                 :max-length 50))
-           (pos (gtk-entry-text-length entry)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (g-signal-connect entry "activate"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (format t "Entry contents: ~A"
-                                  (gtk-entry-text entry))))
-      (gtk-editable-insert-text entry " world" pos)
-      (gtk-editable-select-region entry 0 (gtk-entry-text-length entry))
-      (gtk-box-pack-start vbox entry :expand t :fill t :padding 0)
-      (let ((check (gtk-check-button-new-with-label "Editable")))
-        (g-signal-connect check "toggled"
-           (lambda (widget)
-             (declare (ignore widget))
-             (gtk-editable-set-editable
-                                      entry
-                                      (gtk-toggle-button-active check))))
-        (gtk-box-pack-start hbox check))
-      (let ((check (gtk-check-button-new-with-label "Visible")))
-        (setf (gtk-toggle-button-active check) t)
-        (g-signal-connect check "toggled"
-           (lambda (widget)
-             (declare (ignore widget))
-             (setf (gtk-entry-visibility entry)
-                   (gtk-toggle-button-active check))))
-        (gtk-box-pack-start hbox check))
-      (gtk-box-pack-start vbox hbox)
-      (let ((button (gtk-button-new-with-label "Close")))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start vbox button))
-      (gtk-container-add window vbox)
-      (gtk-widget-show window))))
-    </programlisting>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/text-entry.lisp" parse="text"/>
+   </programlisting>
    </example>
   </section>
 
-  <section id="Spin_Buttons">
+  <section id="Spin_Buttons" revision="2021-6-11">
    <title>Spin Buttons</title>
+   <para>
+    The spin button widget is generally used to allow the user to select a value from a range of numeric
+    values. It consists of a text entry box with up and down arrow buttons attached to the side. Selecting
+    one of the buttons causes the value to "spin" up and down the range of possible values. The entry box
+    may also be edited directly to enter a specific value.
+   </para>
+
    <figure id="figure-spin-button">
     <title>Spin Button</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/spin-button306x347.gif" format="gif"></imagedata>
+      <imagedata fileref="figures/spin-button.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
-   <para>
-    The spin button widget is generally used to allow the user to select a value from a range of numeric
-    values.  It consists of a text entry box with up and down arrow buttons attached to the side.  Selecting
-    one of the buttons causes the value to "spin" up and down the range of possible values.  The entry box
-    may also be edited directly to enter a specific value.
-   </para>
+
    <para>
     The spin button allows the value to have zero or a number of decimal places and to be incremented or
-    decremented in configurable steps.  The action of holding down one of the buttons optionally results in
+    decremented in configurable steps. The action of holding down one of the buttons optionally results in
     an acceleration of change in the value according to how long it is depressed.
    </para>
    <para>
@@ -7527,127 +7271,133 @@ lambda (buffer location text len)
    </para>
    <para>
     Recall that an adjustment object is created with the function &gtk-adjustment-new;, which has the
-    arguments <code>value</code>, <code>lower</code>,
-    <code>step-increment</code>, <code>page-increment</code>, and <code>page-size</code>.  These properties
-    of an adjustment are used by the spin button in the following way:
+    arguments <code>value</code>, <code>lower</code>, <code>step-increment</code>,
+    <code>page-increment</code>, and <code>page-size</code>. These properties of an adjustment are used by
+    the spin button in the following way:
    </para>
-   <table id="table-gtk-adjustment-properties" frame='all'>
-    <title>Properties of GtkAdjustment</title>
-    <tgroup cols='2' align='left' colsep='0' rowsep='0'>
-     <thead>
-      <row>
-       <entry>Value&#x2001;&#x2001;&#x2001;&#x2001;&#x2001;</entry>
-       <entry>Description</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry valign="top"><code>value</code></entry>
-       <entry valign="top">initial value for the Spin Button</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>lower</code></entry>
-       <entry valign="top">lower range value</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>upper</code></entry>
-       <entry valign="top">upper range value</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>step-increment</code></entry>
-       <entry valign="top">value to increment/decrement when pressing mouse button 1 on a button</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>page-increment</code></entry>
-       <entry valign="top">value to increment/decrement when pressing mouse button 2 on a button</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>page-size</code></entry>
-       <entry valign="top">unused</entry>
-      </row>
-     </tbody>
-    </tgroup>
+
+   <table id="table-gtk-adjustment-properties">
+    <caption>Properties of the GtkAdjustment widget</caption>
+    <colgroup>
+       <col style="width:20%"/>
+       <col style="width:80%"/>
+    </colgroup>
+    <tr>
+     <th align="left">Value</th>
+     <th align="left">Description</th>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:2px solid #ff9900;"></td>
+    </tr>
+    <tr valign="top">
+     <td><code>value</code></td>
+     <td>Initial value for the spin button</td>
+    </tr>
+    <tr valign="top">
+     <td><code>lower</code></td>
+     <td>Lower range value</td>
+    </tr>
+    <tr valign="top">
+     <td><code>upper</code></td>
+     <td>Upper range value</td>
+    </tr>
+    <tr valign="top">
+     <td><code>step-increment</code></td>
+     <td>Value to increment/decrement when pressing mouse button 1 on a button</td>
+    </tr>
+    <tr valign="top">
+     <td><code>page-increment</code></td>
+     <td>Value to increment/decrement when pressing mouse button 2 on a button</td>
+    </tr>
+    <tr valign="top">
+     <td><code>page-size</code></td>
+     <td>Unused</td>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:1px solid #ff9900;"></td>
+    </tr>
    </table>
+
    <para>
     Additionally, mouse button 3 can be used to jump directly to the upper or lower values when used to
-    select one of the buttons. A spin button is created with the function <ulink url="&gtk-spin-button-new;">
-    <code>gtk-spin-button-new</code></ulink>, which as the arguments <code>adjustment</code>,
-    <code>climb-rate</code>, and <code>digits</code>.
+    select one of the buttons. A spin button is created with the function &gtk-spin-button-new;, which as the
+    arguments <code>adjustment</code>, <code>climb-rate</code>, and <code>digits</code>.
    </para>
    <para>
     The <code>climb-rate</code> argument take a value between 0.0 and 1.0 and indicates the amount of
-    acceleration that the spin button has.  The <code>digits</code> argument specifies the number of decimal
+    acceleration that the spin button has. The <code>digits</code> argument specifies the number of decimal
     places to which the value will be displayed.
    </para>
    <para>
-    A spin button can be reconfigured after creation using the function
-    <ulink url="&gtk-spin-button-configure;"><code>gtk-spin-button-configure</code></ulink>.  The first
-    argument specifies the spin button that is to be reconfigured.  The other arguments are as specified for
-    the function <ulink url="&gtk-spin-button-new;"><code>gtk-spin-button-new</code></ulink>.
+    A spin button can be reconfigured after creation using the function &gtk-spin-button-configure;. The first
+    argument specifies the spin button that is to be reconfigured. The other arguments are as specified for
+    the function &gtk-spin-button-new;.
    </para>
    <para>
-    The adjustment can be set and retrieved independently using the function
-    <ulink url="&gtk-spin-button-adjustment;"><code>gtk-spin-button-adjustment</code></ulink>.
+    The adjustment can be set and retrieved independently using the function &gtk-spin-button-adjustment;.
    </para>
    <para>
-    The number of decimal places can also be altered using the function
-    <ulink url="&gtk-spin-button-digits;"><code>gtk-spin-button-digits</code></ulink> and the value that a
-    spin button is currently displaying can be changed using the function
-    <ulink url="&gtk-spin-button-value;"><code>gtk-spin-button-value</code></ulink>.
+    The number of decimal places can also be altered using the function &gtk-spin-button-digits; and the value
+    that a spin button is currently displaying can be changed using the function &gtk-spin-button-value;.
    </para>
    <para>
     The current value of a spin button can be retrieved as either a floating point or integer value with the
-    functions <ulink url="&gtk-spin-button-value;"><code>gtk-spin-button-value</code></ulink> and
-    <ulink url="&gtk-spin-button-value-as-int;"><code>gtk-spin-button-value-as-int</code></ulink>.
+    functions &gtk-spin-button-value; and &gtk-spin-button-value-as-int;.
    </para>
    <para>
     If you want to alter the value of a spin button relative to its current value, then the function
-    <ulink url="&gtk-spin-button-spin;"><code>gtk-spin-button-spin</code></ulink> can be used, which has the
-    three arguments <code>spin-button</code>, <code>direction</code>, and <code>increment</code>.  The
-    argument <code>direction</code> is of the enumeration type <code>GtkSpinType</code>, which can take one
-    of the values shown in table <link linkend="table-gtk-spin-type">GtkSpinType</link>.
+    &gtk-spin-button-spin; can be used, which has the three arguments <code>spin-button</code>,
+    <code>direction</code>, and <code>increment</code>. The argument <code>direction</code> is of the
+    enumeration type <code>GtkSpinType</code>, which can take one of the values shown in
+    <xref linkend="table-gtk-spin-type"/>.
    </para>
-   <table id="table-gtk-spin-type" frame='all'>
-    <title>Values of the type <code>GtkSpinType</code></title>
-    <tgroup cols='2' align='left' colsep='0' rowsep='0'>
-     <thead>
-      <row>
-       <entry>Value&#x2001;&#x2001;&#x2001;&#x2001;&#x2001;</entry>
-       <entry>Description</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry valign="top"><code>:step-forward</code></entry>
-       <entry valign="top">Increment by the adjustments step increment.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:backward</code></entry>
-       <entry valign="top">Decrement by the adjustments step increment.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:forward</code></entry>
-       <entry valign="top">Increment by the adjustments page incremstent.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:page-backward</code></entry>
-       <entry valign="top">Decrement by the adjustments page increment.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:home</code></entry>
-       <entry valign="top">Go to the adjustments lower bound.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:end</code></entry>
-       <entry valign="top">Go to the adjustments upper bound.</entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:user-defined</code></entry>
-       <entry valign="top">Change by a specified amount.</entry>
-      </row>
-     </tbody>
-    </tgroup>
+
+   <table id="table-gtk-spin-type">
+    <caption>Values of the GtkSpinType enumeration</caption>
+    <colgroup>
+       <col style="width:20%"/>
+       <col style="width:80%"/>
+    </colgroup>
+    <tr>
+     <th align="left">Value</th>
+     <th align="left">Description</th>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:2px solid #ff9900;"></td>
+    </tr>
+    <tr valign="top">
+     <td><code>:step-forward</code></td>
+     <td>Increment by the adjustments step increment.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:backward</code></td>
+     <td>Decrement by the adjustments step increment.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:forward</code></td>
+     <td>Increment by the adjustments page increment.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:page-backward</code></td>
+     <td>Decrement by the adjustments page increment.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:home</code></td>
+     <td>Go to the adjustments lower bound.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:end</code></td>
+     <td>Go to the adjustments upper bound.</td>
+    </tr>
+    <tr valign="top">
+     <td><code>:user-defined</code></td>
+     <td>Change by a specified amount.</td>
+    </tr>
+    <tr>
+     <td colspan="2" style="border-top:1px solid #ff9900;"></td>
+    </tr>
    </table>
+
    <para>
     <code>:step-forward</code> and <code>:step-backward</code> change the value of the spin button by the
     amount specified by increment, unless increment is equal to 0, in which case the value is changed by the
@@ -7669,235 +7419,38 @@ lambda (buffer location text len)
     move onto functions that affect the appearance and behavior of the spin button widget itself.
    </para>
    <para>
-    The first of these functions is <ulink url="&gtk-spin-button-numeric;">
-    <code>gtk-spin-button-numeric</code></ulink>, which is used to constrain the text box of the spin button
-    such that it may only contain a numeric value.  This prevents a user from typing anything other than
-    numeric values into the text box of a spin button.
+    The first of these functions is &gtk-spin-button-numeric;, which is used to constrain the text box of the
+    spin button such that it may only contain a numeric value. This prevents a user from typing anything other
+    than numeric values into the text box of a spin button.
    </para>
    <para>
     You can set whether a Spin Button will wrap around between the upper and lower range values with the
-    function <ulink url="&gtk-spin-button-wrap;"><code>gtk-spin-button-wrap</code></ulink>.  You can set a
-    spin button to round the value to the nearest <code>step-increment</code>, which is set within the
-    adjustment object used with the spin button.  This is accomplished with the function
-    <ulink url="&gtk-spin-button-snap-to-ticks;"><code>gtk-spin-button-snap-to-ticks</code></ulink>.
+    function &gtk-spin-button-wrap;. You can set a spin button to round the value to the nearest
+    <code>step-increment</code>, which is set within the adjustment object used with the spin button. This is
+    accomplished with the function &gtk-spin-button-snap-to-ticks;.
    </para>
    <para>
-    The update policy of a spin button can be changed with the function
-    <ulink url="&gtk-spin-button-update-policy;"><code>gtk-spin-button-update-policy</code></ulink>.  The
-    possible values of policy are either <code>:always</code> or <code>:if-valid</code>.  These policies
-    affect the behavior of a Spin Button when parsing inserted text and syncing its value with the values of
+    The update policy of a spin button can be changed with the function &gtk-spin-button-update-policy;. The
+    possible values of policy are either <code>:always</code> or <code>:if-valid</code>. These policies
+    affect the behavior of a spin Button when parsing inserted text and syncing its value with the values of
     the adjustment.
    </para>
    <para>
     In the case of <code>:if-valid</code> the spin button value only gets changed if the text input is a
-    numeric value that is within the range specified by the adjustment.  Otherwise the text is reset to the
-    current value.  In case of <code>:always</code> we ignore errors while converting text into a numeric
+    numeric value that is within the range specified by the adjustment. Otherwise the text is reset to the
+    current value. In case of <code>:always</code> we ignore errors while converting text into a numeric
     value.
    </para>
    <para>
     Finally, you can explicitly request that a spin button update itself with the function
-    <ulink url="&gtk-spin-button-update;"><code>gtk-spin-button-update</code></ulink>.
+    &gtk-spin-button-update;.
    </para>
+
    <example id="example-spin-button">
     <title>Spin Button</title>
-    <programlisting>
-(defun example-spin-button ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Spin Button"
-                                 :default-width 300))
-          (vbox (make-instance 'gtk-box
-                               :orientatin :vertical
-                               :homogeneous nil
-                               :spacing 6
-                               :border-width 12))
-          (vbox1 (make-instance 'gtk-box
-                                :orientation :vertical
-                                :homogeneous nil
-                                :spacing 0
-                                :border-width 6))
-          (vbox2 (make-instance 'gtk-box
-                                :orientation :vertical
-                                :homogeneous nil
-                                :spacing 0
-                                :boder-width 6))
-          (hbox (make-instance 'gtk-box :orientation :horizontal))
-          (frame1 (make-instance 'gtk-frame
-                                 :label "Not accelerated"))
-          (frame2 (make-instance 'gtk-frame
-                                 :label "Accelerated"))
-          (label (make-instance 'gtk-label
-                                :label "0")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (let ((vbox (make-instance 'gtk-box :orientation :vertical))
-            (spinner (make-instance 'gtk-spin-button
-                                    :adjustment
-                                    (make-instance 'gtk-adjustment
-                                                   :value 1.0
-                                                   :lower 1.0
-                                                   :upper 31.0
-                                                   :step-increment 1.0
-                                                   :page-increment 5.0
-                                                   :page-size 0.0)
-                                    :climb-rate 0
-                                    :digits 0
-                                    :wrap t)))
-        (gtk-box-pack-start vbox
-                            (make-instance 'gtk-label
-                                           :label "Day :"
-                                           :xalign 0
-                                           :yalign 0.5)
-                            :expand nil)
-        (gtk-box-pack-start vbox spinner :expand nil)
-        (gtk-box-pack-start hbox vbox :padding 6))
-      (let ((vbox (make-instance 'gtk-box :orientation :vertical))
-            (spinner (make-instance 'gtk-spin-button
-                                    :adjustment
-                                    (make-instance 'gtk-adjustment
-                                                   :value 1.0
-                                                   :lower 1.0
-                                                   :upper 12.0
-                                                   :step-increment 1.0
-                                                   :page-increment 5.0
-                                                   :page-size 0.0)
-                                    :climb-rate 0
-                                    :digits 0
-                                    :wrap t)))
-        (gtk-box-pack-start vbox
-                            (make-instance 'gtk-label
-                                           :label "Month :"
-                                           :xalign 0
-                                           :yalign 0.5)
-                            :expand nil)
-        (gtk-box-pack-start vbox spinner :expand nil)
-        (gtk-box-pack-start hbox vbox :padding 6))
-      (let ((vbox (make-instance 'gtk-box :orientation :vertical))
-            (spinner (make-instance 'gtk-spin-button
-                                    :adjustment
-                                    (make-instance 'gtk-adjustment
-                                                   :value 1.0
-                                                   :lower 1998.0
-                                                   :upper 2100.0
-                                                   :step-increment 1.0
-                                                   :page-increment 100.0
-                                                   :page-size 0.0)
-                                    :climb-rate 0
-                                    :digits 0
-                                    :wrap t)))
-        (gtk-box-pack-start vbox
-                            (make-instance 'gtk-label
-                                           :label "Year :"
-                                           :xalign 0
-                                           :yalign 0.5)
-                            :expand nil)
-        (gtk-box-pack-start vbox spinner :expand nil :fill t)
-        (gtk-box-pack-start hbox vbox :padding 6))
-      (gtk-box-pack-start vbox1 hbox :padding 6)
-      (gtk-container-add frame1 vbox1)
-      (gtk-box-pack-start vbox frame1)
-      (setq hbox (make-instance 'gtk-box :orientation :horizontal))
-      (let ((vbox (make-instance 'gtk-box :orientation :vertical))
-            (spinner1 (make-instance 'gtk-spin-button
-                                     :adjustment
-                                     (make-instance 'gtk-adjustment
-                                                    :value 1.0
-                                                    :lower -10000.0
-                                                    :upper  10000.0
-                                                    :step-increment 0.5
-                                                    :page-increment 100.0
-                                                    :page-size 0.0)
-                                     :climb-rate 1.0
-                                     :digits 2
-                                     :wrap t))
-            (spinner2 (make-instance 'gtk-spin-button
-                                     :adjustment
-                                     (make-instance 'gtk-adjustment
-                                                    :value 2
-                                                    :lower 1
-                                                    :upper 5
-                                                    :step-increment 1
-                                                    :page-increment 1
-                                                    :page-size 0)
-                                     :climb-rate 0.0
-                                     :digits 0
-                                     :wrap t)))
-        (gtk-box-pack-start vbox
-                            (make-instance 'gtk-label
-                                           :label "Value :"
-                                           :xalign 0
-                                           :yalign 0.5)
-                            :fill t)
-        (gtk-box-pack-start vbox spinner1 :expand nil)
-        (gtk-box-pack-start hbox vbox :padding 6)
-        (g-signal-connect spinner2 "value-changed"
-           (lambda (widget)
-             (declare (ignore widget))
-             (gtk-spin-button-set-digits
-                               spinner1
-                               (gtk-spin-button-get-value-as-int spinner2))))
-        (setq vbox (make-instance 'gtk-box :orientation :vertical))
-        (gtk-box-pack-start vbox
-                            (make-instance 'gtk-label
-                                           :label "Digits :"
-                                           :xalign 0
-                                           :yalign 0.5)
-                            :expand nil)
-        (gtk-box-pack-start vbox spinner2 :expand nil)
-        (gtk-box-pack-start hbox vbox :padding 6)
-        (gtk-box-pack-start vbox2 hbox :padding 6)
-        (let ((check (make-instance 'gtk-check-button
-                                    :label "Snap to 0.5-ticks"
-                                    :active t)))
-          (g-signal-connect check "clicked"
-             (lambda (widget)
-               (gtk-spin-button-set-snap-to-ticks
-                                     spinner1
-                                     (gtk-toggle-button-active widget))))
-          (gtk-box-pack-start vbox2 check))
-        (let ((check (make-instance 'gtk-check-button
-                                    :label "Numeric only input mode"
-                                    :active t)))
-          (g-signal-connect check "clicked"
-             (lambda (widget)
-               (gtk-spin-button-set-numeric
-                                     spinner1
-                                     (gtk-toggle-button-active widget))))
-          (gtk-box-pack-start vbox2 check))
-        (gtk-container-add frame2 vbox2)
-        (setq hbox (make-instance 'gtk-box :orientation :horizontal))
-        (let ((button (gtk-button-new-with-label "Value as Int")))
-          (g-signal-connect button "clicked"
-             (lambda (widget)
-               (declare (ignore widget))
-               (setf (gtk-label-text label)
-                     (format nil "~A"
-                             (gtk-spin-button-get-value-as-int spinner1)))))
-            (gtk-box-pack-start hbox button))
-        (let ((button (gtk-button-new-with-label "Value as Float")))
-          (g-signal-connect button "clicked"
-             (lambda (widget)
-               (declare (ignore widget))
-               (setf (gtk-label-text label)
-                     (format nil "~A"
-                             (gtk-spin-button-value spinner1)))))
-          (gtk-box-pack-start hbox button))
-        (gtk-box-pack-start vbox2 hbox)
-        (gtk-box-pack-start vbox2 label))
-      (gtk-box-pack-start vbox frame2)
-      (let ((button (make-instance 'gtk-button
-                                   :label "Close")))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start vbox button))
-      (gtk-container-add window vbox)
-      (gtk-widget-show window))))
-    </programlisting>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/spin-button.lisp" parse="text"/>
+   </programlisting>
    </example>
   </section>
 
@@ -10884,6 +10437,51 @@ lambda (merge widget)
    </section>
   </section>
 
+  <section id="Arrow_Widget" revision="2021-6-10">
+   <title>Arrow Widget</title>
+   <para>
+    The &gtk-arrow; widget draws an arrowhead, facing in a number of possible directions and having a number
+    of possible styles. It can be very useful when placed on a button. Like the label widget, the arrow
+    widget emits no signals. There are only two functions for manipulating an arrow widget &gtk-arrow-new;
+    and &gtk-arrow-set;. The first function creates a new arrow widget with the indicated type and appearance.
+    The second function allows these values to be altered retrospectively. The type of an arrow can be one of
+    of the values of the &gtk-arrow-type; enumeration. Possible values are <code>:up</code>,
+    <code>:down</code>, <code>:left</code> and <code>:right</code>. These values obviously indicate the
+    direction in which the arrow will point.
+   </para>
+
+   <figure id="figure-arrow-button">
+    <title>Arrow Button</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/arrow-button.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
+   <para>
+    The shadow type argument is a value of the &gtk-shadow-type; enumeration and may take one of the the
+    values <code>:none</code>, <code>:in</code>, <code>:etched-in</code> and <code>:etched-out</code>.
+   </para>
+   <para>
+    The amount of space used by the arrow is controlled by the <code>arrow-scaling</code> style property.
+    The <code>arrow-scaling</code> style property takes values of type <code>double float</code> in a range
+    of [0,1]. The default value is 0.7.
+   </para>
+   <para>
+    <xref linkend="example-arrow-button"/> shows a brief example to illustrate the use of arrows in buttons.
+    In addition, this example introduces the function &gtk-widget-tooltip-text;, which attaches a tooltip to
+    the button. The tooltip pops up, when the mouse is over the button.
+   </para>
+
+   <example id="example-arrow-button">
+    <title>Arrow Button</title>
+    <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/arrow-button.lisp" parse="text"/>
+    </programlisting>
+   </example>
+  </section>
+
  </chapter>
 
  <appendix id="Licenses">
@@ -10948,6 +10546,8 @@ lambda (merge widget)
  </appendix>
 
 </book>
+
+
 
 
 
