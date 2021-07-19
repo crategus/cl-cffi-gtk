@@ -143,9 +143,9 @@
       @begin[code]{table}
         @entry[handlebox]{The @sym{gtk-handle-box} widget which received the
           signal.}
-        @entry[widget]{The child widget of the handle box. This argument
-          provides no extra information and is here only for backwards
-          compatibility.}
+        @entry[widget]{The @class{gtk-widget} child widget of the handle box.
+          This argument provides no extra information and is here only for
+          backwards compatibility.}
       @end{table}
     @subheading{The \"child-detached\" signal}
       @begin{pre}
@@ -156,9 +156,9 @@
       @begin[code]{table}
         @entry[handlebox]{The @sym{gtk-handle-box} widget which received the
           signal.}
-        @entry[widget]{The child widget of the handle box. This argument
-          provides no extra information and is here only for backwards
-          compatibility.}
+        @entry[widget]{The @class{gtk-widget} child widget of the handle box.
+          This argument provides no extra information and is here only for
+          backwards compatibility.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-handle-box-child-detached}
@@ -178,8 +178,7 @@
 (setf (documentation (atdoc:get-slot-from-name "child-detached"
                                                'gtk-handle-box) 't)
  "The @code{child-detached} property of type @code{:boolean} (Read) @br{}
-  A boolean value indicating whether the child of the handle box is attached or
-  detached. @br{}
+  Whether the child of the handle box is attached or detached. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
