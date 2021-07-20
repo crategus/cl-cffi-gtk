@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.action.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -177,7 +177,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-action 'type)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @begin{short}
     Actions represent operations that the user can be perform, along with some
     information how it should be presented in the interface.
@@ -185,8 +185,8 @@
   Each action provides methods to create icons, menu items and toolbar items
   representing itself.
 
-  As well as the callback that is called when the action gets activated, the
-  following also gets associated with the action:
+  As well as the callback function that is called when the action gets
+  activated, the following also gets associated with the action:
   @begin{itemize}
     @item{a name, not translated, for path lookup}
     @item{a label, translated, for display}
@@ -207,7 +207,7 @@
 
   Each action can have one or more proxy widgets. To act as an action proxy,
   the widget needs to implement the @class{gtk-activatable} interface. Proxies
-  mirror the state of the action and should change when the action's state
+  mirror the state of the action and should change when the state of the action
   changes. Properties that are always mirrored by proxies are @code{sensitive}
   and @code{visible}. The @code{gicon}, @code{icon-name}, @code{label},
   @code{short-label} and @code{stock-id} properties are only mirorred if the
@@ -216,9 +216,9 @@
 
   When the proxy is activated, it should activate its action.
   @begin[Warning]{dictionary}
-    The @sym{gtk-action} object has been deprecated since GTK+ 3.10. Use
+    The @sym{gtk-action} class has been deprecated since GTK 3.10. Use
     the @class{g-action} interface instead, and associate actions with
-    @class{gtk-actionable} widgets. Use the @class{g-menu-model} object for
+    @class{gtk-actionable} widgets. Use the @class{g-menu-model} class for
     creating menus with the function @fun{gtk-menu-new-from-model}.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -248,7 +248,10 @@
   @see-slot{gtk-action-visible-overflown}
   @see-slot{gtk-action-visible-vertical}
   @see-class{gtk-action-group}
-  @see-class{gtk-activatable}")
+  @see-class{gtk-activatable}
+  @see-class{g-action}
+  @see-class{gtk-actionable}
+  @see-class{g-menu-model}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -260,14 +263,14 @@
 (setf (documentation (atdoc:get-slot-from-name "action-group" 'gtk-action) 't)
  "The @code{action-group} property of type @class{gtk-action-group}
   (Read / Write) @br{}
-  The action group this action is associated with, or @code{nil} for internal
+  The action group the action is associated with, or @code{nil} for internal
   use.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-action-group 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{gtk-action-action-group object) => group}
   @syntax[]{(setf (gtk-action-action-group object) group)}
   @argument[object]{a @class{gtk-action} object}
@@ -277,13 +280,14 @@
     @class{gtk-action} class.
   @end{short}
 
-  The action group this action is associated with, or @code{nil} for internal
+  The action group the action is associated with, or @code{nil} for internal
   use.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-action-group} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-action}")
+  @see-class{gtk-action}
+  @see-class{gtk-action-group}")
 
 ;;; --- gtk-action-always-show-image -------------------------------------------
 
@@ -292,7 +296,7 @@
                                                'gtk-action) 't)
  "The @code{always-show-image} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
-  If @em{true}, the action's menu item proxies will ignore the
+  If @em{true}, the menu item proxies of the action will ignore the
   @slot[gtk-settings]{gtk-menu-images} setting and always show their image, if
   available. Use this property if the menu item would be useless or hard to use
   without their image. @br{}
@@ -302,7 +306,7 @@
 (setf (gethash 'gtk-action-always-show-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-always-show-image 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-always-show-image object) => always-show}
   @syntax[]{(setf (gtk-action-always-show-image object) always-show)}
   @argument[object]{a @class{gtk-action} object}
@@ -323,10 +327,9 @@
   image.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-always-show-image} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-class{gtk-settings}
   @see-function{gtk-settings-gtk-menu-images}")
 
 ;;; --- gtk-action-gicon -------------------------------------------------------
@@ -334,16 +337,16 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gicon" 'gtk-action) 't)
  "The @code{gicon} property of type @class{g-icon} (Read / Write) @br{}
-  The @class{g-icon} displayed in the @sym{gtk-action}. Note that the stock
-  icon is preferred, if the @code{stock-id} property holds the ID of an
-  existing stock icon. This is an appearance property and thus only applies if
-  the @slot[gtk-activatable]{use-action-appearance} property is @em{true}.")
+  The icon displayed in the action. Note that the stock icon is preferred, if
+  the @code{stock-id} property holds the ID of an existing stock icon. This is
+  an appearance property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} property is @em{true}.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-gicon 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-gicon object) => icon}
   @syntax[]{(setf (gtk-action-gicon object) icon)}
   @argument[object]{a @class{gtk-action} object}
@@ -356,14 +359,13 @@
   The slot access function @sym{gtk-action-gicon} gets the icon of the action.
   The slot access function @sym{(setf gtk-action-gicon)} sets the icon.
 
-  The @class{g-icon} object displayed in the @sym{gtk-action} object. Note that
-  the stock icon is preferred, if the @slot[gtk-action]{stock-id} property
-  holds the ID of an existing stock icon. This is an appearance property and
-  thus only applies if the @slot[gtk-activatable]{use-action-appearance}
-  property is @em{true}.
+  The icon displayed in the action. Note that the stock icon is preferred, if
+  the @slot[gtk-action]{stock-id} property holds the ID of an existing stock
+  icon. This is an appearance property and thus only applies if the
+  @slot[gtk-activatable]{use-action-appearance} property is @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-gicon} has been deprecated since version 3.10
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
   @see-class{g-icon}
@@ -382,7 +384,7 @@
 (setf (gethash 'gtk-action-hide-if-empty atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-hide-if-empty 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-hide-if-empty object) => hide-if-empty}
   @syntax[]{(setf (gtk-action-hide-if-empty object) hide-if-empty)}
   @argument[object]{a @class{gtk-action} object}
@@ -395,7 +397,7 @@
   When @em{true}, empty menu proxies for this action are hidden.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-hide-if-empty} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}")
 
@@ -406,8 +408,8 @@
  "The @code{icon-name} property of type @code{:string} (Read / Write) @br{}
   The name of the icon from the icon theme. Note that the stock icon is
   preferred, if the @code{stock-id} property holds the ID of an existing stock
-  icon, and the @class{g-icon} is preferred if the @code{gicon} property is set.
-  This is an appearance property and thus only applies if the
+  icon, and the @class{g-icon} object is preferred if the @code{gicon} property
+  is set. This is an appearance property and thus only applies if the
   @slot[gtk-activatable]{use-action-appearance} property is @em{true}. @br{}
   Default value: @code{nil}")
 
@@ -415,11 +417,11 @@
 (setf (gethash 'gtk-action-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-icon-name 'function)
- "@version{2021-3-29}
-  @syntax[]{(gtk-action-icon-name object) => icon-name}
-  @syntax[]{(setf (gtk-action-icon-name object) icon-name)}
+ "@version{2021-7-20}
+  @syntax[]{(gtk-action-icon-name object) => name}
+  @syntax[]{(setf (gtk-action-icon-name object) name)}
   @argument[object]{a @class{gtk-action} object}
-  @argument[icon-name]{a string with the icon name to set}
+  @argument[name]{a string with the icon name to set}
   @begin{short}
     Accessor of the @slot[gtk-action]{icon-name} slot of the
     @class{gtk-action} class.
@@ -430,15 +432,18 @@
   icon name.
 
   The name of the icon from the icon theme. Note that the stock icon is
-  preferred, if the @code{stock-id} property holds the ID of an existing stock
-  icon, and the @class{g-icon} is preferred if the @code{gicon} property is set.
-  This is an appearance property and thus only applies if the
-  @slot[gtk-activatable]{use-action-appearance} property is @em{true}.
+  preferred, if the @slot[gtk-action]{stock-id} property holds the ID of an
+  existing stock icon, and the @class{g-icon} object is preferred if the
+  @slot[gtk-action]{gicon} property is set. This is an appearance property and
+  thus only applies if the @slot[gtk-activatable]{use-action-appearance}
+  property is @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-icon-name} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
+  @see-function{gtk-action-gicon}
+  @see-function{gtk-action-stock-id}
   @see-function{gtk-activatable-use-action-appearance}")
 
 ;;; --- gtk-action-is-important ------------------------------------------------
@@ -454,7 +459,7 @@
 (setf (gethash 'gtk-action-is-important atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-is-important 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-is-important object) => is-important}
   @syntax[]{(setf (gtk-action-is-important object) is-important)}
   @argument[object]{a @class{gtk-action} object}
@@ -472,10 +477,10 @@
   @code{:both-horiz} mode.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-is-important} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-symbol{gtk-tool-item-toolbar-style}")
+  @see-symbol{gtk-toolbar-style}")
 
 ;;; --- gtk-action-label -------------------------------------------------------
 
@@ -483,9 +488,9 @@
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-action) 't)
  "The @code{label} property of type @code{:string} (Read / Write) @br{}
   The label used for menu items and buttons that activate this action. If the
-  label is @code{nil}, GTK+ uses the stock label specified via the
-  @code{stock-id} property. This is an appearance property and thus only
-  applies if the @slot[gtk-activatable]{use-action-appearance} property is
+  label is @code{nil}, GTK uses the stock label specified via the
+  @code{stock-id} property. This is an appearance property and thus
+  only applies if the @slot[gtk-activatable]{use-action-appearance} property is
   @em{true}. @br{}
   Default value: @code{nil}")
 
@@ -493,7 +498,7 @@
 (setf (gethash 'gtk-action-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-label 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-label object) => label}
   @syntax[]{(setf (gtk-action-label object) label)}
   @argument[object]{a @class{gtk-action} object}
@@ -507,15 +512,16 @@
   action. The slot access function @sym{(setf gtk-action-label)} sets the label.
 
   The label used for menu items and buttons that activate this action. If the
-  label is @code{nil}, GTK+ uses the stock label specified via the
-  @code{stock-id} property. This is an appearance property and thus only
-  applies if the @slot[gtk-activatable]{use-action-appearance} property is
+  label is @code{nil}, GTK uses the stock label specified via the
+  @slot[gtk-action]{stock-id} property. This is an appearance property and thus
+  only applies if the @slot[gtk-activatable]{use-action-appearance} property is
   @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-label} has been deprecated since version 3.10
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
+  @see-function{gtk-action-stock-id}
   @see-function{gtk-activatable-use-action-appearance}")
 
 ;;; --- gtk-action-name --------------------------------------------------------
@@ -531,7 +537,7 @@
 (setf (gethash 'gtk-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-name 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-name object) => name}
   @argument[object]{a @class{gtk-action} object}
   @argument[name]{a string with the name of the action}
@@ -544,7 +550,7 @@
   the action.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-name} has been deprecated since version 3.10
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}")
 
@@ -560,7 +566,7 @@
 (setf (gethash 'gtk-action-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-sensitive 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-action-sensitive object) sensitive)}
   @argument[object]{a @class{gtk-action} object}
@@ -578,7 +584,7 @@
   function @fun{gtk-action-is-sensitive} for that.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-sensitive} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
   @see-function{gtk-action-is-sensitive}")
@@ -597,7 +603,7 @@
 (setf (gethash 'gtk-action-short-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-short-label 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-short-label object) => short-label}
   @syntax[]{(setf (gtk-action-short-label object) short-label)}
   @argument[object]{a @class{gtk-action} object}
@@ -616,7 +622,7 @@
   @slot[gtk-activatable]{use-action-appearance} property is @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-short-label} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
   @see-function{gtk-activatable-use-action-appearance}")
@@ -635,7 +641,7 @@
 (setf (gethash 'gtk-action-stock-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-stock-id 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-stock-id object) => stock-id}
   @syntax[]{(setf (gtk-action-stock-id object) stock-id)}
   @argument[object]{a @class{gtk-action} object}
@@ -649,12 +655,12 @@
   action. The slot access function @sym{(setf gtk-action-stock-id)} sets the
   stock ID.
 
-  The stock icon displayed in widgets representing this action. This is an
+  The stock icon displayed in widgets representing the action. This is an
   appearance property and thus only applies if the
   @slot[gtk-activatable]{use-action-appearance} property is @em{true}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-stock-id} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
   @see-function{gtk-activatable-use-action-appearance}")
@@ -671,7 +677,7 @@
 (setf (gethash 'gtk-action-tooltip atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-tooltip 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-tooltip object) => tooltip}
   @syntax[]{(setf (gtk-action-tooltip object) tooltip)}
   @argument[object]{a @class{gtk-action} object}
@@ -686,7 +692,7 @@
   tooltip text.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-tooltip} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}")
 
@@ -702,7 +708,7 @@
 (setf (gethash 'gtk-action-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-visible object) => visible}
   @syntax[]{(setf (gtk-action-visible object) visible)}
   @argument[object]{a @class{gtk-action} object}
@@ -720,7 +726,7 @@
   function @fun{gtk-action-is-visible} for that.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-visible} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
   @see-function{gtk-action-is-visible}")
@@ -740,7 +746,7 @@
 (setf (gethash 'gtk-action-visible-horizontal atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-horizontal 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-visible-horizontal object) => visible}
   @syntax[]{(setf (gtk-action-visible-horizontal object) visible)}
   @argument[object]{a @class{gtk-action} object}
@@ -755,7 +761,7 @@
   @sym{(setf gtk-action-visible-horizontal)} sets the visibility.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-visible-horizontal} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}")
 
@@ -774,7 +780,7 @@
 (setf (gethash 'gtk-action-visible-overflown atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-overflown 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-visible-overflow object) => visible}
   @syntax[]{(setf (gtk-action-visible-overflow object) visible)}
   @argument[object]{a @class{gtk-action} object}
@@ -788,7 +794,7 @@
   toolbar overflow menu.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-visible-overflown} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}")
 
@@ -807,7 +813,7 @@
 (setf (gethash 'gtk-action-visible-vertical atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-vertical 'function)
- "@version{2021-3-29}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-visible-vertical object) => visible}
   @syntax[]{(setf (gtk-action-visible-vertical object) visible)}
   @argument[object]{a @class{gtk-action} object}
@@ -822,7 +828,7 @@
   @sym{(setf gtk-action-visible-vertical)} sets the visibility.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-visible-vertical} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}")
 
@@ -834,31 +840,35 @@
 
 (defun gtk-action-new (name &optional (label nil) (tooltip nil) (stock-id nil))
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
-  @argument[name]{a @code{:string} with a unique name for the action}
-  @argument[label]{a @code{:string} with the label displayed in menu items and
-    on buttons, or @code{nil}}
-  @argument[tooltip]{a @code{:string} with a tooltip for the action, or
-    @code{nil}}
-  @argument[stock-id]{a @code{:string} with the stock icon to display in widgets
+ "@version{2021-7-20}
+  @argument[name]{a string with a unique name for the action}
+  @argument[label]{a string with the label displayed in menu items and on
+    buttons, or @code{nil}}
+  @argument[tooltip]{a string with a tooltip for the action, or @code{nil}}
+  @argument[stock-id]{a string with the stock icon to display in widgets
     representing the action, or @code{nil}}
   @return{A new @class{gtk-action} object.}
   @begin{short}
-    Creates a new @class{gtk-action} object.
+    Creates a new action.
   @end{short}
-  To add the action to a @class{gtk-action-group} and set the accelerator for
-  the action, call the @fun{gtk-action-group-add-action} function.
-  See the section called \"UI Definitions\" for information on allowed action
-  names in the documentation of @class{gtk-ui-manager}.
+  To add the action to a @class{gtk-action-group} object and set the accelerator
+  for the action, call the function @fun{gtk-action-group-add-action}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-new} has been deprecated since version 3.10
-    and should not be used in newly-written code. Use @class{g-action} instead,
-    associating it to a widget with @class{gtk-actionable} or creating a
-    @class{gtk-menu} with the function @fun{gtk-menu-new-from-model}.
+    and should not be used in newly written code. Use the @class{g-action}
+    interface instead, associating it to a widget with the
+    @class{gtk-actionable} interface or creating a @class{gtk-menu} widget with
+    the function @fun{gtk-menu-new-from-model}.
   @end{dictionary}
   @see-class{gtk-action}
   @see-class{gtk-action-group}
-  @see-function{gtk-action-group-add-action}"
+  @see-class{gtk-menu}
+  @see-class{g-action}
+  @see-class{g-menu-model}
+  @see-function{gtk-action-group-add-action}
+  @see-function{gtk-actionable}
+  @see-function{gtk-menu-new-from-model}
+  @see-function{g-action-enabled}"
   (make-instance 'gtk-action
                  :name name
                  :label (if label label (null-pointer))
@@ -873,19 +883,19 @@
 
 (defcfun ("gtk_action_is_sensitive" gtk-action-is-sensitive) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
   @return{@em{True} if the action and its associated action group are both
     sensitive.}
   @short{Returns whether the action is effectively sensitive.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-is-sensitive} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{g-action-enabled} on a @class{g-action} instead.
+    version 3.10 and should not be used in newly written code. Use the function
+    @fun{g-action-enabled} on a @class{g-action} object instead.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-function{gtk-action-sensitive}
   @see-class{g-action}
+  @see-function{gtk-action-sensitive}
   @see-function{g-action-enabled}"
   (action (g-object gtk-action)))
 
@@ -897,20 +907,20 @@
 
 (defcfun ("gtk_action_is_visible" gtk-action-is-visible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
   @return{@em{True} if the action and its associated action group are
     both visible.}
   @short{Returns whether the action is effectively visible.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-is-visible} has been deprecated since version
-    3.10 and should not be used in newly-written code. Use @class{g-action}
-    instead, and control and monitor the state of @class{gtk-actionable}
-    widgets directly.
+    3.10 and should not be used in newly written code. Use the @class{g-action}
+    interface instead, and control and monitor the state of
+    @class{gtk-actionable} widgets directly.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-class{gtk-actionable}
-  @see-class{g-action}"
+  @see-class{g-action}
+  @see-class{gtk-actionable}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-is-visible)
@@ -921,20 +931,22 @@
 
 (defcfun ("gtk_action_activate" gtk-action-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
   @begin{short}
     Emits the \"activate\" signal on the specified action, if it is not
-    insensitive. This gets called by the proxy widgets when they get activated.
+    insensitive.
   @end{short}
-
-  It can also be used to manually activate an action.
+  This gets called by the proxy widgets when they get activated. It can also be
+  used to manually activate an action.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-activate} has been deprecated since version
-    3.10 and should not be used in newly-written code. Use the function
-    @fun{g-action-group-activate-action} on a @class{g-action} instead.
+    3.10 and should not be used in newly written code. Use the function
+    @fun{g-action-group-activate-action} on a @class{g-action} object instead.
   @end{dictionary}
-  @see-class{gtk-action}"
+  @see-class{gtk-action}
+  @see-class{g-action}
+  @see-function{g-action-group-activate-action}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-activate)
@@ -945,27 +957,32 @@
 
 (defcfun ("gtk_action_create_icon" gtk-action-create-icon) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
-  @argument[icon-size]{the size of type @symbol{gtk-icon-size} of the icon that
-    should be created}
-  @return{A widget that displays the icon for this action.}
+  @argument[size]{a value of the @symbol{gtk-icon-size} enumeration for the
+    size of the icon that should be created}
+  @return{A @class{gtk-widget} object that displays the icon for this action.}
   @begin{short}
     This function is intended for use by action implementations to create icons
     displayed in the proxy widgets.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-create-icon} has been deprecated since version
-    3.10 and should not be used in newly-written code. Use the function
-    @fun{g-menu-item-set-icon} to set an icon on a @class{g-menu-item}, or the
-    function @fun{gtk-container-add} to add a @class{gtk-image} to a
-    @class{gtk-button}.
+    3.10 and should not be used in newly written code. Use the function
+    @fun{g-menu-item-set-icon} to set an icon on a @class{g-menu-item} object,
+    or the function @fun{gtk-container-add} to add a @class{gtk-image} widget
+    to a @class{gtk-button} widget.
   @end{dictionary}
   @see-class{gtk-action}
   @see-class{gtk-widget}
-  @see-symbol{gtk-icon-size}"
+  @see-class{g-menu-item}
+  @see-class{gtk-image}
+  @see-class{gtk-button}
+  @see-symbol{gtk-icon-size}
+  @see-function{g-menu-item-set-icon}
+  @see-function{gtk-container-add}"
   (action (g-object gtk-action))
-  (icon-size gtk-icon-size))
+  (size gtk-icon-size))
 
 (export 'gtk-action-create-icon)
 
@@ -976,17 +993,20 @@
 (defcfun ("gtk_action_create_menu_item" gtk-action-create-menu-item)
     (g-object gtk-image-menu-item)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
-  @return{A @class{gtk-image-menu-item} connected to the action.}
+  @return{A @class{gtk-image-menu-item} widget connected to the action.}
   @short{Creates a menu item widget that proxies for the given action.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-create-menu-item} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{g-menu-item-new} and associate it with a @class{g-action} instead.
+    version 3.10 and should not be used in newly written code. Use the function
+    @fun{g-menu-item-new} and associate it with a @class{g-action} object
+    instead.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-class{gtk-image-menu-item}"
+  @see-class{gtk-image-menu-item}
+  @see-class{g-action}
+  @see-function{g-menu-item-new}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-create-menu-item)
@@ -998,18 +1018,21 @@
 (defcfun ("gtk_action_create_tool_item" gtk-action-create-tool-item)
     (g-object gtk-tool-button)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
-  @return{A @class{gtk-tool-button} toolbar item connected to the action.}
-  @short{Creates a toolbar item widget that proxies for the given action.}
+  @return{A @class{gtk-tool-button} widget connected to the action.}
+  @short{Creates a toolbar item that proxies for the given action.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-create-tool-item} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use a
-    @class{gtk-tool-item} and associate it with a @class{g-action} using the
-    function @fun{gtk-actionable-action-name} instead.
+    version 3.10 and should not be used in newly written code. Use a
+    @class{gtk-tool-item} widget and associate it with a @class{g-action}
+    object using the function @fun{gtk-actionable-action-name} instead.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-class{gtk-tool-button}"
+  @see-class{gtk-tool-button}
+  @see-class{gtk-tool-item}
+  @see-class{g-action}
+  @see-function{gtk-actionable-action-name}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-create-tool-item)
@@ -1020,9 +1043,9 @@
 
 (defcfun ("gtk_action_create_menu" gtk-action-create-menu) g-object
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
-  @return{The menu item provided by the action, or @code{nil}.}
+  @return{The @class{gtk-menu} widget provided by the action, or @code{nil}.}
   @begin{short}
     If the action provides a @class{gtk-menu} widget as a submenu for the menu
     item or the toolbar item it creates, this function returns an instance of
@@ -1030,37 +1053,41 @@
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-create-menu} has been deprecated since version
-    3.10 and should not be used in newly-written code. Use @class{g-action} and
-    @class{g-menu-model} instead, and create a @class{gtk-menu} with the
-    function @fun{gtk-menu-new-from-model}.
+    3.10 and should not be used in newly written code. Use the @class{g-action}
+    interface and the @class{g-menu-model} object instead, and create a
+    @class{gtk-menu} widget with the function @fun{gtk-menu-new-from-model}.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-class{gtk-menu}"
+  @see-class{gtk-menu}
+  @see-class{g-action}
+  @see-class{g-menu-model}
+  @see-function{gtk-menu-new-from-model}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-create-menu)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_action_get_proxies ()
+;;; gtk_action_get_proxies () -> gtk-action-proxies
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_get_proxies" gtk-action-get-proxies)
+(defcfun ("gtk_action_get_proxies" gtk-action-proxies)
     (g-slist g-object :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
-  @return{A list of proxy widgets.}
+  @return{A list of @class{gtk-widget} proxy widgets.}
   @short{Returns the proxy widgets for the action.}
-  See also the function @fun{gtk-activatable-get-related-action}.
+  See also the function @fun{gtk-activatable-related-action}.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-action-get-proxies} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    The function @sym{gtk-action-proxies} has been deprecated since version
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-function{gtk-activatable-get-related-action}"
+  @see-class{gtk-widget}
+  @see-function{gtk-activatable-related-action}"
   (action (g-object gtk-action)))
 
-(export 'gtk-action-get-proxies)
+(export 'gtk-action-proxies)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_connect_accelerator ()
@@ -1068,13 +1095,13 @@
 
 (defcfun ("gtk_action_connect_accelerator" gtk-action-connect-accelerator) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
   @begin{short}
     Installs the accelerator for the action if the action has an accel path and
     group.
   @end{short}
-  See the functions @fun{gtk-action-set-accel-path} and
+  See the functions @fun{gtk-action-accel-path} and
   @fun{gtk-action-set-accel-group}.
 
   Since multiple proxies may independently trigger the installation of the
@@ -1083,12 +1110,14 @@
   @fun{gtk-action-disconnect-accelerator} has been called as many times.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-connect-accelerator} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use
-    @class{g-action} and the accelerator group on an associated
-    @class{gtk-menu} instead.
+    version 3.10 and should not be used in newly written code. Use the
+    @class{g-action} interface and the accelerator group on an associated
+    @class{gtk-menu} widget instead.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-function{gtk-action-set-accel-path}
+  @see-class{gtk-menu}
+  @see-class{g-action}
+  @see-function{gtk-action-accel-path}
   @see-function{gtk-action-set-accel-group}
   @see-function{gtk-action-disconnect-accelerator}"
   (action (g-object gtk-action)))
@@ -1102,7 +1131,7 @@
 (defcfun ("gtk_action_disconnect_accelerator" gtk-action-disconnect-accelerator)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
   @begin{short}
     Undoes the effect of one call to the function
@@ -1110,11 +1139,13 @@
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-disconnect-accelerator} has been deprecated
-    since version 3.10 and should not be used in newly-written code. Use
-    @class{g-action} and the accelerator group on an associated @class{gtk-menu}
-    instead.
+    since version 3.10 and should not be used in newly written code. Use the
+    @class{g-action} interface and the accelerator group on an associated
+    @class{gtk-menu} widget instead.
   @end{dictionary}
   @see-class{gtk-action}
+  @see-class{gtk-menu}
+  @see-class{g-action}
   @see-function{gtk-action-connect-accelerator}"
   (action (g-object gtk-action)))
 
@@ -1126,22 +1157,25 @@
 
 (defcfun ("gtk_action_block_activate" gtk-action-block-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
   @short{Disable activation signals from the action.}
 
-  This is needed when updating the state of your proxy @class{gtk-activatable}
+  This is needed when updating the state of your @class{gtk-activatable} proxy
   widget could result in calling the function @fun{gtk-action-activate}, this
-  is a convenience function to avoid recursing in those cases (updating toggle
-  state for instance).
+  is a convenience function to avoid recursing in those cases, updating toggle
+  state for instance.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-block-activate} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{g-simple-action-enabled} to disable the @class{g-simple-action}
+    version 3.10 and should not be used in newly written code. Use the function
+    @fun{g-simple-action-enabled} to disable the @class{g-simple-action} object
     instead.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-function{gtk-action-activate}"
+  @see-class{gtk-activatable}
+  @see-class{g-simple-action}
+  @see-function{gtk-action-activate}
+  @see-function{g-simple-action-enbaled}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-block-activate)
@@ -1152,94 +1186,87 @@
 
 (defcfun ("gtk_action_unblock_activate" gtk-action-unblock-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
   @short{Reenable activation signals from the action.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-unblock-activate} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{g-simple-action-enabled} to enable the @class{g-simple-action} instead.
+    version 3.10 and should not be used in newly written code. Use the function
+    @fun{g-simple-action-enabled} to enable the @class{g-simple-action} object
+    instead.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-function{gtk-action-block-activate}"
+  @see-class{g-simple-action}
+  @see-function{gtk-action-block-activate}
+  @see-function{g-simple-action-enabled}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-unblock-activate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_accel_path ()
+;;; gtk_action_set_accel_path () -> gtk-action-accel-path
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_get_accel_path" gtk-action-get-accel-path) :string
+(defun (setf gtk-action-accel-path) (path action)
+  (foreign-funcall "gtk_action_set_accel_path"
+                   (g-object gtk-action) action
+                   :string path
+                   :void)
+  path)
+
+(defcfun ("gtk_action_get_accel_path" gtk-action-accel-path) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
+  @syntax[]{(gtk-action-accel-path action) => path}
+  @syntax[]{(setf (gtk-action-accel-path action) path)}
   @argument[action]{a @class{gtk-action} object}
-  @return{The accel path of type @code{:string} for this action, or @code{nil}
-    if none is set.}
-  @short{Returns the accel path for this action.}
-  @begin[Warning]{dictionary}
-    The function @sym{gtk-action-get-accel-path} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use
-    @class{g-action} and the accelerator path on an associated @class{gtk-menu}
-    instead.
-  @end{dictionary}
-  @see-class{gtk-action}
-  @see-function{gtk-action-set-accel-path}"
-  (action (g-object gtk-action)))
-
-(export 'gtk-action-get-accel-path)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_action_set_accel_path ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_action_set_accel_path" gtk-action-set-accel-path) :void
- #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
-  @argument[action]{a @class{gtk-action} object}
-  @argument[accel-path]{the accelerator path}
+  @argument[path]{a string with the accelerator path}
   @begin{short}
-    Sets the accel path for this action.
+    Accessor of the accel path for the action.
   @end{short}
+
+  The function @sym{gtk-action-accel-path} returns the accel path for this
+  action, or @code{nil} if none is set. The function
+  @sym{(setf gtk-action-accel-path)} sets the accel path.
+
   All proxy widgets associated with the action will have this accel path, so
   that their accelerators are consistent.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-action-set-accel-path} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use
-    @class{g-action} and the accelerator path on an associated @class{gtk-menu}
-    instead.
+    The function @sym{gtk-action-accel-path} has been deprecated since version
+    3.10 and should not be used in newly written code. Use the
+    @class{g-action} interface and the accelerator path on an associated
+    @class{gtk-menu} widget instead.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-function{gtk-action-get-accel-path}"
-  (action (g-object gtk-action))
-  (accel-path :string))
+  @see-class{gtk-menu}
+  @see-class{g-action}"
+  (action (g-object gtk-action)))
 
-(export 'gtk-action-set-accel-path)
+(export 'gtk-action-accel-path)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_action_get_accel_closure ()
+;;; gtk_action_get_accel_closure ()                        not exported
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_get_accel_closure" gtk-action-get-accel-closure)
+(defcfun ("gtk_action_get_accel_closure" gtk-action-accel-closure)
     (:pointer (:struct g-closure))
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-6}
   @argument[action]{a @class{gtk-action} object}
   @begin{return}
-    The accel closure for this action. The returned closure is owned by GTK+
-    and must not be unreffed or modified.
+    The accel closure for this action.
   @end{return}
+  The returned closure is owned by GTK and must not be unreffed or modified.
   @short{Returns the accel closure for this action.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-get-accel-closure} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use
-    @class{g-action} and @class{gtk-menu} instead, which have no equivalent
-    for getting the accel closure.
+    version 3.10 and should not be used in newly written code. Use the
+    @class{g-action} inferface and @class{gtk-menu} widget instead, which have
+    no equivalent for getting the accel closure.
   @end{dictionary}
   @see-class{gtk-action}"
   (action (g-object gtk-action)))
-
-(export 'gtk-action-get-accel-closure)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_accel_group ()
@@ -1247,23 +1274,25 @@
 
 (defcfun ("gtk_action_set_accel_group" gtk-action-set-accel-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-12}
+ "@version{2021-7-20}
   @argument[action]{a @class{gtk-action} object}
-  @argument[accel-group]{a @class{gtk-accel-group} or @code{nil}}
+  @argument[group]{a @class{gtk-accel-group} object or @code{nil}}
   @begin{short}
-    Sets the @class{gtk-accel-group} in which the accelerator for this action
-    will be installed.
+    Sets the accel group in which the accelerator for this action will be
+    installed.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-set-accel-group} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use
-    @class{g-action} and the accelerator group on an associated @class{gtk-menu}
-    instead.
+    version 3.10 and should not be used in newly written code. Use the
+    @class{g-action} interface and the accelerator group on an associated
+    @class{gtk-menu} widget instead.
   @end{dictionary}
   @see-class{gtk-action}
-  @see-class{gtk-accel-group}"
+  @see-class{gtk-accel-group}
+  @see-class{gtk-menu}
+  @see-class{g-action}"
   (action (g-object gtk-action))
-  (accel-group (g-object gtk-accel-group)))
+  (group (g-object gtk-accel-group)))
 
 (export 'gtk-action-set-accel-group)
 
