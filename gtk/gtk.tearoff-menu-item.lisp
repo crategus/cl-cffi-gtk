@@ -72,21 +72,20 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tearoff-menu-item 'type)
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @begin{short}
     A @sym{gtk-tearoff-menu-item} widget is a special @class{gtk-menu-item}
     widget which is used to tear off and reattach its menu.
   @end{short}
 
-  When its menu is shown normally, the @sym{gtk-tearoff-menu-item} widget is
-  drawn as a dotted line indicating that the menu can be torn off. Activating
-  it causes its menu to be torn off and displayed in its own window as a tearoff
-  menu.
+  When its menu is shown normally, the tearoff menu is drawn as a dotted line
+  indicating that the menu can be torn off. Activating it causes its menu to be
+  torn off and displayed in its own window as a tearoff menu.
 
-  When its menu is shown as a tearoff menu, the @sym{gtk-tearoff-menu-item}
-  widget is drawn as a dotted line which has a left pointing arrow graphic
-  indicating that the tearoff menu can be reattached. Activating it will erase
-  the tearoff menu window.
+  When its menu is shown as a tearoff menu, the tearoff menu is drawn as a
+  dotted line which has a left pointing arrow graphic indicating that the
+  tearoff menu can be reattached. Activating it will erase the tearoff menu
+  window.
   @begin[Warning]{dictionary}
     The @sym{gtk-tearoff-menu-item} widget is deprecated since GTK 3.4 and
     should not be used in newly written code. Menus are not meant to be torn
@@ -102,12 +101,12 @@
 
 (defun gtk-tearoff-menu-item-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-5-26}
+ "@version{2021-7-20}
   @return{A new @class{gtk-tearoff-menu-item} widget.}
-  @short{Creates a new tearoff menu item.}
+  @short{Creates a new tearoff menu.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-tearoff-menu-item-new} has been deprecated since
-    version 3.4 and should not be used in newly-written code.
+    version 3.4 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-tearoff-menu-item}"
   (make-instance 'gtk-tearoff-menu-item))
