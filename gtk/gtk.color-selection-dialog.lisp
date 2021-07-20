@@ -89,7 +89,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-selection-dialog 'type)
- "@version{2021-6-13}
+ "@version{2021-7-20}
   @begin{short}
     The @sym{gtk-color-selection-dialog} widget provides a standard dialog
     which allows the user to select a color much like the
@@ -111,7 +111,7 @@
   @end{dictionary}
   @begin[Warning]{dictionary}
     The @sym{gtk-color-selection-dialog} widget is deprecated since GTK 3.4 and
-    should not be used in newly-written code. Use the
+    should not be used in newly written code. Use the
     @class{gtk-color-chooser-dialog} widget instead.
   @end{dictionary}
   @see-slot{gtk-color-selection-dialog-cancel-button}
@@ -131,23 +131,30 @@
 (setf (documentation (atdoc:get-slot-from-name "cancel-button"
                                                'gtk-color-selection-dialog) 't)
  "The @code{cancel-button} property of type @class{gtk-widget} (Read) @br{}
-  The cancel button of the dialog.")
+  The Cancel button of the dialog.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-cancel-button
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-dialog-cancel-button 'function)
- "@version{2021-5-30}
+ "@version{2021-7-20}
+  @syntax[]{(gtk-color-selection-dialog-cancel-button object) => button}
+  @syntax[]{(setf (gtk-color-selection-dialog-cancel-button object) button)}
+  @argument[object]{a @class{gtk-color-selection-dialog} widget}
+  @argument[button]{a @class{gtk-widget} button}
   @begin{short}
     Accessor of the @slot[gtk-color-selection-dialog]{cancel-button} slot of
     the @class{gtk-color-selection-dialog} class.
   @end{short}
+
+  The Cancel button of the color selection dialog.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-dialog-cancel-button} is deprecated
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-color-selection-dialog}")
+  @see-class{gtk-color-selection-dialog}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-color-selection-dialog-color-selection -----------------------------
 
@@ -162,7 +169,11 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-dialog-color-selection 'function)
- "@version{2021-6-13}
+ "@version{2021-7-20}
+  @syntax[]{(gtk-color-selection-dialog-color-selection object) => selection}
+  @syntax[]{(setf (gtk-color-selection-dialog-color-selection object) selection)}
+  @argument[object]{a @class{gtk-color-selection-dialog} widget}
+  @argument[selection]{a @class{gtk-color-selection} widget}
   @begin{short}
     Accessor of the @slot[gtk-color-selection-dialog]{color-selection} slot of
     the @class{gtk-color-selection-dialog} class.
@@ -170,9 +181,11 @@
 
   The slot access function @sym{gtk-color-selection-dialog-color-selection}
   retrieves the @class{gtk-color-selection} widget embedded in the dialog.
+
+  The color selection embedded in the color selection dialog.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-dialog-color-selection} is deprecated
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection-dialog}
   @see-class{gtk-color-selection}")
@@ -183,23 +196,30 @@
 (setf (documentation (atdoc:get-slot-from-name "help-button"
                                                'gtk-color-selection-dialog) 't)
  "The @code{help-button} property of type @class{gtk-widget} (Read) @br{}
-  The help button of the dialog.")
+  The Help button of the dialog.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-help-button
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-dialog-help-button 'function)
- "@version{2021-5-30}
+ "@version{2021-7-20}
+  @syntax[]{(gtk-color-selection-dialog-help-button object) => button}
+  @syntax[]{(setf (gtk-color-selection-dialog-help-button object) button)}
+  @argument[object]{a @class{gtk-color-selection-dialog} widget}
+  @argument[button]{a @class{gtk-widget} button}
   @begin{short}
     Accessor of the @slot[gtk-color-selection-dialog]{help-button} slot of the
     @class{gtk-color-selection-dialog} class.
   @end{short}
+
+  The Help button of the color selection dialog.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-dialog-help-button} is deprecated
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-color-selection-dialog}")
+  @see-class{gtk-color-selection-dialog}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-color-selection-dialog-ok-button -----------------------------------
 
@@ -207,23 +227,30 @@
 (setf (documentation (atdoc:get-slot-from-name "ok-button"
                                                'gtk-color-selection-dialog) 't)
  "The @code{ok-button} property of type @class{gtk-widget} (Read) @br{}
-  The OK button of the dialog.")
+  The Ok button of the dialog.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-ok-button
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-dialog-ok-button 'function)
- "@version{2021-5-30}
+ "@version{2021-7-20}
+  @syntax[]{(gtk-color-selection-dialog-ok-button object) => button}
+  @syntax[]{(setf (gtk-color-selection-dialog-ok-button object) button)}
+  @argument[object]{a @class{gtk-color-selection-dialog} widget}
+  @argument[button]{a @class{gtk-widget} button}
   @begin{short}
     Accessor of the @slot[gtk-color-selection-dialog]{ok-button} slot of the
     @class{gtk-color-selection-dialog} class.
   @end{short}
+
+  The Ok button of the color selection dialog.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-dialog-ok-button} is deprecated
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-color-selection-dialog}")
+  @see-class{gtk-color-selection-dialog}
+  @see-class{gtk-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_dialog_new ()
@@ -233,7 +260,7 @@
 
 (defun gtk-color-selection-dialog-new (title)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @argument[title]{a string containing the title text for the dialog}
   @return{A @class{gtk-color-selection-dialog} widget.}
   @begin{short}
@@ -241,7 +268,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-dialog-new} is deprecated and should
-    not be used in newly-written code.
+    not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection-dialog}"
   (make-instance 'gtk-color-selection-dialog
