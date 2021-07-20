@@ -115,16 +115,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-selection 'type)
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @begin{short}
     The @sym{gtk-color-selection} widget is used to select a color.
   @end{short}
-  It consists of a color wheel and a number of sliders and entry boxes for color
-  parameters such as hue, saturation, value, red, green, blue, and opacity. It
-  is found on the @class{gtk-color-selection-dialog} widget.
+  It consists of a color wheel and a number of sliders and entry boxes for
+  color parameters such as hue, saturation, value, red, green, blue, and
+  opacity. It is found on the @class{gtk-color-selection-dialog} widget.
   @begin[Warning]{dictionary}
     The @sym{gtk-color-selection} widget is deprecated since GTK 3.4 and should
-    not be used in newly-written code.
+    not be used in newly written code.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"color-changed\" signal}
@@ -163,7 +163,7 @@
 (setf (gethash 'gtk-color-selection-current-alpha atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-current-alpha 'function)
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @syntax[]{(gtk-color-selection-current-alpha object) => alpha}
   @syntax[]{(setf (gtk-color-selection-current-alpha object) alpha)}
   @argument[object]{a @class{gtk-color-selection} widget}
@@ -180,7 +180,7 @@
   @arg{alpha} too.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-current-alpha} is deprecated since
-    version 3.4 and should not be used in newly-written code.
+    version 3.4 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection}")
 
@@ -197,7 +197,7 @@
 (setf (gethash 'gtk-color-selection-current-color atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-current-color 'function)
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @syntax[]{(gtk-color-selection-current-color object) => color}
   @syntax[]{(setf (gtk-color-selection-current-color object) color)}
   @argument[object]{a @class{gtk-color-selection} widget}
@@ -214,9 +214,10 @@
   @arg{color} too.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-current-color} is deprecated since
-    version 3.4 and should not be used in newly-written code.
+    version 3.4 and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-color-selection}")
+  @see-class{gtk-color-selection}
+  @see-class{gdk-color}")
 
 ;;; --- gtk-color-selection-current-rgba ---------------------------------------
 
@@ -230,7 +231,7 @@
 (setf (gethash 'gtk-color-selection-current-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-current-rgba 'function)
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @syntax[]{(gtk-color-selection-current-rgba object) => rgba}
   @syntax[]{(setf (gtk-color-selection-current-rgba object) rgba)}
   @argument[object]{a @class{gtk-color-selection} widget}
@@ -247,9 +248,10 @@
   @arg{rgba} too.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-current-rgba} is deprecated since
-    version 3.4 and should not be used in newly-written code.
+    version 3.4 and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-color-selection}")
+  @see-class{gtk-color-selection}
+  @see-class{gdk-rgba}")
 
 ;;; --- gtk-color-selection-has-opacity-control --------------------------------
 
@@ -258,7 +260,7 @@
                                                'gtk-color-selection) 't)
  "The @code{has-opacity-control} property of type @code{:boolean} (Read / Write)
   @br{}
-  Whether the color selector should allow setting opacity. @br{}
+  Whether the color selector should allow setting the opacity. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -266,7 +268,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-has-opacity-control 'function)
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @syntax[]{(gtk-color-selection-has-opacity-control object) => has-opacity}
   @syntax[]{(setf (gtk-color-selection-has-opacity-control object) has-opacity)}
   @argument[object]{a @class{gtk-color-selection} widget}
@@ -278,12 +280,12 @@
   @end{short}
 
   The slot access function @sym{gtk-color-selection-has-opacity-control}
-  determines whether the color selection has an opacity control. The slot access
+  determines whether the color selector has an opacity control. The slot access
   function @sym{(setf gtk-color-selection-has-opacity-control)} sets the color
   selector to use or not use opacity.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-has-opacity-control} is deprecated
-    since version 3.4 and should not be used in newly-written code.
+    since version 3.4 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection}")
 
@@ -300,7 +302,7 @@
 (setf (gethash 'gtk-color-selection-has-palette atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-color-selection-has-palette 'function)
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @syntax[]{(gtk-color-selection-has-palette object) => has-palette}
   @syntax[]{(setf (gtk-color-selection-has-palette object) has-palette)}
   @argument[object]{a @class{gtk-color-selection} widget}
@@ -317,7 +319,7 @@
   palette.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-has-palette} is deprecated since
-    version 3.4 and should not be used in newly-written code.
+    version 3.4 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection}")
 
@@ -327,12 +329,12 @@
 
 (defun gtk-color-selection-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @return{A new @class{gtk-color-selection} widget.}
-  @short{Creates a new @class{gtk-color-selection} widget.}
+  @short{Creates a new color selector.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-new} is deprecated since version 3.4
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection}"
   (make-instance 'gtk-color-selection))
@@ -355,23 +357,23 @@
 (defcfun ("gtk_color_selection_get_previous_alpha"
            gtk-color-selection-previous-alpha) :uint16
  #+cl-cffi-gtk-documentation
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @syntax[]{(gtk-color-selection-previous-alpha selection) => alpha}
   @syntax[]{(setf (gtk-color-selection-previous-alpha selection) alpha)}
   @argument[selection]{a @class{gtk-color-selection} widget}
   @argument[alpha]{an integer between 0 and 65535}
   @begin{short}
-    The slot access function @sym{gtk-color-selection-previous-alpha} returns
-    the previous alpha value.
+    The function @sym{gtk-color-selection-previous-alpha} returns the previous
+    alpha value.
   @end{short}
-  The slot access function @sym{gtk-color-selection-previous-alpha)} sets the
+  The function @sym{(setf gtk-color-selection-previous-alpha)} sets the
   previous alpha value.
 
   This function should be called with some hesitations, as it might seem
   confusing to have that alpha change.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-previous-alpha} is deprecated
-    since version 3.4 and should not be used in newly-written code.
+    since version 3.4 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection}"
   (selection (g-object gtk-color-selection)))
@@ -398,17 +400,17 @@
 
 (defun gtk-color-selection-previous-color (selection)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @syntax[]{(gtk-color-selection-previous-color selection) => color}
   @syntax[]{(setf (gtk-color-selection-previous-color selection) color)}
-  @argument[color-selection]{a @class{gtk-color-selection} widget}
+  @argument[selection]{a @class{gtk-color-selection} widget}
   @argument[color]{a @class{gdk-color} color}
   @begin{short}
-    The function @sym{gtk-color-selection-previous-color} gets the original
+    The function @sym{gtk-color-selection-previous-color} gets the previous
     color value.
   @end{short}
-  The function @sym{(setf gtk-color-selection-previous-color} sets the previous
-  color.
+  The function @sym{(setf gtk-color-selection-previous-color)} sets the
+  previous color.
 
   This function should be called with some hesitations, as it might seem
   confusing to have that color change. Calling the function
@@ -416,9 +418,11 @@
   time it is called.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-previous-color} is deprecated since
-    version 3.4 and should not be used in newly-written code.
+    version 3.4 and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-color-selection}"
+  @see-class{gtk-color-selection}
+  @see-class{gdk-color}
+  @see-function{gtk-color-selection-current-rgba}"
   (let ((color (gdk-color-new)))
     (%gtk-color-selection-get-previous-color selection color)
     color))
@@ -445,13 +449,13 @@
 
 (defun gtk-color-selection-previous-rgba (selection)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @syntax[]{(gtk-color-selection-previous-rgba selection) => rgba}
   @syntax[]{(setf (gtk-color-selection-previous-rgba selection) rgba)}
   @argument[selection]{a @class{gtk-color-selection} widget}
   @argument[rgba]{a @class{gdk-rgba} color to set the previous color with}
   @begin{short}
-    The function @sym{gtk-color-selection-previous-rgba} gets the original
+    The function @sym{gtk-color-selection-previous-rgba} gets the previous
     color.
   @end{short}
   The function @sym{(setf gtk-color-selection-previous-rgba)} sets the previous
@@ -463,9 +467,11 @@
   time it is called.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-previous-rgba} is deprecated since
-    version 3.4 and should not be used in newly-written code.
+    version 3.4 and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-color-selection}"
+  @see-class{gtk-color-selection}
+  @see-class{gdk-rgba}
+  @see-function{gtk-color-selection-current-color}"
   (let ((rgba (make-gdk-rgba)))
     (%gtk-color-selection-get-previous-rgba selection rgba)
     rgba))
@@ -479,7 +485,7 @@
 (defcfun ("gtk_color_selection_is_adjusting" gtk-color-selection-is-adjusting)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @argument[selection]{a @class{gtk-color-selection} widget}
   @begin{return}
     @em{True} if the user is currently dragging a color around, and @em{false}
@@ -490,7 +496,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-is-adjusting} is deprecated since
-    version 3.4 and should not be used in newly-written code.
+    version 3.4 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection}"
   (selection g-object))
@@ -509,7 +515,7 @@
 
 (defun gtk-color-selection-palette-from-string (str)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-27}
+ "@version{2021-7-20}
   @argument[str]{a string encoding a color palette}
   @return{@em{True} if a color palette was successfully parsed.}
   @begin{short}
@@ -519,7 +525,7 @@
   @fun{gdk-color-parse}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-palette-from-string} is deprecated
-    since version 3.4 and should not be used in newly-written code.
+    since version 3.4 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection}
   @see-function{gdk-color-parse}"
@@ -554,7 +560,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-color-selection-palette-to-string} is deprecated
-    since version 3.4 and should not be used in newly-written code.
+    since version 3.4 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-color-selection}"
   (colors :pointer)
