@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.toggle-action.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -85,30 +85,33 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toggle-action 'type)
- "@version{2020-2-8}
+ "@version{2021-7-20}
   @begin{short}
-    A @sym{gtk-toggle-action} corresponds roughly to a
-    @class{gtk-check-menu-item}.
+    A @sym{gtk-toggle-action} object corresponds roughly to a
+    @class{gtk-check-menu-item} widget.
   @end{short}
   It has an \"active\" state specifying whether the action has been checked or
   not.
   @begin[Warning]{dictionary}
-    @sym{gtk-toggle-action} has been deprecated since version 3.10 and should
-    not be used in newly-written code.
+    The @sym{gtk-toggle-action} class has been deprecated since version 3.10 and
+    should not be used in newly written code.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
- lambda (toggleaction)    : Run First
+ lambda (action)    :run-first
       @end{pre}
-      Should be connected if you wish to perform an action whenever the
-      @sym{gtk-toggle-action} state is changed.
+      Should be connected if you wish to perform an action whenever the toggle
+      action state is changed.
       @begin[code]{table}
-        @entry[toggleaction]{The object which received the signal.}
+        @entry[action]{The @sym{gtk-toggle-action} object which received the
+          signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-toggle-action-active}
-  @see-slot{gtk-toggle-action-draw-as-radio}")
+  @see-slot{gtk-toggle-action-draw-as-radio}
+  @see-class{gtk-action}
+  @see-class{gtk-check-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -120,29 +123,28 @@
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-toggle-action) 't)
  "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   Whether the toggle action should be active. @br{}
-  Default value: @arg{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-action-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-action-active 'function)
- "@version{2020-2-8}
+ "@version{2021-7-20}
   @syntax[]{(gtk-toggle-action-active object) => is-active}
   @syntax[]{(setf (gtk-toggle-action-active object) is-active)}
-  @argument[object]{the @class{gtk-toggle-action} object}
-  @argument[is-active]{whether the action should be checked or not}
+  @argument[object]{a @class{gtk-toggle-action} object}
+  @argument[is-active]{a boolean whether the action should be checked or not}
   @begin{short}
     Accessor of the @slot[gtk-toggle-action]{active} slot of the
     @class{gtk-toggle-action} class.
   @end{short}
 
-  The @sym{gtk-toggle-action-active} slot access function
-  returns the checked state of the toggle action. The
-  @sym{(setf gtk-toggle-action-action)} slot access function sets the checked
-  state on the toggle action.
+  The slot access function @sym{gtk-toggle-action-active} returns the checked
+  state of the toggle action. The slot access function
+  @sym{(setf gtk-toggle-action-action)} sets the checked state.
   @begin[Warning]{dictionary}
     The function @sym{gtk-toggle-action-active} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-toggle-action}")
 
@@ -152,19 +154,17 @@
 (setf (documentation (atdoc:get-slot-from-name "draw-as-radio"
                                                'gtk-toggle-action) 't)
  "The @code{draw-as-radio} property of type @code{:boolean} (Read / Write) @br{}
-  Whether the proxies for this action look like radio action proxies.
-  This is an appearance property and thus only applies if the
-  @slot[gtk-activatable]{use-action-appearance} property is @em{true}. @br{}
-  Default value: @arg{false}")
+  Whether the proxies for this action look like radio action proxies. @br{}
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-action-draw-as-radio atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-action-draw-as-radio 'function)
- "@version{2020-2-8}
+ "@version{2021-7-20}
   @syntax[]{(gtk-toggle-action-draw-as-radio object) => draw-as-radio}
   @syntax[]{(setf (gtk-toggle-action-draw-as-radio object) draw-as-radio)}
-  @argument[object]{the @class{gtk-toggle-action} object}
+  @argument[object]{a @class{gtk-toggle-action} object}
   @argument[draw-as-radio]{a boolean whether the action should have proxies
     like a radio action}
   @begin{short}
@@ -172,13 +172,13 @@
     @class{gtk-toggle-action} class.
   @end{short}
 
-  The @sym{gtk-toggle-action-draw-as-radio} slot access function
-  returns whether the action should have proxies like a radio action.
-  The @sym{(setf gtk-toggle-action-draw-as-radio)} slot access function
-  sets whether the action should have proxies like a radio action.
+  The slot access function @sym{gtk-toggle-action-draw-as-radio} returns whether
+  the action should have proxies like a radio action. The slot access function
+  @sym{(setf gtk-toggle-action-draw-as-radio)} sets whether the action should
+  have proxies.
   @begin[Warning]{dictionary}
     The function @sym{gtk-toggle-action-draw-as-radio} has been deprecated
-    since version 3.10 and should not be used in newly-written code.
+    since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-toggle-action}")
 
@@ -188,25 +188,26 @@
 
 (defcfun ("gtk_toggle_action_new" gtk-toggle-action-new)
     (g-object gtk-toggle-action)
- "@version{2020-2-8}
-  @argument[name]{a @code{:string} with a unique name for the action}
-  @argument[label]{a @code{:string} with the label displayed in menu items and
-    on buttons, or @code{nil}}
-  @argument[tooltip]{a @code{:string} with a tooltip for the action, or
-    @code{nil}}
-  @argument[stock-id]{a @code{:string} with the stock icon to display in widgets
+ "@version{2021-7-20}
+  @argument[name]{a string with a unique name for the action}
+  @argument[label]{a string with the label displayed in menu items and on
+    buttons, or @code{nil}}
+  @argument[tooltip]{a string with a tooltip for the action, or @code{nil}}
+  @argument[stock-id]{a string with the stock icon to display in widgets
     representing the action, or @code{nil}}
   @return{A new @class{gtk-toggle-action} object.}
   @begin{short}
-    Creates a new @class{gtk-toggle-action} object.
+    Creates a new toggle action.
   @end{short}
-  To add the action to a @class{gtk-action-group} and set the accelerator for
-  the action, call the @fun{gtk-action-group-add-action} function.
+  To add the action to a @class{gtk-action-group} object and set the accelerator
+  for the action, call the function @fun{gtk-action-group-add-action}.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-toggle-action-new} has been deprecated
-    since version 3.10 and should not be used in newly-written code.
+    The function @sym{gtk-toggle-action-new} has been deprecated since version
+    3.10 and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-toggle-action}"
+  @see-class{gtk-toggle-action}
+  @see-class{gtk-action-group}
+  @see-function{gtk-action-group-add-action}"
   (name :string)
   (label :string)
   (tooltip :string)
@@ -219,14 +220,14 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_toggle_action_toggled" gtk-toggle-action-toggled) :void
- "@version{2020-2-8}
-  @argument[action]{the @class{gtk-toggle-action} object}
+ "@version{2021-7-20}
+  @argument[action]{a @class{gtk-toggle-action} object}
   @begin{short}
     Emits the \"toggled\" signal on the toggle action.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-toggle-action-toggled} has been deprecated
-    since version 3.10 and should not be used in newly-written code.
+    The function @sym{gtk-toggle-action-toggled} has been deprecated since
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-toggle-action}"
   (action (g-object gtk-toggle-action)))
