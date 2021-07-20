@@ -185,7 +185,7 @@
 (setf (gethash 'gtk-handle-box-child-detached atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-child-detached 'function)
- "@version{2021-5-25}
+ "@version{2021-7-20}
   @syntax[]{(gtk-handle-box-child-detached object) => detached}
   @argument[object]{a @class{gtk-handle-box} widget}
   @argument[detached]{a boolean whether the child is detached}
@@ -197,7 +197,7 @@
   Returns whether the child of the handle box is currently detached.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-child-detached} has been deprecated since
-    version 3.4 and should not be used in newly-written code. The
+    version 3.4 and should not be used in newly written code. The
     @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
   @see-class{gtk-handle-box}")
@@ -216,7 +216,7 @@
 (setf (gethash 'gtk-handle-box-handle-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-handle-position 'function)
- "@version{2021-5-25}
+ "@version{2021-7-20}
   @syntax[]{(gtk-handle-box-handle-position object) => position}
   @syntax[]{(setf (gtk-handle-box-handle-position object) position)}
   @argument[object]{a @class{gtk-handle-box} widget}
@@ -231,7 +231,7 @@
   @sym{(setf gtk-handle-box-handle-position)} sets the handle position.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-handle-position} has been deprecated since
-    version 3.4 and should not be used in newly-written code. The
+    version 3.4 and should not be used in newly written code. The
     @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
   @see-class{gtk-handle-box}
@@ -251,7 +251,7 @@
 (setf (gethash 'gtk-handle-box-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-shadow-type 'function)
- "@version{2021-5-25}
+ "@version{2021-7-20}
   @syntax[]{(gtk-handle-box-shadow-type object) => shadow-type}
   @syntax[]{(setf (gtk-handle-box-shadow-type object) shadow-type)}
   @argument[object]{a @class{gtk-handle-box} widget}
@@ -266,7 +266,7 @@
   sets the type of shadow.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-shadow-type} has been deprecated since
-    version 3.4 and should not be used in newly-written code. The
+    version 3.4 and should not be used in newly written code. The
     @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
   @see-class{gtk-handle-box}
@@ -286,7 +286,7 @@
 (setf (gethash 'gtk-handle-box-snap-edge atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge 'function)
- "@version{2021-5-25}
+ "@version{2021-7-20}
   @syntax[]{(gtk-handle-box-snap-edge object) => edge}
   @syntax[]{(setf (gtk-handle-box-snap-edge object) edge)}
   @argument[object]{a @class{gtk-handle-box} widget}
@@ -310,7 +310,7 @@
   then the snap edge will be @code{:top}, otherwise it will be @code{:left}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-snap-edge} has been deprecated since
-    version 3.4 and should not be used in newly-written code. The
+    version 3.4 and should not be used in newly written code. The
     @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
   @see-class{gtk-handle-box}
@@ -330,7 +330,7 @@
 (setf (gethash 'gtk-handle-box-snap-edge-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge-set 'function)
- "@version{2021-5-25}
+ "@version{2021-7-20}
   @syntax[]{(gtk-handle-box-snap-edge-set object) => setting}
   @syntax[]{(setf (gtk-handle-box-snap-edge-set object) setting)}
   @argument[object]{a @class{gtk-handle-box} widget}
@@ -345,7 +345,7 @@
   or a value derived from the @slot[gtk-handle-box]{handle-position} property.
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-snap-edge-set} has been deprecated since
-    version 3.4 and should not be used in newly-written code. The
+    version 3.4 and should not be used in newly written code. The
     @class{gtk-handle-box} widget has been deprecated.
   @end{dictionary}
   @see-class{gtk-handle-box}
@@ -360,14 +360,14 @@
 
 (defun gtk-handle-box-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-5-25}
+ "@version{2021-7-20}
   @return{A new @class{gtk-handle-box} widget.}
   @begin{short}
     Create a new handle box.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-handle-box-new} has been deprecated since version 3.4
-    and should not be used in newly-written code. The @class{gtk-handle-box}
+    and should not be used in newly written code. The @class{gtk-handle-box}
     widget has been deprecated.
   @end{dictionary}
   @see-class{gtk-handle-box}"
