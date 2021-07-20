@@ -79,7 +79,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hsv 'type)
- "@version{2021-5-30}
+ "@version{2021-7-20}
   @begin{short}
     The @sym{gtk-hsv} widget is the \"color wheel\" part of a complete color
     selector widget.
@@ -97,22 +97,20 @@
  lambda (hsv)    :run-first
       @end{pre}
       @begin[code]{table}
-        @entry[hsv]{The @sym{gtk-color-selection-dialog} widget which received
-          the signal.}
+        @entry[hsv]{The @sym{gtk-hsv} widget which received the signal.}
       @end{table}
     @subheading{The \"move\" signal}
       @begin{pre}
  lambda (hsv direction)    :action
       @end{pre}
       @begin[code]{table}
-        @entry[hsv]{The @sym{gtk-color-selection-dialog} widget which received
-          the signal.}
+        @entry[hsv]{The @sym{gtk-hsv} widget which received the signal.}
         @entry[direction]{A value of the @symbol{gtk-direction-type}
           enumeration.}
       @end{table}
   @end{dictionary}
   @see-class{gtk-color-selection}
-  @see-symbol{gtk-direction-type}")
+  @see-class{gtk-color-selection-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_new ()
@@ -122,14 +120,14 @@
 
 (defun gtk-hsv-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-5-30}
+ "@version{2021-7-20}
   @return{A newly-created @class{gtk-hsv} widget.}
   @begin{short}
     Creates a new HSV color selector.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-hsv-new} is deprecated since version 3.4 and should
-    not be used in newly-written code.
+    not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-hsv}"
   (make-instance 'gtk-hsv))
@@ -142,7 +140,7 @@
 
 (defcfun ("gtk_hsv_set_color" gtk-hsv-set-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-5-30}
+ "@version{2021-7-20}
   @argument[hsv]{a @class{gtk-hsv} widget}
   @argument[h]{a double float hue component}
   @argument[s]{a double float saturation component}
@@ -153,7 +151,7 @@
   Color component values must be in the [0.0, 1.0] range.
   @begin[Warning]{dictionary}
     The function @sym{gtk-hsv-set-color} is deprecated since version 3.4 and
-    should not be used in newly-written code.
+    should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv))
@@ -175,7 +173,7 @@
 
 (defun gtk-hsv-get-color (hsv)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-30}
+ "@version{2021-7-20}
   @argument[hsv]{a @class{gtk-hsv} widget}
   @begin{return}
     @code{h} -- a double float hue component @br{}
@@ -188,7 +186,7 @@
   Returned values will be in the [0.0, 1.0] range.
   @begin[Warning]{dictionary}
     The function @sym{gtk-hsv-get-color} is deprecated since version 3.4 and
-    should not be used in newly-written code.
+    should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-hsv}"
   (with-foreign-objects ((h :double) (s :double) (v :double))
@@ -203,14 +201,14 @@
 
 (defcfun ("gtk_hsv_set_metrics" gtk-hsv-set-metrics) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-5-30}
+ "@version{2021-7-20}
   @argument[hsv]{a @class{gtk-hsv} widget}
   @argument[size]{an integer with the diameter for the hue ring}
   @argument[width]{an integer with the width of the hue ring}
   @short{Sets the size and ring width of an HSV color selector.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-hsv-set-metrics} is deprecated since version 3.4 and
-    should not be used in newly-written code.
+    should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv))
@@ -230,7 +228,7 @@
 
 (defun gtk-hsv-get-metrics (hsv)
  #+cl-cffi-gtk-documentation
- "@version{2021-6-13}
+ "@version{2021-7-20}
   @argument[hsv]{a @class{gtk-hsv} widget}
   @begin{return}
     @code{size} -- an integer with the diameter of the hue ring @br{}
@@ -239,7 +237,7 @@
   @short{Queries the size and ring width of an HSV color selector.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-hsv-get-metrics} is deprecated since version 3.4 and
-    should not be used in newly-written code.
+    should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-hsv}"
   (with-foreign-objects ((size :int) (width :int))
@@ -254,7 +252,7 @@
 
 (defcfun ("gtk_hsv_is_adjusting" gtk-hsv-is-adjusting) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-5-30}
+ "@version{2021-7-20}
   @argument[hsv]{a @class{gtk-hsv} widget}
   @begin{return}
     @em{True} if clients can ignore changes to the color value, since they may
@@ -270,7 +268,7 @@
   @see-class{gtk-hsv}
   @begin[Warning]{dictionary}
     The function @sym{gtk-hsv-is-adjusting} is deprecated since version 3.4 and
-    should not be used in newly-written code.
+    should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-hsv}"
   (hsv (g-object gtk-hsv)))
@@ -326,7 +324,7 @@
 
 (defun gtk-rgb-to-hsv (r g b)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-30}
+ "@version{2021-7-20}
   @argument[r]{a double float red component}
   @argument[g]{a double float green component}
   @argument[b]{a double float blue component}
@@ -339,7 +337,8 @@
     Converts a color from RGB space to HSV. Input values must be in the
     [0.0, 1.0] range; output values will be in the same range.
   @end{short}
-  @see-class{gtk-hsv}"
+  @see-class{gtk-hsv}
+  @see-function{gtk-hsv-to-rgb}"
   (with-foreign-objects ((h :double) (s :double) (v :double))
     (%gtk-rgb-to-hsv r g b h s v)
     (values (mem-ref h :double) (mem-ref s :double) (mem-ref v :double))))
