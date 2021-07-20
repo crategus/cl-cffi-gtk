@@ -75,10 +75,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-recent-action 'type)
- "@version{2021-5-4}
+ "@version{2021-7-20}
   @begin{short}
     A @sym{gtk-recent-action} object represents a list of recently used files,
-    which can be shown by widgets such as @class{gtk-recent-chooser-dialog}
+    which can be shown by widgets such as a @class{gtk-recent-chooser-dialog}
     widget or a @class{gtk-recent-chooser-menu} widget.
   @end{short}
 
@@ -87,11 +87,13 @@
   menu toolbutton showing the recently used files in the popup menu, use a
   @sym{gtk-recent-action} object as the action for a tool item.
   @begin[Warning]{dictionary}
-    The @sym{gtk-recent-action} object has been deprecated since version 3.10
-    and should not be used in newly-written code.
+    The @sym{gtk-recent-action} class has been deprecated since version 3.10
+    and should not be used in newly written code.
   @end{dictionary}
   @see-slot{gtk-recent-action-show-numbers}
-  @see-class{gtk-action}")
+  @see-class{gtk-action}
+  @see-class{gtk-recent-chooser-dialog}
+  @see-class{gtk-recent-chooser-menu}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -102,13 +104,13 @@
                                                'gtk-recent-action) 't)
  "The @code{show-numbers} property of type @code{:boolean} (Read / Write) @br{}
   Whether the items should be displayed with a number. @br{}
-  Default value: @arg{false}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-action-show-numbers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-action-show-numbers 'function)
- "@version{2021-5-4}
+ "@version{2021-7-20}
   @syntax[]{(gtk-recent-action-show-numbers object) => show-numbers}
   @syntax[]{(setf (gtk-recent-action-show-numbers object) show-numbers)}
   @argument[object]{a @class{gtk-recent-action} object}
@@ -119,13 +121,13 @@
   @end{short}
 
   The slot access function @sym{gtk-recent-action-show-numbers} sets whether a
-  number should be added to the items shown by the widgets representing action.
-  The numbers are shown to provide a unique character for a mnemonic to be used
-  inside the menu item's label. Only the first ten items get a number to avoid
-  clashes.
+  number should be added to the items shown by the widgets representing the
+  action. The numbers are shown to provide a unique character for a mnemonic to
+  be used inside the menu label of the item. Only the first ten items get a
+  number to avoid clashes.
   @begin[Warning]{dictionary}
     The function @sym{gtk-recent-action-show-numbers} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-recent-action}")
 
@@ -134,7 +136,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_recent_action_new" gtk-recent-action-new) (g-object gtk-action)
- "@version{2021-5-4}
+ "@version{2021-7-20}
   @argument[name]{a string with a unique name for the action}
   @argument[label]{a string with the label displayed in menu items and on
     buttons, or @code{nil}}
@@ -149,7 +151,7 @@
   for the action, call the function @fun{gtk-action-group-add-action}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-recent-action-new} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-recent-action}
   @see-class{gtk-action-group}
@@ -167,7 +169,7 @@
 
 (defcfun ("gtk_recent_action_new_for_manager"
            gtk-recent-action-new-for-manager) (g-object gtk-action)
- "@version{2020-5-4}
+ "@version{2021-7-20}
   @argument[name]{a string with a unique name for the action}
   @argument[label]{a string with the label displayed in menu items and on
     buttons, or @code{nil}}
@@ -184,12 +186,12 @@
   for the action, call the function @fun{gtk-action-group-add-action}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-recent-action-new-manager} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-recent-action}
   @see-class{gtk-action-group}
   @see-class{gtk-recent-manager}
-  @see-function{gtkaction-group-add-action}"
+  @see-function{gtk-action-group-add-action}"
   (name :string)
   (label :string)
   (tooltip :string)
