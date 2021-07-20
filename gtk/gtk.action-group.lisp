@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.action-group.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -117,7 +117,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-action-group 'type)
- "@version{2020-1-11}
+ "@version{2021-7-20}
   @begin{short}
     Actions are organised into groups. An action group is essentially a map
     from names to @class{gtk-action} objects.
@@ -127,21 +127,21 @@
   in a single group. Multiple action groups may be used for a particular user
   interface. In fact, it is expected that most nontrivial applications will
   make use of multiple groups. For example, in an application that can edit
-  multiple documents, one group holding global actions, e.g. quit, about,
-  new, and one group per document holding actions that act on that document,
-  e.g. save, cut, copy, paste. Each window's menus would be constructed
-  from a combination of two action groups.
+  multiple documents, one group holding global actions, e.g. Quit, About,
+  New, and one group per document holding actions that act on that document,
+  e.g. Save, Cut, Copy, Paste. Each of the menus of the window would be
+  constructed from a combination of two action groups.
 
   @subheading{Accelerators}
-  Accelerators are handled by the GTK+ accelerator map. All actions are
-  assigned an accelerator path, which normally has the form
+  Accelerators are handled by the GTK accelerator map. All actions are assigned
+  an accelerator path, which normally has the form
   @code{<Actions>/group-name/action-name}, and a shortcut is associated with
   this accelerator path. All menuitems and toolitems take on this accelerator
-  path. The GTK+ accelerator map code makes sure that the correct shortcut is
+  path. The GTK accelerator map code makes sure that the correct shortcut is
   displayed next to the menu item.
   @begin[Warning]{dictionary}
-    @sym{gtk-action-group} has been deprecated since version 3.10 and should
-    not be used in newly-written code.
+    The @sym{gtk-action-group} class has been deprecated since version 3.10 and
+    should not be used in newly written code.
   @end{dictionary}
   @begin[GtkActionGroup as GtkBuildable]{dictionary}
     The @sym{gtk-action-group} implementation of the @class{gtk-buildable}
@@ -154,9 +154,9 @@
     The @sym{gtk-action-group} implementation of the @class{gtk-buildable}
     interface supports a custom @code{<accelerator>} element, which has
     attributes named @code{key} and @code{modifiers} and allows to specify
-    accelerators. This is similar to the @code{<accelerator>} element of
-    @class{gtk-widget}, the main difference is that it does not allow you to
-    specify a signal.
+    accelerators. This is similar to the @code{<accelerator>} element of a
+    @class{gtk-widget} object, the main difference is that it does not allow
+    you to specify a signal.
 
     @b{Example:} A @sym{gtk-action-group} UI definition fragment.
     @begin{pre}
@@ -175,57 +175,46 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"connect-proxy\" signal}
       @begin{pre}
- lambda (action-group action proxy)
+ lambda (group action proxy)
       @end{pre}
-      The \"connect-proxy\" signal is emitted after connecting a proxy to an
-      action in the group. Note that the proxy may have been connected to a
-      different action before.
+      The signal is emitted after connecting a proxy to an action in the group.
+      Note that the proxy may have been connected to a different action before.
       This is intended for simple customizations for which a custom action class
-      would be too clumsy, e.g. showing tooltips for menuitems in the
-      statusbar. @class{gtk-ui-manager} proxies the signal and provides global
-      notification just before any action is connected to a proxy, which is
-      probably more convenient to use.
+      would be too clumsy, e.g. showing tooltips for menuitems in the statusbar.
       @begin[code]{table}
-        @entry[action-group]{The @sym{gtk-action-group} object.}
+        @entry[group]{The @sym{gtk-action-group} object.}
         @entry[action]{The @class{gtk-action} object.}
         @entry[proxy]{The @class{gtk-widget} proxy.}
       @end{table}
       @subheading{The \"disconnect-proxy\" signal}
         @begin{pre}
- lambda (action-group action proxy)
+ lambda (group action proxy)
         @end{pre}
-        The \"disconnect-proxy\" signal is emitted after disconnecting a proxy
-        from an action in the group.
-        @class{gtk-ui-manager} proxies the signal and provides global
-        notification just before any action is connected to a proxy, which is
-        probably more convenient to use.
+        The signal is emitted after disconnecting a proxy from an action in the
+        group.
         @begin[code]{table}
-          @entry[action-group]{The @sym{gtk-action-group} object.}
+          @entry[group]{The @sym{gtk-action-group} object.}
           @entry[action]{The @class{gtk-action} object.}
           @entry[proxy]{The @class{gtk-widget} proxy.}
         @end{table}
       @subheading{The \"post-activate\" signal}
         @begin{pre}
- lambda (action-group action)
+ lambda (group action)
         @end{pre}
-        The \"post-activate\" signal is emitted just after the action in the
-        action group is activated.
-        This is intended for @class{gtk-ui-manager} to proxy the signal and
-        provide global notification just after any action is activated.
+        The signal is emitted just after the action in the action group is
+        activated.
         @begin[code]{table}
-          @entry[action-group]{The @sym{gtk-action-group} object.}
+          @entry[group]{The @sym{gtk-action-group} object.}
           @entry[action]{The @class{gtk-action} object.}
         @end{table}
       @subheading{The \"pre-activate\" signal}
         @begin{pre}
- lambda (action-group action)
+ lambda (group action)
         @end{pre}
-        The \"pre-activate\" signal is emitted just before the action in the
-        action group is activated.
-        This is intended for @class{gtk-ui-manager} to proxy the signal and
-        provide global notification just before any action is activated.
+        The signal is emitted just before the action in the action group is
+        activated.
         @begin[code]{table}
-          @entry[action-group]{The @sym{gtk-action-group} object.}
+          @entry[group]{The @sym{gtk-action-group} object.}
           @entry[action]{The @class{gtk-action} object.}
         @end{table}
   @end{dictionary}
@@ -234,7 +223,6 @@
   @see-slot{gtk-action-group-sensitive}
   @see-slot{gtk-action-group-visible}
   @see-class{gtk-action}
-  @see-class{gtk-ui-manager}
   @see-class{gtk-accel-group}")
 
 ;;; ----------------------------------------------------------------------------
@@ -254,25 +242,23 @@
 (setf (gethash 'gtk-action-group-accel-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-group-accel-group 'function)
- "@version{2020-1-11}
-  @syntax[]{(gtk-action-group-accel-group object) => accel-group}
-  @syntax[]{(setf (gtk-action-group-accel-group object) accel-group)}
+ "@version{2021-7-20}
+  @syntax[]{(gtk-action-group-accel-group object) => group}
+  @syntax[]{(setf (gtk-action-group-accel-group object) group)}
   @argument[object]{a @class{gtk-action-group} object}
-  @argument[accel-group]{a @class{gtk-accel-group} object to set or @code{nil}}
+  @argument[group]{a @class{gtk-accel-group} object to set or @code{nil}}
   @begin{short}
     Accessor of the @slot[gtk-action-group]{accel-group} slot of the
     @class{gtk-action-group} class.
   @end{short}
 
-  The @sym{gtk-action-group-accel-group} slot access function
-  gets the accelerator group associated with this action group or @code{nil} if
-  there is none.
-
-  The @sym{(setf gtk-action-group-accel-group)} slot access function
-  sets the accelerator group to be used by every action in this group.
+  The slot access function @sym{gtk-action-group-accel-group} gets the
+  accelerator group associated with this action group or @code{nil} if there is
+  none. The slot access function @sym{(setf gtk-action-group-accel-group)} sets
+  the accelerator group.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-accel-group} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-class{gtk-accel-group}")
@@ -282,7 +268,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-action-group) 't)
  "The @code{name} property of type @code{:string}
-  (Read / Write / Construct) @br{}
+  (Read / Write / Construct only) @br{}
   A name for the action group. @br{}
   Default value: @code{nil}")
 
@@ -290,20 +276,20 @@
 (setf (gethash 'gtk-action-group-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-group-name 'function)
- "@version{2020-1-11}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-group-name object) => name}
   @argument[object]{a @class{gtk-action-group} object}
-  @return{The name of type @code{:string} of the action group.}
+  @return{A string with the name of the action group.}
   @begin{short}
     Accessor of the @slot[gtk-action-group]{name} slot of the
     @class{gtk-action-group} class.
   @end{short}
 
-  The @sym{gtk-action-group-name} slot access function
-  gets the name of the action group.
+  The slot access function @sym{gtk-action-group-name} gets the name of the
+  action group.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-name} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}")
 
@@ -314,33 +300,33 @@
                                                'gtk-action-group) 't)
  "The @code{sensitive} property of type @code{:boolean} (Read / Write) @br{}
   Whether the action group is enabled. @br{}
-  Default value: @arg{true}")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-group-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-group-sensitive 'function)
- "@version{2020-1-11}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-group-sensitive object) => sensitive}
   @syntax[]{(setf (gtk-action-group-sensitive object) sensitive)}
   @argument[object]{a @class{gtk-action-group} object}
-  @argument[sensitive]{sensitivity of type @code{:boolean}}
+  @argument[sensitive]{a boolean with the sensitivity}
   @begin{short}
     Accessor of the @slot[gtk-action-group]{sensitive} slot of the
     @class{gtk-action-group} class.
   @end{short}
 
-  The @sym{gtk-action-group-sensitive} slot access function
-  returns @arg{true} if the action group is sensitive.
+  The slot access function @sym{gtk-action-group-sensitive} returns @em{true}
+  if the action group is sensitive. The slot access function
+  @sym{(setf gtk-action-group-sensitive)} changes the sensitivity of the action
+  group.
+
   The constituent actions can only be logically sensitive, see the function
   @fun{gtk-action-is-sensitive}, if they are sensitive, see the function
   @fun{gtk-action-sensitive}, and their action group is sensitive.
-
-  The @sym{(setf gtk-action-group-sensitive)} slot access function
-  changes the sensitivity of the action group.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-sensitive} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-function{gtk-action-sensitive}
@@ -352,33 +338,33 @@
 (setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-action-group) 't)
  "The @code{visible} property of type @code{:boolean} (Read / Write) @br{}
   Whether the action group is visible. @br{}
-  Default value: @arg{true}")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-group-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-group-visible 'function)
- "@version{2020-1-28}
+ "@version{2021-7-20}
   @syntax[]{(gtk-action-group-visible object) => visible}
   @syntax[]{(setf (gtk-action-group-visible object) visible)}
   @argument[object]{a @class{gtk-action-group} object}
-  @argument[visible]{visibility of type @code{:boolean}}
+  @argument[visible]{a boolean with the visibility}
   @begin{short}
     Accessor of the @slot[gtk-action-group]{visible} slot of the
     @class{gtk-action-group} class.
   @end{short}
 
-  The @sym{gtk-action-group-sensitive} slot access function
-  returns @arg{true} if the action group is visible.
+  The slot access function @sym{gtk-action-group-sensitive} returns @em{true}
+  if the action group is visible. The slot access function
+  @sym{(setf gtk-action-group-sensitive)} changes the visibility of the action
+  group.
+
   The constituent actions can only be logically visible, see the function
   @fun{gtk-action-is-visible}, if they are visible, see the function
   @fun{gtk-action-visible}, and their action group is visible.
-
-  The @sym{(setf gtk-action-group-sensitive)} slot access function
-  changes the visibility of the action group.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-visible} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-function{gtk-action-visible}
@@ -392,16 +378,16 @@
 
 (defun gtk-action-group-new (name)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-28}
-  @argument[name]{a @code{:string} with the name of the action group}
+ "@version{2021-7-20}
+  @argument[name]{a string with the name of the action group}
   @return{The new @class{gtk-action-group} object.}
   @begin{short}
-    Creates a new @class{gtk-action-group} object. The name of the action
-    group is used when associating keybindings with the actions.
+    Creates a new action group. The name of the action group is used when
+    associating keybindings with the actions.
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-new} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}"
   (make-instance 'gtk-action-group
@@ -410,27 +396,27 @@
 (export 'gtk-action-group-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_action_group_get_action ()
+;;; gtk_action_group_get_action () -> gtk-action-group-action
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_group_get_action" gtk-action-group-get-action) g-object
+(defcfun ("gtk_action_group_get_action" gtk-action-group-action) g-object
  #+cl-cffi-gtk-documentation
- "@version{2020-1-11}
-  @argument[action-group]{the @class{gtk-action-group} object}
-  @argument[action-name]{the name of type @code{:string} of the action}
-  @return{The @class{gtk-action} object, or @code{nil} if no action by that name
-    exists.}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
+  @argument[name]{a string with the name of the action}
+  @return{The @class{gtk-action} object, or @code{nil} if no action by that
+    name exists.}
   @short{Looks up an action in the action group by name.}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-action-group-get-action} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    The function @sym{gtk-action-group-action} has been deprecated since
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-add-action}"
-  (action-group (g-object gtk-action-group))
-  (action-name :string))
+  (group (g-object gtk-action-group))
+  (name :string))
 
-(export 'gtk-action-group-get-action)
+(export 'gtk-action-group-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_group_list_actions ()
@@ -439,17 +425,17 @@
 (defcfun ("gtk_action_group_list_actions" gtk-action-group-list-actions)
     (g-list g-object :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-11}
-  @argument[action-group]{the @class{gtk-action-group} object}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
   @return{A list of the @class{gtk-action} objects in the action group.}
   @short{Lists the actions in the action group.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-list-actions} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-add-action}"
-  (action-group (g-object gtk-action-group)))
+  (group (g-object gtk-action-group)))
 
 (export 'gtk-action-group-list-actions)
 
@@ -457,30 +443,27 @@
 ;;; gtk_action_group_add_action ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-action-group-add-action (action-group action &optional accelerator)
+(defun gtk-action-group-add-action (group action &optional accelerator)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-28}
-  @argument[action-group]{the @class{gtk-action-group} object}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
   @argument[action]{the @class{gtk-action} object to add}
-  @argument[accelerator]{a @code{:string} with the optional accelerator for the
-    action, in the format understood by the function
-    @fun{gtk-accelerator-parse}, or \"\" for no accelerator, or @code{nil} to
-    use the stock accelerator}
+  @argument[accelerator]{a string with the optional accelerator for the action,
+    in the format understood by the function @fun{gtk-accelerator-parse}, or
+    \"\" for no accelerator, or @code{nil} to use the stock accelerator}
   @begin{short}
-    Adds an action object to the action group and sets up the accelerator.
+    Adds an action to the action group and sets up the accelerator.
   @end{short}
-
   If @arg{accelerator} is @code{nil}, this is the default value, attempts to
-  use the accelerator associated with the stock ID of the action.
-
-  Accel paths are set to @code{<Actions>/group-name/action-name}.
+  use the accelerator associated with the stock ID of the action. Accel paths
+  are set to @code{<Actions>/group-name/action-name}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-add-action} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-function{gtk-accelerator-parse}"
-  (%gtk-action-group-add-action-with-accel action-group
+  (%gtk-action-group-add-action-with-accel group
                                            action
                                            (if accelerator
                                                accelerator
@@ -489,7 +472,7 @@
 (export 'gtk-action-group-add-action)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_action_group_add_action_with_accel ()
+;;; gtk_action_group_add_action_with_accel ()              not exported
 ;;; ----------------------------------------------------------------------------
 
 ;; This function is called from gtk-action-group-add-action and not exported.
@@ -498,7 +481,7 @@
           %gtk-action-group-add-action-with-accel) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-1-11}
-  @argument[action-group]{the @class{gtk-action-group} object}
+  @argument[group]{a @class{gtk-action-group} object}
   @argument[action]{the @class{gtk-action} object to add}
   @argument[accelerator]{the accelerator for the action, in the format
     understood by the @fun{gtk-accelerator-parse} function, or \"\" for no
@@ -512,12 +495,12 @@
   Accel paths are set to <Actions>/group-name/action-name.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-add-action-with-accel} has been
-    deprecated since version 3.10 and should not be used in newly-written code.
+    deprecated since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-add-action}
   @see-function{gtk-accelerator-parse}"
-  (action-group (g-object gtk-action-group))
+  (group (g-object gtk-action-group))
   (action (g-object gtk-action))
   (accelerator :string))
 
@@ -527,24 +510,24 @@
 
 (defcfun ("gtk_action_group_remove_action" gtk-action-group-remove-action) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-11}
-  @argument[action-group]{the @class{gtk-action-group} object}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
   @argument[action]{a @class{gtk-action} object}
-  @short{Removes an action object from the action group.}
+  @short{Removes an action from the action group.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-remove-action} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-class{gtk-action}
   @see-function{gtk-action-group-add-action}"
-  (action-group (g-object gtk-action-group))
+  (group (g-object gtk-action-group))
   (action (g-object gtk-action)))
 
 (export 'gtk-action-group-remove-action)
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkActionEntry
+;;; struct GtkActionEntry                                  not exported
 ;;; ----------------------------------------------------------------------------
 
 ;; This structure is not used in the Lisp binding and not exported.
@@ -587,7 +570,8 @@
     @entry[tooltip]{The tooltip for the action. This field should typically be
       marked for translation, see the
       @fun{gtk-action-group-set-translation-domain} function.}
-    @entry[callback]{The function to call when the action is activated.}
+    @entry[callback]{The callback function to call when the action is
+      activated.}
   @end{table}
   @see-function{gtk-action-group-set-translation-domain}
   @see-function{gtk-accelerator-parse}")
@@ -596,18 +580,18 @@
 ;;; gtk_action_group_add_actions ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-action-group-add-actions (action-group entries)
+(defun gtk-action-group-add-actions (group entries)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-11}
-  @argument[action-group]{the @class{gtk-action-group} object}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
   @argument[entries]{a list of action descriptions}
   @begin{short}
     This is a convenience function to create a number of actions and add them
     to the action group.
   @end{short}
-
-  The \"activate\" signals of the actions are connected to the callbacks and
-  their accel paths are set to @code{<Actions>/group-name/action-name}.
+  The \"activate\" signals of the actions are connected to the callback
+  functions and their accel paths are set to
+  @code{<Actions>/group-name/action-name}.
   @begin[Example]{dictionary}
     @begin{pre}
 (let ((group (gtk-action-group-new \"AppWindowActions\"))
@@ -624,7 +608,7 @@
   @end{dictionary}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-add-actions} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-class{gtk-action}
@@ -641,7 +625,7 @@
                                  :tooltip (if (fifth entry)
                                               (fifth entry)
                                               (null-pointer)))))
-      (gtk-action-group-add-action action-group action (fourth entry))
+      (gtk-action-group-add-action group action (fourth entry))
       (let ((func (sixth entry)))
         (when func
           (g-signal-connect action "activate" func))))))
@@ -723,21 +707,21 @@
 ;;; gtk_action_group_add_toggle_actions ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-action-group-add-toggle-actions (action-group entries)
+(defun gtk-action-group-add-toggle-actions (group entries)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-11}
-  @argument[action-group]{the @class{gtk-action-group} object}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
   @argument[entries]{a list of toggle action descriptions}
   @begin{short}
     This is a convenience function to create a number of toggle actions and add
     them to the action group.
   @end{short}
-
-  The \"activate\" signals of the actions are connected to the callbacks and
-  their accel paths are set to @code{<Actions>/group-name/action-name}.
+  The \"activate\" signals of the actions are connected to the callback
+  functions and their accel paths are set to
+  @code{<Actions>/group-name/action-name}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-add-toggle-actions} has been deprecated
-    since version 3.10 and should not be used in newly-written code.
+    since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-class{gtk-toggle-action}
@@ -755,7 +739,7 @@
                                               (fifth entry)
                                               (null-pointer))
                                  :active (seventh entry))))
-      (gtk-action-group-add-action action-group action (fourth entry))
+      (gtk-action-group-add-action group action (fourth entry))
       (let ((func (sixth entry)))
         (when func
           (g-signal-connect action "activate" func))))))
@@ -838,22 +822,21 @@
 ;; TODO: This Lisp implementation is not complete.
 ;;       See the C code for missing features.
 
-(defun gtk-action-group-add-radio-actions (action-group entries value on-change)
+(defun gtk-action-group-add-radio-actions (group entries value on-change)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-28}
-  @argument[action-group]{the @class{gtk-action-group} object}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
   @argument[entries]{a list of radio action descriptions}
-  @argument[value]{the value of type @code{:int} of the action to activate
+  @argument[value]{an integer with the value of the action to activate
     initially, or -1 if no action should be activated}
-  @argument[on-change]{the callback to connect to the changed signal}
+  @argument[on-change]{the callback function to connect to the changed signal}
   @begin{short}
     This is a convenience function to create a group of radio actions and add
     them to the action group.
   @end{short}
-
   The \"changed\" signal of the first radio action is connected to the
-  @arg{on-change} callback and the accel paths of the actions are set to
-  @code{<Actions>/group-name/action-name}.
+  callback function @arg{on-change} and the accel paths of the actions are set
+  to @code{<Actions>/group-name/action-name}.
   @begin[Example]{dictionary}
     @begin{pre}
 (let ((group (gtk-action-group-new \"AppWindowActions\"))
@@ -873,7 +856,7 @@
   @end{dictionary}
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-add-radio-actions} has been deprecated
-    since version 3.10 and should not be used in newly-written code.
+    since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-class{gtk-radio-action}
@@ -898,10 +881,10 @@
           (setf first-action action))
         (gtk-radio-action-join-group action last-action)
         (setf last-action action)
-        (if (eql value (sixth entry))
+        (if (= value (sixth entry))
             (setf (gtk-toggle-action-active action) t)
             (setf (gtk-toggle-action-active action) nil))
-        (gtk-action-group-add-action action-group action (fourth entry))))
+        (gtk-action-group-add-action group action (fourth entry))))
     (when on-change
       (g-signal-connect first-action "changed" on-change))))
 
@@ -953,13 +936,33 @@
 ;;; gchar * (*GtkTranslateFunc) (const gchar *path, gpointer func_data);
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-translate-func-cb (:string :free-to-foreign nil
-                                            :free-from-foreign nil)
-    ((path (:string :free-from-foreign nil)) (data :pointer))
+(defcallback gtk-translate-func (:string :free-to-foreign nil
+                                         :free-from-foreign nil)
+    ((path (:string :free-from-foreign nil))
+     (data :pointer))
   (restart-case
-      (funcall (glib::get-stable-pointer-value data)
-               path)
-   (return-untranslated () path)))
+    (let ((func (get-stable-pointer-value data)))
+      (funcall func path))
+    (return-untranslated () path)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-translate-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-translate-func atdoc:*external-symbols*)
+ "@version{2021-7-20}
+  @begin{short}
+    A callback function used to translate messages.
+  @end{short}
+  @begin{pre}
+ lambda (path)
+  @end{pre}
+  @begin[code]{table}
+    @entry[path]{A string with the ID of the message.}
+    @entry[Returns]{A string with the translated message.}
+  @end{table}
+  @see-function{gtk-action-group-set-translate-func}")
+
+(export 'gtk-translate-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_group_set_translate_func ()
@@ -967,35 +970,36 @@
 
 (defcfun ("gtk_action_group_set_translate_func"
           %gtk-action-group-set-translate-func) :void
-  (action-group (g-object gtk-action-group))
+  (group (g-object gtk-action-group))
   (func :pointer)
   (data :pointer)
   (destroy-notify :pointer))
 
-(defun gtk-action-group-set-translate-func (action-group func)
+(defun gtk-action-group-set-translate-func (group func)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-11}
-  @argument[action-group]{a @class{gtk-action-group} object}
-  @argument[func]{a @code{GtkTranslateFunc}}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
+  @argument[func]{a @symbol{gtk-translate-func} callback function}
   @begin{short}
     Sets a function to be used for translating the label and tooltip of
     action entires added by the function @fun{gtk-action-group-add-actions}.
   @end{short}
-
-  If you are using @code{gettext()}, it is enough to set the translation domain
-  with the @fun{gtk-action-group-set-translation-domain} function.
+  If you are using the function @code{gettext()}, it is enough to set the
+  translation domain with the function
+  @fun{gtk-action-group-set-translation-domain}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-set-translate-func} has been deprecated
-    since version 3.10 and should not be used in newly-written code.
+    since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
+  @see-symbol{gtk-translate-func}
   @see-function{gtk-action-group-add-actions}
   @see-function{gtk-action-group-set-translation-domain}"
   (%gtk-action-group-set-translate-func
-                              action-group
-                              (callback gtk-translate-func-cb)
-                              (glib:allocate-stable-pointer func)
-                              (callback glib:stable-pointer-destroy-notify-cb)))
+                              group
+                              (callback gtk-translate-func)
+                              (allocate-stable-pointer func)
+                              (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-action-group-set-translate-func)
 
@@ -1006,27 +1010,25 @@
 (defcfun ("gtk_action_group_set_translation_domain"
           gtk-action-group-set-translation-domain) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-1-28}
-  @argument[action-group]{a @class{gtk-action-group} object}
-  @argument[domain]{the translation domain of type @code{:string} to use for
-    @code{g_dgettext()} calls, or @code{nil} to use the domain set with
-    @code{textdomain()}}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
+  @argument[domain]{a string with the translation domain to use for
+    @code{g_dgettext()} calls}
   @begin{short}
-    Sets the translation domain and uses @code{g_dgettext()} for translating
-    the label and tooltip of action entries added by the function
+    Sets the translation domain and uses the function @code{g_dgettext()} for
+    translating the label and tooltip of action entries added by the function
     @fun{gtk-action-group-add-actions}.
   @end{short}
-
-  If you are not using @code{gettext()} for localization, see the
-  @fun{gtk-action-group-set-translate-func} function.
+  If you are not using the function @code{gettext()} for localization, see the
+  function @fun{gtk-action-group-set-translate-func}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-set-translate-domain} has been deprecated
-    since version 3.10 and should not be used in newly-written code.
+    since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
   @see-function{gtk-action-group-add-actions}
   @see-function{gtk-action-group-set-translate-func}"
-  (action-group (g-object gtk-action-group))
+  (group (g-object gtk-action-group))
   (domain :string))
 
 (export 'gtk-action-group-set-translation-domain)
@@ -1038,20 +1040,22 @@
 (defcfun ("gtk_action_group_translate_string" gtk-action-group-translate-string)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-28}
-  @argument[action-group]{a @class{gtk-action-group} object}
-  @argument[string]{a @code{:string}}
-  @return{The translation of @arg{string}.}
+ "@version{2021-7-20}
+  @argument[group]{a @class{gtk-action-group} object}
+  @argument[string]{a string}
+  @return{A string with the translation.}
   @begin{short}
-    Translates a string using the specified @code{translate_func()}.
+    Translates a string using the specified @symbol{gtk-translate-func} callback
+    function.
   @end{short}
   This is mainly intended for language bindings.
   @begin[Warning]{dictionary}
     The function @sym{gtk-action-group-translate-string} has been deprecated
-    since version 3.10 and should not be used in newly-written code.
+    since version 3.10 and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-action-group}"
-  (action-group (g-object gtk-action-group))
+  @see-class{gtk-action-group}
+  @see-symbol{gtk-translate-func}"
+  (group (g-object gtk-action-group))
   (string (:string :free-to-foreign nil)))
 
 (export 'gtk-action-group-translate-string)
