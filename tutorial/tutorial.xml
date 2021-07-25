@@ -683,8 +683,9 @@ static void destroy (GtkWidget *widget, gpointer data)
    <title>Upgraded Hello World</title>
    <para>
     <xref linkend="figure-upgraded-hello-world"/> and <xref linkend="example-upgraded-hello-world"/> show a
-    slightly improved Hello World with better examples of callbacks. This will also introduce the next topic,
-    packing widgets. First, the C program is shown in <xref linkend="example-upgraded-hello-world-c"/>.
+    slightly improved Hello World with better examples of callback functions. This will also introduce the
+    next topic, packing widgets. First, the C program is shown in
+    <xref linkend="example-upgraded-hello-world-c"/>.
    </para>
 
    <figure id="figure-upgraded-hello-world">
@@ -2420,7 +2421,7 @@ int main( int argc, char *argv[] )
     whenever they change its value. This happens both when user input causes the slider to move on a range
     widget, as well as when the program explicitly changes the value with the function
     &gtk-adjustment-value;. So, for example, if you have a scale widget, and you want to change the rotation
-    of a picture whenever its value changes, you would create a callback like this:
+    of a picture whenever its value changes, you would create a callback function like this:
    </para>
    <programlisting>
 (defun cb-rotate-picture (adj picture)
@@ -2938,7 +2939,7 @@ int main( int argc, char *argv[] )
    </para>
    <para>
     As an example, the following program uses an aspect frame widget to present a drawing area whose aspect
-    ratio will always be 2:1, no matter how the user resizes the top-level window.
+    ratio will always be 2:1, no matter how the user resizes the toplevel window.
    </para>
 
    <figure id="figure-aspect-frame">
@@ -4373,8 +4374,8 @@ lambda (buffer location text len)
     of the model that the iterator points to. Consider the following example:
    </para>
    <programlisting>
-(let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
-  ;; Set the top-level row
+(let ((iter (gtk-tree-store-append model nil))) ; Toplevel iterator
+  ;; Set the toplevel row
   (gtk-tree-store-set model
                       iter
                       "The Art of Computer Programming"
@@ -4391,8 +4392,8 @@ lambda (buffer location text len)
     be visible when its parent is visible and in its expanded state. Consider the following example:
    </para>
    <programlisting>
-(let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
-  ;; Set the top-level row
+(let ((iter (gtk-tree-store-append model nil))) ; Toplevel iterator
+  ;; Set the toplevel row
   (gtk-tree-store-set model
                       iter
                       "The Art of Computer Programming"
@@ -4644,7 +4645,7 @@ lambda (buffer location text len)
       Instead of the string notation, the &gtk-tree-path; structure uses an integer array internally. You can
       get the depth, i.e. the nesting level, of a tree path with the function &gtk-tree-path-depth;. A depth
       of 0 is the imaginary invisible root node of the tree view and model. A depth of 1 means that the tree
-      path describes a top-level row. As lists are just trees without child nodes, all rows in a list always
+      path describes a toplevel row. As lists are just trees without child nodes, all rows in a list always
       have tree paths of depth 1. The function &gtk-tree-path-indices; returns the internal integer array of
       a tree path. You will rarely need to operate with those either.
      </para>
@@ -4689,7 +4690,7 @@ lambda (buffer location text len)
       </tr>
       <tr valign="top">
        <td><code>gtk-tree-model-iter-first</code></td>
-       <td>Returns the iterator to the the first top-level item in the list or tree.</td>
+       <td>Returns the iterator to the the first toplevel item in the list or tree.</td>
       </tr>
       <tr valign="top">
        <td><code>gtk-tree-model-iter-next</code></td>
@@ -4710,7 +4711,7 @@ lambda (buffer location text len)
        <td><code>gtk-tree-model-iter-n-children</code></td>
        <td>
         Returns the number of children the row referenced by the provided iterator has. If you pass
-        <code>nil</code> instead of an iterator, this function will return the number of top-level
+        <code>nil</code> instead of an iterator, this function will return the number of toplevel
         rows. You can use this function to count the number of items in a list store.
        </td>
       </tr>
@@ -4804,8 +4805,8 @@ lambda (buffer location text len)
       Tree iterators can easily be converted into tree paths using the function &gtk-tree-model-path;, and
       tree paths can easily be converted into tree iterators using the function &gtk-tree-model-iter;.
       Here is an example that shows how to get the iterator from the tree path that is passed to us from the
-      tree view in the "row-activated" signal callback. We need the iterator here to retrieve data from the
-      store.
+      tree view in the "row-activated" signal callback function. We need the iterator here to retrieve data
+      from the store.
      </para>
 
      <example id="example-row-activated">
@@ -4885,18 +4886,18 @@ lambda (buffer location text len)
       Adding rows to a tree store works similar to adding rows to a list store, only that the function
       &gtk-tree-store-append; is the function to use and one more argument is required, namely the tree
       iterator to the parent of the row to insert. If you supply <code>nil</code> instead of providing the
-      tree iterator of another row, a new top-level row will be inserted. If you do provide a parent tree
+      tree iterator of another row, a new toplevel row will be inserted. If you do provide a parent tree
       iterator, the new empty row will be inserted after any already existing children of the parent. Again,
       there are other ways to insert a row into the tree store and they are documented in the &gtk-tree-store;
       API reference manual. Another short example
      </para>
      <programlisting>
 (let* ((model (gtk-tree-store-new "gchararray"))
-       ;; Append an empty top-level row to the tree store.
+       ;; Append an empty toplevel row to the tree store.
        ;; Iter will point to the new row.
        (iter (gtk-tree-store-append model nil))
        (child nil))
-  ;; Append another empty top-level row to the tree store.
+  ;; Append another empty toplevel row to the tree store.
   (setf iter (gtk-tree-store-append model nil))
   ;; Append a child to the row we just added.
   (setf child (gtk-tree-store-append model iter))
@@ -5024,7 +5025,7 @@ lambda (buffer location text len)
      approaches: either you first create a &gtk-tree-path; instance that describes that row and then turn it
      into an iterator and remove it, or you take the iterator of the parent node and use the function
      &gtk-tree-model-iter-nth-child; (which will also work for list stores if you use <code>nil</code> as the
-     parent iterator. Of course you could also start with the iterator of the first top-level row, and then
+     parent iterator. Of course you could also start with the iterator of the first toplevel row, and then
      step-by-step move it to the row you want, although that seems a rather awkward way of doing it. The
      following code snippet will remove the n-th row of a list if it exists:
     </para>
@@ -5032,9 +5033,9 @@ lambda (buffer location text len)
 ;; Removes the nth row of a list store if it exists.
 (defun list-store-remove-nth-row (store n)
   (let (;; nil means the parent is the virtual root node, so the
-        ;; n-th top-level element is returned in iter, which is
+        ;; n-th toplevel element is returned in iter, which is
         ;; the n-th row in a list store as a list store only has
-        ;; top-level elements, and no children
+        ;; toplevel elements, and no children
         (iter (gtk-tree-model-nth-child store nil n)))
     (when iter
       (gtk-list-store-remove store iter))))
@@ -5101,7 +5102,7 @@ lambda (buffer location text len)
     </para>
     <para>
      The function &gtk-tree-view-model; will return the model that is currently attached to a given tree view,
-     which is particularly useful in callbacks where you only get passed the tree view widget.
+     which is particularly useful in callback functions where you only get passed the tree view widget.
     </para>
    </section>
 
@@ -5207,7 +5208,7 @@ lambda (buffer location text len)
       <td><code>gtk-cell-renderer-text</code></td>
       <td>
        Renders strings or numbers or boolean values as text ("Joe", "99.32", "true"). Sets the given
-       iterator to the first top-level item in the list or tree.
+       iterator to the first toplevel item in the list or tree.
       </td>
      </tr>
      <tr valign="top">
@@ -5539,7 +5540,7 @@ lambda (buffer location text len)
      properties accordingly (and unset them if you want that row to look normal), or you use attributes.
      Cell data functions are most likely not the right choice in this case though.
     </para>
-    <!-- TODO: The property rules-hint is deprecated, the theme is responsible  -->
+    <!-- TODO: The property rules-hint is deprecated, the theme is responsible -->
     <para>
      If you only want every second line to have a gray background to make it easier for the user to see which
      data belongs to which line in wide tree views, then you do not have to bother with the stuff mentioned
@@ -5700,14 +5701,14 @@ lambda (buffer location text len)
      </programlisting>
      <para>
       One thing you need to be aware of is that you need to take care when removing rows from the model in a
-      &gtk-tree-selection-selected-foreach; callback, or when looping through the list that the function
-      &gtk-tree-selection-selected-rows; returns (because it contains paths, and when you remove rows in the
-      middle, then the old paths will point to either a non-existing row, or to another row than the one
-      selected). You have two ways around this problem: one way is to use the solution to removing multiple
-      rows that has been described above, i.e. to get tree row references for all selected rows and then
-      remove the rows one by one; the other solution is to sort the list of selected tree paths so that the
-      last rows come first in the list, so that you remove rows from the end of the list or tree. You cannot
-      remove rows from within a foreach callback in any case, that is simply not allowed.
+      &gtk-tree-selection-selected-foreach; callback function, or when looping through the list that the
+      function &gtk-tree-selection-selected-rows; returns (because it contains paths, and when you remove rows
+      in the middle, then the old paths will point to either a non-existing row, or to another row than the
+      one selected). You have two ways around this problem: one way is to use the solution to removing
+      multiple rows that has been described above, i.e. to get tree row references for all selected rows and
+      then remove the rows one by one; the other solution is to sort the list of selected tree paths so that
+      the last rows come first in the list, so that you remove rows from the end of the list or tree. You
+      cannot remove rows from within a foreach callback function in any case, that is simply not allowed.
      </para>
      <para>
       Here is an example of how to use the function &gtk-tree-selection-selected-foreach;:
@@ -5965,8 +5966,8 @@ lambda (buffer location text len)
     <para>
      For the tree view, the sort tree model is the 'real' model - it knows nothing about the sort tree model's
      child model at all, which means that any path or iterator that you get passed from the tree view in a
-     callback or otherwise will refer to the sort tree model, and that you need to pass a path or iterator
-     refering to the sort tree model as well if you call tree view functions.
+     callback function or otherwise will refer to the sort tree model, and that you need to pass a path or
+     iterator refering to the sort tree model as well if you call tree view functions.
     </para>
    </section>
 
@@ -6025,11 +6026,11 @@ lambda (buffer location text len)
                                                 text))))
     </programlisting>
     <para>
-     This callback is then called whenever a cell has been edited.
+     This callback function is then called whenever a cell has been edited.
     </para>
     <para>
-     The tree path is passed to the "edited" signal callback in string form. You can convert this into a
-     &gtk-tree-path; instance with the function &gtk-tree-path-new-from-string;, or convert it into an
+     The tree path is passed to the "edited" signal callback function in string form. You can convert this
+     into a &gtk-tree-path; instance with the function &gtk-tree-path-new-from-string;, or convert it into an
      iterator with the function &gtk-tree-model-iter-from-string;.
     </para>
     <para>
@@ -6077,8 +6078,8 @@ lambda (buffer location text len)
      that cell from the model, and not from the cell renderer.
     </para>
     <para>
-     The callback for the "toggled" signal looks like this (the API reference is a bit lacking in this
-     particular case):
+     The callback function for the "toggled" signal looks like this (the API reference is a bit lacking in
+     this particular case):
     </para>
     <programlisting>
 (g-signal-connect renderer "toggled"
@@ -6089,8 +6090,8 @@ lambda (buffer location text len)
     </programlisting>
     <para>
      Just like with the "edited" signal of the text cell renderer, the tree path is passed to the "toggled"
-     signal callback in string form. You can convert this into a &gtk-tree-path; instance with the function
-     &gtk-tree-path-new-from-string;, or convert it into an iterator with the function
+     signal callback function in string form. You can convert this into a &gtk-tree-path; instance with the
+     function &gtk-tree-path-new-from-string;, or convert it into an iterator with the function
      &gtk-tree-model-iter-from-string;.
     </para>
    </section>
@@ -6347,7 +6348,7 @@ lambda (buffer location text len)
     expose a standard programming interface.
    </para>
    <para>
-    The &gtk-file-chooser; interface allows for shortcuts to various places in the filesystem.  In the
+    The &gtk-file-chooser; interface allows for shortcuts to various places in the filesystem. In the
     default implementation these are displayed in the left pane. It may be a bit confusing at first that
     these shortcuts come from various sources and in various flavours, so lets explain the terminology here:
    </para>
@@ -6397,10 +6398,10 @@ lambda (buffer location text len)
     preview.
    </para>
    <para>
-    Your callback should use the function &gtk-file-chooser-preview-filename; to see what needs previewing.
-    Once you have generated the preview for the corresponding file, you must call the function
-    &gtk-file-chooser-preview-widget-active; with a boolean flag that indicates whether your callback could
-    successfully generate a preview.
+    Your callback function should use the function &gtk-file-chooser-preview-filename; to see what needs
+    previewing. Once you have generated the preview for the corresponding file, you must call the function
+    &gtk-file-chooser-preview-widget-active; with a boolean flag that indicates whether your callback function
+    could successfully generate a preview.
    </para>
 
    <bridgehead renderas='sect3'>Adding Extra Widgets</bridgehead>
@@ -6680,8 +6681,8 @@ lambda (buffer location text len)
      </listitem>
      <listitem>
       Menu items are the only things that can be activated, and these emit an "activate" signal, which must
-      be connected to a callback to handle the user's clicks on that item. Although they emit other signals,
-      this is the normally used.
+      be connected to a callback function to handle the user's clicks on that item. Although they emit other
+      signals, this is the normally used.
      </listitem>
     </itemizedlist>
     <para>
@@ -6738,7 +6739,7 @@ lambda (buffer location text len)
      An empty menubar is created with the function &gtk-menu-bar-new; or the call
      <code>(make-instance 'gtk-menu-bar)</code>. The menubar itself should be added to its parent container
      with an appropriate packing function. Typically the menubar is put at the top of the content area just
-     below the top-level windows's title bar, so the usual sequence is
+     below the toplevel windows's title bar, so the usual sequence is
     </para>
     <programlisting>
 (let ((vbox (gtk-box-new :vertical 0)))
@@ -6866,7 +6867,7 @@ lambda (buffer location text len)
      The preceding steps create the menu items, but they are not yet connected to the "activate" signal.
      Menu items that have a submenu do not need to be connected to the "activate" signal; GTK arranges for
      that signal to open the submenu. But the others need to be connected. For example, the "Exit" menu item
-     is connected to a callback to quit the application with
+     is connected to a callback function to quit the application with
     </para>
     <programlisting>
 (g-signal-connect exit-item "activate"
@@ -6893,9 +6894,9 @@ lambda (buffer location text len)
      The same techniques for creating menus rooted in a menubar applies to the creation of pop-up menus for
      other widgets. For example, to create a button, which when the mouse button is pressed on it, would pop
      up a menu instead of taking some action, first the menu is created using the instructions above. Then a
-     mouse button press event signal is connected to a callback that popped up the menu, using the function
-     &g-signal-connect;. To illustrate, a small pop-up
-     menu is created and two menu items are packed into it.
+     mouse button press event signal is connected to a callback function that popped up the menu, using the
+     function &g-signal-connect;. To illustrate, a small pop-up menu is created and two menu items are packed
+     into it.
     </para>
     <programlisting>
 (let ((popup-menu (gtk-menu-new))
@@ -6906,10 +6907,10 @@ lambda (buffer location text len)
   ... )
     </programlisting>
     <para>
-     Next a callback is connected to the "button-press-event" signal. The callback will be responsible for
-     popping up the menu with the function &gtk-menu-popup;.
-     This function displays a menu and makes it available for selection. It exists precisely for the purpose
-     of displaying context sensitive menus.
+     Next a callback function is connected to the "button-press-event" signal. The callback function will be
+     responsible for popping up the menu with the function &gtk-menu-popup;. This function displays a menu and
+     makes it available for selection. It exists precisely for the purpose of displaying context sensitive
+     menus.
     </para>
     <para>
      The first argument of the function is the menu to pop-up. All other arguments are keyword arguments
@@ -6938,7 +6939,7 @@ lambda (buffer location text len)
      be the time stamp of the user event that caused the initiation of the popup.
     </para>
     <para>
-     Putting this together, the callback should be:
+     Putting this together, the callback function should be:
     </para>
     <programlisting>
 (g-signal-connect button "button-press-event"
@@ -7049,7 +7050,7 @@ lambda (buffer location text len)
    </programlisting>
    <para>
     Toolbar buttons are buttons, not items, and therefore they emit a "clicked" signal. To respond to button
-    clicks, connect a callback to the button as if it were an ordinary button, such as
+    clicks, connect a callback function to the button as if it were an ordinary button, such as
    </para>
    <programlisting>
 (g-signal-connect quit-button "clicked"
@@ -7880,482 +7881,122 @@ lambda (buffer location text len)
   </section>
  </chapter>
 
- <chapter id="Application_Suport">
+ <chapter id="Application_Support" revision="2021-6-15">
   <title>Application Support</title>
-  <section id="Application_Class">
+  <section id="Application_Class" revision="2021-6-15">
    <title>Application Class</title>
    <para>
-    <ulink url="&gtk-application;"><code>gtk-application</code></ulink> is a class that handles many
-    important aspects of a GTK application in a convenient fashion, without enforcing a one-size-fits-all
-    application model.
+    The &gtk-application; class handles many important aspects of a GTK application in a convenient fashion,
+    without enforcing a one-size-fits-all application model.
    </para>
    <para>
-    Currently, <ulink url="&gtk-application;"><code>gtk-application</code></ulink> handles GTK
-    initialization, application uniqueness, session management, provides some basic scriptability and desktop
-    shell integration by exporting actions and menus and manages a list of toplevel windows whose life-cycle
-    is automatically tied to the life-cycle of your application.
+    Currently, the &gtk-application; class handles GTK initialization, application uniqueness, session
+    management, provides some basic scriptability and desktop shell integration by exporting actions and menus
+    and manages a list of toplevel windows whose life-cycle is automatically tied to the life-cycle of your
+    application.
    </para>
    <para>
-    While <ulink url="&gtk-application;"><code>gtk-application</code></ulink> works fine with plain
-    &gtk-window; widgets, it is recommended to use it together
-    with <ulink url="&gtk-application-window;"><code>gtk-application-window</code></ulink>.
+    While the &gtk-application; class works fine with plain &gtk-window; widgets, it is recommended to use it
+    together with the &gtk-application-window; widget.
    </para>
    <para>
-    When GDK threads are enabled, <ulink url="&gtk-application;"><code>gtk-application</code></ulink> will
-    acquire the GDK lock when invoking actions that arrive from other processes.  The GDK lock is not touched
-    for local action invocations.  In order to have actions invoked in a predictable context it is therefore
-    recommended that the GDK lock be held while invoking actions locally with the function
-    <ulink url="&g-action-group-activate-action;"><code>g-action-group-activate-action</code></ulink>.  The
-    same applies to actions associated with <ulink url="&gtk-application-window;">
-    <code>gtk-application-window</code></ulink> and to the 'activate' and 'open'
-    <ulink url="&g-application;"><code>g-application</code></ulink> methods.
+    When GDK threads are enabled, the &gtk-application; object will acquire the GDK lock when invoking actions
+    that arrive from other processes. The GDK lock is not touched for local action invocations. In order to
+    have actions invoked in a predictable context it is therefore recommended that the GDK lock be held while
+    invoking actions locally with the function &g-action-group-activate-action;. The same applies to actions
+    associated with the &gtk-application-window; widget and to the 'activate' and 'open' signals of the
+    &g-application; class.
    </para>
+
+   <figure id="figure-bloatpad">
+    <title>Simple Application</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="figures/bloatpad.png" format="png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+
    <para>
-    To set an application menu for a <ulink url="&gtk-application;"><code>gtk-application</code></ulink>, use
-    the generic function <ulink url="&gtk-application-app-menu;">
-    <code>gtk-application-app-menu</code></ulink>.  The <ulink url="&g-menu-model;">
-    <code>g-menu-model</code></ulink> that this function expects is usually constructed using
-    <ulink url="&gtk-builder;"><code>gtk-builder</code></ulink>, as seen in example
-    <link linkend="example-application">Application</link>.  To specify a menubar that will be shown by
-    <ulink url="&gtk-application-window;"><code>gtk-application-window</code></ulink> widgets, use the
-    generic function <ulink url="&gtk-application-menubar;"><code>gtk-application-menubar</code></ulink>.
-    Use the base <ulink url="&g-action-map;"><code>g-action-map</code></ulink> interface to add actions, to
-    respond to the user selecting these menu items.
+    To set an application menu for a &gtk-application; object, use the function &gtk-application-app-menu;.
+    The &g-menu-model; object that this function expects is usually constructed using the &gtk-builder;
+    object, as seen in <xref linkend="example-bloatpad"/>. To specify a menubar that will be shown by
+    &gtk-application-window; widgets, use the function &gtk-application-menubar;. Use the base &g-action-map;
+    interface to add actions, to respond to the user selecting these menu items.
    </para>
    <para>
     GTK displays these menus as expected, depending on the platform the application is running on.
    </para>
    <para>
-    <ulink url="&gtk-application;"><code>gtk-application</code></ulink> optionally registers with a session
-    manager of the users session, if you set the <ulink url="&register-session;">
-    <code>register-session</code></ulink> property, and offers various functionality related to the session
+    The &gtk-application; object optionally registers with a session manager of the users session, if you set
+    the &gtk_application_register-session; property, and offers various functionality related to the session
     life-cycle.
    </para>
    <para>
-    An application can block various ways to end the session with the function
-    <ulink url="&gtk-application-inhibit;"><code>gtk-application-inhibit</code></ulink>.  Typical use cases
-    for this kind of inhibiting are long-running, uninterruptible operations, such as burning a CD or
-    performing a disk backup.  The session manager may not honor the inhibitor, but it can be expected to
-    inform the user about the negative consequences of ending the session while inhibitors are present.
+    An application can block various ways to end the session with the function &gtk-application-inhibit;.
+    Typical use cases for this kind of inhibiting are long-running, uninterruptible operations, such as
+    burning a CD or performing a disk backup. The session manager may not honor the inhibitor, but it can be
+    expected to inform the user about the negative consequences of ending the session while inhibitors are
+    present.
    </para>
   </section>
 
-  <section id="Application_Window">
-   <sectioninfo>
-    <itermset>
-     <indexterm zone="Application_Window">
-      <primary>GtkApplicationWindow</primary>
-     </indexterm>
-     <indexterm zone="Application_Window">
-      <primary>application-window, gtk-application-window</primary>
-     </indexterm>
-     <indexterm zone="Application_Window">
-      <primary>GActionGroup</primary>
-     </indexterm>
-     <indexterm zone="Application_Window">
-      <primary>action-group, g-action-group</primary>
-     </indexterm>
-     <indexterm zone="Application_Window">
-      <primary>GActionMap</primary>
-     </indexterm>
-     <indexterm zone="Application_Window">
-      <primary>action-map, g-action-map</primary>
-     </indexterm>
-     <indexterm zone="Application_Window">
-      <primary>GMenuModel</primary>
-     </indexterm>
-     <indexterm zone="Application_Window">
-      <primary>menu-model, g-menu-model</primary>
-     </indexterm>
-     <indexterm zone="Application_Window">
-      <primary>GtkMenuBar</primary>
-     </indexterm>
-     <indexterm zone="Application_Window">
-      <primary>menu-bar,gtk-menu-bar</primary>
-     </indexterm>
-    </itermset>
-   </sectioninfo>
+  <section id="Application_Window" revision="2021-6-15">
    <title>Application Window</title>
    <para>
-    <ulink url="&gtk-application-window;"><code>gtk-application-window</code></ulink> is a
-    &gtk-window; subclass that offers some extra functionality
-    for better integration with <ulink url="&gtk-application;"><code>gtk-application</code></ulink> features.
-    Notably, it can handle both the application menu as well as the menubar. See the functions
-    <ulink url="&gtk-application-app-menu;"><code>gtk-application-app-menu</code></ulink> and
-    <ulink url="&gtk-application-menubar;"><code>gtk-application-menubar</code></ulink>.
+    The &gtk-application-window; class is a &gtk-window; subclass that offers some extra functionality for
+    better integration with &gtk-application; features. Notably, it can handle both the application menu as
+    well as the menubar. See the functions &gtk-application-app-menu; and &gtk-application-menubar;.
    </para>
    <para>
-    This class implements the <ulink url="&g-action-group;"><code>g-action-group</code></ulink> and
-    <ulink url="&g-action-map;"><code>g-action-map</code></ulink> interfaces, to let you add window-specific
-    actions that will be exported by the associated <ulink url="&gtk-application;">
-    <code>gtk-application</code></ulink>, together with its application-wide actions. Window-specific actions
-    are prefixed with the "win." prefix and application-wide actions are prefixed with the "app." prefix.
-    Actions must be addressed with the prefixed name when referring to them from a
-    <ulink url="&g-menu-model;"><code>g-menu-model</code></ulink>.
+    This class implements the &g-action-group; and &g-action-map; interfaces, to let you add window-specific
+    actions that will be exported by the associated &gtk-application; object, together with its
+    application-wide actions. Window-specific actions are prefixed with the "win." prefix and application-wide
+    actions are prefixed with the "app." prefix. Actions must be addressed with the prefixed name when
+    referring to them from a &g-menu-model; object.
    </para>
    <para>
-    Note that widgets that are placed inside a <ulink url="&gtk-application-window;">
-    <code>gtk-application-window</code></ulink> can also activate these actions, if they implement the
-    <ulink url="&gtk-actionable;"><code>gtk-actionable</code></ulink> interface.
+    Note that widgets that are placed inside a &gtk-application-window; widget can also activate these
+    actions, if they implement the &gtk-actionable; interface.
    </para>
    <para>
-    As with <ulink url="&gtk-application;"><code>gtk-application</code></ulink>, the GDK lock will be
-    acquired when processing actions arriving from other processes and should therefore be held when
-    activating actions locally if GDK threads are enabled.
+    As with &gtk-application; objects, the GDK lock will be acquired when processing actions arriving from
+    other processes and should therefore be held when activating actions locally if GDK threads are enabled.
    </para>
    <para>
-    The settings <ulink url="&gtk-shell-shows-app-menu;"><code>gtk-shell-shows-app-menu</code></ulink> and
-    <ulink url="&gtk-shell-shows-menubar;"><code>gtk-shell-shows-menubar</code></ulink> tell GTK whether the
-    desktop environment is showing the application menu and menubar models outside the application as part of
-    the desktop shell.  For instance, on OS X, both menus will be displayed remotely; on Windows neither will
-    be.  gnome-shell (starting with version 3.4) will display the application menu, but not the menubar.
+    The &gtk_settings_gtk-shell-shows-app-menu; and &gtk_settings_gtk-shell-shows-menubar; settings tell GTK
+    whether the desktop environment is showing the application menu and menubar models outside the application
+    as part of the desktop shell. For instance, on OS X, both menus will be displayed remotely; on Windows
+    neither will be. gnome-shell (starting with version 3.4) will display the application menu, but not the
+    menubar.
    </para>
    <para>
-    If the desktop environment does not display the menubar, then <ulink url="&gtk-application-window;">
-    <code>gtk-application-window</code></ulink> will automatically show a &gtk-menu-bar;
-    for it. See the <ulink url="&gtk-application;">
-    <code>gtk-application</code></ulink> docs for some screenshots of how this looks on different platforms.
-    This behaviour can be overridden with the <ulink url="&show-menubar;"><code>show-menubar</code></ulink>
-    property.  If the desktop environment does not display the application menu, then it will automatically
-    be included in the menubar.
+    If the desktop environment does not display the menubar, then the &gtk-application-window; widget will
+    automatically show a &gtk-menu-bar; widget for it. See the &gtk-application; docs for some screenshots of
+    how this looks on different platforms. This behaviour can be overridden with the
+    &gtk_application_window_show-menubar; property. If the desktop environment does not display the
+    application menu, then it will automatically be included in the menubar.
    </para>
    <para>
-    The XML format understood by <ulink url="&gtk-builder;"><code>gtk-builder</code></ulink> for
-    <ulink url="&g-menu-model;"><code>g-menu-model</code></ulink> consists of a toplevel
+    The XML format understood by the &gtk-builder; object for a &g-menu-model; object consists of a toplevel
     <code>&#x3c;menu></code> element, which contains one or more <code>&#x3c;item></code> elements. Each
     <code>&#x3c;item></code> element contains <code>&#x3c;attribute></code> and <code>&#x3c;link></code>
-    elements with a mandatory name attribute.  <code>&#x3c;link></code> elements have the same content model
+    elements with a mandatory name attribute. <code>&#x3c;link></code> elements have the same content model
     as <code>&#x3c;menu></code>.
    </para>
    <para>
-    Attribute values can be translated using gettext, like other <ulink url="&gtk-builder;">
-    <code>gtk-builder</code></ulink> content.  <code>&#x3c;attribute></code> elements can be marked for
-    translation with a translatable = "yes" attribute.  It is also possible to specify message context and
-    translator comments, using the context and comments attributes. To make use of this, the
-    <ulink url="&gtk-builder;"><code>gtk-builder</code></ulink> must have been given the gettext domain to
-    use.
+    Attribute values can be translated using the function <code>gettext()</code>, like other &gtk-builder;
+    content. <code>&#x3c;attribute></code> elements can be marked for translation with a translatable = "yes"
+    attribute. It is also possible to specify message context and translator comments, using the context and
+    comments attributes. To make use of this, the &gtk-builder; object must have been given the
+    gettext domain to use.
    </para>
-  </section>
 
-  <section id="Simple_Application">
-   <title>Simple Application</title>
-   <figure id="figure-bloatpad">
-    <title>Simple Application</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="figures/bloatpad.gif" format="gif"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-   <example id="example-application">
+   <example id="example-bloatpad">
     <title>Simple GTK Application</title>
-    <programlisting>
-(defclass bloat-pad (gtk-application)
-  ()
-  (:metaclass gobject-class)
-  (:g-type-name . "BloatPad"))
-
-(register-object-type-implementation "BloatPad"
-                                     bloat-pad
-                                     "GtkApplication"
-                                     nil
-                                     nil)
-
-(defun new-window (application file)
-  (declare (ignore file))
-    (let (;; Create the application window
-          (window (make-instance 'gtk-application-window
-                                 :application application
-                                 :title "Bloatpad"
-                                 :border-width 12
-                                 :default-width 500
-                                 :default-height 400))
-          (grid (make-instance 'gtk-grid))
-          (toolbar (make-instance 'gtk-toolbar)))
-
-      ;; Connect signal "destroy" to the application window
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)
-                          (if (zerop gtk::*main-thread-level*)
-                              (g-application-quit application))))
-
-      ;; Add action "copy" to the application window
-      (let ((action (g-simple-action-new "copy" nil)))
-        (g-action-map-add-action window action)
-        (g-signal-connect action "activate"
-           (lambda (action parameter)
-             (declare (ignore action parameter))
-             (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-data window "bloatpad-text"))))
-               (gtk-text-buffer-copy-clipboard
-                                  (gtk-text-view-buffer view)
-                                  (gtk-widget-clipboard view "CLIPBOARD"))))))
-
-      ;; Add action "paste" to the application window
-      (let ((action (g-simple-action-new "paste" nil)))
-        (g-action-map-add-action window action)
-        (g-signal-connect action "activate"
-           (lambda (action parameter)
-             (declare (ignore action parameter))
-             (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-data window "bloatpad-text"))))
-               (gtk-text-buffer-paste-clipboard
-                                       (gtk-text-view-buffer view)
-                                       (gtk-widget-clipboard view "CLIPBOARD")
-                                       :editable t)))))
-
-      ;; Add action "fullscreen" to the application window
-      (let ((action (g-simple-action-new-stateful
-                                               "fullscreen"
-                                               nil
-                                               (g-variant-new-boolean nil))))
-        (g-action-map-add-action window action)
-        (g-signal-connect action "activate"
-           (lambda (action parameter)
-             (declare (ignore parameter))
-             (let* ((state (g-action-state action))
-                    (value (g-variant-boolean state)))
-               (g-action-change-state action
-                                      (g-variant-new-boolean (not value))))))
-        (g-signal-connect action "change-state"
-           (lambda (action parameter)
-             (if (g-variant-boolean parameter)
-                 (gtk-window-fullscreen window)
-                 (gtk-window-unfullscreen window))
-             (setf (g-simple-action-state action) parameter))))
-
-      ;; Add action "justify" to the application window
-      (let ((action (g-simple-action-new-stateful
-                                             "justify"
-                                             (g-variant-type-new "s")
-                                             (g-variant-new-string "left"))))
-        (g-action-map-add-action window action)
-        (g-signal-connect action "activate"
-           (lambda (action parameter)
-             (g-action-change-state action parameter)))
-        (g-signal-connect action "change-state"
-           (lambda (action parameter)
-             (let ((view (gobject::get-g-object-for-pointer
-                           (g-object-data window "bloatpad-text")))
-                   (str (g-variant-string parameter)))
-               (cond ((equal str "left")
-                      (setf (gtk-text-view-justification view) :left))
-                     ((equal str "center")
-                      (setf (gtk-text-view-justification view) :center))
-                     (t
-                      (setf (gtk-text-view-justification view) :right)))
-               (setf (g-simple-action-state action) parameter)))))
-
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :stock-id "gtk-justify-left")))
-        (gtk-actionable-set-detailed-action-name button "win.justify::left")
-        (gtk-container-add toolbar button))
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :stock-id "gtk-justify-center")))
-        (gtk-actionable-set-detailed-action-name button
-                                                 "win.justify::center")
-        (gtk-container-add toolbar button))
-      (let ((button (make-instance 'gtk-toggle-tool-button
-                                   :stock-id "gtk-justify-right")))
-        (gtk-actionable-set-detailed-action-name button "win.justify::right")
-        (gtk-container-add toolbar button))
-      (let ((button (make-instance 'gtk-separator-tool-item
-                                   :draw nil)))
-        (setf (gtk-tool-item-expand button) t)
-        (gtk-container-add toolbar button))
-      (let ((button (make-instance 'gtk-tool-item))
-            (box (make-instance 'gtk-box
-                                :orientation :horizontal
-                                :spacing 6))
-            (label (make-instance 'gtk-label
-                                  :label "Fullscreen:"))
-            (switch (make-instance 'gtk-switch)))
-        (setf (gtk-actionable-action-name switch) "win.fullscreen")
-        (gtk-container-add box label)
-        (gtk-container-add box switch)
-        (gtk-container-add button box)
-        (gtk-container-add toolbar button))
-      (gtk-grid-attach grid toolbar 0 0 1 1)
-      (let ((scrolled (make-instance 'gtk-scrolled-window
-                                     :hexpand t
-                                     :vexpand t))
-            (view (make-instance 'gtk-text-view)))
-        (setf (g-object-data window "bloatpad-text") (pointer view))
-        (gtk-container-add scrolled view)
-        (gtk-grid-attach grid scrolled 0 1 1 1))
-      (gtk-container-add window grid)
-      (gtk-widget-show-all window)))
-
-(defun bloat-pad-activate (application)
-  ;; Start a main loop and create an application window
-  (within-main-loop
-    (new-window application nil))
-  ;; Wait until the main loop has finished
-  (join-gtk-main))
-
-(defun create-about-dialog ()
-  (let (;; Create an about dialog
-        (dialog (make-instance 'gtk-about-dialog
-                               :program-name "Example Dialog"
-                               :version "0.00"
-                               :copyright "(c) Dieter Kaiser"
-                               :website
-                               "github.com/crategus/cl-cffi-gtk"
-                               :website-label "Project web site"
-                               :license "LLGPL"
-                               :authors '("Dieter Kaiser")
-                               :documenters '("Dieter Kaiser")
-                               :artists '("None")
-                               :logo-icon-name
-                               "applications-development"
-                               :wrap-license t)))
-    ;; Run the about dialog
-    (gtk-dialog-run dialog)
-    ;; Destroy the about dialog
-    (gtk-widget-destroy dialog)))
-
-(defvar *menu*
-  "&#x3c;interface>
-    &#x3c;menu id='app-menu'>
-     &#x3c;section>
-      &#x3c;item>
-       &#x3c;attribute name='label' translatable='yes'>_New Window&#x3c;/attribute>
-       &#x3c;attribute name='action'>app.new&#x3c;/attribute>
-       &#x3c;attribute name='accel'>&lt;Primary&gt;n&#x3c;/attribute>
-      &#x3c;/item>
-     &#x3c;/section>
-     &#x3c;section>
-      &#x3c;item>
-       &#x3c;attribute name='label' translatable='yes'>_About Bloatpad&#x3c;/attribute>
-       &#x3c;attribute name='action'>app.about&#x3c;/attribute>
-      &#x3c;/item>
-     &#x3c;/section>
-     &#x3c;section>
-      &#x3c;item>
-       &#x3c;attribute name='label' translatable='yes'>_Quit&#x3c;/attribute>
-       &#x3c;attribute name='action'>app.quit&#x3c;/attribute>
-       &#x3c;attribute name='accel'>&lt;Primary&gt;q&#x3c;/attribute>
-      &#x3c;/item>
-     &#x3c;/section>
-     &#x3c;/menu>
-    &#x3c;menu id='menubar'>
-     &#x3c;submenu>
-      &#x3c;attribute name='label' translatable='yes'>_Edit&#x3c;/attribute>
-      &#x3c;section>
-       &#x3c;item>
-        &#x3c;attribute name='label' translatable='yes'>_Copy&#x3c;/attribute>
-        &#x3c;attribute name='action'>win.copy&#x3c;/attribute>
-        &#x3c;attribute name='accel'>&lt;Primary&gt;c&#x3c;/attribute>
-       &#x3c;/item>
-       &#x3c;item>
-        &#x3c;attribute name='label' translatable='yes'>_Paste&#x3c;/attribute>
-        &#x3c;attribute name='action'>win.paste&#x3c;/attribute>
-        &#x3c;attribute name='accel'>&lt;Primary&gt;v&#x3c;/attribute>
-       &#x3c;/item>
-      &#x3c;/section>
-     &#x3c;/submenu>
-     &#x3c;submenu>
-      &#x3c;attribute name='label' translatable='yes'>_View&#x3c;/attribute>
-      &#x3c;section>
-       &#x3c;item>
-        &#x3c;attribute name='label' translatable='yes'>_Fullscreen&#x3c;/attribute>
-        &#x3c;attribute name='action'>win.fullscreen&#x3c;/attribute>
-        &#x3c;attribute name='accel'>F11&#x3c;/attribute>
-       &#x3c;/item>
-      &#x3c;/section>
-     &#x3c;/submenu>
-    &#x3c;/menu>
-   &#x3c;/interface>")
-
-(defun bloat-pad-startup (application)
-  ;; Add action "new" to the application
-  (let ((action (g-simple-action-new "new" nil)))
-    ;; Connect a handler to the signal "activate"
-    (g-signal-connect action "activate"
-       (lambda (action parameter)
-         (declare (ignore action parameter))
-         ;; ensure-gtk-main increases the thread level for the new window
-         (ensure-gtk-main)
-         (new-window application nil)))
-    ;; Add the action to the action map of the application
-    (g-action-map-add-action application action))
-
-  ;; Add action "about" to the application
-  (let ((action (g-simple-action-new "about" nil)))
-    ;; Connect a handler to the signal "activate"
-    (g-signal-connect action "activate"
-       (lambda (action parameter)
-         (declare (ignore action parameter))
-         (create-about-dialog)))
-    ;; Add the action to the action map of the application
-    (g-action-map-add-action application action))
-
-  ;; Add action "quit" to the application
-  (let ((action (g-simple-action-new "quit" nil)))
-    ;; Connect a handler to the signal activate
-    (g-signal-connect action "activate"
-       (lambda (action parameter)
-         (declare (ignore action parameter))
-         ;; Destroy all windows of the application
-         (dolist (window (gtk-application-get-windows application))
-           (gtk-widget-destroy window))
-         ;; Quit the main loop
-         (leave-gtk-main)
-         ;; Quit the application
-         (g-application-quit application)))
-    ;; Add the action to action map of the application
-    (g-action-map-add-action application action))
-
-  ;; Intitialize the application menu and the menubar
-  (let ((builder (make-instance 'gtk-builder)))
-    ;; Read the menus from a string
-    (gtk-builder-add-from-string builder *menu*)
-    ;; Set the application menu
-    (setf (gtk-application-app-menu application)
-          (gtk-builder-object builder "app-menu"))
-    ;; Set the menubar
-    (setf (gtk-application-menubar application)
-          (gtk-builder-object builder "menubar"))))
-
-(defun bloat-pad-open (application)
-  (declare (ignore application))
-  ;; Executed when the application is opened
-  nil)
-
-(defun bloat-pad-shutdown (application)
-  (declare (ignore application))
-  ;; Executed when the application is shut down
-  nil)
-
-(defmethod initialize-instance :after
-    ((app bloat-pad) &#x26;key &#x26;allow-other-keys)
-  (g-signal-connect app "activate" #'bloat-pad-activate)
-  (g-signal-connect app "startup" #'bloat-pad-startup)
-  (g-signal-connect app "open" #'bloat-pad-open)
-  (g-signal-connect app "shutdown" #'bloat-pad-shutdown))
-
-(defun bloat-pad-new ()
-  (g-set-application-name "Bloatpad")
-  (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
-        nil)
-  (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
-        nil)
-  (make-instance 'bloat-pad
-                 :application-id "com.crategus.bloatpad"
-                 :flags :handles-open
-                 :inactivity-timeout 30000
-                 :register-session t))
-
-(defun example-application (&#x26;optional (argc 0) (argv (null-pointer)))
-  (let (;; Create an instance of the application Bloat Pad
-        (bloat-pad (bloat-pad-new)))
-    (format t "call G-APPLICATION-RUN.~%")
-    ;; Run the application
-    (g-application-run bloat-pad argv)
-    (format t "back from G-APPLICATION-RUN.~%")))
-    </programlisting>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/bloatpad.lisp" parse="text"/>
+   </programlisting>
    </example>
   </section>
  </chapter>
@@ -8378,7 +8019,7 @@ lambda (buffer location text len)
    <para>
     In order to explain the operations used by cairo, we first delve into a model of how Cairo models
     drawing. There are only a few concepts involved, which are then applied over and over by the different
-    methods. First I will describe the nouns: destination, source, mask, path, and context.  After that I
+    methods. First I will describe the nouns: destination, source, mask, path, and context. After that I
     will describe the verbs which offer ways to manipulate the nouns and draw the graphics you wish to
     create.
    </para>
@@ -8386,7 +8027,7 @@ lambda (buffer location text len)
    <section id="Nouns">
     <title>Nouns</title>
     <para>
-     Cairo's nouns are somewhat abstract.  To make them concrete I am including diagrams that depict how they
+     Cairo's nouns are somewhat abstract. To make them concrete I am including diagrams that depict how they
      interact. The first three nouns are the three layers in the diagrams you see in this section. The fourth
      noun, the path, is drawn on the middle layer when it is relevant. The final noun, the context, is not
      shown.
@@ -8428,7 +8069,7 @@ lambda (buffer location text len)
     </mediaobject>
     <para>
      The mask is the most important piece: it controls where you apply the source to the destination. I
-     will show it as a yellow layer with holes where it lets the source through.  When you apply a drawing
+     will show it as a yellow layer with holes where it lets the source through. When you apply a drawing
      verb, it is like you stamp the source to the destination. Anywhere the mask allows, the source is
      copied. Anywhere the mask disallows, nothing happens.
     </para>
@@ -8691,9 +8332,9 @@ lambda (buffer location text len)
     </programlisting>
     <para>
      Gradients describe a progression of colors by setting a start and stop reference location and a series
-     of "stops" along the way.  Linear gradients are built from two points which pass through parallel lines
-     to define the start and stop locations.  Radial gradients are also built from two points, but each has
-     an associated radius of the circle on which to define the start and stop locations.  Stops are added to 
+     of "stops" along the way. Linear gradients are built from two points which pass through parallel lines
+     to define the start and stop locations. Radial gradients are also built from two points, but each has
+     an associated radius of the circle on which to define the start and stop locations. Stops are added to 
      the gradient with <ulink url="&cairo-pattern-add-color-stop-rgb;">
      <code>cairo-pattern-add-color-stop-rgb</code></ulink> and
      <ulink url="&cairo-pattern-add-color-stop-rgba;"><code>cairo-pattern-add-color-stop-rgba</code></ulink>
@@ -8762,7 +8403,7 @@ lambda (buffer location text len)
     <para>
      What if you want to do multiple things with the same path? For instance to draw a red rectangle with a
      black border, you would want to fill the rectangle path with a red source, then stroke the same path
-     with a black source.  A rectangle path is easy to create multiple times, but a lot of paths are more
+     with a black source. A rectangle path is easy to create multiple times, but a lot of paths are more
      complex.
     </para>
     <para>
@@ -8784,11 +8425,11 @@ lambda (buffer location text len)
      </imageobject>
     </mediaobject>
     <para>
-     Cairo uses a connect-the-dots style system when creating paths.  Start at 1, draw a line to 2, then 3,
-     and so forth.  When you start a path, or when you need to start a new sub-path, you want it to be like
-     point 1: it has nothing connecting to it.  For this, use <ulink url="&cairo-move-to;">
-     <code>cairo-move-to</code></ulink>.  This sets the current reference point without making the path
-     connect the previous point to it.  There is also a relative coordinate variant,
+     Cairo uses a connect-the-dots style system when creating paths. Start at 1, draw a line to 2, then 3,
+     and so forth. When you start a path, or when you need to start a new sub-path, you want it to be like
+     point 1: it has nothing connecting to it. For this, use <ulink url="&cairo-move-to;">
+     <code>cairo-move-to</code></ulink>. This sets the current reference point without making the path
+     connect the previous point to it. There is also a relative coordinate variant,
      <ulink url="&cairo-rel-move-to;"><code>cairo-rel-move-to</code></ulink>, which sets the new reference a
      specified distance away from the current reference instead. After setting your first reference point,
      use the other path operations which both update the reference point and connect to it in some way.
@@ -8807,7 +8448,7 @@ lambda (buffer location text len)
      Whether with absolute coordinates <ulink url="&cairo-line-to;"><code>cairo-line-to</code></ulink>
      (extend the path from the reference to this point), or relative coordinates
      <ulink url="&cairo-rel-line-to;"><code>cairo-rel-line-to</code></ulink> (extend the path from the
-     reference this far in this direction), the path connection will be a straight line.  The new reference
+     reference this far in this direction), the path connection will be a straight line. The new reference
      point will be at the other end of the line.
     </para>
     <programlisting>
@@ -8822,8 +8463,8 @@ lambda (buffer location text len)
      </imageobject>
     </mediaobject>
     <para>
-     Arcs are parts of the outside of a circle.  Unlike straight lines, the point you directly specify is not
-     on the path.  Instead it is the center of the circle that makes up the addition to the path.  Both a
+     Arcs are parts of the outside of a circle. Unlike straight lines, the point you directly specify is not
+     on the path. Instead it is the center of the circle that makes up the addition to the path. Both a
      starting and ending point on the circle must be specified, and these points are connected either
      clockwise by <ulink url="&cairo-arc;"><code>cairo-arc</code></ulink> or counter-clockwise by
      <ulink url="&cairo-arc-negative;"><code>cairo-arc-negative</code></ulink>. If the previous reference
@@ -8841,8 +8482,8 @@ lambda (buffer location text len)
      </imageobject>
     </mediaobject>
     <para>
-     Curves in Cairo are cubic Bezier splines.  They start at the current reference point and smoothly follow
-     the direction of two other points (without going through them) to get to a third specified point.  Like
+     Curves in Cairo are cubic Bezier splines. They start at the current reference point and smoothly follow
+     the direction of two other points (without going through them) to get to a third specified point. Like
      lines, there are both absolute <ulink url="&cairo-curve-to;"><code>cairo-curve-to</code></ulink> and
      relative <ulink url="&cairo-rel-curve-to;"><code>cairo-rel-curve-to</code></ulink> versions. Note that
      the relative variant specifies all points relative to the previous reference point, rather than each
@@ -8862,7 +8503,7 @@ lambda (buffer location text len)
      Cairo can also close the path by drawing a straight line to the beginning of the current sub-path. This
      straight line can be useful for the last edge of a polygon, but is not directly useful for curve-based
      shapes. A closed path is fundamentally different from an open path: it is one continuous path and has
-     no start or end.  A closed path has no line caps for there is no place to put them.
+     no start or end. A closed path has no line caps for there is no place to put them.
     </para>
     <programlisting>
 (cairo-close-path cr)
@@ -8893,29 +8534,29 @@ lambda (buffer location text len)
     To use text effectively you need to know where it will go. The methods <ulink url="&cairo-font-extents;">
     <code>cairo-font-extents</code></ulink> and <ulink url="&cairo-text-extents;">
     <code>cairo-text-extents</code></ulink> get you this information. Since this diagram is hard to see so
-    small, I suggest getting its source and bump the size up to 600. It shows the relation between the  
+    small, I suggest getting its source and bump the size up to 600. It shows the relation between the
     reference point (red dot); suggested next reference point (blue dot); bounding box (dashed blue lines);
     bearing displacement (solid blue line); and height, ascent, baseline, and descent lines (dashed green).
    </para>
    <para>
-    The reference point is always on the baseline.  The descent line is below that, and reflects a rough
-    bounding box for all characters in the font.  However it is an artistic choice intended to indicate
-    alignment rather than a true bounding box.  The same is true for the ascent line above.  Next above that
-    is the height line, the artist-recommended spacing between subsequent baselines.  All three of these are
+    The reference point is always on the baseline. The descent line is below that, and reflects a rough
+    bounding box for all characters in the font. However it is an artistic choice intended to indicate
+    alignment rather than a true bounding box. The same is true for the ascent line above. Next above that
+    is the height line, the artist-recommended spacing between subsequent baselines. All three of these are
     reported as distances from the baseline, and expected to be positive despite their differing directions.
    </para>
    <para>
     The bearing is the displacement from the reference point to the upper-left corner of the bounding box.
     It is often zero or a small positive value for x displacement, but can be negative x for characters like
-    j as shown; it is almost always a negative value for y displacement.  The width and height then describe
-    the size of the bounding box.  The advance takes you to the suggested reference point for the next
-    letter.  Note that bounding boxes for subsequent blocks of text can overlap if the bearing is negative,
+    j as shown; it is almost always a negative value for y displacement. The width and height then describe
+    the size of the bounding box. The advance takes you to the suggested reference point for the next
+    letter. Note that bounding boxes for subsequent blocks of text can overlap if the bearing is negative,
     or the advance is smaller than the width would suggest.
    </para>
    <para>
-    In addition to placement, you also need to specify a face, style, and size.  Set the face and style
+    In addition to placement, you also need to specify a face, style, and size. Set the face and style
     together with <ulink url="&cairo-select-font-face;"><code>cairo-select-font-face</code></ulink>, and the
-    size with <ulink url="&cairo-set-font-size;"><code>cairo-set-font-size</code></ulink>.  If you need even
+    size with <ulink url="&cairo-set-font-size;"><code>cairo-set-font-size</code></ulink>. If you need even
     finer control, try getting a <ulink url="&cairo-font-options-t;">
     <code>cairo-font-options-t</code></ulink> with <ulink url="&cairo-get-font-options;">
     <code>cairo-get-font-options</code></ulink>, tweaking it, and setting it with
@@ -8926,33 +8567,33 @@ lambda (buffer location text len)
   <section id="Working_with_Transforms">
    <title>Working with Transforms</title>
    <para>
-    Transforms have three major uses.  First they allow you to set up a coordinate system that is easy to
+    Transforms have three major uses. First they allow you to set up a coordinate system that is easy to
     think in and work in, yet have the output be of any size. Second they allow you to make helper functions
-    that work at or around a (0, 0) but can be applied anywhere in the output image.  Thirdly they let you
-    deform the image, turning a circular arc into an elliptical arc, etc.  Transforms are a way of setting
-    up a relation between two coordinate systems.  The device-space coordinate system is tied to the surface,
-    and cannot change.  The user-space coordinate system matches that space by default, but can be changed
-    for the above reasons.  The helper functions <ulink url="&cairo-user-to-device;">
+    that work at or around a (0, 0) but can be applied anywhere in the output image. Thirdly they let you
+    deform the image, turning a circular arc into an elliptical arc, etc. Transforms are a way of setting
+    up a relation between two coordinate systems. The device-space coordinate system is tied to the surface,
+    and cannot change. The user-space coordinate system matches that space by default, but can be changed
+    for the above reasons. The helper functions <ulink url="&cairo-user-to-device;">
     <code>cairo-user-to-device</code></ulink> and <ulink url="&cairo-user-to-device-distance;">
     <code>cairo-user-to-device-distance</code></ulink> tell you what the device-coordinates are for a
-    user-coordinates position or distance.  Correspondingly <ulink url="&cairo-device-to-user;">
+    user-coordinates position or distance. Correspondingly <ulink url="&cairo-device-to-user;">
     <code>cairo-device-to-user</code></ulink> and <ulink url="&cairo-device-to-user-distance;">
     <code>cairo-device-to-user-distance</code></ulink> tell you user-coordinates for a device-coordinates
-    position or distance.  Remember to send positions through the non-distance variant, and relative moves
+    position or distance. Remember to send positions through the non-distance variant, and relative moves
     or other distances through the distance variant.
    </para>
    <para>
-    I leverage all of these reasons to draw the diagrams in this document.  Whether I am drawing 120 x 120
+    I leverage all of these reasons to draw the diagrams in this document. Whether I am drawing 120 x 120
     or 600 x 600, I use <ulink url="&cairo-scale;"><code>cairo-scale</code></ulink> to give me a 1.0 x 1.0
-    workspace.  To place the results along the right column, such as in the discussion of cairo's drawing
-    model, I use <ulink url="&cairo-translate;"><code>cairo-translate</code></ulink>.  And to add the
+    workspace. To place the results along the right column, such as in the discussion of cairo's drawing
+    model, I use <ulink url="&cairo-translate;"><code>cairo-translate</code></ulink>. And to add the
     perspective view for the overlapping layers, I set up an arbitrary deformation with
     <ulink url="&cairo-transform;"><code>cairo-transform</code></ulink> on a <ulink url="&cairo-matrix-t;">
     <code>cairo-matrix-t</code></ulink>.
    </para>
    <para>
-    To understand your transforms, read them bottom to top, applying them to the point you are drawing.  To
-    figure out which transforms to create, think through this process in reverse.  For example if I want my
+    To understand your transforms, read them bottom to top, applying them to the point you are drawing. To
+    figure out which transforms to create, think through this process in reverse. For example if I want my
     1.0 x 1.0 workspace to be 100 x 100 pixels in the middle of a 120 x 120 pixel surface, I can set it up
     one of three ways:
    </para>
@@ -8972,12 +8613,12 @@ lambda (buffer location text len)
     access additional control not available with the primary functions.
    </para>
    <para>
-    Be careful when trying to draw lines while under transform.  Even if you set your line width while the
+    Be careful when trying to draw lines while under transform. Even if you set your line width while the
     scale factor was 1, the line width setting is always in user-coordinates and is not modified by setting
-    the scale.  While you are operating under a scale, the width of your line is multiplied by that scale.
+    the scale. While you are operating under a scale, the width of your line is multiplied by that scale.
     To specify a width of a line in pixels, use <ulink url="&cairo-device-to-user-distance;">
     <code>cairo-device-to-user-distance</code></ulink> to turn a (1, 1) device-space distance into, for
-    example, a (0.01, 0.01) user-space distance.  Note that if your transform deforms the image there is not
+    example, a (0.01, 0.01) user-space distance. Note that if your transform deforms the image there is not
     necessarily a way to specify a line with a uniform width.
    </para>
   </section>
@@ -8999,7 +8640,7 @@ lambda (buffer location text len)
    <para>
     In the previous sections you should have built up a firm grasp of the operations Cairo uses to create
     images. In this section I've put together a small handful of snippets I have found particularly useful
-    or non-obvious.  I am still new to Cairo myself, so there may be other better ways to do these things.
+    or non-obvious. I am still new to Cairo myself, so there may be other better ways to do these things.
     If you find a better way, or find a cool way to do something else, let me know and perhaps I can
     incorporate it into these tips.
    </para>
@@ -9008,9 +8649,9 @@ lambda (buffer location text len)
     <title>Line Width</title>
     <para>
      When you are working under a uniform scaling transform, you can not just use pixels for the width of
-     your line.  However it is easy to translate it with the help of
+     your line. However it is easy to translate it with the help of
      <ulink url="&cairo-device-to-user-distance;"><code>cairo-device-to-user-distance</code></ulink>
-     (assuming that the pixel width is  1):
+     (assuming that the pixel width is 1):
     </para>
     <programlisting>
 (muliple-value-bind (ux uy)
@@ -9019,7 +8660,7 @@ lambda (buffer location text len)
     </programlisting>
     <para>
      When you are working under a deforming scale, you may wish to still have line widths that are uniform
-     in device space.  For this you should return to a uniform scale before you stroke the path.  In the
+     in device space. For this you should return to a uniform scale before you stroke the path. In the
      image, the arc on the left is stroked under a deformation, while the arc on the right is stroked under
      a uniform scale.
     </para>
@@ -9042,8 +8683,8 @@ lambda (buffer location text len)
     <title>Text Alignment</title>
     <para>
      When you try to center text letter by letter at various locations, you have to decide how you want to
-     center it.  For example the following code will actually center letters individually, leading to poor
-     results when your letters are of different sizes.  (Unlike most examples, here I assume a 26 x 1
+     center it. For example the following code will actually center letters individually, leading to poor
+     results when your letters are of different sizes. (Unlike most examples, here I assume a 26 x 1
      workspace.)
     </para>
     <programlisting>
@@ -9063,7 +8704,7 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
     </programlisting>
     <para>
      Instead the vertical centering must be based on the general size of the font, thus keeping your baseline
-     steady.  Note that the exact positioning now depends on the metrics provided by the font itself, so the
+     steady. Note that the exact positioning now depends on the metrics provided by the font itself, so the
      results are not necessarily the same from font to font.
     </para>
     <programlisting>
@@ -9098,13 +8739,13 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
    </figure>
    <para>
     This demo shows a custom widget named <code>egg-clock-face</code> which draws a clock using
-    Cairo.  This Cairo Clock example is inspired by the C code from Davyd Madeley.  
+    Cairo. This Cairo Clock example is inspired by the C code from Davyd Madeley.
     <code>egg-clock-face</code> is defined as a subclass of the &gtk-drawing-area;
-    class.  Only the property <code>time</code> is added to
-    hold the actual time of the clock.  The <code>initialize-instance</code> method installs a
+    class. Only the property <code>time</code> is added to
+    hold the actual time of the clock. The <code>initialize-instance</code> method installs a
     timeout source with the function <ulink url="&g-timeout-add;"><code>g-timeout-add</code>
     </ulink>, which updates every second the <code>time</code> property of <code>egg-clock-face
-    </code> and requests the redrawing of the widget.  The "draw" signal handler draws the clock
+    </code> and requests the redrawing of the widget. The "draw" signal handler draws the clock
     into the &gtk-drawing-area; of the
     <code>egg-clock-face</code> widget.
    </para>
@@ -9233,320 +8874,129 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
   </section>
  </chapter>
 
- <chapter id="Deprecated" revidion="2021-5-18">
+ <chapter id="Deprecated" revision="2021-7-14">
   <title>Deprecated</title>
 
-  <section id="Packing_Using_Tables">
+  <section id="Packing_Using_Tables" revision="2021-7-14">
    <title>Packing Using Tables</title>
    <para>
-    Tables are another way of packing widgets and can be extremely useful in certain situations. Using tables
-    a grid is created that widgets can placed in. The widgets may take up as many spaces as specified. Tables
-    can be created with the function &gtk-table-new;. The function takes three arguments which set the
-    properties of a table. Alternatively, the table is created with the function <code>make-instance</code>.
+    Tables are another way of packing widgets. Using tables a grid is created that widgets can placed in. The
+    widgets may take up as many spaces as specified. Tables can be created with the function &gtk-table-new;.
+    The function takes the three arguments <code>rows</code>, <code>columns</code>, and
+    <code>homogeneous</code> which set the properties of a table. Alternatively, the table is created with the
+    function <code>make-instance</code>.
    </para>
    <para>
-    The first argument of &gtk-table-new; is the number of rows to make in the table, while the second is the
-    number of columns. The last argument <code>homogeneous</code> has to do with how the boxes of the table
-    are sized. If <code>homogeneous</code> is <code>T</code>, the table boxes are resized to the size of the
-    largest widget in the table. If <code>homogeneous</code> is <code>NIL</code>, the size of a table boxes is
-    dictated by the tallest widget in its same row, and the widest widget in its column. The rows and columns
-    are laid out from <code>0</code> to <code>n</code>, where <code>n</code> is the number specified in the
-    call to the function &gtk-table-new;. For <code>rows = 2</code> and <code>columns = 2</code>, the layout
-    is shown in figure <link linkend="figure-table-layout"> Layout of a 2 x 2 Table</link>. Note that the
-    coordinate system starts in the upper left hand corner.
+    The first argument <code>rows</code> of the function &gtk-table-new; is the number of rows to make in the
+    table, while the second argument <code>columns</code> is the number of columns. The last argument
+    <code>homogeneous</code> has to do with how the boxes of the table are sized. If <code>homogeneous</code>
+    is <code>true</code>, the table boxes are resized to the size of the largest widget in the table. If
+    <code>homogeneous</code> is <code>false</code>, the size of a table boxes is dictated by the tallest
+    widget in its same row, and the widest widget in its column. The rows and columns are laid out from
+    0 to <code>n</code>, where <code>n</code> is the number of specified rows or columns.
    </para>
-   <figure id="figure-table-layout">
-    <title>Layout of a 2 x 2 Table</title>
-    <programlisting>
- 0          1          2
-0+----------+----------+
- |          |          |
-1+----------+----------+
- |          |          |
-2+----------+----------+
-    </programlisting>
-   </figure>
    <para>
-    To place a widget into a table, the function &gtk-table-attach; can be used. The arguments are listed in
-    the table <link linkend="table-gtk-table-attach">Table Attach</link>. The first argument
-    <code>table</code> is the table you have created and the second <code>child</code> the widget you wish to
-    place into the table. The left and right attach arguments specify where to place the widget, and how many
-    boxes to use. If you want a button in the lower right table entry of a 2 x 2 table, and want it to fill
-    that entry only, <code>left-attach</code> is <code>= 1</code>, <code>right-attach = 2</code>,
-    <code>top-attach = 1</code>, <code>bottom-attach = 2</code>. Now, if you wanted a widget to take up the
-    whole top row of a 2 x 2 table, you would use <code>left-attach = 0</code>, <code>right-attach = 2</code>,
-    <code>top-attach = 0</code>, <code>bottom-attach = 1</code>.
+    To place a widget into a table, the function &gtk-table-attach; can be used. The first argument
+    <code>table</code> is the table you have created and the second argument <code>child</code> the widget
+    you wish to place into the table. The left and right attach arguments specify where to place the widget,
+    and how many boxes to use.
    </para>
-
-   <table id="table-gtk-table-attach">
-    <caption>Arguments of the function <code>gtk-table-attach</code></caption>
-    <colgroup>
-     <col style="width:30%"/>
-     <col style="width:70%"/>
-    </colgroup>
-    <tr>
-     <th align="left">Argument</th>
-     <th align="left">Description</th>
-    </tr>
-    <tr>
-     <td colspan="2" style="border-top:2px solid #ff9900;"></td>
-    </tr>
-    <tr valign="top">
-     <td><code>table</code></td>
-     <td>The GtkTable to add a new widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>child</code></td>
-     <td>The widet to add.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>left-attach</code></td>
-     <td>The column number to attach the left side of a child widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>right-attach</code></td>
-     <td>The column number to attach the right side of a child widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>top-attach</code></td>
-     <td>The row number to attach the top of a child widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>bottom-attach</code></td>
-     <td>The row number to attach the bottom of a child widget to.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>:xoptions</code></td>
-     <td>Used to specify the properties of the child widget when the table is resized.
-        The default value is <code>'(:expand :fill)</code>.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>:yoptions</code></td>
-     <td>The same as <code>xoptions</code>, except this field determines behavior of vertical resizing.
-        The default value is <code>'(:expand :fill)</code>.</td>
-    </tr>
-    <tr valign="top">
-     <td><code>:xpadding</code></td>
-     <td>An integer value specifying the padding on the left and right of the widget being added to the table.
-        The default value is <code>0</code>.</td>
-    </tr>
-    <tr>
-     <td colspan="2" style="border-top:1px solid #ff9900;"></td>
-    </tr>
-   </table>
-
    <para>
-    The arguments <code>:xoptions</code> and <code>:yoptions</code> are of the enumeration type
-    &gtk-attach-options; and used to specify packing options. The packing options can be OR'ed together to
-    allow multiple options. In the Lisp binding a list of options is used to combine multiple options.
-    Possible values of the enumeration type &gtk-attach-options; are listed in the table
-    <link linkend="table-gtk-attach-options">GtkAttachOptions</link>.
+    The keyword arguments <code>:xoptions</code> and <code>:yoptions</code> have values of the
+    &gtk-attach-options; flags and used to specify packing options. The packing options can be OR'ed together
+    to allow multiple options. In the Lisp binding a list of options is used to combine multiple options.
    </para>
    <para>
     Padding is just like in boxes, creating a clear area around the widget specified in pixels and is
-    controlled with the arguments <code>:xpadding</code> and <code>:ypadding</code>.
+    controlled with the keyword arguments <code>:xpadding</code> and <code>:ypadding</code>.
    </para>
-   <table id="table-gtk-attach-options" frame='all'>
-    <title>Values of the type GtkAttachOptions</title>
-    <tgroup cols='2' align='left' colsep='0' rowsep='0'>
-     <thead>
-      <row>
-       <entry>Value</entry>
-       <entry>Description</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry valign="top"><code>:fill</code></entry>
-       <entry valign="top">
-        If the table box is larger than the widget, and <code>:fill</code> is specified, the widget will
-        expand to use all the room available.
-       </entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:shrink</code></entry>
-       <entry valign="top">
-        If the table widget was allocated less space then was requested (usually by the user resizing the
-        window), then the widgets would normally just be pushed off the bottom of the window and disappear.
-        If <code>:shrink</code> is specified, the widgets will shrink with the table.
-       </entry>
-      </row>
-      <row>
-       <entry valign="top"><code>:expand</code></entry>
-       <entry valign="top">
-         This will cause the table to expand to use up any remaining space in the window.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </table>
    <para>
-    In the Lisp binding the arguments <code>:xoptions</code>, <code>:yoptions</code>, <code>:xpadding</code>,
-    and <code>:ypadding</code> of the function &gtk-table-attach; are defined as keyword arguments with
-    default values as shown in table <link linkend="table-gtk-table-attach">GtkTableAttach</link>. In the C
-    library this is realized with a second function <code>gtk_table_attach_defaults()</code>. In the Lisp
-    binding the function &gtk-table-attach-defaults; is a second equivalent implementation of
-    &gtk-table-attach;, when using the default values of the keyword arguments.
+    In the Lisp binding the keyword arguments <code>:xoptions</code>, <code>:yoptions</code>,
+    <code>:xpadding</code>, and <code>:ypadding</code> of the function &gtk-table-attach; have default values.
+    In the C library this is realized with a second function <code>gtk_table_attach_defaults()</code>.
    </para>
    <para>
     The functions &gtk-table-set-row-spacing; and &gtk-table-set-col-spacing; places spacing between the rows
-    at the specified row or column. The first argument of the functions is a &gtk-table;, the second argument
-    a row or a column and the third argument the spacing. Note that for columns, the space goes to the right
-    of the column, and for rows, the space goes below the row.
+    at the specified row or column. The first argument of the functions is a &gtk-table; widget, the second
+    argument a row or a column number and the third argument the spacing. Note that for columns, the space
+    goes to the right of the column, and for rows, the space goes below the row.
    </para>
    <para>
-    You can also set a consistent spacing of all rows and columns with the functions
-    &gtk-table-set-row-spacings; and &gtk-table-set-col-spacings;. Both functions take a &gtk-table; as the
-    first argument and the desired spacing <code>spacing</code> as the second argument. Note that with these
-    calls, the last row and last column do not get any spacing.
+    You can also set a consistent spacing of all rows and columns with the functions &gtk-table-row-spacing;
+    and &gtk-table-column-spacing;. Both functions take a &gtk-table; widget as the first argument and the
+    desired spacing as the second argument. Note that with these calls, the last row and last column do not
+    get any spacing.
    </para>
    <note>
     <para>
-     &gtk-table; has been deprecated since GTK 3.4. It is recommended to use &gtk-grid; instead. &gtk-grid;
-     provides the same capabilities as &gtk-table; for arranging widgets in a rectangular grid, but does
-     support height-for-width geometry management, which is newly introduced for widgets in GTK 3. This
-     chapter will vanish in the near future.
+     The &gtk-table; widget has been deprecated since GTK 3.4. It is recommended to use the &gtk-grid; widget
+     instead. The &gtk-grid; widget provides the same capabilities as the &gtk-table; widget for arranging
+     widgets in a rectangular grid, but does support height-for-width geometry management, which is newly
+     introduced for widgets in GTK 3.
     </para>
    </note>
-  </section>
 
-  <section id="Table_Packing_Example">
-   <title>Table Packing Example</title>
+   <bridgehead renderas='sect2'>Table Packing Example</bridgehead>
    <para>
-    The figure <link linkend="figure-table-packing">Table Packing</link> is a window with three buttons in a
-    2 x 2 table. The first two buttons are placed in the upper row. A third, quit button, is placed in the
-    lower row, spanning both columns. The code of this example is shown in the example
-    <link linkend="example-table-packing">Table Packing</link>.
+    <xref linkend="figure-table-packing"/> shows a window with three buttons in a 2 x 2 table. The first two
+    buttons are placed in the upper row. A third, Quit button, is placed in the lower row, spanning both
+    columns. The code of this example is shown <xref linkend="example-table-packing"/>.
    </para>
+
    <figure id="figure-table-packing">
     <title>Table Packing</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/table-packing306x108.gif" format="gif"></imagedata>
+      <imagedata fileref="figures/table-packing.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
+
    <example id="example-table-packing">
     <title>Table Packing</title>
-    <programlisting>
-(defun example-table-packing ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Table Packing"
-                                 :border-width 12
-                                 :default-width 300))
-          (table (make-instance 'gtk-table
-                                :n-columns 2
-                                :n-rows 2
-                                :homogeneous t))
-          (button1 (make-instance 'gtk-button
-                                  :label "Button 1"))
-          (button2 (make-instance 'gtk-button
-                                  :label "Button 2"))
-          (quit (make-instance 'gtk-button
-                               :label "Quit")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (g-signal-connect quit "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (gtk-table-attach table button1 0 1 0 1)
-      (gtk-table-attach table button2 1 2 0 1)
-      (gtk-table-attach table quit    0 2 1 2)
-      (gtk-container-add window table)
-      (gtk-widget-show-all window))))
-    </programlisting>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/table-packing.lisp" parse="text"/>
+   </programlisting>
    </example>
+
    <para>
-    Figure <link linkend="figure-table-packing-2">Table Packing</link> is an extended example to show the
-    possibility to increase the spacing of the rows and columns. This is implemented through two toggle
-    buttons which increase and decrease the spacings. Toggle buttons are described in
-    <link linkend="Toggle_Button">Toggle Buttons</link> later in this tutorial. The code of
-    <link linkend="figure-table-packing-2">Table Packing</link> is shown in example
-    <link linkend="example-table-packing-2">Table Packing</link>.
+    <xref linkend="figure-table-packing-2"/> is an extended example to show the possibility to increase the
+    spacing of the rows and columns. This is implemented through two toggle buttons which increase and
+    decrease the spacings. Toggle buttons are described in <xref linkend="Toggle_Button"/> in this tutorial.
+    The code of the example is shown in <xref linkend="example-table-packing-2"/>.
    </para>
+
    <figure id="figure-table-packing-2">
     <title>Table Packing with more spacing</title>
     <mediaobject>
      <imageobject>
-      <imagedata fileref="figures/table-packing-2-306x120.png" format="png"></imagedata>
+      <imagedata fileref="figures/table-packing-2.png" format="png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure>
+
    <example id="example-table-packing-2">
     <title>Table Packing with more spacing</title>
-    <programlisting>
-(defun example-table-packing-2 ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Table Packing"
-                                 :border-width 12
-                                 :default-width 300))
-          (table (make-instance 'gtk-table
-                                :n-columns 2
-                                :n-rows 2
-                                :homogeneous t))
-          (button1 (make-instance 'gtk-toggle-button
-                                  :label "More Row Spacing"))
-          (button2 (make-instance 'gtk-toggle-button
-                                  :label "More Col Spacing"))
-          (quit (make-instance 'gtk-button
-                               :label "Quit")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (g-signal-connect button1 "toggled"
-         (lambda (widget)
-           (if (gtk-toggle-button-active widget)
-               (progn
-                 (gtk-table-set-row-spacings table 12)
-                 (setf (gtk-button-label widget) "Less Row Spacing"))
-               (progn
-                 (gtk-table-set-row-spacings table 0)
-                 (setf (gtk-button-label widget) "More Row Spacing")))))
-      (g-signal-connect button2 "toggled"
-         (lambda (widget)
-           (if (gtk-toggle-button-active widget)
-               (progn
-                 (gtk-table-set-col-spacings table 12)
-                 (setf (gtk-button-label widget) "Less Col Spacing"))
-               (progn
-                 (gtk-table-set-col-spacings table 0)
-                 (setf (gtk-button-label widget) "More Col Spacing")))))
-      (g-signal-connect quit "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (gtk-table-attach table button1 0 1 0 1)
-      (gtk-table-attach table button2 1 2 0 1)
-      (gtk-table-attach table quit    0 2 1 2)
-      (gtk-container-add window table)
-      (gtk-widget-show-all window))))
-    </programlisting>
+   <programlisting xmlns:xi="http://www.w3.org/2001/XInclude">
+<xi:include href="../demo/gtk-example/table-packing-2.lisp" parse="text"/>
+   </programlisting>
    </example>
   </section>
 
-  <section id="Alignment_Widget" revision="2021-6-5">
+  <section id="Alignment_Widget" revision="2021-7-12">
    <title>Alignment Widget</title>
    <para>
     The &gtk-alignment; widget allows to place a widget within its window at a position and size relative to
-    the size of the alignment itself. For example, it can be very useful for centering a widget within the
-    window.
+    the size of the alignment itself. For example, it can be useful for centering a widget within the window.
    </para>
    <para>
-    The &gtk-alignment; widget has the four properties <code>xalign</code>, <code>yalign</code>,
-    <code>xscale</code>, and <code>yscale</code>. The properties are floating point numbers. The align
-    settings are used to place the child widget within the available area. The values range from 0.0, top or
-    left, to 1.0, bottom or right. Of course, if the scale settings are both set to 1.0, the alignment
-    settings have no effect. The scale settings are used to specify how much the child widget should expand
-    to fill the space allocated to the alignment. The values can range from 0.0, meaning the child does not
-    expand at all, to 1.0, meaning the child expands to fill all of the available space.
+    The alignment has the four properties <code>xalign</code>, <code>yalign</code>, <code>xscale</code>, and
+    <code>yscale</code>. The properties are floating point numbers. The align settings are used to place the
+    child widget within the available area. The values range from 0.0, top or left, to 1.0, bottom or right.
+    If the scale settings are both set to 1.0, the alignment settings have no effect. The scale settings are
+    used to specify how much the child widget should expand to fill the space allocated to the alignment. The
+    values can range from 0.0, meaning the child does not expand at all, to 1.0, meaning the child expands to
+    fill all of the available space.
    </para>
 
    <figure id="figure-alignment">
@@ -9559,22 +9009,22 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
    </figure>
 
    <para>
-    The properties are set when creating the &gtk-alignment; widget with the function &gtk-alignment-new;.
-    For an existing alignment the properties can be set with the function &gtk-alignment-set;. A child widget
-    can be added to the alignment using the function &gtk-container-add;.
+    The properties are set when creating the alignment with the function &gtk-alignment-new;. For an existing
+    alignment the properties can be set with the function &gtk-alignment-set;. A child widget can be added to
+    the alignment using the function &gtk-container-add;.
    </para>
    <para>
-    In addition, the &gtk-alignment; widget has the properties <code>top-padding</code>,
-    <code>bottom-padding</code>, <code>left-padding</code>, and <code>right-padding</code>. These properties
-    control how many space is added to the sides of the widget. The functions &gtk-alignment-set-padding;
-    and &gtk-alignment-get-padding; are used to set or to retrieve the values of the padding properties.
+    In addition, the alignment has the properties <code>top-padding</code>, <code>bottom-padding</code>,
+    <code>left-padding</code>, and <code>right-padding</code>. These properties control how many space is
+    added to the sides of the widget. The functions &gtk-alignment-set-padding; and
+    &gtk-alignment-get-padding; are used to set or to retrieve the values of the padding properties.
    </para>
 
    <note>
     <para>
      Note that the desired effect can in most cases be achieved by using the &gtk_widget_halign;,
      &gtk_widget_valign; and &gtk_widget_margin; properties on the child widget, so the &gtk-alignment;
-     widget should not be used in new code.
+     widget is deprecated and should not be used in new code.
     </para>
    </note>
 
@@ -9586,22 +9036,21 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
    </example>
   </section>
 
-  <section id="GtkUIManager">
+  <section id="GtkUIManager" revision="2021-7-14">
    <title>GtkUIManager</title>
    <para>
-    A <ulink url="&gtk-ui-manager;"><code>gtk-ui-manager</code></ulink> is an object that can dynamically
-    construct a user interface consisting of menus and toolbars from a UI description.  A UI description is a
-    specification of what menu and toolbar widgets should be present in an application and is described in an
-    XML format. A <ulink url="&gtk-ui-manager;"><code>gtk-ui-manager</code></ulink> makes it possible to
-    change menus and toolbars dynamically using what is called UI merging.
+    A &gtk-ui-manager; object can dynamically construct a user interface consisting of menus and toolbars from
+    a UI description. A UI description is a specification of what menu and toolbar widgets should be present
+    in an application and is described in an XML format. A &gtk-ui-manager; object makes it possible to change
+    menus and toolbars dynamically using what is called UI merging.
    </para>
 
-   <section id="Actions">
+   <section id="Actions" revision="2021-7-14">
     <title>Actions</title>
     <para>
-     The principal objects manipulated by a <ulink url="&gtk-ui-manager;"><code>gtk-ui-manager</code></ulink>
-     are actions, which are instances of the <ulink url="&gtk-action;"><code>gtk-action</code></ulink> class.
-     Actions represent operations that the user can perform.  Associated with an action are
+     The principal objects manipulated by a &gtk-ui-manager; object are actions, which are instances of the
+     &gtk-action; class. Actions represent operations that the user can perform. Associated with an action
+     are:
     </para>
     <itemizedlist>
      <listitem>a callback function</listitem>
@@ -9615,111 +9064,127 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
      <listitem>a flag indicating whether it is visible</listitem>
     </itemizedlist>
     <para>
-     The callback function is the function that is executed when the action is activated.  The action name is
-     how it is referred to, not what appears in a menu item or toolbar button, which is its label.  Actions
-     can have associated keyboard accelerators and tooltips.  Their visibility and sensitivity can be
-     controlled as well.  The idea is that you can create actions that the <ulink url="&gtk-ui-manager;">
-     <code>gtk-ui-manager</code></ulink> can bind to proxies such as menu items and toolbar buttons.
+     The callback function is the function that is executed when the action is activated. The action name is
+     how it is referred to, not what appears in a menu item or toolbar button, which is its label. Actions
+     can have associated keyboard accelerators and tooltips. Their visibility and sensitivity can be
+     controlled as well. The idea is that you can create actions that the &gtk-ui-manager; object can bind to
+     proxies such as menu items and toolbar buttons.
     </para>
     <para>
-     The <ulink url="&gtk-action;"><code>gtk-action</code></ulink> class has methods to create icons, menu
-     items and toolbar items representing itself, as well as get and set methods for accessing and changing
-     its properties.
-    </para>
-    <para>
-     The <ulink url="&gtk-action;"><code>gtk-action</code></ulink> class also has two subclasses:
-     <ulink url="&gtk-toggle-action;"><code>gtk-toggle-action</code></ulink> and
-     <ulink url="&gtk-recent-action;"><code>gtk-recent-action</code></ulink>.  The
-     <ulink url="&gtk-toggle-action;"><code>gtk-toggle-action</code></ulink> class has a
-     &gtk-radio-action; subclass.  These correspond to
-     toggle buttons and radio buttons respectively.
+     The &gtk-action; class has methods to create icons, menu items and toolbar items representing itself, as
+     well as get and set methods for accessing and changing its properties. The &gtk-action; class also has
+     two subclasses: &gtk-toggle-action; and &gtk-recent-action;. The &gtk-toggle-action; class has a
+     &gtk-radio-action; subclass. These correspond to toggle buttons and radio buttons respectively.
     </para>
    </section>
 
-   <section id="UI_Definitions">
+   <section id="Actions_Groups" revision="2021-7-14">
+    <title>Actions Groups</title>
+    <para>
+     Actions are organized into &gtk-action-group; objects. An action group is essentially a map from names
+     to &gtk-action; objects. Action groups are the easiest means for adding actions to a UI manager object.
+    </para>
+    <para>
+     In general, related actions should be placed into a single group. More precisely, since the UI manager
+     can add and remove actions as groups, if the interface is supposed to change dynamically, then all
+     actions that should be available in the same state of the application should be in the same group. It
+     is typical that multiple action groups are defined for a particular user interface. Most nontrivial
+     applications will make use of multiple groups. For example, in an application that can play media files,
+     when a media file is open, the playback actions (Play, Pause, Rewind, etc.) would be in a group that
+     could be added and removed as needed.
+    </para>
+   </section>
+
+   <section id="UI_Definitions" revision="2021-7-14">
     <title>UI Definitions</title>
     <para>
-     You can specify the set user interface action elements in your application with an XML description
-     called a UI definition.  A UI definition is a textual description that represents the actions and the
-     widgets that will be associated with them.  It must b e bracketed by the pair of tags
-     <code>&#x3c;ui></code> and <code>&#x3c;/ui></code>.  Within these tags you describe your user interface
-     in a hierarchical way, by defining menubars, which would contain menus, which in turn contain menus and
-     menu items, toolbars, which would contain tool items, and pop-up menus, which can contain menus and menu
-     items.  The set of tags that can be used in these UI definitions, with their descriptions and
-     attributes, is
+     You can specify the set user interface action elements in your application with an XML description called
+     a UI definition. A UI definition is a textual description that represents the actions and the widgets
+     that will be associated with them. It must be bracketed by the pair of tags <code>&#x3c;ui></code> and
+     <code>&#x3c;/ui></code>. Within these tags you describe your user interface in a hierarchical way, by
+     defining menubars, which would contain menus, which in turn contain menus and menu items, toolbars, which
+     would contain tool items, and pop-up menus, which can contain menus and menu items. The set of tags that
+     can be used in these UI definitions, with their descriptions and attributes, is shown in
+     <xref linkend="table-ui-definitions"/>.
     </para>
-    <table frame='all'>
-     <tgroup cols='4' align='left' colsep='0' rowsep='0'>
-      <thead>
-       <row>
-        <entry>Tag</entry>
-        <entry>Description</entry>
-        <entry>Attributes</entry>
-        <entry>Closing Tag</entry>
-       </row>
-      </thead>
-      <tbody>
-       <row>
-        <entry valign="top"><code>&#x3c;menubar></code></entry>
-        <entry valign="top"><code>gtk-menu-bar</code></entry>
-        <entry valign="top">name, action</entry>
-        <entry valign="top">yes</entry>
-       </row>
-       <row>
-        <entry valign="top"><code>&#x3c;toolbar></code></entry>
-        <entry valign="top"><code>gtk-toolbar</code></entry>
-        <entry valign="top">name, action</entry>
-        <entry valign="top">yes</entry>
-       </row>
-       <row>
-        <entry valign="top"><code>&#x3c;popup></code></entry>
-        <entry valign="top">toplevel <code>gtk-menu</code></entry>
-        <entry valign="top">name, action, accelerators</entry>
-        <entry valign="top">yes</entry>
-       </row>
-       <row>
-        <entry valign="top"><code>&#x3c;menu></code></entry>
-        <entry valign="top"><code>gtk-menu</code> attached to a menu item</entry>
-        <entry valign="top">name, action, position</entry>
-        <entry valign="top">yes</entry>
-       </row>
-       <row>
-        <entry valign="top"><code>&#x3c;menuitem></code></entry>
-        <entry valign="top"><code>gtk-menu-item</code> subclass, the exact type depends on the action</entry>
-        <entry valign="top">name, action, position, always-show-image</entry>
-        <entry valign="top">no</entry>
-       </row>
-       <row>
-        <entry valign="top"><code>&#x3c;toolitem></code></entry>
-        <entry valign="top"><code>gtk-tool-item</code> subclass, the exact type depends on the action</entry>
-        <entry valign="top">name, action, position</entry>
-        <entry valign="top">no</entry>
-       </row>
-       <row>
-        <entry valign="top"><code>&#x3c;separator></code></entry>
-        <entry valign="top">
-         <code>gtk-separator-menu-item</code> or <code>gtk-separator-tool-item</code>
-        </entry>
-        <entry valign="top">name, action, expand</entry>
-        <entry valign="top">no</entry>
-       </row>
-       <row>
-        <entry valign="top"><code>&#x3c;accelerator></code></entry>
-        <entry valign="top">keyboard accelerator</entry>
-        <entry valign="top">name, action</entry>
-        <entry valign="top">no</entry>
-       </row>
-       <row>
-        <entry valign="top"><code>&#x3c;placeholder></code></entry>
-        <entry valign="top">placeholder for dynamically adding an item</entry>
-        <entry valign="top">name, action</entry>
-        <entry valign="top">yes</entry>
-       </row>
-      </tbody>
-     </tgroup>
-    </table>
 
-    <bridgehead renderas='sect3'>Example</bridgehead>
+   <table id="table-ui-definitions">
+    <caption>UI definitions</caption>
+    <colgroup>
+     <col style="width:20%"/>
+     <col style="width:30%"/>
+     <col style="width:30%"/>
+     <col style="width:20%"/>
+    </colgroup>
+    <tr>
+     <th align="left">Tag</th>
+     <th align="left">Description</th>
+     <th align="left">Attributes</th>
+     <th align="left">Closing Tag</th>
+    </tr>
+    <tr>
+     <td colspan="4" style="border-top:2px solid #ff9900;"></td>
+    </tr>
+    <tr valign="top">
+     <td><code>&#x3c;menubar></code></td>
+     <td><code>gtk-menu-bar</code></td>
+     <td>name, action</td>
+     <td>yes</td>
+    </tr>
+    <tr valign="top">
+     <td><code>&#x3c;toolbar></code></td>
+     <td><code>gtk-toolbar</code></td>
+     <td>name, action</td>
+     <td>yes</td>
+    </tr>
+    <tr valign="top">
+     <td><code>&#x3c;popup></code></td>
+     <td>toplevel <code>gtk-menu</code></td>
+     <td>name, action, accelerators</td>
+     <td>yes</td>
+    </tr>
+    <tr valign="top">
+     <td><code>&#x3c;menu></code></td>
+     <td><code>gtk-menu</code> attached to a menu item</td>
+     <td>name, action, position</td>
+     <td>yes</td>
+    </tr>
+    <tr valign="top">
+     <td><code>&#x3c;menuitem></code></td>
+     <td><code>gtk-menu-item</code> subclass, the exact type depends on the action</td>
+     <td>name, action, position, always-show-image</td>
+     <td>no</td>
+    </tr>
+    <tr valign="top">
+     <td><code>&#x3c;toolitem></code></td>
+     <td><code>gtk-tool-item</code> subclass, the exact type depends on the action</td>
+     <td>name, action, position</td>
+     <td>no</td>
+    </tr>
+    <tr valign="top">
+     <td><code>&#x3c;separator></code></td>
+     <td> <code>gtk-separator-menu-item</code> or <code>gtk-separator-tool-item</code></td>
+     <td>name, action, expand</td>
+     <td>no</td>
+    </tr>
+    <tr valign="top">
+     <td><code>&#x3c;accelerator></code></td>
+     <td>keyboard accelerator</td>
+     <td>name, action</td>
+     <td>no</td>
+    </tr>
+    <tr valign="top">
+     <td><code>&#x3c;placeholder></code></td>
+     <td>placeholder for dynamically adding an item</td>
+     <td>name, action</td>
+     <td>yes</td>
+    </tr>
+    <tr>
+     <td colspan="4" style="border-top:1px solid #ff9900;"></td>
+    </tr>
+   </table>
+
+    <bridgehead renderas='sect2'>Example</bridgehead>
     <para>
      The following example shows a UI definition of a menubar and its submenus.
     </para>
@@ -9750,19 +9215,19 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
 &#x3c;/ui>
     </programlisting>
 
-    <bridgehead renderas='sect3'>Notes</bridgehead>
+    <bridgehead renderas='sect2'>Notes</bridgehead>
     <itemizedlist>
      <listitem>
       Some tags must have a closing tag and some do not. Those with no closing tag are
       <code>&#x3c;menuitem></code>, <code>&#x3c;toolitem></code>, <code>&#x3c;separator></code>, and
       <code>&#x3c;accelerator></code>. A tag that does not have a closing tag must have a forward slash
-      preceding its right bracket: <code>/></code>.  All other tags can have content.
+      preceding its right bracket: <code>/></code>. All other tags can have content.
      </listitem>
      <listitem>
       All attribute values are plain text strings.
      </listitem>
      <listitem>
-      All UI elements have a name and action attribute. The name is optional; if a name is not specified, the
+      All UI elements have a name and action attribute. The name is optional. If a name is not specified, the
       action is used as its own name. If for some reason, neither the name nor the action attribute are
       specified, the name of the element is used when referring to it. The name and action attributes must
       not contain "/" characters after parsing, nor double quotes.
@@ -9770,15 +9235,15 @@ for (i=0; i &#x3c; strlen(alphabet); i++) {
      <listitem>
       Menus, menu items, and toolitems have a position attribute with two possible values: "top" and
       "bottom". If this attribute is missing, its default value of "bottom" is used. This attribute
-      determines where the element is placed relative to its siblings. If position="top" then when it is
-      added to the parent container, it will be placed before its siblings, meaning to the left in a
+      determines where the element is placed relative to its siblings. If the position is "top" then when it
+      is added to the parent container, it will be placed before its siblings, meaning to the left in a
       horizontal container or above the siblings in a vertical container. If it is "bottom" then it will be
       placed to the right of the siblings or below them in horizontal and vertical containers respectively.
      </listitem>
      <listitem>
       The elements are added to the UI interface in the order in which they appear in the XML string. In the
-      above example, the JustifyLeft action precedes the JustifyCenter action, so the former will appear
-      above the latter. If however, the UI was defined as follows:
+      above example, the <code>JustifyLeft</code> action precedes the <code>JustifyCenter</code> action, so
+      the former will appear above the latter. If however, the UI was defined as follows:
       <programlisting>
 &#x3c;menuitem name='JustifyLeft' action='JustifyLeft' position='top'/>
 &#x3c;menuitem name='JustifyCenter action='JustifyCenter' position='top'/>
@@ -9790,18 +9255,18 @@ JustifyRight
 JustifyCenter
 JustifyLeft
       </programlisting>
-      because each time the element is inserted, the position='top' attribute forces it to be above its
-      siblings. The 'top' attribute converts the packing into a stack push operation in effect.
+      because each time the element is inserted, the "top" position attribute forces it to be above its
+      siblings. The "top" attribute converts the packing into a stack push operation in effect.
      </listitem>
      <listitem>
-      Menu items have a "always-show-image" attribute with two possible values: "true" and "false". If this
-      attribute is true, then menu item icons will always be visible, overriding any user settings in the
-      desktop environment.
+      Image menu items have a &gtk_image_menu_item_always-show-image; attribute with two possible values:
+      <code>true</code> and <code>false</code>. If this attribute is true, then menu item icons will always
+      be visible, overriding any user settings in the desktop environment.
      </listitem>
      <listitem>
       Separators can have an expand attribute, with the value "true" or "false". If it is set to "true" then
       the separator will expand to take up extra space in the parent container and become invisible.
-      Otherwise it is drawn as a thin line, depending on the user's theme.
+      Otherwise it is drawn as a thin line, depending on the theme.
      </listitem>
      <listitem>
       Submenus are created in a different way using the XML than they are when constructing these
@@ -9842,9 +9307,9 @@ JustifyLeft
     </programlisting>
     <para>
      Notice that the tool items have the same action names as some of the menu items. This is how you can
-     create multiple proxies for the same action. When the <ulink url="&gtk-ui-manager;">
-     <code>gtk-ui-manager</code></ulink> loads these descriptions, and you take the appropriate steps in your
-     program, they will be connected to the same callback functions.
+     create multiple proxies for the same action. When the &gtk-ui-manager; object loads these descriptions,
+     and you take the appropriate steps in your program, they will be connected to the same callback
+    functions.
     </para>
     <para>
      Notice also that there is a placeholder in the toolbar defined above. We can use that placeholder to
@@ -9854,28 +9319,10 @@ JustifyLeft
     </para>
    </section>
 
-   <section id="Actions_Groups">
-    <title>Actions Groups</title>
-    <para>
-     Actions are organized into action groups. An action group is essentially a map from names to
-     <ulink url="&gtk-action;"><code>gtk-action</code></ulink> objects. Action groups are the easiest means
-     for adding actions to a UI manager object.
-    </para>
-    <para>
-     In general, related actions should be placed into a single group. More precisely, since the UI manager
-     can add and remove actions as groups, if the interface is supposed to change dynamically, then all
-     actions that should be available in the same state of the application should be in the same group. It
-     is typical that multiple action groups are defined for a particular user interface. Most nontrivial
-     applications will make use of multiple groups. For example, in an application that can play media files,
-     when a media file is open, the playback actions (play, pause, rewind, etc.) would be in a group that
-     could be added and removed as needed.
-    </para>
-   </section>
-
-   <section id="Creating_the_UI">
+   <section id="Creating_the_UI" revision="2021-7-14">
     <title>Creating the UI</title>
     <para>
-     The basic steps in creating the UI are to
+     The basic steps in creating the UI are:
     </para>
     <orderedlist>
      <listitem>
@@ -9886,34 +9333,29 @@ JustifyLeft
      <listitem>Create a UI manager.</listitem>
      <listitem>Add the action groups to the UI manager.</listitem>
      <listitem>
-      Extract the accelerators from the UI manager and add them to the top-level window.
+      Extract the accelerators from the UI manager and add them to the toplevel window.
      </listitem>
      <listitem>Add the UI definition to the UI manager from the file or string.</listitem>
      <listitem>
       Get the menubar and toolbar widgets from the UI manager and pack them into the window.
      </listitem>
-     <listitem>Create the callbacks referenced in the action objects created in step 2.</listitem>
+     <listitem>Create the callback functions referenced in the action objects created in step 2.</listitem>
     </orderedlist>
-    <para>
-     We will next describe how to program each of steps 2 through 7.
-    </para>
 
     <bridgehead>Creating Actions and Action Groups</bridgehead>
     <para>
-     The function to create an action group is <ulink url="&gtk-action-group-new;">
-     <code>gtk-action-group-new</code></ulink>. The name argument can be used by various methods for
-     accessing this particular action group. It should reflect what this particular group's purpose or common
-     feature is. Actions are added to an action group in one of two ways.  You can add them one at a time
-     with the function <ulink url="&gtk-action-group-add-action;">
-     <code>gtk-action-group-add-action</code></ulink>, or as a list of related actions with the function
-     <ulink url="&gtk-action-group-add-actions;"><code>gtk-action-group-add-actions</code></ulink>.
+     The function to create an action group is &gtk-action-group-new;. The argument <code>name</code> can be
+     used by various methods for accessing this particular action group. It should reflect what this
+     particular purpose or common feature of the group is. Actions are added to an action group in one of two
+     ways. You can add them one at a time with the function &gtk-action-group-add-action;, or as a list of
+     related actions with the function &gtk-action-group-add-actions;.
     </para>
     <para>
      The problem with the first method is that it is tedious to add actions one by one, and that this method
      does not provide a means to add the accelerators for the actions without additional steps. Even if there
      is just a single action in the group, it is more convenient to use the second function. To use the
-     function <ulink url="&gtk-action-group-add-actions;"><code>gtk-action-group-add-actions</code></ulink>,
-     you first have to create a list of action entries, which looks like the following example:
+     function &gtk-action-group-add-actions;, you first have to create a list of action entries, which looks
+     like the following example:
     </para>
     <programlisting>
 (list
@@ -9935,25 +9377,20 @@ JustifyLeft
      <varlistentry>
       <term>label</term>
       <listitem>
-       The label for the action. This field should typically be marked for translation, see the function
-       <ulink url="&gtk-action-group-set-translation-domain;">
-       <code>gtk-action-group-set-translation-domain</code></ulink>. If label is <code>nil</code>, the label
-       of the stock item with ID <code>stock-id</code> is used.
+       The label for the action. If <code>label</code> is <code>nil</code>, the label of the stock item with
+       ID <code>stock-id</code> is used.
       </listitem>
      </varlistentry>
      <varlistentry>
       <term>accelerator</term>
       <listitem>
-       The accelerator for the action, in the format understood by the function
-       <ulink url="&gtk-accelerator-parse;"><code>gtk-accelerator-parse</code></ulink>.
+       The accelerator for the action, in the format understood by the function &gtk-accelerator-parse;.
       </listitem>
      </varlistentry>
      <varlistentry>
       <term>tooltip</term>
       <listitem>
-       The tooltip for the action. This field should typically be marked for translation, see the function
-       <ulink url="&gtk-action-group-set-translation-domain;">
-       <code>gtk-action-group-set-translation-domain</code></ulink>.
+       The tooltip for the action.
       </listitem>
      </varlistentry>
      <varlistentry>
@@ -9965,12 +9402,12 @@ JustifyLeft
     </variablelist>
 
     <para>
-     The <code>name</code> must match the name of the action to which it corresponds in the UI  definition.
-     The <code>stock-id</code> can be <code>nil</code>, as can the <code>label</code>. The
-     <code>accelerator</code> syntax is very flexible. You can specify control keys, function keys and even
-     ordinary characters, for example, using "&#x3c;Control>a", "Ctrl>a","&#x3c;ctrl>a", or
+     The argument <code>name</code> must match the name of the action to which it corresponds in the UI
+     definition. The argument <code>stock-id</code> can be <code>nil</code>, as can the argument
+     <code>label</code>. The accelerator syntax is very flexible. You can specify control keys, function keys
+     and even ordinary characters, for example, using "&#x3c;Control>a", "Ctrl>a","&#x3c;ctrl>a", or
      "&#x3c;Shift>&#x3c;Alt>F1", "&#x3c;Release>z", or "minus", to name a few. If you use a stock item, it is
-     not necessary to supply an accelerator, unless you want to override the default one. The
+     not necessary to supply an accelerator, unless you want to override the default one. The argument
      <code>tooltip</code> is a string that will appear when the cursor hovers over the proxy for this action
      entry.
     </para>
@@ -10002,9 +9439,9 @@ JustifyLeft
                         (gtk-widget-destroy toplevel-window)))))
     </programlisting>
     <para>
-     Notice that the FileMenu action does not have a tooltip nor a callback. The Open, Close, and Exit
-     actions have both a mnemonic label and an accelerator. Having defined this list, it can be added to a
-     group as follows:
+     Notice that the <code>FileMenu</code> action does not have a tooltip nor a callback function. The Open,
+     Close, and Exit actions have both a mnemonic label and an accelerator. Having defined this list, it can
+     be added to a group as follows:
     </para>
     <programlisting>
 (let ((action-group (gtk-action-group-new "common-actions")))
@@ -10013,22 +9450,13 @@ JustifyLeft
     </programlisting>
     <para>
      Multiple action entry lists can be added to a single action group. In fact, you probably will need to do
-     this, because toggle actions and radio actions must be defined differently. A
-     <ulink url="&gtk-toggle-action;"><code>gtk-toggle-action</code></ulink> entry contains all of the
-     members of a <ulink url="&gtk-action;"><code>gtk-action</code></ulink> entry, as well as an additional
-     boolean flag <code>is-active</code>.
-    </para>
-    <para>
-     The <code>is-active</code> flag indicates whether or not the action is active or inactive. To add toggle
-     action entries to an action group you need to use the function
-     <ulink url="&gtk-action-group-add-toggle-actions;">
-     <code>gtk-action-group-add-toggle-actions</code></ulink> designed for that purpose.
-    </para>
-    <para>
-     The function differs from <ulink url="&gtk-action-group-add-actions;">
-     <code>gtk-action-group-add-actions</code></ulink> only in that it expects a list of
-     <ulink url="&gtk-toggle-action;"><code>gtk-toggle-action</code></ulink> entries. To illustrate, we could
-     define a list with a single toggle action entry:
+     this, because toggle actions and radio actions must be defined differently. A &gtk-toggle-action; entry
+     contains all of the members of a &gtk-action; entry, as well as an additional boolean flag
+     <code>is-active</code>. The <code>is-active</code> flag indicates whether or not the action is active or
+     inactive. To add toggle action entries to an action group you need to use the function
+     &gtk-action-group-add-toggle-actions; designed for that purpose. The function differs from the function
+     &gtk-action-group-add-actions; only in that it expects a list of &gtk-toggle-action; entries. To
+     illustrate, we could define a list with a single toggle action entry:
     </para>
     <programlisting>
 (defvar toggle-entries
@@ -10049,11 +9477,11 @@ JustifyLeft
     <para>
      GTK defines radio action entries separately. Usually you use radio buttons when there are three or more
      alternatives. If there are just two, a toggle is the cleaner interface element. Because radio actions
-     can have more than two values, the list's last element is an integer instead of a boolean.
+     can have more than two values, the last element of the list is an integer instead of a boolean.
     </para>
     <para>
-     Unlike ordinary actions and toggle actions, which can have different callbacks for each action, radio
-     action entries do not specify a callback function. Furthermore, the last member of this structure is the
+     Unlike ordinary actions and toggle actions, which can have different callback functions for each action,
+     radio action entries do not specify a callback function. Furthermore, the last member of this list is the
      value that that particular radio action has. If for example, there are three radio actions for how text
      is to be aligned, left, right, or centered, then one would have the value 0, the next, 1, and the third,
      2. An example of a list of radio action entries is below.
@@ -10081,15 +9509,14 @@ JustifyLeft
     </programlisting>
     <para>
      Because radio action entries do not have a callback function as a member, the function
-     <ulink url="&gtk-action-group-add-radio-actions;">
-     <code>gtk-action-group-add-radio-actions</code></ulink> to add radio actions to an action group
-     specifies a single callback to be used for all of the actions in the array of radio actions being added.
-     This is the callback that will be called in response to the "changed" signal.
+     &gtk-action-group-add-radio-actions; to add radio actions to an action group specifies a single callback
+     function to be used for all of the actions in the list of radio actions being added. This is the callback
+     function that will be called in response to the "changed" signal.
     </para>
     <para>
      Also, this function has another parameter that specifies the value that should be active initially. It
      is either one of the values in the individual radio action entries, or -1 to indicate that none should
-     be active to start. We could add the radio_entries action list to our group with the call
+     be active to start. We could add the radio action list to our group with the call
     </para>
     <programlisting>
 (gtk-action-group-add-radio-actions action-group
@@ -10098,20 +9525,19 @@ JustifyLeft
                                     #'on-change)
     </programlisting>
     <para>
-     specifying that the JustifyLeft action is the initial value.
+     specifying that the <code>JustifyLeft</code> action is the initial value.
     </para>
 
     <bridgehead>Creating the UIManager and Adding the Action Groups</bridgehead>
     <para>
-     A <ulink url="&gtk-ui-manager;"><code>gtk-ui-manager</code></ulink> is created with the function
-     <ulink url="&gtk-ui-manager-new;"><code>gtk-ui-manager-new</code></ulink>. This creates a UI manager
-     object that can then be used for creating and managing the application's user interface. It is now ready
-     to be populated with the action groups that you already defined. To insert an action group into the UI
-     manager, use the function @xurl{gtk-ui-manager-insert-action-group}.
+     A &gtk-ui-manager; object is created with the function &gtk-ui-manager-new;. This creates a UI manager
+     object that can then be used for creating and managing the user interface of the application. It is now
+     ready to be populated with the action groups that you already defined. To insert an action group into the
+     UI manager, use the function &gtk-ui-manager-insert-action-group;.
     </para>
     <para>
      The first argument is the object returned by the call to create the UI manager. The second is the group
-     to be inserted. The <code>pos</code> argument specifies the position in the list of action groups
+     to be inserted. The argument <code>pos</code> specifies the position in the list of action groups
      managed by this UI manager. Action groups that are earlier in this list will be accessed before those
      that are later in this list. A consequence of this is that, if an action with the same name, e.g.
      "Open", is in two different groups, the entry in the group with smaller position will hide the one in
@@ -10119,35 +9545,31 @@ JustifyLeft
      <code>action-group1</code> and <code>action-group2</code>, and <code>action-group1</code> is inserted at
      position 1, and <code>action-group2</code> is at position 2, then the entry for the "Open" action in
      <code>action-group1</code> will be used by the UI manager when its proxy is activated. If it has a
-     different callback or label or accelerator, these will be associated with this action, not the one in
-     <code>action-group2</code>. You can use this feature if you need to change the semantics of a menu item
-     or toolbar button, but not the menu item or button itself.
+     different callback function or label or accelerator, these will be associated with this action, not the
+     one in <code>action-group2</code>. You can use this feature if you need to change the semantics of a menu
+     item or toolbar button, but not the menu item or button itself.
     </para>
     <para>
      While we are on the subject of inserting actions, we might as well look at how you can remove an action
-     group, if you have need to do that dynamically. That function is
-     <ulink url="&gtk-ui-manager-remove-action-group;">
-     <code>gtk-ui-manager-remove-action-group</code></ulink>. This searches the list of action groups in the
-     UI manager and deletes the one which is passed to it.
+     group, if you have need to do that dynamically. That function is &gtk-ui-manager-remove-action-group;.
+     This searches the list of action groups in the UI manager and deletes the one which is passed to it.
     </para>
 
-    <bridgehead>Extracting Accelerators and adding them to the Top-Level Window</bridgehead>
+    <bridgehead>Extracting Accelerators and adding them to the Toplevel Window</bridgehead>
     <para>
      Accelerators are key combinations that provide quick access to the actions in a window. They are usually
-     associated with the top-level window so that key-presses while that window has focus can be handled by
-     the top-level window's "key-press-event" handler, which can propagate it through the chain of widgets.
-     The problem is that the accelerators are stored within the UI manager, not the top-level window, when
+     associated with the toplevel window so that key-presses while that window has focus can be handled by
+     the"key-press-event" handler of the toplevel window, which can propagate it through the chain of widgets.
+     The problem is that the accelerators are stored within the UI manager, not the toplevel window, when
      you insert the action groups into it. The UI manager aggregates the accelerators into its private data
      as action groups are added to it. However it provides a method of extracting them. The set of
-     accelerators can be extracted into a <ulink url="&gtk-accel-group;"><code>gtk-accel-group</code></ulink>
-     object that can be added into a top-level window. The function that does this is
-     <ulink url="&gtk-ui-manager-get-accel-group;"><code>gtk-ui-manager-get-accel-group</code></ulink>.
-     The function that adds this group into a top-level window is <ulink url="&gtk-window-add-accel-group;">
-     <code>gtk-window-add-accel-group</code></ulink>. The following code-snippet will extract the
-     accelerators and add them to the top-level window:
+     accelerators can be extracted into a &gtk-accel-group; object that can be added into a toplevel window.
+     The function that does this is &gtk-ui-manager-accel-group;. The function that adds this group into a
+     toplevel window is &gtk-window-add-accel-group;. The following code snippet will extract the accelerators
+     and add them to the toplevel window:
     </para>
     <programlisting>
-(let ((accel-group (gtk-ui-manager-get-accel-group ui-manager)))
+(let ((accel-group (gtk-ui-manager-accel-group ui-manager)))
   (gtk-window-add-accel-group window accel-group)
   ... )
     </programlisting>
@@ -10155,17 +9577,15 @@ JustifyLeft
     <bridgehead>Loading the UI Definition</bridgehead>
     <para>
      If the UI definition is in a separate file, it can be loaded using the function
-     <ulink url="&gtk-ui-manager-add-ui-from-file;"><code>gtk-ui-manager-add-ui-from-file</code></ulink>. The
-     first argument is the UI manager object, the second, a filename passed as a UTF-8 string. If this
-     function is successful, it will return a positive integer called a merge-id. Merge-ids will be explained
-     in the next section. If the function fails, for one reason or another, the return value will be zero.
-     Therefore it is a good idea to check the return value of the function. The following code fragment tests
-     both conditions and terminates the program with an error message if there is an error:
+     &gtk-ui-manager-add-ui-from-file;. The first argument is the UI manager object, the second, a filename
+     passed as a UTF-8 string. If this function is successful, it will return a positive integer called a
+     merge ID. If the function fails, for one reason or another, the return value will be zero. Therefore it
+     is a good idea to check the return value of the function. The following code fragment tests both
+     conditions and terminates the program with an error message if there is an error:
     </para>
     <programlisting>
-(let ((merge-id (gtk-ui-manager-add-ui-from-file ui-manager
-                                                 "menu-1.xml")))
-  (when (eql 0 merge-id)
+(let ((merge-id (gtk-ui-manager-add-ui-from-file ui-manager "menu-1.xml")))
+  (when (= 0 merge-id)
     (error-message "Could not load UI Manager definition"))
   ... )
     </programlisting>
@@ -10175,13 +9595,12 @@ JustifyLeft
     <para>
      An alternative to storing the UI definition in a file in the source code tree is to store the UI
      definition as a string within a source code file itself. If the UI definition is in a string, then it
-     can be added with the function <ulink url="&gtk-ui-manager-add-ui-from-string;">
-     <code>gtk-ui-manager-add-ui-from-string</code></ulink>.
+     can be added with the function &gtk-ui-manager-add-ui-from-string;.
     </para>
     <para>
-     The buffer argument is the name of the string containing the UI definition. The return value is also
-     either a positive integer on success, in which case it is a valid merge-id, or zero on failure. The
-     following listing shows how to define a UI definition in a string.
+     The argument <code>buffer</code> is the name of the string containing the UI definition. The return value
+     is also either a positive integer on success, in which case it is a valid merge ID, or zero on failure.
+     The following listing shows how to define a UI definition in a string.
     </para>
     <programlisting>
 (defparameter ui-constant
@@ -10206,9 +9625,8 @@ JustifyLeft
      This would then be added to the UI manager with the fragment
     </para>
     <programlisting>
-(let ((merge-id (gtk-ui-manager-add-ui-from-string ui-manager 
-                                                   ui-constant)))
-  (when (eql 0 merge-id)
+(let ((merge-id (gtk-ui-manager-add-ui-from-string manager ui-constant)))
+  (when (= 0 merge-id)
     (error-message "Could not load UI Manager definition"))
   ... )
     </programlisting>
@@ -10219,74 +9637,63 @@ JustifyLeft
      into it, and pack those widgets into the window where you want them to be. This is where the names of
      the UI definition elements come into play. The UI manager can find a widget for you when you give it the
      absolute pathname of the element that you want to construct. The absolute pathname is a string starting
-     with a forward slash '/', much like a file's absolute pathname, with a sequence of the ancestor elements
-     in the XML tree of that element.
+     with a forward slash '/', much like a absolute pathname of the file, with a sequence of the ancestor
+     elements in the XML tree of that element.
     </para>
     <para>
      Elements which do not have a name or action attribute in the XML (e.g. <code>&#x3c;popup></code>) can
      be addressed by their XML element name (e.g. "popup"). The root element ("/ui") can be omitted in the
      path.
     </para>
-    <para>t
-     As an example, the absolute pathname of the FileMenu in the UI definition above is "/MainMenu/FileMenu".
+    <para>
+     As an example, the absolute pathname of the <code>FileMenu</code> in the UI definition above is
+     "/MainMenu/FileMenu".
     </para>
     <para>
-     The function <ulink url="&gtk-ui-manager-get-widget;"><code>gtk-ui-manager-get-widget</code></ulink>
-     finds the widget that the UI manager constructed, whose name matches the pathname that you give it. If
-     you give it the name of a menubar, you get a menubar widget with its entire subtree. If you give it the
-     name of a menu, you get the menu item to which the menu is attached, not the menu.
+     The function &gtk-ui-manager-widget; finds the widget that the UI manager constructed, whose name matches
+     the pathname that you give it. If you give it the name of a menubar, you get a menubar widget with its
+     entire subtree. If you give it the name of a menu, you get the menu item to which the menu is attached,
+     not the menu.
     </para>
     <para>
      If our UI definition had a menubar and toolbar at the top level named "MainMenu" and "MainToolBar"
      respectively, we could get them from the UI manager using
     </para>
     <programlisting>
-(let ((menubar (gtk-ui-manget-get-widget ui-manager "/MainMenu"))
-      (toolbar (gtk-ui-manager-get-widget ui-manager "/MainToolBar")))
+(let ((menubar (gtk-ui-manager-widget ui-manager "/MainMenu"))
+      (toolbar (gtk-ui-manager-widget ui-manager "/MainToolBar")))
   ... )
     </programlisting>
     <para>
-     We could then pack these into a &gtk-box; one below the other
-     in our main window, and we would be finished, except of course for defining all of the required callback
-     functions.
+     We could then pack these into a &gtk-box; widget one below the other in our main window, and we would be
+     finished, except of course for defining all of the required callback functions.
     </para>
     <para>
      <emphasis>Note.</emphasis> The widgets that are constructed by a UI manager are not tied to the
      life-cycle of that UI manager. It does acquire a reference to them, but when you add the widgets
      returned by this function to a container or if you explicitly ref them, they will survive the
-     destruction of the UI manager. (Read the notes on memory management in GTK if you are unfamiliar with
-     these concepts.)
-    </para>
-    <para>
-     Lastly, you can tell the UI manager to create tear-off menus if you want, using the function
-     <ulink url="&gtk-ui-manager-add-tearoffs;"><code>gtk-ui-manager-add-tearoffs</code></ulink>.
-     By passing <emphasis>true</emphasis>, all menus (except popup menus) will have the tear-off property.
+     destruction of the UI manager.
     </para>
    </section>
 
-   <section id="UI_Merging">
+   <section id="UI_Merging" revision="2021-7-14">
     <title>UI Merging</title>
     <para>
      One of the most powerful features of the UI manager is its ability to dynamically change the menus and
      toolbars by overlaying or inserting menu items or toolbar items over others and removing them later.
      This feature is called UI merging. The ability to merge elements is based on the use of the pathnames
-     to the UI elements defined in the UI definition, and merge-ids.
+     to the UI elements defined in the UI definition, and merge IDs.
     </para>
     <para>
-     A merge-id is an unsigned integer value that is associated with a particular UI definition inside the UI
+     A merge ID is an unsigned integer value that is associated with a particular UI definition inside the UI
      manager. The functions that add UI definitions into the UI manager, such as
-     <ulink url="&gtk-ui-manager-add-ui-from-string;"><code>gtk-ui-manager-add-ui-from-string</code></ulink>
-     and <ulink url="&gtk-ui-manager-add-ui-from-file;"><code>gtk-ui-manager-add-ui-from-file</code></ulink>,
-     return a merge-id that can be used at a later time, for example, to remove that particular UI
-     definition. The function that removes a UI definition is @xurl{gtk-ui-manager-remove-ui}.
-    </para>
-    <para>
-     This is given the merge-id of the UI definition to be removed. For example, if I create a UI with the
-     call
+     &gtk-ui-manager-add-ui-from-string; and &gtk-ui-manager-add-ui-from-file;, return a merge ID that can be
+     used at a later time, for example, to remove that particular UI definition. The function that removes a
+     UI definition is &gtk-ui-manager-remove-ui;. This is given the merge ID of the UI definition to be
+     removed. For example, if I create a UI with the call
     </para>
     <programlisting>
-(let ((merge-id (gtk-ui-manager-add-ui-from-string ui_manager
-                                                   ui_toolbar)))
+(let ((merge-id (gtk-ui-manager-add-ui-from-string ui_manager ui_toolbar)))
   ... )
     </programlisting>
     <para>
@@ -10297,85 +9704,31 @@ JustifyLeft
     </programlisting>
     <para>
      In order to add an element such as a toolbar in one part of the code, and later remove it in a callback
-     function, you would need to make the merge-id either a shared variable, or attach it as a property to a
-     widget that the callback is passed.
+     function, you would need to make the merge ID either a shared variable, or attach it as a property to a
+     widget that the callback function is passed.
     </para>
     <para>
-     There is a third function <ulink url="&gtk-ui-manager-add-ui;">
-     <code>gtk-ui-manager-add-ui</code></ulink> for adding a new element to the user interface. The
-     parameters have the following meanings:
-    </para>
-    <variablelist>
-     <varlistentry>
-      <term><code>self</code></term>
-      <listitem>a <code>gtk-ui-manager</code></listitem>
-     </varlistentry>
-     <varlistentry>
-      <term><code>merge-id</code></term>
-      <listitem>the merge-id for the merged UI</listitem>
-     </varlistentry>
-     <varlistentry>
-      <term><code>path</code></term>
-      <listitem>a path</listitem>
-     </varlistentry>
-     <varlistentry>
-      <term><code>name</code></term>
-      <listitem>the name for the added UI element</listitem>
-     </varlistentry>
-     <varlistentry>
-      <term><code>action</code></term>
-      <listitem>the name of the action to be proxied, or <code>nil</code> to add a separator</listitem>
-     </varlistentry>
-     <varlistentry>
-      <term><code>type</code></term>
-      <listitem>the type of UI element to add</listitem>
-     </varlistentry>
-     <varlistentry>
-      <term><code>top</code></term>
-      <listitem>
-       if <emphasis>true</emphasis>, the UI element is added before its siblings, otherwise it is added
-       after its siblings.
-      </listitem>
-     </varlistentry>
-    </variablelist>
-    <para>
-     This function can add a single element to the UI, such as a menu item, a toolbar item, a menu, or a
-     menubar. It cannot add an entire UI definition such as the ones contained in the strings defined above.
+     There is a third function &gtk-ui-manager-add-ui; for adding a new element to the user interface. This
+     function can add a single element to the UI definition, such as a menu item, a toolbar item, a menu, or
+     a menubar. It cannot add an entire UI definition such as the ones contained in the strings defined above.
      Furthermore, it cannot be used to insert an element in a place where such an element cannot be inserted.
      For example, you cannot insert a toolbar inside a menu, or a menu inside a menu, but you can insert a
      menu item in a menu, or a menu in a menubar.
     </para>
     <para>
-     In order to use this function, you need a merge-id to give to it. It will assign associate the new UI
-     element to this merge-id so that it can be removed at a later time. New merge-ids are created with the
-     function <ulink url="&gtk-ui-manager-new-merge-id;"><code>gtk-ui-manager-new-merge-id</code></ulink>.
-     The third parameter is the absolute path name to the position at which you want to add the new UI
-     element. For example, if you want to insert a new menu item at the top of the File menu, the path would
-     be "/MainMenu/FileMenu". The fourth parameter is a name that you want this item to have for future
-     access and the fifth is the name for the action, which must exist already, that should be connected to
-     this element.
+     In order to use this function, you need a merge ID to give to it. It will assign associate the new UI
+     element to this merge ID so that it can be removed at a later time. New merge IDs are created with the
+     function &gtk-ui-manager-new-merge-id;. The third parameter is the absolute path name to the position at
+     which you want to add the new UI element. For example, if you want to insert a new menu item at the top
+     of the File menu, the path would be "/MainMenu/FileMenu". The fourth parameter is a name that you want
+     this item to have for future access and the fifth is the name for the action, which must exist already,
+     that should be connected to this element.
     </para>
     <para>
-     The type must be a member of the <ulink url="&gtk-ui-manager-item-type;">
-     <code>gtk-ui-manager-item-type</code></ulink>, which has the following values
-    </para>
-    <programlisting>
-:auto
-:menubar
-:menu
-:toolbar
-:placeholder
-:popup
-:menuitem
-:toolitem
-:separator
-:accelerator
-    </programlisting>
-    <para>
-     Their meanings should be self-explanatory, except for the first. You can use <code>:auto</code> as the
-     type to let GTK decide the type of the element that can be inserted at the indicated path. Lastly, if
-     you want the element to be above the element that is currently in that position, you set top to
-     <emphasis>true</emphasis>, otherwise <code>nil</code>.
+     The type must be a value of the &gtk-ui-manager-item-type; flags. You can use <code>:auto</code> as
+     the type to let GTK decide the type of the element that can be inserted at the indicated path. Lastly,
+     if you want the element to be above the element that is currently in that position, you set top to
+     <emphasis>true</emphasis>, otherwise <code>false</code>.
     </para>
     <para>
      As an example, suppose that I want to add a Print menu item in my File menu just below the Open menu
@@ -10397,7 +9750,7 @@ JustifyLeft
      This will insert the Print menu item into the proper position.
     </para>
     <para>
-     Assuming that  your menu is to be changed dynamically, these steps will not be enough to make the menu
+     Assuming that your menu is to be changed dynamically, these steps will not be enough to make the menu
      elements appear dynamically. The UI manager does not handle the task of packing new toolbars or menubars
      into their places in the window. However, it does emit the "add-widget" signal for each generated
      menubar and toolbar. Your application can respond to this signal with a callback function that can pack
@@ -10409,11 +9762,11 @@ JustifyLeft
       Create a callback function to pack these widgets into the parent container, and
      </listitem>
      <listitem>
-      Connect the "add-widget" signal emitted by the UI manager to this callback.
+      Connect the "add-widget" signal emitted by the UI manager to this callback function.
      </listitem>
     </itemizedlist>
     <para>
-     The callback for this signal has the prototype
+     The callback function for this signal has the prototype
     </para>
     <programlisting>
 lambda (merge widget)
@@ -10430,20 +9783,20 @@ lambda (merge widget)
      (gtk-widget-show widget)))
     </programlisting>
     <para>
-     This will pack the menubar or toolbar after any other widgets in the parent, assuming that menu-box is
-     a &gtk-box; of some kind that the menu or toolbar should be
-     packed into. It must show the widget to realize it.
+     This will pack the menubar or toolbar after any other widgets in the parent, assuming that
+     <code>menu-box</code> is a &gtk-box; widget of some kind that the menu or toolbar should be packed into.
+     It must show the widget to realize it.
     </para>
    </section>
   </section>
 
-  <section id="Arrow_Widget" revision="2021-6-10">
+  <section id="Arrow_Widget" revision="2021-7-14">
    <title>Arrow Widget</title>
    <para>
     The &gtk-arrow; widget draws an arrowhead, facing in a number of possible directions and having a number
-    of possible styles. It can be very useful when placed on a button. Like the label widget, the arrow
-    widget emits no signals. There are only two functions for manipulating an arrow widget &gtk-arrow-new;
-    and &gtk-arrow-set;. The first function creates a new arrow widget with the indicated type and appearance.
+    of possible styles. It can be useful when placed on a button. Like the label widget, the arrow widget
+    emits no signals. There are only two functions for manipulating an arrow widget &gtk-arrow-new; and
+    &gtk-arrow-set;. The first function creates a new arrow widget with the indicated type and appearance.
     The second function allows these values to be altered retrospectively. The type of an arrow can be one of
     of the values of the &gtk-arrow-type; enumeration. Possible values are <code>:up</code>,
     <code>:down</code>, <code>:left</code> and <code>:right</code>. These values obviously indicate the
@@ -10481,14 +9834,13 @@ lambda (merge widget)
     </programlisting>
    </example>
   </section>
-
  </chapter>
 
  <appendix id="Licenses">
   <title>Licenses</title>
   <para>
-   The GTK 3 Tutorial for Lisp and the presented examples have been collected from different sources.  The
-   original sources have been modified to describe the Lisp binding.  Numerous examples are taken from C
+   The GTK 3 Tutorial for Lisp and the presented examples have been collected from different sources. The
+   original sources have been modified to describe the Lisp binding. Numerous examples are taken from C
    code and translated to Lisp.
   </para>
   <orderedlist>
@@ -10546,62 +9898,3 @@ lambda (merge widget)
  </appendix>
 
 </book>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
