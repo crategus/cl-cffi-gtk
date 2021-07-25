@@ -333,9 +333,9 @@
   @argument[selection]{a @symbol{gdk-atom} as a string identifying a selection}
   @argument[time]{an unsigned integer with the timestamp to use when setting
     the selection}
-  @argument[send]{if @arg{true}, and the new owner is different from the current
+  @argument[send]{if @em{true}, and the new owner is different from the current
     owner, the current owner will be sent a @code{:selection-clear} event}
-  @return{@arg{True} if the selection owner was successfully changed to
+  @return{@em{True} if the selection owner was successfully changed to
     @arg{owner}, otherwise @em{false}.}
   @begin{short}
     Sets the owner of the given selection.

@@ -194,7 +194,7 @@ gdk_gl_context_make_current (context);
     @class{gdk-gl-context} class.
   @end{short}
 
-  The slot acess function @sym{gdk-gl-context-display} retrieves the display
+  The slot access function @sym{gdk-gl-context-display} retrieves the display
   the OpenGL drawing context is created for.
   @see-class{gdk-gl-context}
   @see-class{gdk-display}")

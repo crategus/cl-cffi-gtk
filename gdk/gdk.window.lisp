@@ -657,9 +657,10 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   (:resize 48)) ; :resize-x | :resize-y
 
 #+(and gdk-3-22 cl-cffi-gtk-documentation)
-(setf (gethash 'gdk-anchor-hints atdoc:*symbol-name-alias*) "Flags"
+(setf (gethash 'gdk-anchor-hints atdoc:*symbol-name-alias*)
+      "GFlags"
       (gethash 'gdk-anchor-hints atdoc:*external-symbols*)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @begin{short}
     Positioning hints for aligning a window relative to a rectangle.
   @end{short}
@@ -2235,7 +2236,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   composited is supported before attempting to do so.
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-composited} has been deprecated since version
-    3.16 and should not be used in newly-written code. Compositing is an
+    3.16 and should not be used in newly written code. Compositing is an
     outdated technology that only ever worked on X11.
   @end{dictionary}
   @see-class{gdk-window}
@@ -2513,7 +2514,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @end{short}
   @begin[Warning]{dictionary}
     The @sym{gdk-window-flush} function has been deprecated since version 3.14
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
   @see-class{gdk-window}"
   (window (g-object gdk-window)))
@@ -3097,7 +3098,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   See the function @fun{gdk-window-begin-paint-region} for details.
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-begin-paint-rect} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Use the function
+    version 3.22 and should not be used in newly written code. Use the function
     @fun{gdk-window-begin-draw-frame} instead.
   @end{dictionary}
   @see-class{gdk-window}
@@ -3159,7 +3160,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   required for each call to the function @sym{gdk-window-begin-paint-region}.
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-begin-paint-region} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Use the function
+    version 3.22 and should not be used in newly written code. Use the function
     @fun{gdk-window-begin-draw-frame} instead.
   @end{dictionary}
   @see-class{gdk-window}
@@ -3192,7 +3193,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @fun{gdk-window-begin-paint-region} first.
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-end-paint} is deprecated and should not be used
-    in newly-written code.
+    in newly written code.
   @end{dictionary}
   @see-class{gdk-window}
   @see-function{gdk-window-begin-paint-region}"
@@ -3574,7 +3575,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-process-all-updates} has been deprecated since
-    version 3.22 and should not be used in newly-written code.
+    version 3.22 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gdk-window}
   @see-function{gdk-window-process-updates}")
@@ -3603,7 +3604,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   to produce nicer scrolling behavior, for example.
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-process-updates} has been deprecated since
-    version 3.22 and should not be used in newly-written code.
+    version 3.22 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gdk-window}
   @see-function{gdk-window-invalidate-region}
@@ -3644,7 +3645,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   application startup time.
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-set-debug-updates} has been deprecated since
-    version 3.22 and should not be used in newly-written code.
+    version 3.22 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gdk-window}
   @see-function{gdk-window-invalidate-region}
@@ -3667,7 +3668,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-enable-synchronized-configure} has been
-    deprecated since version 3.8 and should not be used in newly-written code.
+    deprecated since version 3.8 and should not be used in newly written code.
     This function is no longer needed.
   @end{dictionary}
   @see-class{gdk-window}
@@ -3689,7 +3690,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-configure-finished} has been deprecated since
-    version 3.8 and should not be used in newly-written code. This function is
+    version 3.8 and should not be used in newly written code. This function is
     no longer needed.
   @end{dictionary}
   @see-class{gdk-window}
@@ -4139,7 +4140,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   knowledge of the windowing system. Do not worry about it unless you have to.
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-set-static-gravities} has been deprecated since
-    version 3.16 and should not be used in newly-written code. Static gravities
+    version 3.16 and should not be used in newly written code. Static gravities
     have not worked on anything but X11 for a long time.
   @end{dictionary}
   @see-class{gdk-window}"
@@ -4220,7 +4221,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   See also the function @fun{gdk-window-background-pattern}.
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-set-background-rgba} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Do not use this
+    version 3.22 and should not be used in newly written code. Do not use this
     function.
   @end{dictionary}
   @see-class{gdk-window}
@@ -4273,7 +4274,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   the window is obscured then exposed.
   @begin[Warning]{dictionary}
     The function @sym{gdk-window-background-pattern} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Do not use
+    version 3.22 and should not be used in newly written code. Do not use
     this function.
   @end{dictionary}
   @see-class{gdk-window}
