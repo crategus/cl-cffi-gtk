@@ -666,28 +666,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_set_icon ()
-;;;
-;;; void g_menu_item_set_icon (GMenuItem *menu_item, GIcon *icon);
-;;;
-;;; Sets (or unsets) the icon on menu_item.
-;;;
-;;; This call is the same as calling g_icon_serialize() and using the result as
-;;; the value to g_menu_item_set_attribute_value() for G_MENU_ATTRIBUTE_ICON.
-;;;
-;;; This API is only intended for use with "noun" menu items; things like
-;;; bookmarks or applications in an "Open With" menu. Don't use it on menu
-;;; items corresponding to verbs (eg: stock icons for 'Save' or 'Quit').
-;;;
-;;; If icon is NULL then the icon is unset.
-;;;
-;;; menu_item :
-;;;     a GMenuItem
-;;;
-;;; icon :
-;;;     a GIcon, or NULL
-;;;
-;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_item_set_icon" g-menu-item-set-icon) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-7-20}
+  @argument[item]{a @class{g-menu-item} object}
+  @argument[icon]{a @class{g-icon} object}
+  @begin{short}
+    Sets (or unsets) the icon on @arg{item}.
+  @end{short}
+
+  This call is the same as calling the function @fun{g-icon-serialize} and using
+  the result as the value to the function @fun{g-menu-item-set-attribute-value}
+  for \"icon\".
+
+  This API is only intended for use with \"noun\" menu items. Things like
+  bookmarks or applications in an \"Open With\" menu. Do not use it on menu
+  items corresponding to verbs, e.g. stock icons for 'Save' or 'Quit'.
+
+  If @arg{icon} is @code{nil} then the icon is unset.
+  @see-class{g-menu-item}
+  @see-function{g-icon-serialize}
+  @see-function{g-menu-item-set-attribute-value}"
+  (item (g-object g-menu-item))
+  (icon (g-object g-icon)))
+
+(export 'g-menu-item-set-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_set_action_and_target_value ()
