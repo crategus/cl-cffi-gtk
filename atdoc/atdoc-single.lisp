@@ -120,6 +120,8 @@
 
 (unexport 'gtk:gtk-notebook-add-page :gtk)
 
+(unexport 'gtk:g-error :gtk)
+
 (defun generate-html ()
   (let* ((base (asdf:component-pathname (asdf:find-system :cl-cffi-gtk)))
          (output-directory (merge-pathnames "../atdoc/" base)))

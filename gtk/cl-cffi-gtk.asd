@@ -56,7 +56,7 @@
    (:file "gtk.accel-map")             ; Loadable keyboard accelerator
    (:file "gtk.selections")            ; Inter-process communication
    (:file "gtk.drag-and-drop")         ; Controlling drag and drop
-   (:file "gtk.stock-item")            ; Stock Items
+;   (:file "gtk.stock-item")            ; Stock Items
    (:file "gtk.clipboard")             ; Storing data on clipboards
    (:file "gtk.settings")              ; Sharing settings
    (:file "gtk.bindings")              ; Key bindings for individual widgets
@@ -72,7 +72,7 @@
    (:file "gtk.style-provider")        ; Interface to provide style information
    (:file "gtk.css-provider")          ; CSS-like styling for widgets
    (:file "gtk.style-context")         ; Rendering UI elements
-   (:file "gtk.theming-engine")        ; Theming renderers
+;   (:file "gtk.theming-engine")        ; Theming renderers
    (:file "gtk.icon-theme")            ; Looking up icons by name
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.numerable-icon")        ; A GIcon that allows numbered emblems

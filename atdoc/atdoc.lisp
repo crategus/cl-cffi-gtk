@@ -123,6 +123,7 @@
 (unexport 'gtk:with-text-buffer-user-action :gtk)
 
 (unexport 'gtk:let-ui :gtk)
+(unexport 'gtk:g-error :gtk)
 
 (defun generate-html ()
   (let* ((base (asdf:component-pathname (asdf:find-system :cl-cffi-gtk)))

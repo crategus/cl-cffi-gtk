@@ -1407,6 +1407,7 @@
     @begin[GtkTextIter]{subsection}
       Text buffer iterator.
 
+      @about-symbol{gtk-text-search-flags}
       @about-class{gtk-text-iter}
       @about-function{gtk-text-iter-buffer}
       @about-function{gtk-text-iter-copy}
@@ -1416,8 +1417,8 @@
       @about-function{gtk-text-iter-line}
       @about-function{gtk-text-iter-line-offset}
       @about-function{gtk-text-iter-line-index}
-      @about-function{gtk-text-iter-visible-line-index}
       @about-function{gtk-text-iter-visible-line-offset}
+      @about-function{gtk-text-iter-visible-line-index}
       @about-function{gtk-text-iter-char}
       @about-function{gtk-text-iter-slice}
       @about-function{gtk-text-iter-text}
@@ -1452,50 +1453,48 @@
       @about-function{gtk-text-iter-is-start}
       @about-function{gtk-text-iter-move}
       @about-function{gtk-text-iter-forward-char}
-      @about-function{gtk-text-iter-backward-char}
       @about-function{gtk-text-iter-forward-chars}
+      @about-function{gtk-text-iter-backward-char}
       @about-function{gtk-text-iter-backward-chars}
       @about-function{gtk-text-iter-forward-line}
-      @about-function{gtk-text-iter-backward-line}
       @about-function{gtk-text-iter-forward-lines}
+      @about-function{gtk-text-iter-backward-line}
       @about-function{gtk-text-iter-backward-lines}
-      @about-function{gtk-text-iter-forward-word-ends}
-      @about-function{gtk-text-iter-backward-word-starts}
       @about-function{gtk-text-iter-forward-word-end}
+      @about-function{gtk-text-iter-forward-word-ends}
       @about-function{gtk-text-iter-backward-word-start}
+      @about-function{gtk-text-iter-backward-word-starts}
       @about-function{gtk-text-iter-forward-cursor-position}
-      @about-function{gtk-text-iter-backward-cursor-position}
       @about-function{gtk-text-iter-forward-cursor-positions}
+      @about-function{gtk-text-iter-backward-cursor-position}
       @about-function{gtk-text-iter-backward-cursor-positions}
-      @about-function{gtk-text-iter-backward-sentence-start}
-      @about-function{gtk-text-iter-backward-sentence-starts}
       @about-function{gtk-text-iter-forward-sentence-end}
       @about-function{gtk-text-iter-forward-sentence-ends}
-      @about-function{gtk-text-iter-forward-visible-word-ends}
-      @about-function{gtk-text-iter-backward-visible-word-starts}
+      @about-function{gtk-text-iter-backward-sentence-start}
+      @about-function{gtk-text-iter-backward-sentence-starts}
       @about-function{gtk-text-iter-forward-visible-word-end}
+      @about-function{gtk-text-iter-forward-visible-word-ends}
       @about-function{gtk-text-iter-backward-visible-word-start}
+      @about-function{gtk-text-iter-backward-visible-word-starts}
       @about-function{gtk-text-iter-forward-visible-cursor-position}
-      @about-function{gtk-text-iter-backward-visible-cursor-position}
       @about-function{gtk-text-iter-forward-visible-cursor-positions}
+      @about-function{gtk-text-iter-backward-visible-cursor-position}
       @about-function{gtk-text-iter-backward-visible-cursor-positions}
       @about-function{gtk-text-iter-forward-visible-line}
-      @about-function{gtk-text-iter-backward-visible-line}
       @about-function{gtk-text-iter-forward-visible-lines}
+      @about-function{gtk-text-iter-backward-visible-line}
       @about-function{gtk-text-iter-backward-visible-lines}
       @about-function{gtk-text-iter-forward-to-end}
       @about-function{gtk-text-iter-forward-to-line-end}
       @about-function{gtk-text-iter-forward-to-tag-toggle}
       @about-function{gtk-text-iter-backward-to-tag-toggle}
+      @about-symbol{gtk-text-char-predicate}
       @about-function{gtk-text-iter-find-char}
       @about-function{gtk-text-iter-forward-find-char}
       @about-function{gtk-text-iter-backward-find-char}
-
-      @about-symbol{gtk-text-search-flags}
       @about-function{gtk-text-iter-search}
       @about-function{gtk-text-iter-forward-search}
       @about-function{gtk-text-iter-backward-search}
-
       @about-function{gtk-text-iter-equal}
       @about-function{gtk-text-iter-compare}
       @about-function{gtk-text-iter-in-range}
@@ -2771,7 +2770,7 @@ setup_tree (void)
       @about-function{gtk-tree-store-move-after}
     @end{subsection}
   @end{section}
-  @begin[Menus, Combo Box, Toolbar]{section}
+  @begin[Combo Box]{section}
     @begin[GtkComboBox]{subsection}
       A widget used to choose from a list of items.
 
@@ -2822,6 +2821,27 @@ setup_tree (void)
       @about-function{gtk-combo-box-text-remove}
       @about-function{gtk-combo-box-text-remove-all}
       @about-function{gtk-combo-box-text-active-text}
+    @end{subsection}
+  @end{section}
+  @begin[Menus]{section}
+    @begin[GtkMenuShell]{subsection}
+      A base class for menu objects.
+
+      @about-symbol{gtk-menu-direction-type}
+      @about-class{gtk-menu-shell}
+      @about-generic{gtk-menu-shell-take-focus}
+      @about-function{gtk-menu-shell-append}
+      @about-function{gtk-menu-shell-prepend}
+      @about-function{gtk-menu-shell-insert}
+      @about-function{gtk-menu-shell-deactivate}
+      @about-function{gtk-menu-shell-select-item}
+      @about-function{gtk-menu-shell-select-first}
+      @about-function{gtk-menu-shell-deselect}
+      @about-function{gtk-menu-shell-activate-item}
+      @about-function{gtk-menu-shell-cancel}
+      @about-function{gtk-menu-shell-selected-item}
+      @about-function{gtk-menu-shell-parent-shell}
+      @about-function{gtk-menu-shell-bind-model}
     @end{subsection}
     @begin[GtkMenu]{subsection}
       A menu widget
@@ -2891,6 +2911,24 @@ setup_tree (void)
       @about-function{gtk-menu-item-toggle-size-allocate}
       @about-function{gtk-menu-item-reserve-indicator}
     @end{subsection}
+    @begin[GtkCheckMenuItem]{subsection}
+      A menu item with a check box.
+
+      @about-class{gtk-check-menu-item}
+      @about-generic{gtk-check-menu-item-active}
+      @about-generic{gtk-check-menu-item-draw-as-radio}
+      @about-generic{gtk-check-menu-item-inconsistent}
+      @about-function{gtk-check-menu-item-new}
+      @about-function{gtk-check-menu-item-new-with-label}
+      @about-function{gtk-check-menu-item-new-with-mnemonic}
+      @about-function{gtk-check-menu-item-get-active}
+      @about-function{gtk-check-menu-item-set-active}
+      @about-function{gtk-check-menu-item-toggled}
+      @about-function{gtk-check-menu-item-get-inconsistent}
+      @about-function{gtk-check-menu-item-set-inconsistent}
+      @about-function{gtk-check-menu-item-set-draw-as-radio}
+      @about-function{gtk-check-menu-item-get-draw-as-radio}
+    @end{subsection}
     @begin[GtkRadioMenuItem]{subsection}
       A choice from multiple check menu items
 
@@ -2906,32 +2944,14 @@ setup_tree (void)
       @about-function{gtk-radio-menu-item-get-group}
       @about-function{gtk-radio-menu-item-join-group}
     @end{subsection}
-    @begin[GtkCheckMenuItem]{subsection}
-      A menu item with a check box.
-
-      @about-class{gtk-check-menu-item}
-
-      @about-generic{gtk-check-menu-item-active}
-      @about-generic{gtk-check-menu-item-draw-as-radio}
-      @about-generic{gtk-check-menu-item-inconsistent}
-
-      @about-function{gtk-check-menu-item-new}
-      @about-function{gtk-check-menu-item-new-with-label}
-      @about-function{gtk-check-menu-item-new-with-mnemonic}
-      @about-function{gtk-check-menu-item-get-active}
-      @about-function{gtk-check-menu-item-set-active}
-      @about-function{gtk-check-menu-item-toggled}
-      @about-function{gtk-check-menu-item-get-inconsistent}
-      @about-function{gtk-check-menu-item-set-inconsistent}
-      @about-function{gtk-check-menu-item-set-draw-as-radio}
-      @about-function{gtk-check-menu-item-get-draw-as-radio}
-    @end{subsection}
     @begin[GtkSeparatorMenuItem]{subsection}
       A separator used in menus.
 
       @about-class{gtk-separator-menu-item}
       @about-function{gtk-separator-menu-item-new}
     @end{subsection}
+  @end{section}
+  @begin[Toolbar]{section}
     @begin[GtkToolShell]{subsection}
       Interface for containers containing GtkToolItem widgets.
 
@@ -3087,6 +3107,8 @@ setup_tree (void)
       @about-function{gtk-radio-tool-button-get-group}
       @about-function{gtk-radio-tool-button-set-group}
     @end{subsection}
+  @end{section}
+  @begin[Popover]{section}
     @begin[GtkPopover]{subsection}
       Context dependent bubbles.
 
@@ -4099,25 +4121,6 @@ setup_tree (void)
       @about-class{gtk-bin}
       @about-function{gtk-bin-child}
     @end{subsection}
-    @begin[GtkMenuShell]{subsection}
-      A base class for menu objects.
-
-      @about-symbol{gtk-menu-direction-type}
-      @about-class{gtk-menu-shell}
-      @about-generic{gtk-menu-shell-take-focus}
-      @about-function{gtk-menu-shell-append}
-      @about-function{gtk-menu-shell-prepend}
-      @about-function{gtk-menu-shell-insert}
-      @about-function{gtk-menu-shell-deactivate}
-      @about-function{gtk-menu-shell-select-item}
-      @about-function{gtk-menu-shell-select-first}
-      @about-function{gtk-menu-shell-deselect}
-      @about-function{gtk-menu-shell-activate-item}
-      @about-function{gtk-menu-shell-cancel}
-      @about-function{gtk-menu-shell-selected-item}
-      @about-function{gtk-menu-shell-parent-shell}
-      @about-function{gtk-menu-shell-bind-model}
-    @end{subsection}
     @begin[GtkRange]{subsection}
       Base class for widgets which visualize an adjustment
 
@@ -4935,7 +4938,7 @@ setup_tree (void)
   @end{section}
   @begin[Theming in GTK]{section}
     @begin[GtkStyleContext]{subsection}
-      Rendering UI elements
+      Rendering UI elements.
 
       @about-symbol{gtk-junction-sides}
       @about-symbol{gtk-region-flags}
@@ -5001,7 +5004,7 @@ setup_tree (void)
       @about-function{gtk-border-copy}
       @about-function{gtk-render-arrow}
       @about-function{gtk-render-background}
-      @about-function{gtk-render-background-get-clip}
+      @about-function{gtk-render-background-clip}
       @about-function{gtk-render-check}
       @about-function{gtk-render-expander}
       @about-function{gtk-render-extension}
@@ -5212,7 +5215,7 @@ setup_tree (void)
       A deprecated container for arranging buttons horizontally.
 
       The GtkHButtonBox widget has been deprecated since GTK 3.2 and should not
-      be used in newly-written code. Use the @class{gtk-button-box} widget with
+      be used in newly written code. Use the @class{gtk-button-box} widget with
       the value @code{:horizontal} for the @slot[gtk-orientable]{orientation}
       property instead.
 
@@ -5223,7 +5226,7 @@ setup_tree (void)
       A deprecated container for arranging buttons vertically.
 
       The GtkVButtonBox widget has been deprecated since GTK 3.2 and should not
-      be used in newly-written code. Use the @class{gtk-button-box} widget with
+      be used in newly written code. Use the @class{gtk-button-box} widget with
       the value @code{:vertical} for the @slot[gtk-orientable]{orientation}
       property instead.
 
@@ -5234,7 +5237,7 @@ setup_tree (void)
       A deprecated container with two panes arranged horizontally.
 
       The GtkHPaned widget has been deprecated since GTK 3.2 and should not be
-      used in newly-written code. Use the @class{gtk-paned} widget with the
+      used in newly written code. Use the @class{gtk-paned} widget with the
       value @code{:horizontal} for the @slot[gtk-orientable]{orientation}
       property instead.
 
@@ -5245,7 +5248,7 @@ setup_tree (void)
       A deprecated container with two panes arranged vertically.
 
       The GtkVPaned widget has been deprecated since GTK 3.2 and should not be
-      used in newly-written code. Use the @class{gtk-paned} widget with the
+      used in newly written code. Use the @class{gtk-paned} widget with the
       value @code{:vertical} for the @slot[gtk-orientable]{orientation} property
       instead.
 
@@ -5352,7 +5355,7 @@ setup_tree (void)
       @about-function{gtk-handle-box-new}
     @end{subsection}
     @begin[GtkTable]{subsection}
-      Pack widgets in regular patterns.
+      Deprecated widget which pack widgets in regular patterns.
 
       @about-symbol{gtk-attach-options}
       @about-class{gtk-table}
@@ -5442,7 +5445,8 @@ setup_tree (void)
 
     @begin[Deprecated since GTK 3.10]{subsection}@end{subsection}
     @begin[GtkUIManager]{subsection}
-      Constructing menus and toolbars from an XML description.
+      Deprecated class for constructing menus and toolbars from an XML
+      description.
 
       @about-symbol{gtk-ui-manager-item-type}
       @about-class{gtk-ui-manager}
@@ -5465,7 +5469,7 @@ setup_tree (void)
       @about-function{gtk-ui-manager-ensure-update}
     @end{subsection}
     @begin[GtkActionGroup]{subsection}
-      A group of actions.
+      A deprecated group of actions.
 
       @about-class{gtk-action-group}
       @about-generic{gtk-action-group-accel-group}
@@ -5473,7 +5477,7 @@ setup_tree (void)
       @about-generic{gtk-action-group-sensitive}
       @about-generic{gtk-action-group-visible}
       @about-function{gtk-action-group-new}
-      @about-function{gtk-action-group-get-action}
+      @about-function{gtk-action-group-action}
       @about-function{gtk-action-group-list-actions}
       @about-function{gtk-action-group-add-action}
       @about-function{gtk-action-group-add-action-with-accel}
@@ -5487,6 +5491,7 @@ setup_tree (void)
       @about-symbol{gtk-radio-action-entry}
       @about-function{gtk-action-group-add-radio-actions}
       @about-function{gtk-action-group-add-radio-actions-full}
+      @about-symbol{gtk-translate-func}
       @about-function{gtk-action-group-set-translate-func}
       @about-function{gtk-action-group-set-translation-domain}
       @about-function{gtk-action-group-translate-string}
@@ -5519,14 +5524,13 @@ setup_tree (void)
       @about-function{gtk-action-create-menu-item}
       @about-function{gtk-action-create-tool-item}
       @about-function{gtk-action-create-menu}
-      @about-function{gtk-action-get-proxies}
+      @about-function{gtk-action-proxies}
       @about-function{gtk-action-connect-accelerator}
       @about-function{gtk-action-disconnect-accelerator}
       @about-function{gtk-action-block-activate}
       @about-function{gtk-action-unblock-activate}
-      @about-function{gtk-action-get-accel-path}
-      @about-function{gtk-action-set-accel-path}
-      @about-function{gtk-action-get-accel-closure}
+      @about-function{gtk-action-accel-path}
+      @about-function{gtk-action-accel-closure}
       @about-function{gtk-action-set-accel-group}
     @end{subsection}
     @begin[GtkToggleAction]{subsection}
@@ -5549,7 +5553,7 @@ setup_tree (void)
       @about-function{gtk-radio-action-join-group}
     @end{subsection}
     @begin[GtkRecentAction]{subsection}
-      A deprecated action of which represents a list of recently used files.
+      A deprecated action which represents a list of recently used files.
 
       @about-class{gtk-recent-action}
       @about-generic{gtk-recent-action-show-numbers}
@@ -5589,56 +5593,46 @@ setup_tree (void)
       @about-function{gtk-misc-get-padding}
     @end{subsection}
     @begin[Stock items]{subsection}
-      Prebuilt common menu/toolbar items and corresponding icons.
+      Deprecated prebuilt common menu/toolbar items and corresponding icons.
 
       Since GTK 3.10, stock items are deprecated. You should instead set up
       whatever labels and/or icons you need using normal widget API, rather
       than relying on GTK providing ready-made combinations of these.
 
-      Stock items represent commonly-used menu or toolbar items such as \"Open\"
-      or \"Exit\". Each stock item is identified by a stock ID; stock IDs are
-      just strings like \"gtk-open\" or \"gtk-exit\". Applications can register
-      their own stock items in addition to those built-in to GTK.
-
-      Each stock ID can be associated with a @code{GtkStockItem}, which contains
-      the user-visible label, keyboard accelerator, and translation domain of
-      the menu or toolbar item; and/or with an icon stored in a
-      @class{gtk-icon-factory}. See @class{gtk-icon-factory} for more
-      information on stock icons. The connection between a @code{GtkStockItem}
-      and stock icons is purely conventional by virtue of using the same stock
-      ID; it's possible to register a stock item but no icon, and vice versa.
-      Stock icons may have a RTL variant which gets used for right-to-left
-      locales.
-
-      Only the function @fun{gtk-stock-list-ids} is in the Lisp binding
-      implemented. For more information see
-      @url[https://developer.gnome.org/gtk3/stable/gtk3-Stock-Items.html]{Stock Items}
-      in the GTK documentation.
-
-      @about-class{gtk-stock-item}
-      @about-function{gtk-stock-add}
-      @about-function{gtk-stock-add-static}
-      @about-function{gtk-stock-item-copy}
-      @about-function{gtk-stock-item-free}
-      @about-function{gtk-stock-list-ids}
-      @about-function{gtk-stock-lookup}
-      @about-function{gtk-stock-set-translate-func}
+      In the Lisp binding no symbols and functions are implemented.
     @end{subsection}
     @begin[Themable Stock Images]{subsection}
-      Manipulating stock icons
+      Deprecated structures and functions for manipulating stock icons.
 
-      @about-class{gtk-icon-source}
-      @about-class{gtk-icon-factory}
-      @about-class{gtk-icon-set}
       @about-symbol{gtk-icon-size}
+      @about-function{gtk-icon-size-lookup}
+      @about-function{gtk-icon-size-lookup-for-settings}
+      @about-function{gtk-icon-size-register}
+      @about-function{gtk-icon-size-register-alias}
+      @about-function{gtk-icon-size-from-name}
+      @about-function{gtk-icon-size-get-name}
+      @about-function{gtk-icon-size-get-sizes}
+      @about-class{gtk-icon-source}
       @about-function{gtk-icon-source-copy}
       @about-function{gtk-icon-source-free}
-      @about-function{gtk-icon-factory-add}
-      @about-function{gtk-icon-factory-add-default}
-      @about-function{gtk-icon-factory-lookup}
-      @about-function{gtk-icon-factory-lookup-default}
-      @about-function{gtk-icon-factory-new}
-      @about-function{gtk-icon-factory-remove-default}
+      @about-function{gtk-icon-source-get-direction}
+      @about-function{gtk-icon-source-get-direction-wildcarded}
+      @about-function{gtk-icon-source-filename}
+      @about-function{gtk-icon-source-get-pixbuf}
+      @about-function{gtk-icon-source-icon-name}
+      @about-function{gtk-icon-source-get-size}
+      @about-function{gtk-icon-source-get-size-wildcarded}
+      @about-function{gtk-icon-source-get-state}
+      @about-function{gtk-icon-source-get-state-wildcarded}
+      @about-function{gtk-icon-source-new}
+      @about-function{gtk-icon-source-set-direction}
+      @about-function{gtk-icon-source-set-direction-wildcarded}
+      @about-function{gtk-icon-source-set-pixbuf}
+      @about-function{gtk-icon-source-set-size}
+      @about-function{gtk-icon-source-set-size-wildcarded}
+      @about-function{gtk-icon-source-set-state}
+      @about-function{gtk-icon-source-set-state-wildcarded}
+      @about-class{gtk-icon-set}
       @about-function{gtk-icon-set-add-source}
       @about-function{gtk-icon-set-copy}
       @about-function{gtk-icon-set-new}
@@ -5647,37 +5641,18 @@ setup_tree (void)
       @about-function{gtk-icon-set-render-icon}
       @about-function{gtk-icon-set-render-icon-pixbuf}
       @about-function{gtk-icon-set-unref}
-      @about-function{gtk-icon-size-lookup}
-      @about-function{gtk-icon-size-lookup-for-settings}
-      @about-function{gtk-icon-size-register}
-      @about-function{gtk-icon-size-register-alias}
-      @about-function{gtk-icon-size-from-name}
-      @about-function{gtk-icon-size-get-name}
-      @about-function{gtk-icon-size-get-sizes}
-      @about-function{gtk-icon-source-get-direction}
-      @about-function{gtk-icon-source-get-direction-wildcarded}
-      @about-function{gtk-icon-source-get-filename}
-      @about-function{gtk-icon-source-get-pixbuf}
-      @about-function{gtk-icon-source-get-icon-name}
-      @about-function{gtk-icon-source-get-size}
-      @about-function{gtk-icon-source-get-size-wildcarded}
-      @about-function{gtk-icon-source-get-state}
-      @about-function{gtk-icon-source-get-state-wildcarded}
-      @about-function{gtk-icon-source-new}
-      @about-function{gtk-icon-source-set-direction}
-      @about-function{gtk-icon-source-set-direction-wildcarded}
-      @about-function{gtk-icon-source-set-filename}
-      @about-function{gtk-icon-source-set-pixbuf}
-      @about-function{gtk-icon-source-set-icon-name}
-      @about-function{gtk-icon-source-set-size}
-      @about-function{gtk-icon-source-set-size-wildcarded}
-      @about-function{gtk-icon-source-set-state}
-      @about-function{gtk-icon-source-set-state-wildcarded}
+      @about-class{gtk-icon-factory}
+      @about-function{gtk-icon-factory-add}
+      @about-function{gtk-icon-factory-add-default}
+      @about-function{gtk-icon-factory-lookup}
+      @about-function{gtk-icon-factory-lookup-default}
+      @about-function{gtk-icon-factory-new}
+      @about-function{gtk-icon-factory-remove-default}
     @end{subsection}
 
     @begin[Deprecated since GTK 3.14]{subsection}@end{subsection}
     @begin[GtkNumerableIcon]{subsection}
-      A deprecated @class{g-icon} that allows numbered emblems.
+      A deprecated @class{g-icon} implementation that allows numbered emblems.
 
       @about-class{gtk-numerable-icon}
       @about-generic{gtk-numerable-icon-background-icon}
@@ -5689,7 +5664,7 @@ setup_tree (void)
       @about-function{gtk-numerable-icon-new-with-style-context}
     @end{subsection}
     @begin[GtkArrow]{subsection}
-      Displays an arrow.
+      Deprecated widget which displays an arrow.
 
       @about-class{gtk-arrow}
       @about-generic{gtk-arrow-arrow-type}
@@ -5698,7 +5673,7 @@ setup_tree (void)
       @about-function{gtk-arrow-set}
     @end{subsection}
     @begin[GtkStatusIcon]{subsection}
-      Display an icon in the system tray.
+      Deprecated class for displaying an icon in the system tray.
 
       @about-class{gtk-status-icon}
       @about-generic{gtk-status-icon-embedded}
@@ -5734,33 +5709,12 @@ setup_tree (void)
       @about-function{gtk-status-icon-get-x11-window-id}
     @end{subsection}
     @begin[GtkThemingEngine]{subsection}
-      Theming renderers
+      Deprecated class for theming renderers. The GtkThemingEngine class has
+      been deprecated in GTK 3.14 and will be ignored for rendering. The
+      advancements in CSS theming are good enough to allow themers to achieve
+      their goals without the need to modify source code.
 
-      @about-class{gtk-theming-engine}
-      @about-function{gtk-theming-engine-get}
-      @about-function{gtk-theming-engine-get-direction}
-      @about-function{gtk-theming-engine-get-junction-sides}
-      @about-function{gtk-theming-engine-get-path}
-      @about-function{gtk-theming-engine-get-property}
-      @about-function{gtk-theming-engine-get-screen}
-      @about-function{gtk-theming-engine-get-state}
-      @about-function{gtk-theming-engine-get-style}
-      @about-function{gtk-theming-engine-get-style-property}
-      @about-function{gtk-theming-engine-get-style-valist}
-      @about-function{gtk-theming-engine-get-valist}
-      @about-function{gtk-theming-engine-get-color}
-      @about-function{gtk-theming-engine-get-background-color}
-      @about-function{gtk-theming-engine-get-border-color}
-      @about-function{gtk-theming-engine-get-border}
-      @about-function{gtk-theming-engine-get-padding}
-      @about-function{gtk-theming-engine-get-margin}
-      @about-function{gtk-theming-engine-get-font}
-      @about-function{gtk-theming-engine-has-class}
-      @about-function{gtk-theming-engine-has-region}
-      @about-function{gtk-theming-engine-lookup-color}
-      @about-function{gtk-theming-engine-state-is-running}
-      @about-function{gtk-theming-engine-load}
-      @about-function{gtk-theming-engine-register-property}
+      In the Lisp binding no symbols and functions are implemented.
     @end{subsection}
     @begin[GtkAlignment]{subsection}
       A deprecated widget which controls the alignment and size of its child.
