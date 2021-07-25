@@ -230,7 +230,7 @@
   @argument[uri]{a string with the URI to show}
   @argument[timestamp]{a @code{:uint} with the timestamp to prevent focus
     stealing}
-  @return{@arg{True} on success, @code{nil} on error.}
+  @return{@em{True} on success, @code{nil} on error.}
   @begin{short}
     This is a convenience function for launching the default application to
     show the URI.

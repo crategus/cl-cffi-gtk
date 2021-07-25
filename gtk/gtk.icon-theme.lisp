@@ -1062,7 +1062,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-3-5}
   @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @return{@arg{True} if the icon theme has changed and needed to be reloaded.}
+  @return{@em{True} if the icon theme has changed and needed to be reloaded.}
   @begin{short}
     Checks to see if the icon theme has changed.
   @end{short}
@@ -1103,7 +1103,7 @@
   @fun{gdk-pixbuf-new-from-inline}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-icon-theme-add-builtin-icon} has been deprecated since
-    version 3.14 and should not be used in newly-written code. Use the function
+    version 3.14 and should not be used in newly written code. Use the function
     @fun{gtk-icon-theme-add-resource-path} to add application-specific icons to
     the icon theme.
   @end{dictionary}
@@ -1124,7 +1124,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_icon_info_copy has been deprecated since version 3.8 and should not be
-;;; used in newly-written code.
+;;; used in newly written code.
 ;;;
 ;;; Use g_object_ref()
 ;;;
@@ -1147,7 +1147,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_icon_info_free has been deprecated since version 3.8 and should not be
-;;; used in newly-written code.
+;;; used in newly written code.
 ;;;
 ;;; Use g_object_unref()
 ;;;
@@ -1291,7 +1291,7 @@
   @code{:use-builtin} to the function @fun{gtk-icon-theme-lookup-icon}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-icon-info-builtin-pixbuf} has been deprecated
-    since version 3.14 and should not be used in newly-written code. Use the
+    since version 3.14 and should not be used in newly written code. Use the
     function @fun{gtk-icon-theme-add-resource-path} instead of builtin icons.
   @end{dictionary}
   @see-symbol{gtk-icon-info}
@@ -1579,7 +1579,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_icon_info_load_symbolic_for_style has been deprecated since version 3.0
-;;; and should not be used in newly-written code. Use
+;;; and should not be used in newly written code. Use
 ;;; gtk_icon_info_load_symbolic_for_context() instead
 ;;;
 ;;; Loads an icon, modifying it to match the system colours for the foreground,
@@ -1745,7 +1745,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_icon_info_set_raw_coordinates has been deprecated since version 3.14 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; Embedded rectangles and attachment points are deprecated
 ;;;
@@ -1773,7 +1773,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_icon_info_get_embedded_rect has been deprecated since version 3.14 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; Embedded rectangles are deprecated
 ;;;
@@ -1804,7 +1804,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_icon_info_get_attach_points has been deprecated since version 3.14 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; Attachment points are deprecated
 ;;;
@@ -1835,7 +1835,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_icon_info_get_display_name has been deprecated since version 3.14 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; Display names are deprecated
 ;;;

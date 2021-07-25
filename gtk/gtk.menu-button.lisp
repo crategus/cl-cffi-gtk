@@ -96,7 +96,7 @@
 (setf (gethash 'gtk-arrow-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-arrow-type atdoc:*external-symbols*)
- "@version{2021-6-11}
+ "@version{*2021-7-25}
   @begin{short}
     Used to indicate the direction in which an arrow should point in a
     @class{gtk-menu-button} widget.

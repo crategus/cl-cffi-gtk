@@ -340,15 +340,15 @@
   @syntax[]{(gtk-file-filter-name filter) => name}
   @syntax[]{(setf (gtk-file-filter-name filter) name)}
   @argument[filter]{a @class{gtk-file-filter} object}
-  @argument[name]{a string with the human-readable-name for the filter,
+  @argument[name]{a string with the human readable-name for the filter,
     or @code{nil} to remove any existing name}
   @begin{short}
-    Accessor of the human-readable name of the file filter.
+    Accessor of the human readable name of the file filter.
   @end{short}
 
-  The function @sym{gtk-file-filter-name} gets the human-readable name for the
+  The function @sym{gtk-file-filter-name} gets the human readable name for the
   file filter. The function @sym{(setf gtk-file-filter-name)} sets the
-  human-readable name of the file filter. This is the string that will be
+  human readable name of the file filter. This is the string that will be
   displayed in the file selector user interface if there is a selectable list
   of filters.
   @see-class{gtk-file-filter}"

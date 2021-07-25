@@ -296,7 +296,7 @@
 (setf (documentation (atdoc:get-slot-from-name "label"
                                                'gtk-tool-item-group) 't)
  "The @code{label} property of type @code{:string} (Read / Write) @br{}
-  The human-readable title of this item group. @br{}
+  The human readable title of this item group. @br{}
   Default value: \"\"")
 
 #+cl-cffi-gtk-documentation
@@ -307,7 +307,7 @@
   @syntax[]{(gtk-tool-item-group-label object) => label}
   @syntax[]{(setf (gtk-tool-item-group-label object) label)}
   @argument[object]{a @class{gtk-tool-item-group} widget}
-  @argument[label]{a @code{:string} with the new human-readable label of of the
+  @argument[label]{a @code{:string} with the new human readable label of of the
     group}
   @begin{short}
     Accessor of the @slot[gtk-tool-item-group]{label} slot of the

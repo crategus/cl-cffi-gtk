@@ -645,9 +645,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-state-flags atdoc:*symbol-name-alias*)
-      "Flags"
+      "GFlags"
       (gethash 'gtk-state-flags atdoc:*external-symbols*)
- "@version{2021-3-21}
+ "@version{2021-7-4}
   @short{Describes a widget state.}
   Widget states are used to match the widget against CSS pseudo-classes. Note
   that GTK extends the regular CSS classes and sometimes uses different names.
@@ -705,14 +705,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-style atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-toolbar-style atdoc:*external-symbols*)
- "@version{2021-3-21}
+ "@version{2021-7-20}
   @begin{short}
     Used to customize the appearance of a @class{gtk-toolbar} widget.
   @end{short}
-  Note that setting the toolbar style overrides the user's preferences for the
-  default toolbar style. Note that if the button has only a label set and
+  Note that setting the toolbar style overrides the preferences of the user for
+  the default toolbar style. Note that if the button has only a label set and
   @code{:icons} is used, the label will be visible, and vice versa.
   @begin{pre}
 (define-g-enum \"GtkToolbarStyle\" gtk-toolbar-style
@@ -869,7 +869,7 @@
   widget as well as entire widgets.
   @begin[Warning]{dictionary}
     The @sym{gtk-state-type} enumeration has been deprecated since version 3.14
-    and should not be used in newly-written code. All APIs that are using this
+    and should not be used in newly written code. All APIs that are using this
     enumeration have been deprecated in favor of alternatives using the
     @symbol{gtk-state-flags} flags.
   @end{dictionary}

@@ -122,7 +122,7 @@
     @entry[mode]{The mode that will trigger this action entry, or -1 for all
       modes.}
     @entry[label]{Human readable description of this action entry, this string
-      should be deemed user-visible.}
+      should be deemed user visible.}
     @entry[action-name]{Action name that will be activated in the
       @class{g-action-group}.}
   @end{table}
@@ -331,7 +331,7 @@ pad_controller = gtk_pad_controller_new (window, action_group, NULL);
 ;;; current mode is mode . -1 may be used for simple cases, so the action is
 ;;; triggered on all modes.
 ;;;
-;;; The given label should be considered user-visible, so internationalization
+;;; The given label should be considered user visible, so internationalization
 ;;; rules apply. Some windowing systems may be able to use those for user
 ;;; feedback.
 ;;;
@@ -349,7 +349,7 @@ pad_controller = gtk_pad_controller_new (window, action_group, NULL);
 ;;;
 ;;; label :
 ;;;     Human readable description of this action, this string should be deemed
-;;;     user-visible.
+;;;     user visible.
 ;;;
 ;;; action_name :
 ;;;     action name that will be activated in the GActionGroup

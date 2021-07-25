@@ -1239,28 +1239,28 @@
 (defun (setf gtk-label-text) (text label)
   (foreign-funcall "gtk_label_set_text"
                    (g-object gtk-label) label
-                   g-string text
+                   :string text
                    :void)
   text)
 
-(defcfun ("gtk_label_get_text" gtk-label-text) g-string
+(defcfun ("gtk_label_get_text" gtk-label-text) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-4-15}
+ "@version{*2021-7-24}
   @syntax[]{(gtk-label-text label) => text}
   @syntax[]{(setf (gtk-label-text-label) text)}
   @argument[label]{a @class{gtk-label} widget}
   @argument[text]{a string with the text}
   @begin{short}
-    Accessor of the text in the label widget.
+    Accessor of the text in the label.
   @end{short}
 
-  The function @sym{gtk-label-text} fetches the text from a label widget, as
-  displayed on the screen. The function @sym{(setf gtk-label-text)} sets the
-  text within the label. It overwrites any text that was there before. This
-  will also clear any previously set mnemonic accelerators.
+  The function @sym{gtk-label-text} fetches the text from a label, as displayed
+  on the screen. The function @sym{(setf gtk-label-text)} sets the text.
 
-  This does not include any embedded underlines indicating mnemonics or Pango
-  markup. See the slot access function @fun{gtk-label-label}.
+  It overwrites any text that was there before. This will also clear any
+  previously set mnemonic accelerators. This does not include any embedded
+  underlines indicating mnemonics or Pango markup. See the slot access function
+  @fun{gtk-label-label}.
   @see-class{gtk-label}
   @see-function{gtk-label-label}"
   (label (g-object gtk-label)))

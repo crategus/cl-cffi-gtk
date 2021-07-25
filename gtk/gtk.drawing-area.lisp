@@ -101,7 +101,7 @@
   To receive mouse events on a drawing area, you will need to enable them with
   the function @fun{gtk-widget-add-events}. To receive keyboard events, you
   will need to set the @slot[gtk-widget]{can-focus} property on the drawing
-  area, and you should probably draw some user-visible indication that the
+  area, and you should probably draw some user visible indication that the
   drawing area is focused. Use the function @fun{gtk-widget-has-focus} in your
   expose event handler to decide whether to draw the focus indicator. See the
   function @see-function{gtk-render-focus} for one way to draw focus.

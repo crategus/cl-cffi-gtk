@@ -270,7 +270,7 @@
         Sets the amount of space used up by the combo box arrow, proportional
         to the font size. @br{}
         @em{Warning:} The @code{arrow-scaling} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use the standard min-width/min-height CSS properties on the arrow
         node. The value of this style property is ignored. @br{}
         Allowed values: [0.0,2.0] @br{}
@@ -282,7 +282,7 @@
         size is coupled to the font size, so in case a larger font is used, the
         arrow will be larger than set by arrow size. @br{}
         @em{Warning:} The @code{arrow-size} style property has been deprecated
-        since version 3.20 and should not be used in newly-written code. Use
+        since version 3.20 and should not be used in newly written code. Use
         the standard min-width/min-height CSS properties on the arrow node. The
         value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
@@ -293,7 +293,7 @@
         (Read) @br{}
         Which kind of shadow to draw around the combo box. @br{}
         @em{Warning:} The @code{shadow-type} style property has been deprecated
-        since version 3.20 and should not be used in newly-written code. Use
+        since version 3.20 and should not be used in newly written code. Use
         CSS styling to change the appearance of the combobox frame. The value
         of this style property is ignored. @br{}
         Default value: @code{:none}
@@ -472,7 +472,7 @@
   Controls whether generated menus have tearoff menu items. Note that this only
   affects menu style combo boxes. @br{}
   @em{Warning:} The @code{add-tearoffs} property has been deprecated since
-  version 3.10 and should not be used in newly-written code. @br{}
+  version 3.10 and should not be used in newly written code. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -494,7 +494,7 @@
   @sym{(setf gtk-combo-box-add-tearoffs)} sets the property.
   @begin[Warning]{dictionary}
     The function @sym{gtk-combo-box-add-tearoffs} has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-combo-box}")
 
@@ -679,7 +679,7 @@
   application.
   @begin[Warning]{dictionary}
     The function @sym{gtk-combo-box-focus-on-click} has been deprecated since
-    version 3.20 and should not be used in newly-written code. Use the function
+    version 3.20 and should not be used in newly written code. Use the function
     @fun{gtk-widget-focus-on-click} instead.
   @end{dictionary}
   @see-class{gtk-combo-box}
@@ -894,7 +894,7 @@
     @class{gtk-combo-box} class.
   @end{short}
 
-  The slot acess function @sym{gtk-combo-box-row-span-column} returns the
+  The slot access function @sym{gtk-combo-box-row-span-column} returns the
   column with row span information for the combo box. The slot access function
   @sym{(setf gtk-combo-box-row-span-column)} sets the column with row span
   information. The row span column contains integers which indicate how many
@@ -910,7 +910,7 @@
   A title that may be displayed by the window manager when the popup is
   torn-off. @br{}
   @em{Warning:} The @code{tearoff-title} property has been deprecated since
-  version 3.10 and should not be used in newly-written code. @br{}
+  version 3.10 and should not be used in newly written code. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -931,7 +931,7 @@
   torn-off.
   @begin[Warning]{dictionary}
     The @code{tearoff-title} property has been deprecated since version 3.10
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-combo-box}")
 
@@ -1294,7 +1294,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The @sym{gtk-combo-box-set-title} function has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-combo-box}
   @see-function{gtk-combo-box-get-title}"
@@ -1319,7 +1319,7 @@
   See the @fun{gtk-combo-box-set-add-tearoffs} function.
   @begin[Warning]{dictionary}
     The @sym{gtk-combo-box-get-title} function has been deprecated since
-    version 3.10 and should not be used in newly-written code.
+    version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-combo-box}
   @see-function{gtk-combo-box-set-title}

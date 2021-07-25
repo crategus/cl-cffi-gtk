@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.text-buffer.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -604,12 +604,12 @@
 (export 'gtk-text-buffer-line-count)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_buffer_get_char_count ()
+;;; gtk_text_buffer_get_char_count () -> gtk-text-buffer-char-count
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_char_count" gtk-text-buffer-char-count) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-2-14}
+ "@version{*2021-7-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @return{An integer with the number of characters in the text buffer.}
   @begin{short}
@@ -1434,7 +1434,7 @@
 (defcfun ("gtk_text_buffer_get_insert" gtk-text-buffer-get-insert)
     (g-object gtk-text-mark)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-17}
+ "@version{*2021-7-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @return{A @class{gtk-text-mark} insertion point mark.}
   @begin{short}
@@ -1869,12 +1869,12 @@
 
 (defun gtk-text-buffer-iter-at-mark (buffer mark)
  #+cl-cffi-gtk-documentation
- "@version{2020-7-16}
+ "@version{*2021-7-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[mark]{a @class{gtk-text-mark} object in @arg{buffer}}
-  @return{iter -- iterator to initialize}
+  @return{A @class{gtk-text-iter} interator.}
   @begin{short}
-    Initializes @arg{iter} with the current position of @arg{mark}.
+    Returns the iterator with the current position of @arg{mark}.
   @end{short}
   @see-class{gtk-text-buffer}
   @see-class{gtk-text-mark}"
@@ -2195,7 +2195,7 @@
   @begin{short}
     Called to indicate that the buffer operations between here and a call to the
     function @fun{gtk-text-buffer-end-user-action} are part of a single
-    user-visible operation.
+    user visible operation.
   @end{short}
   The operations between the functions @sym{gtk-text-buffer-begin-user-action}
   and @fun{gtk-text-buffer-end-user-action} can then be grouped when creating
@@ -2625,7 +2625,7 @@
     MIME type.
   @end{return}
   @begin{short}
-    This function registers GTK+'s internal rich text serialization format with
+    This function registers GTK's internal rich text serialization format with
     the passed buffer.
   @end{short}
   See the function @fun{gtk-text-buffer-register-serialize-tagset} for details.
@@ -2687,7 +2687,7 @@
     MIME type.
   @end{return}
   @begin{short}
-    This function registers GTK+'s internal rich text serialization format with
+    This function registers GTK's internal rich text serialization format with
     the passed buffer.
   @end{short}
   The internal format does not comply to any standard rich text format and only

@@ -271,7 +271,7 @@
  lambda (application)    : Run First
       @end{pre}
       Emitted when the session manager is about to end the session, only if the
-      @code{register-session} property is @arg{true}. Applications can connect
+      @code{register-session} property is @em{true}. Applications can connect
       to this signal and call the function @fun{gtk-application-inhibit} with
       the value @code{:logout} of type @symbol{gtk-application-inhibit-flags} to
       delay the end of the session until the state has been saved. Since 3.24
@@ -659,7 +659,7 @@
   @argument[window]{a @class{gtk-window} widget, or @code{nil}}
   @argument[flags]{what @symbol{gtk-application-inhibit-flags} types of user
     actions should be inhibited}
-  @argument[reason]{a short, human-readable string that explains why these
+  @argument[reason]{a short, human readable string that explains why these
     operations are inhibited}
   @begin{return}
     A non-zero cookie of type @code{:uint} that is used to uniquely identify
@@ -735,7 +735,7 @@
   @argument[application]{the @class{gtk-application} object}
   @argument[flags]{what @symbol{gtk-application-inhibit-flags} types of actions
     should be queried}
-  @return{A boolean that is @arg{true} if any of the actions specified in
+  @return{A boolean that is @em{true} if any of the actions specified in
     the argument @arg{flags} are inhibited.}
   @begin{short}
     Determines if any of the actions specified in the argument @arg{flags} are
@@ -759,14 +759,14 @@
  #+cl-cffi-gtk-documentation
  "@version{*2020-5-14}
   @argument[application]{a @class{gtk-application} object}
-  @return{A boolean that is @arg{true} if the desktop enviroment would prefer
+  @return{A boolean that is @em{true} if the desktop enviroment would prefer
     an application menu be shown.}
   @begin{short}
     Determines if the desktop environment in which the application is running
     would prefer an application menu be shown.
   @end{short}
 
-  If this function returns @arg{true} then the application should call the
+  If this function returns @em{true} then the application should call the
   function @fun{gtk-application-app-menu} with the contents of an application
   menu, which will be shown by the desktop environment. If it returns @code{nil}
   then you should consider using an alternate approach, such as a menubar.
@@ -863,7 +863,7 @@
   usually more convenient than calling this function for each accelerator.
   @begin[Warning]{dictionary}
     The function @sym{gtk-application-add-accelerator} has been deprecated since
-    version 3.14 and should not be used in newly-written code. Use the function
+    version 3.14 and should not be used in newly written code. Use the function
     @fun{gtk-application-accels-for-action} instead.
   @end{dictionary}
   @see-class{gtk-application}
@@ -902,7 +902,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-application-remove-accelerator} has been deprecated
-    since version 3.14 and should not be used in newly-written code. Use the
+    since version 3.14 and should not be used in newly written code. Use the
     function @fun{gtk-application-accels-for-action} instead.
   @end{dictionary}
   @see-class{gtk-application}

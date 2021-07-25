@@ -240,7 +240,7 @@
 ;;;
 ;;; const gchar * gtk_recent_filter_get_name (GtkRecentFilter *filter);
 ;;;
-;;; Gets the human-readable name for the filter. See
+;;; Gets the human readable name for the filter. See
 ;;; gtk_recent_filter_set_name().
 ;;;
 ;;; filter :
@@ -259,7 +259,7 @@
 ;;; void gtk_recent_filter_set_name (GtkRecentFilter *filter,
 ;;;                                  const gchar *name);
 ;;;
-;;; Sets the human-readable name of the filter; this is the string that will be
+;;; Sets the human readable name of the filter; this is the string that will be
 ;;; displayed in the recently used resources selector user interface if there is
 ;;; a selectable list of filters.
 ;;;

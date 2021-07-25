@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.info-bar.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -112,31 +112,31 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-info-bar 'type)
- "@version{2020-4-17}
+ "@version{*2021-7-24}
   @begin{short}
-    @sym{gtk-info-bar} is a widget that can be used to show messages to the
-    user without showing a dialog.
+    The @sym{gtk-info-bar} widget can be used to show messages to the user
+    without showing a dialog.
   @end{short}
   It is often temporarily shown at the top or bottom of a document. In contrast
-  to @class{gtk-dialog}, which has a horizontal action area at the bottom,
-  @sym{gtk-info-bar} has a vertical action area at the side.
+  to @class{gtk-dialog} widget, which has a horizontal action area at the
+  bottom, the info bar has a vertical action area at the side.
 
   @image[info-bar]{}
 
-  The API of @sym{gtk-info-bar} is very similar to @class{gtk-dialog}, allowing
-  you to add buttons to the action area with the functions
-  @fun{gtk-info-bar-add-button} or @fun{gtk-info-bar-new-with-buttons}. The
-  sensitivity of action widgets can be controlled with the function
-  @fun{gtk-info-bar-set-response-sensitive}. To add widgets to the main content
-  area of a @sym{gtk-info-bar}, use the function @fun{gtk-info-bar-content-area}
-  and add your widgets to the container.
+  The API of the @sym{gtk-info-bar} widget is very similar to the
+  @class{gtk-dialog} widget, allowing you to add buttons to the action area
+  with the functions @fun{gtk-info-bar-add-button} or
+  @fun{gtk-info-bar-new-with-buttons}. The sensitivity of action widgets can be
+  controlled with the function @fun{gtk-info-bar-set-response-sensitive}. To add
+  widgets to the main content area of an info bar, use the function
+  @fun{gtk-info-bar-content-area} and add your widgets to the container.
 
-  Similar to @class{gtk-message-dialog}, the contents of a @sym{gtk-info-bar}
-  can by classified as error message, warning, informational message, etc, by
-  using the slot access function @fun{gtk-info-bar-message-type}. GTK+ uses the
-  message type to determine the background color of the message area.
+  Similar to @class{gtk-message-dialog} widget, the contents of an info bar can
+  by classified as error message, warning, informational message, etc, by using
+  the slot access function @fun{gtk-info-bar-message-type}. GTK uses the message
+  type to determine the background color of the message area.
   @begin[Example]{dictionary}
-    Simple @sym{gtk-info-bar} usage.
+    Simple info bar usage.
     @begin{pre}
 (defun create-info-bar ()
   (let* ((info-bar (make-instance 'gtk-info-bar))
@@ -169,35 +169,35 @@
     exposes the content area and action area as internal children with the names
     @code{content_area} and @code{action_area}.
 
-    @sym{gtk-info-bar} supports a custom @code{<action-widgets>} element, which
-    can contain multiple @code{<action-widget>} elements. The
+    The @sym{gtk-info-bar} widget supports a custom @code{<action-widgets>}
+    element, which can contain multiple @code{<action-widget>} elements. The
     @code{response} attribute specifies a numeric response, and the content
     of the element is the ID of widget, which should be a child of the dialogs
     action area.
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-info-bar} has a single CSS node with name @code{infobar}. The node
-    may get one of the style classes @code{.info}, @code{.warning},
-    @code{.error} or @code{.question}, depending on the message type.
+    The @sym{gtk-info-bar} widget has a single CSS node with name
+    @code{infobar}. The node may get one of the style classes @code{.info},
+    @code{.warning}, @code{.error} or @code{.question}, depending on the message
+    type.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
       @begin[action-area-border]{entry}
-        The @code{action-area-border} style property of type @code{:int}
-        (Read) @br{}
+        The @code{action-area-border} style property of type @code{:int} (Read)
+        @br{}
         Width of the border around the action area of the info bar. @br{}
         @em{Warning:} The @code{action-area-border} style property has been
-        deprecated since version 3.6 and should not be used in newly-written
+        deprecated since version 3.6 and should not be used in newly written
         code. Use the function @fun{gtk-container-border-width}. @br{}
         Allowed values: >= 0 @br{}
         Default value: 5
       @end{entry}
       @begin[button-spacing]{entry}
-        The @code{button-spacing} style property of type @code{:int} (Read)
-        @br{}
+        The @code{button-spacing} style property of type @code{:int} (Read)@br{}
         Spacing between buttons in the action area of the info bar. @br{}
         @em{Warning:} The @code{button-spacing} style property has been
-        deprecated since version 3.6 and should not be used in newly-written
+        deprecated since version 3.6 and should not be used in newly written
         code. Use the function @fun{gtk-box-spacing}. @br{}
         Allowed values: >= 0 @br{}
         Default value: 6
@@ -208,7 +208,7 @@
         The width of the border around the content content area of the info bar.
         @br{}
         @em{Warning:} The @code{content-area-border} style property has been
-        deprecated since version 3.6 and should not be used in newly-written
+        deprecated since version 3.6 and should not be used in newly written
         code. Use the function @fun{gtk-container-border-width}. @br{}
         Allowed values: >= 0 @br{}
         Default value: 8
@@ -219,7 +219,7 @@
         The default spacing used between elements of the content area of the
         info bar. @br{}
         @em{Warning:} The @code{content-area-spacing} style property has been
-        deprecated since version 3.6 and should not be used in newly-written
+        deprecated since version 3.6 and should not be used in newly written
         code. Use the function @fun{gtk-box-spacing}. @br{}
         Allowed values: >= 0 @br{}
         Default value: 16
@@ -229,24 +229,24 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"close\" signal}
       @begin{pre}
- lambda (info-bar)    : Action
+ lambda (infobar)    :action
       @end{pre}
-      The \"close\" signal is a keybinding signal which gets emitted when the
-      user uses a keybinding to dismiss the info bar. The default binding for
-      this signal is the Escape key. @br{}
+      The signal is a keybinding signal which gets emitted when the user uses a
+      keybinding to dismiss the info bar. The default binding for this signal
+      is the Escape key. @br{}
       @begin[code]{table}
-        @entry[info-bar]{The @sym{gtk-info-bar} object on which the signal is
+        @entry[infobar]{The @sym{gtk-info-bar} widget on which the signal is
           emitted.}
       @end{table}
     @subheading{The \"response\" signal}
       @begin{pre}
- lambda (info-bar response-id)    : Run Last
+ lambda (infobar response-id)    :run-last
       @end{pre}
       Emitted when an action widget is clicked or the application programmer
-      calls @fun{gtk-dialog-response}. The @arg{response-id} depends on which
-      action widget was clicked. @br{}
+      calls the function @fun{gtk-dialog-response}. The argument
+      @arg{response-id} depends on which action widget was clicked. @br{}
       @begin[code]{table}
-        @entry[info-bar]{The @sym{gtk-info-bar} object on which the signal is
+        @entry[infobar]{The @sym{gtk-info-bar} widget on which the signal is
           emitted.}
         @entry[response-id]{An integer with the response ID.}
       @end{table}
@@ -267,27 +267,15 @@
 (setf (documentation (atdoc:get-slot-from-name "message-type" 'gtk-info-bar) 't)
  "The @code{message-type} property of type @symbol{gtk-message-type}
   (Read / Write / Construct) @br{}
-  The type of the message is used to determine the colors to use in the info
-  bar. The following symbolic color names can by used to customize these colors:
-  @code{\"info_fg_color\"},
-  @code{\"info_bg_color\"},
-  @code{\"warning_fg_color\"},
-  @code{\"warning_bg_color\"},
-  @code{\"question_fg_color\"},
-  @code{\"question_bg_color\"},
-  @code{\"error_fg_color\"},
-  @code{\"error_bg_color\"},
-  @code{\"other_fg_color\"},
-  @code{\"other_bg_color\"}.
-  If the type is @code{:other}, no info bar is painted but the colors are
-  still set. @br{}
-  Default value: @code{:info} @br{}")
+  The type of the message. The type may be used to determine the appearance of
+  the info bar. @br{}
+  Default value: @code{:info}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-info-bar-message-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-info-bar-message-type 'function)
- "@version{2020-4-17}
+ "@version{*2021-7-24}
   @syntax[]{(gtk-info-bar-message-type object) => message-type}
   @syntax[]{(setf (gtk-info-bar-message-type object) message-type)}
   @argument[object]{a @class{gtk-info-bar} widget}
@@ -299,10 +287,9 @@
 
   The slot access function @sym{gtk-info-bar-message-type} returns the message
   type of the message area. The slot access function
-  @sym{(setf gtk-info-bar-message-type)} sets the message type of the message
-  area.
+  @sym{(setf gtk-info-bar-message-type)} sets the message type.
 
-  GTK+ uses this type to determine what color to use when drawing the message
+  GTK uses this type to determine what color to use when drawing the message
   area.
   @see-class{gtk-info-bar}")
 
@@ -443,14 +430,14 @@
 (defcfun ("gtk_info_bar_add_button" gtk-info-bar-add-button)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-18}
-  @argument[info-bar]{a @class{gtk-info-bar} widget}
-  @argument[button-text]{a string with the text of the button, or stock ID}
+ "@version{*2021-7-24}
+  @argument[infobar]{a @class{gtk-info-bar} widget}
+  @argument[text]{a string with the text of the button, or stock ID}
   @argument[response-id]{an integer with the response ID for the button}
   @return{The @class{gtk-button} widget that was added.}
   @begin{short}
-    Adds a button with the given text, or a stock button, if @arg{button-text}
-    is a stock ID, and sets things up so that clicking the button will emit the
+    Adds a button with the given text, or a stock button, if @arg{text} is a
+    stock ID, and sets things up so that clicking the button will emit the
     \"response\" signal with the given response ID.
   @end{short}
   The button is appended to the end of the info bars's action area. The button
@@ -459,7 +446,7 @@
   @see-class{gtk-button}
   @see-function{gtk-info-bar-add-buttons}"
   (info-bar (g-object gtk-info-bar))
-  (button-text g-string)
+  (text :string)
   (response-id :int))
 
 (export 'gtk-info-bar-add-button)
@@ -498,7 +485,7 @@
  "@version{2020-4-17}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[response-id]{an integer with a response ID}
-  @argument[setting]{@arg{true} for sensitive}
+  @argument[setting]{@em{true} for sensitive}
   @begin{short}
     Calls the function @fun{gtk-widget-sensitive} for each widget in the info
     bars's action area with the given response ID.
@@ -579,14 +566,15 @@
 (defcfun ("gtk_info_bar_get_content_area" gtk-info-bar-content-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-18}
-  @argument[info-bar]{a @class{gtk-info-bar} widget}
-  @return{The content area.}
+ "@version{*2021-7-24}
+  @argument[infobar]{a @class{gtk-info-bar} widget}
+  @return{The @class{gtk-box} content area.}
   @begin{short}
     Returns the content area of the info bar.
   @end{short}
-  @see-class{gtk-info-bar}"
-  (info-bar (g-object gtk-info-bar)))
+  @see-class{gtk-info-bar}
+  @see-class{gtk-box}"
+  (infobar (g-object gtk-info-bar)))
 
 (export 'gtk-info-bar-content-area)
 

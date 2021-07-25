@@ -124,7 +124,7 @@
       @begin{pre}
  lambda (editable)    : Run Last
       @end{pre}
-      The \"changed\" signal is emitted at the end of a single user-visible
+      The \"changed\" signal is emitted at the end of a single user visible
       operation on the contents of the @sym{gtk-editable}.
 
       E.g., a paste operation that replaces the contents of the selection will

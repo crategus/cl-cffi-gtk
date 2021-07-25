@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.accel-group.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -145,7 +145,7 @@
     @fun{gtk-window-add-accel-group}.
   @end{short}
   Usually you will not need to create a @sym{gtk-accel-group} object directly.
-  Instead, when using @class{gtk-ui-manager}, GTK+ automatically sets up the
+  Instead, when using @class{gtk-ui-manager}, GTK automatically sets up the
   accelerators for your menus in the UI manager's @sym{gtk-accel-group} object.
 
   Note that accelerators are different from mnemonics. Accelerators are
@@ -170,7 +170,7 @@
         @entry[keyval]{The accelerator keyval of type @code{:uint}.}
         @entry[modifier]{The modifier combination of type
           @symbol{gdk-modifier-type} of the accelerator.}
-        @entry[Returns]{@arg{True} if the accelerator was activated.}
+        @entry[Returns]{@em{True} if the accelerator was activated.}
       @end{table}
     @subheading{The \"accel-changed\" signal}
       @begin{pre}
@@ -559,7 +559,7 @@
 ;;;     data to pass to find_func
 ;;;
 ;;; Returns :
-;;;     the key of the first entry passing find_func. The key is owned by GTK+
+;;;     the key of the first entry passing find_func. The key is owned by GTK
 ;;;     and must not be freed
 ;;; ----------------------------------------------------------------------------
 

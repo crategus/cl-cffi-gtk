@@ -1052,7 +1052,7 @@
 
   The slot access function @sym{gtk-tree-view-level-indentation} returns the
   amount, in pixels, of extra indentation for child levels in the tree view in
-  addition to the default indentation. The slot acess function
+  addition to the default indentation. The slot access function
   @sym{(setf gtk-tree-view-level-indentation)} sets the amount of extra
   indentation.
 
@@ -1175,7 +1175,7 @@
  "The @code{rules-hint} property of type @code{:boolean} (Read / Write) @br{}
   Set a hint to the theme engine to draw rows in alternating colors. @br{}
   @em{Warning:} The @code{rules-hint} property has been deprecated since version
-  3.14 and should not be used in newly-written code. The theme is responsible
+  3.14 and should not be used in newly written code. The theme is responsible
   for drawing rows using zebra striping. @br{}
   Default value: @em{false}")
 
@@ -1204,7 +1204,7 @@
   useful from a functional standpoint, since it has lots of columns, generally.
   @begin[Warning]{dictionary}
     The function @sym{gtk-tree-view-rules-hint} has been deprecated since
-    version 3.14 and should not be used in newly-written code.
+    version 3.14 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-tree-view}")
 
@@ -1393,7 +1393,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_tree_view_get_hadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_get_hadjustment()
 ;;;
 ;;; Gets the GtkAdjustment currently being used for the horizontal aspect.
@@ -1414,7 +1414,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_tree_view_set_hadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_set_hadjustment()
 ;;;
 ;;; Sets the GtkAdjustment for the current horizontal aspect.
@@ -1434,7 +1434,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_tree_view_get_vadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_get_vadjustment()
 ;;;
 ;;; Gets the GtkAdjustment currently being used for the vertical aspect.
@@ -1455,7 +1455,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_tree_view_set_vadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_set_vadjustment()
 ;;;
 ;;; Sets the GtkAdjustment for the current vertical aspect.
@@ -3224,7 +3224,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_tree_view_set_destroy_count_func has been deprecated since version 3.4
-;;; and should not be used in newly-written code. Accessibility does not need
+;;; and should not be used in newly written code. Accessibility does not need
 ;;; the function anymore.
 ;;;
 ;;; This function should almost never be used. It is meant for private use by

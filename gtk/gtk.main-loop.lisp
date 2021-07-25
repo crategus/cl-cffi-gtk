@@ -535,7 +535,7 @@
  "@version{2020-8-22}
   @argument[blocking]{@em{true} if you want GTK+ to block if no events are
     pending}
-  @return{@arg{True} if the function @fun{gtk-main-quit} has been called for the
+  @return{@em{True} if the function @fun{gtk-main-quit} has been called for the
     innermost main loop.}
   @begin{short}
     Runs a single iteration of the main loop.
@@ -822,7 +822,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_key_snooper_install has been deprecated since version 3.4 and should not
-;;; be used in newly-written code. Key snooping should not be done. Events
+;;; be used in newly written code. Key snooping should not be done. Events
 ;;; should be handled by widgets.
 ;;;
 ;;; Installs a key snooper function, which will get called on all key events
@@ -869,7 +869,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_key_snooper_remove has been deprecated since version 3.4 and should not
-;;; be used in newly-written code. Key snooping should not be done. Events
+;;; be used in newly written code. Key snooping should not be done. Events
 ;;; should be handled by widgets.
 ;;;
 ;;; Removes the key snooper function with the given id.

@@ -277,7 +277,7 @@ drag_motion (GtkWidget *widget,
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-drag-dest-set-proxy} has been deprecated since version
-    3.22 and should not be used in newly-written code.
+    3.22 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-window}
@@ -494,7 +494,7 @@ drag_motion (GtkWidget *widget,
   @argument[context]{the @class{gdk-drag-context} object}
   @argument[success]{a boolean indicating whether the drop was successful}
   @argument[del]{a boolean indicating whether the source should delete the
-    original data, this should be @arg{true} for a move}
+    original data, this should be @em{true} for a move}
   @argument[time]{the timestamp of type @code{:uint} from the \"drag-drop\"
     signal}
   @begin{short}
@@ -650,7 +650,7 @@ drag_motion (GtkWidget *widget,
   @end{enumerate}
   @begin[Warning]{dictionary}
     The function @sym{gtk-drag-begin} has been deprecated since version 3.10
-    and should not be used in newly-written code. Use the function
+    and should not be used in newly written code. Use the function
     @fun{gtk-drag-begin-with-coordinates} instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -838,7 +838,7 @@ drag_motion (GtkWidget *widget,
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-drag-set-icon-stock} has been deprecated since version
-    3.10 and should not be used in newly-written code. Use the function
+    3.10 and should not be used in newly written code. Use the function
     @fun{gtk-drag-set-icon-name} instead.
   @end{dictionary}
   @see-class{gdk-drag-context}"
@@ -1058,7 +1058,7 @@ drag_motion (GtkWidget *widget,
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-drag-source-set-icon-stock} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
+    version 3.10 and should not be used in newly written code. Use the function
     @fun{gtk-drag-source-set-icon-name} instead.
   @end{dictionary}
   @see-class{gtk-widget}

@@ -250,7 +250,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2021-3-17}
   @argument[name]{a string with the PPD paper name}
-  @argument[displayname]{a string with the corresponding human-readable name}
+  @argument[displayname]{a string with the corresponding human readable name}
   @argument[width]{a double float with the paper width, in points}
   @argument[height]{a double float with the paper height in points}
   @begin{return}
@@ -319,7 +319,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2021-3-17}
   @argument[name]{a string with the paper name}
-  @argument[displayname]{a string with the human-readable name}
+  @argument[displayname]{a string with the human readable name}
   @argument[width]{a double float with the paper width, in units of @arg{unit}}
   @argument[height]{a double float with the paper height, in units of
     @arg{unit}}
@@ -440,9 +440,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2021-3-17}
   @argument[size]{a @class{gtk-paper-size} instance}
-  @return{A string with the human-readable name of the paper size.}
+  @return{A string with the human readable name of the paper size.}
   @begin{short}
-    Gets the human-readable name of the paper size.
+    Gets the human readable name of the paper size.
   @end{short}
   @see-class{gtk-paper-size}"
   (size (g-boxed-foreign gtk-paper-size)))

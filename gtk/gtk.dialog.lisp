@@ -113,9 +113,10 @@
   (:use-header-bar      #.(ash 1 2)))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*) "Flags"
+(setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*)
+      "GFlags"
       (gethash 'gtk-dialog-flags atdoc:*external-symbols*)
- "@version{2020-5-26}
+ "@version{*2021-7-24}
   @short{Flags used to influence the dialog construction.}
   @begin{pre}
 (define-g-flags \"GtkDialogFlags\" gtk-dialog-flags
@@ -589,12 +590,13 @@
   behavior of the \"delete-event\" signal is disabled. If the dialog window
   receives the \"delete-event\" signal, it will not be destroyed as windows
   usually are, and the function @sym{gtk-dialog-run} will return the response
-  ID @code{:delete-event}. Also, during @sym{gtk-dialog-run} the dialog window
-  will be modal. You can force the function @sym{gtk-dialog-run} to return at
-  any time by calling the function @fun{gtk-dialog-response} to emit the
-  \"response\" signal. Destroying the dialog window during @sym{gtk-dialog-run}
-  is a very bad idea, because your post-run code will not know whether the
-  dialog was destroyed or not.
+  ID @code{:delete-event}. Also, during the execution of the function
+  @sym{gtk-dialog-run} the dialog window will be modal. You can force the
+  function @sym{gtk-dialog-run} to return at any time by calling the function
+  @fun{gtk-dialog-response} to emit the \"response\" signal. Destroying the
+  dialog window during the execution of the function @sym{gtk-dialog-run} is a
+  very bad idea, because your post-run code will not know whether the dialog
+  was destroyed or not.
 
   After the function @sym{gtk-dialog-run} returns, you are responsible for
   hiding or destroying the dialog if you wish to do so.

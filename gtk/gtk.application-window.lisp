@@ -164,7 +164,7 @@
 
   The following attributes are used when constructing menu items:
   @begin{itemize}
-    @item{\"label\": a user-visible string to display}
+    @item{\"label\": a user visible string to display}
     @item{\"action\": the prefixed name of the action to trigger}
     @item{\"target\": the parameter to use when activating the action}
     @item{\"icon\" and \"verb-icon\": names of icons that may be displayed}
@@ -176,7 +176,7 @@
   @end{itemize}
   The following attributes are used when constructing sections:
   @begin{itemize}
-    @item{\"label\": a user-visible string to use as section heading}
+    @item{\"label\": a user visible string to use as section heading}
     @item{\"display-hint\": a string used to determine special formatting for
       the section. Possible values include \"horizontal-buttons\".}
     @item{\"text-direction\": a string used to determine the GtkTextDirection
@@ -185,7 +185,7 @@
   @end{itemize}
   The following attributes are used when constructing submenus:
   @begin{itemize}
-    @item{\"label\": a user-visible string to display}
+    @item{\"label\": a user visible string to display}
     @item{\"icon\": icon name to display}
   @end{itemize}
   @see-slot{gtk-application-window-show-menubar}

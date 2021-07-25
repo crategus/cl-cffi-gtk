@@ -1026,7 +1026,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         (Read) @br{}
         Dash pattern used to draw the focus indicator. @br{}
         @em{Warning:} The @code{focus-line-pattern} style property has been
-        deprecated since version 3.14 and should not be used in newly-written
+        deprecated since version 3.14 and should not be used in newly written
         code. Use the outline-style CSS property instead. @br{}
         Default value: \"\001\001\"
       @end{entry}
@@ -1035,7 +1035,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         (Read) @br{}
         Width, in pixels, of the focus indicator line. @br{}
         @em{Warning:} The @code{focus-line-width} style property has been
-        deprecated since version 3.14 and should not be used in newly-written
+        deprecated since version 3.14 and should not be used in newly written
         code. Use the outline-width CSS property instead. @br{}
         Allowed values: >= 0 @br{}
         Default value: 1
@@ -1045,7 +1045,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         (Read) @br{}
         Width, in pixels, between focus indicator and the widget 'box'. @br{}
         @em{Warning:} The @code{focus-padding} style property has been
-        deprecated since version 3.14 and should not be used in newly-written
+        deprecated since version 3.14 and should not be used in newly written
         code. Use the padding CSS property instead. @br{}
         Allowed values: >= 0 @br{}
         Default value: 1
@@ -1055,7 +1055,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         (Read) @br{}
         Whether to draw the focus indicator inside widgets. @br{}
         @em{Warning:} The @code{interior-focus} style property has been
-        deprecated since version 3.14 and should not be used in newly-written
+        deprecated since version 3.14 and should not be used in newly written
         code. Use the outline CSS property instead. @br{}
         Default value: @em{true}
       @end{entry}
@@ -1065,7 +1065,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         The @code{link-color} style property defines the color of unvisited
         links. @br{}
         @em{Warning:} The @code{link-color} style property has been
-        deprecated since version 3.12 and should not be used in newly-written
+        deprecated since version 3.12 and should not be used in newly written
         code. Links now use a separate state flags for selecting different
         theming, this style property is ignored.
       @end{entry}
@@ -1098,7 +1098,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         separators. This property only takes effect if the
         @code{wide-separators} style property is @em{true}. @br{}
         @em{Warning:} The @code{separator-height} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use the standard min-height CSS property on the separator elements
         to size separators; the value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
@@ -1111,7 +1111,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         separators. This property only takes effect if the
         @code{wide-separators} style property is @em{true}. @br{}
         @em{Warning:} The @code{separator-width} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use the standard min-height CSS property on the separator elements
         to size separators; the value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
@@ -1137,7 +1137,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
         The @code{visited-link-color} style property defines the color of
         visited links. @br{}
         @em{Warning:} The @code{visited-link-color} style property has been
-        deprecated since version 3.12 and should not be used in newly-written
+        deprecated since version 3.12 and should not be used in newly written
         code. Links now use a separate state flags for selecting different
         theming, this style property is ignored.
       @end{entry}
@@ -1228,7 +1228,7 @@ GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget), &min, &natural);
       Emitted when the composited status of widgets screen changes. See the
       function @fun{gdk-screen-is-composited}. @br{}
       @em{Warning:} The \"composited-changed\" signal has been deprecated since
-      version 3.22 and should not be used in newly-written code. Use the
+      version 3.22 and should not be used in newly written code. Use the
       \"composited-changed\" signal of the @class{gdk-screen} class instead.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object on which the signal is
@@ -2110,7 +2110,7 @@ drag_data_received (GtkWidget        *widget,
       @end{pre}
       Emitted when the widget state changes. @br{}
       @em{Warning:} The \"state-changed\" signal is deprecated since version
-      3.0 and should not be used in newly-written code. Use the
+      3.0 and should not be used in newly written code. Use the
       \"state-flags-changed\" signal instead.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
@@ -2137,7 +2137,7 @@ drag_data_received (GtkWidget        *widget,
       @class{gtk-style-context} object associated with a widget, use the
       \"style-updated\" signal. @br{}
       @em{Warning:} The \"style-set\" signal has been deprecated since version
-      3.0 and should not be used in newly-written code. Use the
+      3.0 and should not be used in newly written code. Use the
       \"style-updated\" signal.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object on which the signal is
@@ -2211,7 +2211,7 @@ drag_data_received (GtkWidget        *widget,
       to enable the mask @code{:visibility-notify-mask} of type
       @symbol{gdk-event-mask}. @br{}
       @em{Warning:} The \"visibility-notify-event\" signal has been deprecated
-      since version 3.12 and should not be used in newly-written code. Modern
+      since version 3.12 and should not be used in newly written code. Modern
       composited windowing systems with pervasive transparency make it
       impossible to track the visibility of a window reliably, so this signal
       can not be guaranteed to provide useful information.
@@ -2473,7 +2473,7 @@ drag_data_received (GtkWidget        *widget,
   @br{}
   Whether the widget is double buffered. @br{}
   @em{Warning:} The @code{double-buffered} property has been deprecated since
-  version 3.14 and should not be used in newly-written code. Widgets should
+  version 3.14 and should not be used in newly written code. Widgets should
   not use this property. @br{}
   Default value: @em{true}")
 
@@ -2522,7 +2522,7 @@ drag_data_received (GtkWidget        *widget,
   increases rendering times significantly.
   @begin[Warning]{dictionary}
     The @code{double-buffered} property has been deprecated since version 3.14
-    and should not be used in newly-written code. This function does not work
+    and should not be used in newly written code. This function does not work
     under non-X11 backends or with non-native windows. Widgets should not use
     this property.
   @end{dictionary}
@@ -2652,9 +2652,10 @@ drag_data_received (GtkWidget        *widget,
   Default value: @code{:fill}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-halign atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-halign atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-halign 'function)
- "@version{2020-9-27}
+ "@version{*2021-7-24}
   @syntax[]{(gtk-widget-halign object) => align}
   @syntax[]{(setf (gtk-widget-halign object) align)}
   @argument[object]{a @class{gtk-widget} object}
@@ -3043,7 +3044,7 @@ drag_data_received (GtkWidget        *widget,
   widget's normal size request, the margin will be added in addition to the
   size from the function @fun{gtk-widget-size-request} for example. @br{}
   @em{Warning:} The @code{margin-left} property has been deprecated since
-  version 3.12 and should not be used in newly-written code. Use the
+  version 3.12 and should not be used in newly written code. Use the
   @code{margin-start} property instead. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0")
@@ -3071,7 +3072,7 @@ drag_data_received (GtkWidget        *widget,
   @fun{gtk-widget-size-request} for example.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-margin-left} has been deprecated since version
-    3.12 and should not be used in newly-written code. Use the function
+    3.12 and should not be used in newly written code. Use the function
     @fun{gtk-widget-margin-start} instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -3088,7 +3089,7 @@ drag_data_received (GtkWidget        *widget,
   widget's normal size request, the margin will be added in addition to the
   size from the function @fun{gtk-widget-size-request} for example. @br{}
   @em{Warning:} The @code{margin-right} property has been deprecated since
-  version 3.12 and should not be used in newly-written code. Use the
+  version 3.12 and should not be used in newly written code. Use the
   @code{margin-end} property instead. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0")
@@ -3116,7 +3117,7 @@ drag_data_received (GtkWidget        *widget,
   @fun{gtk-widget-size-request} for example.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-margin-right} has been deprecated since
-    version 3.12 and should not be used in newly-written code. Use the function
+    version 3.12 and should not be used in newly written code. Use the function
     @fun{gtk-widget-margin-end} instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -3222,7 +3223,7 @@ drag_data_received (GtkWidget        *widget,
   @end{short}
 
   The slot access function @sym{gtk-widget-name} retrieves the name of a widget.
-  The slot acess function @sym{(setf gtk-widget-name)} sets the name of a
+  The slot access function @sym{(setf gtk-widget-name)} sets the name of a
   widget.
 
   Widgets can be named, which allows you to refer to them from a CSS file.
@@ -3462,13 +3463,14 @@ drag_data_received (GtkWidget        *widget,
   The style of the widget, which contains information about how it will look.
   @br{}
   @em{Warning:} The @code{style} property is deprecated since version 3.0 and
-  should not be used in newly-written code. Use @class{gtk-style-context}
-  instead.")
+  should not be used in newly written code. Use the @class{gtk-style-context}
+  object instead.")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-style atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-style atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-style 'function)
- "@version{2020-1-19}
+ "@version{2021-6-15}
   @syntax[]{(gtk-widget-style object) => style}
   @syntax[]{(setf (gtk-widget-style object) style)}
   @argument[object]{a @class{gtk-widget} object}
@@ -3481,8 +3483,9 @@ drag_data_received (GtkWidget        *widget,
   Used to access the deprecated @code{GtkStyle} object for a widget. Since
   GTK 3.0 this function does nothing, the passed in style is ignored.
   @begin[Warning]{dictionary}
-    @sym{gtk-widget-style} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use @class{gtk-style-context} instead.
+    the @sym{gtk-widget-style} object has been deprecated since version 3.0 and
+    should not be used in newly written code. Use the
+    @class{gtk-style-context} object instead.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-style-context}")
@@ -3874,7 +3877,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_show" gtk-widget-show) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-3-19}
+ "@version{*2021-7-24}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Flags a widget to be displayed.
@@ -3882,10 +3885,8 @@ drag_data_received (GtkWidget        *widget,
   Any widget that is not shown will not appear on the screen. If you want to
   show all the widgets in a container, it is easier to call the function
   @fun{gtk-widget-show-all} on the container, instead of individually showing
-  the widgets.
-
-  Remember that you have to show the containers containing a widget, in
-  addition to the widget itself, before it will appear onscreen.
+  the widgets. Remember that you have to show the containers containing a
+  widget, in addition to the widget itself, before it will appear onscreen.
 
   When a toplevel container is shown, it is immediately realized and mapped.
   Other shown widgets are realized and mapped when their toplevel container is
@@ -3922,7 +3923,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_hide" gtk-widget-hide) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-3-19}
+ "@version{*2021-7-24}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Reverses the effects of the function @fun{gtk-widget-show}, causing the
@@ -4332,7 +4333,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Warning
 ;;;
 ;;; gtk_widget_get_child_requisition has been deprecated since version 3.0 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;; Use gtk_widget_get_preferred_size() instead.
 ;;;
 ;;; This function is only for use in widget implementations. Obtains
@@ -4654,7 +4655,7 @@ drag_data_received (GtkWidget        *widget,
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-reparent} has been deprecated since version
-    3.14 and should not be used in newly-written code. Use the functions
+    3.14 and should not be used in newly written code. Use the functions
     @fun{gtk-container-remove} and @fun{gtk-container-add}.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -4700,7 +4701,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_grab_focus" gtk-widget-grab-focus) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-17}
+ "@version{*2021-7-24}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Causes the widget to have the keyboard focus for the @class{gtk-window}
@@ -4782,7 +4783,7 @@ drag_data_received (GtkWidget        *widget,
   @fun{gtk-widget-sensitive}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-state} is deprecated and should not be used
-    in newly-written code. Use the function @fun{gtk-widget-state-flags}
+    in newly written code. Use the function @fun{gtk-widget-state-flags}
     instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -5119,7 +5120,7 @@ drag_data_received (GtkWidget        *widget,
   @code{widget->allocation.x}, @code{widget->allocation.y} otherwise.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-pointer} has been deprecated since version 3.4
-    and should not be used in newly-written code. Use the function
+    and should not be used in newly written code. Use the function
     @fun{gdk-window-device-position} instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -5235,7 +5236,7 @@ drag_data_received (GtkWidget        *widget,
   already.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-ensure-style} has been deprecated since
-    version 3.0 and should not be used in newly-written code.
+    version 3.0 and should not be used in newly written code.
     Use the @class{gtk-style-context} class instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -5260,7 +5261,7 @@ drag_data_received (GtkWidget        *widget,
   This function is not useful for applications.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-reset-rc-styles} has been deprecated since
-    version 3.0 and should not be used in newly-written code. Use the
+    version 3.0 and should not be used in newly written code. Use the
     @class{gtk-style-context} class instead, and the function
     @fun{gtk-widget-reset-style}.
   @end{dictionary}
@@ -5283,7 +5284,7 @@ drag_data_received (GtkWidget        *widget,
   @short{Returns the default style used by all widgets initially.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-default-style} has been deprecated since
-    version 3.0 and should not be used in newly-written code. Use the
+    version 3.0 and should not be used in newly written code. Use the
     @class{gtk-style-context} object instead, and the function
     @fun{gtk-css-provider-new} to obtain a @class{gtk-style-provider}
     object with the default widget style information.
@@ -5449,7 +5450,7 @@ drag_data_received (GtkWidget        *widget,
   generic function @fun{gtk-widget-name}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-path} has been deprecated since version 3.0 and
-    should not be used in newly-written code. Use the function
+    should not be used in newly written code. Use the function
     @fun{gtk-widget-path} instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -5476,7 +5477,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Warning
 ;;;
 ;;; gtk_widget_class_path has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use gtk_widget_get_path() instead
+;;; be used in newly written code. Use gtk_widget_get_path() instead
 ;;;
 ;;; Same as gtk_widget_path(), but always uses the name of a widget's type,
 ;;; never uses a custom name set with gtk_widget_set_name().
@@ -5532,7 +5533,7 @@ drag_data_received (GtkWidget        *widget,
   composite name. The widget must be a composite child of its parent.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-composite-name} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
+    version 3.10 and should not be used in newly written code. Use the function
     @fun{gtk-widget-class-set-template}, or do not use this API at all.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -5559,7 +5560,7 @@ drag_data_received (GtkWidget        *widget,
   @fun{gtk-widget-override-color}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-override-background-color} has been deprecated
-    since version 3.16 and should not be used in newly-written code. This
+    since version 3.16 and should not be used in newly written code. This
     function is not useful in the context of CSS-based rendering. If you wish
     to change the way a widget renders its background you should use a custom
     CSS style, through an application-specific @class{gtk-style-provider} and
@@ -5616,7 +5617,7 @@ drag_data_received (GtkWidget        *widget,
   @end{dictionary}
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-override-color} has been deprecated since
-    version 3.16 and should not be used in newly-written code. Use a custom
+    version 3.16 and should not be used in newly written code. Use a custom
     style provider and style classes instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -5646,7 +5647,7 @@ drag_data_received (GtkWidget        *widget,
   @fun{gtk-widget-override-color}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-override-font} has been deprecated since
-    version 3.16 and should not be used in newly-written code. This function is
+    version 3.16 and should not be used in newly written code. This function is
     not useful in the context of CSS-based rendering. If you wish to change the
     font a widget uses to render its text you should use a custom CSS style,
     through an application-specific style provider and a CSS style class.
@@ -5669,7 +5670,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Warning
 ;;;
 ;;; gtk_widget_override_symbolic_color has been deprecated since version 3.16
-;;; and should not be used in newly-written code.
+;;; and should not be used in newly written code.
 ;;;
 ;;; This function is not useful in the context of CSS-based rendering. If you
 ;;; wish to change the color used to render symbolic icons you should use a
@@ -5705,7 +5706,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Warning
 ;;;
 ;;; gtk_widget_override_cursor has been deprecated since version 3.16 and should
-;;; not be used in newly-written code.
+;;; not be used in newly written code.
 ;;;
 ;;; This function is not useful in the context of CSS-based rendering. If you
 ;;; wish to change the color used to render the primary and seconday cursors you
@@ -5744,7 +5745,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Warning
 ;;;
 ;;; gtk_widget_modify_style has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use GtkStyleContext with a custom
+;;; be used in newly written code. Use GtkStyleContext with a custom
 ;;; GtkStyleProvider instead
 ;;;
 ;;; Modifies style values on the widget.
@@ -5780,7 +5781,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Warning
 ;;;
 ;;; gtk_widget_get_modifier_style has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use GtkStyleContext with a custom
+;;; should not be used in newly written code. Use GtkStyleContext with a custom
 ;;; GtkStyleProvider instead.
 ;;;
 ;;; Returns the current modifier style for the widget. (As set by
@@ -5822,7 +5823,7 @@ drag_data_received (GtkWidget        *widget,
   All other style values are left untouched.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-modify-fg} has been deprecated since version
-    3.0 and should not be used in newly-written code. Use a custom style
+    3.0 and should not be used in newly written code. Use a custom style
     provider and style classes instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -5860,7 +5861,7 @@ drag_data_received (GtkWidget        *widget,
   and setting the background color on that.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-modify-bg} has been deprecated since version
-    3.0 and should not be used in newly-written code. This function is not
+    3.0 and should not be used in newly written code. This function is not
     useful in the context of CSS-based rendering. If you wish to change the way
     a widget renders its background you should use a custom CSS style, through
     an application-specific @class{gtk-style-provider} object and a CSS style
@@ -5899,7 +5900,7 @@ drag_data_received (GtkWidget        *widget,
   @class{gtk-text-view}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-modify-text} has been deprecated since version
-    3.0 and should not be used in newly-written code. Use a custom style
+    3.0 and should not be used in newly written code. Use a custom style
     provider and style classes instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -5943,7 +5944,7 @@ drag_data_received (GtkWidget        *widget,
   the base color on that.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-modify-base} has been deprecated since version
-    3.0 and should not be used in newly-written code. This function is not
+    3.0 and should not be used in newly written code. This function is not
     useful in the context of CSS-based rendering. If you wish to change the way
     a widget renders its background you should use a custom CSS style, through
     an application-specific @class{gtk-style-provider} object and a CSS style
@@ -6009,7 +6010,7 @@ drag_data_received (GtkWidget        *widget,
   All other style values are left untouched.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-modify-cursor} is deprecated since version 3.0
-    and should not be used in newly-written code. This function is not useful in
+    and should not be used in newly written code. This function is not useful in
     the context of CSS-based rendering. If you wish to change the color used to
     render the primary and seconday cursors you should use a custom CSS style,
     through an application-specific @class{gtk-style-provider} object and a CSS
@@ -6208,7 +6209,7 @@ drag_data_received (GtkWidget        *widget,
   of the application and should not be modified.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-render-icon} has been deprecated since version
-    3.0 and should not be used in newly-written code. Use the function
+    3.0 and should not be used in newly written code. Use the function
     @fun{gtk-icon-theme-load-icon} instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -6248,7 +6249,7 @@ drag_data_received (GtkWidget        *widget,
   of the application and should not be modified.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-render-icon-pixbuf} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
+    version 3.10 and should not be used in newly written code. Use the function
     @fun{gtk-icon-theme-load-icon} instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -6275,7 +6276,7 @@ drag_data_received (GtkWidget        *widget,
   @end{short}
   @begin[Warning]{dictionary}
     The function @fun{gtk-widget-pop-composite-child} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
+    version 3.10 and should not be used in newly written code. Use the function
     @fun{gtk-widget-class-set-template}, or do not use this API at all.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -6293,7 +6294,7 @@ drag_data_received (GtkWidget        *widget,
  #+cl-cffi-gtk-documentation
  "@version{2021-4-17}
   @begin{short}
-    Makes all newly-created widgets as composite children until the
+    Makes all newly created widgets as composite children until the
     corresponding function @fun{gtk-widget-pop-composite-child} call.
   @end{short}
 
@@ -6303,7 +6304,7 @@ drag_data_received (GtkWidget        *widget,
   GUI builders might want to treat them in a different way.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-push-composite-child} has been deprecated
-    since version 3.10 and should not be used in newly-written code. This API
+    since version 3.10 and should not be used in newly written code. This API
     never really worked well and was mostly unused, now we have a more complete
     mechanism for composite children, see the function
     @fun{gtk-widget-class-set-template}.
@@ -6587,7 +6588,7 @@ drag_data_received (GtkWidget        *widget,
   check.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-region-intersect} has been deprecated since
-    version 3.14 and should not be used in newly-written code. Use the functions
+    version 3.14 and should not be used in newly written code. Use the functions
     @fun{gtk-widget-allocation} and @fun{cairo-region-intersect-rectangle}
     to get the same behavior.
   @end{dictionary}
@@ -6763,7 +6764,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Warning
 ;;;
 ;;; gtk_widget_style_attach is deprecated and should not be used in
-;;; newly-written code. 3.0. This step is unnecessary with GtkStyleContext.
+;;; newly written code. 3.0. This step is unnecessary with GtkStyleContext.
 ;;;
 ;;; This function attaches the widget's GtkStyle to the widget's GdkWindow. It
 ;;; is a replacement for
@@ -7097,7 +7098,7 @@ drag_data_received (GtkWidget        *widget,
   should free those resources when the widget is unrealized.
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-root-window} has been deprecated since version
-    3.12 and should not be used in newly-written code. Use the function
+    3.12 and should not be used in newly written code. Use the function
     @fun{gdk-screen-root-window} instead.
   @end{dictionary}
   @see-class{gtk-widget}
@@ -8007,7 +8008,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Warning
 ;;;
 ;;; gtk_widget_has_rc_style has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use GtkStyleContext instead.
+;;; be used in newly written code. Use GtkStyleContext instead.
 ;;;
 ;;; Determines if the widget style has been looked up through the rc mechanism.
 ;;;
@@ -8184,7 +8185,7 @@ drag_data_received (GtkWidget        *widget,
 ;;; Warning
 ;;;
 ;;; gtk_widget_get_requisition has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. The GtkRequisition cache on the widget
+;;; not be used in newly written code. The GtkRequisition cache on the widget
 ;;; was removed, If you need to cache sizes across requests and allocations, add
 ;;; an explicit cache to the widget in question instead.
 ;;;

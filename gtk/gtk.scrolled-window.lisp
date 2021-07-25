@@ -134,12 +134,12 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-policy-type atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-policy-type atdoc:*external-symbols*)
- "@version{*2021-3-19}
+ "@version{*2021-7-24}
   @begin{short}
-   Determines how the size should be computed to achieve the one of the
-   visibility mode for the scrollbars.
+    Determines how the size should be computed to achieve one of the visibility
+    mode for the scrollbars.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkPolicyType\" gtk-policy-type
@@ -365,7 +365,7 @@
         Whether to place scrollbars within the scrolled window's bevel. @br{}
         @em{Warning:} The @code{scrollbars-within-bevel} style property has
         been deprecated since version 3.20 and should not be used in
-        newly-written code. The value of this style property is ignored. @br{}
+        newly written code. The value of this style property is ignored. @br{}
         Default value: @em{false}
       @end{entry}
     @end{table}
@@ -942,7 +942,7 @@
   Whether @code{window-placement} should be used to determine the location
   of the contents with respect to the scrollbars. @br{}
   @em{Warning:} The @code{window-placement-set} property has been deprecated
-  since version 3.10 and should not be used in newly-written code. This value
+  since version 3.10 and should not be used in newly written code. This value
   is ignored and the value of the @code{window-placement} property is always
   honored. @br{}
   Default value: @em{true}")
@@ -966,7 +966,7 @@
   used to determine the location of the contents with respect to the scrollbars.
   @begin[Warning]{dictionary}
     The @code{window-placement-set} property has been deprecated since version
-    3.10 and should not be used in newly-written code. This value is ignored
+    3.10 and should not be used in newly written code. This value is ignored
     and the @slot[gtk-scrolled-window]{window-placement} property is always
     honored.
   @end{dictionary}
@@ -1118,7 +1118,7 @@
   @class{gtk-scrollable} interface.
   @begin[Warning]{dictionary}
     The function @sym{gtk-scrolled-window-add-with-viewport} has been deprecated
-    since version 3.8 and should not be used in newly-written code. The function
+    since version 3.8 and should not be used in newly written code. The function
     @fun{gtk-container-add} will automatically add a @class{gtk-viewport} widget
     if the child does not implement the @class{gtk-scrollable} interface.
   @end{dictionary}

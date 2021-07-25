@@ -376,7 +376,7 @@
   @syntax[]{(gtk-toggle-button-mode button) => draw-indicator}
   @syntax[]{(setf (gtk-toggle-button-mode button) draw-indicator)}
   @argument[button]{a @class{gtk-toggle-button} widget}
-  @argument[draw-indicator]{if @arg{true}, draw the button as a separate
+  @argument[draw-indicator]{if @em{true}, draw the button as a separate
     indicator and label, if @em{false}, draw the button like a normal button}
   @begin{short}
     Accessor of the mode of the toggle button.

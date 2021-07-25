@@ -778,7 +778,7 @@
   @argument[stack]{a @class{gtk-stack} container}
   @argument[child]{the @class{gtk-widget} child to add}
   @argument[name]{a string with the name for the child} widget
-  @argument[title]{a string with a human-readable title for the child widget}
+  @argument[title]{a string with a human readable title for the child widget}
   @begin{short}
     Adds a child widget to the stack.
   @end{short}

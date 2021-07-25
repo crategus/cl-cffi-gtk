@@ -1266,9 +1266,9 @@
 ;;; gtk_list_box_row_is_selected ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_list_box_is_selected" gtk-list-box-is-selected) :boolean
+(defcfun ("gtk_list_box_row_is_selected" gtk-list-box-row-is-selected) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-7-13}
   @argument[row]{a @class{gtk-list-box-row} widget}
   @begin{short}
     Returns a boolean whether the child is currently selected in its list box
@@ -1278,7 +1278,7 @@
   @see-class{gtk-list-box-row}"
   (row (g-object gtk-list-box-row)))
 
-(export 'gtk-list-box-is-selected)
+(export 'gtk-list-box-row-is-selected)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_get_header ()

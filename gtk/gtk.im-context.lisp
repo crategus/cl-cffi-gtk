@@ -296,7 +296,7 @@ void im_module_list(const <a class=\"link\"
 ;;;     The unique identification string of the input method.
 ;;;
 ;;; const gchar *context_name;
-;;;     The human-readable name of the input method.
+;;;     The human readable name of the input method.
 ;;;
 ;;; const gchar *domain;
 ;;;     Translation domain to be used with dgettext()

@@ -2644,7 +2644,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-shell-shows-app-menu 'function)
- "@version{2021-4-18}
+ "@version{*2021-7-24}
   @syntax[]{(gtk-settings-gtk-shell-shows-app-menu object) => setting}
   @syntax[]{(setf (gtk-settings-gtk-shell-shows-app-menu object) setting)}
   @argument[object]{a @class{gtk-settings} object}
@@ -2706,11 +2706,12 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-settings-gtk-shell-shows-menubar 'function)
- "@version{2021-4-18}
+ "@version{*2021-7-24}
   @syntax[]{(gtk-settings-gtk-shell-shows-menubar object) => setting}
   @syntax[]{(setf (gtk-settings-gtk-shell-shows-menubar object) setting)}
   @argument[object]{a @class{gtk-settings} object}
-  @argument[setting]{a boolean whether the environment is displaying the menubar}
+  @argument[setting]{a boolean whether the environment is displaying the
+    menubar}
   @begin{short}
     Accessor of the @slot[gtk-settings]{gtk-shell-shows-menubar} slot of the
     @class{gtk-settings} class.
@@ -3497,14 +3498,14 @@
 (defcfun ("gtk_settings_get_default" gtk-settings-default)
     (g-object gtk-settings)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-16}
+ "@version{*2021-7-24}
   @begin{return}
     A @class{gtk-settings} object. If there is no default screen, then returns
     @code{nil}.
   @end{return}
   @begin{short}
-    Gets the @class{gtk-settings} object for the default GDK screen, creating it
-    if necessary.
+    Gets the @class{gtk-settings} object for the default GDK screen, creating
+    it if necessary.
   @end{short}
   See the function @fun{gtk-settings-for-screen}.
   @see-class{gtk-settings}

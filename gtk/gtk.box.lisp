@@ -914,14 +914,14 @@
 (defun gtk-hbox-new (homogeneous spacing)
  #+cl-cffi-gtk-documentation
  "@version{2014-2-22}
-  @argument[homogeneous]{@arg{true} if all children are to be given equal space
+  @argument[homogeneous]{@em{true} if all children are to be given equal space
     allotments}
   @argument[spacing]{the number of pixels to place by default between children}
   @return{A new @class{gtk-hbox} container.}
   @short{Creates a new @class{gtk-hbox} container.}
   @begin[Warning]{dictionary}
     The @sym{gtk-hbox-new} function has been deprecated since version 3.2 and
-    should not be used in newly-written code. You can use the @fun{gtk-box-new}
+    should not be used in newly written code. You can use the @fun{gtk-box-new}
     function with @code{:horizontal} instead, which is a quick and easy
     change. But the recommendation is to switch to @class{gtk-grid}, since
     @class{gtk-box} is going to go away eventually. See Migrating from other

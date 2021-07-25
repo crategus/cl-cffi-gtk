@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.about-dialog.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -139,9 +139,10 @@
 )
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-license atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-license atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-license atdoc:*external-symbols*)
- "@version{*2020-5-26}
+ "@version{*2021-7-24}
   @short{The type of license for an application.}
   This enumeration can be expanded at later date.
   @begin{pre}
@@ -172,7 +173,7 @@
     @entry[:lgpl-2-1]{The GNU Lesser General Public License, version 2.1.}
     @entry[:lgpl-3-0]{The GNU Lesser General Public License, version 3.0.}
     @entry[:bsd]{The BSD standard license.}
-    @entry[MIT_X11]{The MIT/X11 standard license.}
+    @entry[:mit-x11]{The MIT/X11 standard license.}
     @entry[:artistic]{The Artistic License, version 2.0.}
     @entry[:gpl-2-0-only]{The GNU General Public License, version 2.0 only.}
     @entry[:gpl-3-0-only]{The GNU General Public License, version 3.0 only.}
@@ -245,7 +246,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-about-dialog 'type)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @begin{short}
     The @sym{gtk-about-dialog} offers a simple way to display information about
     a program like its logo, name, copyright, website and license.
@@ -266,7 +267,7 @@
   can use the function @fun{gtk-show-about-dialog} which constructs and shows
   a dialog and keeps it around so that it can be shown again.
 
-  Note that GTK+ sets a default title of \"About @code{%s}\" on the dialog
+  Note that GTK sets a default title of \"About @code{%s}\" on the dialog
   window where @code{%s} is replaced by the name of the application, but in
   order to ensure proper translation of the title, applications should set the
   title property explicitly when constructing a @sym{gtk-about-dialog}, as shown
@@ -333,7 +334,7 @@
 (setf (gethash 'gtk-about-dialog-artists atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-artists 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-artists object) => artists}
   @syntax[]{(setf (gtk-about-dialog-artists object) artists)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -364,7 +365,7 @@
 (setf (gethash 'gtk-about-dialog-authors atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-authors 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-authors object) => authors}
   @syntax[]{(setf (gtk-about-dialog-authors object) authors)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -405,7 +406,7 @@
 (setf (gethash 'gtk-about-dialog-comments atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-comments 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-comments object) => comments}
   @syntax[]{(setf (gtk-about-dialog-comments object) comments)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -433,7 +434,7 @@
 (setf (gethash 'gtk-about-dialog-copyright atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-copyright 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-copyright object) => copyright}
   @syntax[]{(setf (gtk-about-dialog-copyright object) copyright)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -462,7 +463,7 @@
 (setf (gethash 'gtk-about-dialog-documenters atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-documenters 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-documenters object) => documenters}
   @syntax[]{(setf (gtk-about-dialog-documenters object) documenters)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -497,7 +498,7 @@
 (setf (gethash 'gtk-about-dialog-license atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-license 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-license object) => license}
   @syntax[]{(setf (gtk-about-dialog-license object) license)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -534,7 +535,7 @@
 (setf (gethash 'gtk-about-dialog-license-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-license-type 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-license-type object) => license-type}
   @syntax[]{(setf (gtk-about-dialog-license-type object) license-type)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -566,7 +567,7 @@
 (setf (gethash 'gtk-about-dialog-logo atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-logo 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-logo object) => logo}
   @syntax[]{(setf (gtk-about-dialog-logo object) logo)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -599,7 +600,7 @@
 (setf (gethash 'gtk-about-dialog-logo-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-logo-icon-name 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-logo-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-about-dialog-logo-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -631,7 +632,7 @@
 (setf (gethash 'gtk-about-dialog-program-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-program-name 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-program-name object) => program-name}
   @syntax[]{(setf (gtk-about-dialog-program-name object) program-name)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -665,7 +666,7 @@
 (setf (gethash 'gtk-about-dialog-translator-credits atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-translator-credits 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-translator-credits object) => translator-credits}
   @syntax[]{(setf (gtk-about-dialog-translator-credits object) translator-credits)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -708,7 +709,7 @@
 (setf (gethash 'gtk-about-dialog-version atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-version 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-version object) => version}
   @syntax[]{(setf (gtk-about-dialog-version object) version)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -736,7 +737,7 @@
 (setf (gethash 'gtk-about-dialog-website atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-website 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-website object) => website}
   @syntax[]{(setf (gtk-about-dialog-website object) website)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -765,7 +766,7 @@
 (setf (gethash 'gtk-about-dialog-website-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-website-label 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-website-label object) => label}
   @syntax[]{(setf (gtk-about-dialog-website-label object) label)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -795,7 +796,7 @@
 (setf (gethash 'gtk-about-dialog-wrap-license atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-wrap-license 'function)
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @syntax[]{(gtk-about-dialog-wrap-license object) => wrap-license}
   @syntax[]{(setf (gtk-about-dialog-wrap-license object) wrap-license)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -820,7 +821,7 @@
 
 (defun gtk-about-dialog-new ()
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @return{A newly created @class{gtk-about-dialog} widget.}
   @short{Creates a new about dialog.}
   @see-class{gtk-about-dialog}"
@@ -835,7 +836,7 @@
 (defcfun ("gtk_about_dialog_add_credit_section"
            gtk-about-dialog-add-credit-section) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-26}
+ "@version{2020-5-26}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[section-name]{a string with the name of the section}
   @argument[people]{a list of strings of the people who belong to that section}
@@ -856,15 +857,16 @@
 (let ((about-dialog (null-pointer)))
   (defun gtk-show-about-dialog (parent &rest args)
    #+cl-cffi-gtk-documentation
-   "@version{*2020-5-26}
+   "@version{*2021-7-24}
     @argument[parent]{a @class{gtk-window} transient parent, or @code{nil}
       for none}
     @argument[args]{pairs of property name and property value}
     @begin{short}
-      This is a convenience function for showing an application's about box.
+      This is a convenience function for showing the about dialog of an
+      application.
     @end{short}
-    The constructed dialog is associated with the parent window and reused for
-    future invocations of this function.
+    The constructed about dialog is associated with the parent window and reused
+    for future invocations of this function.
     @see-class{gtk-about-dialog}"
     (let ((dialog (if parent
                       (g-object-data parent "gtk-about-dialog")

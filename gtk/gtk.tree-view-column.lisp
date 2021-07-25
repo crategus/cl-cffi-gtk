@@ -666,7 +666,7 @@
 (setf (gethash 'gtk-tree-view-column-sort-indicator atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-sort-indicator 'function)
- "@version{2020-2-24}
+ "@version{2021-2-24}
   @syntax[]{(gtk-tree-view-column-sort-indicator object) => setting}
   @syntax[]{(setf (gtk-tree-view-column-sort-indicator object) setting)}
   @argument[object]{a @class{gtk-tree-view-column} object}

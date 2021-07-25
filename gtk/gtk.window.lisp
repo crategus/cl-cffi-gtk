@@ -1093,7 +1093,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-hide-titlebar-when-maximized 'function)
- "@version{2020-5-25}
+ "@version{*2021-7-24}
   @syntax[]{(gtk-window-hide-titlebar-when-maximized object) => setting}
   @syntax[]{(setf (gtk-window-hide-titlebar-when-maximized object) setting)}
   @argument[object]{a @class{gtk-window} widget}
@@ -1107,14 +1107,14 @@
   The slot access function @sym{gtk-window-hide-titlebar-when-maximized} returns
   whether the window has requested to have its titlebar hidden when maximized.
   The slot access function @sym{(setf gtk-window-hide-titlebar-when-maximized)}
-  sets whether to hide the titlebar when the window is maximized. If the
-  argument @arg{setting} is @em{true}, then the window will request that it's
-  titlebar should be hidden when maximized.
+  sets whether to hide the titlebar when the window is maximized.
 
-  This is useful for windows that do not convey any information other than the
-  application name in the titlebar, to put the available screen space to better
-  use. If the underlying window system does not support the request, the setting
-  will not have any effect.
+  If the argument @arg{setting} is @em{true}, then the window will request that
+  its titlebar should be hidden when maximized. This is useful for windows that
+  do not convey any information other than the application name in the
+  titlebar, to put the available screen space to better use. If the underlying
+  window system does not support the request, the setting will not have any
+  effect.
   @see-class{gtk-window}")
 
 ;;; --- gtk-window-icon --------------------------------------------------------
@@ -1858,19 +1858,19 @@
 
 (defcfun ("gtk_window_add_accel_group" gtk-window-add-accel-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-26}
-  @argument[window]{the @class{gtk-window} widget to attach accelerator group
-    to}
-  @argument[accel-group]{a @class{gtk-accel-group} object}
+ "@version{*2021-7-24}
+  @argument[window]{the @class{gtk-window} widget to attach the accelerator
+    group to}
+  @argument[group]{a @class{gtk-accel-group} object}
   @begin{short}
-    Associate @arg{accel-group} with the window, such that calling the function
+    Associate @arg{group} with the window, such that calling the function
     @fun{gtk-accel-group-activate} on the window will activate accelerators in
-    @arg{accel-group}.
+    @arg{group}.
   @end{short}
   @see-class{gtk-window}
   @see-function{gtk-accel-group-activate}"
   (window (g-object gtk-window))
-  (accel-group (g-object gtk-accel-group)))
+  (group (g-object gtk-accel-group)))
 
 (export 'gtk-window-add-accel-group)
 

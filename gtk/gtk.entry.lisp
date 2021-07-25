@@ -609,7 +609,7 @@
         The prelight style property determines whether activatable icons
         prelight on mouseover. @br{}
         @em{Warning:} The @code{icon-prelight} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use CSS to control the appearance of prelighted icons. The value
         of this style property is ignored.
       @end{entry}
@@ -1683,7 +1683,7 @@
   @br{}
   The stock ID to use for the primary icon for the entry. @br{}
   @em{Warning:} The @code{primary-icon-stock} property has been deprecated
-  since version 3.10 and should not be used in newly-written code. Use the
+  since version 3.10 and should not be used in newly written code. Use the
   @code{primary-icon-name} property instead. @br{}
   Default value: @code{nil}")
 
@@ -1704,7 +1704,7 @@
   The stock ID to use for the primary icon for the entry.
   @begin[Warning]{dictionary}
     The @code{primary-icon-stock} property has been deprecated since version
-    3.10 and should not be used in newly-written code. Use the
+    3.10 and should not be used in newly written code. Use the
     @code{primary-icon-name} property instead.
   @end{dictionary}
   @see-class{gtk-entry}")
@@ -1967,7 +1967,7 @@
 (setf (gethash 'gtk-entry-secondary-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-name 'function)
- "@version{*2020-3-12}
+ "@version{*2021-3-12}
   @syntax[]{(gtk-entry-secondary-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-entry-secondary-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-entry} widget}
@@ -2053,7 +2053,7 @@
   @br{}
   The stock ID to use for the secondary icon for the entry. @br{}
   @em{Warning:} The @code{secondary-icon-stock} property has been deprecated
-  since version 3.10 and should not be used in newly-written code. Use the
+  since version 3.10 and should not be used in newly written code. Use the
   @code{secondary-icon-name} property instead. @br{}
   Default value: @code{nil}")
 
@@ -2074,7 +2074,7 @@
   The stock ID to use for the secondary icon for the entry.
   @begin[Warning]{dictionary}
     The @code{secondary-icon-stock} property has been deprecated since version
-    3.10 and should not be used in newly-written code. Use the
+    3.10 and should not be used in newly written code. Use the
     @slot[gtk-entry]{secondary-icon-name} property instead.
   @end{dictionary}
   @see-class{gtk-entry}")
@@ -2210,7 +2210,7 @@
   Which kind of shadow to draw around the entry when \"has-frame\" is set to
   @em{true}. @br{}
   @em{Warning:} The @code{shadow-type} property has been deprecated since
-  version 3.20 and should not be used in newly-written code. Use CSS to
+  version 3.20 and should not be used in newly written code. Use CSS to
   determine the style of the border. The value of this style property is
   ignored. @br{}
   Default value: @code{:in}")
@@ -2233,7 +2233,7 @@
   @em{true}.
   @begin[Warning]{dictionary}
     The @code{shadow-type} property has been deprecated since version 3.20 and
-    should not be used in newly-written code. Use CSS to determine the style of
+    should not be used in newly written code. Use CSS to determine the style of
     the border. The value of this style property is ignored.
   @end{dictionary}
   @see-class{gtk-entry}")
@@ -2882,7 +2882,7 @@
   position.
   @begin[Warning]{dictionary}
     The function @sym{gtk-entry-set-icon-from-stock} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the
+    version 3.10 and should not be used in newly written code. Use the
     @fun{gtk-entry-set-icon-from-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-entry}
@@ -3031,7 +3031,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-entry-icon-stock} has been deprecated since version
-    3.10 and should not be used in newly-written code. Use the function
+    3.10 and should not be used in newly written code. Use the function
     @fun{gtk-entry-icon-name} instead.
   @end{dictionary}
   @see-class{gtk-entry}
