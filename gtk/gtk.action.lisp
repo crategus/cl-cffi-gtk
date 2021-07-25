@@ -177,7 +177,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-action 'type)
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @begin{short}
     Actions represent operations that the user can be perform, along with some
     information how it should be presented in the interface.
@@ -537,7 +537,7 @@
 (setf (gethash 'gtk-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-name 'function)
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @syntax[]{(gtk-action-name object) => name}
   @argument[object]{a @class{gtk-action} object}
   @argument[name]{a string with the name of the action}

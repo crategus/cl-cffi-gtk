@@ -333,7 +333,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-ui-manager 'type)
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @begin{short}
     A @sym{gtk-ui-manager} object constructs a user interface, menus and
     toolbars, from one or more UI definitions, which reference actions from one
@@ -561,7 +561,7 @@
 (defcfun ("gtk_ui_manager_insert_action_group"
           gtk-ui-manager-insert-action-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[group]{a @class{gtk-action-group} object to be inserted}
   @argument[pos]{an integer with the position at which the group will be
@@ -639,7 +639,7 @@
 (defcfun ("gtk_ui_manager_get_accel_group" gtk-ui-manager-accel-group)
     (g-object gtk-accel-group)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @return{The @class{gtk-accel-group} object.}
   @short{Returns the accel group associated with the UI manager.}
@@ -660,7 +660,7 @@
 (defcfun ("gtk_ui_manager_get_widget" gtk-ui-manager-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[path]{a string with a path}
   @begin{return}
@@ -803,7 +803,7 @@
 
 (defun gtk-ui-manager-add-ui-from-string (manager buffer)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[buffer]{the string to parse}
   @begin{return}

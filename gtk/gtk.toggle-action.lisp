@@ -129,7 +129,7 @@
 (setf (gethash 'gtk-toggle-action-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-action-active 'function)
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @syntax[]{(gtk-toggle-action-active object) => is-active}
   @syntax[]{(setf (gtk-toggle-action-active object) is-active)}
   @argument[object]{a @class{gtk-toggle-action} object}

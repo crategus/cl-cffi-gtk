@@ -139,7 +139,7 @@
 (setf (gethash 'gtk-radio-action-current-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-current-value 'function)
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @syntax[]{(gtk-radio-action-current-value object) => current-value}
   @syntax[]{(setf (gtk-radio-action-current-value object) current-value)}
   @argument[object]{a @class{gtk-radio-action} object}

@@ -117,7 +117,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-action-group 'type)
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @begin{short}
     Actions are organised into groups. An action group is essentially a map
     from names to @class{gtk-action} objects.
@@ -445,7 +445,7 @@
 
 (defun gtk-action-group-add-action (group action &optional accelerator)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @argument[group]{a @class{gtk-action-group} object}
   @argument[action]{the @class{gtk-action} object to add}
   @argument[accelerator]{a string with the optional accelerator for the action,
@@ -582,7 +582,7 @@
 
 (defun gtk-action-group-add-actions (group entries)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @argument[group]{a @class{gtk-action-group} object}
   @argument[entries]{a list of action descriptions}
   @begin{short}
@@ -709,7 +709,7 @@
 
 (defun gtk-action-group-add-toggle-actions (group entries)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @argument[group]{a @class{gtk-action-group} object}
   @argument[entries]{a list of toggle action descriptions}
   @begin{short}
@@ -824,7 +824,7 @@
 
 (defun gtk-action-group-add-radio-actions (group entries value on-change)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{*2021-7-24}
   @argument[group]{a @class{gtk-action-group} object}
   @argument[entries]{a list of radio action descriptions}
   @argument[value]{an integer with the value of the action to activate
