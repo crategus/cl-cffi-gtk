@@ -119,7 +119,7 @@
   and can be retrieved with the function @fun{cairo-status}.
 
   New entries may be added in future versions. Use the function
-  @fun{cairo-status-to-string} to get a human-readable representation of an
+  @fun{cairo-status-to-string} to get a human readable representation of an
   error message.
   @begin{pre}
 (defcenum cairo-status-t
@@ -263,7 +263,7 @@
   @argument[status]{a value of the @symbol{cairo-status-t} enumeration}
   @return{A string representation of the Cario status.}
   @begin{short}
-    Provides a human-readable description of a Cairo status value.
+    Provides a human readable description of a Cairo status value.
   @end{short}
   @see-symbol{cairo-status-t}"
   (status cairo-status-t))

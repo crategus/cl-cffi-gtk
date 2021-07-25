@@ -121,7 +121,7 @@
 ; #+cl-cffi-gtk-documentation
 ; "@version{2013-3-2}
 ;  @begin{short}
-;    A human-readable string literal containing the version of Cairo available at
+;    A human readable string literal containing the version of Cairo available at
 ;    compile-time, in the form of \"x.y.z\".
 ;  @end{short}")
 
@@ -206,7 +206,7 @@
  "@version{2020-12-5}
   @return{A string containing the Cairo version.}
   @begin{short}
-    Returns the version of the Cairo library as a human-readable string of the
+    Returns the version of the Cairo library as a human readable string of the
     form \"x.y.z\".
   @end{short}
   See also the function @fun{cairo-version}.

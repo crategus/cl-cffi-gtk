@@ -671,7 +671,7 @@
     @end{subsection}
     @begin[Version Information]{subsection}
       Cairo provides the ability to examine the version at either compile-time
-      or run-time and in both a human-readable form as well as an encoded form
+      or run-time and in both a human readable form as well as an encoded form
       suitable for direct comparison. Cairo also provides the function
       @fun{cairo-version-encode} to perform the encoding.
 
