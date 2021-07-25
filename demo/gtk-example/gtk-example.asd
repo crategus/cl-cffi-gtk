@@ -8,7 +8,7 @@
   :components ((:file "gtk-example")
                (:file "utils")
                (:file "alignment")
-               (:file "alignment-new")
+               (:file "alignment-interactive")
                (:file "application-simple")
                (:file "arrow-button")
                (:file "aspect-frame")                  ; Layout Widgets
@@ -116,6 +116,7 @@
                (:file "tree-view-content-type")        ; Tree and List Widgets
                (:file "tree-view-context-menu")        ; Tree and List Widgets
                (:file "tree-view-drag-and-drop")       ; Tree and List Widgets
+               (:file "widget-align")
                (:file "widget-pointer")
                (:file "window-application")            ; Deprecated
                (:file "window-simple")                 ; Getting started

@@ -6,7 +6,7 @@
            #:create-print-dialog
            #:do-print-operation
            #:example-alignment
-           #:example-alignment-new
+           #:example-alignment-interactive
            #:example-arrow-button
            #:example-aspect-frame                      ; Layout Widgets
            #:example-box-packing                       ; Packing Widgets
@@ -121,6 +121,7 @@
            #:example-tree-view-content-type            ; Tree and List Widgets
            #:example-tree-view-context-menu            ; Tree and List Widgets
            #:example-tree-view-drag-and-drop           ; Tree and List Widgets
+           #:example-widget-align
            #:example-widget-pointer
            #:example-window-application                ; Deprecated
            #:example-window-simple                     ; Getting started
@@ -128,4 +129,4 @@
 
 (in-package :gtk-example)
 
-;;; 2021-6-5
+;;; 2021-7-25

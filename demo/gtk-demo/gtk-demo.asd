@@ -9,7 +9,6 @@
                :gio-example
                :cl-cffi-gtk :split-sequence)
   :components ((:file "package")
-               (:file "alignment")
                (:file "app-chooser-button")
                (:file "app-chooser-dialog")
                (:file "assistant")

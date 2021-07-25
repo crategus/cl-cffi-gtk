@@ -311,9 +311,6 @@
        "../gtk-example/revealer-icon.lisp"
        "EXAMPLE-REVEALER-ICON"
        "../gtk-example/revealer-icon.ui")
-      ("Alignment"
-       "alignment.lisp"
-       "DEMO-ALIGNMENT")
       ("Fixed Container"
        "../gtk-example/fixed.lisp"
        "EXAMPLE-FIXED")
@@ -396,7 +393,10 @@
        "DEMO-PIXBUFS")
       ("Emblemed Icons"
        "../gio-example/emblemed-icon.lisp"
-       "EXAMPLE-EMBLEMED-ICON"))
+       "EXAMPLE-EMBLEMED-ICON")
+      ("Align Widget"
+       "../gtk-example/widget-align.lisp"
+       "EXAMPLE-WIDGET-ALIGN"))
 
      ;; Examples from the tutorial
      "GTK 3 Tutorial for Lisp"
@@ -523,7 +523,13 @@
        "EXAMPLE-NUMERABLE-ICON")
       ("Arrow Button"
        "../gtk-example/arrow-button.lisp"
-       "EXAMPLE-ARROW-BUTTON"))
+       "EXAMPLE-ARROW-BUTTON")
+      ("Alignment"
+       "../gtk-example/alignment.lisp"
+       "EXAMPLE-ALIGNMENT")
+      ("Alignment Interactive"
+       "../gtk-example/alignment-interactive.lisp"
+       "EXAMPLE-ALIGNMENT-INTERACTIVE"))
 ))
 
 (defun mklist (obj)
