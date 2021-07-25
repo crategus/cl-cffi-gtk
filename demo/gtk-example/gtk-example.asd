@@ -12,20 +12,21 @@
                (:file "application-simple")
                (:file "arrow-button")
                (:file "aspect-frame")                  ; Layout Widgets
-               (:file "bloat-pad")
+               (:file "bloatpad")
                (:file "box-packing")                   ; Packing Widgets
                (:file "box-simple")                    ; Packing Widgets
                (:file "button-box")                    ; Layout Widgets
                (:file "button-image")                  ; Button Widgets
                (:file "button-more")                   ; Button Widgets
                (:file "calendar")
+               (:file "cell-renderer-properties")      ; Tree and List Widgets
+               (:file "clipboard")
                (:file "color-button")
                (:file "color-button-label")            ; Selecting Colors, ...
                (:file "color-chooser-dialog")          ; Selecting Colors, ...
-               (:file "cell-renderer-properties")      ; Tree and List Widgets
-               (:file "clipboard")
                (:file "combo-box")
                (:file "combo-box-text")
+               (:file "custom-drawing")
                (:file "custom-window")
                (:file "dialog")                        ; Dialog Windows
                (:file "drag-and-drop")
@@ -64,6 +65,7 @@
                (:file "link-button")                   ; Button Widgets
 ;               (:file "list-box")
 ;               (:file "list-store")
+               (:file "menu")
                (:file "menu-by-hand")                  ; Menus and Toolbars
                (:file "menu-builder")
                (:file "menu-popup")                    ; Menus and Toolbars
@@ -82,10 +84,13 @@
                (:file "scale-button")
                (:file "scale-widget")
                (:file "scrolled-window")
+               (:file "search-entry")
                (:file "show-about-dialog")
                (:file "spin-button")
                (:file "statusbar")                     ; Display Widgets
                (:file "switch")                        ; Button widgets
+               (:file "table-packing")                 ; Deprecated
+               (:file "table-packing-2")               ; Deprecated
                (:file "text-entry")
                (:file "text-entry-buffer")
                (:file "text-entry-completion")
@@ -111,7 +116,8 @@
                (:file "tree-view-context-menu")        ; Tree and List Widgets
                (:file "tree-view-drag-and-drop")       ; Tree and List Widgets
                (:file "widget-pointer")
+               (:file "window-application")            ; Deprecated
                (:file "window-simple")                 ; Getting started
               ))
 
-;;; 2021-6-4
+;;; 2021-7-25

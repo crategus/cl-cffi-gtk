@@ -234,11 +234,13 @@ button_press (GtkWidget      *widget,
       ;; Copy button clicked
       (g-signal-connect button1 "clicked"
           (lambda (widget)
+            (declare (ignore widget))
       ))
 
       ;; Paste button clicked
       (g-signal-connect button1 "clicked"
           (lambda (widget)
+            (declare (ignore widget))
       ))
 
 

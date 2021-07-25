@@ -15,14 +15,15 @@
            #:example-button-image                      ; Button Widgets
            #:example-button-more                       ; Button Widgets
            #:example-calendar
+           #:example-cell-renderer-properties          ; Tree and List Widgets
+           #:example-clipboard
            #:example-color-button
            #:example-color-button-label                ; Selecting Colors, ...
            #:example-color-chooser-dialog              ; Selecting Colors, ...
-           #:example-cell-renderer-properties          ; Tree and List Widgets
-           #:example-clipboard
-           #:example-custom-window
            #:example-combo-box
            #:example-combo-box-text
+           #:example-custom-drawing
+           #:example-custom-window
            #:example-dialog                            ; Dialog Windows
            #:example-dialog-new
            #:example-dialog-new-with-buttons
@@ -62,8 +63,9 @@
            #:example-level-bar
            #:example-link-button                       ; Button Widgets
            #:example-list-box
-           #:example-menu-by-hand                      ; Menus and Toolbars
+           #:example-menu
            #:example-menu-builder
+           #:example-menu-by-hand                      ; Menus and Toolbars
            #:example-menu-popup                        ; Menus and Toolbars
            #:example-message-dialog-get-message-area
            #:example-message-dialog-new
@@ -86,11 +88,14 @@
            #:example-scale-button
            #:example-scale-widget
            #:example-scrolled-window
+           #:example-search-entry
            #:example-show-about-dialog
            #:example-simple-list-store
            #:example-spin-button
            #:example-statusbar                         ; Display Widgets
            #:example-switch                            ; Button Widgets
+           #:example-table-packing                     ; Deprecated
+           #:example-table-packing-2                   ; Deprecated
            #:example-text-entry
            #:example-text-entry-buffer
            #:example-text-entry-completion
@@ -116,6 +121,7 @@
            #:example-tree-view-context-menu            ; Tree and List Widgets
            #:example-tree-view-drag-and-drop           ; Tree and List Widgets
            #:example-widget-pointer
+           #:example-window-application                ; Deprecated
            #:example-window-simple                     ; Getting started
            ))
 

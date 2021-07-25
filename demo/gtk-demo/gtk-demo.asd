@@ -12,7 +12,6 @@
                (:file "alignment")
                (:file "app-chooser-button")
                (:file "app-chooser-dialog")
-               (:file "application-window")
                (:file "assistant")
                (:file "clipboard")
                (:file "color-chooser-widget")
@@ -23,12 +22,10 @@
                (:file "css-blendmodes")
                (:file "css-pixbufs")
                (:file "grid")
-               (:file "menu")
                (:file "numerable-icon")
                (:file "pixbuf-scale")
                (:file "pixbufs")
                (:file "popover")
-               (:file "search-entry")
                (:file "selections-1")
                (:file "size-management")
                (:file "simple-application-window")
@@ -37,4 +34,4 @@
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2021-6-11
+;;; 2021-7-25

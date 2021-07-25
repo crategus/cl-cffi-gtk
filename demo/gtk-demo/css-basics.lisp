@@ -36,7 +36,7 @@
       ;; Signal handler changed for the buffer
       (g-signal-connect text "changed"
                         (lambda (buffer)
-                          (format t "Signal changed für text buffer~%")
+                          (format t "Signal changed for text buffer~%")
                           (let ((start (gtk-text-buffer-start-iter buffer))
                                 (end (gtk-text-buffer-end-iter buffer)))
                             (gtk-text-buffer-remove-all-tags buffer start end)

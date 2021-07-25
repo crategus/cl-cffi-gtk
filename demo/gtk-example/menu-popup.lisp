@@ -1,4 +1,4 @@
-;;;; Example Menu Popup (2021-6-1)
+;;;; Example Menu Popup (2021-7-17)
 
 (in-package :gtk-example)
 
@@ -6,22 +6,22 @@
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :default-width 250
-                                 :default-height 150
+                                 :default-width 300
+                                 :default-height 180
                                  :title "Example Popup Menu"))
           (button (gtk-button-new-with-label "Click me")))
       ;; Create pop-up menu for button
-      (let ((popup-menu (gtk-menu-new))
-            (big-item (gtk-menu-item-new-with-label "Larger"))
-            (small-item (gtk-menu-item-new-with-label "Smaller")))
-        (gtk-menu-shell-append popup-menu big-item)
-        (gtk-menu-shell-append popup-menu small-item)
-        (gtk-widget-show-all popup-menu)
+      (let ((popupmenu (gtk-menu-new))
+            (bigitem (gtk-menu-item-new-with-label "Larger"))
+            (smallitem (gtk-menu-item-new-with-label "Smaller")))
+        (gtk-menu-shell-append popupmenu bigitem)
+        (gtk-menu-shell-append popupmenu smallitem)
+        (gtk-widget-show-all popupmenu)
         ;; Signal handler to pop up the menu
         (g-signal-connect button "button-press-event"
            (lambda (widget event)
              (declare (ignore widget))
-             (gtk-menu-popup popup-menu
+             (gtk-menu-popup popupmenu
                              :button (gdk-event-button-button event)
                              :activate-time (gdk-event-button-time event))
              t)))

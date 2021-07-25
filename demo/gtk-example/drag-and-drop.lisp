@@ -71,7 +71,7 @@
           (lambda (widget context x y time)
             (let ((targets (gdk-drag-context-list-targets context))
                   (is-valid-drop t))
-              (declare (ignorable is-valid-drop))
+              (declare (ignorable targets is-valid-drop))
 
               (format t "~%DRAG-DROP~%")
               (format t "   widget : ~a~%" widget)
