@@ -7,7 +7,7 @@
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1458,7 +1458,7 @@
 ;;; Warning
 ;;;
 ;;; GTypeDebugFlags has been deprecated since version 2.36 and should not be
-;;; used in newly-written code. g_type_init() is now done automatically
+;;; used in newly written code. g_type_init() is now done automatically
 ;;;
 ;;; These flags used to be passed to g_type_init_with_debug_flags() which is now
 ;;; deprecated.
@@ -1696,7 +1696,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-11-13}
   @argument[gtype]{a @class{g-type} ID}
-  @return{@arg{True} if @arg{gtype} is a value type.}
+  @return{@em{True} if @arg{gtype} is a value type.}
   @begin{short}
     Checks if @arg{gtype} is a value type and can be used with the function
     @fun{g-value-init}.
@@ -1750,7 +1750,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-11-1}
   @argument[gtype]{a @class{g-type} ID}
-  @return{@arg{True} if @arg{gtype} is a classed type.}
+  @return{@em{True} if @arg{gtype} is a classed type.}
   @short{Checks if @arg{gtype} is a classed type.}
   @see-class{g-type}
   @see-symbol{g-type-class}"
@@ -1973,7 +1973,7 @@
 ;;;                                                 (g_type)))
 ;;;
 ;;; G_TYPE_INSTANCE_GET_PRIVATE has been deprecated since version 2.58 and
-;;; should not be used in newly-written code. Use G_ADD_PRIVATE and the
+;;; should not be used in newly written code. Use G_ADD_PRIVATE and the
 ;;; generated your_type_get_instance_private() function instead
 ;;;
 ;;; Gets the private structure for a particular type. The private structure must
@@ -2207,7 +2207,7 @@
 ;;; Warning
 ;;;
 ;;; g_type_init has been deprecated since version 2.36 and should not be used in
-;;; newly-written code. The type system is now initialised automatically.
+;;; newly written code. The type system is now initialised automatically.
 ;;;
 ;;; This function used to initialise the type system. Since GLib 2.36, the type
 ;;; system is initialised automatically and this function does nothing.
@@ -2223,7 +2223,7 @@
 ;;; Warning
 ;;;
 ;;; g_type_init_with_debug_flags has been deprecated since version 2.36 and
-;;; should not be used in newly-written code. the type system is now initialised
+;;; should not be used in newly written code. the type system is now initialised
 ;;; automatically
 ;;;
 ;;; This function used to initialise the type system with debugging flags. Since
@@ -2299,7 +2299,7 @@
 
 (defun g-type-from-name (name)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-14}
+ "@version{*2021-7-6}
   @argument[name]{a string with the type name to lookup}
   @return{Corresponding @class{g-type} ID for @arg{name}.}
   @begin{short}
@@ -2307,6 +2307,15 @@
   @end{short}
   This is the preferred method to find out by name whether a specific type has
   been registered yet.
+  @begin[Example]{dictionary}
+    @begin{pre}
+(g-type-from-name \"gdouble\") => #<GTYPE :name \"gdouble\" :id 60>
+(g-type-from-name \"GtkContainer\")
+=> #<GTYPE :name \"GtkContainer\" :id 94893595931264>
+(g-type-from-name \"GtkCheckButton\")
+=> #<GTYPE :name \"GtkCheckButton\" :id 94893595969952>
+    @end{pre}
+  @end{dictionary}
   @see-class{g-type}
   @see-function{g-type-name}"
   (gtype name))
@@ -2565,7 +2574,7 @@
 ;;; g_type_class_add_private ()                            not exported
 ;;;
 ;;; g_type_class_add_private has been deprecated since version 2.58 and should
-;;; not be used in newly-written code. Use the G_ADD_PRIVATE() macro with the
+;;; not be used in newly written code. Use the G_ADD_PRIVATE() macro with the
 ;;; G_DEFINE_* family of macros to add instance private data to a type
 ;;; ----------------------------------------------------------------------------
 

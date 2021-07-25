@@ -409,7 +409,7 @@
  "@version{2021-4-8}
   @argument[value]{a @symbol{g-value} instance}
   @argument[gtype]{a @class{g-type} value}
-  @return{@arg{True} if @arg{value} holds the @arg{gtype}.}
+  @return{@em{True} if @arg{value} holds the @arg{gtype}.}
   @begin{short}
     Checks if @arg{value} holds or contains a value of @arg{gtype}.
   @end{short}
@@ -569,7 +569,7 @@
 ;;; Warning
 ;;;
 ;;; G_TYPE_VALUE_ARRAY has been deprecated since version 2.32 and should not be
-;;; used in newly-written code. Use GArray instead of GValueArray
+;;; used in newly written code. Use GArray instead of GValueArray
 ;;;
 ;;; The type ID of the "GValueArray" type which is a boxed type, used to pass
 ;;; around pointers to GValueArrays.

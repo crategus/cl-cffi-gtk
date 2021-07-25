@@ -1154,7 +1154,7 @@
 
 (defun g-object-type-name (object)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-28}
+ "@version{*2021-7-24}
   @argument[object]{a @class{g-object} instance to return the type name for}
   @return{A string with type name of @arg{object}.}
   @short{Gets the name of the type for an instance.}
@@ -2904,53 +2904,64 @@
 
 (defcfun ("g_object_set_property" %g-object-set-property) :void
   (object g-object)
-  (property-name :string)
+  (name :string)
   (value (:pointer (:struct g-value))))
 
-(defun (setf g-object-property) (value object property-name
-                                       &optional property-type)
-  (unless property-type
-    (setf property-type
+(defun (setf g-object-property) (value object name &optional gtype)
+  (unless gtype
+    (setf gtype
           (class-property-type (g-type-from-instance object)
-                               property-name
+                               name
                                :assert-writable t)))
   (with-foreign-object (new-value '(:struct g-value))
     (unwind-protect
       (progn
-        (set-g-value new-value value property-type :zero-g-value t)
-        (%g-object-set-property object property-name new-value))
+        (set-g-value new-value value gtype :zero-g-value t)
+        (%g-object-set-property object name new-value))
       (g-value-unset new-value)))
   value)
 
 (defcfun ("g_object_get_property" %g-object-get-property) :void
   (object g-object)
-  (property-name :string)
+  (name :string)
   (value (:pointer (:struct g-value))))
 
-(defun g-object-property (object property-name &optional property-type)
+(defun g-object-property (object name &optional gtype)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-17}
-  @syntax[]{(g-object-property object property-name property-type) => value}
-  @syntax[]{(setf (g-object-property object property-name property-type) value)}
+ "@version{*2021-7-24}
+  @syntax[]{(g-object-property object name gtype) => value}
+  @syntax[]{(setf (g-object-property object name gtype) value)}
   @argument[object]{a @class{g-object} instance}
-  @argument[property-name]{a string with the name of the property}
-  @argument[property-type]{the optional @class{g-type} ID of the property}
+  @argument[name]{a string with the name of the property}
+  @argument[gtype]{the optional @class{g-type} ID of the property}
   @argument[value]{a value for the property}
   @short{Accessor of the value of the property of an object.}
+  @begin[Example]{dictionary}
+    Setting and retrieving the
+    @slot[gtk-settings]{gtk-application-prefer-dark-theme} setting.
+    @begin{pre}
+(defvar settings (gtk-settings-default))
+=> SETTINGS
+(setf (g-object-property settings \"gtk-application-prefer-dark-theme\") t)
+=> T
+(g-object-property settings \"gtk-application-prefer-dark-theme\")
+=> T
+    @end{pre}
+  @end{dictionary}
   @see-class{g-object}
   @see-class{g-type}"
   (restart-case
-    (unless property-type
-      (setf property-type
+    (unless gtype
+      (setf gtype
             (class-property-type (g-type-from-instance object)
-                                 property-name
+                                 name
                                  :assert-readable t)))
     (return-nil () (return-from g-object-property nil)))
   (with-foreign-object (value '(:struct g-value))
     (unwind-protect
       (progn
-        (g-value-init value property-type)
-        (%g-object-get-property object property-name value)
+        (g-value-init value gtype)
+        (%g-object-get-property object name value)
         (parse-g-value value))
       (g-value-unset value))))
 
