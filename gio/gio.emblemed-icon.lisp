@@ -108,6 +108,8 @@
   @see-class{g-emblemed-icon}
   @see-function{g-emblemed-icon-icon}")
 
+(export 'g-emblemed-icon-gicon)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblemed_icon_new ()
 ;;; ----------------------------------------------------------------------------

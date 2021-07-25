@@ -293,6 +293,7 @@
       An implementation of GIcon for icons with emblems.
 
       @about-class{g-emblemed-icon}
+      @about-generic{g-emblemed-icon-gicon}
       @about-function{g-emblemed-icon-new}
       @about-function{g-emblemed-icon-icon}
       @about-function{g-emblemed-icon-emblems}
@@ -505,10 +506,9 @@
       @about-function{g-menu-link-iter-next}
     @end{subsection}
     @begin[GMenu]{subsection}
-      A simple implementation of GMenuModel.
+      A simple implementation of a @class{g-menu-model} object.
 
       @about-class{g-menu}
-      @about-class{g-menu-item}
       @about-function{g-menu-new}
       @about-function{g-menu-freeze}
       @about-function{g-menu-insert}
@@ -525,6 +525,7 @@
       @about-function{g-menu-prepend-submenu}
       @about-function{g-menu-remove}
       @about-function{g-menu-remove-all}
+      @about-class{g-menu-item}
       @about-function{g-menu-item-new}
       @about-function{g-menu-item-new-section}
       @about-function{g-menu-item-new-submenu}

@@ -505,7 +505,7 @@
 ;;;
 ;;; const char * g_app_info_get_description (GAppInfo *appinfo);
 ;;;
-;;; Gets a human-readable description of an installed application.
+;;; Gets a human readable description of an installed application.
 ;;;
 ;;; appinfo :
 ;;;     a GAppInfo.

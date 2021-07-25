@@ -414,7 +414,7 @@
   @argument[action-name]{a @code{:string} with the action name}
   @argument[target-value]{a @type{g-variant} target value, or @code{nil} for
     no target}
-  @return{@arg{True} if successul, else @arg{false}.}
+  @return{@em{True} if successul, else @em{false}.}
   @begin{short}
     Parses a detailed action name into its separate name and target components.
   @end{short}

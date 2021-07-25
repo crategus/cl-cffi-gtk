@@ -549,7 +549,7 @@
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance.}
         @entry[options]{The options dictionary of type @type{g-variant-dict}.}
-        @entry[Returns]{@arg{True} if the signal has been handled.}
+        @entry[Returns]{@em{True} if the signal has been handled.}
       @end{table}
     @subheading{The \"open\" signal}
       @begin{pre}
@@ -626,7 +626,7 @@
   there is @class{g-action-map} for that.
   @begin[Warning]{dictionary}
     The function @sym{g-application-action-group} has been deprecated since
-    version 2.32 and should not be used in newly-written code. Use the
+    version 2.32 and should not be used in newly written code. Use the
     @class{g-action-map} interface instead. Never ever mix use of this API with
     use of @class{g-action-map} on the same application or things will go very
     badly wrong. This function is known to introduce buggy behaviour, i.e.
@@ -757,7 +757,7 @@
  "@version{2020-2-1}
   @syntax[]{(g-application-is-busy object) => is-busy}
   @argument[object]{a @class{g-application} object}
-  @return{@arg{True} if the application is currenty marked as busy.}
+  @return{@em{True} if the application is currenty marked as busy.}
   @begin{short}
     Accessor of the @slot[g-application]{is-busy} slot of the
     @class{g-application} class.
@@ -785,7 +785,7 @@
  "@version{2020-2-2}
   @syntax[]{(g-application-is-registered object) => is-registered}
   @argument[object]{a @class{g-application} object}
-  @return{@arg{True} if the application is registered.}
+  @return{@em{True} if the application is registered.}
   @begin{short}
     Accessor of the @slot[g-application]{is-registered} slot of the
     @class{g-application} class.
@@ -811,7 +811,7 @@
  "@version{2020-2-2}
   @syntax[]{(g-application-is-remote object) => is-remote}
   @argument[object]{a @class{g-application} object}
-  @return{@arg{True} if the application is remote.}
+  @return{@em{True} if the application is remote.}
   @begin{short}
     Accessor of the @slot[g-application]{is-remote} slot of the
     @class{g-application} class.
@@ -1042,14 +1042,14 @@
   ensure that any object paths that you wish to register are registered before
   calling this function.
 
-  If the application has already been registered then @arg{true} is returned
+  If the application has already been registered then @em{true} is returned
   with no work performed.
 
   The \"startup\" signal is emitted if registration succeeds and application is
   the primary instance.
 
   In the event of an error, such as @arg{cancellable} being cancelled, or a
-  failure to connect to the session bus, @arg{false} is returned and error is
+  failure to connect to the session bus, @em{false} is returned and error is
   set appropriately.
 
   Note: The return value of this function is not an indicator that this
