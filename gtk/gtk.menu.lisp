@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.menu.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -139,9 +139,10 @@
   (:end 2))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-arrow-placement atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-arrow-placement atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-arrow-placement atdoc:*external-symbols*)
- "@version{2020-5-18}
+ "@version{2021-7-17}
   @begin{short}
     Used to specify the placement of scroll arrows in scrolling menus.
   @end{short}
@@ -216,61 +217,57 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu 'type)
- "@version{2020-5-18}
+ "@version{2021-7-17}
   @begin{short}
-    A @sym{gtk-menu} is a @class{gtk-menu-shell} that implements a drop down
-    menu consisting of a list of @class{gtk-menu-item} widgets which can be
-    navigated and activated by the user to perform application functions.
+    A @sym{gtk-menu} widget is a @class{gtk-menu-shell} widget that implements
+    a drop down menu consisting of a list of @class{gtk-menu-item} widgets
+    which can be navigated and activated by the user to perform application
+    functions.
   @end{short}
 
-  A @sym{gtk-menu} is most commonly dropped down by activating a
-  @class{gtk-menu-item} in a @class{gtk-menu-bar} or popped up by activating
-  a @class{gtk-menu-item} in another @sym{gtk-menu}.
+  A @sym{gtk-menu} widget is most commonly dropped down by activating a
+  @class{gtk-menu-item} widget in a @class{gtk-menu-bar} widget or popped up by
+  activating a @class{gtk-menu-item} widget in another @sym{gtk-menu} widget.
 
-  A @sym{gtk-menu} can also be popped up by activating a @class{gtk-combo-box}
-  widget. Other composite widgets such as the @class{gtk-notebook} can pop up
-  a @sym{gtk-menu} as well.
+  A @sym{gtk-menu} widget can also be popped up by activating a
+  @class{gtk-combo-box} widget. Other composite widgets such as the
+  @class{gtk-notebook} widget can pop up a @sym{gtk-menu} widget as well.
 
-  Applications can display a @sym{gtk-menu} as a popup menu by calling the
-  function @fun{gtk-menu-popup}. The example below shows how an application
-  can pop up a menu when the 3rd mouse button is pressed.
+  Applications can display a @sym{gtk-menu} widget as a popup menu by calling
+  the function @fun{gtk-menu-popup}. The example below shows how an application
+  can pop up a menu when a mouse button is pressed.
   @begin[Example]{dictionary}
-    Connecting the popup signal handler
+    Example with a signal handler which displays a popup menu.
     @begin{pre}
-/* connect our handler which will popup the menu */
-g_signal_connect_swapped (window, \"button_press_event\",
-G_CALLBACK (my_popup_handler), menu);
-    @end{pre}
-    Signal handler which displays a popup menu.
-    @begin{pre}
-static gint
-my_popup_handler (GtkWidget *widget, GdkEvent *event)
-{
-  GtkMenu *menu;
-  GdkEventButton *event_button;
-
-  g_return_val_if_fail (widget != NULL, FALSE);
-  g_return_val_if_fail (GTK_IS_MENU (widget), FALSE);
-  g_return_val_if_fail (event != NULL, FALSE);
-
-  /* The \"widget\" is the menu that was supplied when
-   * g_signal_connect_swapped() was called.
-   */
-  menu = GTK_MENU (widget);
-
-  if (event->type == GDK_BUTTON_PRESS)
-    {
-      event_button = (GdkEventButton *) event;
-      if (event_button->button == GDK_BUTTON_SECONDARY)
-        {
-          gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
-                          event_button->button, event_button->time);
-          return TRUE;
-        @}
-    @}
-GtkScrollType
-  return FALSE;
-@}
+(defun example-menu-popup ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :default-width 300
+                                 :default-height 180
+                                 :title \"Example Popup Menu\"))
+          (button (gtk-button-new-with-label \"Click me\")))
+      ;; Create pop-up menu for button
+      (let ((popupmenu (gtk-menu-new))
+            (bigitem (gtk-menu-item-new-with-label \"Larger\"))
+            (smallitem (gtk-menu-item-new-with-label \"Smaller\")))
+        (gtk-menu-shell-append popupmenu bigitem)
+        (gtk-menu-shell-append popupmenu smallitem)
+        (gtk-widget-show-all popupmenu)
+        ;; Signal handler to pop up the menu
+        (g-signal-connect button \"button-press-event\"
+           (lambda (widget event)
+             (declare (ignore widget))
+             (gtk-menu-popup popupmenu
+                             :button (gdk-event-button-button event)
+                             :activate-time (gdk-event-button-time event))
+             t)))
+      (g-signal-connect window \"destroy\"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window button)
+      (gtk-widget-show-all window))))
     @end{pre}
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
@@ -282,9 +279,9 @@ menu
 ├── <child>
 ╰── arrow.bottom
     @end{pre}
-    The main CSS node of @sym{gtk-menu} has name @code{menu}, and there are two
-    subnodes with name @code{arrow}, for scrolling menu arrows. These subnodes
-    get the @code{.top} and @code{.bottom} style classes.
+    The main CSS node of the @sym{gtk-menu} widget has name @code{menu}, and
+    there are two subnodes with name @code{arrow}, for scrolling menu arrows.
+    These subnodes get the @code{.top} and @code{.bottom} style classes.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
@@ -325,7 +322,7 @@ menu
         @symbol{gtk-arrow-placement} (Read) @br{}
         Indicates where scroll arrows should be placed. @br{}
         @em{Warning:} The @code{arrow-placement} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. The value of this style property is ignored. @br{}
         Default value: @code{:boths}
       @end{entry}
@@ -334,7 +331,7 @@ menu
         (Read) @br{}
         Arbitrary constant to scale down the size of the scroll arrow. @br{}
         @em{Warning:} The @code{arrow-scaling} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use the standard min-width/min-height CSS properties on the arrow
         node. The value of this style property is ignored. @br{}
         Allowed values: [0,1] @br{}
@@ -345,7 +342,7 @@ menu
         (Read) @br{}
         When scrolling, always show both arrows. @br{}
         @em{Warning:} The @code{double-arrows} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. The value of this style property is ignored. @br{}
         Default value: @em{true}
       @end{entry}
@@ -361,7 +358,7 @@ menu
         (Read) @br{}
         Extra space at the left and right edges of the menu. @br{}
         @em{Warning:} The @code{horizontal-padding} style property has been
-        deprecated since version 3.8 and should not be used in newly-written
+        deprecated since version 3.8 and should not be used in newly written
         code. Use the standard padding CSS property, through objects like
         @class{gtk-style-context} and @class{gtk-css-provider}. The value of
         this style property is ignored. @br{}
@@ -380,7 +377,7 @@ menu
         (Read) @br{}
         Extra space at the top and bottom of the menu. @br{}
         @em{Warning:} The @code{vertical-padding} style property has been
-        deprecated since version 3.8 and should not be used in newly-written
+        deprecated since version 3.8 and should not be used in newly written
         code. Use the standard padding CSS property, through objects like
         @class{gtk-style-context} and @class{gtk-css-provider}. The value of
         this style property is ignored. @br{}
@@ -392,33 +389,33 @@ menu
   @begin[Signal Details]{dictionary}
     @subheading{The \"move-scroll\" signal}
       @begin{pre}
- lambda (menu scroll-type)    : Action
+ lambda (menu scrolltype)    :action
       @end{pre}
       @begin[code]{table}
-        @entry[menu]{A @class{gtk-menu} widget.}
-        @entry[scroll-type]{A @symbol{gtk-scroll-type}.}
+        @entry[menu]{A @sym{gtk-menu} widget.}
+        @entry[scrolltype]{A value of the @symbol{gtk-scroll-type} enumeration.}
       @end{table}
     @subheading{The \"popped-up\" signal}
       @begin{pre}
- lambda (menu flipped-rect final-rect flipped-x flipped-y)    : Run First
+ lambda (menu flippedrect finalrect flippedx flippedy)    :run-first
       @end{pre}
       Emitted when the position of the menu is finalized after being popped up
       using the functions @fun{gtk-menu-popup-at-rect},
       @fun{gtk-menu-popup-at-widget}, or @fun{gtk-menu-popup-at-pointer}.
 
       The menu might be flipped over the anchor rectangle in order to keep it
-      on-screen, in which case @arg{flipped-x} and @arg{flipped-y} will be set
-      to @em{true} accordingly.
+      on-screen, in which case the arguments @arg{flippedx} and @arg{flippedy}
+      will be set to @em{true} accordingly.
 
-      @arg{flipped-rect} is the ideal position of the menu after any possible
-      flipping, but before any possible sliding. @arg{final-rect} is
-      @arg{flipped-rect}, but possibly translated in the case that flipping is
-      still ineffective in keeping menu on-screen.
+      The argument @arg{flippedrect} is the ideal position of the menu after
+      any possible flipping, but before any possible sliding. The argument
+      @arg{finalrect} is @arg{flippedrect}, but possibly translated in the case
+      that flipping is still ineffective in keeping menu on-screen.
 
       @image[popup-slide]{}
 
       The blue menu is the ideal position of the menu, the green menu is
-      @arg{flipped-rect}, and the red menu is @arg{final-rect}.
+      @arg{flippedrect}, and the red menu is @arg{finalrect}.
 
       See the functions @fun{gtk-menu-popup-at-rect},
       @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, and the
@@ -427,13 +424,13 @@ menu
 
       Since 3.22
       @begin[code]{table}
-        @entry[menu]{A @class{gtk-menu} widget that popped up.}
-        @entry[flipped-rect]{The position of @arg{menu} after any possible
+        @entry[menu]{A @sym{gtk-menu} widget that popped up.}
+        @entry[flippedrect]{The position of @arg{menu} after any possible
           flipping or @code{nil} if the backend can not obtain it.}
-        @entry[final-rect]{The final position of @arg{menu} or @code{nil} if
+        @entry[finalrect]{The final position of @arg{menu} or @code{nil} if
           the backend can not obtain it.}
-        @entry[flipped-x]{@em{True} if the anchors were flipped horizontally.}
-        @entry[flipped-y]{@em{True} if the anchors were flipped vertically.}
+        @entry[flippedx]{@em{True} if the anchors were flipped horizontally.}
+        @entry[flippedy]{@em{True} if the anchors were flipped vertically.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-menu-accel-group}
@@ -447,7 +444,8 @@ menu
   @see-slot{gtk-menu-rect-anchor-dy}
   @see-slot{gtk-menu-reserve-toggle-size}
   @see-slot{gtk-menu-tearoff-state}
-  @see-slot{gtk-menu-tearoff-title}")
+  @see-slot{gtk-menu-tearoff-title}
+  @see-class{gtk-menu-shell}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -457,20 +455,19 @@ menu
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-group" 'gtk-menu) 't)
- "The @code{accel-group} property of type @class{gtk-accel-group}
-  (Read / Write) @br{}
+ "The @code{accel-group} property of type @class{gtk-accel-group} (Read / Write)
+  @br{}
   The accel group holding accelerators for the menu.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-accel-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-accel-group 'function)
- "@version{2020-5-18}
-  @syntax[]{(gtk-menu-accel-group object) => accel-group}
-  @syntax[]{(setf (gtk-menu-accel-group object) accel-group)}
+ "@version{2021-7-17}
+  @syntax[]{(gtk-menu-accel-group object) => group}
+  @syntax[]{(setf (gtk-menu-accel-group object) group)}
   @argument[object]{a @class{gtk-menu} widget}
-  @argument[accel-group]{the @class{gtk-accel-group} to be associated with the
-    menu}
+  @argument[group]{the @class{gtk-accel-group} to be associated with the menu}
   @begin{short}
     Accessor of the @slot[gtk-menu]{accel-group} slot of the @class{gtk-menu}
     class.
@@ -478,13 +475,13 @@ menu
 
   The slot access function @sym{gtk-menu-accel-group} gets the accel group
   which holds global accelerators for the menu. The slot access function
-  @sym{(setf gtk-menu-accel-group)} sets the accel group which holds global
-  accelerators for the menu.
+  @sym{(setf gtk-menu-accel-group)} sets the accel group.
 
   This accelerator group needs to also be added to all windows that this menu
   is being used in with the function @fun{gtk-window-add-accel-group}, in order
   for those windows to support all the accelerators contained in this group.
   @see-class{gtk-menu}
+  @see-class{gtk-accel-group}
   @see-function{gtk-window-add-accel-group}")
 
 ;;; --- gtk-menu-accel-path ----------------------------------------------------
@@ -499,21 +496,20 @@ menu
 (setf (gethash 'gtk-menu-accel-path atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-accel-path 'function)
- "@version{2020-5-18}
-  @syntax[]{(gtk-menu-accel-path object) => accel-path}
-  @syntax[]{(setf (gtk-menu-accel-path object) accel-path)}
+ "@version{2021-7-17}
+  @syntax[]{(gtk-menu-accel-path object) => path}
+  @syntax[]{(setf (gtk-menu-accel-path object) path)}
   @argument[object]{a @class{gtk-menu} widget}
-  @argument[accel-path]{a string with a valid accelerator path}
+  @argument[path]{a string with a valid accelerator path}
   @begin{short}
     Accessor of the @slot[gtk-menu]{accel-path} slot of the @class{gtk-menu}
     class.
   @end{short}
 
   The slot access function @sym{gtk-menu-accel-path} retrieves the accelerator
-  path set on the menu. The slot access function
-  @sym{(setf gtk-menu-accel-path)} sets an accelerator path for this menu from
-  which accelerator paths for its immediate children, its menu items, can be
-  constructed.
+  path for this menu from which accelerator paths for its immediate children,
+  its menu items, can be constructed. The slot access function
+  @sym{(setf gtk-menu-accel-path)} sets an accelerator path.
 
   The main purpose of this function is to spare the programmer the inconvenience
   of having to call the function @fun{gtk-menu-item-accel-path} on each menu
@@ -549,7 +545,7 @@ menu
 (setf (gethash 'gtk-menu-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-active 'function)
- "@version{2020-5-18}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-active object) => active}
   @syntax[]{(setf (gtk-menu-active object) active)}
   @argument[object]{a @class{gtk-menu} widget}
@@ -559,13 +555,11 @@ menu
     Accessor of the @slot[gtk-menu]{active} slot of the @class{gtk-menu} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-active} returns the selected menu item
-  from the menu. The slot access function @sym{(setf gtk-menu-active)} selects
-  the specified menu item within the menu. This is used by the
-  @class{gtk-combo-box} and should not be used by anyone else.
-
-  The index of the currently selected menu item, or -1 if no menu item is
-  selected.
+  The slot access function @sym{gtk-menu-active} returns the currently selected
+  menu item from the menu, or -1 if no menu item is selected. The slot access
+  function @sym{(setf gtk-menu-active)} selects the specified menu item. This
+  is used by the @class{gtk-combo-box} widget and should not be used by anyone
+  else.
   @see-class{gtk-menu}
   @see-class{gtk-combo-box}")
 
@@ -577,49 +571,53 @@ menu
   (Read / Write / Construct) @br{}
   Positioning hints for aligning the menu relative to a rectangle. These hints
   determine how the menu should be positioned in the case that the menu would
-  fall off-screen if placed in its ideal position. For example, @code{:flip-y}
-  will replace @code{:north-west} with @code{:south-west} and vice versa if the
-  menu extends beyond the bottom edge of the monitor. See the functions
-  @fun{gtk-menu-popup-at-rect}, @fun{gtk-menu-popup-at-widget},
-  @fun{gtk-menu-popup-at-pointer}, and the properties @code{rect-anchor-dx},
-  @code{rect-anchor-dy}, @code{menu-type-hint}, and @code{popped-up}.
-  Since 3.22 @br{}
-  Default value: @code{:flib-x} | @code{:flip-y} | @code{:slide-x} |
-                 @code{:slide-y} | @code{:resize-x} | @code{:resize-y}")
+  fall off-screen if placed in its ideal position. Since 3.22 @br{}
+  Default value: @code{'(:flip-x :flip-y :slide-x :slide-y :resize-x
+                         :resize-y)}")
 
 #+(and gtk-3-22 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-menu-anchor-hints atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-anchor-hints 'function)
- "@version{2020-5-18}
-  @syntax[]{(gtk-menu-anchor-hints object) => index}
-  @syntax[]{(setf (gtk-menu-anchor-hints object) index)}
+ "@version{2021-7-17}
+  @syntax[]{(gtk-menu-anchor-hints object) => hints}
+  @syntax[]{(setf (gtk-menu-anchor-hints object) hints)}
   @argument[object]{a @class{gtk-menu} widget}
-  @argument[index]{the index of the @arg{menu} item to select, index values
-    are from 0 to n-1}
+  @argument[hints]{a value of the @symbol{gdk-anchor-hints} flags}
   @begin{short}
-    Accessor of the @slot[gtk-menu]{anchor-hints} slot of the
-    @class{gtk-menu} class.
+    Accessor of the @slot[gtk-menu]{anchor-hints} slot of the @class{gtk-menu}
+    class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-anchor-hints} returns the selected
-  menu item from the menu. The slot access function
-  @sym{(setf gtk-menu-anchor-hints)} selects the specified menu item within
-  the menu.
+  Positioning hints for aligning the menu relative to a rectangle. These hints
+  determine how the menu should be positioned in the case that the menu would
+  fall off-screen if placed in its ideal position.
 
-  This is used by the @class{gtk-combo-box} widget and should not be used by
-  anyone else.
+  @image[popup-flip]{}
+
+  For example, @code{:flip-y} will replace @code{:north-west} with
+  @code{:south-west} and vice versa if the menu extends beyond the bottom edge
+  of the monitor. See the functions @fun{gtk-menu-popup-at-rect},
+  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, the
+  properties @slot[gtk-menu]{rect-anchor-dx}, @slot[gtk-menu]{rect-anchor-dy},
+  @slot[gtk-menu]{menu-type-hint}, and the \"popped-up\" signal.
 
   Since 3.22
   @see-class{gtk-menu}
-  @see-class{gtk-combo-box}")
+  @see-symbol{gdk-anchor-hints}
+  @see-function{gtk-menu-popup-at-rect}
+  @see-function{gtk-menu-popup-at-widget}
+  @see-function{gtk-menu-popup-at-pointer}
+  @see-function{gtk-menu-rect-anchor-dx}
+  @see-function{gtk-menu-rect-anchor-dy}
+  @see-function{gtk-menu-menu-type-hint}")
 
 ;;; --- gtk-menu-attach-widget -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "attach-widget" 'gtk-menu) 't)
- "The @code{attach-widget} property of type @class{gtk-widget}
-  (Read / Write) @br{}
+ "The @code{attach-widget} property of type @class{gtk-widget} (Read / Write)
+  @br{}
   The widget the menu is attached to. Setting this property attaches the menu
   without a @code{GtkMenuDetachFunc}. If you need to use a detacher, use the
   function @fun{gtk-menu-attach-to-widget} directly.")
@@ -628,11 +626,11 @@ menu
 (setf (gethash 'gtk-menu-attach-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-attach-widget 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-attach-widget object) => widget}
   @syntax[]{(setf (gtk-menu-attach-widget object) widget)}
   @argument[object]{a @class{gtk-menu} widget}
-  @argument[widget]{a @class{gtk-widget} widget}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Accessor of the @slot[gtk-menu]{attach-widget} slot of the @class{gtk-menu}
     class.
@@ -640,13 +638,13 @@ menu
 
   The slot access function @sym{gtk-menu-attach-widget} returns the widget that
   the menu is attached to. The slot access function
-  @sym{(setf gtk-menu-attach-widget} sets the widget that the memnu is
-  attached to.
+  @sym{(setf gtk-menu-attach-widget)} sets the widget.
 
   Setting this property attaches the menu without a call of the function
   @code{GtkMenuDetachFunc}. If you need to use a detacher, use the function
   @fun{gtk-menu-attach-to-widget} directly.
   @see-class{gtk-menu}
+  @see-class{gtk-widget}
   @see-function{gtk-menu-attach-to-widget}")
 
 ;;; --- gtk-menu-menu-type-hint ------------------------------------------------
@@ -655,18 +653,15 @@ menu
 (setf (documentation (atdoc:get-slot-from-name "menu-type-hint" 'gtk-menu) 't)
  "The @code{menu-type-hint} property of type @symbol{gdk-window-type-hint}
   (Read / Write / Construct) @br{}
-  The @symbol{gdk-window-type-hint} value to use for the menu's
-  @class{gdk-window} object. See the functions @fun{gtk-menu-popup-at-rect},
-  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, and the
-  properties @code{anchor-hints}, @code{rect-anchor-dx}, @code{rect-anchor-dy},
-  and @code{popped-up}. Since 3.22 @br{}
+  The @symbol{gdk-window-type-hint} value to use for the @class{gdk-window}
+  object of the menu. Since 3.22 @br{}
   Default value: @code{:popup-menu}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-menu-type-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-menu-type-hint 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-menu-type-hint object) => hint}
   @syntax[]{(setf (gtk-menu-menu-type-hint object) hint)}
   @argument[object]{a @class{gtk-menu} widget}
@@ -676,17 +671,22 @@ menu
     class.
   @end{short}
 
-  See the functions @fun{gtk-menu-popup-at-rect},
-  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, and the
+  The @symbol{gdk-window-type-hint} value to use for the @class{gdk-window}
+  object of the menu. See the functions @fun{gtk-menu-popup-at-rect},
+  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, the
   properties @slot[gtk-menu]{anchor-hints}, @slot[gtk-menu]{rect-anchor-dx},
-  @slot[gtk-menu]{rect-anchor-dy}, and @slot[gtk-menu]{popped-up}.
+  @slot[gtk-menu]{rect-anchor-dy}, and the \"popped-up\" signal.
 
   Since 3.22
   @see-class{gtk-menu}
+  @see-class{gdk-window}
   @see-symbol{gdk-window-type-hint}
   @see-function{gtk-menu-popup-at-rect}
   @see-function{gtk-menu-popup-at-widget}
-  @see-function{gtk-menu-popup-at-pointer}")
+  @see-function{gtk-menu-popup-at-pointer}
+  @see-function{gtk-menu-anchor-hints}
+  @see-function{gtk-menu-rect-anchor-dx}
+  @see-function{gtk-menu-rect-anchor-dy}")
 
 ;;; --- gtk-menu-monitor -------------------------------------------------------
 
@@ -701,11 +701,11 @@ menu
 (setf (gethash 'gtk-menu-monitor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-monitor 'function)
- "@version{2020-5-19}
-  @syntax[]{(gtk-menu-monitor object) => monitor-num}
-  @syntax[]{(setf (gtk-menu-monitor object) monitor-num)}
-  @argument[object]{a @code{gtk-menu} widget}
-  @argument[monitor-num]{an integer with the number of the monitor on which
+ "@version{2021-7-17}
+  @syntax[]{(gtk-menu-monitor object) => num}
+  @syntax[]{(setf (gtk-menu-monitor object) num)}
+  @argument[object]{a @class{gtk-menu} widget}
+  @argument[num]{an integer with the number of the monitor on which
     the menu should be popped up}
   @begin{short}
     Accessor of the @slot[gtk-menu]{monitor} slot of the @class{gtk-menu} class.
@@ -713,8 +713,7 @@ menu
 
   The slot access function @sym{gtk-menu-monitor} retrieves the number of
   the monitor on which to show the menu. The slot access function
-  @sym{(setf gtk-menu-monitor)} informs GTK+ on which monitor a menu
-  should be popped up.
+  @sym{(setf gtk-menu-monitor)} sets the monitor.
 
   This function should be called from a @code{GtkMenuPositionFunc} if the menu
   should not appear on the same monitor as the pointer. This information cannot
@@ -730,20 +729,17 @@ menu
  "The @code{rect-anchor-dx} property of type @code{:int}
   (Read / Write / Construct) @br{}
   Horizontal offset to apply to the menu, i.e. the rectangle or widget anchor.
-  See the functions @fun{gtk-menu-popup-at-rect},
-  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, and the
-  properties @code{anchor-hints}, @code{rect-anchor-dy}, @code{menu-type-hint},
-  and @code{popped-up}. Since 3.22 @br{}
+  Since 3.22 @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-rect-anchor-dx atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-rect-anchor-dx 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-rect-anchor-dx object) => anchor}
   @syntax[]{(setf (gtk-menu-rect-anchor-dx object) anchor)}
-  @argument[object]{a @code{gtk-menu} widget}
+  @argument[object]{a @class{gtk-menu} widget}
   @argument[anchor]{an integer with the horizontal offset to apply to the menu}
   @begin{short}
     Accessor of the @slot[gtk-menu]{rect-anchor-dx} slot of the
@@ -751,17 +747,19 @@ menu
   @end{short}
 
   Horizontal offset to apply to the menu, i.e. the rectangle or widget anchor.
-
   See the functions @fun{gtk-menu-popup-at-rect},
-  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, and the
+  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, the
   properties @slot[gtk-menu]{anchor-hints}, @slot[gtk-menu]{rect-anchor-dx},
-  @slot[gtk-menu]{rect-anchor-dy}, and @slot[gtk-menu]{popped-up}.
+  @slot[gtk-menu]{rect-anchor-dy}, and the \"popped-up\" signal.
 
   Since 3.22
   @see-class{gtk-menu}
   @see-function{gtk-menu-popup-at-rect}
   @see-function{gtk-menu-popup-at-widget}
-  @see-function{gtk-menu-popup-at-pointer}")
+  @see-function{gtk-menu-popup-at-pointer}
+  @see-function{gtk-menu-anchor-hints}
+  @see-function{gtk-menu-rect-anchor-dx}
+  @see-function{gtk-menu-rect-anchor-dy}")
 
 ;;; --- gtk-menu-rect-anchor-dy ------------------------------------------------
 
@@ -770,20 +768,17 @@ menu
  "The @code{rect-anchor-dy} property of type @code{:int}
   (Read / Write / Construct) @br{}
   Vertical offset to apply to the menu, i.e. the rectangle or widget anchor.
-  See the functions @fun{gtk-menu-popup-at-rect},
-  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, and the
-  properties @code{anchor-hints}, @code{rect-anchor-dx}, @code{menu-type-hint},
-  and @code{popped-up}. Since 3.22 @br{}
+  Since 3.22 @br{}
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-rect-anchor-dy atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-rect-anchor-dy 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-rect-anchor-dy object) => anchor}
   @syntax[]{(setf (gtk-menu-rect-anchor-dy object) anchor)}
-  @argument[object]{a @code{gtk-menu} widget}
+  @argument[object]{a @class{gtk-menu} widget}
   @argument[anchor]{an integer with the vertical offset to apply to the menu}
   @begin{short}
     Accessor of the @slot[gtk-menu]{rect-anchor-dy} slot of the
@@ -793,23 +788,26 @@ menu
   Vertical offset to apply to the menu, i.e. the rectangle or widget anchor.
 
   See the functions @fun{gtk-menu-popup-at-rect},
-  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, and the
+  @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, the
   properties @slot[gtk-menu]{anchor-hints}, @slot[gtk-menu]{rect-anchor-dx},
-  @slot[gtk-menu]{rect-anchor-dy}, and @slot[gtk-menu]{popped-up}.
+  @slot[gtk-menu]{rect-anchor-dy}, and the \"popped-up\" signal.
 
   Since 3.22
   @see-class{gtk-menu}
   @see-function{gtk-menu-popup-at-rect}
   @see-function{gtk-menu-popup-at-widget}
-  @see-function{gtk-menu-popup-at-pointer}")
+  @see-function{gtk-menu-popup-at-pointer}
+  @see-function{gtk-menu-anchor-hints}
+  @see-function{gtk-menu-rect-anchor-dx}
+  @see-function{gtk-menu-rect-anchor-dy}")
 
 ;;; --- gtk-menu-reserve-toggle-size -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "reserve-toggle-size"
                                                'gtk-menu) 't)
- "The @code{reserve-toggle-size} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{reserve-toggle-size} property of type @code{:boolean} (Read / Write)
+  @br{}
   A boolean that indicates whether the menu reserves space for toggles and
   icons, regardless of their actual presence. This property should only be
   changed from its default value for special-purposes such as tabular menus.
@@ -821,7 +819,7 @@ menu
 (setf (gethash 'gtk-menu-reserve-toggle-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-reserve-toggle-size 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-reserve-toggle-size object) => reserve-toggle-size}
   @syntax[]{(setf (gtk-menu-reserve-toggle-size object) reserve-toggle-size)}
   @argument[object]{a @class{gtk-menu} widget}
@@ -834,8 +832,7 @@ menu
   The slot access function @sym{gtk-menu-reserve-toggle-size} returns whether
   the menu reserves space for toggles and icons, regardless of their actual
   presence. The slot access function @sym{(setf gtk-menu-reserve-toggle-size)}
-  sets whether the menu should reserve space for drawing toggles or icons,
-  regardless of their actual presence.
+  sets whether the menu should reserve space.
 
   This property should only be changed from its default value for
   special-purposes such as tabular menus. Regular menus that are connected to
@@ -849,14 +846,14 @@ menu
  "The @code{tearoff-state} property of type @code{:boolean} (Read / Write) @br{}
   A boolean that indicates whether the menu is torn-off. @br{}
   @em{Warning:} The @code{tearoff-state} property has been deprecated since
-  version 3.10 and should not be used in newly-written code. @br{}
+  version 3.10 and should not be used in newly written code. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-tearoff-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-tearoff-state 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-tearoff-state object) => torn-off}
   @syntax[]{(setf (gtk-menu-tearoff-state object) torn-off)}
   @argument[object]{a @class{gtk-menu} widget}
@@ -875,7 +872,7 @@ menu
   until it is closed or reattached.
   @begin[Warning]{dictionary}
     The function @sym{gtk-menu tearoff-state} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-menu}")
 
@@ -887,14 +884,14 @@ menu
   A title that may be displayed by the window manager when this menu is
   torn-off. @br{}
   @em{Warning:} The @code{tearoff-title} property has been deprecated since
-  version 3.10 and should not be used in newly-written code. @br{}
+  version 3.10 and should not be used in newly written code. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-tearoff-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-tearoff-title 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-tearoff-title object) => title}
   @syntax[]{(setf (gtk-menu-tearoff-title object) title)}
   @argument[object]{a @class{gtk-menu} widget}
@@ -905,16 +902,16 @@ menu
   @end{short}
 
   The slot access function @sym{gtk-menu-tearoff-title} returns the title of
-  the menu. The slot access funcion @sym{(setf gtk-menu-tearoff-title} sets the
-  title string for the menu.
+  the menu. The slot access funcion @sym{(setf gtk-menu-tearoff-title)} sets
+  the title.
 
   The title is displayed when the menu is shown as a tearoff menu. If
   @arg{title} is @code{nil}, the menu will see if it is attached to a parent
-  menu item, and if so it will try to use the same text as that menu item's
-  label.
+  menu item, and if so it will try to use the same text as that menu label of
+  the item.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-menu-title} has been deprecated since version 3.10
-    and should not be used in newly-written code.
+    The function @sym{gtk-menu-tearoff-title} has been deprecated since version
+    3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-menu}")
 
@@ -932,11 +929,11 @@ menu
 (setf (gethash 'gtk-menu-child-bottom-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-child-bottom-attach 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-child-bottom-attach container child) => bottom-attach}
   @syntax[]{(setf (gtk-menu-child-bottom-attach container child) bottom-attach)}
   @argument[container]{a @class{gtk-menu} widget}
-  @argument[child]{a @class{gtk-widget} child}
+  @argument[child]{a @class{gtk-widget} child widget}
   @argument[bottom-attach]{an integer with the row number}
   @begin{short}
     Accessor of the @code{bottom-attach} child property of the
@@ -944,7 +941,8 @@ menu
   @end{short}
 
   The row number to attach the bottom of the child to.
-  @see-class{gtk-menu}")
+  @see-class{gtk-menu}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-menu-child-left-attach ---------------------------------------------
 
@@ -956,11 +954,11 @@ menu
 (setf (gethash 'gtk-menu-child-left-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-child-left-attach 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-child-left-attach container child) => left-attach}
   @syntax[]{(setf (gtk-menu-child-left-attach container child) left-attach)}
   @argument[container]{a @class{gtk-menu} widget}
-  @argument[child]{a @class{gtk-widget} child}
+  @argument[child]{a @class{gtk-widget} child widget}
   @argument[left-attach]{an integer with the column number}
   @begin{short}
     Accessor of the @code{left-attach} child property of the @class{gtk-menu}
@@ -968,7 +966,8 @@ menu
   @end{short}
 
   The column number to attach the left side of the child to.
-  @see-class{gtk-menu}")
+  @see-class{gtk-menu}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-menu-child-right-attach --------------------------------------------
 
@@ -980,11 +979,11 @@ menu
 (setf (gethash 'gtk-menu-child-right-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-child-right-attach 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-child-right-attach container child) => right-attach}
   @syntax[]{(setf (gtk-menu-child-right-attach container child) right-attach)}
   @argument[container]{a @class{gtk-menu} widget}
-  @argument[child]{a @class{gtk-widget} child}
+  @argument[child]{a @class{gtk-widget} child widget}
   @argument[right-attach]{an integer with the column number}
   @begin{short}
     Accessor of the @code{right-attach} child property of the @class{gtk-menu}
@@ -992,7 +991,8 @@ menu
   @end{short}
 
   The column number to attach the right side of the child to.
-  @see-class{gtk-menu}")
+  @see-class{gtk-menu}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-menu-child-top-attach ----------------------------------------------
 
@@ -1004,11 +1004,11 @@ menu
 (setf (gethash 'gtk-menu-child-top-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-child-top-attach 'function)
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @syntax[]{(gtk-menu-child-top-attach container child) => top-attach}
   @syntax[]{(setf (gtk-menu-child-top-attach container child) top-attach)}
   @argument[container]{a @class{gtk-menu} widget}
-  @argument[child]{a @class{gtk-widget} child}
+  @argument[child]{a @class{gtk-widget} child widget}
   @argument[top-attach]{an integer with the row number}
   @begin{short}
     Accessor of the @code{top-attach} child property of the @class{gtk-menu}
@@ -1016,7 +1016,8 @@ menu
   @end{short}
 
   The row number to attach the top of the child to.
-  @see-class{gtk-menu}")
+  @see-class{gtk-menu}
+  @see-class{gtk-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_new ()
@@ -1026,7 +1027,7 @@ menu
 
 (defun gtk-menu-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @return{A new @class{gtk-menu} widget.}
   @short{Creates a new menu.}
   @see-class{gtk-menu}"
@@ -1041,7 +1042,7 @@ menu
 (defcfun ("gtk_menu_new_from_model" gtk-menu-new-from-model)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-19}
+ "@version{2021-7-17}
   @argument[model]{a @class{g-menu-model} object}
   @return{A new @class{gtk-menu} widget.}
   @begin{short}
@@ -1050,8 +1051,8 @@ menu
   @end{short}
 
   The created menu items are connected to actions found in the
-  @class{gtk-application-window} to which the menu belongs - typically by means
-  of being attached to a widget, see the function
+  @class{gtk-application-window} widget to which the menu belongs - typically
+  by means of being attached to a widget, see the function
   @fun{gtk-menu-attach-to-widget}, that is contained within the
   @class{gtk-application-window} widgets hierarchy.
   @see-class{gtk-menu}
@@ -1302,7 +1303,7 @@ menu
 ;;; push_in :
 ;;;     This parameter controls how menus placed outside the monitor are
 ;;;     handled. If this is set to TRUE and part of the menu is outside the
-;;;     monitor then GTK+ pushes the window into the visible area, effectively
+;;;     monitor then GTK pushes the window into the visible area, effectively
 ;;;     modifying the popup position. Note that moving and possibly resizing the
 ;;;     menu around will alter the scroll position to keep the menu items "in
 ;;;     place", i.e. at the same monitor position they would have been without
@@ -1385,7 +1386,7 @@ menu
   available, the function @fun{gtk-current-event-time} can be used instead.
   @begin[Warning]{dictionary}
     The function @sym{gtk-menu-popup-for-device} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Please use the
+    version 3.22 and should not be used in newly written code. Please use the
     functions @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer},
     or @fun{gtk-menu-popup-at-rect} instead.
   @end{dictionary}
@@ -1456,7 +1457,7 @@ menu
   available, the function @fun{gtk-current-event-time} can be used instead.
   @begin[Warning]{dictionary}
     The function @sym{gtk-menu-popup} has been deprecated since version 3.22
-    and should not be used in newly-written code. Please use the functions
+    and should not be used in newly written code. Please use the functions
     @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, or
     @fun{gtk-menu-popup-at-rect} instead.
   @end{dictionary}
