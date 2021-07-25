@@ -364,7 +364,7 @@
   @image[layout]{Figure. Adjustable parameters (on the left) and font metrics
     (on the right) for a Pango layout}
 
-  The @sym{pango-layout} class is opaque, and has no user-visible fields.
+  The @sym{pango-layout} class is opaque, and has no user visible fields.
   @see-class{pango-context}")
 
 ;;; ----------------------------------------------------------------------------
@@ -384,7 +384,7 @@
     extents of a @class{pango-layout} object.
   @end{short}
 
-  The @sym{pango-layout-iter} structure is opaque, and has no user-visible
+  The @sym{pango-layout-iter} structure is opaque, and has no user visible
   fields.
   @begin{pre}
 (define-g-boxed-opaque pango-layout-iter \"PangoLayoutIter\"
