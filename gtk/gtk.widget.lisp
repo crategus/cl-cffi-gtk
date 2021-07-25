@@ -8368,14 +8368,14 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_reset_style" gtk-widget-reset-style) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-2-29}
+ "@version{2021-7-25}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Updates the style context of the widget and all descendents by updating its
     widget path.
   @end{short}
-  GtkContainers may want to use this on a child when reordering it in a way that
-  a different style might apply to it. See also the function
+  Containers may want to use this on a child widget when reordering it in a way
+  that a different style might apply to it. See also the function
   @fun{gtk-container-path-for-child}.
   @see-class{gtk-widget}
   @see-class{gtk-widget-path}
