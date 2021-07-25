@@ -1,9 +1,11 @@
-;;;; Application window
+;;;; Example Application Window (2021-7-24)
 ;;;;
-;;;; Demonstrates a typical application window with menubar, toolbar, statusbar.
-;;;; This example uses GtkUIManager and GtkActionGroup.
+;;;; Demonstrates a window with a menubar, a toolbar, and a statusbar.
+;;;;
+;;;; This example uses the deprecated GtkUIManager, GtkActionGroup, and
+;;;; GtkAction classes.
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defstruct app
   window
@@ -14,14 +16,14 @@
 
 (defun activate-action (action)
   (let* ((name (gtk-action-name action))
-         (type (g-object-type-name action))
+         (gtype (g-object-type-name action))
          (dialog (gtk-message-dialog-new (app-window *app*)
                                          '(:destroy-with-parent)
                                          :info
                                          :close
                                          "You activated action ~S of type ~S."
                                          name
-                                         type)))
+                                         gtype)))
     (cond ((string= name "DarkTheme")
            (let ((value (gtk-toggle-action-active action))
                  (settings (gtk-settings-default)))
@@ -40,7 +42,7 @@
 (defun activate-radio-action (action current)
   (declare (ignore action))
   (let ((name (gtk-action-name current))
-        (type (g-object-type-name current))
+        (gtype (g-object-type-name current))
         (active (gtk-toggle-action-active current))
         (value (gtk-radio-action-current-value current)))
     (when active
@@ -48,7 +50,7 @@
             (format nil
                     "You activated radio action ~S of type ~S.~% ~
                      Current value ~D."
-                    name type value))
+                    name gtype value))
       (setf (gtk-info-bar-message-type (app-infobar *app*)) value)
       (gtk-widget-show (app-infobar *app*)))))
 
@@ -64,7 +66,8 @@
                          :license-type :lgpl-2-1
                          :website "http://www.gtk.org"
                          :comments "Program to demonstrate GTK+ Lisp functions."
-                         :logo (gdk-pixbuf-new-from-file (rel-path "gtk-logo-old.png"))
+                         :logo
+                         (gdk-pixbuf-new-from-file (sys-path "gtk-logo-old.png"))
                          :title "About GTK+ Lisp Code Demos"))
 
 (defvar *entries*
@@ -198,16 +201,16 @@
 
 (defun register-stock-icons ()
   (let* ((factory (make-instance 'gtk-icon-factory))
-         (pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-old.png")))
+         (pixbuf (gdk-pixbuf-new-from-file (sys-path "gtk-logo-old.png")))
          (icon-set (gtk-icon-set-new-from-pixbuf pixbuf)))
     (gtk-icon-factory-add-default factory)
     (gtk-icon-factory-add factory "demo-gtk-logo" icon-set)))
 
-(defun demo-application-window ()
+(defun example-window-application ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                    :type :toplevel
-                                   :title "Demo Application Window"
+                                   :title "Example Application Window"
                                    :icon-name "document-open"
                                    :default-width 300
                                    :default-height 250))
@@ -262,11 +265,8 @@
                                           *shape-entries*
                                           0
                                           #'activate-radio-action)
-
       (gtk-ui-manager-insert-action-group ui-info action-group 0)
-
-      (gtk-window-add-accel-group window
-        (gtk-ui-manager-accel-group ui-info))
+      (gtk-window-add-accel-group window (gtk-ui-manager-accel-group ui-info))
 
       (let ((ui-id (gtk-ui-manager-add-ui-from-string ui-info *ui-info*)))
         (when (= 0 ui-id)
@@ -304,16 +304,13 @@
       (g-signal-connect buffer "changed"
                                (lambda (buffer)
                                  (update-statusbar buffer statusbar)))
-
       (g-signal-connect buffer "mark-set"
                                (lambda (buffer location mark)
                                  (declare (ignore location mark))
                                  (update-statusbar buffer statusbar)))
-
       (update-statusbar buffer statusbar)
 
       ;; Add the Grid to the window
       (gtk-container-add window table)
       ;; Show the window.
       (gtk-widget-show-all window))))
-
