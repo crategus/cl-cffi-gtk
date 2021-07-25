@@ -6,7 +6,7 @@
 ;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -114,7 +114,8 @@
   (:threadsave 4))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-pixbuf-format-flags atdoc:*symbol-name-alias*) "Bitfield"
+(setf (gethash 'gdk-pixbuf-format-flags atdoc:*symbol-name-alias*)
+      "Bitfield"
       (gethash 'gdk-pixbuf-format-flags atdoc:*external-symbols*)
  #+cl-cffi-gtk-documentation
  "@version{2020-11-22}
@@ -146,7 +147,8 @@
   (relevance :int))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-pixbuf-module-pattern atdoc:*type-name-alias*) "CStruct"
+(setf (gethash 'gdk-pixbuf-module-pattern atdoc:*type-name-alias*)
+      "CStruct"
       (documentation 'gdk-pixbuf-module-pattern 'type)
  #+cl-cffi-gtk-documentation
  "@version{2020-11-22}
@@ -365,9 +367,10 @@ GdkPixbufModulePattern *signature[] = {
 (defcstruct gdk-pixbuf-format)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-pixbuf-format atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'gdk-pixbuf-format atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'gdk-pixbuf-format atdoc:*external-symbols*)
- "@version{2020-11-22}
+ "@version{2021-7-24}
   @begin{short}
     A @sym{gdk-pixbuf-format} structure contains information about the image
     format accepted by a module.
@@ -385,15 +388,23 @@ GdkPixbufModulePattern *signature[] = {
 (defcfun ("gdk_pixbuf_get_formats" gdk-pixbuf-formats)
     (g-slist (:pointer (:struct gdk-pixbuf-format)) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
+ "@version{2021-7-24}
   @begin{return}
-    A list of @symbol{gdk-pixbuf-format} structures describing the supported
+    A list of @symbol{gdk-pixbuf-format} instances describing the supported
     image formats.
   @end{return}
   @begin{short}
     Obtains the available information about the image formats supported by
-    the @class{gdk-pixbuf} class.
+    the @class{gdk-pixbuf} API.
   @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+(mapcar #'gdk-pixbuf-format-name (gdk-pixbuf-formats))
+=> (\"wmf\" \"ani\" \"bmp\" \"gif\" \"icns\" \"ico\" \"jpeg\" \"png\" \"pnm\"
+    \"qtif\" \"svg\" \"tga\" \"tiff\" \"xbm\" \"xpm\")
+    @end{pre}
+  @end{dictionary}
+  @see-class{gdk-pixbuf}
   @see-symbol{gdk-pixbuf-format}")
 
 (export 'gdk-pixbuf-formats)
@@ -430,65 +441,65 @@ GdkPixbufModulePattern *signature[] = {
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_pixbuf_format_get_name () -> gdk-pixbuf-name
+;;; gdk_pixbuf_format_get_name () -> gdk-pixbuf-format-name
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_format_get_name" gdk-pixbuf-format-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
-  @return{A string with the name of the format.}
-  @short{Returns the name of the format.}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
+  @return{A string with the name of the image format.}
+  @short{Returns the name of the image format.}
   @see-symbol{gdk-pixbuf-format}"
   (format (:pointer (:struct gdk-pixbuf-format))))
 
 (export 'gdk-pixbuf-format-name)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_pixbuf_format_get_description () -> gdk-pixbuf-description
+;;; gdk_pixbuf_format_get_description () -> gdk-pixbuf-format-description
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_format_get_description" gdk-pixbuf-format-description)
     :string
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
-  @return{A string with a description of the format.}
-  @short{Returns a description of the format.}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
+  @return{A string with a description of the image format.}
+  @short{Returns a description of the image format.}
   @see-symbol{gdk-pixbuf-format}"
   (format (:pointer (:struct gdk-pixbuf-format))))
 
 (export 'gdk-pixbuf-format-description)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_pixbuf_format_get_mime_types () -> gdk-pixbuf-mime-types
+;;; gdk_pixbuf_format_get_mime_types () -> gdk-pixbuf-format-mime-types
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_format_get_mime_types" gdk-pixbuf-format-mime-types)
     g-strv
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
   @return{A list of strings with the MIME types.}
-  @short{Returns the MIME types supported by the format.}
+  @short{Returns the MIME types supported by the image format.}
   @see-symbol{gdk-pixbuf-format}"
   (format (:pointer (:struct gdk-pixbuf-format))))
 
 (export 'gdk-pixbuf-format-mime-types)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_pixbuf_format_get_extensions () -> gdk-pixbuf-extensions
+;;; gdk_pixbuf_format_get_extensions () -> gdk-pixbuf-format-extensions
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_format_get_extensions" gdk-pixbuf-format-extensions)
     g-strv
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
   @return{A list of strings with filename extensions.}
   @begin{short}
     Returns the filename extensions typically used for files in the given
-    format.
+    image format.
   @end{short}
   @see-symbol{gdk-pixbuf-format}"
   (format (:pointer (:struct gdk-pixbuf-format))))
@@ -502,20 +513,21 @@ GdkPixbufModulePattern *signature[] = {
 (defcfun ("gdk_pixbuf_format_is_save_option_supported"
            gdk-pixbuf-format-is-save-option-supported) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
-  @argument[option-key]{a string with the name of an option}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
+  @argument[option]{a string with the name of an option}
   @return{@em{True} if the specified option is supported.}
   @begin{short}
-    Returns @em{true} if the save option specified by @arg{option-key} is
-    supported when saving a pixbuf using the module implementing format.
+    Returns @em{true} if the save option specified by @arg{option} is supported
+    when saving a pixbuf using the module implementing the image format.
   @end{short}
   See the function @fun{gdk-pixbuf-save} for more information about option keys.
 
   Since 2.36
-  @see-symbol{gdk-pixbuf-format}"
+  @see-symbol{gdk-pixbuf-format}
+  @see-function{gdk-pixbuf-save}"
   (format (:pointer (:struct gdk-pixbuf-format)))
-  (option-key :string))
+  (option :string))
 
 (export 'gdk-pixbuf-format-is-save-option-supported)
 
@@ -526,11 +538,11 @@ GdkPixbufModulePattern *signature[] = {
 (defcfun ("gdk_pixbuf_format_is_writable" gdk-pixbuf-format-is-writable)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
-  @return{A boolean whether pixbufs can be saved in the given format.}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
+  @return{A boolean whether pixbufs can be saved in the given image format.}
   @begin{short}
-    Returns whether pixbufs can be saved in the given format.
+    Returns whether pixbufs can be saved in the given image format.
   @end{short}
   @see-symbol{gdk-pixbuf-format}"
   (format (:pointer (:struct gdk-pixbuf-format))))
@@ -544,8 +556,8 @@ GdkPixbufModulePattern *signature[] = {
 (defcfun ("gdk_pixbuf_format_is_scalable" gdk-pixbuf-format-is-scalable)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
   @return{A boolean whether this image format is scalable.}
   @begin{short}
     Returns whether this image format is scalable.
@@ -565,14 +577,15 @@ GdkPixbufModulePattern *signature[] = {
 (defcfun ("gdk_pixbuf_format_is_disabled" gdk-pixbuf-format-is-disabled)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
   @return{A boolean whether this image format is disabled.}
   @begin{short}
     Returns whether this image format is disabled.
   @end{short}
   See the function @fun{gdk-pixbuf-format-set-disabled}.
-  @see-symbol{gdk-pixbuf-format}"
+  @see-symbol{gdk-pixbuf-format}
+  @see-function{gdk-pixbuf-format-set-disabled}"
   (format (:pointer (:struct gdk-pixbuf-format))))
 
 (export 'gdk-pixbuf-format-is-disabled)
@@ -583,34 +596,37 @@ GdkPixbufModulePattern *signature[] = {
 
 (defcfun ("gdk_pixbuf_format_set_disabled" gdk-pixbuf-format-set-disabled) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
-  @argument[disabled]{@em{true} to disable the given format}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
+  @argument[disabled]{@em{true} to disable the given image format}
   @return{A boolean whether this image format is disabled.}
   @begin{short}
     Disables or enables an image format.
   @end{short}
-  If a format is disabled, the @class{gdk-pixbuf} library will not use the image
-  loader for this format to load images. Applications can use this to avoid
-  using image loaders with an inappropriate license, see the function
-  @fun{gdk-pixbuf-format-license}.
-  @see-symbol{gdk-pixbuf-format}"
+  If the image format is disabled, the @class{gdk-pixbuf} library will not use
+  the image loader for this image format to load images. Applications can use
+  this to avoid using image loaders with an inappropriate license, see the
+  function @fun{gdk-pixbuf-format-license}.
+  @see-class{gdk-pixbuf}
+  @see-symbol{gdk-pixbuf-format}
+  @see-function{gdk-pixbuf-format-license}"
   (format (:pointer (:struct gdk-pixbuf-format)))
   (disabled :boolean))
 
 (export 'gdk-pixbuf-format-set-disabled)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_pixbuf_format_get_license () -> gdk-pixbuf-license
+;;; gdk_pixbuf_format_get_license () -> gdk-pixbuf-format-license
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_format_get_license" gdk-pixbuf-format-license) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[format]{a @symbol{gdk-pixbuf-format} structure}
-  @return{A string describing the license of format.}
+ "@version{2021-7-24}
+  @argument[format]{a @symbol{gdk-pixbuf-format} instance}
+  @return{A string describing the license of the image format.}
   @begin{short}
-    Returns information about the license of the image loader for the format.
+    Returns information about the license of the image loader for the
+    image format.
   @end{short}
   The returned string should be a shorthand for a wellknown license, e.g.
   \"LGPL\", \"GPL\", \"QPL\", \"GPL/QPL\", or \"other\" to indicate some other
