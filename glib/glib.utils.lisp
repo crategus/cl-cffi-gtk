@@ -351,7 +351,7 @@
   @argument[application-name]{a string with the localized name of the
     application}
   @begin{short}
-    Accessor of a human-readable name for the application.
+    Accessor of a human readable name for the application.
   @end{short}
 
   This name should be localized if possible, and is intended for display to the
@@ -1039,7 +1039,7 @@
 ;;; Warning
 ;;;
 ;;; g_basename has been deprecated since version 2.2 and should not be used in
-;;; newly-written code. Use g_path_get_basename() instead, but notice that
+;;; newly written code. Use g_path_get_basename() instead, but notice that
 ;;; g_path_get_basename() allocates new memory for the returned string, unlike
 ;;; this function which returns a pointer into the argument.
 ;;;
@@ -1060,7 +1060,7 @@
 ;;;
 ;;; Warning
 ;;;
-;;; g_dirname is deprecated and should not be used in newly-written code. use
+;;; g_dirname is deprecated and should not be used in newly written code. use
 ;;; g_path_get_dirname() instead
 ;;;
 ;;; Gets the directory components of a file name.
@@ -1401,7 +1401,7 @@
 ;;; Warning
 ;;;
 ;;; g_format_size_for_display has been deprecated since version 2.30 and should
-;;; not be used in newly-written code. This function is broken due to its use
+;;; not be used in newly written code. This function is broken due to its use
 ;;; of SI suffixes to denote IEC units. Use g_format_size() instead.
 ;;;
 ;;; Formats a size (for example the size of a file) into a human readable
@@ -1532,7 +1532,7 @@
 ;;; Warning
 ;;;
 ;;; g_atexit has been deprecated since version 2.32 and should not be used in
-;;; newly-written code. It is best to avoid g_atexit().
+;;; newly written code. It is best to avoid g_atexit().
 ;;;
 ;;; Specifies a function to be called at normal program termination.
 ;;;
@@ -1621,7 +1621,7 @@
 ;;;
 ;;; Warning
 ;;;
-;;; GVoidFunc is deprecated and should not be used in newly-written code.
+;;; GVoidFunc is deprecated and should not be used in newly written code.
 ;;;
 ;;; Declares a type of function which takes no arguments and has no return
 ;;; value. It is used to specify the type function passed to g_atexit().

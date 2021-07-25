@@ -769,7 +769,7 @@
 ;;; Warning
 ;;;
 ;;; g_main_new has been deprecated since version 2.2 and should not be used in
-;;; newly-written code. Use g_main_loop_new() instead
+;;; newly written code. Use g_main_loop_new() instead
 ;;;
 ;;; Creates a new GMainLoop for th default main context.
 ;;;
@@ -789,7 +789,7 @@
 ;;; Warning
 ;;;
 ;;; g_main_destroy has been deprecated since version 2.2 and should not be used
-;;; in newly-written code. Use g_main_loop_unref() instead
+;;; in newly written code. Use g_main_loop_unref() instead
 ;;;
 ;;; Frees the memory allocated for the GMainLoop.
 ;;;
@@ -805,7 +805,7 @@
 ;;; Warning
 ;;;
 ;;; g_main_run has been deprecated since version 2.2 and should not be used in
-;;; newly-written code. Use g_main_loop_run() instead
+;;; newly written code. Use g_main_loop_run() instead
 ;;;
 ;;; Runs a main loop until it stops running.
 ;;;
@@ -821,7 +821,7 @@
 ;;; Warning
 ;;;
 ;;; g_main_quit has been deprecated since version 2.2 and should not be used in
-;;; newly-written code. Use g_main_loop_quit() instead
+;;; newly written code. Use g_main_loop_quit() instead
 ;;;
 ;;; Stops the GMainLoop. If g_main_run() was called to run the GMainLoop, it
 ;;; will now return.
@@ -838,7 +838,7 @@
 ;;; Warning
 ;;;
 ;;; g_main_is_running has been deprecated since version 2.2 and should not be
-;;; used in newly-written code. Use g_main_loop_is_running() instead
+;;; used in newly written code. Use g_main_loop_is_running() instead
 ;;;
 ;;; Checks if the main loop is running.
 ;;;
@@ -953,7 +953,7 @@
 ;;; Warning
 ;;;
 ;;; g_main_iteration has been deprecated since version 2.2 and should not be
-;;; used in newly-written code. Use g_main_context_iteration() instead.
+;;; used in newly written code. Use g_main_context_iteration() instead.
 ;;;
 ;;; Runs a single iteration for the default GMainContext.
 ;;;
@@ -993,7 +993,7 @@
 ;;; Warning
 ;;;
 ;;; g_main_pending has been deprecated since version 2.2 and should not be used
-;;; in newly-written code. Use g_main_context_pending() instead.
+;;; in newly written code. Use g_main_context_pending() instead.
 ;;;
 ;;; Checks if any events are pending for the default GMainContext (i.e. ready
 ;;; to be processed).
@@ -1195,7 +1195,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
 ;;;                      GMutex *mutex);
 ;;;
 ;;; g_main_context_wait has been deprecated since version 2.58 and should not
-;;; be used in newly-written code.
+;;; be used in newly written code.
 ;;;
 ;;; Use g_main_context_is_owner() and separate locking instead.
 ;;;
@@ -1495,7 +1495,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
 ;;; Warning
 ;;;
 ;;; g_main_set_poll_func has been deprecated since version 2.2 and should not be
-;;; used in newly-written code. Use g_main_context_set_poll_func() again
+;;; used in newly written code. Use g_main_context_set_poll_func() again
 ;;;
 ;;; Sets the function to use for the handle polling of file descriptors for the
 ;;; default main context.
@@ -2631,7 +2631,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
   The function @sym{(setf g-source-name)} sets a name for the source. The name
   may be @code{NULL}.
 
-  The source name should describe in a human-readable way what the source
+  The source name should describe in a human readable way what the source
   does. For example, \"X11 event queue\" or \"GTK+ repaint idle handler\" or
   whatever it is.
 
@@ -3043,7 +3043,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
 ;;; g_source_get_current_time (GSource *source, GTimeVal *timeval);
 ;;;
 ;;; g_source_get_current_time has been deprecated since version 2.28 and should
-;;; not be used in newly-written code.
+;;; not be used in newly written code.
 ;;;
 ;;; use g_source_get_time() instead
 ;;;

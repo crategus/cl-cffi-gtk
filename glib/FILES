@@ -10,7 +10,7 @@ GLib Fundamentals
   glib.version.lisp            - Version Information               - Glib 2.68 %
   glib.misc.lisp               - Basic Types                       - Glib 2.68 %
 
-    Standard Macros            - commonly-used macros
+    Standard Macros            - commonly used macros
     Type Conversion Macros     - portably storing integers in pointer variables
     Byte Order Macros          - a portable way to convert byte orders
     Integer Arithmetic         - checked integer arithmetic

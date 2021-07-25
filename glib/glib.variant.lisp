@@ -1444,7 +1444,7 @@ add_to_count (GVariant  *orig,
  #+cl-cffi-gtk-documentation
  "@version{2020-12-1}
   @argument[string]{a string with a D-Bus object path}
-  @return{@arg{True} if @arg{string} is a D-Bus object path.}
+  @return{@em{True} if @arg{string} is a D-Bus object path.}
   @begin{short}
     Determines if a given @arg{string} is a valid D-Bus object path.
   @end{short}

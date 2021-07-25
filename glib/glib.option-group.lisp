@@ -716,7 +716,7 @@ Hilfeoptionen:
 ;;;
 ;;; const gchar * (*GTranslateFunc) (const gchar *str, gpointer data);
 ;;;
-;;; The type of functions which are used to translate user-visible strings, for
+;;; The type of functions which are used to translate user visible strings, for
 ;;; --help output.
 ;;;
 ;;; str :
@@ -756,7 +756,7 @@ Hilfeoptionen:
   @argument[context]{a @type{g-option-context} instance}
   @argument[func]{the @code{GTranslateFunc}, or @code{NULL}}
   @begin{short}
-    Sets the function which is used to translate the contexts user-visible
+    Sets the function which is used to translate the contexts user visible
     strings, for --help output. If @arg{func} is @code{NULL}, strings are not
     translated.
   @end{short}
@@ -793,7 +793,7 @@ Hilfeoptionen:
   @argument[context]{a @type{g-option-context} instance}
   @argument[domain]{a string with the domain to use}
   @begin{short}
-    A convenience function to use @code{gettext()} for translating user-visible
+    A convenience function to use @code{gettext()} for translating user visible
     strings.
   @end{short}
   @see-type{g-option-context}"
@@ -1294,7 +1294,7 @@ Hilfeoptionen:
 ;;; Warning
 ;;;
 ;;; g_option_group_free has been deprecated since version 2.44 and should not
-;;; be used in newly-written code. Use g_option_group_unref() instead.
+;;; be used in newly written code. Use g_option_group_unref() instead.
 ;;;
 ;;; Frees a GOptionGroup. Note that you must not free groups which have been
 ;;; added to a GOptionContext.
@@ -1481,7 +1481,7 @@ Hilfeoptionen:
 ;;;                                         gpointer data,
 ;;;                                         GDestroyNotify destroy_notify);
 ;;;
-;;; Sets the function which is used to translate user-visible strings, for
+;;; Sets the function which is used to translate user visible strings, for
 ;;; --help output. Different groups can use different GTranslateFuncs. If func
 ;;; is NULL, strings are not translated.
 ;;;
@@ -1509,7 +1509,7 @@ Hilfeoptionen:
 ;;; void g_option_group_set_translation_domain (GOptionGroup *group,
 ;;;                                             const gchar *domain);
 ;;;
-;;; A convenience function to use gettext() for translating user-visible
+;;; A convenience function to use gettext() for translating user visible
 ;;; strings.
 ;;;
 ;;; group :

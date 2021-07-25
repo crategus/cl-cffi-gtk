@@ -363,7 +363,7 @@
   @begin{table}
     @entry[:domain]{Error domain, e.g. @code{G_FILE_ERROR}.}
     @entry[:code]{Error code, e.g. @code{G_FILE_ERROR_NOENT}.}
-    @entry[:message]{Human-readable informative error message.}
+    @entry[:message]{Human readable informative error message.}
   @end{table}")
 
 ;(export '%g-error)
