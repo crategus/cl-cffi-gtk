@@ -17,7 +17,7 @@
              (gtk-widget-path-append-type path gtype)))
           (t
            (gtk-widget-path-append-type path +g-type-none+)
-           (gtk-widget-path-iter-set-object-name path -1 name)))
+           (setf (gtk-widget-path-iter-object-name path -1) name)))
     (do* ((mark (if next (elt selector next)) (if next (elt selector next)))
           (selector (if next (subseq selector (1+ next)))
                     (if next (subseq selector (1+ next))))
@@ -28,7 +28,7 @@
       (cond ((eq mark #\.)
              (gtk-widget-path-iter-add-class path -1 name))
             ((eq mark #\#)
-             (gtk-widget-path-iter-set-name path -1 name))
+             (setf (gtk-widget-path-iter-name path -1) name))
             ((eq mark #\:)
              (let ((flags (cdr (assoc name
                                       '(("active" . :active)
@@ -45,11 +45,9 @@
                                         ("checked" . :checked)
                                         ("drop(active)" . :drop-active))
                                        :test #'string=))))
-             (gtk-widget-path-iter-set-state
-                           path
-                           -1
-                           (union (list flags)
-                                  (gtk-widget-path-iter-get-state path -1)))))))
+             (setf (gtk-widget-path-iter-state path -1)
+                   (union (list flags)
+                          (gtk-widget-path-iter-state path -1)))))))
     path))
 
 (defun get-style-context (parent selector)
@@ -62,7 +60,7 @@
     (setf (gtk-style-context-parent context) parent)
     ;; We have to explicitly set the state again here for it to take effect
     (setf (gtk-style-context-state context)
-          (gtk-widget-path-iter-get-state path -1))
+          (gtk-widget-path-iter-state path -1))
     context))
 
 (defun query-size (context width height)
