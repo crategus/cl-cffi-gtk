@@ -5076,12 +5076,12 @@ setup_tree (void)
       @about-function{gtk-widget-path-iter-add-region}
       @about-function{gtk-widget-path-iter-clear-classes}
       @about-function{gtk-widget-path-iter-clear-regions}
-      @about-function{gtk-widget-path-iter-get-name}
-      @about-function{gtk-widget-path-iter-get-object-name}
+      @about-function{gtk-widget-path-iter-name}
+      @about-function{gtk-widget-path-iter-object-name}
       @about-function{gtk-widget-path-iter-object-type}
-      @about-function{gtk-widget-path-iter-get-siblings}
-      @about-function{gtk-widget-path-iter-get-sibling-index}
-      @about-function{gtk-widget-path-iter-get-state}
+      @about-function{gtk-widget-path-iter-siblings}
+      @about-function{gtk-widget-path-iter-sibling-index}
+      @about-function{gtk-widget-path-iter-state}
       @about-function{gtk-widget-path-iter-has-class}
       @about-function{gtk-widget-path-iter-has-name}
       @about-function{gtk-widget-path-iter-has-qclass}
@@ -5092,10 +5092,6 @@ setup_tree (void)
       @about-function{gtk-widget-path-iter-list-regions}
       @about-function{gtk-widget-path-iter-remove-class}
       @about-function{gtk-widget-path-iter-remove-region}
-      @about-function{gtk-widget-path-iter-set-name}
-      @about-function{gtk-widget-path-iter-set-object-name}
-      @about-function{gtk-widget-path-iter-set-object-type}
-      @about-function{gtk-widget-path-iter-set-state}
       @about-function{gtk-widget-path-length}
       @about-function{gtk-widget-path-new}
       @about-function{gtk-widget-path-prepend-type}
