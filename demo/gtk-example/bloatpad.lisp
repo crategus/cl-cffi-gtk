@@ -307,7 +307,7 @@
                  :inactivity-timeout 30000
                  :register-session t))
 
-(defun bloat-pad (&optional (argv nil))
+(defun bloatpad (&optional (argv nil))
   (within-main-loop
     (let (;; Create an instance of the application Bloat Pad
           (bloat-pad (bloat-pad-new)))

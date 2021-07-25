@@ -1,6 +1,6 @@
-;;;; Menu
+;;;; Example Menu (2021-7-25)
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
 (defun example-menu ()
   (within-main-loop
@@ -10,9 +10,9 @@
           nil)
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :default-width 250
-                                 :default-height 200
-                                 :title "Example Menu Widget"))
+                                 :default-width 320
+                                 :default-height 180
+                                 :title "Example Menu"))
           (vbox (make-instance 'gtk-box
                                :orientation :vertical)))
       (g-signal-connect window "destroy"
@@ -39,26 +39,16 @@
         (let ((submenu (make-instance 'gtk-menu
                                       :visible t
                                       :can-focus nil))
-              (item-file-new (make-instance 'gtk-image-menu-item
-                                       :label "gtk-new"
-                                       :use-underline t
-                                       :use-stock t))
-              (item-file-open (make-instance 'gtk-image-menu-item
-                                        :label "gtk-open"
-                                        :use-underline t
-                                        :use-stock t))
-              (item-file-save (make-instance 'gtk-image-menu-item
-                                        :label "gtk-save"
-                                        :user-underline t
-                                        :use-stock t))
-              (item-file-save-as (make-instance 'gtk-image-menu-item
-                                                :label "gtk-save-as"
-                                                :user-underline t
-                                                :use-stock t))
-              (item-file-quit (make-instance 'gtk-image-menu-item
-                                             :label "gtk-quit"
-                                             :user-underline t
-                                             :use-stock t)))
+              (item-file-new (make-instance 'gtk-menu-item
+                                            :label "Neu"))
+              (item-file-open (make-instance 'gtk-menu-item
+                                             :label "Öffnen ..."))
+              (item-file-save (make-instance 'gtk-menu-item
+                                             :label "Speichern"))
+              (item-file-save-as (make-instance 'gtk-menu-item
+                                                :label "Speichern unter ..."))
+              (item-file-quit (make-instance 'gtk-menu-item
+                                             :label "Schließen")))
           ;; Add the items to to the submenu.
           (gtk-menu-shell-append submenu item-file-new)
           (gtk-menu-shell-append submenu item-file-open)
@@ -74,22 +64,14 @@
         (let ((submenu (make-instance 'gtk-menu
                                       :visible t
                                       :can-focus nil))
-              (item-edit-cut (make-instance 'gtk-image-menu-item
-                                            :label "gtk-cut"
-                                            :use-underline t
-                                            :use-stock t))
-              (item-edit-copy (make-instance 'gtk-image-menu-item
-                                             :label "gtk-copy"
-                                             :use-underline t
-                                             :use-stock t))
-              (item-edit-paste (make-instance 'gtk-image-menu-item
-                                              :label "gtk-paste"
-                                              :user-underline t
-                                              :use-stock t))
-              (item-edit-delete (make-instance 'gtk-image-menu-item
-                                               :label "gtk-delete"
-                                               :user-underline t
-                                               :use-stock t)))
+              (item-edit-cut (make-instance 'gtk-menu-item
+                                            :label "Ausschneiden"))
+              (item-edit-copy (make-instance 'gtk-menu-item
+                                             :label "Kopieren"))
+              (item-edit-paste (make-instance 'gtk-menu-item
+                                              :label "Einfügen"))
+              (item-edit-delete (make-instance 'gtk-menu-item
+                                               :label "Löschen")))
           ;; Add the items to to the submenu.
           (gtk-menu-shell-append submenu item-edit-cut)
           (gtk-menu-shell-append submenu item-edit-copy)
@@ -101,10 +83,8 @@
         (let ((submenu (make-instance 'gtk-menu
                                       :visible t
                                       :can-focus nil))
-              (item-help-about (make-instance 'gtk-image-menu-item
-                                              :label "gtk-about"
-                                              :use-underline t
-                                              :use-stock t)))
+              (item-help-about (make-instance 'gtk-menu-item
+                                              :label "Über")))
           ;; Add the items to to the submenu.
           (gtk-menu-shell-append submenu item-help-about)
           ;; Set the submenu of the item help.
