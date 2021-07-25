@@ -22,7 +22,6 @@
                (:file "css-blendmodes")
                (:file "css-pixbufs")
                (:file "grid")
-               (:file "numerable-icon")
                (:file "pixbuf-scale")
                (:file "pixbufs")
                (:file "popover")

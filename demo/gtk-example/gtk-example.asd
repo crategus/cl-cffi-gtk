@@ -71,6 +71,7 @@
                (:file "menu-popup")                    ; Menus and Toolbars
                (:file "message-dialog-new")
                (:file "notebook")                      ; Layout Widgets
+               (:file "numerable-icon")
                (:file "page-setup-dialog")
                (:file "paned-window")                  ; Layout Widgets
                (:file "pointer-device")

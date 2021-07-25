@@ -74,6 +74,7 @@
            #:example-message-dialog-set-markup
            #:example-message-dialog-ui
            #:example-notebook                          ; Layout Widgets
+           #:example-numerable-icon
            #:example-paned-window                      ; Layout Widgets
            #:example-pointer-device
            #:example-print-dialog

@@ -518,12 +518,12 @@
       ("Application Window"
        "../gtk-example/window-application.lisp"
        "EXAMPLE-WINDOW-APPLICATION")
+      ("Numerable Icons"
+       "../gtk-example/numerable-icon.lisp"
+       "EXAMPLE-NUMERABLE-ICON")
       ("Arrow Button"
        "../gtk-example/arrow-button.lisp"
-       "EXAMPLE-ARROW-BUTTON")
-      ("Numerable Icons"
-       "numerable-icon.lisp"
-       "DEMO-NUMERABLE-ICON"))
+       "EXAMPLE-ARROW-BUTTON"))
 ))
 
 (defun mklist (obj)

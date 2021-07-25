@@ -1,3 +1,5 @@
+;;;; Example Numerable Icon (2021-7-25)
+;;;;
 ;;;; This small demo shows how numerable icons are created.
 ;;;;
 ;;;; gtk-numerable-icon is a subclass of g-emblemed-icon that can show a number
@@ -6,17 +8,15 @@
 ;;;;
 ;;;; In this demo only the properties GICON and COUNT are in use to number
 ;;;; the icons in the grid from 1 ... 25. The icon is a stock icon.
-;;;;
-;;;; Last update: 1-2-2014
 
-(in-package #:gtk-demo)
+(in-package :gtk-example)
 
-(defun demo-numerable-icon ()
+(defun example-numerable-icon ()
   (within-main-loop
     (let (;; Create a toplevel window
           (window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "Demo Numerable Icons"
+                                 :title "Example Numerable Icons"
                                  :border-width 12))
           ;; Create a grid for the numerable icons
           (grid (make-instance 'gtk-grid
@@ -34,10 +34,9 @@
                            (gtk-image-new-from-gicon
                              (make-instance 'gtk-numerable-icon
                                             :gicon (g-themed-icon-new "gtk-ok")
-                                            :count (+ (* j 5)(1+ i)))
+                                            :count (+ (* j 5) (1+ i)))
                            :dialog)
                        i j 1 1)))
       ;; Show the window
       (gtk-container-add window grid)
       (gtk-widget-show-all window))))
-
