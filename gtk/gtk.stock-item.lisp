@@ -173,7 +173,7 @@
 ;;; void gtk_stock_add (const GtkStockItem *items, guint n_items);
 ;;;
 ;;; gtk_stock_add has been deprecated since version 3.10 and should not be used
-;;; in newly-written code.
+;;; in newly written code.
 ;;;
 ;;; Registers each of the stock items in items. If an item already exists with
 ;;; the same stock ID as one of the items, the old item gets replaced. The stock
@@ -194,7 +194,7 @@
 ;;; void gtk_stock_add_static (const GtkStockItem *items, guint n_items);
 ;;;
 ;;; gtk_stock_add_static has been deprecated since version 3.10 and should not
-;;; be used in newly-written code.
+;;; be used in newly written code.
 ;;;
 ;;; Same as gtk_stock_add(), but does not copy items, so items must persist
 ;;; until application exit.
@@ -212,7 +212,7 @@
 ;;; GtkStockItem * gtk_stock_item_copy (const GtkStockItem *item);
 ;;;
 ;;; gtk_stock_item_copy has been deprecated since version 3.10 and should not
-;;; be used in newly-written code.
+;;; be used in newly written code.
 ;;;
 ;;; Copies a stock item, mostly useful for language bindings and not in
 ;;; applications.
@@ -230,7 +230,7 @@
 ;;; void gtk_stock_item_free (GtkStockItem *item);
 ;;;
 ;;; gtk_stock_item_free has been deprecated since version 3.10 and should not
-;;; be used in newly-written code.
+;;; be used in newly written code.
 ;;;
 ;;; Frees a stock item allocated on the heap, such as one returned by
 ;;; gtk_stock_item_copy(). Also frees the fields inside the stock item, if they
@@ -241,7 +241,7 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_stock_list_ids ()
+;;; gtk_stock_list_ids ()                                  not exported
 ;;; ----------------------------------------------------------------------------
 
 ;;; TODO: We free the list. What about the strings?
@@ -252,28 +252,26 @@
 (defcfun ("gtk_stock_list_ids" gtk-stock-list-ids)
     (g-slist :string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-1-18}
+ "@version{2021-7-18}
   @return{A list of known stock IDs.}
   @begin{short}
-    Retrieves a list of all known stock IDs added to a @class{gtk-icon-factory}
-    or registered with @fun{gtk-stock-add}.
+    Retrieves a list of strings of all known stock IDs added to a
+    @class{gtk-icon-factory} object or registered with the function
+    @code{gtk_stock_add()}.
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
-  (gtk-stock-list-ids)
+(gtk-stock-list-ids)
 => (\"gtk-zoom-out\" \"gtk-zoom-in\" \"gtk-zoom-fit\" ...)
-  (member \"gtk-cancel\" (gtk-stock-list-ids) :test #'equal)
+(member \"gtk-cancel\" (gtk-stock-list-ids) :test #'equal)
 => (\"gtk-cancel\" \"gtk-bold\" \"gtk-apply\" \"gtk-add\" \"gtk-about\")
     @end{pre}
   @end{dictionary}
   @begin[Warning]{dictionary}
     The function @sym{gtk-stock-list-ids} has been deprecated since version
-    3.10 and should not be used in newly-written code.
+    3.10 and should not be used in newly written code.
   @end{dictionary}
-  @see-class{gtk-icon-factory}
-  @see-function{gtk-stock-add}")
-
-(export 'gtk-stock-list-ids)
+  @see-class{gtk-icon-factory}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_stock_lookup ()
@@ -281,7 +279,7 @@
 ;;; gboolean gtk_stock_lookup (const gchar *stock_id, GtkStockItem *item);
 ;;;
 ;;; gtk_stock_lookupp has been deprecated since version 3.10 and should not
-;;; be used in newly-written code.
+;;; be used in newly written code.
 ;;;
 ;;; Fills item with the registered values for stock_id, returning TRUE if
 ;;; stock_id was known.
@@ -305,7 +303,7 @@
 ;;;                                    GDestroyNotify notify);
 ;;;
 ;;; gtk_stock_set_translate_func has been deprecated since version 3.10 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; Sets a function to be used for translating the label of a stock item.
 ;;;
