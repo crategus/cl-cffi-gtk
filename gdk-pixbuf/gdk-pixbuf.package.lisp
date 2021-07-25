@@ -82,12 +82,12 @@
     This interface can be used by applications in which blocking is acceptable
     while an image is being loaded. It can also be used to load small images in
     general. Applications that need progressive loading can use the
-    @class{gdk-pixbuf-loader} class functionality instead.
+    @class{gdk-pixbuf-loader} API functionality instead.
 
+    @about-function{gdk-pixbuf-file-info}
     @about-function{gdk-pixbuf-new-from-file}
     @about-function{gdk-pixbuf-new-from-file-at-size}
     @about-function{gdk-pixbuf-new-from-file-at-scale}
-    @about-function{gdk-pixbuf-file-info}
     @about-function{gdk-pixbuf-get-file-info-async}
     @about-function{gdk-pixbuf-get-file-info-finish}
     @about-function{gdk-pixbuf-new-from-resource}
