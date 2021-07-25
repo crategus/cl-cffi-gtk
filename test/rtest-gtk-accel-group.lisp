@@ -144,8 +144,8 @@
     (gtk-widget-realize window)
     (gtk-action-group-add-actions action-group *entries*)
     (gtk-ui-manager-insert-action-group ui-info action-group 0)
-    (gtk-window-add-accel-group window (gtk-ui-manager-get-accel-group ui-info))
-    (let ((accel-group (gtk-ui-manager-get-accel-group ui-info)))
+    (gtk-window-add-accel-group window (gtk-ui-manager-accel-group ui-info))
+    (let ((accel-group (gtk-ui-manager-accel-group ui-info)))
       (is (eql 'gtk-accel-group (type-of accel-group)))
 ; This does not work as expected.
 ;      (is-true (gtk-accel-group-activate accel-group "<Control>q" window 113 '(:control-mask)))

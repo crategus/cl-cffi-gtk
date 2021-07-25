@@ -21,9 +21,9 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkActionGroup"))))
   ;; Check the class properties
   (is (equal '("accel-group" "name" "sensitive" "visible")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkActionGroup"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkActionGroup"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkActionGroup" GTK-ACTION-GROUP
                        (:SUPERCLASS G-OBJECT
@@ -47,8 +47,7 @@
   (let ((group (gtk-action-group-new "AppWindowActions")))
     (is-false (gtk-action-group-accel-group group))
     (setf (gtk-action-group-accel-group group) (gtk-accel-group-new))
-    (is (eq 'gtk-accel-group
-            (type-of (gtk-action-group-accel-group group))))))
+    (is (typep (gtk-action-group-accel-group group) 'gtk-accel-group))))
 
 ;;;   gtk-action-group-name
 
@@ -77,12 +76,11 @@
 ;;;   gtk-action-group-new
 
 (test gtk-action-group-new
-  (is (eq 'gtk-action-group
-          (type-of (gtk-action-group-new "AppWindowActions")))))
+  (is (typep (gtk-action-group-new "AppWindowActions") 'gtk-action-group)))
 
-;;;   gtk-action-group-get-action
+;;;   gtk_action_group_get_action
 
-(test gtk-action-group-get-action
+(test gtk-action-group-action
   (let ((group (gtk-action-group-new "AppWindowActions")))
     (gtk-action-group-add-action group
                                  (make-instance 'gtk-action
@@ -90,10 +88,9 @@
                                                 :label "_Open"
                                                 :tooltip "Open a file"
                                                 :stock-id "gtk-stock-open"))
-    (is (eq 'gtk-action
-             (type-of (gtk-action-group-get-action group "Open"))))
-    (is (equal "Open"
-               (gtk-action-name (gtk-action-group-get-action group "Open"))))))
+    (is (typep (gtk-action-group-action group "Open") 'gtk-action))
+    (is (string= "Open"
+                 (gtk-action-name (gtk-action-group-action group "Open"))))))
 
 ;;;   gtk-action-group-list-actions
 
@@ -112,8 +109,8 @@
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))))
 
-;;;   gtk-action-group-add-action
-;;;   gtk-action-group-add-action-with-accel
+;;;   gtk_action_group_add_action
+;;;   gtk_action_group_add_action_with_accel
 
 (test gtk-action-group-add-action.1
   (let ((group (gtk-action-group-new "AppWindowActions")))
@@ -123,8 +120,7 @@
                                                 :label "_Open"
                                                 :tooltip "Open a file"
                                                 :stock-id "gtk-stock-open"))
-    (is (eq 'gtk-action
-             (type-of (gtk-action-group-get-action group "Open"))))))
+    (is (typep (gtk-action-group-action group "Open") 'gtk-action))))
 
 (test gtk-action-group-add-action.2
   (let ((group (gtk-action-group-new "AppWindowActions")))
@@ -135,8 +131,7 @@
                                                 :tooltip "Open a file"
                                                 :stock-id "gtk-stock-open")
                                  "<ctrl>o")
-    (is (eq 'gtk-action
-             (type-of (gtk-action-group-get-action group "Open"))))))
+    (is (typep (gtk-action-group-action group "Open") 'gtk-action))))
 
 (test gtk-action-group-add-action.3
   (let ((group (gtk-action-group-new "AppWindowActions")))
@@ -147,8 +142,7 @@
                                                 :tooltip "Open a file"
                                                 :stock-id "gtk-stock-open")
                                  nil)
-    (is (eq 'gtk-action
-             (type-of (gtk-action-group-get-action group "Open"))))))
+    (is (typep (gtk-action-group-action group "Open") 'gtk-action))))
 
 (test gtk-action-group-add-action.4
   (let ((group (gtk-action-group-new "AppWindowActions")))
@@ -159,8 +153,7 @@
                                                 :tooltip "Open a file"
                                                 :stock-id "gtk-stock-open")
                                  (null-pointer))
-    (is (eq 'gtk-action
-             (type-of (gtk-action-group-get-action group "Open"))))))
+    (is (typep (gtk-action-group-action group "Open") 'gtk-action))))
 
 ;;;   gtk-action-group-remove-action
 
@@ -179,7 +172,7 @@
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
     (gtk-action-group-remove-action group
-                                    (gtk-action-group-get-action group "Open"))
+                                    (gtk-action-group-action group "Open"))
     (is (equal '("Close" "Save")
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))))
@@ -202,9 +195,9 @@
     (is (equal '("Open")
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
-    (is (equal "<Actions>/AppWindowActions/Open"
-               (gtk-action-get-accel-path
-                 (gtk-action-group-get-action group "Open"))))))
+    (is (string= "<Actions>/AppWindowActions/Open"
+                 (gtk-action-accel-path
+                     (gtk-action-group-action group "Open"))))))
 
 (test gtk-action-group-add-actions.2
   (let ((group (gtk-action-group-new "AppWindowActions"))
@@ -219,9 +212,9 @@
     (is (equal '("Open")
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
-    (is (equal "<Actions>/AppWindowActions/Open"
-               (gtk-action-get-accel-path
-                 (gtk-action-group-get-action group "Open"))))))
+    (is (string= "<Actions>/AppWindowActions/Open"
+                 (gtk-action-accel-path
+                     (gtk-action-group-action group "Open"))))))
 
 (test gtk-action-group-add-actions.3
   (let* ((message nil)
@@ -242,11 +235,11 @@
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
     (setf message nil)
-    (is-false (gtk-action-activate (gtk-action-group-get-action group "Open")))
-    (is (equal "in Signal activate" message))
-    (is (equal "<Actions>/AppWindowActions/Open"
-               (gtk-action-get-accel-path
-                 (gtk-action-group-get-action group "Open"))))))
+    (is-false (gtk-action-activate (gtk-action-group-action group "Open")))
+    (is (string= "in Signal activate" message))
+    (is (string= "<Actions>/AppWindowActions/Open"
+                 (gtk-action-accel-path
+                     (gtk-action-group-action group "Open"))))))
 
 (test gtk-action-group-add-actions.4
   (let* ((message nil)
@@ -267,11 +260,11 @@
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
     (setf message nil)
-    (is-false (gtk-action-activate (gtk-action-group-get-action group "Open")))
-    (is (equal "in Signal activate" message))
-    (is (equal "<Actions>/AppWindowActions/Open"
-               (gtk-action-get-accel-path
-                 (gtk-action-group-get-action group "Open"))))))
+    (is-false (gtk-action-activate (gtk-action-group-action group "Open")))
+    (is (string= "in Signal activate" message))
+    (is (string= "<Actions>/AppWindowActions/Open"
+                 (gtk-action-accel-path
+                     (gtk-action-group-action group "Open"))))))
 
 ;;;    GtkToggleActionEntry
 ;;;
@@ -292,9 +285,9 @@
     (is (equal '("Open")
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
-    (is (equal "<Actions>/AppWindowActions/Open"
-               (gtk-action-get-accel-path
-                 (gtk-action-group-get-action group "Open"))))))
+    (is (string= "<Actions>/AppWindowActions/Open"
+                 (gtk-action-accel-path
+                     (gtk-action-group-action group "Open"))))))
 
 (test gtk-action-group-add-toggle-actions.2
   (let ((group (gtk-action-group-new "AppWindowActions"))
@@ -309,9 +302,9 @@
     (is (equal '("Open")
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
-    (is (equal "<Actions>/AppWindowActions/Open"
-               (gtk-action-get-accel-path
-                 (gtk-action-group-get-action group "Open"))))))
+    (is (string= "<Actions>/AppWindowActions/Open"
+                 (gtk-action-accel-path
+                     (gtk-action-group-action group "Open"))))))
 
 (test gtk-action-group-add-toggle-actions.3
   (let* ((message nil)
@@ -332,11 +325,11 @@
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
     (setf message nil)
-    (is-false (gtk-action-activate (gtk-action-group-get-action group "Open")))
-    (is (equal "in Signal activate" message))
-    (is (equal "<Actions>/AppWindowActions/Open"
-               (gtk-action-get-accel-path
-                 (gtk-action-group-get-action group "Open"))))))
+    (is-false (gtk-action-activate (gtk-action-group-action group "Open")))
+    (is (string= "in Signal activate" message))
+    (is (string= "<Actions>/AppWindowActions/Open"
+                 (gtk-action-accel-path
+                     (gtk-action-group-action group "Open"))))))
 
 (test gtk-action-group-add-toggle-actions.4
   (let* ((message nil)
@@ -351,18 +344,17 @@
                                 (setf message "in Signal activate")
                                 (when *verbose-gtk-action-group*
                                   (format t "in Signal activate for ~A~%"
-                                            action)))
-                   ))))
+                                            action)))))))
     (gtk-action-group-add-toggle-actions group actions)
     (is (equal '("Open")
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
     (setf message nil)
-    (is-false (gtk-action-activate (gtk-action-group-get-action group "Open")))
-    (is (equal "in Signal activate" message))
-    (is (equal "<Actions>/AppWindowActions/Open"
-               (gtk-action-get-accel-path
-                 (gtk-action-group-get-action group "Open"))))))
+    (is-false (gtk-action-activate (gtk-action-group-action group "Open")))
+    (is (string= "in Signal activate" message))
+    (is (string= "<Actions>/AppWindowActions/Open"
+                 (gtk-action-accel-path
+                     (gtk-action-group-action group "Open"))))))
 
 ;;;    GtkRadioActionEntry
 ;;;
@@ -385,11 +377,12 @@
     (is (equal '("Red" "Blue" "Green")
                (mapcar #'gtk-action-name
                        (gtk-action-group-list-actions group))))
-    (is (equal "<Actions>/AppWindowActions/Red"
-               (gtk-action-get-accel-path
-                 (gtk-action-group-get-action group "Red"))))))
+    (is (string= "<Actions>/AppWindowActions/Red"
+                 (gtk-action-accel-path
+                     (gtk-action-group-action group "Red"))))))
 
 ;;;    gtk_action_group_set_translate_func
 ;;;    gtk_action_group_set_translation_domain
 ;;;    gtk_action_group_translate_string
 
+;;; 2021-7-26

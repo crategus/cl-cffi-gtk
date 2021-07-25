@@ -38,8 +38,10 @@
     (is-true (null-pointer-p (gtk-actionable-action-target button)))
     ;; Set the name and the target
     (gtk-actionable-set-detailed-action-name button "app::save")
-    (is (equal "app"  (gtk-actionable-action-name button)))
-    (is (equal "save" (g-variant-string (gtk-actionable-action-target button))))))
+    (is (string= "app"
+                 (gtk-actionable-action-name button)))
+    (is (string= "save"
+                 (g-variant-string (gtk-actionable-action-target button))))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; Functions
@@ -51,4 +53,4 @@
 
 ;;; See gtk-actionable-properties for an example
 
-;;; 2020-11-13
+;;; 2021-7-25

@@ -24,31 +24,34 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkNotebook"))))
   ;; Check the class properties
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "enable-popup" "events" "expand"
-               "focus-on-click" "group-name" "halign" "has-default" "has-focus" "has-tooltip"
-               "height-request" "hexpand" "hexpand-set" "is-focus" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start" "margin-top" "name"
-               "no-show-all" "opacity" "page" "parent" "receives-default" "resize-mode"
-               "scale-factor" "scrollable" "sensitive" "show-border" "show-tabs" "style"
-               "tab-pos" "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
-               "visible" "width-request" "window")
+               "composite-child" "double-buffered" "enable-popup" "events"
+               "expand" "focus-on-click" "group-name" "halign" "has-default"
+               "has-focus" "has-tooltip" "height-request" "hexpand"
+               "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top" "name"
+               "no-show-all" "opacity" "page" "parent" "receives-default"
+               "resize-mode" "scale-factor" "scrollable" "sensitive"
+               "show-border" "show-tabs" "style" "tab-pos" "tooltip-markup"
+               "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
+               "width-request" "window")
              (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkNotebook"))
                           #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging" "arrow-spacing"
-               "has-backward-stepper" "has-forward-stepper" "has-secondary-backward-stepper"
-               "has-secondary-forward-stepper" "has-tab-gap" "initial-gap" "tab-curvature"
-               "tab-overlap")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging" "arrow-spacing"
+               "has-backward-stepper" "has-forward-stepper"
+               "has-secondary-backward-stepper" "has-secondary-forward-stepper"
+               "has-tab-gap" "initial-gap" "tab-curvature" "tab-overlap")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkNotebook"))))
   ;; Get the names of the child properties
-  (is (equal '("tab-label" "menu-label" "position" "tab-expand" "tab-fill" "reorderable"
-               "detachable")
+  (is (equal '("tab-label" "menu-label" "position" "tab-expand" "tab-fill"
+               "reorderable" "detachable")
              (mapcar #'g-param-spec-name
                      (gtk-container-class-list-child-properties "GtkNotebook"))))
   ;; Check the class definition
@@ -196,10 +199,11 @@
     (is (= 0 (gtk-notebook-add-page notebook page2 label2 :position :start)))
     (is (= 1 (gtk-notebook-add-page notebook page3 label3 :position 1)))
 
-    (is (= 3 (gtk-notebook-add-page notebook page4 label4 :menu menu-label1)))
-    (is (= 0 (gtk-notebook-add-page notebook page5 label5 :position :start :menu menu-label2)))
-    (is (= 1 (gtk-notebook-add-page notebook page6 label6 :position 1 :menu menu-label3)))
-))
+    (is (= 3 (gtk-notebook-add-page notebook page4 label4 :menu-label menu-label1)))
+    (is (= 0 (gtk-notebook-add-page notebook page5 label5 :position :start
+                                                          :menu-label menu-label2)))
+    (is (= 1 (gtk-notebook-add-page notebook page6 label6 :position 1
+                                                          :menu-label menu-label3)))))
 
 ;;;     gtk_notebook_detach_tab
 ;;;     gtk_notebook_page_num

@@ -3,71 +3,6 @@
 
 ;;; --- Types and Values -------------------------------------------------------
 
-;;;     GtkStyleContext
-
-(test gtk-style-context-class
-  ;; Type check
-  (is (g-type-is-object "GtkStyleContext"))
-  ;; Check the registered name
-  (is (eq 'gtk-style-context
-          (registered-object-type-by-name "GtkStyleContext")))
-  ;; Check the parent
-  (is (eq (gtype "GObject") (g-type-parent "GtkStyleContext")))
-  ;; Check the children
-  (is (equal '()
-             (mapcar #'g-type-name (g-type-children "GtkStyleContext"))))
-  ;; Check the interfaces
-  (is (equal '()
-             (mapcar #'g-type-name (g-type-interfaces "GtkStyleContext"))))
-  ;; Check the class properties
-  (is (equal '("direction" "paint-clock" "parent" "screen")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkStyleContext"))
-                          #'string-lessp)))
-  ;; Check the class definition
-  (is (equal '(DEFINE-G-OBJECT-CLASS "GtkStyleContext" GTK-STYLE-CONTEXT
-                       (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
-                        :TYPE-INITIALIZER "gtk_style_context_get_type")
-                       ((DIRECTION GTK-STYLE-CONTEXT-DIRECTION "direction"
-                         "GtkTextDirection" T T)
-                        (PAINT-CLOCK GTK-STYLE-CONTEXT-PAINT-CLOCK
-                         "paint-clock" "GdkFrameClock" T T)
-                        (PARENT GTK-STYLE-CONTEXT-PARENT "parent"
-                         "GtkStyleContext" T T)
-                        (SCREEN GTK-STYLE-CONTEXT-SCREEN "screen" "GdkScreen" T
-                         T)))
-             (get-g-type-definition "GtkStyleContext"))))
-
-;;; --- Properties and Accessors -----------------------------------------------
-
-;;;  GtkTextDirection    direction      Read / Write
-;;;     GdkFrameClock*   paint-clock    Read / Write
-;;;   GtkStyleContext*   parent         Read / Write
-;;;         GdkScreen*   screen         Read / Write
-
-(test gtk-style-context-properties
-  (let* ((widget (make-instance 'gtk-button))
-         (context (gtk-widget-style-context widget)))
-  ;; gtk-style-context-direction
-  (is (eq :ltr (gtk-style-context-direction context)))
-  (is (eq :rtl (setf (gtk-style-context-direction context) :rtl)))
-  (is (eq :rtl (gtk-style-context-direction context)))
-  ;; gtk-style-context-paint-clock
-  (is-false (gtk-style-context-paint-clock context))
-; TODO: We cannot create an instance of a frame clock.
-;  (setf (gtk-style-context-paint-clock context) (make-instance 'gdk-frame-clock))
-  ;; gtk-style-context-parent
-  (is-false (gtk-style-context-parent context))
-  (is (eq 'gtk-style-context
-          (type-of (setf (gtk-style-context-parent context) (make-instance 'gtk-style-context)))))
-  (is (eq 'gtk-style-context (type-of (gtk-style-context-parent context))))
-  ;; gtk-style-context-screen
-  (is (eq 'gdk-screen (type-of (gtk-style-context-screen context))))
-; TODO: This causes a unhandled memory fault.
-;  (setf (gtk-style-context-screen context) (make-instance 'gdk-screen))
-;  (is-false (type-of (gtk-style-context-screen context)))
-  ))
-
 ;;;     GtkJunctionSides
 
 (test gtk-junction-sides
@@ -79,8 +14,8 @@
   ;; Check the names
   (is (equal '("GTK_JUNCTION_NONE" "GTK_JUNCTION_CORNER_TOPLEFT"
                "GTK_JUNCTION_CORNER_TOPRIGHT" "GTK_JUNCTION_CORNER_BOTTOMLEFT"
-               "GTK_JUNCTION_CORNER_BOTTOMRIGHT" "GTK_JUNCTION_TOP" "GTK_JUNCTION_BOTTOM"
-               "GTK_JUNCTION_LEFT" "GTK_JUNCTION_RIGHT")
+               "GTK_JUNCTION_CORNER_BOTTOMRIGHT" "GTK_JUNCTION_TOP"
+               "GTK_JUNCTION_BOTTOM" "GTK_JUNCTION_LEFT" "GTK_JUNCTION_RIGHT")
              (mapcar #'flags-item-name
                      (get-flags-items "GtkJunctionSides"))))
   ;; Check the values
@@ -117,8 +52,8 @@
   (is (eq 'gtk-region-flags
           (registered-flags-type "GtkRegionFlags")))
   ;; Check the names
-  (is (equal '("GTK_REGION_EVEN" "GTK_REGION_ODD" "GTK_REGION_FIRST" "GTK_REGION_LAST"
-               "GTK_REGION_ONLY" "GTK_REGION_SORTED")
+  (is (equal '("GTK_REGION_EVEN" "GTK_REGION_ODD" "GTK_REGION_FIRST"
+               "GTK_REGION_LAST" "GTK_REGION_ONLY" "GTK_REGION_SORTED")
              (mapcar #'flags-item-name
                      (get-flags-items "GtkRegionFlags"))))
   ;; Check the values
@@ -167,7 +102,8 @@
   (is (equal '(DEFINE-G-FLAGS "GtkStyleContextPrintFlags"
                               GTK-STYLE-CONTEXT-PRINT-FLAGS
                               (:EXPORT T
-                               :TYPE-INITIALIZER "gtk_style_context_print_flags_get_type")
+                               :TYPE-INITIALIZER
+                               "gtk_style_context_print_flags_get_type")
                               (:NONE 0)
                               (:RECURSE 1)
                               (:SHOW-STYLE 2))
@@ -200,7 +136,8 @@
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkBorderStyle"
                              GTK-BORDER-STYLE
-                             (:EXPORT T :TYPE-INITIALIZER "gtk_border_style_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gtk_border_style_get_type")
                              (:NONE 0)
                              (:SOLID 1)
                              (:INSET 2)
@@ -213,130 +150,83 @@
                              (:RIDGE 9))
              (get-g-type-definition "GtkBorderStyle"))))
 
-;;;     GtkBorder
+;;;     GtkStyleContext
 
-(test gtk-border
+(test gtk-style-context-class
   ;; Type check
-  (is (g-type-is-a (gtype "GtkBorder") +g-type-boxed+))
-  ;; Check the type initializer
-  (is (eq (gtype "GtkBorder")
-          (gtype (foreign-funcall "gtk_border_get_type" g-size)))))
+  (is (g-type-is-object "GtkStyleContext"))
+  ;; Check the registered name
+  (is (eq 'gtk-style-context
+          (registered-object-type-by-name "GtkStyleContext")))
+  ;; Check the parent
+  (is (eq (gtype "GObject") (g-type-parent "GtkStyleContext")))
+  ;; Check the children
+  (is (equal '()
+             (mapcar #'g-type-name (g-type-children "GtkStyleContext"))))
+  ;; Check the interfaces
+  (is (equal '()
+             (mapcar #'g-type-name (g-type-interfaces "GtkStyleContext"))))
+  ;; Check the class properties
+  (is (equal '("direction" "paint-clock" "parent" "screen")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkStyleContext"))
+                   #'string-lessp)))
+  ;; Check the class definition
+  (is (equal '(DEFINE-G-OBJECT-CLASS "GtkStyleContext" GTK-STYLE-CONTEXT
+                       (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
+                        :TYPE-INITIALIZER "gtk_style_context_get_type")
+                       ((DIRECTION GTK-STYLE-CONTEXT-DIRECTION "direction"
+                         "GtkTextDirection" T T)
+                        (PAINT-CLOCK GTK-STYLE-CONTEXT-PAINT-CLOCK
+                         "paint-clock" "GdkFrameClock" T T)
+                        (PARENT GTK-STYLE-CONTEXT-PARENT "parent"
+                         "GtkStyleContext" T T)
+                        (SCREEN GTK-STYLE-CONTEXT-SCREEN "screen" "GdkScreen" T
+                         T)))
+             (get-g-type-definition "GtkStyleContext"))))
 
-;;;     GTK_STYLE_PROPERTY_BACKGROUND_COLOR
-;;;     GTK_STYLE_PROPERTY_COLOR
-;;;     GTK_STYLE_PROPERTY_FONT
-;;;     GTK_STYLE_PROPERTY_MARGIN
-;;;     GTK_STYLE_PROPERTY_PADDING
-;;;     GTK_STYLE_PROPERTY_BORDER_WIDTH
-;;;     GTK_STYLE_PROPERTY_BORDER_RADIUS
-;;;     GTK_STYLE_PROPERTY_BORDER_STYLE
-;;;     GTK_STYLE_PROPERTY_BORDER_COLOR
-;;;     GTK_STYLE_PROPERTY_BACKGROUND_IMAGE
-;;;
-;;;     GTK_STYLE_CLASS_ACCELERATOR
-;;;     GTK_STYLE_CLASS_ARROW
-;;;     GTK_STYLE_CLASS_BACKGROUND
-;;;     GTK_STYLE_CLASS_BOTTOM
-;;;     GTK_STYLE_CLASS_BUTTON
-;;;     GTK_STYLE_CLASS_CALENDAR
-;;;     GTK_STYLE_CLASS_CELL
-;;;     GTK_STYLE_CLASS_COMBOBOX_ENTRY
-;;;     GTK_STYLE_CLASS_CONTEXT_MENU
-;;;     GTK_STYLE_CLASS_CHECK
-;;;     GTK_STYLE_CLASS_CSD
-;;;     GTK_STYLE_CLASS_CURSOR_HANDLE
-;;;     GTK_STYLE_CLASS_DEFAULT
-;;;     GTK_STYLE_CLASS_DESTRUCTIVE_ACTION
-;;;     GTK_STYLE_CLASS_DIM_LABEL
-;;;     GTK_STYLE_CLASS_DND
-;;;     GTK_STYLE_CLASS_DOCK
-;;;     GTK_STYLE_CLASS_ENTRY
-;;;     GTK_STYLE_CLASS_ERROR
-;;;     GTK_STYLE_CLASS_EXPANDER
-;;;     GTK_STYLE_CLASS_FRAME
-;;;     GTK_STYLE_CLASS_FLAT
-;;;     GTK_STYLE_CLASS_GRIP
-;;;     GTK_STYLE_CLASS_HEADER
-;;;     GTK_STYLE_CLASS_HIGHLIGHT
-;;;     GTK_STYLE_CLASS_HORIZONTAL
-;;;     GTK_STYLE_CLASS_IMAGE
-;;;     GTK_STYLE_CLASS_INFO
-;;;     GTK_STYLE_CLASS_INLINE_TOOLBAR
-;;;     GTK_STYLE_CLASS_INSERTION_CURSOR
-;;;     GTK_STYLE_CLASS_LABEL
-;;;     GTK_STYLE_CLASS_LEFT
-;;;     GTK_STYLE_CLASS_LEVEL_BAR
-;;;     GTK_STYLE_CLASS_LINKED
-;;;     GTK_STYLE_CLASS_LIST
-;;;     GTK_STYLE_CLASS_LIST_ROW
-;;;     GTK_STYLE_CLASS_MARK
-;;;     GTK_STYLE_CLASS_MENU
-;;;     GTK_STYLE_CLASS_MENUBAR
-;;;     GTK_STYLE_CLASS_MENUITEM
-;;;     GTK_STYLE_CLASS_MESSAGE_DIALOG
-;;;     GTK_STYLE_CLASS_MONOSPACE
-;;;     GTK_STYLE_CLASS_NEEDS_ATTENTION
-;;;     GTK_STYLE_CLASS_NOTEBOOK
-;;;     GTK_STYLE_CLASS_OSD
-;;;     GTK_STYLE_CLASS_OVERSHOOT
-;;;     GTK_STYLE_CLASS_PANE_SEPARATOR
-;;;     GTK_STYLE_CLASS_PAPER
-;;;     GTK_STYLE_CLASS_POPUP
-;;;     GTK_STYLE_CLASS_POPOVER
-;;;     GTK_STYLE_CLASS_PRIMARY_TOOLBAR
-;;;     GTK_STYLE_CLASS_PROGRESSBAR
-;;;     GTK_STYLE_CLASS_PULSE
-;;;     GTK_STYLE_CLASS_QUESTION
-;;;     GTK_STYLE_CLASS_RADIO
-;;;     GTK_STYLE_CLASS_RAISED
-;;;     GTK_STYLE_CLASS_READ_ONLY
-;;;     GTK_STYLE_CLASS_RIGHT
-;;;     GTK_STYLE_CLASS_RUBBERBAND
-;;;     GTK_STYLE_CLASS_SCALE
-;;;     GTK_STYLE_CLASS_SCALE_HAS_MARKS_ABOVE
-;;;     GTK_STYLE_CLASS_SCALE_HAS_MARKS_BELOW
-;;;     GTK_STYLE_CLASS_SCROLLBAR
-;;;     GTK_STYLE_CLASS_SCROLLBARS_JUNCTION
-;;;     GTK_STYLE_CLASS_SEPARATOR
-;;;     GTK_STYLE_CLASS_SIDEBAR
-;;;     GTK_STYLE_CLASS_SLIDER
-;;;     GTK_STYLE_CLASS_SPINBUTTON
-;;;     GTK_STYLE_CLASS_SPINNER
-;;;     GTK_STYLE_CLASS_STATUSBAR
-;;;     GTK_STYLE_CLASS_SUBTITLE
-;;;     GTK_STYLE_CLASS_SUGGESTED_ACTION
-;;;     GTK_STYLE_CLASS_TITLE
-;;;     GTK_STYLE_CLASS_TITLEBAR
-;;;     GTK_STYLE_CLASS_TOOLBAR
-;;;     GTK_STYLE_CLASS_TOOLTIP
-;;;     GTK_STYLE_CLASS_TOUCH_SELECTION
-;;;     GTK_STYLE_CLASS_TOP
-;;;     GTK_STYLE_CLASS_TROUGH
-;;;     GTK_STYLE_CLASS_UNDERSHOOT
-;;;     GTK_STYLE_CLASS_VERTICAL
-;;;     GTK_STYLE_CLASS_VIEW
-;;;     GTK_STYLE_CLASS_WARNING
-;;;     GTK_STYLE_CLASS_WIDE
-;;;
-;;;     GTK_STYLE_REGION_COLUMN
-;;;     GTK_STYLE_REGION_COLUMN_HEADER
-;;;     GTK_STYLE_REGION_ROW
-;;;     GTK_STYLE_REGION_TAB
+;;; --- Properties and Accessors -----------------------------------------------
+
+;;;  GtkTextDirection    direction      Read / Write
+;;;     GdkFrameClock*   paint-clock    Read / Write
+;;;   GtkStyleContext*   parent         Read / Write
+;;;         GdkScreen*   screen         Read / Write
+
+(test gtk-style-context-properties
+  (let* ((widget (make-instance 'gtk-button))
+         (context (gtk-widget-style-context widget)))
+  ;; gtk-style-context-direction
+  (is (eq :ltr (gtk-style-context-direction context)))
+  (is (eq :rtl (setf (gtk-style-context-direction context) :rtl)))
+  (is (eq :rtl (gtk-style-context-direction context)))
+  ;; gtk-style-context-paint-clock
+  (is-false (gtk-style-context-paint-clock context))
+  ;; gtk-style-context-parent
+  (is-false (gtk-style-context-parent context))
+  (is (typep (setf (gtk-style-context-parent context)
+                   (gtk-style-context-new))
+             'gtk-style-context))
+  (is (typep (gtk-style-context-parent context) 'gtk-style-context))
+  ;; gtk-style-context-screen
+  (is (typep (gtk-style-context-screen context) 'gdk-screen))))
 
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_style_context_new
 
 (test gtk-style-context-new
-  (is (eq 'gtk-style-context (type-of (gtk-style-context-new)))))
+  (is (typep (gtk-style-context-new) 'gtk-style-context)))
 
 ;;;     gtk_style_context_add_provider
 ;;;     gtk_style_context_remove_provider
 
 (test gtk-style-context-add-provider
-  (let ((context (make-instance 'gtk-style-context))
+  (let ((context (gtk-style-context-new))
         (provider (make-instance 'gtk-css-provider)))
-    (is-false (gtk-style-context-add-provider context provider +gtk-style-provider-priority-user+))
+    (is-false (gtk-style-context-add-provider
+                                            context
+                                            provider
+                                            +gtk-style-provider-priority-user+))
     (is-false (gtk-style-context-remove-provider context provider))))
 
 ;;;     gtk_style_context_add_provider_for_screen
@@ -345,7 +235,10 @@
 (test gtk-style-context-add-provider-for-screen
   (let ((screen (gdk-screen-default))
         (provider (make-instance 'gtk-css-provider)))
-    (is-false (gtk-style-context-add-provider-for-screen screen provider +gtk-style-provider-priority-user+))
+    (is-false (gtk-style-context-add-provider-for-screen
+                                            screen
+                                            provider
+                                            +gtk-style-provider-priority-user+))
     (is-false (gtk-style-context-remove-provider-for-screen screen provider))))
 
 ;;;     gtk_style_context_get
@@ -357,7 +250,8 @@
          (context (gtk-widget-style-context widget)))
     (is-false (gtk-style-context-junction-sides context))
     (is (eq :top (setf (gtk-style-context-junction-sides context) :top)))
-    (is (equal '(:corner-topleft :corner-topright) (gtk-style-context-junction-sides context)))))
+    (is (equal '(:corner-topleft :corner-topright)
+               (gtk-style-context-junction-sides context)))))
 
 ;;;     gtk-style-context-path
 
@@ -365,16 +259,14 @@
   (let* ((widget (make-instance 'gtk-button))
          (context (gtk-widget-style-context widget))
          (path (gtk-widget-path widget)))
-    (is (eq 'gtk-widget-path (type-of (gtk-style-context-path context))))
-    (is (string= "button:dir-ltr" (gtk-widget-path-to-string (gtk-style-context-path context))))
-    (is (eq 'gtk-widget-path (type-of path)))
-    ;; TODO: Find an example
-;    (is-false (gtk-style-context-set-path context path))
-  ))
+    (is (typep (gtk-style-context-path context) 'gtk-widget-path))
+    (is (string= "button:dir-ltr"
+                 (gtk-widget-path-to-string (gtk-style-context-path context))))
+    (is (typep path 'gtk-widget-path))))
 
 ;;;     gtk-style-context-property
 
-(test gtk-style-context-property
+(test gtk-style-context-property.1
   (let ((context (gtk-style-context-new)))
     (with-foreign-object (value '(:struct g-value))
       (g-value-init value)
@@ -382,30 +274,31 @@
       (is-true value)
       (is (eq (gtype "GdkRGBA") (g-value-type value)))
       (is (string= "GdkRGBA" (g-value-type-name value)))
-      (g-value-unset value)))
+      (g-value-unset value))))
+
+(test gtk-style-context-property.2
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gdk-rgba
-            (type-of (gtk-style-context-property context "color" :normal))))
+    (is (typep (gtk-style-context-property context "color" :normal) 'gdk-rgba))
     (is-true (gdk-rgba-equal (gdk-rgba-new :red 1.0d0
                                            :green 1.0d0
                                            :blue 1.0d0
                                            :alpha 1.0d0)
                              (gtk-style-context-property context
                                                          "color" :normal)))
-    (is (eq 'double-float
-            (type-of (gtk-style-context-property context "opacity" :normal))))
+    (is (typep (gtk-style-context-property context "opacity" :normal)
+               'double-float))
     (is (= 1.0d0 (gtk-style-context-property context "opacity" :normal)))
-    (is (eq 'gdk-rgba
-            (type-of (gtk-style-context-property context
-                                                 "background-color" :normal))))
+    (is (typep (gtk-style-context-property context "background-color" :normal)
+                'gdk-rgba))
     (is-true (gdk-rgba-equal (gdk-rgba-new)
                              (gtk-style-context-property context
                                                          "background-color"
                                                          :normal)))
-    (is (eq 'pango-font-description
-            (type-of (gtk-style-context-property context "font" :normal))))
+    (is (typep (gtk-style-context-property context "font" :normal)
+               'pango-font-description))
     (is (string= "Ubuntu 11"
-                 (pango-font-description-to-string (gtk-style-context-property context "font" :normal))))))
+                 (pango-font-description-to-string
+                     (gtk-style-context-property context "font" :normal))))))
 
 ;;;     gtk_style_context_get_frame_clock
 ;;;     gtk_style_context_set_frame_clock
@@ -417,7 +310,8 @@
     (is (equal '(:dir-ltr) (gtk-style-context-state context)))
     (is (eq :active (setf (gtk-style-context-state context) :active)))
     (is (equal '(:active) (gtk-style-context-state context)))
-    (is (equal '(:active :dir-ltr) (setf (gtk-style-context-state context) '(:active :dir-ltr))))
+    (is (equal '(:active :dir-ltr)
+               (setf (gtk-style-context-state context) '(:active :dir-ltr))))
     (is (equal '(:active :dir-ltr) (gtk-style-context-state context)))))
 
 ;;;     gtk_style_context_get_style
@@ -427,7 +321,10 @@
 (test gtk-style-context-style-property
   (let* ((message (make-instance 'gtk-message-dialog))
          (context (gtk-widget-style-context message)))
-    (is (= 12 (gtk-style-context-style-property context message "message-border")))))
+    (is (= 12
+           (gtk-style-context-style-property context
+                                             message
+                                             "message-border")))))
 
 ;;;     gtk_style_context_get_style_valist
 ;;;     gtk_style_context_get_valist
@@ -458,7 +355,7 @@
 
 (test gtk-style-context-border-color
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gdk-rgba (type-of (gtk-style-context-border-color context :normal))))
+    (is (typep (gtk-style-context-border-color context :normal) 'gdk-rgba))
     (is-true (gdk-rgba-equal (gdk-rgba-new :red 1.0d0
                                            :green 1.0d0
                                            :blue 1.0d0
@@ -469,7 +366,7 @@
 
 (test gtk-style-context-border
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gtk-border (type-of (gtk-style-context-border context :normal))))
+    (is (typep (gtk-style-context-border context :normal) 'gtk-border))
     (is (= 0 (gtk-border-left (gtk-style-context-border context :normal))))
     (is (= 0 (gtk-border-right (gtk-style-context-border context :normal))))
     (is (= 0 (gtk-border-top (gtk-style-context-border context :normal))))
@@ -479,7 +376,7 @@
 
 (test gtk-style-context-padding
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gtk-border (type-of (gtk-style-context-padding context :normal))))
+    (is (typep (gtk-style-context-padding context :normal) 'gtk-border))
     (is (= 0 (gtk-border-left (gtk-style-context-padding context :normal))))
     (is (= 0 (gtk-border-right (gtk-style-context-padding context :normal))))
     (is (= 0 (gtk-border-top (gtk-style-context-padding context :normal))))
@@ -489,7 +386,7 @@
 
 (test gtk-style-context-margin
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gtk-border (type-of (gtk-style-context-margin context :normal))))
+    (is (typep (gtk-style-context-margin context :normal) 'gtk-border))
     (is (= 0 (gtk-border-left (gtk-style-context-margin context :normal))))
     (is (= 0 (gtk-border-right (gtk-style-context-margin context :normal))))
     (is (= 0 (gtk-border-top (gtk-style-context-margin context :normal))))
@@ -499,9 +396,10 @@
 
 (test gtk-style-context-font
   (let ((context (gtk-style-context-new)))
-    (is (eq 'pango-font-description (type-of (gtk-style-context-font context :normal))))
+    (is (typep (gtk-style-context-font context :normal) 'pango-font-description))
     (is (string= "Ubuntu 11"
-                 (pango-font-description-to-string (gtk-style-context-font context :normal))))))
+                 (pango-font-description-to-string
+                     (gtk-style-context-font context :normal))))))
 
 ;;;     gtk_style_context_invalidate
 ;;;     gtk_style_context_state_is_running
@@ -519,7 +417,8 @@
 
 (test gtk-style-context-icon-set
   (let ((context (gtk-style-context-new)))
-    (is (eq 'gtk-icon-set (type-of (gtk-style-context-lookup-icon-set context "gtk-ok"))))))
+    (is (typep (gtk-style-context-lookup-icon-set context "gtk-ok")
+               'gtk-icon-set))))
 
 ;;;     gtk_style_context_notify_state_change
 ;;;     gtk_style_context_pop_animatable_region
@@ -600,6 +499,13 @@
 
 ;;;     GtkBorder
 
+(test gtk-border
+  ;; Type check
+  (is (g-type-is-a (gtype "GtkBorder") +g-type-boxed+))
+  ;; Check the type initializer
+  (is (eq (gtype "GtkBorder")
+          (gtype (foreign-funcall "gtk_border_get_type" g-size)))))
+
 ;;;     gtk_border_new
 ;;;     gtk_border_copy
 ;;;     gtk_border_free
@@ -624,3 +530,4 @@
 ;;;     gtk_render_icon
 ;;;     gtk_render_insertion_cursor
 
+;;; 2021-7-6

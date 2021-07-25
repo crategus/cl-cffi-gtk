@@ -20,12 +20,13 @@
   (is (equal '("GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkAction"))))
   ;; Check the class properties
-  (is (equal '("action-group" "always-show-image" "gicon" "hide-if-empty" "icon-name"
-               "is-important" "label" "name" "sensitive" "short-label" "stock-id" "tooltip"
-               "visible" "visible-horizontal" "visible-overflown" "visible-vertical")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkAction"))
-                          #'string-lessp)))
+  (is (equal '("action-group" "always-show-image" "gicon" "hide-if-empty"
+               "icon-name" "is-important" "label" "name" "sensitive"
+               "short-label" "stock-id" "tooltip" "visible" "visible-horizontal"
+               "visible-overflown" "visible-vertical")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkAction"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkAction" GTK-ACTION
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES
@@ -126,21 +127,19 @@
   (let ((action (gtk-action-new "action")))
     ;; Check for a stock-id, also check for icon-name and gicon
     (setf (gtk-action-stock-id action) "gtk-ok")
-    (is (eq 'gtk-image (type-of (gtk-action-create-icon action :dialog))))))
+    (is (typep (gtk-action-create-icon action :dialog) 'gtk-image))))
 
 ;;;   gtk-action-create-menu-item
 
 (test gtk-action-create-menu-item
   (let ((action (gtk-action-new "action")))
-    (is (eq 'gtk-image-menu-item
-            (type-of (gtk-action-create-menu-item action))))))
+    (is (typep (gtk-action-create-menu-item action) 'gtk-image-menu-item))))
 
 ;;;   gtk-action-create-tool-item
 
 (test gtk-action-create-tool-item
   (let ((action (gtk-action-new "action")))
-    (is (eq 'gtk-tool-button
-            (type-of (gtk-action-create-tool-item action))))))
+    (is (typep (gtk-action-create-tool-item action) 'gtk-tool-button))))
 
 ;;;   gtk-action-create-menu
 
@@ -149,25 +148,24 @@
     ;; Create an test for an result not nil
     (is-false (gtk-action-create-menu action))))
 
-;;;   gtk-action-get-proxies
+;;;   gtk_action_get_proxies
 
-(test gtk-action-get-proxies
+(test gtk-action-proxies
   (let ((action (gtk-action-new "action")))
-    (is-false (gtk-action-get-proxies action))
+    (is-false (gtk-action-proxies action))
     ;; Add a tool item to list of proxies
     (gtk-action-create-tool-item action)
-    (is (eq 'gtk-tool-button (type-of (first (gtk-action-get-proxies action)))))
+    (is (typep (first (gtk-action-proxies action)) 'gtk-tool-button))
     ;; Add a menu item to list of proxies
     (gtk-action-create-menu-item action)
-    (is (eq 'gtk-image-menu-item
-            (type-of (first (gtk-action-get-proxies action)))))))
+    (is (typep (first (gtk-action-proxies action)) 'gtk-image-menu-item))))
 
 ;;;   gtk-action-connect-accelerator
 
 (test gtk-action-connect-accelerator
   (let ((accel-group (gtk-accel-group-new))
         (action (gtk-action-new "action")))
-    (gtk-action-set-accel-path action "<test>/File/Exit")
+    (setf (gtk-action-accel-path action) "<test>/File/Exit")
     (gtk-action-set-accel-group action accel-group)
     (gtk-action-connect-accelerator action)))
 
@@ -199,3 +197,4 @@
 ;;;    gtk_action_set_is_important
 ;;;    gtk_action_get_is_important
 
+;;; 2021-7-25
