@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.dialog.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -159,15 +159,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-response-type atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-response-type atdoc:*external-symbols*)
- "@version{*2021-1-26}
+ "@version{*2021-7-27}
   @begin{short}
     Predefined values for use as response IDs in the function
     @fun{gtk-dialog-add-button}.
   @end{short}
-  All predefined values are negative, GTK+ leaves positive values for
-  application defined response IDs.
+  All predefined values are negative, GTK leaves positive values for application
+  defined response IDs.
   @begin{pre}
 (define-g-enum \"GtkResponseType\" gtk-response-type
   (:export t
@@ -187,16 +187,16 @@
   @begin[code]{table}
     @entry[:none]{Returned if an action widget has no response ID, or if the
       dialog gets programmatically hidden or destroyed.}
-    @entry[:reject]{Generic response ID, not used by GTK+ dialogs.}
-    @entry[:accept]{Generic response ID, not used by GTK+ dialogs.}
+    @entry[:reject]{Generic response ID, not used by GTK dialogs.}
+    @entry[:accept]{Generic response ID, not used by GTK dialogs.}
     @entry[:delete-event]{Returned if the dialog is deleted.}
-    @entry[:ok]{Returned by OK buttons in GTK+ dialogs.}
-    @entry[:cancel]{Returned by Cancel buttons in GTK+ dialogs.}
-    @entry[:close]{Returned by Close buttons in GTK+ dialogs.}
-    @entry[:yes]{Returned by Yes buttons in GTK+ dialogs.}
-    @entry[:no]{Returned by No buttons in GTK+ dialogs.}
-    @entry[:apply]{Returned by Apply buttons in GTK+ dialogs.}
-    @entry[:help]{Returned by Help buttons in GTK+ dialogs.}
+    @entry[:ok]{Returned by OK buttons in GTK dialogs.}
+    @entry[:cancel]{Returned by Cancel buttons in GTK dialogs.}
+    @entry[:close]{Returned by Close buttons in GTK dialogs.}
+    @entry[:yes]{Returned by Yes buttons in GTK dialogs.}
+    @entry[:no]{Returned by No buttons in GTK dialogs.}
+    @entry[:apply]{Returned by Apply buttons in GTK dialogs.}
+    @entry[:help]{Returned by Help buttons in GTK dialogs.}
   @end{table}
   @see-class{gtk-dialog}
   @see-function{gtk-dialog-add-button}")
@@ -224,7 +224,7 @@
     does not require extensive effort on the user's part.
   @end{short}
 
-  GTK+ treats a dialog as a window split vertically. The top section is known as
+  GTK treats a dialog as a window split vertically. The top section is known as
   the \"content area\" and is a @class{gtk-box} widget with a @code{:vertical}
   orientation. This is where widgets such as a @class{gtk-label} or a
   @class{gtk-entry} should be packed. The bottom area is known as the
@@ -250,7 +250,7 @@
   @fun{gtk-dialog-new-with-buttons}, @fun{gtk-dialog-add-button},
   @fun{gtk-dialog-add-buttons}, or @fun{gtk-dialog-add-action-widget}, clicking
   the button will emit a signal called \"response\" with a response ID that you
-  specified. GTK+ will never assign a meaning to positive response IDs. These
+  specified. GTK will never assign a meaning to positive response IDs. These
   are entirely user-defined. But for convenience, you can use the response IDs
   in the @symbol{gtk-response-type} enumeration. These all have values less than
   zero. If a dialog receives a delete event, the \"response\" signal will be
@@ -849,7 +849,7 @@
   @short{Returns the action area of the dialog.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-dialog-action-area} has been deprecated since version
-    3.12 and should not be used in newly-written code. Direct access to the
+    3.12 and should not be used in newly written code. Direct access to the
     action area is discouraged. Use the function @fun{gtk-dialog-add-button},
     etc.
   @end{dictionary}
@@ -925,7 +925,7 @@
   setting changes.
   @begin[Warning]{dictionary}
     The function @sym{gtk-alternative-dialog-button-order} has been deprecated
-    since version 3.10 and should not be used in newly-written code.
+    since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-dialog}
   @see-class{gdk-screen}
@@ -951,9 +951,9 @@
   @em{true}, the dialog buttons are reordered according to the order of the
   response IDs passed to this function.
 
-  By default, GTK+ dialogs use the button order advocated by the Gnome Human
+  By default, GTK dialogs use the button order advocated by the Gnome Human
   Interface Guidelines with the affirmative button at the far right, and the
-  cancel button left of it. But the builtin GTK+ dialogs and message dialogs
+  cancel button left of it. But the built-in GTK dialogs and message dialogs
   do provide an alternative button order, which is more suitable on some
   platforms, e.g. Windows.
   @begin[Example]{dictionary}
@@ -986,7 +986,7 @@
   @end{dictionary}
   @begin[Warning]{dictionary}
     The function @sym{gtk-dialog-set-alternative-button-order} has been
-    deprecated since version 3.10 and should not be used in newly-written code.
+    deprecated since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-dialog}
   @see-class{gtk-message-dialog}
@@ -1028,7 +1028,7 @@
   This function is for use by language bindings.
   @begin[Warning]{dictionary}
     The @sym{gtk-dialog-set-alternative-button-order} function has been
-    deprecated since version 3.10 and should not be used in newly-written code.
+    deprecated since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-dialog}"
   (dialog (g-object gtk-dialog))

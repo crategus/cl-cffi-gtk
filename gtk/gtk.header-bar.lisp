@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.header-bar.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -199,7 +199,7 @@
 
   The title should help a user identify the current view. This supersedes any
   title set by the functions @fun{gtk-header-bar-title} or
-  @fun{gtk-header-bar-subtitle}. To achieve the same style as the builtin
+  @fun{gtk-header-bar-subtitle}. To achieve the same style as the built-in
   title and subtitle, use the \"title\" and \"subtitle\" style classes.
 
   You should set the custom title to @code{nil}, for the header title label to

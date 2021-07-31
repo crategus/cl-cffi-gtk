@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.places-sidebar.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -407,7 +407,7 @@
       @code{g_file_mount_enclosing_volume()}.
 
       @em{Warning:} The \"show-connect-to-server\" signal has been deprecated
-      since version 3.18 and should not be used in newly-written code. Use the
+      since version 3.18 and should not be used in newly written code. Use the
       \"show-other-locations\" signal to connect to network servers.
       @begin[code]{table}
         @entry[sidebar]{The @sym{gtk-places-sidebar} widget which received the
@@ -451,7 +451,7 @@
       persistent volumes and discovered network addresses. Since 3.18
 
       @em{Warning:} The \"show-other-locations\" signal has been deprecated
-      since version 3.20 and should not be used in newly-written code. Use the
+      since version 3.20 and should not be used in newly written code. Use the
       \"show-other-locations-with-flags\" signal which includes the open flags
       in order to allow the user to specify to open in a new tab or window, in
       a similar way than the \"open-location\" signal.
@@ -916,7 +916,7 @@
 ;;; “Insert Clipart” dialog box.
 ;;;
 ;;; This function adds the specified location to a special place for immutable
-;;; shortcuts. The shortcuts are application-specific; they are not shared
+;;; shortcuts. The shortcuts are application specific; they are not shared
 ;;; across applications, and they are not persistent. If this function is called
 ;;; multiple times with different locations, then they are added to the
 ;;; sidebar’s list in the same order as the function is called.
@@ -925,7 +925,7 @@
 ;;;     a places sidebar
 ;;;
 ;;; location :
-;;;     location to add as an application-specific shortcut
+;;;     location to add as an application specific shortcut
 ;;;
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
@@ -937,7 +937,7 @@
 ;;; gtk_places_sidebar_remove_shortcut (GtkPlacesSidebar *sidebar,
 ;;;                                     GFile *location);
 ;;;
-;;; Removes an application-specific shortcut that has been previously been
+;;; Removes an application specific shortcut that has been previously been
 ;;; inserted with gtk_places_sidebar_add_shortcut(). If the location is not a
 ;;; shortcut in the sidebar, then nothing is done.
 ;;;
@@ -963,7 +963,7 @@
 ;;;
 ;;; Returns :
 ;;;     A GSList of GFile of the locations that have been added as
-;;;     application-specific shortcuts with gtk_places_sidebar_add_shortcut().
+;;;     application specific shortcuts with gtk_places_sidebar_add_shortcut().
 ;;;     To free this list, you can use
 ;;;     g_slist_free_full (list, (GDestroyNotify) g_object_unref);
 ;;;

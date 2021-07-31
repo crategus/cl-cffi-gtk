@@ -5440,7 +5440,7 @@ drag_data_received (GtkWidget        *widget,
   hierarchy, separated by periods. The name of a widget comes from
   @fun{gtk-widget-name}. Paths are used to apply styles to a widget in gtkrc
   configuration files. Widget names are the type of the widget by default (e.g.
-  \"GtkButton\") or can be set to an application-specific value with the
+  \"GtkButton\") or can be set to an application specific value with the
   generic function @fun{gtk-widget-name}. By setting the name of a widget, you
   allow users or theme authors to apply styles to that specific widget in their
   gtkrc file.
@@ -5563,7 +5563,7 @@ drag_data_received (GtkWidget        *widget,
     since version 3.16 and should not be used in newly written code. This
     function is not useful in the context of CSS-based rendering. If you wish
     to change the way a widget renders its background you should use a custom
-    CSS style, through an application-specific @class{gtk-style-provider} and
+    CSS style, through an application specific @class{gtk-style-provider} and
     a CSS style class. You can also override the default drawing of a widget
     through the \"draw\" signal, and use Cairo to draw a specific color,
     regardless of the CSS style.
@@ -5650,7 +5650,7 @@ drag_data_received (GtkWidget        *widget,
     version 3.16 and should not be used in newly written code. This function is
     not useful in the context of CSS-based rendering. If you wish to change the
     font a widget uses to render its text you should use a custom CSS style,
-    through an application-specific style provider and a CSS style class.
+    through an application specific style provider and a CSS style class.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{pango-font-description}
@@ -5674,7 +5674,7 @@ drag_data_received (GtkWidget        *widget,
 ;;;
 ;;; This function is not useful in the context of CSS-based rendering. If you
 ;;; wish to change the color used to render symbolic icons you should use a
-;;; custom CSS style, through an application-specific GtkStyleProvider and a
+;;; custom CSS style, through an application specific GtkStyleProvider and a
 ;;; CSS style class.
 ;;;
 ;;;
@@ -5710,7 +5710,7 @@ drag_data_received (GtkWidget        *widget,
 ;;;
 ;;; This function is not useful in the context of CSS-based rendering. If you
 ;;; wish to change the color used to render the primary and seconday cursors you
-;;; should use a custom CSS style, through an application-specific
+;;; should use a custom CSS style, through an application specific
 ;;; GtkStyleProvider and a CSS style class.
 ;;;
 ;;;
@@ -5864,7 +5864,7 @@ drag_data_received (GtkWidget        *widget,
     3.0 and should not be used in newly written code. This function is not
     useful in the context of CSS-based rendering. If you wish to change the way
     a widget renders its background you should use a custom CSS style, through
-    an application-specific @class{gtk-style-provider} object and a CSS style
+    an application specific @class{gtk-style-provider} object and a CSS style
     class. You can also override the default drawing of a widget through the
     \"draw\" signal, and use Cairo to draw a specific color, regardless of the
     CSS style.
@@ -5947,7 +5947,7 @@ drag_data_received (GtkWidget        *widget,
     3.0 and should not be used in newly written code. This function is not
     useful in the context of CSS-based rendering. If you wish to change the way
     a widget renders its background you should use a custom CSS style, through
-    an application-specific @class{gtk-style-provider} object and a CSS style
+    an application specific @class{gtk-style-provider} object and a CSS style
     class. You can also override the default drawing of a widget through the
     \"draw\" signal, and use Cairo to draw a specific color, regardless of the
     CSS style.
@@ -5980,7 +5980,7 @@ drag_data_received (GtkWidget        *widget,
     3.0 and should not be used in newly written code. This function is not
     useful in the context of CSS-based rendering. If you wish to change the font
     a widget uses to render its text you should use a custom CSS style, through
-    an application-specific style provider and a CSS style class.
+    an application specific style provider and a CSS style class.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{pango-font-description}"
@@ -6013,7 +6013,7 @@ drag_data_received (GtkWidget        *widget,
     and should not be used in newly written code. This function is not useful in
     the context of CSS-based rendering. If you wish to change the color used to
     render the primary and seconday cursors you should use a custom CSS style,
-    through an application-specific @class{gtk-style-provider} object and a CSS
+    through an application specific @class{gtk-style-provider} object and a CSS
     style class.
   @end{dictionary}
   @see-class{gtk-widget}

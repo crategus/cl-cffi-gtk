@@ -627,7 +627,7 @@
 ;;;
 ;;; For any type a parse_func may be provided, being this function used for
 ;;; turning any property value (between ':' and ';') in CSS to the GValue
-;;; needed. For basic types there is already builtin parsing support, so NULL
+;;; needed. For basic types there is already built-in parsing support, so NULL
 ;;; may be provided for these cases.
 ;;;
 ;;; Note

@@ -5098,16 +5098,15 @@ setup_tree (void)
       @about-function{gtk-widget-path-to-string}
     @end{subsection}
     @begin[GtkIconTheme]{subsection}
-      Looking up icons by name
+      Looking up icons by name.
 
-      @about-symbol{gtk-icon-info}
       @about-symbol{gtk-icon-lookup-flags}
       @about-symbol{gtk-icon-theme-error}
       @about-class{gtk-icon-theme}
       @about-function{gtk-icon-theme-new}
       @about-function{gtk-icon-theme-default}
       @about-function{gtk-icon-theme-for-screen}
-      @about-function{gtk-icon-theme-set-screen}0
+      @about-function{gtk-icon-theme-set-screen}
       @about-function{gtk-icon-theme-search-path}
       @about-function{gtk-icon-theme-append-search-path}
       @about-function{gtk-icon-theme-prepend-search-path}
@@ -5129,6 +5128,7 @@ setup_tree (void)
       @about-function{gtk-icon-theme-example-icon-name}
       @about-function{gtk-icon-theme-rescan-if-needed}
       @about-function{gtk-icon-theme-add-builtin-icon}
+      @about-symbol{gtk-icon-info}
       @about-function{gtk-icon-info-copy}
       @about-function{gtk-icon-info-free}
       @about-function{gtk-icon-info-new-for-pixbuf}

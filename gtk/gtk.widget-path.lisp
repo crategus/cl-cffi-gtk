@@ -191,7 +191,8 @@
   @begin{short}
     Appends a widget type to the widget hierarchy represented by @arg{path}.
   @end{short}
-  @see-class{gtk-widget-path}"
+  @see-class{gtk-widget-path}
+  @see-class{g-type}"
   (path (g-boxed-foreign gtk-widget-path))
   (gtype g-type))
 
@@ -666,8 +667,8 @@
     gtk-state-flags
  #+cl-cffi-gtk-documentation
  "@version{2021-7-25}
-  @syntax[]{(gtk-widget-path-iter-state path pos) => gtype}
-  @syntax[]{(setf (gtk-widget-path-iter-state path pos) gtype)}
+  @syntax[]{(gtk-widget-path-iter-state path pos) => state}
+  @syntax[]{(setf (gtk-widget-path-iter-state path pos) state)}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position , -1 for the path head}
   @argument[state]{the @symbol{gtk-state-flags} flags to set or unset}
