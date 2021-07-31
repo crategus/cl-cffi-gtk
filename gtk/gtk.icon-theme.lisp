@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.icon-theme.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -106,6 +106,59 @@
 
 (in-package :gtk)
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-lookup-flags atdoc:*symbol-name-alias*)
+      "GFlags"
+      (gethash 'gtk-icon-lookup-flags atdoc:*external-symbols*)
+ "@version{2021-7-27}
+  @begin{short}
+    Used to specify options for the function @fun{gtk-icon-theme-lookup-icon}.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkIconLookupFlags\" gtk-icon-lookup-flags
+  (:export t
+   :type-initializer \"gtk_icon_lookup_flags_get_type\")
+  (:no-svg           #.(ash 1 0))
+  (:force-svg        #.(ash 1 1))
+  (:use-builtin      #.(ash 1 2))
+  (:generic-fallback #.(ash 1 3))
+  (:force-size       #.(ash 1 4))
+  (:force-regular    #.(ash 1 5))
+  (:force-symbolic   #.(ash 1 6))
+  (:dir-ltr          #.(ash 1 7))
+  (:dir-rtl          #.(ash 1 8)))
+   @end{pre}
+  @begin[code]{table}
+    @entry[:no-svg]{Never get SVG icons, even if the @class{gdk-pixbuf} class
+      supports them. Cannot be used together with @code{:force-svg}.}
+    @entry[:force-svg]{Get SVG icons, even if the @class{gdk-pixbuf} class
+      does not support them. Cannot be used together with @code{:no-svg}.}
+    @entry[:use-builtin]{When passed to the function
+      @fun{gtk-icon-theme-lookup-icon} includes built-in icons as well as files.
+      For a built-in icon, the function @fun{gtk-icon-info-filename} returns
+      @code{nil} and you need to call the function
+      @fun{gtk-icon-info-builtin-pixbuf}.}
+    @entry[:generic-fallback]{Try to shorten icon name at '-' characters before
+      looking at inherited themes. This flag is only supported in functions that
+      take a single icon name. For more general fallback, see the function
+      @fun{gtk-icon-theme-choose-icon}.}
+    @entry[:force-size]{Always get the icon scaled to the requested size.}
+    @entry[:force-regular]{Try to always load regular icons, even when symbolic
+      icon names are given.}
+    @entry[:force-symbolic]{Try to always load symbolic icons, even when regular
+      icon names are given.}
+    @entry[:dir-ltr]{Try to load a variant of the icon for left-to-right
+      text direction.}
+    @entry[:dir-rtl]{Try to load a variant of the icon for right-to-left text
+      direction.}
+  @end{table}
+  @see-class{gtk-icon-theme}
+  @see-class{gdk-pixbuf}
+  @see-function{gtk-icon-theme-lookup-icon}
+  @see-function{gtk-icon-theme-choose-icon}
+  @see-function{gtk-icon-info-filename}
+  @see-function{gtk-icon-info-builtin-pixbuf}")
+
 ;;; ----------------------------------------------------------------------------
 ;;; GtkIconInfo
 ;;; ----------------------------------------------------------------------------
@@ -116,13 +169,69 @@
 (setf (gethash 'gtk-icon-info atdoc:*symbol-name-alias*)
       "CStruct"
       (gethash 'gtk-icon-info atdoc:*external-symbols*)
- "@version{2021-3-14}
+ "@version{2021-7-27}
   @begin{short}
     Contains information found when looking up an icon in an icon theme.
   @end{short}
   @see-class{gtk-icon-theme}")
 
 (export 'gtk-icon-info)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkIconLookupFlags
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkIconLookupFlags" gtk-icon-lookup-flags
+  (:export t
+   :type-initializer "gtk_icon_lookup_flags_get_type")
+  (:no-svg           #.(ash 1 0))
+  (:force-svg        #.(ash 1 1))
+  (:use-builtin      #.(ash 1 2))
+  (:generic-fallback #.(ash 1 3))
+  (:force-size       #.(ash 1 4))
+  (:force-regular    #.(ash 1 5))
+  (:force-symbolic   #.(ash 1 6))
+  (:dir-ltr          #.(ash 1 7))
+  (:dir-rtl          #.(ash 1 8)))
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_ICON_THEME_ERROR
+;;;
+;;; #define GTK_ICON_THEME_ERROR gtk_icon_theme_error_quark ()
+;;;
+;;; The GQuark used for GtkIconThemeError errors.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkIconThemeError                                 not exported
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkIconThemeError" gtk-icon-theme-error
+  (:export nil
+   :type-initializer "gtk_icon_theme_error_get_type")
+  (:not-found 0)
+  (:failed 1))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-theme-error atdoc:*symbol-name-alias*)
+      "GEnum"
+      (gethash 'gtk-icon-theme-error atdoc:*external-symbols*)
+ "@version{2020-12-4}
+  @begin{short}
+    Error codes for @class{gtk-icon-theme} operations.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkIconThemeError\" gtk-icon-theme-error
+  (:export t
+   :type-initializer \"gtk_icon_theme_error_get_type\")
+  (:not-found 0)
+  (:failed 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:not-found]{The icon specified does not exist in the theme.}
+    @entry[:failed]{An unspecified error occurred.}
+  @end{table}
+  @see-class{gtk-icon-theme}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIconTheme
@@ -137,7 +246,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-icon-theme 'type)
- "@version{*2021-3-14}
+ "@version{*2021-7-27}
   @begin{short}
     The @sym{gtk-icon-theme} object provides a facility for looking up icons by
     name and size.
@@ -178,144 +287,37 @@
   \"gtk-go-forward\" uses the two themed icons \"gtk-stock-go-forward-ltr\" and
   \"gtk-stock-go-forward-rtl\".
 
-  In many cases, named themes are used indirectly, via the @class{gtk-image}
-  widget or stock items, rather than directly, but looking up icons directly is
-  also simple. The @sym{gtk-icon-theme} object acts as a database of all the
-  icons in the current theme. You can create new @sym{gtk-icon-theme} objects,
-  but its much more efficient to use the standard icon theme for the
-  @class{gdk-screen} object so that the icon information is shared with other
-  people looking up icons.
+  In many cases, named icon themes are used indirectly, via the
+  @class{gtk-image} widget or stock items, rather than directly, but looking up
+  icons directly is also simple. The icon theme acts as a database of all the
+  icons in the current icon theme. You can create new icon themes, but its much
+  more efficient to use the standard icon theme for the @class{gdk-screen}
+  object so that the icon information is shared with other people looking up
+  icons.
   @begin[Example]{dictionary}
     In the case where the default screen is being used, looking up an icon can
     be as simple as:
     @begin{pre}
-(let ((icon-theme (gtk-icon-theme-default))
-      (pixbuf (gtk-icon-theme-load-icon icon-theme
-                                        \"gtk-ok\"    ; icon name
-                                        48          ; size
-                                        0)))        ; no flags
+(let* ((theme (gtk-icon-theme-default))
+       (pixbuf (gtk-icon-theme-load-icon theme
+                                         \"gtk-ok\"    ; icon name
+                                         48          ; size
+                                         0)))        ; no flags
    ... )
     @end{pre}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (theme)   : Run Last
+ lambda (theme)   :run-last
       @end{pre}
-      Emitted when the current icon theme is switched or GTK+ detects that a
+      Emitted when the current icon theme is switched or GTK detects that a
       change has occurred in the contents of the current icon theme.
       @begin[code]{table}
         @entry[theme]{The @sym{gtk-icon-theme} object.}
       @end{table}
   @end{dictionary}
   @see-class{gtk-icon-info}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkIconLookupFlags
-;;; ----------------------------------------------------------------------------
-
-(define-g-flags "GtkIconLookupFlags" gtk-icon-lookup-flags
-  (:export t
-   :type-initializer "gtk_icon_lookup_flags_get_type")
-  (:no-svg           #.(ash 1 0))
-  (:force-svg        #.(ash 1 1))
-  (:use-builtin      #.(ash 1 2))
-  (:generic-fallback #.(ash 1 3))
-  (:force-size       #.(ash 1 4))
-  (:force-regular    #.(ash 1 5))
-  (:force-symbolic   #.(ash 1 6))
-  (:dir-ltr          #.(ash 1 7))
-  (:dir-rtl          #.(ash 1 8)))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-icon-lookup-flags atdoc:*symbol-name-alias*) "Flags"
-      (gethash 'gtk-icon-lookup-flags atdoc:*external-symbols*)
- "@version{2020-12-4}
-  @begin{short}
-    Used to specify options for the function @fun{gtk-icon-theme-lookup-icon}.
-  @end{short}
-  @begin{pre}
-(define-g-flags \"GtkIconLookupFlags\" gtk-icon-lookup-flags
-  (:export t
-   :type-initializer \"gtk_icon_lookup_flags_get_type\")
-  (:no-svg           #.(ash 1 0))
-  (:force-svg        #.(ash 1 1))
-  (:use-builtin      #.(ash 1 2))
-  (:generic-fallback #.(ash 1 3))
-  (:force-size       #.(ash 1 4))
-  (:force-regular    #.(ash 1 5))
-  (:force-symbolic   #.(ash 1 6))
-  (:dir-ltr          #.(ash 1 7))
-  (:dir-rtl          #.(ash 1 8)))
-   @end{pre}
-  @begin[code]{table}
-    @entry[:no-svg]{Never get SVG icons, even if the @class{gdk-pixbuf} class
-      supports them. Cannot be used together with @code{:force-svg}.}
-    @entry[:force-svg]{Get SVG icons, even if the @class{gdk-pixbuf} class
-      does not support them. Cannot be used together with @code{:no-svg}.}
-    @entry[:use-builtin]{When passed to the function
-      @fun{gtk-icon-theme-lookup-icon} includes builtin icons as well as files.
-      For a builtin icon, the function @fun{gtk-icon-info-filename} returns
-      @code{nil} and you need to call the function
-      @fun{gtk-icon-info-builtin-pixbuf}.}
-    @entry[:generic-fallback]{Try to shorten icon name at '-' characters before
-      looking at inherited themes. This flag is only supported in functions that
-      take a single icon name. For more general fallback, see the function
-      @fun{gtk-icon-theme-choose-icon}.}
-    @entry[:force-size]{Always get the icon scaled to the requested size.}
-    @entry[:force-regular]{Try to always load regular icons, even when symbolic
-      icon names are given.}
-    @entry[:force-symbolic]{Try to always load symbolic icons, even when regular
-      icon names are given.}
-    @entry[:dir-ltr]{Try to load a variant of the icon for left-to-right
-      text direction.}
-    @entry[:dir-ltr]{Try to load a variant of the icon for right-to-left text
-      direction.}
-  @end{table}
-  @see-class{gtk-icon-theme}
-  @see-class{gdk-pixbuf}
-  @see-function{gtk-icon-theme-lookup-icon}
-  @see-function{gtk-icon-theme-choose-icon}
-  @see-function{gtk-icon-info-filename}
-  @see-function{gtk-icon-info-builtin-pixbuf}")
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_ICON_THEME_ERROR
-;;;
-;;; #define GTK_ICON_THEME_ERROR gtk_icon_theme_error_quark ()
-;;;
-;;; The GQuark used for GtkIconThemeError errors.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkIconThemeError
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkIconThemeError" gtk-icon-theme-error
-  (:export t
-   :type-initializer "gtk_icon_theme_error_get_type")
-  (:not-found 0)
-  (:failed 1))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-icon-theme-error atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-icon-theme-error atdoc:*external-symbols*)
- "@version{2020-12-4}
-  @begin{short}
-    Error codes for @class{gtk-icon-theme} operations.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkIconThemeError\" gtk-icon-theme-error
-  (:export t
-   :type-initializer \"gtk_icon_theme_error_get_type\")
-  (:not-found 0)
-  (:failed 1))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:not-found]{The icon specified does not exist in the theme.}
-    @entry[:failed]{An unspecified error occurred.}
-  @end{table}
-  @see-class{gtk-icon-theme}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_new ()
@@ -325,15 +327,15 @@
 
 (defun gtk-icon-theme-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-3-3}
+ "@version{2021-7-27}
   @return{The newly created @class{gtk-icon-theme} object.}
   @begin{short}
-    Creates a new icon theme object.
+    Creates a new icon theme.
   @end{short}
-  Icon theme objects are used to lookup up an icon by name in a particular icon
-  theme. Usually, you will want to use the functions
-  @fun{gtk-icon-theme-default} or @fun{gtk-icon-theme-for-screen} rather than
-  creating a new icon theme object for scratch.
+  Icon themes are used to lookup up an icon by name in a particular icon theme.
+  Usually, you will want to use the functions @fun{gtk-icon-theme-default} or
+  @fun{gtk-icon-theme-for-screen} rather than creating a new icon theme for
+  scratch.
   @see-class{gtk-icon-theme}
   @see-function{gtk-icon-theme-default}
   @see-function{gtk-icon-theme-for-screen}"
@@ -348,7 +350,7 @@
 (defcfun ("gtk_icon_theme_get_default" gtk-icon-theme-default)
     (g-object gtk-icon-theme)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
+ "@version{2021-7-27}
   @begin{return}
     A unique @class{gtk-icon-theme} object associated with the default screen.
   @end{return}
@@ -369,24 +371,24 @@
 (defcfun ("gtk_icon_theme_get_for_screen" gtk-icon-theme-for-screen)
     (g-object gtk-icon-theme)
  #+cl-cffi-gtk-documentation
- "@version{*2021-3-14}
+ "@version{*2021-7-27}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{return}
     A unique @class{gtk-icon-theme} object associated with the given
     @arg{screen}.
   @end{return}
   @begin{short}
-    Gets the icon theme object associated with the screen.
+    Gets the icon theme associated with the screen.
   @end{short}
   This icon theme is associated with the screen and can be used as long as the
   screen is open.
 
   If this function has not previously been called for the given screen, a new
-  icon theme object will be created and associated with the screen. Icon theme
-  objects are fairly expensive to create, so using this function is usually a
-  better choice than calling the function @fun{gtk-icon-theme-new} and setting
-  the screen yourself. By using this function a single icon theme object will
-  be shared between users.
+  icon theme will be created and associated with the screen. Icon themes are
+  fairly expensive to create, so using this function is usually a better choice
+  than calling the function @fun{gtk-icon-theme-new} and setting the screen
+  yourself. By using this function a single icon theme will be shared between
+  users.
   @see-class{gtk-icon-theme}
   @see-class{gdk-screen}
   @see-function{gtk-icon-theme-new}"
@@ -400,16 +402,17 @@
 
 (defcfun ("gtk_icon_theme_set_screen" gtk-icon-theme-set-screen) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-3}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{short}
     Sets the screen for an icon theme.
   @end{short}
-  The screen is used to track the user's currently configured icon theme, which
-  might be different for different screens.
-  @see-class{gtk-icon-theme}"
-  (icon-theme (g-object gtk-icon-theme))
+  The screen is used to track the currently configured icon theme, which might
+  be different for different screens.
+  @see-class{gtk-icon-theme}
+  @see-class{gdk-screen}"
+  (theme (g-object gtk-icon-theme))
   (screen (g-object gdk-screen)))
 
 (export 'gtk-icon-theme-set-screen)
@@ -419,25 +422,25 @@
 ;;; gtk_icon_theme_set_search_path () -> gtk-icon-theme-search-path
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-icon-theme-search-path) (path icon-theme)
+(defun (setf gtk-icon-theme-search-path) (path theme)
   (foreign-funcall "gtk_icon_theme_set_search_path"
-                   (g-object gtk-icon-theme) icon-theme
+                   (g-object gtk-icon-theme) theme
                    g-strv path
                    :int (length path)
                    :void)
   path)
 
 (defcfun ("gtk_icon_theme_get_search_path" %gtk-icon-theme-search-path) :void
-  (icon-theme (g-object gtk-icon-theme))
+  (theme (g-object gtk-icon-theme))
   (path (:pointer g-strv))
   (n-elements (:pointer :int)))
 
-(defun gtk-icon-theme-search-path (icon-theme)
+(defun gtk-icon-theme-search-path (theme)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
+ "@version{2021-7-27}
   @syntax[]{(gtk-icon-theme-search-path icon-theme) => path}
   @syntax[]{(setf (gtk-icon-theme-search-path icon-theme) path)}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+  @argument[theme]{a @class{gtk-icon-theme} object}
   @argument[path]{a list of strings with directories that are searched for icon
     themes}
   @begin{short}
@@ -446,12 +449,12 @@
 
   The function @sym{gtk-icon-theme-search-path} gets the current list of strings
   with the search path that are searched for icon themes. The function
-  @sym{(setf gtk-icon-theme-search-path)} sets the search path for icon themes.
+  @sym{(setf gtk-icon-theme-search-path)} sets the search path.
 
-  When looking for an icon theme, GTK+ will search for a subdirectory of one or
+  When looking for an icon theme, GTK will search for a subdirectory of one or
   more of the directories in @arg{path} with the same name as the icon theme.
-  Themes from multiple of the path elements are combined to allow themes to be
-  extended by adding icons in the user's home directory.
+  Icon themes from multiple of the path elements are combined to allow themes
+  to be extended by adding icons in the home directory of the user.
 
   In addition if an icon found is not found either in the current icon theme or
   the default icon theme, and an image file with the right name is found
@@ -471,10 +474,9 @@
     \"/var/lib/snapd/desktop/pixmaps\" \"/var/lib/snapd/desktop/pixmaps\")
     @end{pre}
   @end{dictionary}
-  @see-class{gtk-icon-theme}
-  @see-function{gtk-icon-theme-set-search-path}"
+  @see-class{gtk-icon-theme}"
   (with-foreign-objects ((path 'g-strv) (n-elements :int))
-    (%gtk-icon-theme-search-path icon-theme path n-elements)
+    (%gtk-icon-theme-search-path theme path n-elements)
     (mem-ref path 'g-strv)))
 
 (export 'gtk-icon-theme-search-path)
@@ -486,17 +488,17 @@
 (defcfun ("gtk_icon_theme_append_search_path" gtk-icon-theme-append-search-path)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
   @argument[path]{a string with the directory name to append to the icon path}
   @begin{short}
     Appends a directory to the search path.
   @end{short}
-  See the function @fun{gtk-icon-theme-set-search-path}.
+  See the function @fun{gtk-icon-theme-search-path}.
   @see-class{gtk-icon-theme}
-  @see-function{gtk-icon-theme-set-search-path}"
-  (icon-theme (g-object gtk-icon-theme))
-  (path g-string))
+  @see-function{gtk-icon-theme-search-path}"
+  (theme (g-object gtk-icon-theme))
+  (path :string))
 
 (export 'gtk-icon-theme-append-search-path)
 
@@ -507,17 +509,17 @@
 (defcfun ("gtk_icon_theme_prepend_search_path"
            gtk-icon-theme-prepend-search-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
   @argument[path]{a string with the directory name to prepend to the icon path}
   @begin{short}
     Prepends a directory to the search path.
   @end{short}
-  See the function @fun{gtk-icon-theme-set-search-path}.
+  See the function @fun{gtk-icon-theme search-path}.
   @see-class{gtk-icon-theme}
-  @see-function{gtk-icon-theme-set-search-path}"
-  (icon-theme (g-object gtk-icon-theme))
-  (path g-string))
+  @see-function{gtk-icon-theme-search-path}"
+  (theme (g-object gtk-icon-theme))
+  (path :string))
 
 (export 'gtk-icon-theme-prepend-search-path)
 
@@ -528,9 +530,9 @@
 (defcfun ("gtk_icon_theme_add_resource_path" gtk-icon-theme-add-resource-path)
     :void
  #+cl-cffi-gtk-documentation
- "@version{#2020-2-27}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[path]{a @code{:string} with a resource path}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[path]{a string with a resource path}
   @begin{short}
     Adds a resource path that will be looked at when looking for icons, similar
     to search paths.
@@ -538,13 +540,13 @@
   This function should be used to make application specific icons available as
   part of the icon theme.
 
-  The resources are considered as part of the hicolor icon theme and must be
-  located in subdirectories that are defined in the hicolor icon theme, such
+  The resources are considered as part of the Hicolor Icon Theme and must be
+  located in subdirectories that are defined in the Hicolor Icon Theme, such
   as @file{@@path/16x16/actions/run.png}. Icons that are directly placed in the
   resource path instead of a subdirectory are also considered as ultimate
   fallback.
   @see-class{gtk-icon-theme}"
-  (icon-theme (g-object gtk-icon-theme))
+  (theme (g-object gtk-icon-theme))
   (path :string))
 
 (export 'gtk-icon-theme-add-resource-path)
@@ -556,21 +558,22 @@
 (defcfun ("gtk_icon_theme_set_custom_theme" gtk-icon-theme-set-custom-theme)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[theme-name]{a string with the theme name to use instead of
-    configured theme, or @code{nil} to unset a previously set custom theme}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[name]{a string with the icon theme name to use instead of the
+    configured icon theme, or @code{nil} to unset a previously set custom
+    icon theme}
   @begin{short}
-    Sets the name of the icon theme that the icon theme object uses overriding
-    system configuration.
+    Sets the name of the icon theme that the icon theme uses overriding system
+    configuration.
   @end{short}
-  This function cannot be called on the icon theme objects returned from the
-  functions @fun{gtk-icon-theme-default} and @fun{gtk-icon-theme-for-screen}.
+  This function cannot be called on the icon themes returned from the functions
+  @fun{gtk-icon-theme-default} and @fun{gtk-icon-theme-for-screen}.
   @see-class{gtk-icon-theme}
   @see-function{gtk-icon-theme-default}
   @see-function{gtk-icon-theme-for-screen}"
-  (icon-theme (g-object gtk-icon-theme))
-  (theme-name g-string))
+  (theme (g-object gtk-icon-theme))
+  (name :string))
 
 (export 'gtk-icon-theme-set-custom-theme)
 
@@ -580,16 +583,16 @@
 
 (defcfun ("gtk_icon_theme_has_icon" gtk-icon-theme-has-icon) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[icon-name]{a string with the name of an icon}
-  @return{@em{True} if @arg{icon-theme} includes an icon for @arg{icon-name}.}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[name]{a string with the name of an icon}
+  @return{@em{True} if @arg{theme} includes an icon for @arg{name}.}
   @begin{short}
     Checks whether an icon theme includes an icon for a particular name.
   @end{short}
   @see-class{gtk-icon-theme}"
-  (icon-theme (g-object gtk-icon-theme))
-  (icon-name :string))
+  (theme (g-object gtk-icon-theme))
+  (name :string))
 
 (export 'gtk-icon-theme-has-icon)
 
@@ -600,28 +603,30 @@
 (defcfun ("gtk_icon_theme_lookup_icon" gtk-icon-theme-lookup-icon)
     (:pointer (:struct gtk-icon-info))
  #+cl-cffi-gtk-documentation
- "@version{2020-3-2}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[icon-name]{a string with the name of the icon to lookup}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[name]{a string with the name of the icon to lookup}
   @argument[size]{an integer for the desired icon size}
-  @argument[flags]{flags of type @symbol{gtk-icon-lookup-flags} modifying the
+  @argument[flags]{the @symbol{gtk-icon-lookup-flags} flags modifying the
     behavior of the icon lookup}
   @begin{return}
-    A @symbol{gtk-icon-info} structure containing information about the icon,
+    A @symbol{gtk-icon-info} instance containing information about the icon,
     or @code{nil} if the icon was not found.
   @end{return}
   @begin{short}
-    Looks up a named icon and returns a structure containing information such
-    as the filename of the icon.
+    Looks up a named icon and returns a @symbol{gtk-icon-info} instance
+    containing information such as the filename of the icon.
   @end{short}
   The icon can then be rendered into a pixbuf using the function
   @fun{gtk-icon-info-load-icon}. The function @fun{gtk-icon-theme-load-icon}
   combines these two steps if all you need is the pixbuf.
   @see-class{gtk-icon-theme}
+  @see-symbol{gtk-icon-info}
+  @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-info-load-icon}
   @see-function{gtk-icon-theme-load-icon}"
-  (icon-theme (g-object gtk-icon-theme))
-  (icon-name g-string)
+  (theme (g-object gtk-icon-theme))
+  (name :string)
   (size :int)
   (flags gtk-icon-lookup-flags))
 
@@ -635,31 +640,32 @@
            gtk-icon-theme-lookup-icon-for-scale)
     (:pointer (:struct gtk-icon-info))
  #+cl-cffi-gtk-documentation
- "@version{2020-3-2}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[icon-name]{a string with the name of the icon to lookup}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[name]{a string with the name of the icon to lookup}
   @argument[size]{an integer for the desired icon size}
   @argument[scale]{an integer for the desired scale}
-  @argument[flags]{flags of type @symbol{gtk-icon-lookup-flags} modifying the
+  @argument[flags]{the @symbol{gtk-icon-lookup-flags} flags modifying the
     behavior of the icon lookup}
   @begin{return}
-    A @symbol{gtk-icon-info} structure containing information about the icon,
+    A @symbol{gtk-icon-info} instance containing information about the icon,
     or @code{nil} if the icon was not found.
   @end{return}
   @begin{short}
     Looks up a named icon for a particular window scale and returns a
-    @symbol{gtk-icon-info} structure containing information such as the
-    filename of the icon.
+    @symbol{gtk-icon-info} instance containing information such as the filename
+    of the icon.
   @end{short}
   The icon can then be rendered into a pixbuf using the function
   @fun{gtk-icon-info-load-icon}. The funcion @fun{gtk-icon-theme-load-icon}
   combines these two steps if all you need is the pixbuf.
   @see-class{gtk-icon-theme}
   @see-symbol{gtk-icon-info}
+  @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-info-load-icon}
   @see-function{gtk-icon-theme-load-icon}"
-  (icon-theme (g-object gtk-icon-theme))
-  (icon-name g-string)
+  (theme (g-object gtk-icon-theme))
+  (name :string)
   (size :int)
   (scale :int)
   (flags gtk-icon-lookup-flags))
@@ -673,32 +679,33 @@
 (defcfun ("gtk_icon_theme_choose_icon" gtk-icon-theme-choose-icon)
     (:pointer (:struct gtk-icon-info))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[icon-names]{list of strings with the icon names to lookup}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[names]{list of strings with the icon names to lookup}
   @argument[size]{an integer with the desired icon size}
   @argument[flags]{the @symbol{gtk-icon-lookup-flags} flags modifying the
     behavior of the icon lookup}
   @begin{return}
-    A @symbol{gtk-icon-info} structure containing information about the icon,
+    A @symbol{gtk-icon-info} instance containing information about the icon,
     or @code{nil} if the icon was not found.
   @end{return}
   @begin{short}
-    Looks up a named icon and returns a structure containing information such
-    as the filename of the icon.
+    Looks up a named icon and returns a @symbol{gtk-icon-info} instance
+    containing information such as the filename of the icon.
   @end{short}
   The icon can then be rendered into a pixbuf using the function
   @fun{gtk-icon-info-load-icon}. The function @fun{gtk-icon-theme-load-icon}
   combines these two steps if all you need is the pixbuf.
 
-  If @arg{icon-names} contains more than one name, this function tries them all
-  in the given order before falling back to inherited icon themes.
+  If the argument @arg{names} contains more than one name, this function tries
+  them all in the given order before falling back to inherited icon themes.
   @see-class{gtk-icon-theme}
   @see-symbol{gtk-icon-info}
+  @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-info-load-icon}
   @see-function{gtk-icon-theme-load-icon}"
-  (icon-theme (g-object gtk-icon-theme))
-  (icon-names g-strv)
+  (theme (g-object gtk-icon-theme))
+  (names g-strv)
   (size :int)
   (flags gtk-icon-lookup-flags))
 
@@ -712,33 +719,35 @@
            gtk-icon-theme-choose-icon-for-scale)
     (:pointer (:struct gtk-icon-info))
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[icon-names]{list of strings with icon names to lookup}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[names]{list of strings with icon names to lookup}
   @argument[size]{an integer with the desired icon size}
   @argument[scale]{an integet with the desired scale}
-  @argument[flags]{flags modifying the behavior of the icon lookup}
+  @argument[flags]{the @symbol{gtk-icon-lookup-flags} flags modifying the
+    behavior of the icon lookup}
   @begin{return}
-    A @symbol{gtk-icon-info} structure containing information about the icon,
+    A @symbol{gtk-icon-info} instance containing information about the icon,
     or @code{nil} if the icon was not found.
   @end{return}
   @begin{short}
     Looks up a named icon for a particular window scale and returns a
-    @symbol{gtk-icon-info} structure containing information such as the
-    filename of the icon.
+    @symbol{gtk-icon-info} instance containing information such as the filename
+    of the icon.
   @end{short}
   The icon can then be rendered into a pixbuf using the function
   @fun{gtk-icon-info-load-icon}. The function @fun{gtk-icon-theme-load-icon}
   combines these two steps if all you need is the pixbuf.
 
-  If @arg{icon-names} contains more than one name, this function tries them all
-  in the given order before falling back to inherited icon themes.
+  If the argument @arg{names} contains more than one name, this function tries
+  them all in the given order before falling back to inherited icon themes.
   @see-class{gtk-icon-theme}
   @see-symbol{gtk-icon-info}
+  @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-info-load-icon}
   @see-function{gtk-icon-theme-load-icon}"
-  (icon-theme (g-object gtk-icon-theme))
-  (icon-names g-strv)
+  (theme (g-object gtk-icon-theme))
+  (names g-strv)
   (size :int)
   (scale :int)
   (flags gtk-icon-lookup-flags))
@@ -752,25 +761,28 @@
 (defcfun ("gtk_icon_theme_lookup_by_gicon" gtk-icon-theme-lookup-by-gicon)
     (:pointer (:struct gtk-icon-info))
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[icon]{the @class{g-icon} to look up}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[icon]{the @class{g-icon} object to look up}
   @argument[size]{an integer with the desired icon size}
-  @argument[flags]{flags modifying the behavior of the icon lookup}
+  @argument[flags]{the @symbol{gtk-icon-lookup-flags} flags modifying the
+    behavior of the icon lookup}
   @begin{return}
-    A @symbol{gtk-icon-info} structure containing information about the icon,
-    or @code{nil} if the icon was not found.
+    A @symbol{gtk-icon-info} instance containing information about the icon, or
+    @code{nil} if the icon was not found.
   @end{return}
   @begin{short}
-    Looks up an icon and returns a structure containing information such as the
-    filename of the icon.
+    Looks up an icon and returns a @symbol{gtk-icon-info} instance containing
+    information such as the filename of the icon.
   @end{short}
   The icon can then be rendered into a pixbuf using the function
   @fun{gtk-icon-info-load-icon}.
   @see-class{gtk-icon-theme}
+  @see-class{g-icon}
   @see-symbol{gtk-icon-info}
+  @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-info-load-icon}"
-  (icon-theme (g-object gtk-icon-theme))
+  (theme (g-object gtk-icon-theme))
   (icon (g-object g-icon))
   (size :int)
   (flags gtk-icon-lookup-flags))
@@ -785,26 +797,29 @@
            gtk-icon-theme-lookup-by-gicon-for-scale)
     (:pointer (:struct gtk-icon-info))
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[icon]{the @class{g-icon} to look up}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[icon]{the @class{g-icon} object to look up}
   @argument[size]{an integer with the desired icon size}
   @argument[scale]{an integer with the desired scale}
-  @argument[flags]{flags modifying the behavior of the icon lookup}
+  @argument[flags]{the @symbol{gtk-icon-lookup-flags} flags modifying the
+    behavior of the icon lookup}
   @begin{return}
-    A @symbol{gtk-icon-info} structure containing information about the icon,
-    or @code{nil} if the icon was not found.
+    A @symbol{gtk-icon-info} instance containing information about the icon, or
+    @code{nil} if the icon was not found.
   @end{return}
   @begin{short}
-    Looks up an icon and returns a structure containing information such as the
-    filename of the icon.
+    Looks up an icon and returns a @symbol{gtk-icon-info} instance containing
+    information such as the filename of the icon.
   @end{short}
   The icon can then be rendered into a pixbuf using the function
   @fun{gtk-icon-info-load-icon}.
   @see-class{gtk-icon-theme}
+  @see-class{g-icon}
   @see-symbol{gtk-icon-info}
+  @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-info-load-icon}"
-  (icon-theme (g-object gtk-icon-theme))
+  (theme (g-object gtk-icon-theme))
   (icon (g-object g-icon))
   (size :int)
   (scale :int)
@@ -818,22 +833,22 @@
 
 (defcfun ("gtk_icon_theme_load_icon" %gtk-icon-theme-load-icon)
     (g-object gdk-pixbuf)
-  (icon-theme (g-object gtk-icon-theme))
-  (icon-name :string)
+  (theme (g-object gtk-icon-theme))
+  (name :string)
   (size :int)
   (flags gtk-icon-lookup-flags)
   (err :pointer))
 
 (defun gtk-icon-theme-load-icon (theme name size flags)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
+ "@version{2021-7-27}
   @argument[theme]{a @class{gtk-icon-theme} object}
   @argument[name]{a string with the name of the icon to lookup}
   @argument[size]{an integer with the desired icon size, the resulting icon may
     not be exactly this size, see the function @fun{gtk-icon-info-load-icon}}
-  @argument[flags]{flags of type @symbol{gtk-icon-lookup-flags} modifying the
+  @argument[flags]{the @symbol{gtk-icon-lookup-flags} flags modifying the
     behavior of the icon lookup}
-  @return{The rendered @class{gdk-pixbuf} icon.}
+  @return{The rendered icon as a @class{gdk-pixbuf} object.}
   @begin{short}
     Looks up an icon in an icon theme, scales it to the given size and renders
     it into a pixbuf.
@@ -843,12 +858,14 @@
   @fun{gtk-icon-info-load-icon}.
 
   Note that you probably want to listen for icon theme changes and update the
-  icon. This is usually done by connecting to the \"style-set\" signal.
+  icon. This is usually done by connecting to the \"style-updated\" signal.
   If for some reason you do not want to update the icon when the icon theme
   changes, you should consider using the function @fun{gdk-pixbuf-copy} to make
-  a private copy of the pixbuf returned by this function. Otherwise GTK+ may
+  a private copy of the pixbuf returned by this function. Otherwise GTK may
   need to keep the old icon theme loaded, which would be a waste of memory.
   @see-class{gtk-icon-theme}
+  @see-class{gdk-pixbuf}
+  @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-info-load-icon}
   @see-function{gtk-icon-theme-lookup-icon}
   @see-function{gdk-pixbuf-copy}"
@@ -863,39 +880,41 @@
 
 (defcfun ("gtk_icon_theme_load_icon_for_scale"
           %gtk-icon-theme-load-icon-for-scale) (g-object gdk-pixbuf)
-  (icon-theme (g-object gtk-icon-theme))
-  (icon-name g-string)
+  (theme (g-object gtk-icon-theme))
+  (name :string)
   (size :int)
   (scale :int)
   (flags gtk-icon-lookup-flags)
-  (error :pointer))
+  (err :pointer))
 
 (defun gtk-icon-theme-load-icon-for-scale (theme name size scale flags)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
+ "@version{2021-7-27}
   @argument[theme]{a @class{gtk-icon-theme} object}
-  @argument[name]{the name of the icon to lookup}
+  @argument[name]{a string with the name of the icon to lookup}
   @argument[size]{an integer with the desired icon size}
   @argument[scale]{an integer with the desired scale}
-  @argument[flags]{flags of type @symbol{gtk-icon-lookup-flags} modifying the
+  @argument[flags]{the @symbol{gtk-icon-lookup-flags} flags modifying the
     behavior of the icon lookup}
-  @return{The rendered icon.}
+  @return{The rendered icon as a @class{gdk-pixbuf} object.}
   @begin{short}
     Looks up an icon in an icon theme for a particular window scale, scales it
     to the given size and renders it into a pixbuf.
   @end{short}
-  The resulting icon may not be exactly this size; see the function
-  @fun{gtk-icon-info-load-icon}. This is a convenience function; if more details
+  The resulting icon may not be exactly this size, see the function
+  @fun{gtk-icon-info-load-icon}. This is a convenience function. If more details
   about the icon are needed, use the function @fun{gtk-icon-theme-lookup-icon}
   followed by the function @fun{gtk-icon-info-load-icon}.
 
   Note that you probably want to listen for icon theme changes and update the
-  icon. This is usually done by connecting to the \"style-set\" signal.
+  icon. This is usually done by connecting to the \"style-updated\" signal.
   If for some reason you do not want to update the icon when the icon theme
   changes, you should consider using the function @fun{gdk-pixbuf-copy} to make
-  a private copy of the pixbuf returned by this function. Otherwise GTK+ may
+  a private copy of the pixbuf returned by this function. Otherwise GTK may
   need to keep the old icon theme loaded, which would be a waste of memory.
   @see-class{gtk-icon-theme}
+  @see-class{gdk-pixbuf}
+  @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-info-load-icon}
   @see-function{gtk-icon-theme-lookup-icon}
   @see-function{gdk-pixbuf-copy}"
@@ -911,41 +930,42 @@
 (defcfun ("gtk_icon_theme_load_surface" %gtk-icon-theme-load-surface)
     (:pointer (:struct cairo-surface-t))
   (theme (g-object gtk-icon-theme))
-  (name g-string)
+  (name :string)
   (size :int)
   (scale :int)
   (window (g-object gdk-window))
   (flags gtk-icon-lookup-flags)
-  (error :pointer))
+  (err :pointer))
 
-(defun gtk-icon-theme-load-surface (theme name size scale for-window flags)
+(defun gtk-icon-theme-load-surface (theme name size scale window flags)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
+ "@version{2021-7-27}
   @argument[theme]{a @class{gtk-icon-theme} object}
-  @argument[name]{the name of the icon to lookup}
+  @argument[name]{a string with the name of the icon to lookup}
   @argument[size]{an integer with the desired icon size}
   @argument[scale]{an integer with the desired scale}
-  @argument[for-window]{a @class{gdk-window} object to optimize drawing for,
-    or @code{nil}}
-  @argument[flags]{flags of type @symbol{gtk-icon-lookup-flags} modifying the
+  @argument[window]{a @class{gdk-window} object to optimize drawing for, or
+    @code{nil}}
+  @argument[flags]{the @symbol{gtk-icon-lookup-flags} flags modifying the
     behavior of the icon lookup}
-  @return{The rendered icon.}
+  @return{The rendered icon as a @symbol{cairo-surface-t} instance.}
   @begin{short}
     Looks up an icon in an icon theme for a particular window scale, scales it
-    to the given size and renders it into a cairo surface.
+    to the given size and renders it into a Cairo surface.
   @end{short}
-  This is a convenience function; if more details about the icon are needed,
+  This is a convenience function. If more details about the icon are needed,
   use the function @fun{gtk-icon-theme-lookup-icon} followed by the function
   @fun{gtk-icon-info-load-surface}.
 
   Note that you probably want to listen for icon theme changes and update the
-  icon. This is usually done by connecting to the \"style-set\" signal.
+  icon. This is usually done by connecting to the \"style-updated\" signal.
   @see-class{gtk-icon-theme}
+  @see-symbol{cairo-surface-t}
   @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-theme-lookup-icon}
   @see-function{gtk-icon-info-load-surface}"
   (with-g-error (err)
-    (%gtk-icon-theme-load-surface theme name size scale for-window flags err)))
+    (%gtk-icon-theme-load-surface theme name size scale window flags err)))
 
 (export 'gtk-icon-theme-load-surface)
 
@@ -954,12 +974,12 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_list_contexts" gtk-icon-theme-list-contexts)
-    (g-list (g-string :free-from-foreign t))
+    (g-list (:string :free-from-foreign t))
  #+cl-cffi-gtk-documentation
- "@version{*2021-3-14}
+ "@version{*2021-7-27}
   @argument[theme]{a @class{gtk-icon-theme} object}
   @begin{return}
-    A list holding the names of all the contexts in the icon theme.
+    A list of strings holding the names of all the contexts in the icon theme.
   @end{return}
   @begin{short}
     Gets the list of contexts available within the current hierarchy of icon
@@ -967,7 +987,7 @@
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (gtk-icon-theme-list-contexts (gtk-icon-theme-default))
+(gtk-icon-theme-list-contexts (gtk-icon-theme-default))
 => (\"International\" \"Emotes\" \"Places\" \"stock\" \"FileSystems\"
     \"Devices\" \"Applications\" \"Actions\" \"Categories\" \"Animations\"
     \"MimeTypes\" \"Stock\" \"Status\" \"Emblems\")
@@ -990,11 +1010,11 @@
 
 (defun gtk-icon-theme-list-icons (theme context)
  #+cl-cffi-gtk-documentation
- "@version{*2021-3-14}
+ "@version{*2021-7-27}
   @argument[theme]{a @class{gtk-icon-theme} object}
   @argument[context]{a string identifying a particular type of icon, or
     @code{nil} to list all icons}
-  @return{A list holding the names of all the icons in the theme.}
+  @return{A list of strings holding the names of all the icons in the theme.}
   @begin{short}
     Lists the icons in the current icon theme.
   @end{short}
@@ -1013,14 +1033,14 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_get_icon_sizes" %gtk-icon-theme-icon-sizes) :pointer
-  (icon-theme (g-object gtk-icon-theme))
-  (icon-name :string))
+  (theme (g-object gtk-icon-theme))
+  (name :string))
 
-(defun gtk-icon-theme-icon-sizes (icon-theme icon-name)
+(defun gtk-icon-theme-icon-sizes (theme name)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
-  @argument[icon-name]{a @code{:string} with the name of an icon}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
+  @argument[name]{a string with the name of an icon}
   @return{An Lisp array of integer with the sizes at which the icon is
     available.}
   @begin{short}
@@ -1029,7 +1049,7 @@
   @end{short}
   A size of -1 means that the icon is available in a scalable format.
   @see-class{gtk-icon-theme}"
-  (let ((ptr (%gtk-icon-theme-icon-sizes icon-theme icon-name)))
+  (let ((ptr (%gtk-icon-theme-icon-sizes theme name)))
     (cffi:foreign-array-to-lisp ptr '(:array :int 1 ) :adjustable t)))
 
 (export 'gtk-icon-theme-icon-sizes)
@@ -1041,15 +1061,15 @@
 (defcfun ("gtk_icon_theme_get_example_icon_name"
            gtk-icon-theme-example-icon-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
   @return{A string with the name of an example icon or @code{nil}.}
   @begin{short}
-    Gets the name of an icon that is representative of the current theme, for
-    instance, to use when presenting a list of themes to the user.
+    Gets the name of an icon that is representative of the current icon theme,
+    for instance, to use when presenting a list of icon themes to the user.
   @end{short}
   @see-class{gtk-icon-theme}"
-  (icon-theme (g-object gtk-icon-theme)))
+  (theme (g-object gtk-icon-theme)))
 
 (export 'gtk-icon-theme-example-icon-name)
 
@@ -1060,8 +1080,8 @@
 (defcfun ("gtk_icon_theme_rescan_if_needed" gtk-icon-theme-rescan-if-needed)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
   @return{@em{True} if the icon theme has changed and needed to be reloaded.}
   @begin{short}
     Checks to see if the icon theme has changed.
@@ -1080,11 +1100,11 @@
 (defcfun ("gtk_icon_theme_add_builtin_icon" gtk-icon-theme-add-builtin-icon)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-3-5}
-  @argument[icon-name]{a string with the name of the icon to register}
-  @argument[size]{the size at which to register the icon}
-  @argument[pixbuf]{a @class{gdk-pixbuf} that contains the image to use for
-    the icon}
+ "@version{2021-7-27}
+  @argument[name]{a string with the name of the icon to register}
+  @argument[size]{an integer with the size at which to register the icon}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object that contains the image to use
+    for the icon}
   @begin{short}
     Registers a built-in icon for icon theme lookups.
   @end{short}
@@ -1092,23 +1112,21 @@
 
   The idea of built-in icons is to allow an application or library that uses
   themed icons to function requiring files to be present in the file system.
-  For instance, the default images for all of GTK+'s stock icons are registered
-  as built-icons.
+  For instance, the default images for all stock icons of GTK are registered
+  as built-in icons.
 
   In general, if you use the function @sym{gtk-icon-theme-add-builtin-icon} you
   should also install the icon in the icon theme, so that the icon is generally
   available.
-
-  This function will generally be used with pixbufs loaded via the function
-  @fun{gdk-pixbuf-new-from-inline}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-icon-theme-add-builtin-icon} has been deprecated since
     version 3.14 and should not be used in newly written code. Use the function
-    @fun{gtk-icon-theme-add-resource-path} to add application-specific icons to
+    @fun{gtk-icon-theme-add-resource-path} to add application specific icons to
     the icon theme.
   @end{dictionary}
-  @see-class{gtk-icon-theme}"
-  (icon-name g-string)
+  @see-class{gtk-icon-theme}
+  @see-function{gtk-icon-theme-add-resource-path}"
+  (name :string)
   (size :int)
   (pixbuf (g-object gdk-pixbuf)))
 
@@ -1164,18 +1182,18 @@
 (defcfun ("gtk_icon_info_new_for_pixbuf" gtk-icon-info-new-for-pixbuf)
     (:pointer (:struct gtk-icon-info))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+ "@version{2021-7-27}
+  @argument[theme]{a @class{gtk-icon-theme} object}
   @argument[pixbuf]{the @class{gdk-pixbuf} object to wrap in a
-    @symbol{gtk-icon-info} structure}
-  @return{A @symbol{gtk-icon-info} structure.}
+    @symbol{gtk-icon-info} instance}
+  @return{A @symbol{gtk-icon-info} instance.}
   @begin{short}
-    Creates a @symbol{gtk-icon-info} structure for a @class{gdk-pixbuf} object.
+    Creates a @symbol{gtk-icon-info} instance for a @class{gdk-pixbuf} object.
   @end{short}
   @see-class{gtk-icon-theme}
   @see-class{gdk-pixbuf}
   @see-symbol{gtk-icon-info}"
-  (icon-theme (g-object gtk-icon-theme))
+  (theme (g-object gtk-icon-theme))
   (pixbuf (g-object gdk-pixbuf)))
 
 (export 'gtk-icon-info-new-for-pixbuf)
@@ -1186,8 +1204,8 @@
 
 (defcfun ("gtk_icon_info_get_base_size" gtk-icon-info-base-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-info]{a @symbol{gtk-icon-info} structure}
+ "@version{2021-7-27}
+  @argument[info]{a @symbol{gtk-icon-info} instance}
   @return{An integer with the base size, or 0, if no base size is known for the
     icon.}
   @begin{short}
@@ -1208,7 +1226,7 @@
   @end{dictionary}
   @see-class{gtk-icon-info}
   @see-function{gtk-icon-info-base-scale}"
-  (icon-info (:pointer (:struct gtk-icon-info))))
+  (info (:pointer (:struct gtk-icon-info))))
 
 (export 'gtk-icon-info-base-size)
 
@@ -1218,8 +1236,8 @@
 
 (defcfun ("gtk_icon_info_get_base_scale" gtk-icon-info-base-scale) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-info]{a @symbol{gtk-icon-info} structure}
+ "@version{2021-7-27}
+  @argument[info]{a @symbol{gtk-icon-info} instance}
   @return{An integer with the base scale.}
   @begin{short}
     Gets the base scale for the icon.
@@ -1237,7 +1255,7 @@
   @end{dictionary}
   @see-class{gtk-icon-info}
   @see-function{gtk-icon-info-base-size}"
-  (icon-info (:pointer (:struct gtk-icon-info))))
+  (info (:pointer (:struct gtk-icon-info))))
 
 (export 'gtk-icon-info-base-scale)
 
@@ -1247,8 +1265,8 @@
 
 (defcfun ("gtk_icon_info_get_filename" gtk-icon-info-filename) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-info]{a @symbol{gtk-icon-info} structure}
+ "@version{2021-7-27}
+  @argument[info]{a @symbol{gtk-icon-info} instance}
   @begin{return}
    A string with the filename for the icon.
   @end{return}
@@ -1256,7 +1274,7 @@
     Gets the filename for the icon.
   @end{short}
   If the @code{:use-builtin} flag was passed to the function
-  @fun{gtk-icon-theme-lookup-icon}, there may be no filename if a builtin icon
+  @fun{gtk-icon-theme-lookup-icon}, there may be no filename if a built-in icon
   is returned. In this case, you should use the function
   @fun{gtk-icon-info-builtin-pixbuf}.
   @begin[Example]{dictionary}
@@ -1270,7 +1288,7 @@
   @see-symbol{gtk-icon-info}
   @see-function{gtk-icon-info-builtin-pixbuf}
   @see-function{gtk-icon-theme-lookup-icon}"
-  (icon-info (:pointer (:struct gtk-icon-info))))
+  (info (:pointer (:struct gtk-icon-info))))
 
 (export 'gtk-icon-info-filename)
 
@@ -1281,24 +1299,24 @@
 (defcfun ("gtk_icon_info_get_builtin_pixbuf" gtk-icon-info-builtin-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-info]{a @symbol{gtk-icon-info} structure}
-  @return{The built-in image @class{gdk-pixbuf} object, or @code{nil}.}
+ "@version{2021-7-27}
+  @argument[info]{a @symbol{gtk-icon-info} instance}
+  @return{The built-in image as a @class{gdk-pixbuf} object, or @code{nil}.}
   @begin{short}
     Gets the built-in image for this icon, if any.
   @end{short}
-  To allow GTK+ to use built in icon images, you must pass the flag
+  To allow GTK to use built-in icon images, you must pass the flag
   @code{:use-builtin} to the function @fun{gtk-icon-theme-lookup-icon}.
   @begin[Warning]{dictionary}
     The function @sym{gtk-icon-info-builtin-pixbuf} has been deprecated
     since version 3.14 and should not be used in newly written code. Use the
-    function @fun{gtk-icon-theme-add-resource-path} instead of builtin icons.
+    function @fun{gtk-icon-theme-add-resource-path} instead of built-in icons.
   @end{dictionary}
   @see-symbol{gtk-icon-info}
   @see-class{gdk-pixbuf}
   @see-function{gtk-icon-theme-lookup-icon}
   @see-function{gtk-icon-theme-add-resource-path}"
-  (icon-info (:pointer (:struct gtk-icon-info))))
+  (info (:pointer (:struct gtk-icon-info))))
 
 (export 'gtk-icon-info-builtin-pixbuf)
 
@@ -1308,13 +1326,13 @@
 
 (defcfun ("gtk_icon_info_load_icon" %gtk-icon-info-load-icon)
     (g-object gdk-pixbuf)
-  (icon-info (:pointer (:struct gtk-icon-info)))
-  (error :pointer))
+  (info (:pointer (:struct gtk-icon-info)))
+  (err :pointer))
 
-(defun gtk-icon-info-load-icon (icon-info)
+(defun gtk-icon-info-load-icon (info)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-info]{a @symbol{gtk-icon-info} structure}
+ "@version{2021-7-27}
+  @argument[info]{a @symbol{gtk-icon-info} instance}
   @return{The @class{gdk-pixbuf} object with the rendered icon.}
   @begin{short}
     Renders an icon previously looked up in an icon theme using the function
@@ -1325,18 +1343,18 @@
 
   Note that the resulting pixbuf may not be exactly this size. An icon theme
   may have icons that differ slightly from their nominal sizes, and in addition
-  GTK+ will avoid scaling icons that it considers sufficiently close to the
+  GTK will avoid scaling icons that it considers sufficiently close to the
   requested size or for which the source image would have to be scaled up too
   far. This maintains sharpness. This behaviour can be changed by passing the
-  @code{:force-size} flag of type @symbol{gtk-icon-lookup-flags} when obtaining
-  the @symbol{gtk-icon-info}. If this flag has been specified, the pixbuf
-  returned by this function will be scaled to the exact size.
+  @code{:force-size} flag when obtaining the @symbol{gtk-icon-info} innstance.
+  If this flag has been specified, the pixbuf returned by this function will be
+  scaled to the exact size.
   @see-symbol{gtk-icon-info}
   @see-class{gdk-pixbuf}
   @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-theme-lookup-icon}"
   (with-g-error (err)
-    (%gtk-icon-info-load-icon icon-info err)))
+    (%gtk-icon-info-load-icon info err)))
 
 (export 'gtk-icon-info-load-icon)
 
@@ -1346,15 +1364,15 @@
 
 (defcfun ("gtk_icon_info_load_surface" %gtk-icon-info-load-surface)
     (:pointer (:struct cairo-surface-t))
-  (icon-info (:pointer (:struct gtk-icon-info)))
-  (for-window (g-object gdk-window))
+  (info (:pointer (:struct gtk-icon-info)))
+  (window (g-object gdk-window))
   (err :pointer))
 
-(defun gtk-icon-info-load-surface (icon-info for-window)
+(defun gtk-icon-info-load-surface (info window)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-info]{a @symbol{gtk-icon-info} structure}
-  @argument[for-window]{a @class{gdk-window} object to optimize drawing for}
+ "@version{2021-7-27}
+  @argument[info]{a @symbol{gtk-icon-info} instance}
+  @argument[window]{a @class{gdk-window} object to optimize drawing for}
   @return{A @symbol{cairo-surface-t} instance with the rendered icon.}
   @begin{short}
     Renders an icon previously looked up in an icon theme using the function
@@ -1363,20 +1381,19 @@
   The size will be based on the size passed to the function
   @fun{gtk-icon-theme-lookup-icon}. Note that the resulting surface may not be
   exactly this size. An icon theme may have icons that differ slightly from
-  their nominal sizes, and in addition GTK+ will avoid scaling icons that it
+  their nominal sizes, and in addition GTK will avoid scaling icons that it
   considers sufficiently close to the requested size or for which the source
   image would have to be scaled up too far. This maintains sharpness. This
-  behaviour can be changed by passing the @code{:force-size} flag of type
-  @symbol{gtk-icon-lookup-flags} when obtaining the @class{gtk-icon-info}
-  structure. If this flag has been specified, the pixbuf returned by this
-  function will be scaled to the exact size.
+  behaviour can be changed by passing the @code{:force-size} flag when obtaining
+  the @class{gtk-icon-info} instance. If this flag has been specified, the
+  pixbuf returned by this function will be scaled to the exact size.
   @see-symbol{gtk-icon-info}
   @see-class{gdk-window}
   @see-symbol{cairo-surface-t}
   @see-symbol{gtk-icon-lookup-flags}
   @see-function{gtk-icon-theme-lookup-icon}"
   (with-g-error (err)
-    (%gtk-icon-info-load-surface icon-info for-window err)))
+    (%gtk-icon-info-load-surface info window err)))
 
 (export 'gtk-icon-info-load-surface)
 
@@ -1443,7 +1460,7 @@
 
 (defcfun ("gtk_icon_info_load_symbolic" %gtk-icon-info-load-symbolic)
     (g-object gdk-pixbuf)
-  (icon-info (:pointer (:struct gtk-icon-info)))
+  (info (:pointer (:struct gtk-icon-info)))
   (fg (g-boxed-foreign gdk-rgba))
   (success-color (g-boxed-foreign gdk-rgba))
   (warning-color (g-boxed-foreign gdk-rgba))
@@ -1451,14 +1468,14 @@
   (was-symbolic (:pointer :boolean))
   (err :pointer))
 
-(defun gtk-icon-info-load-symbolic (icon-info fg success warning error)
+(defun gtk-icon-info-load-symbolic (info rgbafg rgbasucc rgbawarn rgbaerr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-info]{a @symbol{gtk-icon-info} structure}
-  @argument[fg]{a @class{gdk-rgba} foreground color of the icon}
-  @argument[success]{a @class{gdk-rgba} success color of the icon}
-  @argument[warning]{a @class{gdk-rgba} warning color of the icon}
-  @argument[error]{a @class{gdk-rgba} error color of the icon}
+ "@version{2021-7-27}
+  @argument[info]{a @symbol{gtk-icon-info} instance}
+  @argument[rgbafg]{a @class{gdk-rgba} foreground color of the icon}
+  @argument[rgbasucc]{a @class{gdk-rgba} success color of the icon}
+  @argument[rgbawarn]{a @class{gdk-rgba} warning color of the icon}
+  @argument[rgbaerr]{a @class{gdk-rgba} error color of the icon}
   @return{A @class{gdk-pixbuf} object representing the loaded icon.}
   @begin{short}
     Loads an icon, modifying it to match the system colours for the foreground,
@@ -1481,8 +1498,13 @@
   @see-function{g-themed-icon-new-with-default-fallbacks}"
   (with-g-error (err)
     (with-foreign-object (symbolic? :boolean)
-      (%gtk-icon-info-load-symbolic icon-info
-                                    fg success warning error symbolic? err))))
+      (%gtk-icon-info-load-symbolic info
+                                    rgbafg
+                                    rgbasucc
+                                    rgbawarn
+                                    rgbaerr
+                                    symbolic?
+                                    err))))
 
 (export 'gtk-icon-info-load-symbolic)
 
@@ -1618,15 +1640,15 @@
 
 (defcfun ("gtk_icon_info_load_symbolic_for_context"
           %gtk-icon-info-load-symbolic-for-context) (g-object gdk-pixbuf)
-  (icon-info (:pointer (:struct gtk-icon-info)))
+  (info (:pointer (:struct gtk-icon-info)))
   (context (g-object gtk-style-context))
   (was-symbolic (:pointer :boolean))
   (err :pointer))
 
-(defun gtk-icon-info-load-symbolic-for-context (icon-info context)
+(defun gtk-icon-info-load-symbolic-for-context (info context)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-info]{a @symbol{gtk-icon-info} structure}
+ "@version{2021-7-27}
+  @argument[info]{a @symbol{gtk-icon-info} instance}
   @argument[context]{a @class{gtk-style-context} object}
   @return{A @class{gdk-pixbuf} object representing the loaded icon.}
   @begin{short}
@@ -1647,8 +1669,7 @@
   @see-function{gtk-icon-info-load-symbolic}"
   (with-g-error (err)
     (with-foreign-object (symbolic? :boolean)
-      (%gtk-icon-info-load-symbolic-for-context icon-info
-                                                context symbolic? err))))
+      (%gtk-icon-info-load-symbolic-for-context info context symbolic? err))))
 
 (export 'gtk-icon-info-load-symbolic-for-context)
 
@@ -1856,8 +1877,8 @@
 
 (defcfun ("gtk_icon_info_is_symbolic" gtk-icon-info-is-symbolic) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-12-4}
-  @argument[icon-info]{a @symbol{gtk-icon-info} structure}
+ "@version{2021-7-27}
+  @argument[info]{a @symbol{gtk-icon-info} instance}
   @return{@em{True} if the icon is symbolic, @em{false} otherwise.}
   @begin{short}
     Checks if the icon is symbolic or not.
@@ -1866,7 +1887,7 @@
   determining this. This behaviour may change in the future.
   @see-symbol{gtk-icon-info}
   @see-function{gtk-icon-theme-lookup-icon}"
-  (icon-info (:pointer (:struct gtk-icon-info))))
+  (info (:pointer (:struct gtk-icon-info))))
 
 (export 'gtk-icon-info-is-symbolic)
 
