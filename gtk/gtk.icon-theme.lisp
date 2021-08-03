@@ -254,7 +254,7 @@
   The main reason for using a name rather than simply providing a filename is
   to allow different icons to be used depending on what icon theme is selected
   by the user. The operation of icon themes on Linux and Unix follows the Icon
-  Theme Specification. There is a default icon theme, named @em{hicolor} where
+  Theme Specification. There is a default icon theme, named Hicolor where
   applications should install their icons, but more additional application
   themes can be installed as operating system vendors and users choose.
 
@@ -438,8 +438,8 @@
 (defun gtk-icon-theme-search-path (theme)
  #+cl-cffi-gtk-documentation
  "@version{2021-7-27}
-  @syntax[]{(gtk-icon-theme-search-path icon-theme) => path}
-  @syntax[]{(setf (gtk-icon-theme-search-path icon-theme) path)}
+  @syntax[]{(gtk-icon-theme-search-path theme) => path}
+  @syntax[]{(setf (gtk-icon-theme-search-path theme) path)}
   @argument[theme]{a @class{gtk-icon-theme} object}
   @argument[path]{a list of strings with directories that are searched for icon
     themes}
@@ -460,8 +460,8 @@
   the default icon theme, and an image file with the right name is found
   directly in one of the elements of @arg{path}, then that image will be used
   for the icon name. This is legacy feature, and new icons should be put into
-  the default icon theme, which is called @code{DEFAULT_THEME_NAME}, rather than
-  directly on the icon path.
+  the fallback icon theme, which is called Hicolor, rather than directly on the
+  icon path.
   @begin[Examples]{dictionary}
     @begin{pre}
 (gtk-icon-theme-default) => #<GTK-ICON-THEME {1001A1A1A3@}>
