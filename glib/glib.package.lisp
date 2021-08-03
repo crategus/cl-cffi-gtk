@@ -49,7 +49,7 @@
 
   This is the API documentation of a Lisp binding to the library GLib. Only a
   small part of GLib is implemented in Lisp which is necessary to implement
-  GTK+ in Lisp.
+  GTK in Lisp.
   @begin[Version Information]{section}
     Variables and functions to check the GLib version.
 
@@ -66,7 +66,7 @@
   @end{section}
   @begin[Miscellaneous]{section}
     Documentation of several type definitions and functions, which are
-    needed for the implemenation of the GTK+ library. Only a small part of the
+    needed for the implemenation of the GTK library. Only a small part of the
     GLib library is implemented.
     @begin[Basic Types]{subsection}
       Standard GLib types, defined for ease-of-use and portability.
@@ -271,7 +271,7 @@
     GLib provides a standard method of reporting errors from a called function
     to the calling code. In the Lisp binding we provide internally the macros
     @code{with-g-error} and @code{with-catching-to-g-error} to handle errors
-    from the GTK+ and GLIB libraries. Only the type @type{g-error} is exported.
+    from the GTK and GLIB libraries. Only the type @type{g-error} is exported.
 
     @about-type{g-error}
     @about-function{g-error-new}
