@@ -1,11 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.boxed-lisp.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
-;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -207,8 +204,12 @@
 (defmethod translate-from-foreign
     (native (foreign-type boxed-opaque-foreign-type))
   (let* ((type (g-boxed-foreign-info foreign-type))
-         (proxy (make-instance (g-boxed-info-name type)
-                               :pointer native)))
+         ;; Changed 2021-8-2:
+         ;; If NATIVE is NIL we return NIL. This handles the case of slots which
+         ;; are initialized to a NULL pointer for the GBoxed opaque type.
+         (proxy (when native
+                    (make-instance (g-boxed-info-name type)
+                                   :pointer native))))
     proxy))
 
 (defmethod cleanup-translated-object-for-callback
