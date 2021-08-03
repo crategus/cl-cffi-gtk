@@ -76,7 +76,6 @@
 
 (defun create-text (buffer is-source)
   (let* ((scrolled (make-instance 'gtk-scrolled-window
-                                  :shadow-type :in
                                   :hscrollbar-policy :automatic
                                   :vscrollbar-policy :automatic))
          (view (make-instance 'gtk-text-view
@@ -230,7 +229,13 @@
        "EXAMPLE-TREE-VIEW-SIMPLE")
       ("Tree View Path"
        "../gtk-example/tree-view-path.lisp"
-       "EXAMPLE-TREE-VIEW-PATH"))
+       "EXAMPLE-TREE-VIEW-PATH")
+      ("Tree View Content Type"
+       "../gtk-example/tree-view-content-type.lisp"
+       "EXAMPLE-TREE-VIEW-CONTENT-TYPE")
+      ("Icon View"
+       "../gtk-example/icon-view.lisp"
+       "EXAMPLE-ICON-VIEW"))
 
      "Menus, Combo Box, Toolbar"
      (("Combo Box"
@@ -599,54 +604,54 @@
       view))
 
 (defun gtk-demo-activate (application)
-    (let ((window (make-instance 'gtk-application-window
-                                 :application application
-                                 :type :toplevel
-                                 :title "GTK Lisp Code Demos"
-                                 :default-width 1000
-                                 :default-height 800))
-          ;; A horizontal pane
-          (content (make-instance 'gtk-paned
-                                  :orientation :horizontal))
-          ;; A scrollable
-          (scroller (make-instance 'gtk-scrolled-window
-                                   :hscrollbar-policy :never
-                                   :vscrollbar-policy :automatic
-                                   :hexpand t
-                                   :vexpand t))
-          ;; A notebook
-          (notebook (make-instance 'gtk-notebook
-                                   :scrollable t))
-          (view (create-view-and-model)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)
-                          (g-application-quit application)))
-      ;; Set an icon for the application
-      (let ((pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-rgb.gif"))))
-        (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))
-        (setf (gtk-window-default-icon-list) (list pixbuf)))
-      ;; Add the widgets to the content of the window
-      (gtk-container-add scroller view)
-      (gtk-paned-add1 content scroller)
-      (gtk-paned-add2 content notebook)
-      ;; Add the notebook pages to the notebook
-      (gtk-notebook-append-page notebook
-                                (create-text info-buffer nil)
-                                (gtk-label-new-with-mnemonic "_Info"))
-      (gtk-notebook-append-page notebook
-                                (create-text source-buffer t)
-                                (gtk-label-new-with-mnemonic "_Source"))
-      (gtk-notebook-append-page notebook
-                                (create-text ui-buffer t)
-                                (gtk-label-new-with-mnemonic "_UI Definition"))
-      (gtk-notebook-append-page notebook
-                                (create-text css-buffer t)
-                                (gtk-label-new-with-mnemonic "_CSS Definition"))
-      ;; Add the content to the window
-      (gtk-container-add window content)
-      (gtk-widget-show-all window)))
+  (let ((window (make-instance 'gtk-application-window
+                               :application application
+                               :type :toplevel
+                               :title "GTK Lisp Code Demos"
+                               :default-width 1000
+                               :default-height 800))
+        ;; A horizontal pane
+        (content (make-instance 'gtk-paned
+                                :orientation :horizontal))
+        ;; A scrollable
+        (scroller (make-instance 'gtk-scrolled-window
+                                 :hscrollbar-policy :never
+                                 :vscrollbar-policy :automatic
+                                 :hexpand t
+                                 :vexpand t))
+        ;; A notebook
+        (notebook (make-instance 'gtk-notebook
+                                 :scrollable t))
+        (view (create-view-and-model)))
+    (g-signal-connect window "destroy"
+                      (lambda (widget)
+                        (declare (ignore widget))
+                        (leave-gtk-main)
+                        (g-application-quit application)))
+    ;; Set an icon for the application
+    (let ((pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-rgb.gif"))))
+      (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))
+      (setf (gtk-window-default-icon-list) (list pixbuf)))
+    ;; Add the widgets to the content of the window
+    (gtk-container-add scroller view)
+    (gtk-paned-add1 content scroller)
+    (gtk-paned-add2 content notebook)
+    ;; Add the notebook pages to the notebook
+    (gtk-notebook-append-page notebook
+                              (create-text info-buffer nil)
+                              (gtk-label-new-with-mnemonic "_Info"))
+    (gtk-notebook-append-page notebook
+                              (create-text source-buffer t)
+                              (gtk-label-new-with-mnemonic "_Source"))
+    (gtk-notebook-append-page notebook
+                              (create-text ui-buffer t)
+                              (gtk-label-new-with-mnemonic "_UI Definition"))
+    (gtk-notebook-append-page notebook
+                              (create-text css-buffer t)
+                              (gtk-label-new-with-mnemonic "_CSS Definition"))
+    ;; Add the content to the window
+    (gtk-container-add window content)
+    (gtk-widget-show-all window)))
 
 (defun activate-about-dialog ()
   (let (;; Create an about dialog
@@ -696,7 +701,6 @@
     (gtk-builder-add-from-string builder *appmenu*)
     (setf (gtk-application-app-menu application)
           (gtk-builder-object builder "appmenu")))
-
   ;; Add action "about" to the application
   (let ((action (g-simple-action-new "about" nil)))
     ;; Connect a handler to the signal "activate"
@@ -706,7 +710,6 @@
          (activate-about-dialog)))
     ;; Add the action to the action map of the application
     (g-action-map-add-action application action))
-
   ;; Add action "quit" to the application
   (let ((action (g-simple-action-new "quit" nil)))
     ;; Connect a handler to the signal activate
@@ -734,6 +737,7 @@
       (g-signal-connect gtk-demo "activate" #'gtk-demo-activate)
       (g-signal-connect gtk-demo "startup" #'gtk-demo-startup)
       ;; Start the application
-      (g-application-run gtk-demo argv))))
+      (g-application-run gtk-demo argv)))
+  (join-gtk-main))
 
 ;;; --- End of file gtk-demo.lisp ----------------------------------------------

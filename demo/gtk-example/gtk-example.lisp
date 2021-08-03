@@ -40,10 +40,10 @@
            #:example-frame                             ; Layout Widgets
            #:example-frame-properties                  ; Layout Widgets
            #:example-file-chooser-button
-           #:example-file-chooser-custom-filter
-           #:example-file-chooser-dialog
-           #:example-file-chooser-preview
-           #:example-file-chooser-widget
+           #:create-file-chooser-custom-filter
+           #:create-file-chooser-dialog
+           #:create-file-chooser-preview
+           #:create-file-chooser-widget
            #:example-getting-started                   ; Getting started
            #:example-grab
            #:example-grid-packing

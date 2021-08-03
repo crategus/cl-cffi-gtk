@@ -74,6 +74,7 @@
 
 (defun example-app (&optional (argv nil))
   (within-main-loop
-    (g-application-run (example-app-new) argv)))
+    (g-application-run (example-app-new) argv))
+  (join-gtk-main))
 
 ;;; 2020-12-19

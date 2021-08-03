@@ -1,11 +1,9 @@
-;;;; Example Tool Palette
+;;;; Example Tool Palette (2021-3-15)
 ;;;;
 ;;;; A tool palette widget shows groups of toolbar items as a grid of icons or
 ;;;; a list of names.
-;;;;
-;;;; 2021-3-15
 
-(in-package #:gtk-example)
+(in-package :gtk-example)
 
 (defun load-icon-items (palette)
   (let* ((max-icons 24) ; Do not load too much icons.
