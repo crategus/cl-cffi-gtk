@@ -16,8 +16,9 @@
   ;; Check the names
   (is (equal '("G_APPLICATION_FLAGS_NONE" "G_APPLICATION_IS_SERVICE"
                "G_APPLICATION_IS_LAUNCHER" "G_APPLICATION_HANDLES_OPEN"
-               "G_APPLICATION_HANDLES_COMMAND_LINE" "G_APPLICATION_SEND_ENVIRONMENT"
-               "G_APPLICATION_NON_UNIQUE" "G_APPLICATION_CAN_OVERRIDE_APP_ID"
+               "G_APPLICATION_HANDLES_COMMAND_LINE"
+               "G_APPLICATION_SEND_ENVIRONMENT" "G_APPLICATION_NON_UNIQUE"
+               "G_APPLICATION_CAN_OVERRIDE_APP_ID"
                "G_APPLICATION_ALLOW_REPLACEMENT" "G_APPLICATION_REPLACE")
              (mapcar #'flags-item-name
                      (get-flags-items "GApplicationFlags"))))
@@ -26,9 +27,9 @@
              (mapcar #'flags-item-value
                      (get-flags-items "GApplicationFlags"))))
   ;; Check the nick names
-  (is (equal '("flags-none" "is-service" "is-launcher" "handles-open" "handles-command-line"
-               "send-environment" "non-unique" "can-override-app-id" "allow-replacement"
-               "replace")
+  (is (equal '("flags-none" "is-service" "is-launcher" "handles-open"
+               "handles-command-line" "send-environment" "non-unique"
+               "can-override-app-id" "allow-replacement" "replace")
              (mapcar #'flags-item-nick
                      (get-flags-items "GApplicationFlags"))))
   ;; Check the flags definition
@@ -64,11 +65,11 @@
   (is (equal '("GActionGroup" "GActionMap")
              (mapcar #'g-type-name (g-type-interfaces "GApplication"))))
   ;; Check the class properties
-  (is (equal '("action-group" "application-id" "flags" "inactivity-timeout" "is-busy"
-               "is-registered" "is-remote" "resource-base-path")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GApplication"))
-                          #'string-lessp)))
+  (is (equal '("action-group" "application-id" "flags" "inactivity-timeout"
+               "is-busy" "is-registered" "is-remote" "resource-base-path")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GApplication"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GApplication" G-APPLICATION
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES
@@ -279,3 +280,4 @@
 ;;;     g_application_bind_busy_property
 ;;;     g_application_unbind_busy_property
 
+;;; 2021-7-27

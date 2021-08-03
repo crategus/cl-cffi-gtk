@@ -42,6 +42,9 @@
 
 ;;;     GtkButtonBox
 
+(foreign-funcall "gtk_hbutton_box_get_type" g-size)
+(foreign-funcall "gtk_vbutton_box_get_type" g-size)
+
 (test gtk-button-box-class
   ;; Type check
   (is (g-type-is-object "GtkButtonBox"))
@@ -126,4 +129,4 @@
 ;;;                  gint  child-min-height      Read
 ;;;                  gint  child-min-width       Read
 
-;;; 2021-4-30
+;;; 2021-8-2

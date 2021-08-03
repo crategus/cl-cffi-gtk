@@ -75,9 +75,9 @@
                "tooltip-markup" "tooltip-text" "use-fallback" "valign" "vexpand"
                "vexpand-set" "visible" "width-request" "window" "xalign" "xpad"
                "yalign" "ypad")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkImage"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkImage"))
+                   #'string-lessp)))
   ;; Check the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
                "focus-line-width" "focus-padding" "interior-focus" "link-color"
@@ -122,7 +122,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 4 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -131,7 +131,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :empty (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 (test gtk-image-icon-size
@@ -207,7 +207,7 @@
     (is (string= "gtk-logo-24.png" (gtk-image-file image)))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
@@ -216,7 +216,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :pixbuf (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new_from_icon_set
@@ -237,7 +237,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :icon-set (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new_from_pixbuf
@@ -249,7 +249,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
@@ -258,7 +258,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :pixbuf (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new_from_stock
@@ -269,7 +269,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -278,7 +278,7 @@
     (is (string= "gtk-ok" (gtk-image-stock image)))
     (is (eq :stock (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new_from_animation
@@ -290,7 +290,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is (typep (gtk-image-pixbuf-animation image) 'gdk-pixbuf-animation))
@@ -299,7 +299,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :animation (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new_from_icon_name
@@ -310,7 +310,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is (string= "gtk-ok" (gtk-image-icon-name image)))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -319,7 +319,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :icon-name (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new_from_gicon
@@ -331,7 +331,7 @@
     (is-false (gtk-image-file image))
     (is (typep (gtk-image-gicon image) 'g-themed-icon))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -340,7 +340,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :gicon (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new_from_resource
@@ -354,7 +354,7 @@
       (is-false (gtk-image-file image))
       (is-false (gtk-image-gicon image))
       (is-false (gtk-image-icon-name image))
-      (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+      (is-false (gtk-image-icon-set image))
       (is (= 0 (gtk-image-icon-size image)))
       (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
       (is-false (gtk-image-pixbuf-animation image))
@@ -363,7 +363,7 @@
       (is-false (gtk-image-stock image))
       (is (eq :pixbuf (gtk-image-storage-type image)))
       ;; at this point surface is a null-pointer, this causes an error
-      (signals (error) (gtk-image-surface image))
+      (is-false (gtk-image-surface image))
       (is-false (gtk-image-use-fallback image)))
       ;; Unregister the resources
       (is-false (g-resources-unregister resource))))
@@ -372,13 +372,14 @@
 
 (test gtk-image-new-from-surface
   (let* ((theme (gtk-icon-theme-default))
-         (surface (gtk-icon-theme-load-surface theme "gtk-ok" 48 1 nil :use-builtin))
+         (surface (gtk-icon-theme-load-surface theme "gtk-ok"
+                                                     48 1 nil :use-builtin))
          (image (gtk-image-new-from-surface surface)))
     (is (typep image 'gtk-image))
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -401,7 +402,7 @@
     (is (string= "gtk-logo-24.png" (gtk-image-file image)))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
@@ -410,7 +411,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :pixbuf (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_icon_set
@@ -434,7 +435,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :icon-set (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_pixbuf
@@ -449,7 +450,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
@@ -458,7 +459,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :pixbuf (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_stock
@@ -472,7 +473,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -481,7 +482,7 @@
     (is (string= "gtk-ok" (gtk-image-stock image)))
     (is (eq :stock (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_animation
@@ -496,7 +497,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is (typep (gtk-image-pixbuf-animation image) 'gdk-pixbuf-animation))
@@ -505,7 +506,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :animation (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_icon_name
@@ -519,7 +520,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is (string= "gtk-ok" (gtk-image-icon-name image)))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -528,7 +529,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :icon-name (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_gicon
@@ -543,7 +544,7 @@
     (is-false (gtk-image-file image))
     (is (typep (gtk-image-gicon image) 'g-themed-icon))
     (is-false (gtk-image-icon-name image))
-    (is (eq 'gtk-icon-set (type-of (gtk-image-icon-set image))))
+    (is-false (gtk-image-icon-set image))
     (is (= 6 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -552,7 +553,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :gicon (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_resource
@@ -569,7 +570,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is (typep (gtk-image-pixbuf image) 'gdk-pixbuf))
     (is-false (gtk-image-pixbuf-animation image))
@@ -578,7 +579,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :pixbuf (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))
     ;; Unregister the resources
     (is-false (g-resources-unregister resource))))
@@ -587,7 +588,8 @@
 
 (test gtk-image-set-from-surface
   (let* ((theme (gtk-icon-theme-default))
-         (surface (gtk-icon-theme-load-surface theme "gtk-ok" 48 1 nil :use-builtin))
+         (surface (gtk-icon-theme-load-surface theme "gtk-ok"
+                                                     48 1 nil :use-builtin))
          (image (make-instance 'gtk-image)))
     ;; Set image from surface
     (is-false (gtk-image-set-from-surface image surface))
@@ -596,7 +598,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -617,7 +619,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is (string= "gtk-ok" (gtk-image-icon-name image)))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 4 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -626,7 +628,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :icon-name (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))
     ;; Clear the image
     (is-false (gtk-image-clear image))
@@ -634,7 +636,7 @@
     (is-false (gtk-image-file image))
     (is-false (gtk-image-gicon image))
     (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
+    (is-false (gtk-image-icon-set image))
     (is (= 0 (gtk-image-icon-size image)))
     (is-false (gtk-image-pixbuf image))
     (is-false (gtk-image-pixbuf-animation image))
@@ -643,7 +645,7 @@
     (is-false (gtk-image-stock image))
     (is (eq :empty (gtk-image-storage-type image)))
     ;; at this point surface is a null-pointer, this causes an error
-    (signals (error) (gtk-image-surface image))
+    (is-false (gtk-image-surface image))
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new
@@ -651,4 +653,4 @@
 (test gtk-image-new
   (is (typep (gtk-image-new) 'gtk-image)))
 
-;;; 2020-11-27
+;;; 2021-8-2

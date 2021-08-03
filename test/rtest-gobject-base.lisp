@@ -306,7 +306,10 @@
 
 (test g-object-property.4
   (let ((obj (make-instance 'gtk-label :label "label")))
-    (is (eq 'pango-attr-list (type-of (g-object-property obj "attributes"))))))
+;    (is (eq 'pango-attr-list (type-of (g-object-property obj "attributes"))))))
+    (is-false (g-object-property obj "attributes"))
+    (setf (g-object-property obj "attributes") (pango-attr-list-new))
+    (is (typep (g-object-property obj "attributes") 'pango-attr-list))))
 
 (test g-object-property.5
   (let ((obj (make-instance 'gtk-label :label "label")))
@@ -319,7 +322,7 @@
 (test g-object-property.6
   (let ((obj (make-instance 'gtk-label :label "label")))
     (is (eq :none (g-object-property obj "ellipsize" "PangoEllipsizeMode")))
-    (is (eq :start (setf (g-object-property obj "ellipsize" "PangoEllipsizeMode") :start)))
+    (setf (g-object-property obj "ellipsize" "PangoEllipsizeMode") :start)
     (is (eq :start (g-object-property obj "ellipsize")))))
 
 (test g-object-property.7
@@ -363,4 +366,4 @@
 ;;;     g_weak_ref_set
 ;;;     g_assert_finalize_object
 
-;;; 2021-1-28
+;;; 2021-8-2

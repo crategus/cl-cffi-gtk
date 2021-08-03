@@ -23,9 +23,9 @@
              (mapcar #'g-type-name (g-type-interfaces "GSimpleAction"))))
   ;; Check the class properties
   (is (equal '("enabled" "name" "parameter-type" "state" "state-type")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GSimpleAction"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GSimpleAction"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GSimpleAction" G-SIMPLE-ACTION
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES ("GAction"))
@@ -41,75 +41,95 @@
 
 ;;; --- Properties and Accessors -----------------------------------------------
 
-(test g-simple-action-properties
-  (let ((action (make-instance 'g-simple-action :name "simple"
-                                                :parameter-type (g-variant-type-new "b"))))
+(test g-simple-action-properties.1
+  (let ((action (make-instance 'g-simple-action
+                               :name "simple"
+                               :parameter-type (g-variant-type-new "b"))))
     (is-true (g-simple-action-enabled action))
     (is (string= "simple" (g-simple-action-name action)))
-    (is (eq 'g-variant-type (type-of (g-simple-action-parameter-type action))))
-    (is (equal "b" (g-variant-type-dup-string (g-simple-action-parameter-type action))))
-    (is-true (null-pointer-p (g-simple-action-state action)))
-    ;; The slot state-type is not initialized, the accessor signals an error
-    (signals (error) (g-simple-action-state-type action)))
+    (is (typep (g-simple-action-parameter-type action) 'g-variant-type))
+    (is (string= "b"
+                 (g-variant-type-dup-string
+                     (g-simple-action-parameter-type action))))
+    ;; Slot STATE is initialized with a NULL-Pointer
+    (is (null-pointer-p (g-simple-action-state action)))
+    ;; Slot STATE-TYPE is initialized with a NULL pointer, we get NIL
+    (is-false (g-simple-action-state-type action))))
 
-  (let ((action (make-instance 'g-simple-action :name "simple"
-                                                :parameter-type (g-variant-type-new "b")
-                                                :state (g-variant-new-string "text"))))
+(test g-simple-action-properties.2
+  (let ((action (make-instance 'g-simple-action
+                               :name "simple"
+                               :parameter-type (g-variant-type-new "b")
+                               :state (g-variant-new-string "text"))))
     (is-true (g-simple-action-enabled action))
     (is (string= "simple" (g-simple-action-name action)))
-    (is (eq 'g-variant-type (type-of (g-simple-action-parameter-type action))))
-    (is (equal "b" (g-variant-type-dup-string (g-simple-action-parameter-type action))))
-    ;; Slot state
-    (is-true (pointerp (g-simple-action-state action)))
-    (is (string= "s" (g-variant-type-dup-string (g-variant-type (g-simple-action-state action)))))
+    (is (typep (g-simple-action-parameter-type action) 'g-variant-type))
+    (is (string= "b"
+                 (g-variant-type-dup-string
+                     (g-simple-action-parameter-type action))))
+    ;; Slot STATE
+    (is (pointerp (g-simple-action-state action)))
+    (is (string= "s"
+                 (g-variant-type-dup-string
+                     (g-variant-type (g-simple-action-state action)))))
     (is (string= "text" (g-variant-string (g-simple-action-state action))))
-    ;; Slot state-type
-    (is (eq 'g-variant-type (type-of (g-simple-action-state-type action))))
-    (is (string= "s" (g-variant-type-dup-string (g-simple-action-state-type action))))
-    ;; Slot state-type is not writeable
-    (signals (error) (setf (g-simple-action-state-type action) (g-variant-type-new "b")))))
+    ;; Slot STATE-TYPE
+    (is (typep (g-simple-action-state-type action) 'g-variant-type))
+    (is (string= "s"
+                 (g-variant-type-dup-string
+                     (g-simple-action-state-type action))))
+    ;; Slot STATE-TYPE is not writeable
+    (signals (error) (setf (g-simple-action-state-type action)
+                           (g-variant-type-new "b")))))
 
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;   g_simple_action_new
 
 (test g-simple-action-new
-  (let ((action (g-simple-action-new "simple" (g-variant-type-new "b"))))
-    (is (eq 'g-simple-action (type-of action)))
-    (is (equal "simple" (g-action-name action)))
-    (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
-    (is (equal "b" (g-variant-type-dup-string (g-action-parameter-type action))))))
+  (let ((action (g-simple-action-new "action" (g-variant-type-new "b"))))
+    (is (typep action 'g-simple-action))
+    (is (string= "action" (g-simple-action-name action)))
+    (is (typep (g-simple-action-parameter-type action) 'g-variant-type))
+    (is (string= "b"
+                 (g-variant-type-dup-string
+                   (g-simple-action-parameter-type action))))))
 
 ;;;   g_simple_action_new_stateful
 
 (test g-simple-action-new-stateful
-  (let ((action (g-simple-action-new-stateful "simple"
+  (let ((action (g-simple-action-new-stateful "action"
                                               (g-variant-type-new "b")
-                                              (g-variant-new-boolean t))))
-    (is (eq 'g-simple-action (type-of action)))
-    (is (equal "simple" (g-action-name action)))
-    (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
-    (is (equal "b" (g-variant-type-dup-string (g-action-parameter-type action))))
-    (is-true (g-variant-boolean (g-action-state action)))))
+                                              (g-variant-new-int16 10))))
+    (is (typep action 'g-simple-action))
+    (is (string= "action" (g-simple-action-name action)))
+    (is (typep (g-simple-action-parameter-type action) 'g-variant-type))
+    (is (string= "b"
+                 (g-variant-type-dup-string
+                   (g-simple-action-parameter-type action))))
+    (is (= 10 (g-variant-int16 (g-simple-action-state action))))
+    (is (string= "n"
+                 (g-variant-type-dup-string
+                   (g-simple-action-state-type action))))))
 
 ;;; --- Functions from the interface -------------------------------------------
 
 (test g-simple-action-interface-functions
-  (let ((action (g-simple-action-new-stateful "simple"
+  (let ((action (g-simple-action-new-stateful "action"
                                               (g-variant-type-new "b")
                                               (g-variant-new-boolean t))))
-    ;; g-action-name
-    (is (equal "simple" (g-action-name action)))
-    ;; g-action-parameter-type
-    (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
-    ;; g-action-state-type
-    (is (eq 'g-variant-type (type-of (g-action-state-type action))))
-    ;; We have to initialize the state with a g-variant-array to set a hint
-    (is-true (null-pointer-p (g-action-get-state-hint action)))
     ;; g-action-enabled
     (is-true (g-action-enabled action))
+    ;; g-action-name
+    (is (string= "action" (g-action-name action)))
+    ;; g-action-parameter-type
+    (is (typep (g-action-parameter-type action) 'g-variant-type))
     ;; g-action-state
-    (is-true (g-variant-boolean (g-action-state action)))))
+    (is-true (g-variant-boolean (g-action-state action)))
+    ;; g-action-state-type
+    (is (typep (g-action-state-type action) 'g-variant-type))
+    ;; We have to initialize the state with a g-variant-array to set a hint
+    (is (null-pointer-p (g-action-state-hint action)))))
 
 ;;;   g_action_change_state
 ;;;   g_action_activate
@@ -208,3 +228,5 @@
     (g-action-change-state action (g-variant-new-int32 20))
     ;; The state has not changed.
     (is (= 10 (g-variant-int32 (g-action-state action))))))
+
+;;; 2021-8-2

@@ -1,7 +1,19 @@
 (def-suite g-variant-type :in glib-suite)
 (in-suite g-variant-type)
 
+(defparameter vtypes
+              (list "b" "y" "n" "q"  "i" "u" "x" "t" "h" "d" "s" "o" "g" "v"
+                    "*" "?" "m*" "a*" "r" "()"  "{?*}" "a{?*}" "as" "ao" "ay"
+                    "aay" "a(sv)"))
+
 ;;;     GVariantType
+
+(test g-variant-type-struct
+  ;; Type check
+  (is (g-type-is-a (gtype "GVariantType") +g-type-boxed+))
+  ;; Check the type initializer
+  (is (eq (gtype "GVariantType")
+          (gtype (foreign-funcall "g_variant_type_get_gtype" g-size)))))
 
 ;;;     G_VARIANT_TYPE_BOOLEAN
 ;;;     G_VARIANT_TYPE_BYTE
@@ -38,8 +50,12 @@
 
 ;;;     g_variant_type_new
 
-(test g-variant-type-new
+(test g-variant-type-new.1
   (is (typep (g-variant-type-new "b") 'g-variant-type)))
+
+(test g-variant-type-new.2
+  (is (every (lambda (x) (typep x 'g-variant-type))
+             (mapcar #'g-variant-type-new vtypes))))
 
 ;;;     g_variant_type_string_is_valid
 
@@ -61,18 +77,27 @@
 
 ;;;   g_variant_type_dup_string
 
-(test g-variant-type-dup-string
+(test g-variant-type-dup-string.1
   (is (string= "b" (g-variant-type-dup-string (g-variant-type-new "b")))))
+
+(test g-variant-type-dup-string.2
+  (is (equal vtypes
+             (mapcar #'g-variant-type-dup-string
+                     (mapcar #'g-variant-type-new vtypes)))))
 
 ;;;   g_variant_type_is_definite
 
 (test g-variant-type-is-definite
-  (is-true (g-variant-type-is-definite (g-variant-type-new "b"))))
+  (is-true (g-variant-type-is-definite (g-variant-type-new "b")))
+  (is-false (g-variant-type-is-definite (g-variant-type-new "*")))
+  (is-false (g-variant-type-is-definite (g-variant-type-new "?")))
+  (is-false (g-variant-type-is-definite (g-variant-type-new "r"))))
 
 ;;;   g_variant_type_is_container
 
 (test g-variant-type-is-container
-  (is-false (g-variant-type-is-container (g-variant-type-new "b"))))
+  (is-false (g-variant-type-is-container (g-variant-type-new "b")))
+  (is-true (g-variant-type-is-container (g-variant-type-new "a*"))))
 
 ;;;   g_variant_type_is_basic
 
@@ -180,7 +205,8 @@
 
 (test g-variant-type-n-items
   (let ((bool (g-variant-type-new "b")))
-    (is (= 3 (g-variant-type-n-items (g-variant-type-new-tuple bool bool bool))))))
+    (is (= 3
+           (g-variant-type-n-items (g-variant-type-new-tuple bool bool bool))))))
 
 ;;;   g_variant_type_first
 
@@ -188,7 +214,8 @@
   (let* ((bool (g-variant-type-new "b"))
          (int16 (g-variant-type-new "n"))
          (tuple (g-variant-type-new-tuple bool int16 bool bool int16)))
-    (is (string= "b" (g-variant-type-dup-string (g-variant-type-first tuple))))))
+    (is (string= "b"
+                 (g-variant-type-dup-string (g-variant-type-first tuple))))))
 
 ;;;   g_variant_type_next
 
@@ -221,4 +248,4 @@
     (is (string= "n" (g-variant-type-dup-string (g-variant-type-key dict))))
     (is (string= "b" (g-variant-type-dup-string (g-variant-type-value dict))))))
 
-;;; 2021-4-9
+;;; 2021-7-31

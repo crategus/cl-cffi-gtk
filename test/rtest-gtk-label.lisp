@@ -24,26 +24,29 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkLabel"))))
   ;; Check the class properties
   (is (equal '("angle" "app-paintable" "attributes" "can-default" "can-focus"
-               "composite-child" "cursor-position" "double-buffered" "ellipsize" "events"
-               "expand" "focus-on-click" "halign" "has-default" "has-focus" "has-tooltip"
-               "height-request" "hexpand" "hexpand-set" "is-focus" "justify" "label" "lines"
-               "margin" "margin-bottom" "margin-end" "margin-left" "margin-right"
+               "composite-child" "cursor-position" "double-buffered" "ellipsize"
+               "events" "expand" "focus-on-click" "halign" "has-default"
+               "has-focus" "has-tooltip" "height-request" "hexpand"
+               "hexpand-set" "is-focus" "justify" "label" "lines" "margin"
+               "margin-bottom" "margin-end" "margin-left" "margin-right"
                "margin-start" "margin-top" "max-width-chars" "mnemonic-keyval"
-               "mnemonic-widget" "name" "no-show-all" "opacity" "parent" "pattern"
-               "receives-default" "scale-factor" "selectable" "selection-bound" "sensitive"
-               "single-line-mode" "style" "tooltip-markup" "tooltip-text"
-               "track-visited-links" "use-markup" "use-underline" "valign" "vexpand"
-               "vexpand-set" "visible" "width-chars" "width-request" "window" "wrap"
+               "mnemonic-widget" "name" "no-show-all" "opacity" "parent"
+               "pattern" "receives-default" "scale-factor" "selectable"
+               "selection-bound" "sensitive" "single-line-mode" "style"
+               "tooltip-markup" "tooltip-text" "track-visited-links"
+               "use-markup" "use-underline" "valign" "vexpand" "vexpand-set"
+               "visible" "width-chars" "width-request" "window" "wrap"
                "wrap-mode" "xalign" "xpad" "yalign" "ypad")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkLabel"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkLabel"))
+                   #'string-lessp)))
   ;; Check the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkLabel"))))
   ;; Check the class definition
@@ -100,7 +103,7 @@
     (is (= 15.0d0 (setf (gtk-label-angle label) 15)))
     (is (= 15.0d0 (gtk-label-angle label)))
     ;; attributes
-    (is (typep (gtk-label-attributes label) 'pango-attr-list))
+    (is-false (gtk-label-attributes label))
     (is (typep (setf (gtk-label-attributes label)
                      (pango-attr-list-new))
                 'pango-attr-list))
@@ -213,11 +216,13 @@
 
 (test gtk-label-set-markup
   (let ((label (make-instance 'gtk-label)))
-    (is-false (gtk-label-set-markup label "<span style=\"italic\"><small>Small text</small></span>"))
+    (is-false (gtk-label-set-markup label
+                                    "<span style=\"italic\"><small>Small text</small></span>"))
     ;; use-markup is set to true
     (is-true (gtk-label-use-markup label))
     ;; get the label text
-    (is (string= "<span style=\"italic\"><small>Small text</small></span>" (gtk-label-label label)))
+    (is (string= "<span style=\"italic\"><small>Small text</small></span>"
+                 (gtk-label-label label)))
     ;; get the verbatim text
     (is (string= "Small text" (gtk-label-text label)))))
 
@@ -230,7 +235,8 @@
     ;; use-markup is set to true
     (is-true (gtk-label-use-markup label))
     ;; get the label text
-    (is (string= "<span style=\"italic\"><small>_Small text</small></span>" (gtk-label-label label)))
+    (is (string= "<span style=\"italic\"><small>_Small text</small></span>"
+                 (gtk-label-label label)))
     ;; get the verbatim text
     (is (string= "Small text" (gtk-label-text label)))))
 
@@ -265,7 +271,7 @@
 
 (test gtk-label-new-with-mnemonic
   (let ((label nil))
-    (is (eq 'gtk-label (type-of (setf label (gtk-label-new-with-mnemonic "_Print")))))
+    (is (typep (setf label (gtk-label-new-with-mnemonic "_Print")) 'gtk-label))
     (is (string= "_Print" (gtk-label-label label)))
     (is (string= "Print" (gtk-label-text label)))
     (is (= 112 (gtk-label-mnemonic-keyval label)))
@@ -320,3 +326,4 @@
   (let ((label (make-instance 'gtk-label :label "some text")))
     (is-false (gtk-label-current-uri label))))
 
+;;; 2021-8-2

@@ -22,9 +22,11 @@
                 (:EXPORT T)
                 (ENABLED G-ACTION-ENABLED "enabled" "gboolean" T NIL)
                 (NAME G-ACTION-NAME "name" "gchararray" T NIL)
-                (PARAMETER-TYPE G-ACTION-PARAMETER-TYPE "parameter-type" "GVariantType" T NIL)
+                (PARAMETER-TYPE G-ACTION-PARAMETER-TYPE "parameter-type"
+                                                        "GVariantType" T NIL)
                 (STATE G-ACTION-STATE "state" "GVariant" T NIL)
-                (STATE-TYPE G-ACTION-STATE-TYPE "state-type" "GVariantType" T NIL))
+                (STATE-TYPE G-ACTION-STATE-TYPE "state-type"
+                                                "GVariantType" T NIL))
              (get-g-type-definition "GAction"))))
 
 ;;; --- Properties and Accessors -----------------------------------------------
@@ -50,19 +52,18 @@
 
 ;;;     g-action-parameter-type
 
-(test g-action-parameter-type
+(test g-action-parameter-type.1
   ;; Initialize parameter-type with nil
   (let ((action (g-simple-action-new "simple" nil)))
     ;; It is an error to access a null-pointer, we get an error
-    (signals (error) (g-action-parameter-type action))
-    ;; TODO: Property is not writeable, Lisp signals no error
-;    (signals (error) (setf (g-action-parameter-type action) (g-variant-type-new "b")))
-  )
+    (is-false (g-action-parameter-type action))))
+
+(test g-action-parameter-type.2
   ;; Initialize parameter-type with type boolean
   (let ((action (g-simple-action-new "simple" (g-variant-type-new "b"))))
     (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
-    (is (string= "b" (g-variant-type-dup-string (g-action-parameter-type action))))
-  ))
+    (is (string= "b"
+                 (g-variant-type-dup-string (g-action-parameter-type action))))))
 
 ;;;     g-action-state
 
@@ -70,7 +71,9 @@
   ;; It is an error to pass nil for the initialisation of state
   (signals (error) (g-simple-action-new-stateful "stateful" nil nil))
   ;; Initialize state with an integer
-  (let ((action (g-simple-action-new-stateful "stateful" nil (g-variant-new-int32 123))))
+  (let ((action (g-simple-action-new-stateful "stateful"
+                                              nil
+                                              (g-variant-new-int32 123))))
     (is (= 123 (g-variant-int32 (g-action-state action))))
     (setf (g-action-state action) (g-variant-new-int32 321))
     (is (= 321 (g-variant-int32 (g-action-state action))))
@@ -81,11 +84,15 @@
 ;;;     g-action-state-type
 
 (test g-action-state-type
-  (let ((action (g-simple-action-new-stateful "stateful" nil (g-variant-new-int32 123))))
+  (let ((action (g-simple-action-new-stateful "stateful"
+                                              nil
+                                              (g-variant-new-int32 123))))
     (is (eq 'g-variant-type (type-of (g-action-state-type action))))
     (is (string= "i" (g-variant-type-dup-string (g-action-state-type action))))
     (is (= 123 (g-variant-int32 (g-action-state action)))))
-  (let ((action (g-simple-action-new-stateful "stateful" nil (g-variant-new-string "test"))))
+  (let ((action (g-simple-action-new-stateful "stateful"
+                                              nil
+                                              (g-variant-new-string "test"))))
     (is (eq 'g-variant-type (type-of (g-action-state-type action))))
     (is (string= "s" (g-variant-type-dup-string (g-action-state-type action))))
     (is (string= "test" (g-variant-string (g-action-state action))))))
@@ -146,13 +153,14 @@
 ;;;     g_action_parse_detailed_name
 
 (test g-action-parse-detaild-name
-  (is-true (g-action-parse-detailed-name "test" "value" (g-variant-new-int32 123)))
-;  (is-false (g-action-parse-detailed-name "test(123)" nil nil))
-;  (is-false (g-action-parse-detailed-name "app.action" nil nil))
-)
+  (is-true (g-action-parse-detailed-name "test"))
+  (is-true (g-action-parse-detailed-name "test(123)"))
+  (is-true (g-action-parse-detailed-name "app.action::target")))
 
 ;;;     g_action_print_detailed_name
 
 (test g-action-print-detaild-name
-  (is (string= "test(123)" (g-action-print-detailed-name "test" (g-variant-new-int32 123))))
-)
+  (is (string= "test(12)"
+               (g-action-print-detailed-name "test" (g-variant-new-int32 12)))))
+
+;;; 2021-8-2

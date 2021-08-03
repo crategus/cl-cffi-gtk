@@ -205,7 +205,7 @@
 
 (test gdk-keymap-map-virtual-modifiers
   (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
-    (is (equal '((:MOD4-MASK :SUPER-MASK) T)
+    (is (equal '((:SUPER-MASK) T)
                (multiple-value-list
                  (gdk-keymap-map-virtual-modifiers keymap '(:super-mask)))))))
 
@@ -278,4 +278,4 @@
 (test gdk-unicode-to-keyval
   (is (eq 65 (gdk-unicode-to-keyval #\A))))
 
-;;; 2021-4-2
+;;; 2021-8-2

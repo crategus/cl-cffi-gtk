@@ -48,12 +48,12 @@
   (let* ((group (create-action-group))
          (action-quit (g-action-map-lookup-action group "quit"))
          (action-print (g-action-map-lookup-action group "print")))
+    ;; Check action QUIT
     (is (typep action-quit 'g-simple-action))
     (is (string= "quit" (g-action-name action-quit)))
     ;; Slot parameter-type is not initialized
-    (signals (error)
-             (typep (g-action-parameter-type action-quit) 'g-variant-type))
-
+    (is-false (g-action-parameter-type action-quit))
+    ;; Check action PRINT
     (is (typep action-print 'g-simple-action))
     (is (string= "print" (g-action-name action-print)))
     ;; Slot parameter-type is initialized with type "s"
@@ -73,4 +73,4 @@
     (g-action-map-remove-action group "quit")
     (is-false (g-action-map-lookup-action group "quit"))))
 
-;;; 2021-4-15
+;;; 2021-8-2
