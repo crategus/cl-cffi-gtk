@@ -8,7 +8,8 @@
                               :application-id
                               "com.crategus.application-commandline"
                               :inactivity-timeout 10000
-                              :flags :handles-command-line)))
+                              :flags
+                              '(:send-enviroment :handles-command-line))))
 
       ;; Signal handler "startup"
       (g-signal-connect app "startup"
@@ -20,9 +21,11 @@
       (g-signal-connect app "command-line"
           (lambda (application cmdline)
             (declare (ignore application))
-            (let ((args (g-application-command-line-get-arguments cmdline)))
+            (let ((args (g-application-command-line-get-arguments cmdline))
+                  (data (g-application-command-line-get-platform-data cmdline)))
               (format t "Signal handler 'command-line'~%")
-              (format t "  arguments : ~a~%" args)
+              (format t "     arguments : ~a~%" args)
+              (format t " platform-data : ~a~%" data)
               ;; Return the exit status
               0)))
 

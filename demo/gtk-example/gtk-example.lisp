@@ -1,8 +1,7 @@
 (defpackage :gtk-example
   (:use :gtk :gdk :gdk-pixbuf :gobject
    :glib :gio :pango :cairo :cffi :split-sequence :common-lisp)
-  (:export #:application-simple
-           #:create-page-setup-dialog
+  (:export #:create-page-setup-dialog
            #:create-print-dialog
            #:do-print-operation
            #:example-alignment
