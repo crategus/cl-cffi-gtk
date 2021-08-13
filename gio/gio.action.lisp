@@ -2,11 +2,11 @@
 ;;; gio.action.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.62 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -96,9 +96,10 @@
    "state-type" "GVariantType" t nil))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-action atdoc:*class-name-alias*) "Interface"
+(setf (gethash 'g-action atdoc:*class-name-alias*)
+      "Interface"
       (documentation 'g-action 'type)
- "@version{2020-2-8}
+ "@version{2021-8-1}
   @begin{short}
     The @sym{g-action} interface represents a single named action.
   @end{short}
@@ -116,9 +117,9 @@
 
   The state may have a hint associated with it, specifying its valid range.
 
-  @sym{g-action} is merely the interface to the concept of an action, as
-  described above. Various implementations of actions exist, including
-  @class{g-simple-action}.
+  The @sym{g-action} interface is merely the interface to the concept of an
+  action, as described above. Various implementations of actions exist,
+  including the @class{g-simple-action} class.
 
   In all cases, the implementing class is responsible for storing the name of
   the action, the parameter type, the enabled state, the optional state type
@@ -128,7 +129,7 @@
   for the state being enabled.
 
   Probably the only useful thing to do with a @sym{g-action} is to put it inside
-  of a @class{g-simple-action-group}.
+  of a @class{g-simple-action-group} object.
   @see-slot{g-action-enabled}
   @see-slot{g-action-name}
   @see-slot{g-action-parameter-type}
@@ -148,19 +149,19 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "enabled" 'g-action) 't)
  "The @code{enabled} property of type @code{:boolean} (Read) @br{}
-  If the action is currently enabled. If the action is disabled then calls to
-  the functions @fun{g-action-activate} and @fun{g-action-change-state} have no
-  effect. @br{}
+  Whether the action is currently enabled. If the action is disabled then calls
+  to the functions @fun{g-action-activate} and @fun{g-action-change-state} have
+  no effect. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-enabled atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-enabled 'function)
- "@version{2020-2-8}
+ "@version{2021-8-1}
   @syntax[]{(g-action-enabled object) => enabled}
   @argument[object]{a @class{g-action} object}
-  @argument[enabled]{a boolean whether the @arg{action} is enabled}
+  @argument[enabled]{a boolean whether @arg{action} is enabled}
   @begin{short}
     Accessor of the @slot[g-action]{enabled} slot of the @class{g-action} class.
   @end{short}
@@ -182,13 +183,14 @@
 (setf (gethash 'g-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-name 'function)
- "@version{*2021-5-11}
+ "@version{2021-8-1}
   @syntax[]{(g-action-name object) => name}
   @argument[action]{a @class{g-action} object}
   @argument[name]{a string with the name of the action}
   @begin{short}
     Accessor of the @slot[g-action]{name} slot of the @class{g-action} class.
   @end{short}
+
   Queries the name of the action.
   @see-class{g-action}")
 
@@ -196,8 +198,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parameter-type" 'g-action) 't)
- "The @code{parameter-type} property of type @class{g-variant-type}
-  (Read) @br{}
+ "The @code{parameter-type} property of type @class{g-variant-type} (Read) @br{}
   The type of the parameter that must be given when activating the action.
   @br{}")
 
@@ -205,7 +206,7 @@
 (setf (gethash 'g-action-parameter-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-parameter-type 'function)
- "@version{2020-2-8}
+ "@version{2021-8-1}
   @syntax[]{(g-action-parameter-type object) => type}
   @argument[object]{a @class{g-action} object}
   @argument[type]{the @class{g-variant-type} parameter type}
@@ -217,13 +218,16 @@
   Queries the type of the parameter that must be given when activating the
   action.
 
-  When activating the the action using the function @fun{g-action-activate},
-  the @type{g-variant} given to that function must be of the type returned by
+  When activating the action using the function @fun{g-action-activate}, the
+  @type{g-variant} given to that function must be of the type returned by
   this function.
 
-  In the case that this function returns @code{nil}, you must not give any
-  @type{g-variant}, but @code{nil} instead.
-  @see-class{g-action}")
+  In the case that this function returns a @code{NULL} pointer, you must not
+  give any @type{g-variant}, but @code{nil} instead.
+  @see-class{g-action}
+  @see-class{g-variant-type}
+  @see-type{g-variant}
+  @see-function{g-action-activate}")
 
 ;;; --- g-application-state ----------------------------------------------------
 
@@ -238,7 +242,7 @@
 (setf (gethash 'g-action-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state 'function)
- "@version{*2021-5-11}
+ "@version{2021-8-1}
   @syntax[]{(g-action-state object) => state}
   @argument[object]{a @class{g-action} object}
   @argument[state]{the current @type{g-variant} state of the action}
@@ -248,10 +252,11 @@
 
   Queries the current state of the action.
 
-  If the action is not stateful then @code{nil} will be returned. If the
-  action is stateful then the type of the return value is the type given
+  If the action is not stateful then a @code{NULL} pointer will be returned. If
+  the action is stateful then the type of the return value is the type given
   by the function @fun{g-action-state-type}.
   @see-class{g-action}
+  @see-type{g-variant}
   @see-function{g-action-state-type}")
 
 ;;; --- g-action-state-type ----------------------------------------------------
@@ -266,9 +271,10 @@
 (setf (gethash 'g-action-state-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state-type 'function)
- "@version{2020-2-8}
+ "@version{2021-8-1}
+  @syntax[]{(g-action-state-type object) => vtype}
   @argument[object]{a @class{g-action} object}
-  @argument[state-type]{the @class{g-variant-type} state type, if the action is
+  @argument[vtype]{the @class{g-variant-type} state type, if the action is
     stateful}
   @begin{short}
     Accessor of the @slot[g-application]{state-type} slot of the
@@ -286,9 +292,15 @@
 
   If the action is not stateful, e.g. created with the function
   @fun{g-simple-action-new}, then this function will return @code{nil}. In that
-  case, the function @fun{g-action-state} will return @code{nil} and you
-  must not call the function @fun{g-action-change-state}.
-  @see-class{g-action}")
+  case, the function @fun{g-action-state} will return a @code{NULL} pointer and
+  you must not call the function @fun{g-action-change-state}.
+  @see-class{g-action}
+  @see-class{g-variant-type}
+  @see-type{g-variant}
+  @see-function{g-simple-action-new}
+  @see-function{g-simple-action-new-stateful}
+  @see-function{g-action-change-state}
+  @see-function{g-action-state}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_name_is_valid ()
@@ -296,9 +308,9 @@
 
 (defcfun ("g_action_name_is_valid" g-action-name-is-valid) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
-  @argument[name]{a @code{:string} with a action name}
-  @return{@var{True} if @arg{name} is a valid action name.}
+ "@version{2021-8-1}
+  @argument[name]{a string with an action name}
+  @return{@em{True} if @arg{name} is a valid action name.}
   @begin{short}
     Checks if the action name is valid.
   @end{short}
@@ -306,29 +318,37 @@
   '-' and '.'. The empty string is not a valid action name.
 
   It is an error to call this function with a non-utf8 action name.
-  @arg{action-name} must not be @code{nil}.
+  @begin[Example]{dictionary}
+    @begin{pre}
+(g-action-name-is-valid \"action\") => T
+(g-action-name-is-valid \"win.action\") => T
+(g-action-name-is-valid \"win-action\") => T
+(g-action-name-is-valid \"win-action!\") NIL
+(g-action-name-is-valid \"\") => NIL
+    @end{pre}
+  @end{dictionary}
   @see-class{g-action}"
   (name :string))
 
 (export 'g-action-name-is-valid)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_action_get_state_hint ()
+;;; g_action_get_state_hint () -> g-action-state-hint
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_action_get_state_hint" g-action-get-state-hint)
+(defcfun ("g_action_get_state_hint" g-action-state-hint)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
+ "@version{2021-8-1}
   @argument[action]{a @class{g-action} object}
   @return{The @type{g-variant} state range hint.}
   @begin{short}
     Requests a hint about the valid range of values for the state of the action.
   @end{short}
 
-  If @code{nil} is returned it either means that the action is not stateful or
-  that there is no hint about the valid range of values for the state of the
-  action.
+  If a @code{NULL} pointer is returned it either means that the action is not
+  stateful or that there is no hint about the valid range of values for the
+  state of the action.
 
   If a @type{g-variant} array is returned then each item in the array is a
   possible value for the state. If a @type{g-variant} pair, i.e. two-tuple,
@@ -342,15 +362,17 @@
   @see-type{g-variant}"
   (action (g-object g-action)))
 
-(export 'g-action-get-state-hint)
+(export 'g-action-state-hint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_change_state ()
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Is the implementation correct? See g-action-activate.
+
 (defcfun ("g_action_change_state" g-action-change-state) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
+ "@version{2021-8-1}
   @argument[action]{a @class{g-action} object}
   @argument[value]{the new @type{g-variant} state}
   @begin{short}
@@ -362,11 +384,11 @@
 
   This call merely requests a change. The action may refuse to change its
   state or may change its state to something other than @arg{value}. See the
-  function @fun{g-action-get-state-hint}.
+  function @fun{g-action-state-hint}.
   @see-class{g-action}
   @see-type{g-variant}
   @see-function{g-action-state-type}
-  @see-function{g-action-get-state-hint}"
+  @see-function{g-action-state-hint}"
   (action (g-object g-action))
   (value (:pointer (:struct g-variant))))
 
@@ -382,15 +404,17 @@
 
 (defun g-action-activate (action parameter)
  #+cl-cffi-gtk-documentation
- "@version{2020-2-8}
+ "@version{2021-8-1}
   @argument[action]{a @class{g-action} object}
   @argument[parameter]{the @class{g-variant} parameter to the activation}
   @short{Activates the action.}
 
-  @arg{parameter} must be the correct type of the parameter for the action,
-  i.e. the parameter type given at construction time. If the parameter type
-  was @code{nil} then @arg{parameter} must also be @code{nil}.
-  @see-class{g-action}"
+  The argument @arg{parameter} must be the correct type of the parameter for the
+  action, i.e. the parameter type given at construction time. If the parameter
+  type was a @code{NULL} pointer then @arg{parameter} must also be a
+  @code{NULL} pointer.
+  @see-class{g-action}
+  @see-type{g-variant}"
   (%g-action-activate (pointer action) parameter))
 
 (export 'g-action-activate)
@@ -399,22 +423,21 @@
 ;;; g_action_parse_detailed_name ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: More work is needed. The implementation seems not to be fully workable.
-
 (defcfun ("g_action_parse_detailed_name" %g-action-parse-detailed-name) :boolean
-  (detailed-name :string)
-  (action-name :string)
-  (target-value (:pointer (:struct g-variant)))
-  (error :pointer))
+  (detailed :string)
+  (name :string)
+  (value (:pointer (:struct g-variant)))
+  (err :pointer))
 
-(defun g-action-parse-detailed-name (detailed-name action-name target-value)
+(defun g-action-parse-detailed-name (detailed)
  #+cl-cffi-gtk-documentation
- "@version{#2020-2-8}
-  @argument[detailed-name]{a @code{:string} with a detailed action name}
-  @argument[action-name]{a @code{:string} with the action name}
-  @argument[target-value]{a @type{g-variant} target value, or @code{nil} for
-    no target}
-  @return{@em{True} if successul, else @em{false}.}
+ "@version{2021-8-1}
+  @argument[detailed]{a string with a detailed action name}
+  @begin{return}
+     @code{name} - a string with the action name @br{}
+     @code{value} - a @type{g-variant} target value, or a @code{NULL} pointer
+     for no target
+  @end{return}
   @begin{short}
     Parses a detailed action name into its separate name and target components.
   @end{short}
@@ -438,12 +461,39 @@
   \"app.action('target')\". For strings, this third format must be used if *
   target value is empty or contains characters other than alphanumerics,
   '-' and '.'.
-  @see-class{g-action}"
+  @begin[Examples]{dictionary}
+    @begin{pre}
+;; First format
+(g-action-parse-detailed-name \"app.action\")
+=> \"app.action\"
+=> #.(SB-SYS:INT-SAP #X00000000)
+;; Second format
+(g-action-parse-detailed-name \"app.action::target\")
+=> \"app.action\"
+=> #.(SB-SYS:INT-SAP #X7F5B7000E8D0)
+(g-variant-string
+    (second (multiple-value-list
+        (g-action-parse-detailed-name \"app.action::target\"))))
+=> \"target\"
+;; Third format
+(g-action-parse-detailed-name \"app.action(42)\")
+=> \"app.action\"
+=> #.(SB-SYS:INT-SAP #X7F5B7000E870)
+(g-variant-int32
+    (second (multiple-value-list
+        (g-action-parse-detailed-name \"app.action(42)\"))))
+=> 42
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-action}
+  @see-type{g-variant}
+  @see-function{g-variant-parse}"
   (with-g-error (err)
-    (%g-action-parse-detailed-name detailed-name
-                                   action-name
-                                   target-value
-                                   err)))
+    (with-foreign-objects ((name :string)
+                           (value '(:pointer (:struct g-variant))))
+      (when (%g-action-parse-detailed-name detailed name value err)
+        (values (mem-ref name :string)
+                (mem-ref value '(:pointer (:struct g-variant))))))))
 
 (export 'g-action-parse-detailed-name)
 
@@ -451,13 +501,15 @@
 ;;; g_action_print_detailed_name ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: More work is needed. The implementation seems not to be fully workable.
+(defcfun ("g_action_print_detailed_name" %g-action-print-detailed-name) :string
+  (name :string)
+  (value (:pointer (:struct g-variant))))
 
-(defcfun ("g_action_print_detailed_name" g-action-print-detailed-name) :string
+(defun g-action-print-detailed-name (name &optional (value nil))
  #+cl-cffi-gtk-documentation
- "@version{#2020-2-8}
-  @argument[action-name]{a @code{:string} with a valid action name}
-  @argument[target-value]{a @type{g-variant} target value, or @code{nil}}
+ "@version{2021-8-1}
+  @argument[name]{a string with a valid action name}
+  @argument[value]{an optional @type{g-variant} target value}
   @begin{short}
     Formats a detailed action name from an action name and a target value.
   @end{short}
@@ -467,10 +519,23 @@
   It will produce a string that can be parsed back to the action name and
   target value by that function. See that function for the types of strings
   that will be printed by this function.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+(g-action-print-detailed-name \"action\")
+=> \"action\"
+(g-action-print-detailed-name \"action\" (g-variant-new-boolean \"t\"))
+=> \"action(true)\"
+(g-action-print-detailed-name \"action\" (g-variant-new-int32 42))
+=> \"action(42)\"
+    @end{pre}
+  @end{dictionary}
   @see-class{g-action}
+  @see-type{g-variant}
   @see-function{g-action-parse-detailed-name}"
-  (action-name :string)
-  (target-value (:pointer (:struct g-variant))))
+  (%g-action-print-detailed-name name
+                                 (if value
+                                     value
+                                     (null-pointer))))
 
 (export 'g-action-print-detailed-name)
 
