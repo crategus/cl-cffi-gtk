@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -39,7 +39,6 @@
   developers prefer it over raw POSIX calls. Among other things that means
   using GObject. It also means not cloning the POSIX API, but providing
   higher-level, document-centric interfaces.
-
   @begin[File Operations]{section}
     @begin[GFile]{subsection}
       File and Directory Handling.
@@ -392,6 +391,7 @@
       @about-function{g-application-command-line-stdin}
       @about-function{g-application-command-line-create-file-for-arg}
       @about-function{g-application-command-line-getenv}
+      @about-function{g-application-command-line-get-platform-data}
       @about-function{g-application-command-line-exit-status}
       @about-function{g-application-command-line-print}
       @about-function{g-application-command-line-printerr}
@@ -444,14 +444,14 @@
       @about-generic{g-action-state}
       @about-generic{g-action-state-type}
       @about-function{g-action-name-is-valid}
-      @about-function{g-action-get-state-hint}
+      @about-function{g-action-state-hint}
       @about-function{g-action-change-state}
       @about-function{g-action-activate}
       @about-function{g-action-parse-detailed-name}
       @about-function{g-action-print-detailed-name}
     @end{subsection}
     @begin[GSimpleAction]{subsection}
-      A simple GAction implementation.
+      An implementation of the @class{g-action} interface.
 
       @about-class{g-simple-action}
       @about-generic{g-simple-action-enabled}
