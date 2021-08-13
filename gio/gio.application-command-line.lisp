@@ -98,9 +98,9 @@
   \"command-line\" signal and virtual function.
 
   The class contains the list of arguments that the program was invoked with.
-  It is also possible to query if the commandline invocation was local (i.e.
+  It is also possible to query if the command line invocation was local (i.e.
   the current process is running in direct response to the invocation) or
-  remote (i.e. some other process forwarded the commandline to this process).
+  remote (i.e. some other process forwarded the command line to this process).
 
   The @sym{g-application-command-line} object can provide the @code{argc} and
   @code{argv} parameters for use with the @code{GOptionContext} command-line
@@ -176,7 +176,7 @@
 (setf (documentation (atdoc:get-slot-from-name "arguments"
                                                'g-application-command-line) 't)
  "The @code{arguments} property of type @type{g-variant}
-  (Write / Construct only) @br{}
+  (Write / Construct Only) @br{}
   The command line that caused this \"command-line\" signal emission. @br{}
   Allowed values: @code{GVariant<aay>} @br{}
   Default value: @code{nil}")
@@ -205,7 +205,7 @@
 (setf (documentation (atdoc:get-slot-from-name "is-remote"
                                                'g-application-command-line) 't)
  "The @code{is-remote} property of type @code{:boolean} (Read) @br{}
-  @em{True} if this is a remote commandline. @br{}
+  @em{True} if this is a remote command line. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -228,7 +228,7 @@
                                                'g-application-command-line) 't)
  "The @code{options} property of type @type{g-variant}
   (Write / Construct Only) @br{}
-  The options sent along with the commandline. @br{}
+  The options sent along with the command line. @br{}
   Allowed values: @code{GVariant<a{sv@}>} @br{}
   Default value: @code{nil}")
 
@@ -240,7 +240,7 @@
  "@version{2021-5-7}
   @argument[object]{a @class{g-application-command-line} instance}
   @begin{short}
-    The options sent along with the commandline.
+    The options sent along with the command line.
   @end{short}
   The @slot[g-application-command-line]{options} property is not readable and
   set when constructing the instance.
@@ -253,9 +253,9 @@
                                                'g-application-command-line) 't)
  "The @code{platform-data} property of type @type{g-variant}
   (Write / Construct Only) @br{}
-  Platform-specific data for the commandline. @br{}
+  Platform-specific data for the command line. @br{}
   Allowed values: @code{GVariant<a{sv@}>} @br{}
-  Default value: @code{nil}")
+  Default value: @code{NULL}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-command-line-platform-data
@@ -265,7 +265,7 @@
  "@version{2021-5-7}
   @argument[object]{a @class{g-application-command-line} instance}
   @begin{short}
-    Platform-specific data for the commandline.
+    Platform-specific data for the command line.
   @end{short}
   The @slot[g-application-command-line]{platform-data} property is not readable
   and set when constructing the instance.
@@ -302,108 +302,94 @@
 (export 'g-application-command-line-get-arguments)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_get_cwd ()                  not exported
-;;;
-;;; const gchar *
-;;; g_application_command_line_get_cwd (GApplicationCommandLine *cmdline);
-;;;
-;;; Gets the working directory of the command line invocation. The string may
-;;; contain non-utf8 data.
-;;;
-;;; It is possible that the remote application did not send a working directory,
-;;; so this may be NULL.
-;;;
-;;; The return value should not be modified or freed and is valid for as long
-;;; as cmdline exists.
-;;;
-;;; cmdline :
-;;;     a GApplicationCommandLine
-;;;
-;;; Returns :
-;;;     the current directory, or NULL.
-;;;
-;;; Since 2.28
+;;; g_application_command_line_get_cwd ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_application_command_line_get_cwd" g-application-command-line-cwd)
-    :string
+    (:string :free-from-foreign nil)
+ "@version{2021-8-3}
+  @argument[cmdline]{a @class{g-application-command-line} object}
+  @return{A string with the current directory, or @code{nil}.}
+  @begin{short}
+    Gets the working directory of the command line invocation.
+  @end{short}
+  The string may contain non-UTF8 data.
+
+  It is possible that the remote application did not send a working directory,
+  so this may be @code{nil}.
+  @begin[Example]{dictionary}
+    @begin{pre}
+(defvar cmd (make-instance 'g-application-command-line)) => CMD
+(g-application-command-line-cwd cmd) => \"/home/dieter/Lisp/lisp-projects\"
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-application-command-line}"
   (cmdline (g-object g-application-command-line)))
 
+(export 'g-application-command-line-cwd)
+
 ;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_get_environ ()              not exported
-;;;
-;;; const gchar * const *
-;;; g_application_command_line_get_environ
-;;;                                (GApplicationCommandLine *cmdline);
-;;;
-;;; Gets the contents of the 'environ' variable of the command line invocation,
-;;; as would be returned by g_get_environ(), ie as a NULL-terminated list of
-;;; strings in the form 'NAME=VALUE'. The strings may contain non-utf8 data.
-;;;
-;;; The remote application usually does not send an environment. Use
-;;; G_APPLICATION_SEND_ENVIRONMENT to affect that. Even with this flag set it
-;;; is possible that the environment is still not available (due to invocation
-;;; messages from other applications).
-;;;
-;;; The return value should not be modified or freed and is valid for as long
-;;; as cmdline exists.
-;;;
-;;; See g_application_command_line_getenv() if you are only interested in the
-;;; value of a single environment variable.
-;;;
-;;; cmdline :
-;;;     a GApplicationCommandLine
-;;;
-;;; Returns :
-;;;     the environment strings, or NULL if they were not sent.
-;;;
-;;; Since 2.28
+;;; g_application_command_line_get_environ ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_application_command_line_get_environ"
-           g-application-command-line-environ) g-strv
+           g-application-command-line-environ) (g-strv :free-from-foreign nil)
+ "@version{2021-8-3}
+  @argument[cmdline]{a @class{g-application-command-line} object}
+  @return{A list of strings with the environment strings, or @code{nil} if they
+    were not sent.}
+  @begin{short}
+    Gets the contents of the 'environ' variable of the command line invocation,
+    as would be returned by the function @fun{g-environ}.
+  @end{short}
+  Each item in the list of the form @code{NAME} = @code{VALUE}. The strings may
+  contain non-UTF8 data.
+
+  The remote application usually does not send an environment. Use the
+  @code{:send-enviroment} flag to affect that. Even with this flag set it is
+  possible that the environment is still not available, due to invocation
+  messages from other applications.
+
+  See the function @fun{g-application-command-line-getenv} if you are only
+  interested in the value of a single environment variable.
+  @see-class{g-application-command-line}
+  @see-function{g-application-command-line-getenv}
+  @see-function{g-environ}"
   (cmdline (g-object g-application-command-line)))
 
+(export 'g-application-command-line-environ)
+
 ;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_get_options_dict ()         not exported
-;;;
-;;; GVariantDict *
-;;; g_application_command_line_get_options_dict
-;;;                                (GApplicationCommandLine *cmdline);
-;;;
-;;;
-;;; cmdline :
-;;;     a GApplicationCommandLine
-;;;
-;;; Returns :
-;;;     a GVariantDict with the options.
-;;;
-;;; Since 2.40
+;;; g_application_command_line_get_options_dict ()
+;;; -> g-application-command-line-optons-dict
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_application_command_line_get_options_dict"
            g-application-command-line-options-dict)
-    (:pointer (:struct g-variant-dict))
+    (g-boxed-foreign g-variant-dict)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2021-8-12}
   @argument[cmdline]{a @class{g-application-command-line} instance}
-  @return{A @type{g-variant-dict} instance with the options.}
+  @return{A @class{g-variant-dict} instance with the options.}
   @begin{short}
-    Gets the options there were passed to the function
+    Gets the options that were passed to the function
     @fun{g-application-command-line}.
   @end{short}
 
   If you did not override the virtual function @code{local_command_line} then
   these are the same options that were parsed according to the
-  @code{GOptionEntry}s added to the application with the function
+  options entries added to the application with the function
   @fun{g-application-add-main-option-entries} and possibly modified from your
   \"handle-local-options\" signal handler.
 
   If no options were sent then an empty dictionary is returned so that you
   do not need to check for @code{nil}.
   @see-class{g-application-command-line}
+  @see-class{g-variant-dict}
   @see-function{g-application-add-main-option-entries}"
   (cmdline (g-object g-application-command-line)))
+
+(export 'g-application-command-line-options-dict)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_stdin ()
@@ -419,7 +405,7 @@
 ;;; descriptors. If stdin is not available then NULL will be returned. In the
 ;;; future, support may be expanded to other platforms.
 ;;;
-;;; You must only call this function once per commandline invocation.
+;;; You must only call this function once per command line invocation.
 ;;;
 ;;; cmdline :
 ;;;     a GApplicationCommandLine
@@ -458,64 +444,65 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_application_command_line_getenv ()                   not exported
-;;;
-;;; const gchar *
-;;; g_application_command_line_getenv (GApplicationCommandLine *cmdline,
-;;;                                    const gchar *name);
-;;;
-;;; Gets the value of a particular environment variable of the command line
-;;; invocation, as would be returned by g_getenv(). The strings may contain
-;;; non-utf8 data.
-;;;
-;;; The remote application usually does not send an environment. Use
-;;; G_APPLICATION_SEND_ENVIRONMENT to affect that. Even with this flag set it is
-;;; possible that the environment is still not available (due to invocation
-;;; messages from other applications).
-;;;
-;;; The return value should not be modified or freed and is valid for as long
-;;; as cmdline exists.
-;;;
-;;; cmdline :
-;;;     a GApplicationCommandLine
-;;;
-;;; name :
-;;;     the environment variable to get.
-;;;
-;;; Returns :
-;;;     the value of the variable, or NULL if unset or unsent
-;;;
-;;; Since 2.28
+;;; g_application_command_line_getenv ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_application_command_line_getenv" g-application-command-line-getenv)
-    :string
-  (cmdline (g-object g-application-command-line-getenv))
+    (:string :free-from-foreign nil)
+ "@version{2021-8-3}
+  @argument[cmdline]{a @class{g-application-command-line} object}
+  @argument[name]{a string with the environment variable to get}
+  @return{A string with the value of the variable, or @code{nil} if unset or
+    unsent.}
+  @begin{short}
+    Gets the value of a particular environment variable of the command line
+    invocation, as would be returned by the function @fun{g-getenv}.
+  @end{short}
+  The strings may contain non-UTF8 data.
+
+  The remote application usually does not send an environment. Use the
+  @code{:send-enviroment} flag to affect that. Even with this flag set it is
+  possible that the environment is still not available, due to invocation
+  messages from other applications.
+  @begin[Example]{dictionary}
+    @begin{pre}
+(defvar cmd (make-instance 'g-application-command-line)) => CMD
+(g-application-command-line-getenv cmd \"HOME\") => \"/home/dieter\"
+(g-application-command-line-getenv cmd \"unkown\") => NIL
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-application-command-line}
+  @see-function{g-getenv}"
+  (cmdline (g-object g-application-command-line))
   (name :string))
+
+(export 'g-application-command-line-getenv)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_platform_data ()
-;;;
-;;; GVariant *
-;;; g_application_command_line_get_platform_data
-;;;                                (GApplicationCommandLine *cmdline);
-;;;
-;;; Gets the platform data associated with the invocation of cmdline .
-;;;
-;;; This is a GVariant dictionary containing information about the context in
-;;; which the invocation occurred. It typically contains information like the
-;;; current working directory and the startup notification ID.
-;;;
-;;; For local invocation, it will be NULL.
-;;;
-;;; cmdline :
-;;;     GApplicationCommandLine
-;;;
-;;; Returns :
-;;;     the platform data, or NULL.
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_command_line_get_platform_data"
+           g-application-command-line-get-platform-data)
+    (:pointer (:struct g-variant))
+ "@version{2021-8-3}
+  @argument[cmdline]{a @class{g-application-command-line} object}
+  @return{A @type{g-variant} dictionary with the platform data, or a @code{NULL}
+    pointer.}
+  @begin{short}
+    Gets the platform data associated with the invocation of @arg{cmdline}.
+  @end{short}
+
+  This is a @type{g-variant} dictionary containing information about the context
+  in which the invocation occurred. It typically contains information like the
+  current working directory and the startup notification ID.
+
+  For local invocation, it will be a @code{NULL} pointer.
+  @see-class{g-application-command-line}
+  @see-type{g-variant}"
+  (cmdline (g-object g-application-command-line)))
+
+(export 'g-application-command-line-get-platform-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_get_exit_status ()          not exported
@@ -557,8 +544,8 @@
   the last reference is dropped on @arg{cmdline}. The exit status of the remote
   process will be equal to the last value that was set with this function.
 
-  In the case that the commandline invocation is local, the situation is
-  slightly more complicated. If the commandline invocation results in the
+  In the case that the command line invocation is local, the situation is
+  slightly more complicated. If the command line invocation results in the
   mainloop running (ie: because the use-count of the application increased to
   a non-zero value) then the application is considered to have been
   'successful' in a certain sense, and the exit status is always zero. If the
