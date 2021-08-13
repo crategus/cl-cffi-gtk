@@ -2,7 +2,7 @@
 ;;; cl-cffi-gtk-glib.asd
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -41,8 +41,8 @@
                (:file "glib.convert")        ; Convert strings
                (:file "glib.main-loop")      ; The Main Event Loop
                (:file "glib.utils")          ; Miscellaneous Utility Functions
-               (:file "glib.option-group")   ; Parses commandline options
-               (:file "glib.key-value")      ; parses .ini-like config files
+               (:file "glib.option")         ; Parses command line options
+               (:file "glib.key-file")       ; parses .ini-like config files
                (:file "glib.random")         ; Pseudo-random number generator
               )
   :depends-on (:cffi

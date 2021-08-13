@@ -1,11 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.package.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,6 +30,7 @@
            #:get-stable-pointer-value
            #:set-stable-pointer-value
            #:stable-pointer-destroy-notify-cb
+           #:stable-pointer-destroy-notify
            #:with-stable-pointer
            ;; Symbols from glib.error.lisp
            #:with-catching-to-g-error
@@ -340,8 +338,8 @@
     @about-function{g-qsort-with-data}
     @about-function{g-nullify-pointer}
   @end{section}
-  @begin[Commandline option parser]{section}
-    Parses commandline options.
+  @begin[Command line option parser]{section}
+    Parses command line options.
 
     @about-symbol{g-option-error}
     @about-symbol{G_OPTION_ERROR}
@@ -349,12 +347,10 @@
     @about-symbol{g-option-flags}
     @about-symbol{G_OPTION_REMAINING}
     @about-type{g-option-context}
-    @about-type{g-option-entry}
-    @about-type{g-option-group}
     @about-function{g-option-context-new}
     @about-function{g-option-context-summary}
     @about-function{g-option-context-description}
-    @about-symbol{GTranslateFunc}
+    @about-symbol{g-translate-func}
     @about-function{g-option-context-set-translate-func}
     @about-function{g-option-context-set-translation-domain}
     @about-function{g-option-context-free}
@@ -367,6 +363,7 @@
     @about-function{g-option-context-add-main-entries}
     @about-function{g-option-context-add-group}
     @about-function{g-option-context-main-group}
+    @about-type{g-option-group}
     @about-function{g-option-group-new}
     @about-function{g-option-group-ref}
     @about-function{g-option-group-unref}
@@ -397,40 +394,26 @@
     @about-function{g-key-file-load-from-dirs}
     @about-function{g-key-file-to-data}
     @about-function{g-key-file-save-to-file}
-    @about-function{g-key-file-get-start-group}
-    @about-function{g-key-file-get-groups}
-    @about-function{g-key-file-get-keys}
+    @about-function{g-key-file-start-group}
+    @about-function{g-key-file-groups}
+    @about-function{g-key-file-keys}
     @about-function{g-key-file-has-group}
     @about-function{g-key-file-has-key}
-    @about-function{g-key-file-get-value}
-    @about-function{g-key-file-get-string}
-    @about-function{g-key-file-get-locale-string}
-    @about-function{g-key-file-get-locale-for-key}
-    @about-function{g-key-file-get-boolean}
-    @about-function{g-key-file-get-integer}
-    @about-function{g-key-file-get-int64}
-    @about-function{g-key-file-get-uint64}
-    @about-function{g-key-file-get-double}
-    @about-function{g-key-file-get-string-list}
-    @about-function{g-key-file-get-locale-string-list}
-    @about-function{g-key-file-get-boolean-list}
-    @about-function{g-key-file-get-integer-list}
-    @about-function{g-key-file-get-double-list}
-    @about-function{g-key-file-get-comment}
-    @about-function{g-key-file-set-value}
-    @about-function{g-key-file-set-string}
-    @about-function{g-key-file-set-locale-string}
-    @about-function{g-key-file-set-boolean}
-    @about-function{g-key-file-set-integer}
-    @about-function{g-key-file-set-int64}
-    @about-function{g-key-file-set-uint64}
-    @about-function{g-key-file-set-double}
-    @about-function{g-key-file-set-string-list}
-    @about-function{g-key-file-set-locale-string-list}
-    @about-function{g-key-file-set-boolean-list}
-    @about-function{g-key-file-set-integer-list}
-    @about-function{g-key-file-set-double-list}
-    @about-function{g-key-file-set-comment}
+    @about-function{g-key-file-value}
+    @about-function{g-key-file-string}
+    @about-function{g-key-file-locale-string}
+    @about-function{g-key-file-locale-for-key}
+    @about-function{g-key-file-boolean}
+    @about-function{g-key-file-integer}
+    @about-function{g-key-file-int64}
+    @about-function{g-key-file-uint64}
+    @about-function{g-key-file-double}
+    @about-function{g-key-file-string-list}
+    @about-function{g-key-file-locale-string-list}
+    @about-function{g-key-file-boolean-list}
+    @about-function{g-key-file-integer-list}
+    @about-function{g-key-file-double-list}
+    @about-function{g-key-file-comment}
     @about-function{g-key-file-remove-group}
     @about-function{g-key-file-remove-key}
     @about-function{g-key-file-remove-comment}
@@ -504,7 +487,6 @@
     @about-symbol{g-variant-class}
     @about-symbol{g-variant-iter}
     @about-symbol{g-variant-builder}
-    @about-type{g-variant-dict}
     @about-symbol{g-variant-parse-error}
     @about-function{g-variant-unref}
     @about-function{g-variant-ref}
@@ -609,6 +591,7 @@
     @about-function{g-variant-builder-end}
     @about-function{g-variant-builder-open}
     @about-function{g-variant-builder-close}
+    @about-class{g-variant-dict}
     @about-function{g-variant-dict-init}
     @about-function{g-variant-dict-unref}
     @about-function{g-variant-dict-ref}

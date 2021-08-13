@@ -63,9 +63,9 @@ GLib Utilities
     File Utilities             - various file-related functions
     URI Functions              - manipulating URIs
     Hostname Utilities         - Internet hostname utilities
-    Shell-related Utilities    - shell-like commandline handling
+    Shell-related Utilities    - shell-like command line handling
 
-  glib.option-group.lisp       - parses commandline options        - Glib 2.68 &
+  glib.option.lisp             - parses command line options       - Glib 2.68 &
 
     Glob-style pattern
     matching                   - matches strings against patterns containing
@@ -77,7 +77,7 @@ GLib Utilities
                                  supported by GRegex
     Simple XML Subset Parser   - parses a subset of XML
 
-  glib.key-value.lisp          - parses .ini-like config files     - Glib 2.64 &
+  glib.key-file.lisp           - parses .ini-like config files     - Glib 2.64 &
 
     Bookmark file parser       - parses files containing bookmarks
     Testing                    - a test framework
@@ -122,4 +122,4 @@ GLib Data Types
     GVariant Format Strings    - varargs conversion of GVariants
     GVariant Text Format       - textual representation of GVariants
 
-2021-4-9
+2021-8-13
