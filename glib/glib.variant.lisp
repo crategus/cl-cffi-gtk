@@ -502,13 +502,18 @@
 ;;; struct GVariantDict
 ;;; ----------------------------------------------------------------------------
 
-(defcstruct g-variant-dict)
+(glib-init::at-init () (foreign-funcall "g_variant_dict_get_type" g-size))
+
+(gobject::define-g-boxed-opaque g-variant-dict "GVariantDict"
+  :alloc (error "GVariantDict cannot be created from the Lisp side."))
+
+;(defcstruct g-variant-dict)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-variant-dict atdoc:*type-name-alias*)
-      "CStruct"
+(setf (gethash 'g-variant-dict atdoc:*class-name-alias*)
+      "GBoxed"
       (documentation 'g-variant-dict 'type)
- "@version{2020-12-10}
+ "@version{2021-8-12}
   @begin{short}
     The @sym{g-variant-dict} structure is a mutable interface to
     @type{g-variant} dictionaries.
@@ -527,7 +532,7 @@
   you begin with a call to the function @fun{g-variant-dict-init} and free the
   resources with a call to the function @fun{g-variant-dict-clear}.
 
-  Heap-allocated @sym{g-variant-dict} structure follows normal refcounting
+  Heap-allocated @sym{g-variant-dict} structures follows normal refcounting
   rules: you allocate it with the function @fun{g-variant-dict-new} and use
   the functions @fun{g-variant-dict-ref} and @fun{g-variant-dict-unref}.
 
@@ -3630,6 +3635,12 @@ add_to_count (GVariant  *orig,
 ;;;
 ;;; Since 2.40
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_dict_contains" g-variant-dict-contains) :boolean
+  (dict (gobject::g-boxed-foreign g-variant-dict))
+  (key :string))
+
+(export 'g-variant-dict-contains)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_dict_lookup ()
