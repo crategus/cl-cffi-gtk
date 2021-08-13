@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2020 Dieter Kaiser
+;;; Copyright (C) 2020 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -171,30 +171,31 @@
 ;;; ----------------------------------------------------------------------------
 
 (defbitfield g-key-file-flags
-  (:none #.(ash 1 0))
-  (:keep-comments #.(ash 1 1))
-  (:keep-translations #.(ash 1 2)))
+  (:none 0)
+  (:keep-comments #.(ash 1 0))
+  (:keep-translations #.(ash 1 1)))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-key-file-flags atdoc:*symbol-name-alias*) "Bitfield"
+(setf (gethash 'g-key-file-flags atdoc:*symbol-name-alias*)
+      "Bitfield"
       (gethash 'g-key-file-flags atdoc:*external-symbols*)
- "@version{2020-3-29}
+ "@version{2021-8-13}
   @begin{short}
     Flags which influence the parsing of key values.
   @end{short}
   @begin{pre}
 (defbitfield g-key-file-flags
-  (:none #.(ash 1 0))
-  (:keep-comments #.(ash 1 1))
-  (:keep-translations #.(ash 1 2)))
+  (:none 0)
+  (:keep-comments #.(ash 1 0))
+  (:keep-translations #.(ash 1 1)))
   @end{pre}
   @begin[code]{table}
     @entry[:none]{No flags, default behaviour.}
-    @entry[:keep-coments]{Use this flag if you plan to write the (possibly
-      modified) contents of the key file back to a file; otherwise all comments
+    @entry[:keep-coments]{Use this flag if you plan to write the possibly
+      modified contents of the key file back to a file. Otherwise all comments
       will be lost when the key file is written back.}
-    @entry[:keep-translations]{Use this flag if you plan to write the (possibly
-      modified) contents of the key file back to a file; otherwise only the
+    @entry[:keep-translations]{Use this flag if you plan to write the possibly
+      modified contents of the key file back to a file. Otherwise only the
       translations for the current language will be written back.}
   @end{table}
   @see-type{g-key-file}")
@@ -203,47 +204,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GKeyFile
-;;;
-;;; The GKeyFile struct contains only private data and should not be accessed
-;;; directly.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-key-file)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-key-file atdoc:*type-name-alias*) "CStruct"
+(setf (gethash 'g-key-file atdoc:*type-name-alias*)
+      "CStruct"
       (documentation 'g-key-file 'type)
- "@version{2020-3-29}
+ "@version{2021-8-13}
   @begin{short}
-    @sym{g-key-file} lets you parse, edit or create files containing groups of
-    key-value pairs, which we call key files for lack of a better name.
+    The @sym{g-key-file} structure lets you parse, edit or create files
+    containing groups of key-value pairs, which we call key files for lack of a
+    better name.
   @end{short}
-  Several freedesktop.org specifications use key files now, e. g the Desktop
+  Several freedesktop.org specifications use key files now, e.g. the Desktop
   Entry Specification and the Icon Theme Specification.
 
   The syntax of key files is described in detail in the Desktop Entry
   Specification, here is a quick summary: Key files consists of groups of
   key-value pairs, interspersed with comments.
   @begin{pre}
- # this is just an example
- # there can be comments before the first group
+# this is just an example
+# there can be comments before the first group
 
- [First Group]
+[First Group]
 
- Name=Key File Example this value shows escaping
+Name=Key File Example this value shows escaping
 
- # localized strings are stored in multiple key-value pairs
- Welcome=Hello
- Welcome[de]=Hallo
- Welcome[fr_FR]=Bonjour
- Welcome[it]=Ciao
- Welcome[be@@latin]=Hello
+# localized strings are stored in multiple key-value pairs
+Welcome=Hello
+Welcome[de]=Hallo
+Welcome[fr_FR]=Bonjour
+Welcome[it]=Ciao
+Welcome[be@@latin]=Hello
 
- [Another Group]
+[Another Group]
 
- Numbers=2;20;-200;0
+Numbers=2;20;-200;0
 
- Booleans=true;false;true;true
+Booleans=true;false;true;true
   @end{pre}
   Lines beginning with a @code{'#'} and blank lines are considered comments.
 
@@ -280,60 +280,40 @@
       case) are allowed.}
   @end{itemize}
   Note that in contrast to the Desktop Entry Specification, groups in key
-  files may contain the same key multiple times; the last entry wins. Key
-  files may also contain multiple groups with the same name; they are merged
+  files may contain the same key multiple times. The last entry wins. Key
+  files may also contain multiple groups with the same name. They are merged
   together. Another difference is that keys and group names in key files are
   not restricted to ASCII characters.
-  @begin[Example]{dictionary}
+  @begin[Examples]{dictionary}
     Here is an example of loading a key file and reading a value:
     @begin{pre}
-g_autoptr(GError) error = NULL;
-g_autoptr(GKeyFile) key_file = g_key_file_new ();
-
-if (!g_key_file_load_from_file (key_file, \"key-file.ini\", flags, &error))
-  {
-    if (!g_error_matches (error, G_FILE_ERROR, G_FILE_ERROR_NOENT))
-      g_warning (\"Error loading key file: %s\", error->message);
-    return;
-  @}
-
-g_autofree gchar *val = g_key_file_get_string (key_file, \"Group Name\", \"SomeKey\", &error);
-if (val == NULL &&
-    !g_error_matches (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_KEY_NOT_FOUND))
-  {
-    g_warning (\"Error finding key in key file: %s\", error->message);
-    return;
-  @}
-else if (val == NULL)
-  {
-    // Fall back to a default value.
-    val = g_strdup (\"default-value\");
-  @}
+(let ((keyfile (g-key-file-new)))
+  ;; Load the key file
+  (unless (g-key-file-load-from-file keyfile \"rtest-glib-key-file.ini\" :none)
+    (error \"Error loading the key file: RTEST-GLIB-KEY-FILE.INI\"))
+  ;; Read a string from the key file
+  (let ((value (g-key-file-string keyfile \"First Group\" \"Welcome\")))
+    (unless value
+      (setf value \"default-value\"))
+    ... ))
     @end{pre}
     Here is an example of creating and saving a key file:
     @begin{pre}
-g_autoptr(GKeyFile) key_file = g_key_file_new ();
-const gchar *val = …;
-g_autoptr(GError) error = NULL;
+(let ((keyfile (g-key-file-new)))
+  ;; Load existing key file
+  (g-key-file-load-from-file keyfile \"rtest-glib-key-file.ini\" :none)
+  ;; Add a string to the First Group
+  (setf (g-key-file-string keyfile \"First Group\" \"SomeKey\") \"New Value\")
 
-g_key_file_set_string (key_file, \"Group Name\", \"SomeKey\", val);
+  ;; Save to a file
+  (unless (g-key-file-save-to-file keyfile \"rtest-glib-key-file-example.ini\")
+    (error \"Error saving key file.\"))
 
-// Save as a file.
-if (!g_key_file_save_to_file (key_file, \"key-file.ini\", &error))
-  {
-    g_warning (\"Error saving key file: %s\", error->message);
-    return;
-  @}
-
-// Or store to a GBytes for use elsewhere.
-gsize data_len;
-g_autofree guint8 *data = (guint8 *) g_key_file_to_data (key_file, &data_len, &error);
-if (data == NULL)
-  {
-    g_warning (\"Error saving key file: %s\", error->message);
-    return;
-  @}
-g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
+  ;; Or save to data for use elsewhere
+  (let ((data (g-key-file-to-data keyfile)))
+    (unless data
+      (error \"Error saving key file.\"))
+    ... ))
     @end{pre}
   @end{dictionary}
   @see-function{g-key-file-new}")
@@ -346,19 +326,16 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 
 (defcfun ("g_key_file_new" g-key-file-new) (:pointer (:struct g-key-file))
  #+cl-cffi-gtk-documentation
- "@version{2020-3-29}
-  @return{An empty @type{g-key-file} structure.}
+ "@version{2021-8-13}
+  @return{An empty @type{g-key-file} instance.}
   @begin{short}
-    Creates a new empty @type{g-key-file} structure.
+    Creates a new empty @type{g-key-file} instance.
   @end{short}
-  Use the functions @fun{g-key-file-load-from-file},
-  @fun{g-key-file-load-from-data}, @fun{g-key-file-load-from-dirs} or
-  @fun{g-key-file-load-from-data-dirs} to read an existing key file.
+  Use the functions @fun{g-key-file-load-from-file}, or
+  @fun{g-key-file-load-from-data} to read an existing key file.
   @see-type{g-key-file}
   @see-function{g-key-file-load-from-file}
-  @see-function{g-key-file-load-from-data}
-  @see-function{g-key-file-load-from-dirs}
-  @see-function{g-key-file-load-from-data-dirs}")
+  @see-function{g-key-file-load-from-data}")
 
 (export 'g-key-file-new)
 
@@ -411,11 +388,14 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 ;;; g_key_file_set_list_separator ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_key_file_set_list_separator" g-key-file-set-list-separator) :void
+(defcfun ("g_key_file_set_list_separator" %g-key-file-set-list-separator) :void
+  (keyfile (:pointer (:struct g-key-file)))
+  (separator :char))
 
+(defun g-key-file-set-list-separator (keyfile separator)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-29}
-  @argument[key-file]{a @type{g-key-file} structure}
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
   @argument[separator]{a char with the separator}
   @begin{short}
     Sets the character which is used to separate values in lists.
@@ -423,8 +403,7 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
   Typically @code{';'} or @code{','} are used as separators. The default list
   separator is @code{';'}.
   @see-type{g-key-file}"
-  (key-file (:pointer (:struct g-key-file)))
-  (separator :char))
+  (%g-key-file-set-list-separator keyfile (char-code separator)))
 
 (export 'g-key-file-set-list-separator)
 
@@ -434,27 +413,25 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 
 (defcfun ("g_key_file_load_from_file" %g-key-file-load-from-file) :boolean
   (key-file (:pointer (:struct g-key-file)))
-  (file g-string)
+  (filename :string)
   (flags g-key-file-flags)
-  (error :pointer))
+  (err :pointer))
 
-(defun g-key-file-load-from-file (filename flags)
+(defun g-key-file-load-from-file (keyfile filename flags)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-29}
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
   @argument[filename]{a string with the path of a filename to load}
-  @argument[flags]{flags from @symbol{g-key-file-flags}}
-  @return{The @symbol{g-key-file} structure with the loaded key file, otherwise
-    @em{false}.}
+  @argument[flags]{flags from the @symbol{g-key-file-flags} flags}
+  @return{@em{True} if a key file could be loaded, @em{false} otherwise.}
   @begin{short}
-    Loads a key file into an @type{g-key-file} structure.
+    Loads a key file into a @type{g-key-file} instance.
   @end{short}
   If the file could not be loaded then @em{false} is returned.
   @see-type{g-key-file}
   @see-function{g-key-file-save-to-file}"
   (with-g-error (err)
-    (let ((key-file (g-key-file-new)))
-      (when (%g-key-file-load-from-file key-file filename flags err)
-        key-file))))
+    (%g-key-file-load-from-file keyfile filename flags err)))
 
 (export 'g-key-file-load-from-file)
 
@@ -463,28 +440,26 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_key_file_load_from_data" %g-key-file-load-from-data) :boolean
-  (key-file (:pointer (:struct g-key-file)))
+  (keyfile (:pointer (:struct g-key-file)))
   (data :string)
-  (length g-size)
+  (len g-size)
   (flags g-key-file-flags)
   (error :pointer))
 
-(defun g-key-file-load-from-data (data flags)
+(defun g-key-file-load-from-data (keyfile data flags)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-29}
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
   @argument[data]{a string with the key file loaded in memory}
-  @argument[flags]{flags from @symbol{g-key-file-flags}}
-  @return{The @symbol{g-key-file} structure with the loaded key file, otherwise
-    @em{false}.}
+  @argument[flags]{flags from the @symbol{g-key-file-flags} flags}
+  @return{@em{True} if a key file could be loaded, otherwise @em{false}.}
   @begin{short}
-    Loads a key file from memory into a @type{g-key-file} structure.
+    Loads a key file from memory into a @type{g-key-file} instance.
   @end{short}
-  If the object cannot be created then @em{false} is returned.
+  If the data cannot be loaded then @em{false} is returned.
   @see-type{g-key-file}"
   (with-ignore-g-error (err)
-    (let ((key-file (g-key-file-new)))
-      (when (%g-key-file-load-from-data key-file data (length data) flags err)
-        key-file))))
+    (%g-key-file-load-from-data keyfile data (length data) flags err)))
 
 (export 'g-key-file-load-from-data)
 
@@ -599,22 +574,23 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_key_file_to_data" %g-key-file-to-data) :string
-  (key-file (:pointer (:struct g-key-file)))
-  (length (:pointer g-size))
+  (keyfile (:pointer (:struct g-key-file)))
+  (len (:pointer g-size))
   (error :pointer))
 
-(defun g-key-file-to-data (key-file)
+(defun g-key-file-to-data (keyfile)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-29}
-  @argument[key-file]{a @type{g-key-file} structure}
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
   @return{A string holding the contents of the key file.}
   @begin{short}
-    The function @sym{g-key-file-to-data} outputs the key file as a string.
+    Outputs the key file as a string.
   @end{short}
-  @see-type{g-key-file}"
+  @see-type{g-key-file}
+  @see-function{g-key-file-save-to-file}"
   (with-g-error (err)
-    (with-foreign-object (length 'g-size)
-      (%g-key-file-to-data key-file length err))))
+    (with-foreign-object (len 'g-size)
+      (%g-key-file-to-data keyfile len err))))
 
 (export 'g-key-file-to-data)
 
@@ -623,152 +599,138 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_key_file_save_to_file" %g-key-file-save-to-file) :boolean
-  (key-file (:pointer (:struct g-key-file)))
-  (filename g-string)
-  (error :pointer))
+  (keyfile (:pointer (:struct g-key-file)))
+  (filename :string)
+  (err :pointer))
 
-(defun g-key-file-save-to-file (key-file filename)
+(defun g-key-file-save-to-file (keyfile filename)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-29}
-  @argument[key-file]{a @type{g-key-file} structure}
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
   @argument[filename]{a string with the file to write to}
   @return{@em{True} if successful, else @em{false}.}
   @begin{short}
     Writes the contents of the key file to a file.
   @end{short}
-  This function can fail.
-
-  Since 2.40
-  @see-type{g-key-file}"
+  @see-type{g-key-file}
+  @see-function{g-key-file-load-from-file}"
   (with-g-error (err)
-    (%g-key-file-save-to-file key-file filename err)))
+    (%g-key-file-save-to-file keyfile filename err)))
 
 (export 'g-key-file-save-to-file)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_key_file_get_start_group ()
-;;;
-;;; gchar * g_key_file_get_start_group (GKeyFile *key_file);
-;;;
-;;; Returns the name of the start group of the file.
-;;;
-;;; key_file :
-;;;     a GKeyFile
-;;;
-;;; Returns :
-;;;     The start group of the key file.
-;;;
-;;; Since 2.6
+;;; g_key_file_get_start_group () -> g-key-file-start-group
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_key_file_get_groups ()
-;;;
-;;; gchar ** g_key_file_get_groups (GKeyFile *key_file, gsize *length);
-;;;
-;;; Returns all groups in the key file loaded with key_file. The array of
-;;; returned groups will be NULL-terminated, so length may optionally be NULL.
-;;;
-;;; key_file :
-;;;     a GKeyFile
-;;;
-;;; length :
-;;;     return location for the number of returned groups, or NULL
-;;;
-;;; Returns :
-;;;     a newly-allocated NULL-terminated array of strings. Use g_strfreev() to
-;;;     free it.
-;;;
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
+(defcfun ("g_key_file_get_start_group" g-key-file-start-group) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
+  @return{A string with the start group of the key file.}
+  @begin{short}
+    Returns the name of the start group of the key file.
+  @end{short}
+  @see-type{g-key-file}"
+  (keyfile (:pointer (:struct g-key-file))))
+
+(export 'g-key-file-start-group)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_key_file_get_keys ()
-;;;
-;;; gchar ** g_key_file_get_keys (GKeyFile *key_file,
-;;;                               const gchar *group_name,
-;;;                               gsize *length,
-;;;                               GError **error);
-;;;
-;;; Returns all keys for the group name group_name. The array of returned keys
-;;; will be NULL-terminated, so length may optionally be NULL. In the event
-;;; that the group_name cannot be found, NULL is returned and error is set to
-;;; G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
-;;;
-;;; key_file :
-;;;     a GKeyFile
-;;;
-;;; group_name :
-;;;     a group name
-;;;
-;;; length :
-;;;     return location for the number of keys returned, or NULL
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     a newly-allocated NULL-terminated array of strings. Use g_strfreev() to
-;;;     free it.
-;;;
-;;; Since 2.6
+;;; g_key_file_get_groups () -> g-key-file-groups
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_key_file_get_groups" %g-key-file-groups)
+    (g-strv :free-from-foreign t)
+  (keyfile (:pointer (:struct g-key-file)))
+  (len (:pointer g-size)))
+
+(defun g-key-file-groups (keyfile)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
+  @return{A list of strings.}
+  @begin{short}
+    Returns all groups in the key file loaded with @arg{keyfile}.
+  @end{short}
+  @see-type{g-key-file}"
+  (%g-key-file-groups keyfile (null-pointer)))
+
+(export 'g-key-file-groups)
+
+;;; ----------------------------------------------------------------------------
+;;; g_key_file_get_keys () -> g-key-file-keys
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_key_file_get_keys" %g-key-file-keys) (g-strv :free-from-foreign t)
+  (keyfile (:pointer (:struct g-key-file)))
+  (group :string)
+  (len (:pointer g-size))
+  (err :pointer))
+
+(defun g-key-file-keys (keyfile group)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
+  @argument[group]{a string with the group name}
+  @return{A list of strings.}
+  @begin{short}
+    Returns all keys for the group name.
+  @end{short}
+  In the event that the group_name cannot be found, @code{nil} is returned.
+  @see-type{g-key-file}"
+  (with-g-error (err)
+    (%g-key-file-keys keyfile group (null-pointer) err)))
+
+(export 'g-key-file-keys)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_key_file_has_group ()
-;;;
-;;; gboolean g_key_file_has_group (GKeyFile *key_file, const gchar *group_name);
-;;;
-;;; Looks whether the key file has the group group_name.
-;;;
-;;; key_file :
-;;;     a GKeyFile
-;;;
-;;; group_name :
-;;;     a group name
-;;;
-;;; Returns :
-;;;     TRUE if group_name is a part of key_file, FALSE otherwise.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_key_file_has_group" g-key-file-has-group) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
+  @argument[group]{a string with the group name}
+  @return{@em{True} if @arg{group} is a part of @arg{keyfile}, @em{false}
+    otherwise.}
+  @begin{short}
+    Looks whether the key file has the group @arg{group}.
+  @end{short}
+  @see-type{g-key-file}"
+  (keyfile (:pointer (:struct g-key-file)))
+  (group :string))
+
+(export 'g-key-file-has-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_key_file_has_key ()
-;;;
-;;; gboolean g_key_file_has_key (GKeyFile *key_file,
-;;;                              const gchar *group_name,
-;;;                              const gchar *key,
-;;;                              GError **error);
-;;;
-;;; Looks whether the key file has the key key in the group group_name.
-;;;
-;;; Note
-;;; This function does not follow the rules for GError strictly; the return
-;;; value both carries meaning and signals an error. To use this function, you
-;;; must pass a GError pointer in error, and check whether it is not NULL to
-;;; see if an error occurred.
-;;;
-;;; Language bindings should use g_key_file_get_value() to test whether or not
-;;; a key exists.
-;;;
-;;; key_file :
-;;;     a GKeyFile
-;;;
-;;; group_name :
-;;;     a group name
-;;;
-;;; key :
-;;;     a key name
-;;;
-;;; error :
-;;;     return location for a GError
-;;;
-;;; Returns :
-;;;     TRUE if key is a part of group_name, FALSE otherwise.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_key_file_has_key" %g-key-file-has-key) :boolean
+  (keyfile (:pointer (:struct g-key-file)))
+  (group :string)
+  (key :string)
+  (err :pointer))
+
+(defun g-key-file-has-key (keyfile group key)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-13}
+  @argument[keyfile]{a @type{g-key-file} instance}
+  @argument[group]{a string with the group name}
+  @argument[key]{a string with the key name}
+  @return{@em{True} if @arg{key} is a part of @arg{group}, @em{false}
+    otherwise.}
+  @begin{short}
+    Looks whether the key file has the key @arg{key} in the group
+    @arg{group}.
+  @end{short}
+  @see-type{g-key-file}"
+  (with-g-error (err)
+    (%g-key-file-has-key keyfile group key err)))
+
+(export 'g-key-file-has-key)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_key_file_get_value ()
@@ -806,37 +768,51 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_key_file_get_string ()
-;;;
-;;; gchar * g_key_file_get_string (GKeyFile *key_file,
-;;;                                const gchar *group_name,
-;;;                                const gchar *key,
-;;;                                GError **error);
-;;;
-;;; Returns the string value associated with key under group_name. Unlike
-;;; g_key_file_get_value(), this function handles escape sequences like \s.
-;;;
-;;; In the event the key cannot be found, NULL is returned and error is set to
-;;; G_KEY_FILE_ERROR_KEY_NOT_FOUND. In the event that the group_name cannot be
-;;; found, NULL is returned and error is set to
-;;; G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
-;;;
-;;; key_file :
-;;;     a GKeyFile
-;;;
-;;; group_name :
-;;;     a group name
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     a newly allocated string or NULL if the specified key cannot be found.
-;;;
-;;; Since 2.6
+;;; g_key_file_set_string () -> g-key-file-string
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf g-key-file-string) (value keyfile group key)
+  (foreign-funcall "g_key_file_set_string"
+                   (:pointer (:struct g-key-file)) keyfile
+                   :string group
+                   :string key
+                   :string value
+                   :void)
+  value)
+
+(defcfun ("g_key_file_get_string" %g-key-file-string) :string
+  (keyfile (:pointer (:struct g-key-file)))
+  (group :string)
+  (key :string)
+  (err :pointer))
+
+(defun g-key-file-string (keyfile group key)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-13}
+  @syntax[]{(g-key-file-string keyfile) => value}
+  @syntax[]{(setf (g-key-file-string keyfile) value)}
+  @argument[keyfile]{a @type{g-key-file} instance}
+  @argument[group]{a string with the group name}
+  @argument[key]{a string with the key name}
+  @argument[value]{a string or @code{nil}}
+  @begin{short}
+    The function @sym{g-key-file-string} returns the string value associated
+    with @arg{key} under @arg{group}.
+  @end{short}
+  In the event the key or the group name cannot be found, @code{nil} is
+  returned.
+
+  The function @sym{(setf g-key-file-string)} associates a new string value with
+  @arg{key} under @arg{group}. If @arg{key} or @arg{group} cannot be found then
+  they are created.
+
+  Unlike the function @fun{g-key-file-value}, this function handles characters
+  that need escaping, such as newlines.
+  @see-type{g-key-file}"
+  (with-g-error (err)
+    (%g-key-file-string keyfile group key err)))
+
+(export 'g-key-file-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_key_file_get_locale_string ()
@@ -1087,12 +1063,6 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 ;;;                                      gsize *length,
 ;;;                                      GError **error);
 ;;;
-;;; Returns the values associated with key under group_name.
-;;;
-;;; In the event the key cannot be found, NULL is returned and error is set to
-;;; G_KEY_FILE_ERROR_KEY_NOT_FOUND. In the event that the group_name cannot be
-;;; found, NULL is returned and error is set to
-;;; G_KEY_FILE_ERROR_GROUP_NOT_FOUND.
 ;;;
 ;;; key_file :
 ;;;     a GKeyFile
@@ -1109,12 +1079,80 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 ;;; error :
 ;;;     return location for a GError, or NULL
 ;;;
-;;; Returns :
-;;;     a NULL-terminated string array or NULL if the specified key cannot be
-;;;     found. The array should be freed with g_strfreev().
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_key_file_set_string_list ()
+;;;
+;;; void g_key_file_set_string_list (GKeyFile *key_file,
+;;;                                  const gchar *group_name,
+;;;                                  const gchar *key,
+;;;                                  const gchar * const list[],
+;;;                                  gsize length);
+;;;
+;;;
+;;; key_file :
+;;;     a GKeyFile
+;;;
+;;; group_name :
+;;;     a group name
+;;;
+;;; key :
+;;;     a key
+;;;
+;;; list :
+;;;     an array of string values
+;;;
+;;; length :
+;;;     number of string values in list
+;;;
+;;; Since 2.6
+;;; ----------------------------------------------------------------------------
+
+(defun (setf g-key-file-string-list) (value keyfile group key)
+  (foreign-funcall "g_key_file_set_string_list"
+                   (:pointer (:struct g-key-file)) keyfile
+                   :string group
+                   :string key
+                   g-strv value
+                   g-size (length value)
+                   :void)
+  value)
+
+(defcfun ("g_key_file_get_string_list" %g-key-file-string-list) g-strv
+  (keyfile (:pointer (:struct g-key-file)))
+  (group :string)
+  (key :string)
+  (len (:pointer g-size))
+  (err :pointer))
+
+(defun g-key-file-string-list (keyfile group key)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-13}
+  @syntax[]{(g-key-file-string-list keyfile) => value}
+  @syntax[]{(setf (g-key-file-string-list keyfile) value)}
+  @argument[keyfile]{a @type{g-key-file} instance}
+  @argument[group]{a string with the group name}
+  @argument[key]{a string with the key name}
+  @argument[value]{a list of strings}
+  @begin{short}
+    The function @sym{g-key-file-string-list} returns the values associated with
+    @arg{key} under @arg{group}.
+  @end{short}
+  In the event the key or the group name cannot be found, @code{nil} is
+  returned.
+
+  The function @sym{(setf g-key-file-string-list} associates a list of string
+  values for @arg{key} under @arg{group}. If @arg{key} or @arg{group} cannot be
+  found then they are created.
+  @see-type{g-key-file}"
+  (with-g-error (err)
+    (with-foreign-object (len 'g-size)
+      (%g-key-file-string-list keyfile group key len err))))
+
+(export 'g-key-file-string-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_key_file_get_locale_string_list ()
@@ -1338,34 +1376,6 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_key_file_set_string ()
-;;;
-;;; void g_key_file_set_string (GKeyFile *key_file,
-;;;                             const gchar *group_name,
-;;;                             const gchar *key,
-;;;                             const gchar *string);
-;;;
-;;; Associates a new string value with key under group_name. If key cannot be
-;;; found then it is created. If group_name cannot be found then it is created.
-;;; Unlike g_key_file_set_value(), this function handles characters that need
-;;; escaping, such as newlines.
-;;;
-;;; key_file :
-;;;     a GKeyFile
-;;;
-;;; group_name :
-;;;     a group name
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; string :
-;;;     a string
-;;;
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; g_key_file_set_locale_string ()
 ;;;
 ;;; void g_key_file_set_locale_string (GKeyFile *key_file,
@@ -1523,37 +1533,6 @@ g_autoptr(GBytes) bytes = g_bytes_new_take (g_steal_pointer (&data), data_len);
 ;;;     an double value
 ;;;
 ;;; Since 2.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_key_file_set_string_list ()
-;;;
-;;; void g_key_file_set_string_list (GKeyFile *key_file,
-;;;                                  const gchar *group_name,
-;;;                                  const gchar *key,
-;;;                                  const gchar * const list[],
-;;;                                  gsize length);
-;;;
-;;; Associates a list of string values for key under group_name. If key cannot
-;;; be found then it is created. If group_name cannot be found then it is
-;;; created.
-;;;
-;;; key_file :
-;;;     a GKeyFile
-;;;
-;;; group_name :
-;;;     a group name
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; list :
-;;;     an array of string values
-;;;
-;;; length :
-;;;     number of string values in list
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
