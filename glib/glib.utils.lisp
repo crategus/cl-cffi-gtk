@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -390,7 +390,7 @@
   @short{Accessor of the name of the program.}
 
   This name should not be localized, contrast with the function
-  @fun{g-application-name}. If you are using GDK or GTK+ the program name is
+  @fun{g-application-name}. If you are using GDK or GTK the program name is
   set in the function @code{gdk_init()}, which is called by the function
   @code{gtk_init()}. The program name is found by taking the last component of
   @code{argv[0]}.
@@ -1591,7 +1591,7 @@
 ;;;                             guint nkeys);
 ;;;
 ;;; Parses a string containing debugging options into a guint containing bit
-;;; flags. This is used within GDK and GTK+ to parse the debug options passed
+;;; flags. This is used within GDK and GTK to parse the debug options passed
 ;;; on the command line or through environment variables.
 ;;;
 ;;; If string is equal to "all", all flags are set. Any flags specified along
@@ -1633,7 +1633,7 @@
 ;;; void (*GFreeFunc) (gpointer data);
 ;;;
 ;;; Declares a type of function which takes an arbitrary data pointer argument
-;;; and has no return value. It is not currently used in GLib or GTK+.
+;;; and has no return value. It is not currently used in GLib or GTK.
 ;;;
 ;;; data :
 ;;;     a data pointer

@@ -1843,7 +1843,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
                        interval
                        (callback g-source-func)
                        (allocate-stable-pointer func)
-                       (callback stable-pointer-destroy-notify-cb)))
+                       (callback stable-pointer-destroy-notify)))
 
 (export 'g-timeout-add)
 
@@ -1928,7 +1928,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
                                interval
                                (callback g-source-func)
                                (allocate-stable-pointer func)
-                               (callback stable-pointer-destroy-notify-cb)))
+                               (callback stable-pointer-destroy-notify)))
 
 (export 'g-timeout-add-seconds)
 
@@ -2044,7 +2044,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
   (%g-idle-add-full priority
                     (callback g-source-func)
                     (allocate-stable-pointer func)
-                    (callback stable-pointer-destroy-notify-cb)))
+                    (callback stable-pointer-destroy-notify)))
 
 (export 'g-idle-add)
 
@@ -2717,7 +2717,7 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
   (%g-source-set-callback source
                           (callback g-source-func)
                           (allocate-stable-pointer func)
-                          (callback stable-pointer-destroy-notify-cb)))
+                          (callback stable-pointer-destroy-notify)))
 
 (export 'g-source-set-callback)
 
