@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.application.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -158,11 +158,11 @@
  "@version{*2020-5-13}
   @begin{short}
     @sym{gtk-application} is a class that handles many important aspects of a
-    GTK+ application in a convenient fashion, without enforcing a
+    GTK application in a convenient fashion, without enforcing a
     one-size-fits-all application model.
   @end{short}
 
-  Currently, @sym{gtk-application} handles GTK+ initialization, application
+  Currently, @sym{gtk-application} handles GTK initialization, application
   uniqueness, session management, provides some basic scriptability and desktop
   shell integration by exporting actions and menus and manages a list of
   toplevel windows whose life-cycle is automatically tied to the life-cycle of
@@ -473,8 +473,8 @@
 (setf (documentation (atdoc:get-slot-from-name "screensaver-active"
                                                'gtk-application) 't)
  "The @code{screensaver-active} property of type @code{:boolean} (Read) @br{}
-  This property is @em{true} if GTK+ believes that the screensaver is currently
-  active. GTK+ only tracks session state, including this, when the
+  This property is @em{true} if GTK believes that the screensaver is currently
+  active. GTK only tracks session state, including this, when the
   @code{register-session} property is set to @em{true}. Tracking the screensaver
   state is supported on Linux. Since 3.24 @br{}
   Default value: @em{false}")
@@ -492,8 +492,8 @@
     @class{gtk-application} class.
   @end{short}
 
-  The @slot[gtk-application]{screensaver-active} property is @em{true} if GTK+
-  believes that the screensaver is currently active. GTK+ only tracks session
+  The @slot[gtk-application]{screensaver-active} property is @em{true} if GTK
+  believes that the screensaver is currently active. GTK only tracks session
   state, including this, when the @slot[gtk-application]{register-session}
   property is set to @em{true}. Tracking the screensaver state is supported on
   Linux.
@@ -522,13 +522,13 @@
   registered as the primary instance. Concretely, the function @code{gtk_init()}
   is called in the default handler for the \"startup\" signal. Therefore,
   @class{gtk-application} subclasses should chain up in their \"startup\"
-  handler before using any GTK+ API.
+  handler before using any GTK API.
 
-  Note that commandline arguments are not passed to the function
-  @code{gtk_init()}. All GTK+ functionality that is available via commandline
+  Note that command line arguments are not passed to the function
+  @code{gtk_init()}. All GTK functionality that is available via command line
   arguments can also be achieved by setting suitable environment variables such
   as @code{G_DEBUG}, so this should not be a big problem. If you absolutely must
-  support GTK+ commandline arguments, you can explicitly call the function
+  support GTK command line arguments, you can explicitly call the function
   @code{gtk_init()} before creating the application instance.
 
   The application ID must be valid. See the function
@@ -536,7 +536,7 @@
 
   If no application ID is given then some features, most notably application
   uniqueness, will be disabled. No application ID is only allowed with
-  GTK+ 3.6 or later.
+  GTK 3.6 or later.
   @see-class{gtk-application}
   @see-symbol{g-application-flags}
   @see-function{g-application-id-is-valid}"
@@ -567,7 +567,7 @@
   until the window is destroyed, but you can explicitly remove it with the
   function @fun{gtk-application-remove-window}.
 
-  GTK+ will keep the application running as long as it has any windows.
+  GTK will keep the application running as long as it has any windows.
   @see-class{gtk-application}
   @see-class{gtk-window}
   @see-function{gtk-application-remove-window}"

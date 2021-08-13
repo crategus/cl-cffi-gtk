@@ -279,7 +279,7 @@
   @sym{(setf gdk-program-class)} sets the program class.
 
   Unless the program class has explicitly been set with the function
-  @sym{(setf gdk-program-class)} or with the @code{--class} commandline option,
+  @sym{(setf gdk-program-class)} or with the @code{--class} command line option,
   the default value is the program name determined with the function
   @fun{g-prgname} and with the first character converted to uppercase.
 

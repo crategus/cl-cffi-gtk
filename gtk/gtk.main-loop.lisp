@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.main-loop.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -80,7 +80,7 @@
 ;;;
 ;;; Use this priority for functionality related to size allocation.
 ;;;
-;;; It is used internally by GTK+ to compute the sizes of widgets. This priority
+;;; It is used internally by GTK to compute the sizes of widgets. This priority
 ;;; is higher than GDK_PRIORITY_REDRAW to avoid resizing a widget which was just
 ;;; redrawn.
 ;;; ----------------------------------------------------------------------------
@@ -89,7 +89,7 @@
 ;;; gtk_disable_setlocale ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Because GTK+ is initialized, when loading the Lisp library, this
+;; TODO: Because GTK is initialized, when loading the Lisp library, this
 ;; function should have no effect. We do not export the implementation.
 
 (defcfun ("gtk_disable_setlocale" %gtk-disable-setlocale) :void
@@ -127,7 +127,7 @@
   @end{short}
   The default language is derived from the current locale. Note that this can
   change over the life of an application. It determines, for example, whether
-  GTK+ uses the right-to-left or left-to-right text direction.
+  GTK uses the right-to-left or left-to-right text direction.
 
   This function is equivalent to the function @fun{pango-language-default}.
   @begin[Example]{dictionary}
@@ -163,12 +163,12 @@
   @code{:ltr} direction of type @symbol{gtk-text-direction} otherwise. The value
   @code{:none} will never be returned.
 
-  GTK+ sets the default text direction according to the locale during
+  GTK sets the default text direction according to the locale during
   @code{gtk_init()}, and you should normally use the function
   @fun{gtk-widget-direction} or @fun{gtk-widget-default-direction} to obtain
   the current direction.
 
-  This function is only needed rare cases when the locale is changed after GTK+
+  This function is only needed rare cases when the locale is changed after GTK
   has already been initialized.
   @begin[Example]{dictionary}
     You can use the function @sym{gtk-locale-direction} to update the default
@@ -188,11 +188,11 @@
 ;;;
 ;;; gboolean gtk_parse_args (int *argc, char ***argv);
 ;;;
-;;; Parses command line arguments, and initializes global attributes of GTK+,
+;;; Parses command line arguments, and initializes global attributes of GTK,
 ;;; but does not actually open a connection to a display. (See
 ;;; gdk_display_open(), gdk_get_display_arg_name())
 ;;;
-;;; Any arguments used by GTK+ or GDK are removed from the array and argc and
+;;; Any arguments used by GTK or GDK are removed from the array and argc and
 ;;; argv are updated accordingly.
 ;;;
 ;;; There is no need to call this function explicitely if you are using
@@ -223,9 +223,9 @@
     function (or 0 if @arg{argv} is @code{NULL}). This will be changed if any
     arguments were handled.}
   @argument[argv]{Address of the @arg{argv} parameter of @code{main()}, or
-    @code{NULL}. Any options understood by GTK+ are stripped before return.}
+    @code{NULL}. Any options understood by GTK are stripped before return.}
   @begin{short}
-    Call this function before using any other GTK+ functions in your GUI
+    Call this function before using any other GTK functions in your GUI
     applications.
   @end{short}
   It will initialize everything needed to operate the toolkit and parses some
@@ -233,12 +233,12 @@
 
   Although you are expected to pass the @arg{argc}, @arg{argv} parameters from
   @code{main()} to this function, it is possible to pass @code{NULL} if
-  @arg{argv} is not available or commandline handling is not required.
+  @arg{argv} is not available or command line handling is not required.
 
   @arg{argc} and @arg{argv} are adjusted accordingly so your own code will never
   see those standard arguments.
 
-  Note that there are some alternative ways to initialize GTK+: if you are
+  Note that there are some alternative ways to initialize GTK: if you are
   calling @code{gtk_parse_args()}, @fun{%gtk-init-check},
   @code{gtk_init_with_args()} or @code{g_option_context_parse()} with the option
   group returned by the function @fun{gtk-option-group}, you do not have to
@@ -248,7 +248,7 @@
     windowing system for some reason. If you want your program to fall back to a
     textual interface you want to call @fun{%gtk-init-check} instead.
 
-    Since 2.18, GTK+ calls signal @code{(SIGPIPE, SIG_IGN)} during
+    Since 2.18, GTK calls signal @code{(SIGPIPE, SIG_IGN)} during
     initialization, to ignore @code{SIGPIPE} signals, since these are almost
     never wanted in graphical applications. If you do need to handle
     @code{SIGPIPE} for some reason, reset the handler after @code{gtk_init()},
@@ -273,7 +273,7 @@
           (foreign-alloc :string :count 1 :initial-element "/usr/bin/sbcl"))
     (unwind-protect
       (unless (%gtk-init-check argc argv)
-        (error "Cannot initialize Gtk+"))
+        (error "Cannot initialize GTK"))
       (foreign-free (mem-ref argv '(:pointer :string))))))
 
 ;;; ----------------------------------------------------------------------------
@@ -291,7 +291,7 @@
     function (or 0 if @code{argv} is @code{NULL}). This will be changed if any
     arguments were handled.}
   @argument[argv]{Address of the @arg{argv} parameter of @code{main()}, or
-    @code{nil}. Any options understood by GTK+ are stripped before return.}
+    @code{nil}. Any options understood by GTK are stripped before return.}
   @return{@em{true} if the windowing system has been successfully initialized,
     @code{nil} otherwise}
   @begin{short}
@@ -322,7 +322,7 @@
 ;;;                              GError **error);
 ;;;
 ;;; This function does the same work as gtk_init_check(). Additionally, it
-;;; allows you to add your own commandline options, and it automatically
+;;; allows you to add your own command line options, and it automatically
 ;;; generates nicely formatted --help output. Note that your program will be
 ;;; terminated after writing out the help output.
 ;;;
@@ -332,7 +332,7 @@
 ;;;
 ;;; argv :
 ;;;     Address of the argv parameter of main(), or NULL. Any options understood
-;;;     by GTK+ are stripped before return.
+;;;     by GTK are stripped before return.
 ;;;
 ;;; parameter_string :
 ;;;     a string which is displayed in the first line of --help output, after
@@ -360,31 +360,29 @@
 ;;; gtk_get_option_group () -> gtk-option-group
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: We have not a full implementation of GOptionGroup
-
 (defcfun ("gtk_get_option_group" gtk-option-group)
     (:pointer (:struct g-option-group))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-13}
-  @argument[open-default-display]{a boolean whether to open the default display
-    when parsing the commandline arguments}
+ "@version{2021-8-12}
+  @argument[default]{a boolean whether to open the default display when parsing
+    the command line arguments}
   @begin{return}
-    A @type{g-option-group} instance for the commandline arguments recognized
-    by GTK+.
+    A @type{g-option-group} instance for the command line arguments recognized
+    by GTK.
   @end{return}
   @begin{short}
-    Returns a option group for the commandline arguments recognized by GTK+ and
-    GDK.
+    Returns an option group for the command line arguments recognized by GTK
+    and GDK.
   @end{short}
 
   You should add this group to your @type{g-option-context} instance with the
   function @fun{g-option-context-add-group}, if you are using the function
-  @fun{g-option-context-parse} to parse your commandline arguments.
+  @fun{g-option-context-parse} to parse your command line arguments.
   @see-type{g-option-group}
   @see-type{g-option-context}
   @see-function{g-option-context-add-group}
   @see-function{g-option-context-parse}"
-  (open-default-display :boolean))
+  (default :boolean))
 
 (export 'gtk-option-group)
 
@@ -433,7 +431,7 @@
   @fun{gtk-main-quit} will make the innermost invocation of the main loop
   return.
   @begin[Lisp Implementation]{dictionary}
-    In the Lisp binding to GTK+ the function @sym{gtk-main} is not called
+    In the Lisp binding to GTK the function @sym{gtk-main} is not called
     directly but through the macro @fun{within-main-loop}. The macro
     @fun{within-main-loop} does some additional bookkeeping, to run the Lisp
     program in a separate thread.
@@ -494,7 +492,7 @@
   @end{short}
   See the function @fun{gtk-main} for an example.
   @begin[Lisp Implementation]{dictionary}
-    In the Lisp binding to GTK+ the function @sym{gtk-main-quit} is not called,
+    In the Lisp binding to GTK the function @sym{gtk-main-quit} is not called,
     but the function @fun{leave-gtk-main}. The function @fun{leave-gtk-main}
     does some additional bookkeeping, which is necessary to destroy the separate
     thread for a Lisp program.
@@ -516,7 +514,7 @@
     innermost main loop.}
   @short{Runs a single iteration of the main loop.}
 
-  If no events are waiting to be processed GTK+ will block until the next
+  If no events are waiting to be processed GTK will block until the next
   event is noticed. If you do not want to block look at the function
   @fun{gtk-main-iteration-do} or check if any events are pending with
   the function @fun{gtk-events-pending} first.
@@ -533,7 +531,7 @@
 (defcfun ("gtk_main_iteration_do" gtk-main-iteration-do) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2020-8-22}
-  @argument[blocking]{@em{true} if you want GTK+ to block if no events are
+  @argument[blocking]{@em{true} if you want GTK to block if no events are
     pending}
   @return{@em{True} if the function @fun{gtk-main-quit} has been called for the
     innermost main loop.}
@@ -560,7 +558,7 @@
   @begin{short}
     Processes a single GDK event.
   @end{short}
-  This is public only to allow filtering of events between GDK and GTK+. You
+  This is public only to allow filtering of events between GDK and GTK. You
   will not usually need to call this function directly.
 
   While you should not call this function directly, you might want to know how
@@ -627,14 +625,14 @@
 ;;;
 ;;; void (*GtkModuleInitFunc) (gint *argc, gchar ***argv);
 ;;;
-;;; Each GTK+ module must have a function gtk_module_init() with this prototype.
+;;; Each GTK module must have a function gtk_module_init() with this prototype.
 ;;; This function is called after loading the module.
 ;;;
 ;;; argc :
-;;;     GTK+ always passes NULL for this argument. [allow-none]
+;;;     GTK always passes NULL for this argument. [allow-none]
 ;;;
 ;;; argv :
-;;;     GTK+ always passes NULL for this argument
+;;;     GTK always passes NULL for this argument
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -642,8 +640,8 @@
 ;;;
 ;;; void (*GtkModuleDisplayInitFunc) (GdkDisplay *display);
 ;;;
-;;; A multihead-aware GTK+ module may have a gtk_module_display_init() function
-;;; with this prototype. GTK+ calls this function for each opened display.
+;;; A multihead-aware GTK module may have a gtk_module_display_init() function
+;;; with this prototype. GTK calls this function for each opened display.
 ;;;
 ;;; display :
 ;;;     an open GdkDisplay
@@ -888,13 +886,13 @@
  "@version{2020-8-22}
   @return{A copy of the current @class{gdk-event} structure, or @code{nil} if
     there is no current event.}
-  @short{Obtains a copy of the event currently being processed by GTK+.}
+  @short{Obtains a copy of the event currently being processed by GTK.}
 
   For example, if you are handling a \"clicked\" signal, the current event will
   be the @class{gdk-event-button} event that triggered the \"clicked\" signal.
   @begin[Example]{dictionary}
     In this example the function @sym{gtk-current-event} is used in a signal
-    handler to check for a button press event. This code is part of the GTK+
+    handler to check for a button press event. This code is part of the GTK
     demo for popovers.
     @begin{pre}
 (g-signal-connect calendar \"day-selected\"
@@ -1020,7 +1018,7 @@
     event remains unhandled.
   @end{short}
 
-  Events received by GTK+ from GDK normally begin in the function
+  Events received by GTK from GDK normally begin in the function
   @fun{gtk-main-do-event}. Depending on the type of event, existence of modal
   dialogs, grabs, etc., the event may be propagated; if so, this function is
   used.
