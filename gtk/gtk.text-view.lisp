@@ -1834,31 +1834,31 @@
 
 (defcfun ("gtk_text_view_get_iter_at_position" %gtk-text-view-iter-at-position)
     :void
-  (text-view (g-object gtk-text-view))
+  (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter))
   (trailing (:pointer :int))
   (x :int)
   (y :int))
 
-(defun gtk-text-view-iter-at-position (text-view x y)
+(defun gtk-text-view-iter-at-position (view x y)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-22}
-  @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[x]{an integer with the x position, in buffer coordinates}
-  @argument[y]{an integer with the y position, in buffer coordinates}
+ "@version{2021-8-20}
+  @argument[view]{a @class{gtk-text-view} widget}
+  @argument[x]{an integer with the x position, in text buffer coordinates}
+  @argument[y]{an integer with the y position, in text buffer coordinates}
   @begin{return}
-    @code{iter} -- a @class{gtk-text-iter} object @br{}
-    @code{trailing} -- if non-@code{nil}, an integer indicating where in the
-    grapheme the user clicked. It will either be zero, or the number of
-    characters in the grapheme. 0 represents the trailing edge of the grapheme
+    @arg{iter} -- a @class{gtk-text-iter} object @br{}
+    @arg{trailing} -- if non-@code{nil}, an integer indicating where in the
+    grapheme the user clicked, it will either be zero, or the number of
+    characters in the grapheme, 0 represents the trailing edge of the grapheme
   @end{return}
   @begin{short}
-    Retrieves the iterator pointing to the character at buffer coordinates
+    Retrieves the iterator pointing to the character at text buffer coordinates
     @arg{x} and @arg{y}.
   @end{short}
-  Buffer coordinates are coordinates for the entire buffer, not just the
-  currently-displayed portion. If you have coordinates from an event, you have
-  to convert those to buffer coordinates with the function
+  Text buffer coordinates are coordinates for the entire text buffer, not just
+  the currently displayed portion. If you have coordinates from an event, you
+  have to convert those to text buffer coordinates with the function
   @fun{gtk-text-view-window-to-buffer-coords}.
 
   Note that this is different from the function
@@ -1869,7 +1869,7 @@
   @see-function{gtk-text-view-iter-at-location}"
   (with-foreign-object (trailing :int)
     (let ((iter (make-instance 'gtk-text-iter)))
-      (%gtk-text-view-iter-at-position text-view iter trailing x y)
+      (%gtk-text-view-iter-at-position view iter trailing x y)
       (values iter (mem-ref trailing :int)))))
 
 (export 'gtk-text-view-iter-at-position)
