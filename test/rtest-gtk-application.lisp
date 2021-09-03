@@ -1,7 +1,7 @@
 (def-suite gtk-application :in gtk-suite)
 (in-suite gtk-application)
 
-(defvar *gtk-application-verbose* nil)
+(defvar *verbose-gtk-application* t)
 
 ;;; --- GtkApplicationInhibitFlags ---------------------------------------------
 
@@ -28,12 +28,13 @@
   (is (equal '(DEFINE-G-FLAGS "GtkApplicationInhibitFlags"
                               GTK-APPLICATION-INHIBIT-FLAGS
                               (:EXPORT T
-                               :TYPE-INITIALIZER "gtk_application_inhibit_flags_get_type")
+                               :TYPE-INITIALIZER
+                               "gtk_application_inhibit_flags_get_type")
                               (:LOGOUT 1)
                               (:SWITCH 2)
                               (:SUSPEND 4)
                               (:IDLE 8))
-             (gobject::get-g-type-definition "GtkApplicationInhibitFlags"))))
+             (get-g-type-definition "GtkApplicationInhibitFlags"))))
 
 ;;; --- GtkApplication ---------------------------------------------------------
 
@@ -55,12 +56,13 @@
   (is (equal '("GActionGroup" "GActionMap")
              (mapcar #'g-type-name (g-type-interfaces "GtkApplication"))))
   ;; Check the class properties
-  (is (equal '("action-group" "active-window" "app-menu" "application-id" "flags"
-               "inactivity-timeout" "is-busy" "is-registered" "is-remote" "menubar"
-               "register-session" "resource-base-path" "screensaver-active")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkApplication"))
-                          #'string-lessp)))
+  (is (equal '("action-group" "active-window" "app-menu" "application-id"
+               "flags" "inactivity-timeout" "is-busy" "is-registered"
+               "is-remote" "menubar" "register-session" "resource-base-path"
+               "screensaver-active")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkApplication"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkApplication" GTK-APPLICATION
                        (:SUPERCLASS G-APPLICATION :EXPORT T :INTERFACES
@@ -80,7 +82,6 @@
 
 ;;; --- Properties and Accessors -----------------------------------------------
 
-#+nil
 (test gtk-application-properties
   (let ((message nil)
         (application (make-instance 'gtk-application
@@ -88,24 +89,32 @@
                                     :flags :none
                                     :register-session nil
                                     :inactivity-timeout 1000)))
-
+    ;; Connect signal "startup"
+    (g-signal-connect application "startup"
+                      (lambda (app)
+                        (declare (ignore app))
+                        (when *verbose-gtk-application*
+                          (format t "~&Application is in startup.~%"))))
+    ;; TODO: Move the code to "startup" signal handler
     ;; Connect signal "activate"
     (g-signal-connect application "activate"
                       (lambda (app)
                         (g-application-hold app)
                         (push "activate" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in activate.~%"))
                         ;; gtk-application-active-window
                         (is-false (gtk-application-active-window app))
                         ;; gtk-application-app-menu
                         (is-false (gtk-application-app-menu app))
-                        (setf (gtk-application-app-menu app) (make-instance 'g-menu))
-                        (is (eq 'g-menu (type-of (gtk-application-app-menu app))))
+                        (setf (gtk-application-app-menu app)
+                              (make-instance 'g-menu))
+                        (is (typep (gtk-application-app-menu app) 'g-menu))
                         ;; gtk-application-menubar
                         (is-false (gtk-application-menubar app))
-                        (setf (gtk-application-menubar app) (make-instance 'g-menu))
-                        (is (eq 'g-menu (type-of (gtk-application-menubar app))))
+                        (setf (gtk-application-menubar app)
+                              (make-instance 'g-menu))
+                        (is (typep (gtk-application-menubar app) 'g-menu))
                         ;; gtk-application-register-session
                         (is-false (gtk-application-register-session app))
                         (setf (gtk-application-register-session app) t)
@@ -113,15 +122,13 @@
                         ;; gtk-application-screensaver-active
                         (is-false (gtk-application-screensaver-active app))
                         (g-application-release app)))
-
     ;; Connect signal "shutdown"
     (g-signal-connect application "shutdown"
                       (lambda (app)
                         (declare (ignore app))
                         (push "shutdown" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in shutdown.~%"))))
-
     ;; Run the application
     (g-application-run application nil)
     ;; Check the collected messages from the signal handlers
@@ -129,7 +136,6 @@
 
 ;;; --- Signals ----------------------------------------------------------------
 
-#+nil
 (test gtk-application-signals
   (let ((message nil)
         (application (make-instance 'gtk-application
@@ -137,37 +143,33 @@
                                     :flags :none
                                     :register-session t
                                     :inactivity-timeout 1000)))
-
     ;; Connect signal "query-end", will not be executed
     (g-signal-connect application "query-end"
                       (lambda (app)
                         (declare (ignore app))
                         (push "query-end" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in query-end.~%"))))
-
     ;; Connect signal "window-added"
     (g-signal-connect application "window-added"
                       (lambda (app window)
                         (declare (ignore app window))
                         (push "window-added" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in window-added.~%"))))
-
     ;; Connect signal "window-removed"
     (g-signal-connect application "window-removed"
                       (lambda (app window)
                         (declare (ignore app window))
                         (push "window-removed" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in window-removed.~%"))))
-
     ;; Connect signal "activate"
     (g-signal-connect application "activate"
                       (lambda (app)
                         (g-application-hold app)
                         (push "activate" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in activate.~%"))
                         ;; Code for emitting window-added and window-removed
                         (let ((window (make-instance 'gtk-application-window)))
@@ -176,19 +178,18 @@
                           ;; Remove window from the application
                           (gtk-application-remove-window app window))
                         (g-application-release app)))
-
     ;; Connect signal "shutdown"
     (g-signal-connect application "shutdown"
                       (lambda (app)
                         (declare (ignore app))
                         (push "shutdown" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in shutdown.~%"))))
-
     ;; Run the application
     (g-application-run application nil)
     ;; Check the collected messages from the signal handlers
-    (is (equal '("shutdown" "window-removed" "window-added" "activate") message))))
+    (is (equal '("shutdown" "window-removed" "window-added" "activate")
+               message))))
 
 ;;; --- Functions --------------------------------------------------------------
 
@@ -201,14 +202,14 @@
                  (g-application-application-id application)))
     (is (equal '(:handles-open) (g-application-flags application))))
   ;; Create application without ID
-  (is-false (g-application-application-id (gtk-application-new nil '(:handles-open)))))
+  (is-false (g-application-application-id
+                (gtk-application-new nil '(:handles-open)))))
 
 ;;;     gtk_application_add_window
 ;;;     gtk_application_remove_window
 ;;;     gtk_application_get_windows
 ;;;     gtk_application_get_window_by_id
 
-#+nil
 (test gtk-application-add-window
   (let ((message nil)
         (application (make-instance 'gtk-application
@@ -216,29 +217,26 @@
                                     :flags :none
                                     :register-session nil
                                     :inactivity-timeout 1000)))
-
     ;; Connect signal "window-added"
     (g-signal-connect application "window-added"
                       (lambda (app window)
                         (declare (ignore app window))
                         (push "window-added" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in window-added.~%"))))
-
     ;; Connect signal "window-removed"
     (g-signal-connect application "window-removed"
                       (lambda (app window)
                         (declare (ignore app window))
                         (push "window-removed" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in window-removed.~%"))))
-
     ;; Connect signal "activate"
     (g-signal-connect application "activate"
                       (lambda (app)
                         (g-application-hold app)
                         (push "activate" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in activate.~%"))
                         ;; Code for emitting window-added and window-removed
                         (let ((window-id 0)
@@ -246,27 +244,31 @@
                           ;; Add window to the application
                           (gtk-application-add-window app window)
                           ;; Get the window ID
-                          (is (= 1 (setf window-id (gtk-application-window-id window))))
+                          (is (= 1 (setf window-id
+                                         (gtk-application-window-id window))))
                           ;; Get the window by ID
-                          (is (equal window (gtk-application-window-by-id app window-id)))
+                          (is (equal window
+                                     (gtk-application-window-by-id app
+                                                                   window-id)))
                           ;; Check the list of windows
-                          (is-true (member window (gtk-application-windows app) :test #'equal))
+                          (is-true (member window
+                                           (gtk-application-windows app)
+                                           :test #'equal))
                           ;; Remove window from the application
                           (gtk-application-remove-window app window))
                         (g-application-release app)))
-
     ;; Connect signal "shutdown"
     (g-signal-connect application "shutdown"
                       (lambda (app)
                         (declare (ignore app))
                         (push "shutdown" message)
-                        (when *gtk-application-verbose*
+                        (when *verbose-gtk-application*
                           (format t "~&Application is in shutdown.~%"))))
-
     ;; Run the application
     (g-application-run application nil)
     ;; Check the collected messages from the signal handlers
-    (is (equal '("shutdown" "window-removed" "window-added" "activate") message))))
+    (is (equal '("shutdown" "window-removed" "window-added" "activate")
+               message))))
 
 ;;;     gtk_application_inhibit
 ;;;     gtk_application_uninhibit
@@ -282,8 +284,10 @@
 
 (test gtk-application-accelerator
   (let ((application (make-instance 'gtk-application)))
-    (is-false (gtk-application-add-accelerator application "<Primary>q" "action" nil))
-    (is (equal '("action") (gtk-application-list-action-descriptions application)))
+    (is-false (gtk-application-add-accelerator application
+                                               "<Primary>q" "action" nil))
+    (is (equal '("action")
+               (gtk-application-list-action-descriptions application)))
     (is-false (gtk-application-remove-accelerator application "action" nil))
     (is (equal '() (gtk-application-list-action-descriptions application)))))
 
@@ -317,7 +321,9 @@
           '("<Control>q" "<Shift><Alt>F1" "<Release>z"))
     (is (equal '("win::close")
                (gtk-application-actions-for-accel application "<Control>q")))
-    (setf (gtk-application-accels-for-action application "win::save") '("<Control>q"))
+    (setf (gtk-application-accels-for-action application "win::save")
+          '("<Control>q"))
     (is (equal '("win::close" "win::save")
                (gtk-application-actions-for-accel application "<Control>q")))))
 
+;;; 2021-9-2

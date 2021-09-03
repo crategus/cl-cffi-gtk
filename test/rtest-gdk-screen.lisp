@@ -24,9 +24,9 @@
              (mapcar #'g-type-name (g-type-interfaces "GdkScreen"))))
   ;; Check the class properties
   (is (equal '("font-options" "resolution")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GdkScreen"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GdkScreen"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GdkScreen" GDK-SCREEN
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -48,6 +48,7 @@
 
 ;;;         composited-changed
 
+#+nil
 (test gdk-screen-composited-changed-signal
   (let* ((message nil)
          (screen (gdk-screen-default))
@@ -63,6 +64,7 @@
 
 ;;;         monitors-changed
 
+#+nil
 (test gdk-screen-monitors-changed-signal
   (let* ((message nil)
          (screen (gdk-screen-default))
@@ -78,6 +80,7 @@
 
 ;;;         size-changed
 
+#+nil
 (test gdk-screen-size-changed-signal
   (let* ((message nil)
          (screen (gdk-screen-default))
@@ -252,4 +255,4 @@
   (is (every (lambda (x) (typep x 'gdk-window))
              (gdk-screen-window-stack (gdk-screen-default)))))
 
-;;; 2020-11-7
+;;; 2021-8-20

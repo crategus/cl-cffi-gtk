@@ -23,24 +23,26 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkListBox"))))
   ;; Check the class properties
-  (is (equal '("activate-on-single-click" "app-paintable" "border-width" "can-default"
-               "can-focus" "child" "composite-child" "double-buffered" "events" "expand"
-               "focus-on-click" "halign" "has-default" "has-focus" "has-tooltip"
-               "height-request" "hexpand" "hexpand-set" "is-focus" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start" "margin-top" "name"
-               "no-show-all" "opacity" "parent" "receives-default" "resize-mode"
-               "scale-factor" "selection-mode" "sensitive" "style" "tooltip-markup"
-               "tooltip-text" "valign" "vexpand" "vexpand-set" "visible" "width-request"
-               "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkListBox"))
-                          #'string-lessp)))
+  (is (equal '("activate-on-single-click" "app-paintable" "border-width"
+               "can-default" "can-focus" "child" "composite-child"
+               "double-buffered" "events" "expand" "focus-on-click" "halign"
+               "has-default" "has-focus" "has-tooltip" "height-request"
+               "hexpand" "hexpand-set" "is-focus" "margin" "margin-bottom"
+               "margin-end" "margin-left" "margin-right" "margin-start"
+               "margin-top" "name" "no-show-all" "opacity" "parent"
+               "receives-default" "resize-mode" "scale-factor" "selection-mode"
+               "sensitive" "style" "tooltip-markup" "tooltip-text" "valign"
+               "vexpand" "vexpand-set" "visible" "width-request" "window")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkListBox"))
+                   #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkListBox"))))
   ;; Get the names of the child properties
@@ -73,30 +75,35 @@
   ;; Check the parent
   (is (eq (gtype "GtkBin") (g-type-parent "GtkListBoxRow")))
   ;; Check the children
-  (is (equal '()
-             (mapcar #'g-type-name (g-type-children "GtkListBoxRow"))))
+  (is (or (equal '("GtkSidebarRow" "GtkPlacesViewRow")
+                 (mapcar #'g-type-name (g-type-children "GtkListBoxRow")))
+          (equal '()
+                 (mapcar #'g-type-name (g-type-children "GtkListBoxRow")))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkActionable")
              (mapcar #'g-type-name (g-type-interfaces "GtkListBoxRow"))))
   ;; Check the class properties
-  (is (equal '("action-name" "action-target" "activatable" "app-paintable" "border-width"
-               "can-default" "can-focus" "child" "composite-child" "double-buffered" "events"
-               "expand" "focus-on-click" "halign" "has-default" "has-focus" "has-tooltip"
-               "height-request" "hexpand" "hexpand-set" "is-focus" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start" "margin-top" "name"
-               "no-show-all" "opacity" "parent" "receives-default" "resize-mode"
-               "scale-factor" "selectable" "sensitive" "style" "tooltip-markup"
-               "tooltip-text" "valign" "vexpand" "vexpand-set" "visible" "width-request"
+  (is (equal '("action-name" "action-target" "activatable" "app-paintable"
+               "border-width" "can-default" "can-focus" "child"
+               "composite-child" "double-buffered" "events" "expand"
+               "focus-on-click" "halign" "has-default" "has-focus" "has-tooltip"
+               "height-request" "hexpand" "hexpand-set" "is-focus" "margin"
+               "margin-bottom" "margin-end" "margin-left" "margin-right"
+               "margin-start" "margin-top" "name" "no-show-all" "opacity"
+               "parent" "receives-default" "resize-mode" "scale-factor"
+               "selectable" "sensitive" "style" "tooltip-markup" "tooltip-text"
+               "valign" "vexpand" "vexpand-set" "visible" "width-request"
                "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkListBoxRow"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkListBoxRow"))
+                   #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkListBoxRow"))))
   ;; Get the names of the child properties
@@ -147,7 +154,8 @@
     (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row)))
 
     (is (= 3 (length (gtk-container-children listbox))))
-    (is (string= "GtkListBoxRow" (g-object-type-name (first (gtk-container-children listbox)))))))
+    (is (string= "GtkListBoxRow"
+                 (g-object-type-name (first (gtk-container-children listbox)))))))
 
 ;;;     gtk_list_box_insert
 
@@ -159,7 +167,8 @@
     (is-false (gtk-list-box-insert listbox (make-instance 'gtk-list-box-row)  1))
 
     (is (= 3 (length (gtk-container-children listbox))))
-    (is (string= "GtkListBoxRow" (g-object-type-name (first (gtk-container-children listbox)))))))
+    (is (string= "GtkListBoxRow"
+                 (g-object-type-name (first (gtk-container-children listbox)))))))
 
 ;;;     gtk_list_box_select_row
 ;;;     gtk_list_box_unselect_row
@@ -206,11 +215,19 @@
   (let ((listbox (make-instance 'gtk-list-box :selection-mode :multiple))
         (listboxrow (make-instance 'gtk-list-box-row :visible t)))
 
-    (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row :visible t)))
+    (is-false (gtk-list-box-prepend listbox
+                                    (make-instance 'gtk-list-box-row
+                                                   :visible t)))
     (is-false (gtk-list-box-prepend listbox listboxrow))
-    (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row :visible t)))
-    (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row :visible t)))
-    (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row :visible t)))
+    (is-false (gtk-list-box-prepend listbox
+                                    (make-instance 'gtk-list-box-row
+                                                   :visible t)))
+    (is-false (gtk-list-box-prepend listbox
+                                    (make-instance 'gtk-list-box-row
+                                                   :visible t)))
+    (is-false (gtk-list-box-prepend listbox
+                                    (make-instance 'gtk-list-box-row
+                                                   :visible t)))
 
     (is-false (gtk-list-box-select-row listbox listboxrow))
     (is (equal listboxrow (gtk-list-box-selected-row listbox)))
@@ -236,9 +253,15 @@
   (let ((listbox (make-instance 'gtk-list-box :selection-mode :multiple))
         (row (make-instance 'gtk-list-box-row :visible t)))
 
-    (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row :visible t)))
-    (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row :visible t)))
-    (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row :visible t)))
+    (is-false (gtk-list-box-prepend listbox
+                                    (make-instance 'gtk-list-box-row
+                                                   :visible t)))
+    (is-false (gtk-list-box-prepend listbox
+                                    (make-instance 'gtk-list-box-row
+                                                   :visible t)))
+    (is-false (gtk-list-box-prepend listbox
+                                    (make-instance 'gtk-list-box-row
+                                                   :visible t)))
     (is-false (gtk-list-box-prepend listbox row))
 
     (is-false (gtk-list-box-select-row listbox row))
@@ -291,14 +314,17 @@
     (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row)))
     (is-false (gtk-list-box-prepend listbox (make-instance 'gtk-list-box-row)))
 
-    (is-false (gtk-container-add (gtk-list-box-row-at-index listbox 0) (make-instance 'gtk-label)))
-    (is-false (gtk-container-add (gtk-list-box-row-at-index listbox 1) (make-instance 'gtk-button)))
-    (is-false (gtk-container-add (gtk-list-box-row-at-index listbox 2) (make-instance 'gtk-label)))
+    (is-false (gtk-container-add (gtk-list-box-row-at-index listbox 0)
+                                 (make-instance 'gtk-label)))
+    (is-false (gtk-container-add (gtk-list-box-row-at-index listbox 1)
+                                 (make-instance 'gtk-button)))
+    (is-false (gtk-container-add (gtk-list-box-row-at-index listbox 2)
+                                 (make-instance 'gtk-label)))
 
     (is-false (gtk-list-box-set-filter-func listbox
-                                            (lambda (row)
-                                              (let ((child (first (gtk-container-children row))))
-                                                (eq 'gtk-button (type-of child))))))
+                  (lambda (row)
+                    (let ((child (first (gtk-container-children row))))
+                      (eq 'gtk-button (type-of child))))))
 
     (is-false (gtk-list-box-invalidate-filter listbox))))
 
@@ -317,3 +343,4 @@
 ;;;     gtk_list_box_row_set_header
 ;;;     gtk_list_box_row_get_index
 
+;;; 2021-8-20

@@ -26,23 +26,26 @@
   (is (equal '("accumulative-margin" "background" "background-full-height"
                "background-full-height-set" "background-gdk" "background-rgba"
                "background-set" "direction" "editable" "editable-set" "fallback"
-               "fallback-set" "family" "family-set" "font" "font-desc" "font-features"
-               "font-features-set" "foreground" "foreground-gdk" "foreground-rgba"
-               "foreground-set" "indent" "indent-set" "invisible" "invisible-set"
-               "justification" "justification-set" "language" "language-set" "left-margin"
-               "left-margin-set" "letter-spacing" "letter-spacing-set" "name"
-               "paragraph-background" "paragraph-background-gdk" "paragraph-background-rgba"
-               "paragraph-background-set" "pixels-above-lines" "pixels-above-lines-set"
-               "pixels-below-lines" "pixels-below-lines-set" "pixels-inside-wrap"
-               "pixels-inside-wrap-set" "right-margin" "right-margin-set" "rise" "rise-set"
-               "scale" "scale-set" "size" "size-points" "size-set" "stretch" "stretch-set"
-               "strikethrough" "strikethrough-rgba" "strikethrough-rgba-set"
-               "strikethrough-set" "style" "style-set" "tabs" "tabs-set" "underline"
-               "underline-rgba" "underline-rgba-set" "underline-set" "variant" "variant-set"
-               "weight" "weight-set" "wrap-mode" "wrap-mode-set")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkTextTag"))
-                          #'string-lessp)))
+               "fallback-set" "family" "family-set" "font" "font-desc"
+               "font-features" "font-features-set" "foreground" "foreground-gdk"
+               "foreground-rgba" "foreground-set" "indent" "indent-set"
+               "invisible" "invisible-set" "justification" "justification-set"
+               "language" "language-set" "left-margin" "left-margin-set"
+               "letter-spacing" "letter-spacing-set" "name"
+               "paragraph-background" "paragraph-background-gdk"
+               "paragraph-background-rgba" "paragraph-background-set"
+               "pixels-above-lines" "pixels-above-lines-set"
+               "pixels-below-lines" "pixels-below-lines-set"
+               "pixels-inside-wrap" "pixels-inside-wrap-set" "right-margin"
+               "right-margin-set" "rise" "rise-set" "scale" "scale-set" "size"
+               "size-points" "size-set" "stretch" "stretch-set" "strikethrough"
+               "strikethrough-rgba" "strikethrough-rgba-set" "strikethrough-set"
+               "style" "style-set" "tabs" "tabs-set" "underline"
+               "underline-rgba" "underline-rgba-set" "underline-set" "variant"
+               "variant-set" "weight" "weight-set" "wrap-mode" "wrap-mode-set")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkTextTag"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTextTag" GTK-TEXT-TAG
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -264,7 +267,7 @@
     (is-false (gtk-text-tag-strikethrough-set tag))
     (is (eq :normal (gtk-text-tag-style tag)))
     (is-false (gtk-text-tag-style-set tag))
-    (is (eq 'pango-tab-array (type-of (gtk-text-tag-tabs tag))))
+    (is-false (gtk-text-tag-tabs tag))
     (is-false (gtk-text-tag-tabs-set tag))
     (is (eq :none (gtk-text-tag-underline tag)))
     (is-false (gtk-text-tag-underline-rgba tag))
@@ -282,12 +285,14 @@
 ;;;     gtk_text_tag_new
 
 (test gtk-text-tag-new
-  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "tag"))))
-  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "bold" :weight 700))))
-  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "blue-foreground" :foreground "blue"))))
-  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "italic" :style :italic))))
-  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "font" :font "fixed"))))
-  (is (eq 'gtk-text-tag (type-of (gtk-text-tag-new "font-italic" :font "fixed" :style :italic)))))
+  (is (typep (gtk-text-tag-new "tag") 'gtk-text-tag))
+  (is (typep (gtk-text-tag-new "bold" :weight 700) 'gtk-text-tag))
+  (is (typep (gtk-text-tag-new "blue-foreground" :foreground "blue")
+             'gtk-text-tag))
+  (is (typep (gtk-text-tag-new "italic" :style :italic) 'gtk-text-tag))
+  (is (typep (gtk-text-tag-new "font" :font "fixed") 'gtk-text-tag))
+  (is (typep (gtk-text-tag-new "font-italic" :font "fixed" :style :italic)
+             'gtk-text-tag)))
 
 ;;;     gtk_text_tag_get_priority
 ;;;     gtk_text_tag_set_priority
@@ -352,3 +357,4 @@
 ;;;     gtk_text_attributes_unref
 ;;;     gtk_text_attributes_ref
 
+;;; 2021-8-20

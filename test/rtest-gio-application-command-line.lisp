@@ -62,6 +62,7 @@
 
 ;;;     g_application_command_line_get_arguments
 
+#+nil
 (test g-application-command-line-functions
   (let ((app (make-instance 'g-application :flags :handles-command-line
                                            :inactivity-timeout 1000)))

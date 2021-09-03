@@ -80,10 +80,10 @@
 
 (test g-key-file-to-file
   (let ((keyfile (g-key-file-new)))
-    (is-true (g-key-file-save-to-file keyfile "rtest-glib-key-file-example.ini")))
+    (is-true (g-key-file-save-to-file keyfile "rtest-glib-key-file-test.ini")))
   (let ((keyfile (g-key-file-new)))
     (is-true (g-key-file-load-from-file keyfile
-                                        "rtest-glib-key-file-example.ini"
+                                        "rtest-glib-key-file-test.ini"
                                         :none))))
 
 ;;;     g_key_file_get_start_group
@@ -200,7 +200,7 @@
     (setf (g-key-file-string keyfile "First Group" "SomeKey") "New Value")
 
     ;; Save to a file
-    (unless (g-key-file-save-to-file keyfile "rtest-glib-key-file-example.ini")
+    (unless (g-key-file-save-to-file keyfile "rtest-glib-key-file-test.ini")
       (error "Error saving key file."))
 
     ;; Or save to data for use elsewhere

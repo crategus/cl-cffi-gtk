@@ -29,7 +29,8 @@
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkLevelBarMode"
                              GTK-LEVEL-BAR-MODE
-                             (:EXPORT T :TYPE-INITIALIZER "gtk_level_bar_mode_get_type")
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gtk_level_bar_mode_get_type")
                              (:CONTINUOUS 0)
                              (:DISCRETE 1))
              (get-g-type-definition "GtkLevelBarMode"))))
@@ -54,23 +55,26 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkLevelBar"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child" "double-buffered"
-               "events" "expand" "focus-on-click" "halign" "has-default" "has-focus"
-               "has-tooltip" "height-request" "hexpand" "hexpand-set" "inverted" "is-focus"
-               "margin" "margin-bottom" "margin-end" "margin-left" "margin-right"
+  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
+               "double-buffered" "events" "expand" "focus-on-click" "halign"
+               "has-default" "has-focus" "has-tooltip" "height-request"
+               "hexpand" "hexpand-set" "inverted" "is-focus" "margin"
+               "margin-bottom" "margin-end" "margin-left" "margin-right"
                "margin-start" "margin-top" "max-value" "min-value" "mode" "name"
                "no-show-all" "opacity" "orientation" "parent" "receives-default"
-               "scale-factor" "sensitive" "style" "tooltip-markup" "tooltip-text" "valign"
-               "value" "vexpand" "vexpand-set" "visible" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkLevelBar"))
-                          #'string-lessp)))
+               "scale-factor" "sensitive" "style" "tooltip-markup"
+               "tooltip-text" "valign" "value" "vexpand" "vexpand-set" "visible"
+               "width-request" "window")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkLevelBar"))
+                   #'string-lessp)))
   ;; Check the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging" "min-block-height"
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging" "min-block-height"
                "min-block-width")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkLevelBar"))))
@@ -125,6 +129,7 @@
 
 (defvar *verbose-gtk-level-bar* nil)
 
+#+nil
 (test gtk-level-bar-offset-changed-signal
   (let* ((message nil)
          (level-bar (gtk-level-bar-new-for-interval 0.0 10.0))
@@ -171,4 +176,4 @@
     (is-false (gtk-level-bar-remove-offset-value level-bar "half"))
     (is-false (gtk-level-bar-offset-value level-bar "half"))))
 
-;;; 2020-10-26
+;;; 2021-8-20

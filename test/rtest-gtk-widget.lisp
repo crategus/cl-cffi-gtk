@@ -453,6 +453,7 @@ scale-factor
 
 ;;; --- Signals ----------------------------------------------------------------
 
+#+nil
 (test gtk-widget-show-help-signal
   (let* ((message nil)
          (button (make-instance 'gtk-button))

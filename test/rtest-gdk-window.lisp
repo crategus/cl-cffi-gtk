@@ -24,7 +24,8 @@
              (mapcar #'enum-item-value
                      (get-enum-items "GdkWindowType"))))
   ;; Check the nick names
-  (is (equal '("root" "toplevel" "child" "temp" "foreign" "offscreen" "subsurface")
+  (is (equal '("root" "toplevel" "child" "temp" "foreign" "offscreen"
+               "subsurface")
              (mapcar #'enum-item-nick
                      (get-enum-items "GdkWindowType"))))
   ;; Check the enum definition
@@ -50,7 +51,8 @@
   (is (eq (gtype "GdkWindowWindowClass")
           (gtype (foreign-funcall "gdk_window_window_class_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gdk-window-window-class (registered-enum-type "GdkWindowWindowClass")))
+  (is (eq 'gdk-window-window-class
+          (registered-enum-type "GdkWindowWindowClass")))
   ;; Check the names
   (is (equal '("GDK_INPUT_OUTPUT" "GDK_INPUT_ONLY")
              (mapcar #'enum-item-name
@@ -183,17 +185,31 @@
           (foreign-slot-value ptr '(:struct gdk-geometry) 'gdk::max-aspect) 0.0d0
           (foreign-slot-value ptr '(:struct gdk-geometry) 'gdk::win-gravity) 0)
     ;; Return a list with the coordinates
-    (with-foreign-slots ((gdk::base-width gdk::base-height gdk::min-aspect gdk::max-aspect)
+    (with-foreign-slots ((gdk::base-width
+                          gdk::base-height
+                          gdk::min-aspect
+                          gdk::max-aspect)
                          ptr (:struct gdk-geometry))
       (is (equal '(0 0 0.0d0 0.0d0)
-                 (list gdk::base-width gdk::base-height gdk::min-aspect gdk::max-aspect))))))
+                 (list gdk::base-width
+                       gdk::base-height
+                       gdk::min-aspect
+                       gdk::max-aspect))))))
 
 (test make-gdk-geometry
-  (let ((geometry (make-gdk-geometry :base-width 10 :base-height 20 :min-aspect 1.0d0 :max-aspect 2.0d0)))
-    (with-foreign-slots ((gdk::base-width gdk::base-height gdk::min-aspect gdk::max-aspect)
+  (let ((geometry (make-gdk-geometry :base-width 10
+                                     :base-height 20
+                                     :min-aspect 1.0d0
+                                     :max-aspect 2.0d0)))
+    (with-foreign-slots ((gdk::base-width
+                          gdk::base-height
+                          gdk::min-aspect gdk::max-aspect)
                          geometry (:struct gdk-geometry))
       (is (equal '(10 20 1.0d0 2.0d0)
-                 (list gdk::base-width gdk::base-height gdk::min-aspect gdk::max-aspect))))))
+                 (list gdk::base-width
+                       gdk::base-height
+                       gdk::min-aspect
+                       gdk::max-aspect))))))
 
 ;;;     GdkAnchorHints
 
@@ -291,11 +307,13 @@
   ;; Check the names
   (is (equal '("GDK_WINDOW_TYPE_HINT_NORMAL" "GDK_WINDOW_TYPE_HINT_DIALOG"
                "GDK_WINDOW_TYPE_HINT_MENU" "GDK_WINDOW_TYPE_HINT_TOOLBAR"
-               "GDK_WINDOW_TYPE_HINT_SPLASHSCREEN" "GDK_WINDOW_TYPE_HINT_UTILITY"
-               "GDK_WINDOW_TYPE_HINT_DOCK" "GDK_WINDOW_TYPE_HINT_DESKTOP"
-               "GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU" "GDK_WINDOW_TYPE_HINT_POPUP_MENU"
-               "GDK_WINDOW_TYPE_HINT_TOOLTIP" "GDK_WINDOW_TYPE_HINT_NOTIFICATION"
-               "GDK_WINDOW_TYPE_HINT_COMBO" "GDK_WINDOW_TYPE_HINT_DND")
+               "GDK_WINDOW_TYPE_HINT_SPLASHSCREEN"
+               "GDK_WINDOW_TYPE_HINT_UTILITY" "GDK_WINDOW_TYPE_HINT_DOCK"
+               "GDK_WINDOW_TYPE_HINT_DESKTOP"
+               "GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU"
+               "GDK_WINDOW_TYPE_HINT_POPUP_MENU" "GDK_WINDOW_TYPE_HINT_TOOLTIP"
+               "GDK_WINDOW_TYPE_HINT_NOTIFICATION" "GDK_WINDOW_TYPE_HINT_COMBO"
+               "GDK_WINDOW_TYPE_HINT_DND")
              (mapcar #'enum-item-name
                      (get-enum-items "GdkWindowTypeHint"))))
   ;; Check the values
@@ -303,8 +321,9 @@
              (mapcar #'enum-item-value
                      (get-enum-items "GdkWindowTypeHint"))))
   ;; Check the nick names
-  (is (equal '("normal" "dialog" "menu" "toolbar" "splashscreen" "utility" "dock" "desktop"
-               "dropdown-menu" "popup-menu" "tooltip" "notification" "combo" "dnd")
+  (is (equal '("normal" "dialog" "menu" "toolbar" "splashscreen" "utility"
+               "dock" "desktop" "dropdown-menu" "popup-menu" "tooltip"
+               "notification" "combo" "dnd")
              (mapcar #'enum-item-nick
                      (get-enum-items "GdkWindowTypeHint"))))
   ;; Check the enum definition
@@ -388,14 +407,16 @@
              (mapcar #'flags-item-value
                      (get-flags-items "GdkWindowAttributesType"))))
   ;; Check the nick names
-  (is (equal '("title" "x" "y" "cursor" "visual" "wmclass" "noredir" "type-hint")
+  (is (equal '("title" "x" "y" "cursor" "visual" "wmclass" "noredir"
+               "type-hint")
              (mapcar #'flags-item-nick
                      (get-flags-items "GdkWindowAttributesType"))))
   ;; Check the flags definition
   (is (equal '(DEFINE-G-FLAGS "GdkWindowAttributesType"
                               GDK-WINDOW-ATTRIBUTES-TYPE
                               (:EXPORT T
-                               :TYPE-INITIALIZER "gdk_window_attributes_type_get_type")
+                               :TYPE-INITIALIZER
+                               "gdk_window_attributes_type_get_type")
                               (:TITLE 2)
                               (:X 4)
                               (:Y 8)
@@ -417,7 +438,8 @@
   ;; Check the registered name
   (is (eq 'gdk-fullscreen-mode (registered-enum-type "GdkFullscreenMode")))
   ;; Check the names
-  (is (equal '("GDK_FULLSCREEN_ON_CURRENT_MONITOR" "GDK_FULLSCREEN_ON_ALL_MONITORS")
+  (is (equal '("GDK_FULLSCREEN_ON_CURRENT_MONITOR"
+               "GDK_FULLSCREEN_ON_ALL_MONITORS")
              (mapcar #'enum-item-name
                      (get-enum-items "GdkFullscreenMode"))))
   ;; Check the values
@@ -494,8 +516,9 @@
              (mapcar #'enum-item-value
                      (get-enum-items "GdkModifierIntent"))))
   ;; Check the nick names
-  (is (equal '("primary-accelerator" "context-menu" "extend-selection" "modify-selection"
-               "no-text-input" "shift-group" "default-mod-mask")
+  (is (equal '("primary-accelerator" "context-menu" "extend-selection"
+               "modify-selection" "no-text-input" "shift-group"
+               "default-mod-mask")
              (mapcar #'enum-item-nick
                      (get-enum-items "GdkModifierIntent"))))
   ;; Check the enum definition
@@ -597,16 +620,18 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GdkWindow")))
   ;; Check the children
-  (is (equal '("GdkX11Window")
-             (mapcar #'g-type-name (g-type-children "GdkWindow"))))
+  (is (or (equal '("GdkX11Window" "GdkWaylandWindow")
+                 (mapcar #'g-type-name (g-type-children "GdkWindow")))
+          (equal '("GdkX11Window")
+                 (mapcar #'g-type-name (g-type-children "GdkWindow")))))
   ;; Check the interfaces
   (is (equal '()
              (mapcar #'g-type-name (g-type-interfaces "GdkWindow"))))
   ;; Check the class properties
   (is (equal '("cursor")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GdkWindow"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GdkWindow"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GdkWindow" GDK-WINDOW
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -647,12 +672,14 @@
 
 ;;;     from-embedder
 
+#+nil
 (test gdk-window-from-embedder-signal
   (with-foreign-objects ((offscreen-x :double) (offscreen-y :double))
     (let* ((message nil)
            (window (gdk-default-root-window))
            (handler-id (g-signal-connect window "from-embedder"
-                         (lambda (object embedder-x embedder-y offscreen-x offscreen-y)
+                         (lambda (object
+                                  embedder-x embedder-y offscreen-x offscreen-y)
                            (setf message "Signal from-embedder")
                            (is (typep object 'gdk-window))
                            (is (typep embedder-x 'double-float))
@@ -661,7 +688,9 @@
                            (is (pointerp offscreen-y))
                            t))))
       ;; Emit the signal
-      (is-false (g-signal-emit window "from-embedder" 100 100 offscreen-x offscreen-y))
+      (is-false (g-signal-emit window
+                               "from-embedder"
+                               100 100 offscreen-x offscreen-y))
       (is (string= "Signal from-embedder" message))
       (is (typep (mem-ref offscreen-x :double) 'double-float))
       (is (typep (mem-ref offscreen-y :double) 'double-float))
@@ -669,13 +698,15 @@
 
 ;;;     moved-to-rect
 
+#+nil
 (test gdk-window-move-to-rect-signal
   (with-foreign-objects ((flipped-rect '(g-boxed-foreign gdk-rectangle))
                          (final-rect '(g-boxed-foreign gdk-rectangle)))
     (let* ((message nil)
            (window (gdk-default-root-window))
            (handler-id (g-signal-connect window "moved-to-rect"
-                         (lambda (object flipped-rect final-rect flipped-x flipped-y)
+                         (lambda (object
+                                  flipped-rect final-rect flipped-x flipped-y)
                            (setf message "Signal moved-to-rect")
                            (is (typep object 'gdk-window))
                            (is (pointerp flipped-rect))
@@ -684,7 +715,9 @@
                            (is-false flipped-y)
                            t))))
       ;; Emit the signal
-      (is-false (g-signal-emit window "moved-to-rect" flipped-rect final-rect nil nil))
+      (is-false (g-signal-emit window
+                               "moved-to-rect"
+                               flipped-rect final-rect nil nil))
       (is (string= "Signal moved-to-rect" message))
       (is (typep (convert-from-foreign flipped-rect
                                        '(g-boxed-foreign gdk-rectangle))
@@ -696,6 +729,7 @@
 
 ;;;     pick-embedded-child
 
+#+nil
 (test gdk-window-pick-embedded-child-signal
   (let* ((message nil)
          (window (gdk-default-root-window))
@@ -713,6 +747,7 @@
 
 ;;;     to-embedder
 
+#+nil
 (test gdk-window-to-embedder-signal
   (with-foreign-objects ((embedder-x :double) (embedder-y :double))
     (let* ((message nil)
@@ -1010,4 +1045,4 @@
 ;;;     gdk_window_get_effective_parent
 ;;;     gdk_window_get_effective_toplevel
 
-;;; 2020-11-10
+;;; 2021-8-20

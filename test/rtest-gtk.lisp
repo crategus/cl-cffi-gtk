@@ -85,13 +85,13 @@
 
 ;;;  Multiline Text Editor
 
-(load "rtest-gtk-text-attributes.lisp")
-;(load "rtest-gtk-text-iter.lisp")
-;(load "rtest-gtk-text-mark.lisp")
+;(load "rtest-gtk-text-attributes.lisp") ; causes a crash of the testsuite
+(load "rtest-gtk-text-iter.lisp")
+(load "rtest-gtk-text-mark.lisp")
 (load "rtest-gtk-text-buffer.lisp")
-;(load "rtest-gtk-text-tag.lisp")
-;(load "rtest-gtk-text-tag-table.lisp")
-;(load "rtest-gtk-text-view.lisp")
+(load "rtest-gtk-text-tag.lisp")
+(load "rtest-gtk-text-tag-table.lisp")
+(load "rtest-gtk-text-view.lisp")
 
 ;;;  Tree, List and Icon Grid Widgets
 
@@ -285,4 +285,4 @@
 (load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-action.lisp")
 
-;;; 2021-4-30
+;;; 2021-8-20

@@ -346,7 +346,7 @@
 ;;;     gtk_image_new_from_resource
 
 (test gtk-image-new-from-resource
-  (let ((resource (g-resource-load "rtest-resources.gresource")))
+  (let ((resource (g-resource-load "rtest-gio-resource.gresource")))
     ;; Register the resources
     (is-false (g-resources-register resource))
     (let ((image (gtk-image-new-from-resource "/com/crategus/test/ducky.png")))
@@ -559,7 +559,7 @@
 ;;;     gtk_image_set_from_resource
 
 (test gtk-image-set-from-resource
-  (let ((resource (g-resource-load "rtest-resources.gresource"))
+  (let ((resource (g-resource-load "rtest-gio-resource.gresource"))
         (image (gtk-image-new)))
     ;; Register the resources
     (is-false (g-resources-register resource))
@@ -653,4 +653,4 @@
 (test gtk-image-new
   (is (typep (gtk-image-new) 'gtk-image)))
 
-;;; 2021-8-2
+;;; 2021-8-16

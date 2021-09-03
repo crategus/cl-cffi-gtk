@@ -24,9 +24,9 @@
              (mapcar #'g-type-name (g-type-interfaces "GdkDisplay"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GdkDisplay"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GdkDisplay"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GdkDisplay" GDK-DISPLAY
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -38,6 +38,7 @@
 
 ;;;     closed
 
+#+nil
 (test gdk-display-closed-signal
   (let* ((message nil)
          (display (gdk-display-default))
@@ -59,6 +60,7 @@
 
 ;;;     monitor-added
 
+#+nil
 (test gdk-display-monitor-added-signal
   (let* ((message nil)
          (display (gdk-display-default))
@@ -76,6 +78,7 @@
 
 ;;;     monitor-removed
 
+#+nil
 (test gdk-display-monitor-removed-signal
   (let* ((message nil)
          (display (gdk-display-default))
@@ -93,6 +96,7 @@
 
 ;;;     opened
 
+#+nil
 (test gdk-display-opened-signal
   (let* ((message nil)
          (display (gdk-display-default))
@@ -108,6 +112,7 @@
 
 ;;;     seat-added
 
+#+nil
 (test gdk-display-seat-added-signal
   (let* ((message nil)
          (display (gdk-display-default))
@@ -125,6 +130,7 @@
 
 ;;;     seat-removed
 
+#+nil
 (test gdk-display-seat-removed-signal
   (let* ((message nil)
          (display (gdk-display-default))
@@ -246,7 +252,8 @@
   (let ((display (gdk-display-default)))
     (is (= 24 (gdk-display-default-cursor-size display)))
     (is (equal '(128 128)
-                (multiple-value-list (gdk-display-maximal-cursor-size display))))))
+                (multiple-value-list
+                    (gdk-display-maximal-cursor-size display))))))
 
 ;;;     gdk-display-default-group
 
@@ -285,7 +292,8 @@
 
 (test gdk-display-app-launch-context
   (let ((display (gdk-display-default)))
-    (is (typep (gdk-display-app-launch-context display) 'gdk-app-launch-context))))
+    (is (typep (gdk-display-app-launch-context display)
+               'gdk-app-launch-context))))
 
 ;;;     gdk-display-notify-startup-complete
 
@@ -338,4 +346,4 @@
          (window (gdk-display-default-group display)))
     (is (typep (gdk-display-monitor-at-window display window) 'gdk-monitor))))
 
-;;; 2020-11-7
+;;; 2021-8-20

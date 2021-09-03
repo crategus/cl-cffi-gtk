@@ -24,9 +24,9 @@
              (mapcar #'g-type-name (g-type-interfaces "GdkDisplayManager"))))
   ;; Check the class properties
   (is (equal '("default-display")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GdkDisplayManager"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GdkDisplayManager"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GdkDisplayManager" GDK-DISPLAY-MANAGER
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -54,6 +54,7 @@
 
 ;;;     display-opened
 
+#+nil
 (test gdk-display-manager-display-opened-signal
   (let* ((message nil)
          (manager (gdk-display-manager-get))
@@ -91,4 +92,4 @@
          (name (gdk-display-name (gdk-display-manager-default-display manager))))
     (is-true (gdk-display-manager-open-display manager name))))
 
-;;; 2020-11-7
+;;; 2021-8-20

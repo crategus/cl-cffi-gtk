@@ -139,7 +139,7 @@
 ;;;     gtk_builder_new_from_resource
 
 (test gtk-builder-new-from-resource
-  (let ((resource (g-resource-load "rtest-resources.gresource")))
+  (let ((resource (g-resource-load "rtest-gio-resource.gresource")))
     (is-false (g-resources-register resource))
     (is (typep (gtk-builder-new-from-resource "/com/crategus/test/rtest-dialog.ui")
                'gtk-builder))
@@ -163,7 +163,7 @@
 ;;;     gtk_builder_add_from_resource
 
 (test gtk-builder-add-from-resource
-  (let ((resource (g-resource-load "rtest-resources.gresource"))
+  (let ((resource (g-resource-load "rtest-gio-resource.gresource"))
         (builder (gtk-builder-new)))
     (is-false (g-resources-register resource))
     (is-true (gtk-builder-add-from-resource builder
@@ -225,4 +225,4 @@
 ;;;     gtk_builder_value_from_string
 ;;;     gtk_builder_value_from_string_type
 
-;;; 2020-11-27
+;;; 2021-8-16

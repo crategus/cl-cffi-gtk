@@ -53,12 +53,18 @@
 ;; TODO: Thhe signals "enter", "leave", "pressed", and "released" are deprecated
 
 (test g-signal-name
-  (is (string= "pressed" (g-signal-name (g-signal-lookup "pressed" "GtkButton"))))
-  (is (string= "released" (g-signal-name (g-signal-lookup "released" "GtkButton"))))
-  (is (string= "clicked" (g-signal-name (g-signal-lookup "clicked" "GtkButton"))))
-  (is (string= "enter" (g-signal-name (g-signal-lookup "enter" "GtkButton"))))
-  (is (string= "leave" (g-signal-name (g-signal-lookup "leave" "GtkButton"))))
-  (is (string= "activate" (g-signal-name (g-signal-lookup "activate" "GtkButton")))))
+  (is (string= "pressed"
+               (g-signal-name (g-signal-lookup "pressed" "GtkButton"))))
+  (is (string= "released"
+               (g-signal-name (g-signal-lookup "released" "GtkButton"))))
+  (is (string= "clicked"
+               (g-signal-name (g-signal-lookup "clicked" "GtkButton"))))
+  (is (string= "enter"
+               (g-signal-name (g-signal-lookup "enter" "GtkButton"))))
+  (is (string= "leave"
+               (g-signal-name (g-signal-lookup "leave" "GtkButton"))))
+  (is (string= "activate"
+               (g-signal-name (g-signal-lookup "activate" "GtkButton")))))
 
 ;;;     g-signal-list-ids
 
@@ -73,6 +79,7 @@
 
 ;;;     g-signal-emit
 
+#+nil
 (test g-signal-emit.1
   (let* ((message nil)
          (button (make-instance 'gtk-button))
@@ -92,6 +99,7 @@
     (is (string= "Signal 'clicked' for button" message))
     (is-false (g-signal-handler-disconnect button handler-id))))
 
+#+nil
 (test g-signal-emit.2
   (let* ((message nil)
          (button (make-instance 'gtk-button))
@@ -104,9 +112,11 @@
                          (setf message "Signal 'notify::can-default' for button")
                          (is (g-is-param-spec pspec))
                          (is (eq (gtype "GParamBoolean") (g-param-spec-type pspec)))
-                         (is (eq (gtype "gboolean") (g-param-spec-value-type pspec)))
+                         (is (eq (gtype "gboolean")
+                                 (g-param-spec-value-type pspec)))
                          (is (string= "myBoolean" (g-param-spec-name pspec)))
-                         (is (string= "GParamBoolean" (g-param-spec-type-name pspec)))
+                         (is (string= "GParamBoolean"
+                                      (g-param-spec-type-name pspec)))
                          (is-true (g-param-spec-default-value pspec))
                          t))))
     ;; The signal handler writes a message in the variable MESSAGE.
@@ -114,12 +124,17 @@
     (is-true (integerp handler-id))
     (is-false (setf message nil))
     (is-false (g-signal-emit button "notify::can-default"
-                             (g-param-spec-boolean "myBoolean" "myBool" "Doku" t '(:readable :writable))))
+                             (g-param-spec-boolean "myBoolean"
+                                                   "myBool"
+                                                   "Doku"
+                                                   t
+                                                   '(:readable :writable))))
     (is (string= "Signal 'notify::can-default' for button" message))
     (is-false (g-signal-handler-disconnect button handler-id))))
 
 ;; This test does not emit the signal, but sets the property "can-default".
 
+#+nil
 (test g-signal-emit.3
   (let* ((message nil)
          (button (make-instance 'gtk-button))
@@ -131,10 +146,13 @@
                            (format t "~&Signal 'notify::can-default' for button.~%"))
                          (setf message "Signal 'notify::can-default' for button")
                          (is (g-is-param-spec pspec))
-                         (is (eq (gtype "GParamBoolean") (g-param-spec-type pspec)))
-                         (is (eq (gtype "gboolean") (g-param-spec-value-type pspec)))
+                         (is (eq (gtype "GParamBoolean")
+                                 (g-param-spec-type pspec)))
+                         (is (eq (gtype "gboolean")
+                                 (g-param-spec-value-type pspec)))
                          (is (string= "can-default" (g-param-spec-name pspec)))
-                         (is (string= "GParamBoolean" (g-param-spec-type-name pspec)))
+                         (is (string= "GParamBoolean"
+                                      (g-param-spec-type-name pspec)))
                          (is-true (g-param-spec-default-value pspec))
                          t))))
     ;; The signal handler writes a message in the variable MESSAGE.
@@ -160,6 +178,7 @@
 ;;;     g-signal-handler-block
 ;;;     g-signal-handler-unblock
 
+#+nil
 (test g-signal-handler-block
   (let* ((button (make-instance 'gtk-button))
          (signal-id (g-signal-lookup "clicked" "GtkButton"))
@@ -178,6 +197,7 @@
 
 ;;;     g-signal-handler-disconnect
 
+#+nil
 (test g-signal-handler-disconnect
   (let* ((button (make-instance 'gtk-button))
          (handler-id (g-signal-connect button "clicked"
@@ -191,6 +211,7 @@
 
 ;;;     g-signal-handler-find
 
+#+nil
 (test g-signal-handler-find
   (let* ((button (make-instance 'gtk-button))
          (signal-id (g-signal-lookup "clicked" "GtkButton"))
@@ -206,6 +227,7 @@
 
 ;;;     g-signal-handler-is-connected
 
+#+nil
 (test g-signal-handler-is-connected
   (let* ((button (make-instance 'gtk-button))
 ;         (signal-id (g-signal-lookup "clicked" "GtkButton"))
@@ -223,6 +245,7 @@
 
 ;;;     g-signal-has-handler-pending
 
+#+nil
 (test g-signal-has-handler-pending
   (let* ((button (make-instance 'gtk-button))
          (signal-id (g-signal-lookup "clicked" "GtkButton"))
@@ -235,12 +258,14 @@
     (is-true (g-signal-has-handler-pending button signal-id (null-pointer) t))
     (is-true (g-signal-has-handler-pending button signal-id (null-pointer) nil))
     ;; We have no signal handler for the signal "pressed"
-    (is-false (g-signal-has-handler-pending button (g-signal-lookup "pressed" "GtkButton")
-                                                   (null-pointer)
-                                                   t))
-    (is-false (g-signal-has-handler-pending button (g-signal-lookup "pressed" "GtkButton")
-                                                   (null-pointer)
-                                                   nil))))
+    (is-false (g-signal-has-handler-pending button
+                                            (g-signal-lookup "pressed" "GtkButton")
+                                            (null-pointer)
+                                            t))
+    (is-false (g-signal-has-handler-pending button
+                                            (g-signal-lookup "pressed" "GtkButton")
+                                            (null-pointer)
+                                            nil))))
 
 ;;;     g_signal_stop_emission
 ;;;     g_signal_stop_emission_by_name
@@ -259,4 +284,4 @@
 ;;;     g_signal_accumulator_true_handled
 ;;;     g_clear_signal_handler
 
-;;; 2020-10-12
+;;; 2021-8-20

@@ -211,7 +211,7 @@ dann benutzen Sie es immer noch.")
                              (make-instance 'gtk-text-tag
                                             :name "bold"
                                             :weight 700))
-    (gtk-text-buffer-apply-tag-by-name buffer "bold" start end)
+    (gtk-text-buffer-apply-tag buffer "bold" start end)
     (is (eq 'gtk-text-tag
             (type-of (first (gtk-text-iter-toggled-tags start t)))))))
 
@@ -249,9 +249,8 @@ dann benutzen Sie es immer noch.")
 
 ;;;     gtk_text_iter_get_attributes
 
-;; TODO: Check this more carefully
+;; FIXME: Check this more carefully. We get an error with this function.
 
-#+nil
 (test gtk-text-iter-attributes
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text "Some sample text for the text buffer."))
@@ -259,9 +258,10 @@ dann benutzen Sie es immer noch.")
          (attributes (gtk-text-view-default-attributes view))
          (iter (gtk-text-buffer-start-iter buffer)))
 
-    (is (eq 'gtk-text-buffer (type-of buffer)))
-    (is (eq 'gtk-text-view (type-of view)))
-    (is (eq 'gtk-text-attributes (type-of attributes)))
+    (is (typep buffer 'gtk-text-buffer))
+    (is (typep view 'gtk-text-view))
+    (is (typep attributes 'gtk-text-attributes))
+    (is (typep iter 'gtk-text-iter))
 
 ;    (is-false (gtk-text-iter-attributes iter attributes))
 ;    (is-false (gtk-text-iter-attributes iter (null-pointer)))
@@ -338,3 +338,4 @@ dann benutzen Sie es immer noch.")
 ;;;     gtk_text_iter_in_range
 ;;;     gtk_text_iter_order
 
+;;; 2021-8-19

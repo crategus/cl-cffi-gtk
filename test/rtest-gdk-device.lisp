@@ -339,9 +339,9 @@
              (mapcar #'g-type-name (g-type-interfaces "GdkDeviceTool"))))
   ;; Check the class properties
   (is (equal '("axes" "hardware-id" "serial" "tool-type")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GdkDeviceTool"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GdkDeviceTool"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GdkDeviceTool" GDK-DEVICE-TOOL
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -378,9 +378,9 @@
   (is (equal '("associated-device" "axes" "device-manager" "display"
                "has-cursor" "input-mode" "input-source" "n-axes" "name"
                "num-touches" "product-id" "seat" "tool" "type" "vendor-id")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GdkDevice"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GdkDevice"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GdkDevice" GDK-DEVICE
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -455,6 +455,7 @@
 
 ;;;     changed
 
+#+nil
 (test gtk-device-changed-signal
   (let* ((message nil)
          (seat (gdk-display-default-seat (gdk-display-default)))
@@ -471,6 +472,7 @@
 
 ;;;     tool-changed
 
+#+nil
 (test gtk-device-tool-changed-signal
   (let* ((message nil)
          (seat (gdk-display-default-seat (gdk-display-default)))
@@ -482,7 +484,8 @@
                          (is (typep tool 'gdk-device-tool))
                          t))))
     ;; Emit the signal
-    (is-false (g-signal-emit device "tool-changed" (make-instance 'gdk-device-tool)))
+    (is-false (g-signal-emit device "tool-changed"
+                             (make-instance 'gdk-device-tool)))
     (is (string= "Signal tool-changed" message))
     (is-false (g-signal-handler-disconnect device handler-id))))
 
@@ -600,12 +603,14 @@
          (axes (gdk-device-state device window)))
     (is (typep (gdk-device-axis-value device axes "Rel X") 'double-float))
     (is (typep (gdk-device-axis-value device axes "Rel Y") 'double-float))
-    (is (typep (gdk-device-axis-value device axes "Rel Horiz Scroll") 'double-float))
-    (is (typep (gdk-device-axis-value device axes "Rel Vert Scroll") 'double-float))))
+    (is (typep (gdk-device-axis-value device axes "Rel Horiz Scroll")
+               'double-float))
+    (is (typep (gdk-device-axis-value device axes "Rel Vert Scroll")
+               'double-float))))
 
 ;;;     gdk_device_get_last_event_window
 
 ;;;     gdk_device_tool_get_serial
 ;;;     gdk_device_tool_get_tool_type
 
-;;; 2020-11-9
+;;; 2021-8-20

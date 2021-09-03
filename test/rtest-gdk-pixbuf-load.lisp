@@ -53,18 +53,19 @@
 ;;;     gdk_pixbuf_new_from_resource
 
 (test gdk-pixbuf-new-from-resource
-  (let ((resource (g-resource-load "rtest-resources.gresource")))
+  (let ((resource (g-resource-load "rtest-gio-resource.gresource")))
     (is-false (g-resources-register resource))
     (is-false (gdk-pixbuf-new-from-resource "unknown"))
     (is (typep (gdk-pixbuf-new-from-resource "/com/crategus/test/ducky.png")
                'gdk-pixbuf))
     (is (typep (gdk-pixbuf-new-from-resource "/com/crategus/test/floppybuddy.gif")
-               'gdk-pixbuf))))
+               'gdk-pixbuf))
+    (is-false (g-resources-unregister resource))))
 
 ;;;     gdk_pixbuf_new_from_resource_at_scale
 
 (test gdk-pixbuf-new-from-resource-at-scale
-  (let ((resource (g-resource-load "rtest-resources.gresource")))
+  (let ((resource (g-resource-load "rtest-gio-resource.gresource")))
     (is-false (g-resources-register resource))
     (is-false (gdk-pixbuf-new-from-resource-at-scale "unknown" 128 128 t))
     (is (typep (gdk-pixbuf-new-from-resource-at-scale
@@ -72,7 +73,8 @@
                     128
                     128
                     t)
-               'gdk-pixbuf))))
+               'gdk-pixbuf))
+    (is-false (g-resources-unregister resource))))
 
 ;;;     gdk_pixbuf_new_from_stream
 ;;;     gdk_pixbuf_new_from_stream_async
@@ -80,4 +82,4 @@
 ;;;     gdk_pixbuf_new_from_stream_at_scale
 ;;;     gdk_pixbuf_new_from_stream_at_scale_async
 
-;;; 2021-1-30
+;;; 2021-8-16

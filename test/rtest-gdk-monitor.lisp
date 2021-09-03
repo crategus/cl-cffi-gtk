@@ -71,9 +71,9 @@
   (is (equal '("display" "geometry" "height-mm" "manufacturer" "model"
                "refresh-rate" "scale-factor" "subpixel-layout" "width-mm"
                "workarea")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GdkMonitor"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GdkMonitor"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GdkMonitor" GDK-MONITOR
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -125,6 +125,7 @@
 
 ;;; --- Signals ----------------------------------------------------------------
 
+#+nil
 (test gdk-monitor-invalidate-signal
   (let* ((message nil)
          (monitor (gdk-display-primary-monitor (gdk-display-default)))
@@ -146,4 +147,4 @@
   (let ((monitor (gdk-display-primary-monitor (gdk-display-default))))
     (is-true (gdk-monitor-is-primary monitor))))
 
-;;; 2020-11-8
+;;; 2021-8-20

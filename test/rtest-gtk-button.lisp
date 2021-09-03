@@ -38,9 +38,9 @@
                "use-action-appearance" "use-stock" "use-underline" "valign"
                "vexpand" "vexpand-set" "visible" "width-request" "window"
                "xalign" "yalign")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkButton"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkButton"))
+                   #'string-lessp)))
   ;; Get the names of the style properties
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
                "focus-line-width" "focus-padding" "interior-focus" "link-color"
@@ -178,6 +178,7 @@
 
 ;;;     gtk-button-clicked
 
+#+nil
 (test gtk-button-clicked
   (let* ((message nil)
          (button (make-instance 'gtk-button))
@@ -211,4 +212,4 @@
     (is-false (gtk-widget-realize button))
     (is (typep (gtk-button-event-window button) 'gdk-window))))
 
-;;; 2020-11-19
+;;; 2021-8-20

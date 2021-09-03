@@ -65,9 +65,9 @@
              (mapcar #'g-type-name (g-type-interfaces "GdkSeat"))))
   ;; Check the class properties
   (is (equal '("display")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GdkSeat"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GdkSeat"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GdkSeat" GDK-SEAT
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -88,6 +88,7 @@
 
 ;;;     device-added
 
+#+nil
 (test gdk-seat-device-added-signal
   (let* ((message nil)
          (seat (gdk-display-default-seat (gdk-display-default)))
@@ -105,6 +106,7 @@
 
 ;;;     device-removed
 
+#+nil
 (test gdk-seat-device-removed-signal
   (let* ((message nil)
          (seat (gdk-display-default-seat (gdk-display-default)))
@@ -122,6 +124,7 @@
 
 ;;;     tool-added
 
+#+nil
 (test gdk-seat-tool-added-signal
   (let* ((message nil)
          (seat (gdk-display-default-seat (gdk-display-default)))
@@ -139,6 +142,7 @@
 
 ;;;     tool-removed
 
+#+nil
 (test gdk-seat-tool-removed-signal
   (let* ((message nil)
          (seat (gdk-display-default-seat (gdk-display-default)))

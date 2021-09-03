@@ -1,6 +1,8 @@
 (def-suite gtk-text-tag-table :in gtk-suite)
 (in-suite gtk-text-tag-table)
 
+(defparameter *verbose-gtk-text-tag-table* t)
+
 ;;; --- Types and Values -------------------------------------------------------
 
 ;;;     GtkTextTagTable
@@ -24,9 +26,9 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkTextTagTable"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkTextTagTable"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkTextTagTable"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTextTagTable" GTK-TEXT-TAG-TABLE
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES
@@ -40,7 +42,7 @@
 ;;;     gtk_text_tag_table_new
 
 (test gtk-text-tag-table-new
-  (is (eq 'gtk-text-tag-table (type-of (gtk-text-tag-table-new))))
+  (is (typep (gtk-text-tag-table-new) 'gtk-text-tag-table))
   (is (= 0 (gtk-text-tag-table-size (gtk-text-tag-table-new)))))
 
 ;;;     gtk_text_tag_table_add
@@ -52,23 +54,29 @@
   (let ((table (gtk-text-tag-table-new)))
     (is (= 0 (gtk-text-tag-table-size table)))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "bold" :weight 700)))
+                                     (gtk-text-tag-new "bold"
+                                                       :weight 700)))
     (is (= 1 (gtk-text-tag-table-size table)))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "blue-foreground" :foreground "blue")))
+                                     (gtk-text-tag-new "blue-foreground"
+                                                       :foreground "blue")))
     (is (= 2 (gtk-text-tag-table-size table)))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "italic" :style :italic)))
+                                     (gtk-text-tag-new "italic"
+                                                       :style :italic)))
     (is (= 3 (gtk-text-tag-table-size table)))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "font" :font "fixed")))
+                                     (gtk-text-tag-new "font"
+                                                       :font "fixed")))
     (is (= 4 (gtk-text-tag-table-size table)))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "font-italic" :font "fixed" :style :italic)))
+                                     (gtk-text-tag-new "font-italic"
+                                                       :font "fixed"
+                                                       :style :italic)))
     (is (= 5 (gtk-text-tag-table-size table)))
-
+    ;; Lookup and remove a tag from the tag table
     (let ((tag (gtk-text-tag-table-lookup table "bold")))
-      (is (eq 'gtk-text-tag (type-of tag)))
+      (is (typep tag 'gtk-text-tag))
       (is-false (gtk-text-tag-table-remove table tag))
       (is-false (gtk-text-tag-table-lookup table "bold")
       (is (= 4 (gtk-text-tag-table-size table)))))))
@@ -78,17 +86,27 @@
 (test gtk-text-tag-table-foreach
   (let ((table (gtk-text-tag-table-new)))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "bold" :weight 700)))
+                                     (gtk-text-tag-new "bold"
+                                                       :weight 700)))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "blue-foreground" :foreground "blue")))
+                                     (gtk-text-tag-new "blue-foreground"
+                                                       :foreground "blue")))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "italic" :style :italic)))
+                                     (gtk-text-tag-new "italic"
+                                                       :style :italic)))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "font" :font "fixed")))
+                                     (gtk-text-tag-new "font"
+                                                       :font "fixed")))
     (is-true (gtk-text-tag-table-add table
-                                     (gtk-text-tag-new "font-italic" :font "fixed" :style :italic)))
-    ;; TODO: Implement a better example?
-    (is-false (gtk-text-tag-table-foreach table #'gtk-text-tag-priority))))
+                                     (gtk-text-tag-new "font-italic"
+                                                       :font "fixed"
+                                                       :style :italic)))
+    (is-false (gtk-text-tag-table-foreach table #'gtk-text-tag-priority))
+    (when *verbose-gtk-text-tag-table* (format t "~%"))
+    (is-false (gtk-text-tag-table-foreach table
+                  (lambda (tag)
+                    (when *verbose-gtk-text-tag-table*
+                      (format t "  name : ~a~%" (gtk-text-tag-name tag))))))))
 
 ;;; --- Signals ----------------------------------------------------------------
 
@@ -98,26 +116,33 @@
 
 #+nil
 (test gtk-text-tag-table-signals
-  (let ((result nil)
-        (table (gtk-text-tag-table-new)))
-    (g-signal-connect table "tag-added"
-                      (lambda (table tag)
-                        (setf result (cons "added" result))
-                        (is (eq 'gtk-text-tag-table (type-of table)))
-                        (is (eq 'gtk-text-tag (type-of tag)))))
-    (g-signal-connect table "tag-changed"
-                      (lambda (table tag size-changed)
-                        (setf result (cons "changed" result))
-                        (is (eq 'gtk-text-tag-table (type-of table)))
-                        (is (eq 'gtk-text-tag (type-of tag)))
-                        (is (eq 'boolean (type-of size-changed)))))
-    (g-signal-connect table "tag-removed"
-                      (lambda (table tag)
-                        (setf result (cons "removed" result))
-                        (is (eq 'gtk-text-tag-table (type-of table)))
-                        (is (eq 'gtk-text-tag (type-of tag)))))
-    (is-true (gtk-text-tag-table-add table (gtk-text-tag-new "bold" :weight 700)))
-    (is-true (gtk-text-tag-table-add table (gtk-text-tag-new "font" :font "fixed")))
-    (is-false (gtk-text-tag-table-remove table (gtk-text-tag-table-lookup table "bold")))
+  (let* ((result nil)
+         (table (gtk-text-tag-table-new))
+         (added (g-signal-connect table "tag-added"
+                                  (lambda (table tag)
+                                    (setf result (cons "added" result))
+                                    (is (typep table 'gtk-text-tag-table))
+                                    (is (typep tag 'gtk-text-tag)))))
+         (changed (g-signal-connect table "tag-changed"
+                                    (lambda (table tag changed)
+                                      (setf result (cons "changed" result))
+                                      (is (typep table 'gtk-text-tag-table))
+                                      (is (typep tag 'gtk-text-tag))
+                                      (is (typep changed 'boolean)))))
+         (removed (g-signal-connect table "tag-removed"
+                                    (lambda (table tag)
+                                      (setf result (cons "removed" result))
+                                      (is (typep table 'gtk-text-tag-table))
+                                      (is (typep tag 'gtk-text-tag))))))
+    (is (every #'integerp (list added changed removed)))
+    (is-true (gtk-text-tag-table-add table
+                                     (gtk-text-tag-new "bold" :weight 700)))
+    (is-true (gtk-text-tag-table-add table
+                                     (gtk-text-tag-new "font" :font "fixed")))
+    (is-false (gtk-text-tag-table-remove table
+                                         (gtk-text-tag-table-lookup table
+                                                                    "bold")))
     (setf (gtk-text-tag-font (gtk-text-tag-table-lookup table "font")) "italic")
     (is (equal '("changed" "removed" "added" "added") result))))
+
+;;; 2021-8-20

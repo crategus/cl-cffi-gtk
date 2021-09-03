@@ -154,8 +154,23 @@
 ;;;
 ;;;     g_variant_hash
 ;;;     g_variant_equal
-;;;
+
 ;;;     g_variant_print
+
+(test g-variant-print
+  (is (string= "false" (g-variant-print (g-variant-new-boolean nil))))
+  (is (string= "true" (g-variant-print (g-variant-new-boolean t))))
+  (is (string= "0xff" (g-variant-print (g-variant-new-byte #xff))))
+  (is (string= "10.0" (g-variant-print (g-variant-new-double 10.0d0))))
+  (is (string= "16777215" (g-variant-print (g-variant-new-handle #xffffff))))
+  (is (string= "4095" (g-variant-print (g-variant-new-int16 #xfff))))
+  (is (string= "4095" (g-variant-print (g-variant-new-uint16 #xfff))))
+  (is (string= "65535" (g-variant-print (g-variant-new-int32 #xffff))))
+  (is (string= "65535" (g-variant-print (g-variant-new-uint32 #xffff))))
+  (is (string= "1048575" (g-variant-print (g-variant-new-int64 #xfffff))))
+  (is (string= "1048575" (g-variant-print (g-variant-new-uint64 #xfffff))))
+  (is (string= "'test'" (g-variant-print (g-variant-new-string "test")))))
+
 ;;;     g_variant_print_string
 ;;;
 ;;;     GVariantIter
@@ -186,9 +201,118 @@
 ;;;     GVariantParseError
 ;;;
 ;;;     G_VARIANT_PARSE_ERROR
-;;;
+
 ;;;     g_variant_parse
+
+(test g-variant-parse
+  (let ((value nil))
+    ;; Parse boolean
+    (setf value (g-variant-parse nil "true"))
+    (is (string= "b" (g-variant-type-string value)))
+    (is (string= "true" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "b") "false"))
+    (is (string= "b" (g-variant-type-string value)))
+    (is (string= "false" (g-variant-print value)))
+    (setf value (g-variant-parse "b" "false"))
+    (is (string= "b" (g-variant-type-string value)))
+    (is (string= "false" (g-variant-print value)))
+
+    ;; Parse byte
+    (setf value (g-variant-parse nil "0xff"))
+    (is (string= "i" (g-variant-type-string value)))
+    (is (string= "255" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "y") "0xff"))
+    (is (string= "y" (g-variant-type-string value)))
+    (is (string= "0xff" (g-variant-print value)))
+    (setf value (g-variant-parse "y" "0xff"))
+    (is (string= "y" (g-variant-type-string value)))
+    (is (string= "0xff" (g-variant-print value)))
+
+    ;; Parse double
+    (setf value (g-variant-parse nil "10.0"))
+    (is (string= "d" (g-variant-type-string value)))
+    (is (string= "10.0" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "d") "10.0"))
+    (is (string= "d" (g-variant-type-string value)))
+    (is (string= "10.0" (g-variant-print value)))
+    (setf value (g-variant-parse "d" "10.0"))
+    (is (string= "d" (g-variant-type-string value)))
+    (is (string= "10.0" (g-variant-print value)))
+
+    ;; Parse handle
+    (setf value (g-variant-parse nil "0xffffff"))
+    (is (string= "i" (g-variant-type-string value)))
+    (is (string= "16777215" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "h") "0xffffff"))
+    (is (string= "h" (g-variant-type-string value)))
+    (is (string= "16777215" (g-variant-print value)))
+    (setf value (g-variant-parse "h" "0xffffff"))
+    (is (string= "h" (g-variant-type-string value)))
+    (is (string= "16777215" (g-variant-print value)))
+
+    ;; Parse int16
+    (setf value (g-variant-parse nil "0xfff"))
+    (is (string= "i" (g-variant-type-string value)))
+    (is (string= "4095" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "n") "0xfff"))
+    (is (string= "n" (g-variant-type-string value)))
+    (is (string= "4095" (g-variant-print value)))
+    (setf value (g-variant-parse "n" "0xfff"))
+    (is (string= "n" (g-variant-type-string value)))
+    (is (string= "4095" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "q") "0xfff"))
+    (is (string= "q" (g-variant-type-string value)))
+    (is (string= "4095" (g-variant-print value)))
+    (setf value (g-variant-parse "q" "0xfff"))
+    (is (string= "q" (g-variant-type-string value)))
+    (is (string= "4095" (g-variant-print value)))
+
+    ;; Parse int32
+    (setf value (g-variant-parse nil "0xffff"))
+    (is (string= "i" (g-variant-type-string value)))
+    (is (string= "65535" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "i") "0xffff"))
+    (is (string= "i" (g-variant-type-string value)))
+    (is (string= "65535" (g-variant-print value)))
+    (setf value (g-variant-parse "i" "0xffff"))
+    (is (string= "i" (g-variant-type-string value)))
+    (is (string= "65535" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "u") "0xffff"))
+    (is (string= "u" (g-variant-type-string value)))
+    (is (string= "65535" (g-variant-print value)))
+    (setf value (g-variant-parse "u" "0xffff"))
+    (is (string= "u" (g-variant-type-string value)))
+    (is (string= "65535" (g-variant-print value)))
+
+    ;; Parse int64
+    (setf value (g-variant-parse nil "0xfffff"))
+    (is (string= "i" (g-variant-type-string value)))
+    (is (string= "1048575" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "x") "0xfffff"))
+    (is (string= "x" (g-variant-type-string value)))
+    (is (string= "1048575" (g-variant-print value)))
+    (setf value (g-variant-parse "x" "0xfffff"))
+    (is (string= "x" (g-variant-type-string value)))
+    (is (string= "1048575" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "t") "0xfffff"))
+    (is (string= "t" (g-variant-type-string value)))
+    (is (string= "1048575" (g-variant-print value)))
+    (setf value (g-variant-parse "t" "0xfffff"))
+    (is (string= "t" (g-variant-type-string value)))
+    (is (string= "1048575" (g-variant-print value)))
+
+    ;; Parse string
+    (setf value (g-variant-parse nil "'test'"))
+    (is (string= "s" (g-variant-type-string value)))
+    (is (string= "'test'" (g-variant-print value)))
+    (setf value (g-variant-parse (g-variant-type-new "s") "'test'"))
+    (is (string= "s" (g-variant-type-string value)))
+    (is (string= "'test'" (g-variant-print value)))
+    (setf value (g-variant-parse "s" "'test'"))
+    (is (string= "s" (g-variant-type-string value)))
+    (is (string= "'test'" (g-variant-print value)))))
+
 ;;;     g_variant_new_parsed_va
 ;;;     g_variant_new_parsed
 
-;;; 2020-11-30
+;;; 2021-8-15

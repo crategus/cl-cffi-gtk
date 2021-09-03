@@ -95,8 +95,11 @@
 
 (test g-object-interface-find-property
   (is (g-is-param-spec (g-object-interface-find-property "GAction" "enabled")))
-  (is (g-is-param-spec (g-object-interface-find-property (gtype "GAction") "enabled")))
-  (is (g-is-param-spec (g-object-interface-find-property (gtype-id (gtype "GAction")) "enabled")))
+  (is (g-is-param-spec (g-object-interface-find-property (gtype "GAction")
+                                                         "enabled")))
+  (is (g-is-param-spec
+        (g-object-interface-find-property (gtype-id (gtype "GAction"))
+                                          "enabled")))
   (is-false (g-object-interface-find-property "GAction" "xxx")))
 
 ;;;     g-object-interface-list-properties
@@ -149,6 +152,7 @@
 
 ;;;     g-object-notify
 
+#+nil
 (test g-object-notify
   (let* ((message nil)
          (button (make-instance 'gtk-button))
@@ -169,6 +173,7 @@
 ;;;     g-object-freeze-notify
 ;;;     g-object-thaw-notify
 
+#+nil
 (test g-object-freeze-notify.1
   (let* ((message nil)
          (button (make-instance 'gtk-button))
@@ -192,6 +197,7 @@
 
 ;; Counter sample without g-object-freeze-notify
 
+#+nil
 (test g-object-freeze-notify.2
   (let* ((message nil)
          (button (make-instance 'gtk-button))
@@ -222,16 +228,20 @@
     (is (pointerp (setf (g-object-data button "property") (make-pointer 100))))
     (is (pointerp (g-object-data button "property")))
     (is (= 100 (pointer-address (g-object-data button "property"))))
-    (is (pointerp (setf (g-object-data button "property") (pointer (make-instance 'gtk-label)))))
+    (is (pointerp (setf (g-object-data button "property")
+                        (pointer (make-instance 'gtk-label)))))
     (is (pointerp (g-object-data button "property")))
-    (is (eq 'gtk-label (type-of (gobject::get-g-object-for-pointer (g-object-data button "property")))))))
+    (is (typep (gobject::get-g-object-for-pointer
+                   (g-object-data button "property"))
+               'gtk-label))))
 
 ;;;     g-object-set-data-full
 
 (defvar *data-full-status* nil)
 
 (defcallback destroy-notify-cb :void ((data :pointer))
-  (is (string= "destroy-notify-cb" (setf *data-full-status* "destroy-notify-cb")))
+  (is (string= "destroy-notify-cb"
+               (setf *data-full-status* "destroy-notify-cb")))
   (is (pointerp data))
   (is (= 100 (pointer-address data))))
 
@@ -280,7 +290,8 @@
     (is (eq :start (g-object-property (pointer obj) "ellipsize")))
     (is (eq :fill (setf (g-object-property (pointer obj) "justify") :fill)))
     (is (eq :fill (g-object-property (pointer obj) "justify")))
-    (is (string= "label" (setf (g-object-property (pointer obj) "label") "label")))
+    (is (string= "label"
+                 (setf (g-object-property (pointer obj) "label") "label")))
     (is (string= "label" (g-object-property (pointer obj) "label")))
     (is (= 10 (setf (g-object-property (pointer obj) "max-width-chars") 10)))
     (is (= 10 (g-object-property (pointer obj) "max-width-chars")))))
@@ -334,7 +345,8 @@
 (test g-object-property.8
   (let ((obj (make-instance 'gtk-label :label "label")))
     (is (string= "label" (g-object-property obj "label")))
-    (is (string= "text" (setf (g-object-property obj "label" "gchararray") "text")))
+    (is (string= "text"
+                 (setf (g-object-property obj "label" "gchararray") "text")))
     (is (string= "text" (g-object-property obj "label")))))
 
 (test g-object-property.9
@@ -366,4 +378,4 @@
 ;;;     g_weak_ref_set
 ;;;     g_assert_finalize_object
 
-;;; 2021-8-2
+;;; 2021-8-20

@@ -42,9 +42,9 @@
 ;  not implemented              - GDBusActionGroup
 ;  not implemented              - GMemoryMonitor
 ;  gio.menu-model-lisp          - GMenuModel
-;  gio.menu.lisp                - GMenu
+(load "rtest-gio-menu.lisp")
 ;  not implemented              - GMenuModel exporter
 ;  not implemented              - GDBusMenuModel
 ;  not implemented              - GNotification
 
-;;; 2020-12-9
+;;; 2021-8-14

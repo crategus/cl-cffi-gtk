@@ -12,19 +12,19 @@
   (is (eq (gtype "GtkArrowPlacement")
           (gtype (foreign-funcall "gtk_arrow_placement_get_type" g-size))))
   ;; Check the registered name
-  (is (eq 'gtk-arrow-placement (gobject::registered-enum-type "GtkArrowPlacement")))
+  (is (eq 'gtk-arrow-placement (registered-enum-type "GtkArrowPlacement")))
   ;; Check the names
   (is (equal '("GTK_ARROWS_BOTH" "GTK_ARROWS_START" "GTK_ARROWS_END")
-             (mapcar #'gobject::enum-item-name
-                     (gobject::get-enum-items "GtkArrowPlacement"))))
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkArrowPlacement"))))
   ;; Check the values
   (is (equal '(0 1 2)
-             (mapcar #'gobject::enum-item-value
-                     (gobject::get-enum-items "GtkArrowPlacement"))))
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkArrowPlacement"))))
   ;; Check the nick names
   (is (equal '("both" "start" "end")
-             (mapcar #'gobject::enum-item-nick
-                     (gobject::get-enum-items "GtkArrowPlacement"))))
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkArrowPlacement"))))
   ;; Check the enum definition
   (is (equal '(DEFINE-G-ENUM "GtkArrowPlacement"
                              GTK-ARROW-PLACEMENT
@@ -33,7 +33,7 @@
                              (:BOTH 0)
                              (:START 1)
                              (:END 2))
-             (gobject::get-g-type-definition "GtkArrowPlacement"))))
+             (get-g-type-definition "GtkArrowPlacement"))))
 
 ;;;     GtkMenu
 
@@ -49,34 +49,39 @@
   ;; Check the parent
   (is (eq (gtype "GtkMenuShell") (g-type-parent "GtkMenu")))
   ;; Check the children
-  (is (equal '("GtkRecentChooserMenu")
-             (mapcar #'g-type-name (g-type-children "GtkMenu"))))
+  (is (or (equal '("GtkRecentChooserMenu" "GtkTreeMenu")
+                 (mapcar #'g-type-name (g-type-children "GtkMenu")))
+          (equal '("GtkRecentChooserMenu")
+                 (mapcar #'g-type-name (g-type-children "GtkMenu")))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkMenu"))))
   ;; Check the class properties
-  (is (equal '("accel-group" "accel-path" "active" "anchor-hints" "app-paintable"
-               "attach-widget" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand" "focus-on-click"
-               "halign" "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end" "margin-left"
-               "margin-right" "margin-start" "margin-top" "menu-type-hint" "monitor" "name"
-               "no-show-all" "opacity" "parent" "receives-default" "rect-anchor-dx"
-               "rect-anchor-dy" "reserve-toggle-size" "resize-mode" "scale-factor"
-               "sensitive" "style" "take-focus" "tearoff-state" "tearoff-title"
-               "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
-               "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkMenu"))
-                          #'string-lessp)))
+  (is (equal '("accel-group" "accel-path" "active" "anchor-hints"
+               "app-paintable" "attach-widget" "border-width" "can-default"
+               "can-focus" "child" "composite-child" "double-buffered" "events"
+               "expand" "focus-on-click" "halign" "has-default" "has-focus"
+               "has-tooltip" "height-request" "hexpand" "hexpand-set" "is-focus"
+               "margin" "margin-bottom" "margin-end" "margin-left"
+               "margin-right" "margin-start" "margin-top" "menu-type-hint"
+               "monitor" "name" "no-show-all" "opacity" "parent"
+               "receives-default" "rect-anchor-dx" "rect-anchor-dy"
+               "reserve-toggle-size" "resize-mode" "scale-factor" "sensitive"
+               "style" "take-focus" "tearoff-state" "tearoff-title"
+               "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
+               "visible" "width-request" "window")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkMenu"))
+                   #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging" "arrow-placement"
-               "arrow-scaling" "double-arrows" "horizontal-offset" "horizontal-padding"
-               "vertical-offset" "vertical-padding")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging" "arrow-placement"
+               "arrow-scaling" "double-arrows" "horizontal-offset"
+               "horizontal-padding" "vertical-offset" "vertical-padding")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkMenu"))))
   ;; Get the names of the child properties
@@ -174,7 +179,8 @@
 (test gtk-menu-set-screen
   (let ((menu (make-instance 'gtk-menu)))
     (is-false (gtk-menu-set-screen menu nil))
-    (is-false (gtk-menu-set-screen menu (gdk-display-default-screen (gdk-display-default))))))
+    (is-false (gtk-menu-set-screen menu
+                  (gdk-display-default-screen (gdk-display-default))))))
 
 ;;;     gtk_menu_reorder_child
 
@@ -232,3 +238,4 @@
 
 ;;;     gtk_menu_get_for_attach_widget
 
+;;; 2021-8-20

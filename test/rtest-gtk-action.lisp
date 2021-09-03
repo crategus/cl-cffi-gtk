@@ -107,6 +107,7 @@
 
 ;;;   gtk-action-activate
 
+#+nil
 (test gtk-action-activate
   (let ((message nil))
     (within-main-loop
@@ -197,4 +198,4 @@
 ;;;    gtk_action_set_is_important
 ;;;    gtk_action_get_is_important
 
-;;; 2021-7-25
+;;; 2021-8-20

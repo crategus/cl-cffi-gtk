@@ -17,14 +17,17 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GtkPrinter")))
   ;; Check the children
-  (is (equal '() ; result for the second run is ("GtkPrinterCups" "GtkPrinterCloudprint")
-             (mapcar #'g-type-name (g-type-children "GtkPrinter"))))
+  (is (or (equal '("GtkPrinterCups" "GtkPrinterCloudprint")
+                 (mapcar #'g-type-name (g-type-children "GtkPrinter")))
+          (equal '()
+                 (mapcar #'g-type-name (g-type-children "GtkPrinter")))))
   ;; Check the interfaces
   (is (equal '()
              (mapcar #'g-type-name (g-type-interfaces "GtkPrinter"))))
   ;; Check the class properties
-  (is (equal '("accepting-jobs" "accepts-pdf" "accepts-ps" "backend" "icon-name" "is-virtual"
-               "job-count" "location" "name" "paused" "state-message")
+  (is (equal '("accepting-jobs" "accepts-pdf" "accepts-ps" "backend" "icon-name"
+               "is-virtual" "job-count" "location" "name" "paused"
+               "state-message")
              (stable-sort (mapcar #'g-param-spec-name
                                   (g-object-class-list-properties "GtkPrinter"))
                           #'string-lessp)))
@@ -68,16 +71,19 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GtkPrintBackend")))
   ;; Check the children
-  (is (equal '() ; result for the second run is ("GtkPrintBackendFile" "GtkPrintBackendCups" "GtkPrintBackendCloudprint")
-             (mapcar #'g-type-name (g-type-children "GtkPrintBackend"))))
+  (is (or (equal '("GtkPrintBackendFile" "GtkPrintBackendCups"
+                   "GtkPrintBackendCloudprint")
+                 (mapcar #'g-type-name (g-type-children "GtkPrintBackend")))
+          (equal '()
+                 (mapcar #'g-type-name (g-type-children "GtkPrintBackend")))))
   ;; Check the interfaces
   (is (equal '()
              (mapcar #'g-type-name (g-type-interfaces "GtkPrintBackend"))))
   ;; Check the class properties
   (is (equal '("status")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkPrintBackend"))
-                          #'string-lessp)))
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkPrintBackend"))
+                   #'string-lessp)))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkPrintBackend" GTK-PRINT-BACKEND
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -154,3 +160,4 @@
 ;;;     gtk_printer_get_hard_margins
 ;;;     gtk_enumerate_printers
 
+;;; 2021-8-20
