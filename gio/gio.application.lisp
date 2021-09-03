@@ -421,7 +421,7 @@
         (g-action-map-add-action app action))
       ;; Create the action \"toggle-action\"
       (let ((action (g-simple-action-new-stateful \"toggle-action\"
-                                                  (g-variant-type-new \"b\")
+                                                  \"b\"
                                                   (g-variant-new-boolean nil))))
         ;; Connect a handler to the signal activate
         (g-signal-connect action \"activate\"
@@ -840,9 +840,9 @@
 (setf (gethash 'g-application-resource-base-path atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-resource-base-path 'function)
- "@version{2021-7-27}
-  @syntax[]{(g-application-is-remote object) => path}
-  @syntax[]{(setf (g-application-is-remote object) path)}
+ "@version{2021-8-17}
+  @syntax[]{(g-application-resource-base-path object) => path}
+  @syntax[]{(setf (g-application-resource-base-path object) path)}
   @argument[object]{a @class{g-application} instance}
   @argument[path]{a string with the resource base path to use}
   @begin{short}
