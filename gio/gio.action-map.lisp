@@ -119,7 +119,7 @@
 
 (defun g-action-map-add-action-entries (map entries)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-11}
+ "@version{2021-9-2}
   @argument[map]{a @class{g-action-map} object}
   @argument[entries]{a list of descriptions for the actions}
   @begin{short}
@@ -132,9 +132,9 @@
   @begin[code]{table}
     @entry[name]{A string with the name of the action.}
     @entry[activate]{The callback to connect to the \"activate\" signal of the
-      action. Since GLib 2.40, this can be @code{NULL} for stateful actions, in
-      which case the default handler is used. For boolean-stated actions with no
-      parameter, this is a toggle. For other state types, and parameter type
+      action. Since GLib 2.40, this can be @code{nil} for stateful actions, in
+      which case the default handler is used. For boolean-stated actions with
+      no parameter, this is a toggle. For other state types, and parameter type
       equal to the state type, this will be a function that just calls the
       callback function @code{change-state}, which you should provide.}
     @entry[parameter-type]{The type of the parameter that must be
@@ -176,12 +176,13 @@
     (let* ((action nil)
            (name (first entry))
            (activate (second entry))
-           (type (when (third entry) (g-variant-type-checked (third entry))))
-           (state (when (fourth entry) (g-variant-parse nil (fourth entry))))
+           (vtype (when (third entry) (g-variant-type-new (third entry))))
+           (state (when (fourth entry)
+                    (g-variant-parse (when vtype vtype) (fourth entry))))
            (change-state (fifth entry)))
       (if state
-          (setf action (g-simple-action-new-stateful name type state))
-          (setf action (g-simple-action-new name type)))
+          (setf action (g-simple-action-new-stateful name vtype state))
+          (setf action (g-simple-action-new name vtype)))
       (when activate
         (g-signal-connect action "activate" activate))
       (when change-state
@@ -200,7 +201,7 @@
 
 (defun g-action-map-add-action (map action)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-11}
+ "@version{2021-5-11}
   @argument[map]{a @class{g-action-map} object}
   @argument[action]{a @class{g-action} object}
   @begin{short}
