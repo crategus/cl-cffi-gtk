@@ -926,16 +926,16 @@
 (define-g-flags "PangoShowFlags" pango-show-flags
   (:export t
    :type-initializer "pango_show_flags_get_type")
-  (:none #.(ash 1 0))
-  (:spaces #.(ash 1 1))
-  (:line-breaks #.(ash 1 2))
-  (:ignorables #.(ash 1 3)))
+  (:none 0)
+  (:spaces #.(ash 1 0))
+  (:line-breaks #.(ash 1 1))
+  (:ignorables #.(ash 1 2)))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*)
-      "Flags"
-      (gethash 'gtk-dialog-flags atdoc:*external-symbols*)
- "@version{2021-1-17}
+(setf (gethash 'pango-show-flags atdoc:*symbol-name-alias*)
+      "GFlags"
+      (gethash 'pango-show-flags atdoc:*external-symbols*)
+ "@version{2021-8-16}
   @begin{short}
     These flags affect how Pango treats characters that are normally not
     visible in the output.
@@ -944,10 +944,10 @@
 (define-g-flags \"PangoShowFlags\" pango-show-flags
   (:export t
    :type-initializer \"pango_show_flags_get_type\")
-  (:none #.(ash 1 0))
-  (:spaces #.(ash 1 1))
-  (:line-breaks #.(ash 1 2))
-  (:ignorables #.(ash 1 3)))
+  (:none 0)
+  (:spaces #.(ash 1 0))
+  (:line-breaks #.(ash 1 1))
+  (:ignorables #.(ash 1 2)))
   @end{pre}
   @begin[code]{table}
     @entry[:none]{No special treatment for invisible characters.}
