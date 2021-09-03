@@ -311,7 +311,7 @@
     @end{subsection}
   @end{section}
   @begin[Resources]{section}
-    Resource framework
+    Resource framework.
 
     @about-symbol{g-resource-flags}
     @about-symbol{g-resource-lookup-flags}
@@ -325,7 +325,7 @@
     @about-function{g-resource-lookup-data}
     @about-function{g-resource-open-stream}
     @about-function{g-resource-enumerate-children}
-    @about-function{g-resource-get-info}
+    @about-function{g-resource-info}
     @about-function{g-static-resource-init}
     @about-function{g-static-resource-fini}
     @about-function{g-static-resource-get.resource}
@@ -334,7 +334,7 @@
     @about-function{g-resources-lookup-data}
     @about-function{g-resources-open-stream}
     @about-function{g-resources-enumerate-children}
-    @about-function{g-resources-get-info}
+    @about-function{g-resources-info}
   @end{section}
   @begin[Application support]{section}
     @begin[GApplication]{subsection}
@@ -482,12 +482,7 @@
 
       @about-class{g-menu-model}
       @about-function{g-menu-model-is-mutable}
-      @about-function{g-menu-model-get-n-items}
-      @about-variable{+g-menu-attribute-action+}
-      @about-variable{+g-menu-attribute-label+}
-      @about-variable{+g-menu-attribute-target+}
-      @about-variable{+g-menu-link-section+}
-      @about-variable{+g-menu-link-submenu+}
+      @about-function{g-menu-model-n-items}
       @about-function{g-menu-model-get-item-attribute-value}
       @about-function{g-menu-model-get-item-attribute}
       @about-function{g-menu-model-get-item-link}
@@ -506,7 +501,7 @@
       @about-function{g-menu-link-iter-next}
     @end{subsection}
     @begin[GMenu]{subsection}
-      A simple implementation of a @class{g-menu-model} object.
+      An implementation of the abstract @class{g-menu-model} class.
 
       @about-class{g-menu}
       @about-function{g-menu-new}
@@ -515,14 +510,14 @@
       @about-function{g-menu-prepend}
       @about-function{g-menu-append}
       @about-function{g-menu-insert-item}
-      @about-function{g-menu-append-item}
       @about-function{g-menu-prepend-item}
+      @about-function{g-menu-append-item}
       @about-function{g-menu-insert-section}
       @about-function{g-menu-prepend-section}
       @about-function{g-menu-append-section}
-      @about-function{g-menu-append-submenu}
       @about-function{g-menu-insert-submenu}
       @about-function{g-menu-prepend-submenu}
+      @about-function{g-menu-append-submenu}
       @about-function{g-menu-remove}
       @about-function{g-menu-remove-all}
       @about-class{g-menu-item}
@@ -537,12 +532,9 @@
       @about-function{g-menu-item-set-detailed-action}
       @about-function{g-menu-item-set-section}
       @about-function{g-menu-item-set-submenu}
-      @about-function{g-menu-item-get-attribute-value}
-      @about-function{g-menu-item-get-attribute}
-      @about-function{g-menu-item-get-link}
-      @about-function{g-menu-item-set-attribute-value}
-      @about-function{g-menu-item-set-attribute}
-      @about-function{g-menu-item-set-link}
+      @about-function{g-menu-item-attribute-value}
+      @about-function{g-menu-item-attribute}
+      @about-function{g-menu-item-link}
     @end{subsection}
   @end{section}")
 
