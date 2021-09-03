@@ -2,11 +2,11 @@
 ;;; gio.resource.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.66 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.68 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -50,9 +50,11 @@
 ;;;     g_resource_open_stream ()
 ;;;     g_resource_enumerate_children ()
 ;;;     g_resource_get_info ()
+;;;
 ;;;     g_static_resource_init ()
 ;;;     g_static_resource_fini ()
 ;;;     g_static_resource_get_resource ()
+;;;
 ;;;     g_resources_register ()
 ;;;     g_resources_unregister ()
 ;;;     g_resources_lookup_data ()
@@ -77,29 +79,64 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GResourceFlags
-;;;
-;;; GResourceFlags give information about a particular file inside a resource
-;;; bundle.
-;;;
-;;; G_RESOURCE_FLAGS_NONE
-;;;     No flags set.
-;;;
-;;; G_RESOURCE_FLAGS_COMPRESSED
-;;;     The file is compressed.
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GResourceFlags" g-resource-flags
+  (:export t
+   :type-initializer "g_resource_flags_get_type")
+  (:none 0)
+  (:compressed #.(ash 1 0)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-resource-flags atdoc:*symbol-name-alias*)
+      "GFlags"
+      (gethash 'g-resource-flags atdoc:*external-symbols*)
+ "@version{2021-8-16}
+  @begin{short}
+    The @sym{g-resource-flags} flags give information about a particular file
+    inside a resource bundle.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GResourceFlags\" g-resource-flags
+  (:export t
+   :type-initializer \"g_resource_flags_get_type\")
+  (:none 0)
+  (:compressed #.(ash 1 0)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No flags set.}
+    @entry[:compressed]{The file is compressed.}
+  @end{table}
+  @see-class{g-resource}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GResourceLookupFlags
-;;;
-;;; GResourceLookupFlags determine how resource path lookups are handled.
-;;;
-;;; G_RESOURCE_LOOKUP_FLAGS_NONE
-;;;     No flags set.
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GResourceLookupFlags" g-resource-lookup-flags
+  (:export t
+   :type-initializer "g_resource_lookup_flags_get_type")
+  (:none 0))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-resource-lookup-flags atdoc:*symbol-name-alias*)
+      "GFlags"
+      (gethash 'g-resource-lookup-flags atdoc:*external-symbols*)
+ "@version{2021-8-16}
+  @begin{short}
+    The @sym{g-resource-lookup-flags} flags determine how resource path lookups
+    are handled.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GResourceLookupFlags\" g-resource-lookup-flags
+  (:export t
+   :type-initializer \"g_resource_lookup_flags_get_type\")
+  (:none 0))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No flags set.}
+  @end{table}
+  @see-class{g-resource}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GStaticResource
@@ -137,13 +174,16 @@
 ;;; GResource
 ;;; ----------------------------------------------------------------------------
 
+(glib-init::at-init () (foreign-funcall "g_resource_get_type" g-size))
+
 (gobject:define-g-boxed-opaque g-resource "GResource"
   :alloc (error "GResource cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-resource atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'g-resource atdoc:*class-name-alias*)
+      "GBoxed"
       (documentation 'g-resource 'type)
- "@version{2020-11-27}
+ "@version{2021-8-16}
   @begin{short}
     Applications and libraries often contain binary or textual data that is
     really part of the application, rather than user data.
@@ -157,36 +197,35 @@
   a convenient and efficient alternative to this which has some nice properties.
   You maintain the files as normal files, so its easy to edit them, but during
   the build the files are combined into a binary bundle that is linked into the
-  executable. This means that loading the resource files are efficient (as they
-  are already in memory, shared with other instances) and simple (no need to
-  check for things like I/O errors or locate the files in the filesystem). It
+  executable. This means that loading the resource files are efficient, as they
+  are already in memory, shared with other instances, and simple, no need to
+  check for things like I/O errors or locate the files in the filesystem. It
   also makes it easier to create relocatable applications.
 
   Resource files can also be marked as compressed. Such files will be included
   in the resource bundle in a compressed form, but will be automatically
   uncompressed when the resource is used. This is very useful e.g. for larger
-  text files that are parsed once (or rarely) and then thrown away.
+  text files that are parsed once, or rarely, and then thrown away.
 
   Resource files can also be marked to be preprocessed, by setting the value of
   the preprocess attribute to a comma-separated list of preprocessing options.
   The only options currently supported are:
   @begin{itemize}
     @begin{item}
-      @code{xml-stripblanks} which will use the xmllint command to strip
+      @code{xml-stripblanks} which will use the @code{xmllint} command to strip
       ignorable whitespace from the XML file. For this to work, the
       @code{XMLLINT} environment variable must be set to the full path to the
-      @code{xmllint} executable, or @code{xmllint} must be in the @code{PATH};
-      otherwise the preprocessing step is skipped.
+      @code{xmllint} executable, or @code{xmllint} must be in the @code{PATH}.
+      Otherwise the preprocessing step is skipped.
     @end{item}
     @begin{item}
       @code{to-pixdata} which will use the @code{gdk-pixbuf-pixdata} command to
-      convert images to the @code{GdkPixdata} format, which allows you to
-      create pixbufs directly using the data inside the resource file, rather
-      than an (uncompressed) copy if it. For this, the @code{gdk-pixbuf-pixdata}
-      program must be in the @code{PATH}, or the @code{GDK_PIXBUF_PIXDATA}
-      environment variable must be set to the full path to the
-      @code{gdk-pixbuf-pixdata} executable; otherwise the resource compiler
-      will abort.
+      convert images to the @code{GdkPixdata} format, which allows you to create
+      pixbufs directly using the data inside the resource file, rather than an
+      uncompressed copy if it. For this, the @code{gdk-pixbuf-pixdata} program
+      must be in the @code{PATH}, or the @code{GDK_PIXBUF_PIXDATA} environment
+      variable must be set to the full path to the @code{gdk-pixbuf-pixdata}
+      executable. Otherwise the resource compiler will abort.
     @end{item}
   @end{itemize}
   Resource files will be exported in the @sym{g-resource} namespace using the
@@ -220,40 +259,40 @@
 /org/gtk/Example/example.css
   @end{pre}
   Note that all resources in the process share the same namespace, so use
-  Java-style path prefixes (like in the above example) to avoid conflicts.
+  Java-style path prefixes, like in the above example, to avoid conflicts.
 
-  You can then use @code{glib-compile-resources} to compile the XML to a binary
-  bundle that you can load with the function @fun{g-resource-load}. However, its
-  more common to use the @code{--generate-source} and @code{--generate-header}
-  arguments to create a source file and header to link directly into your
-  application. This will generate @code{get_resource()},
+  You can then use the @code{glib-compile-resources} program to compile the XML
+  to a binary bundle that you can load with the function @fun{g-resource-load}.
+  However, its more common to use the @code{--generate-source} and
+  @code{--generate-header} arguments to create a source file and header to link
+  directly into your application. This will generate @code{get_resource()},
   @code{register_resource()} and @code{unregister_resource()} functions,
   prefixed by the @code{--c-name} argument passed to
   @code{glib-compile-resources}. The function @code{get_resource()} returns the
-  generated @class{g-resource} object. The register and unregister functions
-  register the resource so its files can be accessed using
-  the function @fun{g-resources-lookup-data}.
+  generated @sym{g-resource} instance. The register and unregister functions
+  register the resource so its files can be accessed using the function
+  @fun{g-resources-lookup-data}.
 
-  Once a @sym{g-resource} has been created and registered all the data in it
-  can be accessed globally in the process by using API calls like the function
-  @fun{g-resources-open-stream} to stream the data or the function
+  Once a @sym{g-resource} instance has been created and registered all the data
+  in it can be accessed globally in the process by using API calls like the
+  function @code{g_resources_open_stream()} to stream the data or the function
   @fun{g-resources-lookup-data} to get a direct pointer to the data. You can
   also use URIs like
-  @code{\"resource:///org/gtk/Example/data/splashscreen.png\"} with GFile to
-  access the resource data.
+  @code{\"resource:///org/gtk/Example/data/splashscreen.png\"} with
+  @code{GFile} to access the resource data.
 
   Some higher-level APIs, such as the @class{gtk-application} class, will
   automatically load resources from certain well-known paths in the resource
   namespace as a convenience. See the documentation for those APIs for details.
 
   There are two forms of the generated source, the default version uses the
-  compiler support for constructor and destructor functions (where available)
-  to automatically create and register the @sym{g-resource} on startup or
-  library load time. If you pass @code{--manual-register}, two functions to
+  compiler support for constructor and destructor functions, where available,
+  to automatically create and register the @sym{g-resource} instance on startup
+  or library load time. If you pass @code{--manual-register}, two functions to
   register/unregister the resource are created instead. This requires an
   explicit initialization call in your application/library, but it works on all
   platforms, even on the minor ones where constructors are not supported.
-  (Constructor support is available for at least Win32, Mac OS and Linux.)
+  Constructor support is available for at least Win32, Mac OS and Linux.
 
   Note that resource data can point directly into the data segment of e.g. a
   library, so if you are unloading libraries during runtime you need to be very
@@ -264,11 +303,11 @@
 
   When debugging a program or testing a change to an installed version, it is
   often useful to be able to replace resources in the program or library,
-  without recompiling, for debugging or quick hacking and testing purposes.
-  Since GLib 2.50, it is possible to use the @code{G_RESOURCE_OVERLAYS}
-  environment variable to selectively overlay resources with replacements from
-  the filesystem. It is a @code{G_SEARCHPATH_SEPARATOR} separated list of
-  substitutions to perform during resource lookups.
+  without recompiling, for debugging or quick hacking and testing purposes. It
+  is possible to use the @code{G_RESOURCE_OVERLAYS} environment variable to
+  selectively overlay resources with replacements from the filesystem. It is a
+  @code{G_SEARCHPATH_SEPARATOR} separated list of substitutions to perform
+  during resource lookups.
 
   A substitution has the form:
   @begin{pre}
@@ -280,8 +319,8 @@
   equivalent names.
 
   In the example above, if an application tried to load a resource with the
-  resource path @code{/org/gtk/libgtk/ui/gtkdialog.ui} then @sym{g-resource}
-  would check the filesystem path
+  resource path @code{/org/gtk/libgtk/ui/gtkdialog.ui} then the @sym{g-resource}
+  instance would check the filesystem path
   @code{/home/desrt/gtk-overlay/ui/gtkdialog.ui}. If a file was found there, it
   would be used instead. This is an overlay, not an outright replacement, which
   means that if a file is not found at that path, the built-in version will be
@@ -291,9 +330,9 @@
   before the @code{'='}. The path after the slash should ideally be absolute,
   but this is not strictly required. It is possible to overlay the location of
   a single resource with an individual file.
-")
+  @see-class{gtk-application}")
 
-(export (boxed-related-symbols 'g-resource))
+(export 'g-resource)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_resource_load ()
@@ -305,24 +344,20 @@
 
 (defun g-resource-load (filename)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-8-16}
   @argument[filename]{a string with the path of a filename to load, in the
     GLib filenname encoding}
-  @return{A new @class{g-resource} structure, or @code{nil} on error.}
+  @return{A new @class{g-resource} instance, or @code{nil} on error.}
   @begin{short}
-    Loads a binary resource bundle and creates a @class{g-resource} structure
+    Loads a binary resource bundle and creates a @class{g-resource} instance
     representation of it, allowing you to query it for data.
   @end{short}
 
   If you want to use this resource in the global resource namespace you need
   to register it with the function @fun{g-resources-register}.
-
-  If @arg{filename} is empty or the data in it is corrupt,
-  @code{G_RESOURCE_ERROR_INTERNAL} will be returned. If @arg{filename} does not
-  exist, or there is an error in reading it, an error from
-  @code{g_mapped_file_new()} will be returned.
-  @see-class{g-resource}"
-  (with-g-error (err)
+  @see-class{g-resource}
+  @see-function{g-resources-register}"
+  (with-ignore-g-error (err)
     (%g-resource-load filename err)))
 
 (export 'g-resource-load)
@@ -394,43 +429,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_resource_lookup_data ()
-;;;
-;;; GBytes *
-;;; g_resource_lookup_data (GResource *resource,
-;;;                         const char *path,
-;;;                         GResourceLookupFlags lookup_flags,
-;;;                         GError **error);
-;;;
-;;; Looks for a file at the specified path in the resource and returns a GBytes
-;;; that lets you directly access the data in memory.
-;;;
-;;; The data is always followed by a zero byte, so you can safely use the data
-;;; as a C string. However, that byte is not included in the size of the GBytes.
-;;;
-;;; For uncompressed resource files this is a pointer directly into the
-;;; resource bundle, which is typically in some readonly data section in the
-;;; program binary. For compressed files we allocate memory on the heap and
-;;; automatically uncompress the data.
-;;;
-;;; lookup_flags controls the behaviour of the lookup.
-;;;
-;;; resource :
-;;; A GResource
-;;;
-;;; path :
-;;;     A pathname inside the resource
-;;;
-;;; lookup_flags :
-;;;     A GResourceLookupFlags
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     GBytes or NULL on error. Free the returned object with g_bytes_unref().
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_resource_lookup_data" %g-resource-lookup-data) :pointer
+  (resource (g-boxed-foreign g-resource))
+  (path :string)
+  (lookup g-resource-lookup-flags)
+  (err :pointer))
+
+(defun g-resource-lookup-data (resource path lookup)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[resource]{a @class{g-resource} instance}
+  @argument[path]{a string with a pathname inside the resource}
+  @argument[lookup]{the @symbol{g-resource-lookup-flags} flags}
+  @return{A pointer to the data, @code{null-pointer} on error.}
+  @begin{short}
+    Looks for a file at the specified path in the resource and returns a pointer
+    that lets you directly access the data in memory.
+  @end{short}
+
+  The data is always followed by a zero byte, so you can safely use the data
+  as a C string. However, that byte is not included in the size of the data.
+
+  For uncompressed resource files this is a pointer directly into the resource
+  bundle, which is typically in some readonly data section in the program
+  binary. For compressed files we allocate memory on the heap and automatically
+  uncompress the data.
+
+  The argument @arg{lookup} controls the behaviour of the lookup.
+  @see-class{g-resource}
+  @see-symbol{g-resource-lookup-flags}"
+  (with-g-error (err)
+    (%g-resource-lookup-data resource path lookup err)))
+
+(export 'g-resource-lookup-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_resource_open_stream ()
@@ -467,81 +500,71 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_resource_enumerate_children ()
-;;;
-;;; char **
-;;; g_resource_enumerate_children (GResource *resource,
-;;;                                const char *path,
-;;;                                GResourceLookupFlags lookup_flags,
-;;;                                GError **error);
-;;;
-;;; Returns all the names of children at the specified path in the resource.
-;;; The return result is a NULL terminated list of strings which should be
-;;; released with g_strfreev().
-;;;
-;;; If path is invalid or does not exist in the GResource,
-;;; G_RESOURCE_ERROR_NOT_FOUND will be returned.
-;;;
-;;; lookup_flags controls the behaviour of the lookup.
-;;;
-;;; resource :
-;;;     A GResource
-;;;
-;;; path :
-;;;     A pathname inside the resource
-;;;
-;;; lookup_flags :
-;;;     A GResourceLookupFlags
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     an array of constant strings.
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_resource_enumerate_children" %g-resource-enumerate-children) g-strv
+  (resource (g-boxed-foreign g-resource))
+  (path :string)
+  (lookup g-resource-lookup-flags)
+  (err :pointer))
+
+(defun g-resource-enumerate-children (resource path lookup)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[resource]{a @class{g-resource} instance}
+  @argument[path]{a string with a pathname inside the resource}
+  @argument[lookup]{the @symbol{g-resource-lookup-flags} flags}
+  @return{A list of strings.}
+  @begin{short}
+    Returns all the names of children at the specified path in the resource.
+  @end{short}
+  The return result is a list of strings. The argument @arg{lookup} controls
+  the behaviour of the lookup.
+  @see-class{g-resource}
+  @see-symbol{g-resource-lookup-flags}"
+  (with-g-error (err)
+    (%g-resource-enumerate-children resource path lookup err)))
+
+(export 'g-resource-enumerate-children)
+
 ;;; ----------------------------------------------------------------------------
-;;; g_resource_get_info ()
-;;;
-;;; gboolean
-;;; g_resource_get_info (GResource *resource,
-;;;                      const char *path,
-;;;                      GResourceLookupFlags lookup_flags,
-;;;                      gsize *size,
-;;;                      guint32 *flags,
-;;;                      GError **error);
-;;;
-;;; Looks for a file at the specified path in the resource and if found returns
-;;; information about it.
-;;;
-;;; lookup_flags controls the behaviour of the lookup.
-;;;
-;;; resource :
-;;;     A GResource
-;;;
-;;; path :
-;;      A pathname inside the resource
-;;;
-;;; lookup_flags :
-;;;     A GResourceLookupFlags
-;;;
-;;; size :
-;;;     a location to place the length of the contents of the file, or NULL if
-;;;     the length is not needed.
-;;;
-;;; flags :
-;;;     a location to place the flags about the file, or NULL if the length is
-;;;     not needed.
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     TRUE if the file was found. FALSE if there were errors
-;;;
-;;; Since 2.32
+;;; g_resource_get_info () -> g-resource-info
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_resource_get_info" %g-resource-info) :boolean
+  (resource (g-boxed-foreign g-resource))
+  (path :string)
+  (lookup g-resource-lookup-flags)
+  (size (:pointer g-size))
+  (flags (:pointer :uint32))
+  (err :pointer))
+
+(defun g-resource-info (resource path lookup)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[resource]{a @class{g-resource} instance}
+  @argument[path]{a string with a pathname inside the resource}
+  @argument[lookup]{the @symbol{g-resource-lookup-flags} flags}
+  @begin{return}
+    @arg{size} -- a @type{g-size} value with the length of the contents of the
+    file @br{}
+    @arg{flags} -- an unsigned integer with the flags about the file
+  @end{return}
+  @begin{short}
+    Looks for a file at the specified path in the resource and if found returns
+    information about it.
+  @end{short}
+  The argument @arg{lookup} controls the behaviour of the lookup.
+  @see-class{g-resource}
+  @see-symbol{g-resource-lookup-flag}
+  @see-type{g-size}"
+  (with-g-error (err)
+    (with-foreign-objects ((size 'g-size) (flags :uint32))
+      (when (%g-resource-info resource path lookup size flags err)
+        (values (mem-ref size 'g-size)
+                (mem-ref flags :uint32))))))
+
+(export 'g-resource-info)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_static_resource_init ()
@@ -604,14 +627,15 @@
 
 (defcfun ("g_resources_register" g-resources-register) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
-  @argument[resource]{a @class{g-resource} structure}
+ "@version{2021-8-16}
+  @argument[resource]{a @class{g-resource} instance}
   @begin{short}
     Registers the resource with the process-global set of resources.
   @end{short}
   Once a resource is registered the files in it can be accessed with the global
   resource lookup functions like the function @fun{g-resources-lookup-data}.
-  @see-class{g-resource}"
+  @see-class{g-resource}
+  @see-function{g-resources-lookup-data}"
   (resource (g-boxed-foreign g-resource)))
 
 (export 'g-resources-register)
@@ -622,8 +646,8 @@
 
 (defcfun ("g_resources_unregister" g-resources-unregister) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
-  @argument[resource]{a @class{g-resource} structure}
+ "@version{2021-8-16}
+  @argument[resource]{a @class{g-resource} instance}
   @begin{short}
     Unregisters the resource from the process-global set of resources.
   @end{short}
@@ -634,55 +658,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_resources_lookup_data ()
-;;;
-;;; GBytes *
-;;; g_resources_lookup_data (const char *path,
-;;;                          GResourceLookupFlags lookup_flags,
-;;;                          GError **error);
-;;;
-;;; Looks for a file at the specified path in the set of globally registered
-;;; resources and returns a GBytes that lets you directly access the data in
-;;; memory.
-;;;
-;;; The data is always followed by a zero byte, so you can safely use the data
-;;; as a C string. However, that byte is not included in the size of the GBytes.
-;;;
-;;; For uncompressed resource files this is a pointer directly into the resource
-;;; bundle, which is typically in some readonly data section in the program
-;;; binary. For compressed files we allocate memory on the heap and
-;;; automatically uncompress the data.
-;;;
-;;; lookup_flags controls the behaviour of the lookup.
-;;;
-;;; path :
-;;;     A pathname inside the resource
-;;;
-;;; lookup_flags :
-;;;     A GResourceLookupFlags
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     GBytes or NULL on error. Free the returned object with g_bytes_unref().
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Implement GBytes
-
-(defcfun ("g_resources_lookup_data" %g-resources-lookup-data) :string
+(defcfun ("g_resources_lookup_data" %g-resources-lookup-data) :pointer
   (path :string)
-  (lookup-flags :int) ; nachbessern type ist GResourceLookupFlags
+  (lookup g-resource-lookup-flags)
   (err :pointer))
 
-(defun g-resources-lookup-data (filename)
+(defun g-resources-lookup-data (path lookup)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-8-16}
+  @argument[path]{a string with a pathname inside the resource}
+  @argument[lookup]{the @symbol{g-resource-lookup-flags} flags}
+  @return{A pointer or @code{null-pointer}.}
+  @begin{short}
+    Looks for a file at the specified path in the set of globally registered
+    resources and returns a pointer that lets you directly access the data in
+    memory.
+  @end{short}
 
-  @see-class{g-resource}"
+  The data is always followed by a zero byte, so you can safely use the data
+  as a C string.
+
+  For uncompressed resource files this is a pointer directly into the resource
+  bundle, which is typically in some readonly data section in the program
+  binary. For compressed files we allocate memory on the heap and automatically
+  uncompress the data.
+
+  The argument @arg{lookup} controls the behaviour of the lookup.
+  @see-class{g-resource}
+  @see-symbol{g-resource-lookup-flags}"
   (with-g-error (err)
-    (%g-resources-lookup-data filename 0 err)))
+    (%g-resources-lookup-data path lookup err)))
 
 (export 'g-resources-lookup-data)
 
@@ -717,69 +724,67 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_resources_enumerate_children ()
-;;;
-;;; char **
-;;; g_resources_enumerate_children (const char *path,
-;;;                                 GResourceLookupFlags lookup_flags,
-;;;                                 GError **error);
-;;;
-;;; Returns all the names of children at the specified path in the set of
-;;; globally registered resources. The return result is a NULL terminated list
-;;; of strings which should be released with g_strfreev().
-;;;
-;;; lookup_flags controls the behaviour of the lookup.
-;;;
-;;; path :
-;;;     A pathname inside the resource
-;;;
-;;; lookup_flags :
-;;;     A GResourceLookupFlags
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     an array of constant strings.
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_resources_enumerate_children" %g-resources-enumerate-children)
+    g-strv
+  (path :string)
+  (lookup g-resource-lookup-flags)
+  (err :pointer))
+
+(defun g-resources-enumerate-children (path lookup)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[path]{a string with a pathname inside the resource}
+  @argument[lookup]{the @symbol{g-resource-lookup-flags} flags}
+  @return{A list of strings.}
+  @begin{short}
+    Returns all the names of children at the specified path in the set of
+    globally registered resources.
+  @end{short}
+  The argument @arg{lookup} controls the behaviour of the lookup.
+  @see-class{g-resource}
+  @see-symbol{g-resource-lookup-flags}"
+  (with-g-error (err)
+    (%g-resources-enumerate-children path lookup err)))
+
+(export 'g-resources-enumerate-children)
+
 ;;; ----------------------------------------------------------------------------
-;;; g_resources_get_info ()
-;;;
-;;; gboolean
-;;; g_resources_get_info (const char *path,
-;;;                       GResourceLookupFlags lookup_flags,
-;;;                       gsize *size,
-;;;                       guint32 *flags,
-;;;                       GError **error);
-;;;
-;;; Looks for a file at the specified path in the set of globally registered
-;;; resources and if found returns information about it.
-;;;
-;;; lookup_flags controls the behaviour of the lookup.
-;;;
-;;; path :
-;;;     A pathname inside the resource
-;;;
-;;; lookup_flags :
-;;;     A GResourceLookupFlags
-;;;
-;;; size :
-;;;     a location to place the length of the contents of the file, or NULL if
-;;;     the length is not needed.
-;;;
-;;; flags :
-;;;     a location to place the GResourceFlags about the file, or NULL if the
-;;;     flags are not needed.
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     TRUE if the file was found. FALSE if there were errors
-;;;
-;;; Since 2.32
+;;; g_resources_get_info () -> g-resources-info
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_resources_get_info" %g-resources-info) :boolean
+  (path :string)
+  (lookup g-resource-lookup-flags)
+  (size (:pointer g-size))
+  (flags (:pointer :uint32))
+  (err :pointer))
+
+(defun g-resources-info (path lookup)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[path]{a string with a pathname inside the resource}
+  @argument[lookup]{the @symbol{g-resource-lookup-flags} flags}
+  @begin{return}
+    @arg{size} -- a @type{g-size} value with the length of the contents of the
+    file @br{}
+    @arg{flags} -- an unsigned integer with the flags about the file
+  @end{return}
+  @begin{short}
+    Looks for a file at the specified path in the set of globally registered
+    resources and if found returns information about it.
+  @end{short}
+  The argument @arg{lookup} controls the behaviour of the lookup.
+  @see-class{g-resource}
+  @see-symbol{g-resource-lookup-flag}
+  @see-type{g-size}"
+  (with-g-error (err)
+    (with-foreign-objects ((size 'g-size) (flags :uint32))
+      (when (%g-resources-info path lookup size flags err)
+        (values (mem-ref size 'g-size)
+                (mem-ref flags :uint32))))))
+
+(export 'g-resources-info)
 
 ;;; --- End of file gio.resource.lisp ------------------------------------------
