@@ -546,8 +546,8 @@
 
   In the case that the command line invocation is local, the situation is
   slightly more complicated. If the command line invocation results in the
-  mainloop running (ie: because the use-count of the application increased to
-  a non-zero value) then the application is considered to have been
+  mainloop running, i.e. because the use-count of the application increased to
+  a non-zero value, then the application is considered to have been
   'successful' in a certain sense, and the exit status is always zero. If the
   application use count is zero, though, the exit status of the local
   @class{g-application-command-line} instance is used.
