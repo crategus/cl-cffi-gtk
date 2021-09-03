@@ -294,14 +294,14 @@
 (define-g-flags "PangoShapeFlags" pango-shape-flags
   (:export t
    :type-initializer "pango_shape_flags_get_type")
-  (:none #.(ash 1 0))
-  (:round-positions #.(ash 1 1)))
+  (:none 0)
+  (:round-positions #.(ash 1 0)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-shape-flags atdoc:*symbol-name-alias*)
-      "Flags"
+      "GFlags"
       (gethash 'pango-shape-flags atdoc:*external-symbols*)
- "@version{2021-1-11}
+ "@version{2021-8-16}
   @begin{short}
     Flags influencing the shaping process.
   @end{short}
@@ -310,8 +310,8 @@
 (define-g-flags \"PangoShapeFlags\" pango-shape-flags
   (:export t
    :type-initializer \"pango_shape_flags_get_type\")
-  (:none #.(ash 1 0))
-  (:round-positions #.(ash 1 1)))
+  (:none 0)
+  (:round-positions #.(ash 1 0)))
   @end{pre}
   @begin[code]{table}
     @entry[:none]{Default value.}
