@@ -1578,21 +1578,22 @@
       @about-function{gtk-text-buffer-end-user-action}
       @about-function{gtk-text-buffer-add-selection-clipboard}
       @about-function{gtk-text-buffer-remove-selection-clipboard}
+      @about-symbol{gtk-text-buffer-deserialize-func}
       @about-function{gtk-text-buffer-deserialize}
-      @about-function{gtk-text-buffer-deserialize-can-create-tags}
-      @about-function{gtk-text-buffer-deserialize-formats}
-      @about-function{gtk-text-buffer-paste-target-list}
-      @about-function{gtk-text-buffer-serialize-formats}
       @about-function{gtk-text-buffer-register-deserialize-format}
       @about-function{gtk-text-buffer-register-deserialize-tagset}
+      @about-symbol{gtk-text-buffer-serialize-func}
+      @about-function{gtk-text-buffer-serialize}
       @about-function{gtk-text-buffer-register-serialize-format}
       @about-function{gtk-text-buffer-register-serialize-tagset}
-      @about-function{gtk-text-buffer-serialize}
+      @about-function{gtk-text-buffer-deserialize-can-create-tags}
+      @about-function{gtk-text-buffer-deserialize-formats}
+      @about-function{gtk-text-buffer-serialize-formats}
       @about-function{gtk-text-buffer-unregister-deserialize-format}
       @about-function{gtk-text-buffer-unregister-serialize-format}
     @end{subsection}
     @begin[GtkTextTag]{subsection}
-      A tag that can be applied to text in a @class{gtk-text-buffer}.
+      A tag that can be applied to text in a @class{gtk-text-buffer} object.
 
       @about-symbol{gtk-wrap-mode}
       @about-symbol{gtk-text-appearance}
@@ -1676,7 +1677,6 @@
       @about-function{gtk-text-tag-event}
       @about-function{gtk-text-tag-changed}
       @about-struct{gtk-text-attributes}
-      @about-function{gtk-text-attributes-refcount}
       @about-function{gtk-text-attributes-appearance}
       @about-function{gtk-text-attributes-justification}
       @about-function{gtk-text-attributes-direction}
@@ -1696,6 +1696,7 @@
       @about-function{gtk-text-attributes-editable}
       @about-function{gtk-text-attributes-no-fallback}
       @about-function{gtk-text-attributes-letter-spacing}
+      @about-function{gtk-text-attributes-font-features}
       @about-function{gtk-text-attributes-new}
       @about-function{gtk-text-attributes-copy}
       @about-function{gtk-text-attributes-copy-values}
@@ -1706,11 +1707,11 @@
       Collection of tags that can be used together.
 
       @about-class{gtk-text-tag-table}
-
       @about-function{gtk-text-tag-table-new}
       @about-function{gtk-text-tag-table-add}
       @about-function{gtk-text-tag-table-remove}
       @about-function{gtk-text-tag-table-lookup}
+      @about-symbol{gtk-text-tag-table-foreach-func}
       @about-function{gtk-text-tag-table-foreach}
       @about-function{gtk-text-tag-table-size}
     @end{subsection}
