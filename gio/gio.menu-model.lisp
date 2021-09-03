@@ -94,9 +94,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-menu-model 'type)
- "@version{2021-4-15}
+ "@version{2021-8-16}
   @begin{short}
-    The @sym{g-menu-model} object represents the contents of a menu - an ordered
+    The @sym{g-menu-model} class represents the contents of a menu - an ordered
     list of menu items.
   @end{short}
   The items are associated with actions, which can be activated through them.
@@ -114,21 +114,19 @@
 
   As an example, consider the visible portions of this menu.
 
-  @b{An example menu}
-
   @image[menu-example]{}
 
   There are 8 \"menus\" visible in the screenshot: one menubar, two submenus
   and 5 sections:
   @begin{itemize}
-    @item{the toplevel menubar (containing 4 items)}
-    @item{the View submenu (containing 3 sections)}
-    @item{the first section of the View submenu (containing 2 items)}
-    @item{the second section of the View submenu (containing 1 item)}
-    @item{the final section of the View submenu (containing 1 item)}
-    @item{the Highlight Mode submenu (containing 2 sections)}
-    @item{the Sources section (containing 2 items)}
-    @item{the Markup section (containing 2 items)}
+    @item{the toplevel menubar, containing 4 items}
+    @item{the View submenu, containing 3 sections}
+    @item{the first section of the View submenu, containing 2 items}
+    @item{the second section of the View submenu, containing 1 item}
+    @item{the final section of the View submenu, containing 1 item}
+    @item{the Highlight Mode submenu, containing 2 sections}
+    @item{the Sources section, containing 2 items}
+    @item{the Markup section, containing 2 items}
   @end{itemize}
   The example illustrates the conceptual connection between these 8 menus. Each
   large block in the figure represents a menu and the smaller blocks within the
@@ -145,34 +143,32 @@
   a menu. Section items can have labels just like any other item. In that case,
   a display system may show a section header instead of a separator.
 
-  The motivation for this abstract model of application controls is that
-  modern user interfaces tend to make these controls available outside the
-  application. Examples include global menus, jumplists, dash boards, etc. To
-  support such uses, it is necessary to 'export' information about actions and
-  their representation in menus, which is exactly what the
-  @class{g-action-group} exporter and the @sym{g-menu-model} exporter do for
-  @class{g-action-group} and @sym{g-menu-model} objects. The client-side
-  counterparts to make use of the exported information are
-  @code{GDBusActionGroup} and @code{GDBusMenuModel}.
+  The motivation for this abstract model of application controls is that modern
+  user interfaces tend to make these controls available outside the application.
+  Examples include global menus, jumplists, dash boards, etc. To support such
+  uses, it is necessary to 'export' information about actions and their
+  representation in menus, which is exactly what the @class{g-action-group}
+  exporter and the @sym{g-menu-model} exporter do for @class{g-action-group} and
+  @sym{g-menu-model} objects. The client-side counterparts to make use of the
+  exported information are @code{GDBusActionGroup} and @code{GDBusMenuModel}.
 
   The API of the @sym{g-menu-model} class is very generic, with iterators for
   the attributes and links of an item, see the functions
   @fun{g-menu-model-iterate-item-attributes} and
   @fun{g-menu-model-iterate-item-links}. The 'standard' attributes and link
-  types have predefined names: @var{+g-menu-attribute-label+},
-  @var{+g-menu-attribute-action+}, @var{+g-menu-attribute-target+},
-  @var{+g-menu-link-section+} and @var{+g-menu-link-submenu+}.
+  types have names: \"label\", \"action\", \"target\", \"section\", and
+  \"submenu\".
 
   Items in a @sym{g-menu-model} object represent active controls if they refer
   to an action that can get activated when the user interacts with the menu
   item. The reference to the action is encoded by the string ID in the
-  @var{+g-menu-attribute-action+} attribute. An action ID uniquely identifies
-  an action in an action group. Which action group(s) provide actions depends
-  on the context in which the menu model is used. E.g. when the model is
-  exported as the application menu of a @class{gtk-application}, actions can be
-  application-wide or window-specific, and thus come from two different action
-  groups. By convention, the application-wide actions have names that start with
-  \"app.\", while the names of window-specific actions start with \"win.\".
+  \"action\" attribute. An action ID uniquely identifies an action in an action
+  group. Which action group(s) provide actions depends on the context in which
+  the menu model is used. E.g. when the model is exported as the application
+  menu of a @class{gtk-application} instance, actions can be application-wide
+  or window-specific, and thus come from two different action groups. By
+  convention, the application-wide actions have names that start with \"app.\",
+  while the names of window-specific actions start with \"win.\".
 
   While a wide variety of stateful actions is possible, the following is the
   minimum that is expected to be supported by all users of exported menu
@@ -207,18 +203,16 @@
       @begin{pre}
  lambda (model position removed added)   :run-last
       @end{pre}
-      Emitted when a change has occured to the menu.
-
-      The only changes that can occur to a menu is that items are removed or
-      added. Items may not change, except by being removed and added back in
-      the same location. This signal is capable of describing both of those
-      changes at the same time.
+      Emitted when a change has occured to the menu. The only changes that can
+      occur to a menu is that items are removed or added. Items may not change,
+      except by being removed and added back in the same location. This signal
+      is capable of describing both of those changes at the same time.
 
       The signal means that starting at the index position, removed items were
       removed and added items were added in their place. If removed is zero
       then only items were added. If added is zero then only items were removed.
 
-      As an example, if the menu contains items a, b, c, d (in that order) and
+      As an example, if the menu contains items a, b, c, d, in that order, and
       the signal (2, 1, 3) occurs then the new composition of the menu will be
       a, b, _, _, _, d, with each _ representing some new item.
 
@@ -232,6 +226,7 @@
         @entry[added]{An integer with the number of items added.}
       @end{table}
   @end{dictionary}
+  @see-class{gtk-application}
   @see-class{g-action-group}")
 
 ;;; ----------------------------------------------------------------------------
@@ -257,7 +252,7 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; G_MENU_ATTRIBUTE_ACTION
+;;; G_MENU_ATTRIBUTE_ACTION                                not exported
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -280,8 +275,6 @@
   @see-function{g-menu-model-get-item-attribute}
   @see-function{g-menu-item-set-attribute}")
 
-(export '+g-menu-attribute-action+)
-
 ;;; ----------------------------------------------------------------------------
 ;;; G_MENU_ATTRIBUTE_ACTION_NAMESPACE
 ;;;
@@ -294,7 +287,7 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; G_MENU_ATTRIBUTE_TARGET
+;;; G_MENU_ATTRIBUTE_TARGET                                not exported
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -313,10 +306,8 @@
   @see-class{g-menu-model}
   @see-function{g-menu-item-set-action-and-target}")
 
-(export '+g-menu-attribute-target+)
-
 ;;; ----------------------------------------------------------------------------
-;;; G_MENU_ATTRIBUTE_LABEL
+;;; G_MENU_ATTRIBUTE_LABEL                                 not exported
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -331,8 +322,6 @@
     The menu item attribute which holds the label of the item.
   @end{short}
   @see-class{g-menu-model}")
-
-(export '+g-menu-attribute-label+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_MENU_ATTRIBUTE_ICON
@@ -351,7 +340,7 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; G_MENU_LINK_SECTION
+;;; G_MENU_LINK_SECTION                                    not exported
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -365,14 +354,12 @@
     The name of the link that associates a menu item with a section.
   @end{short}
   The linked menu will usually be shown in place of the menu item, using the
-  item's label as a header. See also the function @fun{g-menu-item-set-link}.
+  item's label as a header. See also the function @fun{g-menu-item-link}.
   @see-class{g-menu-model}
-  @see-function{g-menu-item-set-link}")
-
-(export '+g-menu-link-section+)
+  @see-function{g-menu-item-link}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_MENU_LINK_SUBMENU
+;;; G_MENU_LINK_SUBMENU                                    not exported
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -385,46 +372,46 @@
   @begin{short}
     The name of the link that associates a menu item with a submenu.
   @end{short}
-  See also the function @fun{g-menu-item-set-link}.
+  See also the function @fun{g-menu-item-link}.
   @see-class{g-menu-model}
-  @see-function{g-menu-item-set-link}")
-
-(export '+g-menu-link-submenu+)
+  @see-function{g-menu-item-link}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_model_is_mutable ()
-;;;
-;;; gboolean g_menu_model_is_mutable (GMenuModel *model);
-;;;
-;;; Queries if model is mutable.
-;;;
-;;; An immutable GMenuModel will never emit the "items-changed" signal.
-;;; Consumers of the model may make optimisations accordingly.
-;;;
-;;; model :
-;;;     a GMenuModel
-;;;
-;;; Returns :
-;;;     TRUE if the model is mutable (ie: "items-changed" may be emitted).
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_menu_model_is_mutable" g-menu-model-is-mutable) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[model]{a @class{g-menu-model} object}
+  @return{@em{True} if the model is mutable, i.e. the \"items-changed\" signal
+    may be emitted.}
+  @begin{short}
+    Queries if @arg{model} is mutable.
+  @end{short}
+  An immutable @class{g-menu-model} object will never emit the \"items-changed\"
+  signal. Consumers of the model may make optimisations accordingly.
+  @see-class{g-menu-model}"
+  (model (g-object g-menu-model)))
+
+(export 'g-menu-model-is-mutable)
+
 ;;; ----------------------------------------------------------------------------
-;;; g_menu_model_get_n_items ()
-;;;
-;;; gint g_menu_model_get_n_items (GMenuModel *model);
-;;;
-;;; Query the number of items in model.
-;;;
-;;; model :
-;;;     a GMenuModel
-;;;
-;;; Returns :
-;;;     the number of items
-;;;
-;;; Since 2.32
+;;; g_menu_model_get_n_items () -> g-menu-model-n-items
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_model_get_n_items" g-menu-model-n-items) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[model]{a @class{g-menu-model} object}
+  @return{An integer with the number of items.}
+  @begin{short}
+    Query the number of items in @arg{model}.
+  @end{short}
+  @see-class{g-menu-model}"
+  (model (g-object g-menu-model)))
+
+(export 'g-menu-model-n-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_model_get_item_attribute_value ()
