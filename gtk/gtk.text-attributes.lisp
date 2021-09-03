@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.text-attributes.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -31,7 +31,6 @@
 ;;;     GtkWrapMode                                     <--- gtk.text-view.lisp
 ;;;     GtkTextAppearance                               <--- gtk.text-tag.lisp
 ;;;     GtkTextAttributes                               <--- gtk.text-tag.lisp
-;;;
 ;;;-----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -50,9 +49,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-wrap-mode atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-wrap-mode atdoc:*external-symbols*)
- "@version{2021-2-8}
+ "@version{2021-8-19}
   @short{Describes a type of line wrapping.}
   @begin{pre}
 (define-g-enum \"GtkWrapMode\" gtk-wrap-mode
@@ -74,7 +73,6 @@
   @end{table}
   @see-class{gtk-text-tag}
   @see-class{gtk-text-view}
-  @see-class{gtk-text-attributes}
   @see-function{pango-log-attrs}")
 
 ;;; ----------------------------------------------------------------------------
@@ -157,40 +155,44 @@
 (glib-init::at-init () (foreign-funcall "gtk_text_attributes_get_type" g-size))
 
 (define-g-boxed-cstruct gtk-text-attributes "GtkTextAttributes"
-  (refcount :uint :initform 0)
-  (appearance :pointer :initform (null-pointer)) ; type is gtk-text-appearance
-  (justification gtk-justification)
-  (direction gtk-text-direction)
+  (refcount :uint :initform 0) ; private field
+  (appearance :pointer :initform (null-pointer))   ; type is gtk-text-appearance
+  (justification gtk-justification :initform :left)
+  (direction gtk-text-direction :initform :none)
   (font (g-boxed-foreign pango-font-description))
-  (font-scale :double)
-  (left-margin :int)
-  (right-margin :int)
-  (indent :int)
-  (pixels-above-lines :int)
-  (pixels-below-lines :int)
-  (pixels-inside-wrap :int)
-  (tabs :pointer)             ; type is pango-tab-array
-  (wrap-mode gtk-wrap-mode)
+  (font-scale :double :initform 0.0d0)
+  (left-margin :int :initform 0)
+  (right-margin :int :initform 0)
+  (indent :int :initform 0)
+  (pixels-above-lines :int :initform 0)
+  (pixels-below-lines :int :initform 0)
+  (pixels-inside-wrap :int :initform 0)
+  (tabs :pointer :initform (null-pointer))             ; type is pango-tab-array
+  (wrap-mode gtk-wrap-mode :initform :none)
   (language (g-boxed-foreign pango-language))
-  (invisible :boolean)
-  (bg-full-height :boolean)
-  (editable :boolean)
-  (no-fallback :boolean)
-  (letter-spacing :int :initform 0))
+  (bg-color (g-boxed-foreign gdk-color)) ; private field
+  (invisible :uint :initform 1)
+  (bg-full-height :uint :initform 1)
+  (editable :uint :initform 1)
+  (no-fallback :uint :initform 1)
+  (bg-rgba (g-boxed-foreign gdk-rgba)) ; private field
+  (letter-spacing :int :initform 0)
+  (font-features :pointer :initform (null-pointer)))             ; type is char*
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-text-attributes atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'gtk-text-attributes atdoc:*class-name-alias*)
+      "GBoxed"
       (documentation 'gtk-text-attributes 'type)
- "@version{2020-3-20}
+ "@version{2021-8-19}
   @begin{short}
-    Using @sym{gtk-text-attributes} directly should rarely be necessary. It is
-    primarily useful with the function @fun{gtk-text-iter-attributes}. As with
-    most GTK+ structures, the fields in this struct should only be read, never
-    modified directly.
+    Using the @sym{gtk-text-attributes} structure directly should rarely be
+    necessary.
   @end{short}
+  It is primarily useful with the function @fun{gtk-text-iter-attributes}. As
+  with most GTK structures, the fields in this structure should only be read,
+  never modified directly.
   @begin{pre}
 (define-g-boxed-cstruct gtk-text-attributes \"GtkTextAttributes\"
-  (refcount :uint :initform 0)
   (appearance :pointer :initform (null-pointer))
   (justification gtk-justification)
   (direction gtk-text-direction)
@@ -209,7 +211,8 @@
   (bg-full-height :uint)
   (editable :uint)
   (no-fallback :uint)
-  (letter-spacing :int))
+  (letter-spacing :int)
+  (font-features :string))
   @end{pre}
   @begin[code]{table}
     @entry[appearance]{Pointer to a @code{GtkTextAppearance} structure for
@@ -219,34 +222,33 @@
     @entry[direction]{A value of the @symbol{gtk-text-direction} enumeration
       for text.}
     @entry[font]{The @class{pango-font-description} structure for text.}
-    @entry[font-scale]{Font scale factor of type @code{:double}.}
-    @entry[left-margin]{A @code{:int} with the width of the left margin in
-      pixels.}
-    @entry[right-margin]{A @code{:int} with the width of the right margin in
-      pixels.}
-    @entry[indent]{A @code{:int} with theamount to indent the paragraph, in
-      pixels.}
-    @entry[pixels-above-lines]{A @code{:int} with the pixels of blank space
-      above paragraphs.}
-    @entry[pixels-below-lines]{A @code{:int} with the pixels of blank space
-      below paragraphs.}
-    @entry[pixels-inside-wrap]{A @code{:int} with the pixels of blank space
+    @entry[font-scale]{A double float with the font scale factor.}
+    @entry[left-margin]{An integer with the width of the left margin,
+      in pixels.}
+    @entry[right-margin]{An integer with the width of the right margin,
+      in pixels.}
+    @entry[indent]{An integer with the amount to indent the paragraph,
+      in pixels.}
+    @entry[pixels-above-lines]{An integer with the pixels of blank space above
+      paragraphs.}
+    @entry[pixels-below-lines]{An integer with the pixels of blank space below
+      paragraphs.}
+    @entry[pixels-inside-wrap]{An integer with the pixels of blank space
       between wrapped lines in a paragraph.}
     @entry[tabs]{Pointer to a custom @class{pango-tab-array} structure for
       this text.}
     @entry[wrap-mode]{A value of the @symbol{gtk-wrap-mode} enumeration for
       text.}
     @entry[language]{Pointer to a @class{pango-language} structure for text.}
-    @entry[invisible]{Hide the text.}
-    @entry[bg-full-height]{Background is fit to full line height rather than
-      baseline +/- ascent/descent (font height).}
-    @entry[editable]{Can edit this text.}
+    @entry[invisible]{An unsigned integer whether to hide the text.}
+    @entry[bg-full-height]{Whether background is fit to full line height rather
+      than baseline +/- ascent/descent (font height).}
+    @entry[editable]{Whether the text is editable.}
     @entry[no-fallback]{Whether to disable font fallback.}
-    @entry[letter-spacing]{A @code{:int} with the extra space to insert between
+    @entry[letter-spacing]{An integer with the extra space to insert between
       graphemes, in Pango units.}
+    @entry[font-features]{A string with font features.}
   @end{table}
-  @see-constructor{copy-gtk-text-attributes}
-  @see-constructor{make-gtk-text-attributes}
   @see-slot{gtk-text-attributes-appearance}
   @see-slot{gtk-text-attributes-justification}
   @see-slot{gtk-text-attributes-direction}
@@ -265,19 +267,24 @@
   @see-slot{gtk-text-attributes-bg-full-height}
   @see-slot{gtk-text-attributes-editable}
   @see-slot{gtk-text-attributes-no-fallback}
-  @see-slot{gtk-text-attributes-letter-spacing}")
+  @see-slot{gtk-text-attributes-letter-spacing}
+  @see-slot{gtk-text-attributes-font-features}
+  @see-function{gtk-text-iter-attributes}")
 
 (export (boxed-related-symbols 'gtk-text-attributes))
 
+;; Unexport the private field of the GtkTextAttributes structure
 (unexport 'gtk-text-attributes-refcount)
+(unexport 'gtk-text-attributes-bg-color)
+(unexport 'gtk-text-attributes-bg-rgba)
 
 ;;; ----------------------------------------------------------------------------
-;;; Constructors for GtkTextAttributes
+;;; Constructors for GtkTextAttributes                     not exported
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-text-attributes 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Creates and returns a structure of type @class{gtk-text-attributes}.
   @end{short}
@@ -288,7 +295,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-text-attributes 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Copies and returns a structure of type @class{gtk-text-attributes}.
   @end{short}
@@ -298,7 +305,7 @@
 (unexport 'copy-gtk-text-attributes)
 
 ;;; ----------------------------------------------------------------------------
-;;; Accessors for GtkTextAttributes
+;;; Accessors for GtkTextAttributes                        not exported
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-text-attributes-appearance -----------------------------------------
@@ -307,11 +314,12 @@
 (setf (gethash 'gtk-text-attributes-appearance atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-appearance 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{appearance} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
+  Pointer to a @code{GtkTextAppearance} structure for text.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-justification --------------------------------------
@@ -320,12 +328,14 @@
 (setf (gethash 'gtk-text-attributes-justification atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-justification 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{justification} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
-  @see-class{gtk-text-attributes}")
+  A value of the @symbol{gtk-justification} enumeration for text.
+  @see-class{gtk-text-attributes}
+  @see-symbol{gtk-justification}")
 
 ;;; --- gtk-text-attributes-direction ------------------------------------------
 
@@ -333,12 +343,14 @@
 (setf (gethash 'gtk-text-attributes-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-direction 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{direction} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
-  @see-class{gtk-text-attributes}")
+  A value of the @symbol{gtk-text-direction} enumeration for text.
+  @see-class{gtk-text-attributes}
+  @see-symbol{gtk-text-direction}")
 
 ;;; --- gtk-text-attributes-font -----------------------------------------------
 
@@ -346,12 +358,14 @@
 (setf (gethash 'gtk-text-attributes-font atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-font 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{font} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
-  @see-class{gtk-text-attributes}")
+  The @class{pango-font-description} structure for text.
+  @see-class{gtk-text-attributes}
+  @see-class{pango-font-description}")
 
 ;;; --- gtk-text-attributes-font-scale -----------------------------------------
 
@@ -359,11 +373,12 @@
 (setf (gethash 'gtk-text-attributes-font-scale atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-font-scale 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{font-scale} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
+  A double float with the font scale factor.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-left-margin ----------------------------------------
@@ -372,11 +387,12 @@
 (setf (gethash 'gtk-text-attributes-left-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-left-margin 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{left-margin} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
+  An integer with the width of the left margin, in pixels.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-right-margin ---------------------------------------
@@ -385,11 +401,12 @@
 (setf (gethash 'gtk-text-attributes-right-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-right-margin 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{right-margin} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
+  An integer with the width of the right margin, in pixels.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-indent ---------------------------------------------
@@ -398,11 +415,12 @@
 (setf (gethash 'gtk-text-attributes-indent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-indent 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{indent} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
+  An integer with the amount to indent the paragraph, in pixels.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-pixels-above-lines ---------------------------------
@@ -412,11 +430,12 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-pixels-above-lines 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{pixels-above-lines} slot of the
     @class{gtk-text-attributes} structure.
   @end{short}
+  An integer with the pixels of blank space above paragraphs.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-pixels-below-lines ---------------------------------
@@ -426,11 +445,12 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-pixels-below-lines 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{pixels-below-lines} slot of the
     @class{gtk-text-attributes} structure.
   @end{short}
+  An integer with the pixels of blank space below paragraphs.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-pixels-inside-wrap ---------------------------------
@@ -440,11 +460,13 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-pixels-inside-wrap 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{pixels-inside-wrap} slot of the
     @class{gtk-text-attributes} structure.
   @end{short}
+  An integer with the pixels of blank space between wrapped lines in a
+  paragraph.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-tabs -----------------------------------------------
@@ -453,12 +475,14 @@
 (setf (gethash 'gtk-text-attributes-tabs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-tabs 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{tabs} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
-  @see-class{gtk-text-attributes}")
+  Pointer to a custom @class{pango-tab-array} instance for this text.
+  @see-class{gtk-text-attributes}
+  @see-class{pango-tab-array}")
 
 ;;; --- gtk-text-attributes-wrap-mode ------------------------------------------
 
@@ -466,12 +490,14 @@
 (setf (gethash 'gtk-text-attributes-wrap-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-wrap-mode 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{wrap-mode} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
-  @see-class{gtk-text-attributes}")
+  A value of the @symbol{gtk-wrap-mode} enumeration for text.
+  @see-class{gtk-text-attributes}
+  @see-symbol{gtk-wrap-mode}")
 
 ;;; --- gtk-text-attributes-language -------------------------------------------
 
@@ -479,12 +505,14 @@
 (setf (gethash 'gtk-text-attributes-language atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-language 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{language} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
-  @see-class{gtk-text-attributes}")
+  Pointer to a @class{pango-language} instance for text.
+  @see-class{gtk-text-attributes}
+  @see-class{pango-language}")
 
 ;;; --- gtk-text-attributes-invisible ------------------------------------------
 
@@ -492,11 +520,12 @@
 (setf (gethash 'gtk-text-attributes-invisible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-invisible 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{invisible} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
+  An unsigned integer whether to hide the text.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-bg-full-height -------------------------------------
@@ -505,11 +534,13 @@
 (setf (gethash 'gtk-text-attributes-bg-full-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-bg-full-height 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{bg-full-height} slot of the
     @class{gtk-text-attributes} structure.
   @end{short}
+  Whether background is fit to full line height rather than baseline +/-
+  ascent/descent (font height).
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-editable -------------------------------------------
@@ -518,11 +549,12 @@
 (setf (gethash 'gtk-text-attributes-editable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-editable 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{editable} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
+  Whether the text is editable.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-no-fallback ----------------------------------------
@@ -531,11 +563,12 @@
 (setf (gethash 'gtk-text-attributes-no-fallback atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-no-fallback 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{no-fallback} slot of the @class{gtk-text-attributes}
     structure.
   @end{short}
+  Whether to disable font fallback.
   @see-class{gtk-text-attributes}")
 
 ;;; --- gtk-text-attributes-letter-spacing -------------------------------------
@@ -544,67 +577,77 @@
 (setf (gethash 'gtk-text-attributes-letter-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-attributes-letter-spacing 'function)
- "@version{2020-3-21}
+ "@version{2021-8-19}
   @begin{short}
     Accessor of the @code{letter-spacing} slot of the
     @class{gtk-text-attributes} structure.
   @end{short}
+  An integer with the extra space to insert between graphemes, in Pango units.
+  @see-class{gtk-text-attributes}")
+
+;;; --- gtk-text-attributes-font-features --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-attributes-font-features atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-attributes-font-features 'function)
+ "@version{2021-8-19}
+  @begin{short}
+    Accessor of the @code{font-features} slot of the
+    @class{gtk-text-attributes} structure.
+  @end{short}
+  A string with font features.
   @see-class{gtk-text-attributes}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_new ()
-;;;
-;;; GtkTextAttributes * gtk_text_attributes_new (void);
-;;;
-;;; Creates a GtkTextAttributes, which describes a set of properties on some
-;;; text.
-;;;
-;;; Returns :
-;;;     a new GtkTextAttributes, free with gtk_text_attributes_unref().
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-text-attributes-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-19}
+  @return{A new @class{gtk-text-attributes} instance.}
+  @begin{short}
+    Creates a @class{gtk-text-attributes} instance, which describes a set of
+    properties on some text.
+  @end{short}
+  @see-class{gtk-text-attributes}"
   (make-gtk-text-attributes))
 
 (export 'gtk-text-attributes-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_copy ()
-;;;
-;;; GtkTextAttributes * gtk_text_attributes_copy (GtkTextAttributes *src);
-;;;
-;;; Copies src and returns a new GtkTextAttributes.
-;;;
-;;; src :
-;;;     a GtkTextAttributes to be copied
-;;;
-;;; Returns :
-;;;     a copy of src, free with gtk_text_attributes_unref()
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-text-attributes-copy (src)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-19}
+  @argument[src]{a @class{gtk-text-attributes} instance to be copied}
+  @return{A copy of @arg{src}.}
+  @begin{short}
+    Copies @arg{src} and returns a new @class{gtk-text-attributes} instance.
+  @end{short}
+  @see-class{gtk-text-attributes}"
   (copy-gtk-text-attributes src))
 
 (export 'gtk-text-attributes-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_copy_values ()
-;;;
-;;; void gtk_text_attributes_copy_values (GtkTextAttributes *src,
-;;;                                       GtkTextAttributes *dest);
-;;;
-;;; Copies the values from src to dest so that dest has the same values as src.
-;;; Frees existing values in dest.
-;;;
-;;; src :
-;;;     a GtkTextAttributes
-;;;
-;;; dest :
-;;;     another GtkTextAttributes
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk-text-attributes-copy-value" gtk-text-attributes-copy-values)
+(defcfun ("gtk_text_attributes_copy_values" gtk-text-attributes-copy-values)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-19}
+  @argument[src]{a @class{gtk-text-attributes} instance}
+  @argument[dest]{another @class{gtk-text-attributes} instance}
+  @begin{short}
+    Copies the values from @arg{src} to @arg{dest} so that @arg{dest} has the
+    same values as @arg{src}.
+  @end{short}
+  @see-class{gtk-text-attributes}"
   (src (g-boxed-foreign gtk-text-attributes))
   (dest (g-boxed-foreign gtk-text-attributes)))
 
