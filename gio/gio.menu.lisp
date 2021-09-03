@@ -28,7 +28,7 @@
 ;;;
 ;;; GMenu
 ;;;
-;;;     A simple implementation of GMenuModel
+;;;     An implementation of GMenuModel
 ;;;
 ;;; Types and Values
 ;;;
@@ -53,7 +53,6 @@
 ;;;     g_menu_prepend_submenu
 ;;;     g_menu_remove
 ;;;     g_menu_remove_all
-;;;
 ;;;
 ;;;     g_menu_item_new
 ;;;     g_menu_item_new_section
@@ -97,9 +96,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-menu 'type)
- "@version{2021-4-15}
+ "@version{2021-8-16}
   @begin{short}
-    The @sym{g-menu} object is a simple implementation of @class{g-menu-model}.
+    The @sym{g-menu} class is an implementation of the abstract
+    @class{g-menu-model} class.
   @end{short}
   You populate a @sym{g-menu} object by adding @class{g-menu-item} objects to
   it.
@@ -120,7 +120,7 @@
 
 (defun g-menu-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-4-15}
+ "@version{2021-8-16}
   @return{A new @class{g-menu} object.}
   @short{Creates a new @class{g-menu} object.}
   The new menu has no items.
@@ -131,170 +131,210 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_freeze ()
-;;;
-;;; void g_menu_freeze (GMenu *menu);
-;;;
-;;; Marks menu as frozen.
-;;;
-;;; After the menu is frozen, it is an error to attempt to make any changes to
-;;; it. In effect this means that the GMenu API must no longer be used.
-;;;
-;;; This function causes g_menu_model_is_mutable() to begin returning FALSE,
-;;; which has some positive performance implications.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_freeze" g-menu-freeze) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @begin{short}
+    Marks menu as frozen.
+  @end{short}
+  After the menu is frozen, it is an error to attempt to make any changes to it.
+  In effect this means that the @class{g-menu} API must no longer be used.
+
+  This function causes the function @fun{g-menu-model-is-mutable} to begin
+  returning @em{false}, which has some positive performance implications.
+  @see-class{g-menu}
+  @see-function{g-menu-model-is-mutable}"
+  (menu (g-object g-menu)))
+
+(export 'g-menu-freeze)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_insert ()
-;;;
-;;; void g_menu_insert (GMenu *menu,
-;;;                     gint position,
-;;;                     const gchar *label,
-;;;                     const gchar *detailed_action);
-;;;
-;;; Convenience function for inserting a normal menu item into menu. Combine
-;;; g_menu_item_new() and g_menu_insert_item() for a more flexible alternative.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; position :
-;;;     the position at which to insert the item
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; detailed_action :
-;;;     the detailed action string, or NULL. [allow-none]
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_insert" %g-menu-insert) :void
+  (menu (g-object g-menu))
+  (position :int)
+  (label :string)
+  (action :string))
+
+(defun g-menu-insert (menu position label action)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[position]{an integer with the position at which to insert the item}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[action]{the detailed action string, or @code{nil}}
+  @begin{short}
+    Convenience function for inserting a normal menu item into the menu.
+  @end{short}
+  Combine the functions @fun{g-menu-item-new} and @fun{g-menu-insert-item} for
+  a more flexible alternative.
+  @see-class{g-menu}
+  @see-function{g-menu-item-new}
+  @see-function{g-menu-insert-item}"
+  (%g-menu-insert menu
+                  position
+                  (if label label (null-pointer))
+                  (if action action (null-pointer))))
+
+(export 'g-menu-insert)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_prepend ()
-;;;
-;;; void g_menu_prepend (GMenu *menu,
-;;;                      const gchar *label,
-;;;                      const gchar *detailed_action);
-;;;
-;;; Convenience function for prepending a normal menu item to the start of menu.
-;;; Combine g_menu_item_new() and g_menu_insert_item() for a more flexible
-;;; alternative.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; detailed_action :
-;;;     the detailed action string, or NULL. [allow-none]
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_prepend" %g-menu-prepend) :void
+  (menu (g-object g-menu))
+  (label :string)
+  (action :string))
+
+(defun g-menu-prepend (menu label action)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[action]{the detailed action string, or @code{nil}}
+  @begin{short}
+    Convenience function for prepending a normal menu item to the start of the
+    menu.
+  @end{short}
+  Combine the functions @fun{g-menu-item-new} and @fun{g-menu-insert-item} for
+  a more flexible alternative.
+  @see-class{g-menu}
+  @see-function{g-menu-item-new}
+  @see-function{g-menu-insert-item}"
+  (%g-menu-prepend menu
+                   (if label label (null-pointer))
+                   (if action action (null-pointer))))
+
+(export 'g-menu-prepend)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_append ()
-;;;
-;;; void g_menu_append (GMenu *menu,
-;;;                     const gchar *label,
-;;;                     const gchar *detailed_action);
-;;;
-;;; Convenience function for appending a normal menu item to the end of menu.
-;;; Combine g_menu_item_new() and g_menu_insert_item() for a more flexible
-;;; alternative.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; detailed_action :
-;;;     the detailed action string, or NULL. [allow-none]
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_append" %g-menu-append) :void
+  (menu (g-object g-menu))
+  (label :string)
+  (action :string))
+
+(defun g-menu-append (menu label action)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[action]{the detailed action string, or @code{nil}}
+  @begin{short}
+    Convenience function for appending a normal menu item to the end of the
+    menu.
+  @end{short}
+  Combine the functions @fun{g-menu-item-new} and @fun{g-menu-insert-item} for
+  a more flexible alternative.
+  @see-class{g-menu}
+  @see-function{g-menu-item-new}
+  @see-function{g-menu-insert-item}"
+  (%g-menu-append menu
+                  (if label label (null-pointer))
+                  (if action action (null-pointer))))
+
+(export 'g-menu-append)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_insert_item ()
-;;;
-;;; void g_menu_insert_item (GMenu *menu, gint position, GMenuItem *item);
-;;;
-;;; Inserts item into menu.
-;;;
-;;; The "insertion" is actually done by copying all of the attribute and link
-;;; values of item and using them to form a new item within menu. As such, item
-;;; itself is not really inserted, but rather, a menu item that is exactly the
-;;; same as the one presently described by item.
-;;;
-;;; This means that item is essentially useless after the insertion occurs. Any
-;;; changes you make to it are ignored unless it is inserted again (at which
-;;; point its updated values will be copied).
-;;;
-;;; You should probably just free item once you're done.
-;;;
-;;; There are many convenience functions to take care of common cases. See
-;;; g_menu_insert(), g_menu_insert_section() and g_menu_insert_submenu() as
-;;; well as "prepend" and "append" variants of each of these functions.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; position :
-;;;     the position at which to insert the item
-;;;
-;;; item :
-;;;     the GMenuItem to insert
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_insert_item" g-menu-insert-item) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[position]{an integer with the position at which to insert the item}
+  @argument[item]{a @class{g-menu-item} object to insert}
+  @begin{short}
+    Inserts a menu item into the menu.
+  @end{short}
+
+  The \"insertion\" is actually done by copying all of the attribute and link
+  values of @arg{item} and using them to form a new menu item within the menu.
+  As such, @arg{item} itself is not really inserted, but rather, a menu item
+  that is exactly the same as the one presently described by @arg{item}.
+
+  This means that @arg{item} is essentially useless after the insertion occurs.
+  Any changes you make to it are ignored unless it is inserted again, at which
+  point its updated values will be copied. You should probably just free
+  @arg{item} once you are done.
+
+  There are many convenience functions to take care of common cases. See the
+  functions @fun{g-menu-insert}, @fun{g-menu-insert-section} and
+  @fun{g-menu-insert-submenu} as well as \"prepend\" and \"append\" variants of
+  each of these functions.
+  @see-class{g-menu}
+  @see-class{g-menu-item}
+  @see-function{g-menu-insert}
+  @see-function{g-menu-insert-section}
+  @see-function{g-menu-insert-submenu}"
+  (menu (g-object g-menu))
+  (position :int)
+  (item (g-object g-menu-item)))
+
+(export 'g-menu-insert-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_append_item ()
-;;;
-;;; void g_menu_append_item (GMenu *menu, GMenuItem *item);
-;;;
-;;; Appends item to the end of menu.
-;;;
-;;; See g_menu_insert_item() for more information.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; item :
-;;;     a GMenuItem to append
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_append_item" g-menu-append-item) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[item]{a @class{g-menu-item} object to append}
+  @begin{short}
+    Appends the menu item to the end of the menu.
+  @end{short}
+  See the function @fun{g-menu-insert-item} for more information.
+  @see-class{g-menu}
+  @see-class{g-menu-item}
+  @see-function{g-menu-insert-item}"
+  (menu (g-object g-menu))
+  (item (g-object g-menu-item)))
+
+(export 'g-menu-append-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_prepend_item ()
-;;;
-;;; void g_menu_prepend_item (GMenu *menu, GMenuItem *item);
-;;;
-;;; Prepends item to the start of menu.
-;;;
-;;; See g_menu_insert_item() for more information.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; item :
-;;;     a GMenuItem to prepend
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_prepend_item" g-menu-prepend-item) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[item]{a @class{g-menu-item} object to prepend}
+  @begin{short}
+    Prepends the menu item to the start of the menu.
+  @end{short}
+  See the function @fun{g-menu-insert-item} for more information.
+  @see-class{g-menu}
+  @see-class{g-menu-item}
+  @see-function{g-menu-insert-item}"
+  (menu (g-object g-menu))
+  (item (g-object g-menu-item)))
+
+(export 'g-menu-prepend-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_insert_section ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_menu_insert_section" g-menu-insert-section) :void
+(defcfun ("g_menu_insert_section" %g-menu-insert-section) :void
+  (menu (g-object g-menu))
+  (position :int)
+  (label :string)
+  (section (g-object g-menu-model)))
+
+(defun g-menu-insert-section (menu position label section)
  #+cl-cffi-gtk-documentation
  "@version{2021-4-15}
   @argument[menu]{a @class{g-menu} object}
@@ -311,169 +351,213 @@
   @see-class{g-menu-model}
   @see-function{g-menu-item-new-section}
   @see-function{g-menu-insert-item}"
-  (menu (g-object g-menu))
-  (position :int)
-  (label :string)
-  (section (g-object g-menu-model)))
+  (%g-menu-insert-section menu
+                          position
+                          (if label label (null-pointer))
+                          section))
 
 (export 'g-menu-insert-section)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_prepend_section ()
-;;;
-;;; void g_menu_prepend_section (GMenu *menu,
-;;;                              const gchar *label,
-;;;                              GMenuModel *section);
-;;;
-;;; Convenience function for prepending a section menu item to the start of
-;;; menu. Combine g_menu_item_new_section() and g_menu_insert_item() for a more
-;;; flexible alternative.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; section :
-;;;     a GMenuModel with the items of the section
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_prepend_section" %g-menu-prepend-section) :void
+  (menu (g-object g-menu))
+  (label :string)
+  (section (g-object g-menu-model)))
+
+(defun g-menu-prepend-section (menu label section)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[section]{a @class{g-menu-model} object with the items of the
+    section}
+  @begin{short}
+    Convenience function for prepending a section menu item to the start of
+    the menu.
+  @end{short}
+  Combine the functions @fun{g-menu-item-new-section} and
+  @fun{g-menu-insert-item} for a more flexible alternative.
+  @see-class{g-menu}
+  @see-class{g-menu-model}
+  @see-function{g-menu-item-new-section}
+  @see-function{g-menu-insert-item}"
+  (%g-menu-prepend-section menu
+                           (if label label (null-pointer))
+                           section))
+
+(export 'g-menu-prepend-section)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_append_section ()
-;;;
-;;; void g_menu_append_section (GMenu *menu,
-;;;                             const gchar *label,
-;;;                             GMenuModel *section);
-;;;
-;;; Convenience function for appending a section menu item to the end of menu.
-;;; Combine g_menu_item_new_section() and g_menu_insert_item() for a more
-;;; flexible alternative.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; section :
-;;;     a GMenuModel with the items of the section
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_append_section" %g-menu-append-section) :void
+  (menu (g-object g-menu))
+  (label :string)
+  (section (g-object g-menu-model)))
+
+(defun g-menu-append-section (menu label section)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[section]{a @class{g-menu-model} object with the items of the
+    section}
+  @begin{short}
+    Convenience function for appending a section menu item to the emd of
+    the menu.
+  @end{short}
+  Combine the functions @fun{g-menu-item-new-section} and
+  @fun{g-menu-insert-item} for a more flexible alternative.
+  @see-class{g-menu}
+  @see-class{g-menu-model}
+  @see-function{g-menu-item-new-section}
+  @see-function{g-menu-insert-item}"
+  (%g-menu-append-section menu
+                          (if label label (null-pointer))
+                          section))
+
+(export 'g-menu-append-section)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_append_submenu ()
-;;;
-;;; void g_menu_append_submenu (GMenu *menu,
-;;;                             const gchar *label,
-;;;                             GMenuModel *submenu);
-;;;
-;;; Convenience function for appending a submenu menu item to the end of menu.
-;;; Combine g_menu_item_new_submenu() and g_menu_insert_item() for a more
-;;; flexible alternative.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; submenu :
-;;;     a GMenuModel with the items of the submenu
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_append_submenu" %g-menu-append-submenu) :void
+  (menu (g-object g-menu))
+  (label :string)
+  (submenu (g-object g-menu-model)))
+
+(defun g-menu-append-submenu (menu label submenu)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[submenu]{a @class{g-menu-model} object with the items of the
+    submenu}
+  @begin{short}
+    Convenience function for appending a submenu menu item to the end of the
+    menu.
+  @end{short}
+  Combine the functions @fun{g-menu-item-new-submenu} and
+  @fun{g-menu-insert-item} for a more flexible alternative.
+  @see-class{g-menu}
+  @see-class{g-menu-model}
+  @see-function{g-menu-item-new-submenu}
+  @see-function{g-menu-insert-item}"
+  (%g-menu-append-submenu menu (if label label (null-pointer)) submenu))
+
+(export 'g-menu-append-submenu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_insert_submenu ()
-;;;
-;;; void g_menu_insert_submenu (GMenu *menu,
-;;;                             gint position,
-;;;                             const gchar *label,
-;;;                             GMenuModel *submenu);
-;;;
-;;; Convenience function for inserting a submenu menu item into menu. Combine
-;;; g_menu_item_new_submenu() and g_menu_insert_item() for a more flexible
-;;; alternative.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; position :
-;;;     the position at which to insert the item
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; submenu :
-;;;     a GMenuModel with the items of the submenu
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_insert_submenu" %g-menu-insert-submenu) :void
+  (menu (g-object g-menu))
+  (position :int)
+  (label :string)
+  (submenu (g-object g-menu-model)))
+
+(defun g-menu-insert-submenu (menu position label submenu)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[position]{an integer with the position at which to insert the item}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[submenu]{a @class{g-menu-model} object with the items of the
+    submenu}
+  @begin{short}
+    Convenience function for inserting a submenu menu item into the menu.
+  @end{short}
+  Combine the functions @fun{g-menu-item-new-submenu} and
+  @fun{g-menu-insert-item} for a more flexible alternative.
+  @see-class{g-menu}
+  @see-class{g-menu-model}
+  @see-function{g-menu-item-new-submenu}
+  @see-function{g-menu-insert-item}"
+  (%g-menu-insert-submenu menu
+                          position
+                          (if label label (null-pointer))
+                          submenu))
+
+(export 'g-menu-insert-submenu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_prepend_submenu ()
-;;;
-;;; void g_menu_prepend_submenu (GMenu *menu,
-;;;                              const gchar *label,
-;;;                              GMenuModel *submenu);
-;;;
-;;; Convenience function for prepending a submenu menu item to the start of
-;;; menu. Combine g_menu_item_new_submenu() and g_menu_insert_item() for a more
-;;; flexible alternative.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; submenu :
-;;;     a GMenuModel with the items of the submenu
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_prepend_submenu" %g-menu-prepend-submenu) :void
+  (menu (g-object g-menu))
+  (label :string)
+  (submenu (g-object g-menu-model)))
+
+(defun g-menu-prepend-submenu (menu label submenu)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[submenu]{a @class{g-menu-model} object with the items of the
+    submenu}
+  @begin{short}
+    Convenience function for prepending a submenu menu item to the start of the
+    menu.
+  @end{short}
+  Combine the functions @fun{g-menu-item-new-submenu} and
+  @fun{g-menu-insert-item} for a more flexible alternative.
+  @see-class{g-menu}
+  @see-class{g-menu-model}
+  @see-function{g-menu-item-new-submenu}
+  @see-function{g-menu-insert-item}"
+  (%g-menu-prepend-submenu menu
+                           (if label label (null-pointer))
+                           submenu))
+
+(export 'g-menu-prepend-submenu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_remove ()
-;;;
-;;; void g_menu_remove (GMenu *menu, gint position);
-;;;
-;;; Removes an item from the menu.
-;;;
-;;; position gives the index of the item to remove.
-;;;
-;;; It is an error if position is not in range the range from 0 to one less
-;;; than the number of items in the menu.
-;;;
-;;; It is not possible to remove items by identity since items are added to the
-;;; menu simply by copying their links and attributes (ie: identity of the item
-;;; itself is not preserved).
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; position :
-;;;     the position of the item to remove
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_remove" g-menu-remove) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[position]{an integer with the position of the menu item to remove}
+  @begin{short}
+    Removes an item from the menu.
+  @end{short}
+  The argument @arg{position} gives the index of the menu item to remove.
+
+  It is an error if @arg{position} is not in the range from 0 to one less than
+  the number of menu items in the menu.
+
+  It is not possible to remove items by identity since items are added to the
+  menu simply by copying their links and attributes, i.e. identity of the menu
+  item itself is not preserved.
+  @see-class{g-menu}"
+  (menu (g-object g-menu))
+  (position :int))
+
+(export 'g-menu-remove)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_remove_all ()
-;;;
-;;; void g_menu_remove_all (GMenu *menu);
-;;;
-;;; Removes all items in the menu.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_remove_all" g-menu-remove-all) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @begin{short}
+    Removes all items in the menu.
+  @end{short}
+  @see-class{g-menu}"
+  (menu (g-object g-menu)))
+
+(export 'g-menu-remove-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GMenuItem
@@ -488,181 +572,202 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-menu-item 'type)
- "@version{2021-4-15}
+ "@version{2021-8-16}
   @begin{short}
     The @sym{g-menu-item} object is an opaque structure type.
   @end{short}
-  You must access it using the functions below.
+  You must access it using the API functions.
   @see-class{g-menu}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_new ()
-;;;
-;;; GMenuItem * g_menu_item_new (const gchar *label,
-;;;                              const gchar *detailed_action);
-;;;
-;;; Creates a new GMenuItem.
-;;;
-;;; If label is non-NULL it is used to set the "label" attribute of the new
-;;; item.
-;;;
-;;; If detailed_action is non-NULL it is used to set the "action" and possibly
-;;; the "target" attribute of the new item. See
-;;; g_menu_item_set_detailed_action() for more information.
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; detailed_action :
-;;;     the detailed action string, or NULL. [allow-none]
-;;;
-;;; Returns :
-;;;     a new GMenuItem
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_item_new" %g-menu-item-new) (g-object g-menu-item)
+  (label :string)
+  (action :string))
+
+(defun g-menu-item-new (label action)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[action]{a detailed action string, or @code{nil}}
+  @return{A new @class{g-menu-item} object.}
+  @begin{short}
+    Creates a new @class{g-menu-item} object.
+  @end{short}
+
+  If @arg{label} is non-@code{nil} it is used to set the \"label\" attribute of
+  the new menu item.
+
+  If @arg{action} is non-@code{nil} it is used to set the \"action\" and
+  possibly the \"target\" attribute of the new item. See the function
+  @fun{g-menu-item-set-detailed-action} for more information.
+  @see-class{g-menu-item}
+  @see-function{g-menu-item-set-detailed-action}"
+  (%g-menu-item-new (if label label (null-pointer))
+                    (if action action (null-pointer))))
+
+(export 'g-menu-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_new_section ()
-;;;
-;;; GMenuItem * g_menu_item_new_section (const gchar *label,
-;;;                                      GMenuModel *section);
-;;;
-;;; Creates a new GMenuItem representing a section.
-;;;
-;;; This is a convenience API around g_menu_item_new() and
-;;; g_menu_item_set_section().
-;;;
-;;; The effect of having one menu appear as a section of another is exactly as
-;;; it sounds: the items from section become a direct part of the menu that
-;;; menu_item is added to.
-;;;
-;;; Visual separation is typically displayed between two non-empty sections. If
-;;; label is non-NULL then it will be encorporated into this visual indication.
-;;; This allows for labeled subsections of a menu.
-;;;
-;;; As a simple example, consider a typical "Edit" menu from a simple program.
-;;; It probably contains an "Undo" and "Redo" item, followed by a separator,
-;;; followed by "Cut", "Copy" and "Paste".
-;;;
-;;; This would be accomplished by creating three GMenu instances. The first
-;;; would be populated with the "Undo" and "Redo" items, and the second with
-;;; the "Cut", "Copy" and "Paste" items. The first and second menus would then
-;;; be added as submenus of the third. In XML format, this would look something
-;;; like the following:
-;;;
-;;; <menu id='edit-menu'>
-;;;   <section>
-;;;     <item label='Undo'/>
-;;;     <item label='Redo'/>
-;;;   </section>
-;;;   <section>
-;;;     <item label='Cut'/>
-;;;     <item label='Copy'/>
-;;;     <item label='Paste'/>
-;;;   </section>
-;;; </menu>
-;;;
-;;; The following example is exactly equivalent. It is more illustrative of the
-;;; exact relationship between the menus and items (keeping in mind that the
-;;; 'link' element defines a new menu that is linked to the containing one).
-;;; The style of the second example is more verbose and difficult to read (and
-;;; therefore not recommended except for the purpose of understanding what is
-;;; really going on).
-;;;
-;;; <menu id='edit-menu'>
-;;;   <item>
-;;;     <link name='section'>
-;;;       <item label='Undo'/>
-;;;       <item label='Redo'/>
-;;;     </link>
-;;;   </item>
-;;;   <item>
-;;;     <link name='section'>
-;;;       <item label='Cut'/>
-;;;       <item label='Copy'/>
-;;;       <item label='Paste'/>
-;;;     </link>
-;;;   </item>
-;;; </menu>
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; section :
-;;;     a GMenuModel with the items of the section
-;;;
-;;; Returns :
-;;;     a new GMenuItem
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_item_new_section" %g-menu-item-new-section)
+    (g-object g-menu-item)
+  (label :string)
+  (section (g-object g-menu-model)))
+
+(defun g-menu-item-new-section (label section)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-18}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[section]{a @class{g-menu-model} object with the menu items of the
+    section}
+  @return{A new @class{g-menu-item} object.}
+  @begin{short}
+    Creates a new @class{g-menu-item} object representing a section.
+  @end{short}
+  This is a convenience API around the functions @fun{g-menu-item-new} and
+  @fun{g-menu-item-set-section}.
+
+  The effect of having one menu appear as a section of another is exactly as
+  it sounds: the items from section become a direct part of the menu that
+  @arg{item} is added to.
+
+  Visual separation is typically displayed between two non-empty sections. If
+  label is non-@code{nil} then it will be encorporated into this visual
+  indication. This allows for labeled subsections of a menu.
+
+  As a simple example, consider a typical \"Edit\" menu from a simple program.
+  It probably contains an \"Undo\" and \"Redo\" item, followed by a separator,
+  followed by \"Cut\", \"Copy\" and \"Paste\".
+
+  This would be accomplished by creating three @class{g-menu} objects. The first
+  would be populated with the \"Undo\" and \"Redo\" items, and the second with
+  the \"Cut\", \"Copy\" and \"Paste\" items. The first and second menus would
+  then be added as submenus of the third. In XML format, this would look
+  something like the following:
+  @begin{pre}
+<menu id='edit-menu'>
+  <section>
+    <item label='Undo'/>
+    <item label='Redo'/>
+  </section>
+  <section>
+    <item label='Cut'/>
+    <item label='Copy'/>
+    <item label='Paste'/>
+  </section>
+</menu>
+  @end{pre}
+  The following example is exactly equivalent. It is more illustrative of the
+  exact relationship between the menus and items, keeping in mind that the
+  'link' element defines a new menu that is linked to the containing one. The
+  style of the second example is more verbose and difficult to read, and
+  therefore not recommended except for the purpose of understanding what is
+  really going on.
+  @begin{pre}
+<menu id='edit-menu'>
+  <item>
+    <link name='section'>
+      <item label='Undo'/>
+      <item label='Redo'/>
+    </link>
+  </item>
+  <item>
+    <link name='section'>
+      <item label='Cut'/>
+      <item label='Copy'/>
+      <item label='Paste'/>
+    </link>
+  </item>
+</menu>
+  @end{pre}
+  @see-class{g-menu-item}
+  @see-function{g-menu-item-new}
+  @see-function{g-menu-item-set-section}"
+  (%g-menu-item-new-section (if label label (null-pointer)) section))
+
+(export 'g-menu-item-new-section)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_new_submenu ()
-;;;
-;;; GMenuItem * g_menu_item_new_submenu (const gchar *label,
-;;;                                      GMenuModel *submenu);
-;;;
-;;; Creates a new GMenuItem representing a submenu.
-;;;
-;;; This is a convenience API around g_menu_item_new() and
-;;; g_menu_item_set_submenu().
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; submenu :
-;;;     a GMenuModel with the items of the submenu
-;;;
-;;; Returns :
-;;;     a new GMenuItem
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_item_new_submenu" %g-menu-item-new-submenu)
+    (g-object g-menu-item)
+  (label :string)
+  (submenu (g-object g-menu-model)))
+
+(defun g-menu-item-new-submenu (label submenu)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[label]{a string with the section label, or @code{nil}}
+  @argument[submenu]{a @class{g-menu-model} object with the menu items of the
+    submenu}
+  @return{A new @class{g-menu-item} object.}
+  @begin{short}
+    Creates a new @class{g-menu-item} object representing a submenu.
+  @end{short}
+  This is a convenience API around the functions @fun{g-menu-item-new} and
+  @fun{g-menu-item-set-submenu}.
+  @see-class{g-menu-item}
+  @see-class{g-menu-model}
+  @see-function{g-menu-item-new}
+  @see-function{g-menu-item-set-submenu}"
+  (%g-menu-item-new-submenu (if label label (null-pointer)) submenu))
+
+(export 'g-menu-item-new-submenu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_new_from_model ()
-;;;
-;;; GMenuItem * g_menu_item_new_from_model (GMenuModel *model,
-;;;                                         gint item_index);
-;;;
-;;; Creates a GMenuItem as an exact copy of an existing menu item in a
-;;; GMenuModel.
-;;;
-;;; item_index must be valid (ie: be sure to call g_menu_model_get_n_items()
-;;; first).
-;;;
-;;; model :
-;;;     a GMenuModel
-;;;
-;;; item_index :
-;;;     the index of an item in model
-;;;
-;;; Returns :
-;;;     a new GMenuItem.
-;;;
-;;; Since 2.34
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_item_new_from_model" g-menu-item-new-from-model)
+    (g-object g-menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[model]{a @class{g-menu-model} object}
+  @argument[index]{an integer with the index of an menu item in @arg{model}}
+  @return{A new @class{g-menu-item} object.}
+  @begin{short}
+    Creates a @class{g-menu-item} object as an exact copy of an existing menu
+    item in a @class{g-menu-model} object.
+  @end{short}
+  The argument @arg{index} must be valid, i.e. be sure to call the function
+  @fun{g-menu-model-n-items} first.
+  @see-class{g-menu-item}
+  @see-class{g-menu-model}
+  @see-function{g-menu-model-n-items}"
+  (model (g-object g-menu-model))
+  (index :int))
+
+(export 'g-menu-item-new-from-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_set_label ()
-;;;
-;;; void g_menu_item_set_label (GMenuItem *menu_item, const gchar *label);
-;;;
-;;; Sets or unsets the "label" attribute of menu_item.
-;;;
-;;; If label is non-NULL it is used as the label for the menu item. If it is
-;;; NULL then the label attribute is unset.
-;;;
-;;; menu_item :
-;;;     a GMenuItem
-;;;
-;;; label :
-;;;     the label to set, or NULL to unset. [allow-none]
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu-item_set_label" %g-menu-item-set-label) :void
+  (item (g-object g-menu-item))
+  (label :string))
+
+(defun g-menu-item-set-label (item label)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[item]{a @class{g-menu-item} object}
+  @argument[label]{a string with the label to set, or @code{nil}}
+  @begin{short}
+    Sets or unsets the \"label\" attribute of the menu item.
+  @end{short}
+  If @arg{label} is non-@code{nil} it is used as the label for the menu item.
+  If it is @code{nil} then the label attribute is unset.
+  @see-class{g-menu-item}"
+  (%g-menu-item-set-label item (if label label (null-pointer))))
+
+(export 'g-menu-item-set-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_set_icon ()
@@ -670,11 +775,11 @@
 
 (defcfun ("g_menu_item_set_icon" g-menu-item-set-icon) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{2021-8-16}
   @argument[item]{a @class{g-menu-item} object}
   @argument[icon]{a @class{g-icon} object}
   @begin{short}
-    Sets (or unsets) the icon on @arg{item}.
+    Sets or unsets the icon on the menu item.
   @end{short}
 
   This call is the same as calling the function @fun{g-icon-serialize} and using
@@ -696,57 +801,67 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_set_action_and_target_value ()
-;;;
-;;; void g_menu_item_set_action_and_target_value (GMenuItem *menu_item,
-;;;                                               const gchar *action,
-;;;                                               GVariant *target_value);
-;;;
-;;; Sets or unsets the "action" and "target" attributes of menu_item.
-;;;
-;;; If action is NULL then both the "action" and "target" attributes are unset
-;;; (and target_value is ignored).
-;;;
-;;; If action is non-NULL then the "action" attribute is set. The "target"
-;;; attribute is then set to the value of target_value if it is non-NULL or
-;;; unset otherwise.
-;;;
-;;; Normal menu items (ie: not submenu, section or other custom item types) are
-;;; expected to have the "action" attribute set to identify the action that they
-;;; are associated with. The state type of the action help to determine the
-;;; disposition of the menu item. See GAction and GActionGroup for an overview
-;;; of actions.
-;;;
-;;; In general, clicking on the menu item will result in activation of the named
-;;; action with the "target" attribute given as the parameter to the action
-;;; invocation. If the "target" attribute is not set then the action is invoked
-;;; with no parameter.
-;;;
-;;; If the action has no state then the menu item is usually drawn as a plain
-;;; menu item (ie: with no additional decoration).
-;;;
-;;; If the action has a boolean state then the menu item is usually drawn as a
-;;; toggle menu item (ie: with a checkmark or equivalent indication). The item
-;;; should be marked as 'toggled' or 'checked' when the boolean state is TRUE.
-;;;
-;;; If the action has a string state then the menu item is usually drawn as a
-;;; radio menu item (ie: with a radio bullet or equivalent indication). The item
-;;; should be marked as 'selected' when the string state is equal to the value
-;;; of the target property.
-;;;
-;;; See g_menu_item_set_action_and_target() or g_menu_item_set_detailed_action()
-;;; for two equivalent calls that are probably more convenient for most uses.
-;;;
-;;; menu_item :
-;;;     a GMenuItem
-;;;
-;;; action :
-;;;     the name of the action for this item. [allow-none]
-;;;
-;;; target_value :
-;;;     a GVariant to use as the action target. [allow-none]
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_item_set_action_and_target_value"
+          %g-menu-item-set-action-and-target-value) :void
+  (item (g-object g-menu-item))
+  (action :string)
+  (value (:pointer (:struct g-variant))))
+
+(defun g-menu-item-set-action-and-target-value (item action value)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[item]{a @class{g-menu-item} object}
+  @argument[action]{a string with the name of the action for this menu item}
+  @argument[value]{a @symbol{g-variant} instance to use as the action target}
+  @begin{short}
+    Sets or unsets the \"action\" and \"target\" attributes of the menu item.
+  @end{short}
+
+  If @arg{action} is @code{nil} then both the \"action\" and \"target\"
+  attributes are unset, and @arg{value} is ignored.
+
+  If @arg{action} is non-@code{nil} then the \"action\" attribute is set. The
+  \"target\" attribute is then set to the value of @arg{value} if it is
+  non-@code{nil} or unset otherwise.
+
+  Normal menu items, i.e. not submenu, section or other custom item types, are
+  expected to have the \"action\" attribute set to identify the action that they
+  are associated with. The state type of the action help to determine the
+  disposition of the menu item. See teh @class{g-action} and
+  @class{g-action-group} documentation for an overview of actions.
+
+  In general, clicking on the menu item will result in activation of the named
+  action with the \"target\" attribute given as the parameter to the action
+  invocation. If the \"target\" attribute is not set then the action is invoked
+  with no parameter.
+
+  If the action has no state then the menu item is usually drawn as a plain
+  menu item, i.e. with no additional decoration.
+
+  If the action has a boolean state then the menu item is usually drawn as a
+  toggle menu item, i.e. with a checkmark or equivalent indication. The item
+  should be marked as 'toggled' or 'checked' when the boolean state is
+  @em{true}.
+
+  If the action has a string state then the menu item is usually drawn as a
+  radio menu item, i.e. with a radio bullet or equivalent indication. The item
+  should be marked as 'selected' when the string state is equal to the value
+  of the target property.
+
+  See the functions @fun{g-menu-item-set-action-and-target} or
+  @fun{g-menu-item-set-detailed-action} for two equivalent calls that are
+  probably more convenient for most uses.
+  @see-class{g-menu-item}
+  @see-symbol{g-variant}
+  @see-function{g-menu-item-set-action-and-target}
+  @see-function{g-menu-item-set-detailed-action}"
+  (%g-menu-item-set-action-and-target-value item
+                                            (if action action (null-pointer))
+                                            (if value value (null-pointer))))
+
+(export 'g-menu-item-set-action-and-target-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_set_action_and_target ()
@@ -791,102 +906,155 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_set_detailed_action ()
-;;;
-;;; void g_menu_item_set_detailed_action (GMenuItem *menu_item,
-;;;                                       const gchar *detailed_action);
-;;;
-;;; Sets the "action" and possibly the "target" attribute of menu_item.
-;;;
-;;; The format of detailed_action is the same format parsed by
-;;; g_action_parse_detailed_name().
-;;;
-;;; See g_menu_item_set_action_and_target() or
-;;; g_menu_item_set_action_and_target_value() for more flexible (but slightly
-;;; less convenient) alternatives.
-;;;
-;;; See also g_menu_item_set_action_and_target_value() for a description of the
-;;; semantics of the action and target attributes.
-;;;
-;;; menu_item :
-;;;     a GMenuItem
-;;;
-;;; detailed_action :
-;;;     the "detailed" action string
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_item_set_detailed_action" g-menu-item-set-detailed-action)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[item]{a @class{g-menu-item} object}
+  @argument[action]{a detailed action string}
+  @begin{short}
+    Sets the \"action\" and possibly the \"target\" attribute of the menu item.
+  @end{short}
+
+  The format of @arg{action} is the same format parsed by the function
+  @fun{g-action-parse-detailed-name}.
+
+  See the functions @fun{g-menu-item-set-action-and-target} or
+  @fun{g-menu-item-set-action-and-target-value} for more flexible, but slightly
+  less convenient, alternatives.
+
+  See also the function @fun{g-menu-item-set-action-and-target-value} for a
+  description of the semantics of the action and target attributes.
+  @see-class{g-menu-item}
+  @see-function{g-action-parse-detailed-name}
+  @see-function{g-menu-item-set-action-and-target}
+  @see-function{g-menu-item-set-action-and-target-value}"
+  (item (g-object g-menu-item))
+  (action :string))
+
+(export 'g-menu-item-set-detailed-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_set_section ()
-;;;
-;;; void g_menu_item_set_section (GMenuItem *menu_item, GMenuModel *section);
-;;;
-;;; Sets or unsets the "section" link of menu_item to section.
-;;;
-;;; The effect of having one menu appear as a section of another is exactly as
-;;; it sounds: the items from section become a direct part of the menu that
-;;; menu_item is added to. See g_menu_item_new_section() for more information
-;;; about what it means for a menu item to be a section.
-;;;
-;;; menu_item :
-;;;     a GMenuItem
-;;;
-;;; section :
-;;;     a GMenuModel, or NULL. [allow-none]
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_item_set_section" %g-menu-item-set-section) :void
+  (item (g-object g-menu-item))
+  (section (g-object g-menu-model)))
+
+(defun g-menu-item-set-section (item section)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[item]{a @class{g-menu-item} object}
+  @argument[section]{a @class{g-menu-model}, or @code{nil}}
+  @begin{short}
+    Sets or unsets the \"section\" link of the menu item to @arg{section}.
+  @end{short}
+
+  The effect of having one menu appear as a section of another is exactly as
+  it sounds: the items from @arg{section} become a direct part of the menu that
+  @arg{item} is added to. See the function @fun{g-menu-item-new-section} for
+  more information about what it means for a menu item to be a section.
+  @see-class{g-menu-item}
+  @see-class{g-menu-model}
+  @see-function{g-menu-item-new-section}"
+  (%g-menu-item-set-section item (if section section (null-pointer))))
+
+(export 'g-menu-item-set-section)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_set_submenu ()
-;;;
-;;; void g_menu_item_set_submenu (GMenuItem *menu_item, GMenuModel *submenu);
-;;;
-;;; Sets or unsets the "submenu" link of menu_item to submenu.
-;;;
-;;; If submenu is non-NULL, it is linked to. If it is NULL then the link is
-;;; unset.
-;;;
-;;; The effect of having one menu appear as a submenu of another is exactly as
-;;; it sounds.
-;;;
-;;; menu_item :
-;;;     a GMenuItem
-;;;
-;;; submenu :
-;;;     a GMenuModel, or NULL. [allow-none]
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_item_set_submenu" %g-menu-item-set-submenu) :void
+  (item (g-object g-menu-item))
+  (submenu (g-object g-menu-model)))
+
+(defun g-menu-item-set-submenu (item submenu)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-16}
+  @argument[item]{a @class{g-menu-item} object}
+  @argument[submenu]{a @class{g-menu-model} object, or @code{nil}}
+  @begin{short}
+    Sets or unsets the \"submenu\" link of the menu item to @arg{submenu}.
+  @end{short}
+
+  If @arg{submenu} is non-@code{nil}, it is linked to. If it is @code{nil} then
+  the link is unset.
+
+  The effect of having one menu appear as a submenu of another is exactly as
+  it sounds.
+  @see-class{g-menu-item}
+  @see-class{g-menu-model}"
+  (%g-menu-item-set-submenu item (if submenu submenu (null-pointer))))
+
+(export 'g-menu-item-set-submenu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_get_attribute_value ()
-;;;
-;;; GVariant * g_menu_item_get_attribute_value
-;;;                                          (GMenuItem *menu_item,
-;;;                                           const gchar *attribute,
-;;;                                           const GVariantType *expected_type)
-;;;
-;;; Queries the named attribute on menu_item.
-;;;
-;;; If expected_type is specified and the attribute does not have this type,
-;;; NULL is returned. NULL is also returned if the attribute simply does not
-;;; exist.
-;;;
-;;; menu_item :
-;;;     a GMenuItem
-;;;
-;;; attribute :
-;;;     the attribute name to query
-;;;
-;;; expected_type :
-;;;     the expected type of the attribute. [allow-none]
-;;;
-;;; Returns :
-;;;     the attribute value, or NULL. [transfer full]
-;;;
-;;; Since 2.34
+;;; g_menu_item_set_attribute_value () -> g-menu-item-attribute-value
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf g-menu-item-attribute-value) (value item attribute)
+  (foreign-funcall "g_menu_item_set_attribute_value"
+                   (g-object g-menu-item) item
+                   :string attribute
+                   (:pointer (:struct g-variant)) value
+                   :void)
+  value)
+
+(defcfun ("g_menu_item_get_attribute_value" %g-menu-item-attribute-value)
+    (:pointer (:struct g-variant))
+  (item (g-object g-menu-item))
+  (attribute :string)
+  (vtype (g-boxed-foreign g-variant-type)))
+
+(defun g-menu-item-attribute-value (item attribute &optional (vtype nil))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-8-17}
+  @syntax[]{(g-menu-item-attribute-value item attribute) => value}
+  @syntax[]{(g-menu-item-attribute-value item attribute vtype) => value}
+  @syntax[]{(setf (g-menu-item-attribute-value item attribute) value)}
+  @argument[item]{a @class{g-menu-item} object}
+  @argument[attribute]{a string with the attribute name}
+  @argument[vtype]{the optional expected @class{g-variant-type} type or a type
+    string of the attribute}
+  @argument[value]{a @symbol{g-variant} value to use as the value, or
+    @code{nil}}
+  @begin{short}
+    The function @sym{g-menu-item-attribute-value} queries the named attribute
+    on the menu item.
+  @end{short}
+  The function @sym{(setf g-menu-item-attribute-value)} sets or unsets an
+  attribute.
+
+  If the argument @arg{vtype} is specified and the attribute does not have this
+  type, @code{nil} is returned. @code{Nil} is also returned if the attribute
+  simply does not exist.
+
+  The attribute to set or unset is specified by @arg{attribute}. This can be
+  one of the standard attribute names \"label\", \"action\", \"target\", or a
+  custom attribute name. Attribute names are restricted to lowercase
+  characters, numbers and '-'. Furthermore, the names must begin with a
+  lowercase character, must not end with a '-', and must not contain
+  consecutive dashes.
+
+  If @arg{value} is non-@code{nil} then it is used as the new value for the
+  attribute. If @arg{value} is @code{nil} then the attribute is unset. If the
+  @symbol{g-variant} value is floating, it is consumed.
+  @see-class{g-menu-item}
+  @see-symbol{g-variant}
+  @see-class{g-variant-type}"
+  (if (stringp vtype)
+      (let ((vtype1 (g-variant-type-new vtype)))
+        (unwind-protect
+          (%g-menu-item-attribute-value item attribute vtype1)
+          (g-variant-type-free vtype1)))
+      (%g-menu-item-attribute-value item attribute vtype)))
+
+(export 'g-menu-item-attribute-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_item_get_attribute ()
@@ -921,62 +1089,6 @@
 ;;;     TRUE if the named attribute was found with the expected type
 ;;;
 ;;; Since 2.34
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_menu_item_get_link ()
-;;;
-;;; GMenuModel * g_menu_item_get_link (GMenuItem *menu_item, const gchar *link);
-;;;
-;;; Queries the named link on menu_item.
-;;;
-;;; menu_item :
-;;;     a GMenuItem
-;;;
-;;; link :
-;;;     the link name to query
-;;;
-;;; Returns :
-;;;     the link, or NULL. [transfer full]
-;;;
-;;; Since 2.34
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_menu_item_set_attribute_value ()
-;;;
-;;; void g_menu_item_set_attribute_value (GMenuItem *menu_item,
-;;;                                       const gchar *attribute,
-;;;                                       GVariant *value);
-;;;
-;;; Sets or unsets an attribute on menu_item.
-;;;
-;;; The attribute to set or unset is specified by attribute. This can be one of
-;;; the standard attribute names G_MENU_ATTRIBUTE_LABEL,
-;;; G_MENU_ATTRIBUTE_ACTION, G_MENU_ATTRIBUTE_TARGET, or a custom attribute
-;;; name. Attribute names are restricted to lowercase characters, numbers and
-;;; '-'. Furthermore, the names must begin with a lowercase character, must not
-;;; end with a '-', and must not contain consecutive dashes.
-;;;
-;;; must consist only of lowercase ASCII characters, digits and '-'.
-;;;
-;;; If value is non-NULL then it is used as the new value for the attribute. If
-;;; value is NULL then the attribute is unset. If the value GVariant is
-;;; floating, it is consumed.
-;;;
-;;; See also g_menu_item_set_attribute() for a more convenient way to do the
-;;; same.
-;;;
-;;; menu_item :
-;;;     a GMenuItem
-;;;
-;;; attribute :
-;;;     the attribute to set
-;;;
-;;; value :
-;;;     a GVariant to use as the value, or NULL. [allow-none]
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1020,35 +1132,45 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g_menu_item_set_link ()
+;;; g_menu_item_get_link ()
+;;; g_menu_item_set_link () -> g-menu-item-link
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_menu_item_set_link" g-menu-item-set-link) :void
+(defun (setf g-menu-item-link) (value item link)
+  (foreign-funcall "g_menu_item_set_link"
+                   (g-object g-menu-item) item
+                   :string link
+                   (g-object g-menu-model) value
+                   :void)
+  value)
+
+(defcfun ("g_menu_item_get_link" g-menu-item-link) (g-object g-menu-model)
  #+cl-cffi-gtk-documentation
  "@version{2021-4-15}
+  @syntax[]{(g-menu-item-link item link) => model}
+  @syntax[]{(setf (g-menu-item-link item link) model)}
   @argument[item]{a @class{g-menu-item} object}
   @argument[link]{a string with the type of link to establish or unset}
   @argument[model]{the @class{g-menu-model} object to link to, or @code{nil} to
     unset}
   @begin{short}
-    Creates a link from @arg{item} to @arg{model} if non-@code{nil},
-    or unsets it.
+    The function @sym{g-menu-item-link} queries the named link on @arg{item}.
   @end{short}
+  The function @sym{(set g-menu-item-link)} creates a link from @arg{item} to
+  @arg{model} if non-@code{nil}, or unsets it.
 
   Links are used to establish a relationship between a particular menu item
-  and another menu. For example, @var{+g-menu-linke-submenu+} is used to
-  associate a submenu with a particular menu item, and
-  @var{+g-menu-link-section+} is used to create a section. Other types of link
-  can be used, but there is no guarantee that clients will be able to make sense
-  of them. Link types are restricted to lowercase characters, numbers and '-'.
-  Furthermore, the names must begin with a lowercase character, must not end
-  with a '-', and must not contain consecutive dashes.
+  and another menu. For example, \"submenu\" is used to associate a submenu with
+  a particular menu item, and \"section\" is used to create a section. Other
+  types of link can be used, but there is no guarantee that clients will be able
+  to make sense of them. Link types are restricted to lowercase characters,
+  numbers and '-'. Furthermore, the names must begin with a lowercase character,
+  must not end with a '-', and must not contain consecutive dashes.
   @see-class{g-menu-item}
   @see-class{g-menu-model}"
-  (menu-item (g-object g-menu-item))
-  (link :string)
-  (model (g-object g-menu-model)))
+  (item (g-object g-menu-item))
+  (link :string))
 
-(export 'g-menu-item-set-link)
+(export 'g-menu-item-link)
 
 ;;; --- End of file gio.menu.lisp ----------------------------------------------
