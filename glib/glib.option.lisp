@@ -184,7 +184,7 @@
 ;;;-----------------------------------------------------------------------------
 
 (defbitfield g-option-flags
-  (:none #x0000)
+  (:none 0)
   :hidden
   :in-main
   :reverse
