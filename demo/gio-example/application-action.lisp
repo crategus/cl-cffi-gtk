@@ -35,7 +35,7 @@
 
       ;; Create the action "toggle-action"
       (let ((action (g-simple-action-new-stateful "toggle-action"
-                                                  (g-variant-type-new "b")
+                                                  "b"
                                                   (g-variant-new-boolean nil))))
         ;; Connect a handler to the signal activate
         (g-signal-connect action "activate"

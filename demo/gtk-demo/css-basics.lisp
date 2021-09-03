@@ -67,7 +67,7 @@
                            (gtk-css-section-end-line section)
                            (gtk-css-section-end-position section))))
               (format t "in signal parsing-error: ~A, ~A~%" start end)
-              (gtk-text-buffer-apply-tag-by-name text "warning" start end)
+              (gtk-text-buffer-apply-tag text "warning" start end)
               +gdk-event-stop+)))
 
       ;; Add the widgets to the window

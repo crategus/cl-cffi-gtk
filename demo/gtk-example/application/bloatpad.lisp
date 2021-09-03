@@ -1,6 +1,6 @@
-;;;; Simple Application
+;;;; Application Bloatpad (2021-8-15)
 
-(in-package #:gtk-example)
+(in-package #:gtk-application)
 
 (defclass bloat-pad (gtk-application)
   ()
@@ -312,4 +312,5 @@
     (let (;; Create an instance of the application Bloat Pad
           (bloat-pad (bloat-pad-new)))
       ;; Run the application
-      (g-application-run bloat-pad argv))))
+      (g-application-run bloat-pad argv)))
+  (join-gtk-main))

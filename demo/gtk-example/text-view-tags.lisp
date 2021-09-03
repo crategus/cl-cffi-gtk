@@ -7,8 +7,8 @@
     (multiple-value-bind (start end)
         (gtk-text-buffer-selection-bounds buffer)
       (if (gtk-toggle-tool-button-active button)
-          (gtk-text-buffer-apply-tag-by-name buffer tag start end)
-          (gtk-text-buffer-remove-tag-by-name buffer tag start end)))))
+          (gtk-text-buffer-apply-tag buffer tag start end)
+          (gtk-text-buffer-remove-tag buffer tag start end)))))
 
 (defun example-text-view-tags ()
   (within-main-loop
