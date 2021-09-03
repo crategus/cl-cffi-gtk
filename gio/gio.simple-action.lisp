@@ -309,22 +309,29 @@
 
 (defun g-simple-action-new (name vtype)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-1}
+ "@version{2021-8-17}
   @argument[name]{a string with the name of the action}
-  @argument[vtype]{the @class{g-variant-type} type of the parameter to the
-    activate function}
+  @argument[vtype]{the @class{g-variant-type} type or a type string of the
+    parameter to the activate function}
   @return{A new @class{g-simple-action} object.}
   @begin{short}
     Creates a new action.
   @end{short}
   The created action is stateless. See the function
-  @fun{g-simple-action-new-stateful}.
+  @fun{g-simple-action-new-stateful} for a stateful action.
   @see-class{g-simple-action}
   @see-class{g-variant-type}
   @see-function{g-simple-action-new-stateful}"
-  (make-instance 'g-simple-action
-                 :name name
-                 :parameter-type vtype))
+  (if (stringp vtype)
+      (let ((vtype1 (g-variant-type-new vtype)))
+        (unwind-protect
+          (make-instance 'g-simple-action
+                         :name name
+                         :parameter-type vtype1)
+          (g-variant-type-free vtype1)))
+      (make-instance 'g-simple-action
+                     :name name
+                     :parameter-type vtype)))
 
 (export 'g-simple-action-new)
 
@@ -334,10 +341,10 @@
 
 (defun g-simple-action-new-stateful (name vtype state)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-1}
+ "@version{2021-8-17}
   @argument[name]{a string with the name of the action}
-  @argument[vtype]{the @class{g-variant-type} type of the parameter to the
-    activate function}
+  @argument[vtype]{the @class{g-variant-type} type or a type string of the
+    parameter to the activate function}
   @argument[state]{the initial @symbol{g-variant} state of the action}
   @return{A new @class{g-simple-action} object.}
   @begin{short}
@@ -349,10 +356,18 @@
   @see-function{g-simple-action-new}
   @see-type{g-variant}
   @see-class{g-variant-type}"
-  (make-instance 'g-simple-action
-                 :name name
-                 :parameter-type vtype
-                 :state state))
+  (if (stringp vtype)
+      (let ((vtype1 (g-variant-type-new vtype)))
+        (unwind-protect
+          (make-instance 'g-simple-action
+                         :name name
+                         :parameter-type vtype1
+                         :state state)
+          (g-variant-type-free vtype1)))
+      (make-instance 'g-simple-action
+                     :name name
+                     :parameter-type vtype
+                     :state state)))
 
 (export 'g-simple-action-new-stateful)
 
