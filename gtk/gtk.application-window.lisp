@@ -249,7 +249,7 @@
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{*2020-5-15}
-  @argument[application]{a @class{gtk-application} object}
+  @argument[application]{a @class{gtk-application} instance}
   @return{A newly created @class{gtk-application-window} widget.}
   @short{Creates a new application window.}
   @see-class{gtk-application}

@@ -1008,11 +1008,12 @@
 
   If text inserted at the iterator would be editable then the user should be
   allowed to insert text at the iterator. The function
-  @fun{gtk-text-buffer-insert-interactive} uses this function to decide whether
-  insertions are allowed at a given position.
+  @fun{gtk-text-buffer-insert} with the value @em{true} for the argument
+  @arg{interactive} uses this function to decide whether insertions are allowed
+  at a given position.
   @see-class{gtk-text-iter}
   @see-class{gtk-text-buffer}
-  @see-function{gtk-text-buffer-insert-interactive}"
+  @see-function{gtk-text-buffer-insert}"
   (iter (g-boxed-foreign gtk-text-iter))
   (editable :boolean))
 

@@ -1602,8 +1602,6 @@
 ;;; gtk_icon_view_get_tooltip_context () -> gtk-icon-view-tooltip-context
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Rework the documentation. The values XX and YY are returned.
-
 (defcfun ("gtk_icon_view_get_tooltip_context"
           %gtk-icon-view-tooltip-context) :boolean
   (view (g-object gtk-icon-view))
@@ -1616,15 +1614,19 @@
 
 (defun gtk-icon-view-tooltip-context (view x y tip)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-9}
+ "@version{2021-8-20}
   @argument[view]{a @class{gtk-icon-view} widget}
   @argument[x]{an integer with the x coordinate, relative to widget coordinates}
   @argument[y]{an integer with the y coordinate, relative to widget coordinates}
   @argument[tip]{a boolean whether this is a keyboard tooltip or not}
   @begin{return}
-    @code{model} -- a @class{gtk-tree-model} or @code{nil} @br{}
-    @code{path} -- a @class{gtk-tree-path} instance or @code{nil} @br{}
-    @code{iter} -- a @class{gtk-tree-iter} iterator or @code{nil}
+    @arg{xx}    -- an integer with @arg{x} converted to be relative to the
+                   bin window of @arg{view} @br{}
+    @arg{yy}    -- an integer with @arg{y} converted to be relative to the
+                   bin window of @arg{view} @br{}
+    @arg{model} -- a @class{gtk-tree-model} or @code{nil} @br{}
+    @arg{path}  -- a @class{gtk-tree-path} instance or @code{nil} @br{}
+    @arg{iter}  -- a @class{gtk-tree-iter} iterator or @code{nil}
   @end{return}
   @begin{short}
     This function is supposed to be used in a \"query-tooltip\" signal handler
@@ -1634,12 +1636,15 @@
   handler, should be passed to this function without modification.
 
   The return value indicates whether there is an icon view item at the given
-  coordinates (@em{true}) or not (@em{false}) for mouse tooltips. For keyboard
+  coordinates, @em{true}) or not @em{false} for mouse tooltips. For keyboard
   tooltips the item returned will be the cursor item. When @em{true}, then any
   of @arg{model}, @arg{path} and @arg{iter} will be set to point to that row
   and the corresponding model. @arg{x} and @arg{y} will always be converted to
-  be relative to @arg{view}'s bin window if @arg{tip} is @em{false}.
-  @see-class{gtk-icon-view}"
+  be relative to the bin window of @arg{view} if @arg{tip} is @em{false}.
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-model}
+  @see-class{gtk-tree-path}
+  @see-class{gtk-tree-iter}"
   (with-foreign-objects ((xx :int)
                          (yy :int)
                          (model-ptr :pointer)

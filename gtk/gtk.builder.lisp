@@ -1175,7 +1175,7 @@
   @syntax[]{(gtk-builder-application builder) => application}
   @syntax[]{(setf (gtk-builder-application builder) application)}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[application]{a @class{gtk-application} object}
+  @argument[application]{a @class{gtk-application} instance}
   @begin{short}
     Accessor of the application associated with the builder.
   @end{short}

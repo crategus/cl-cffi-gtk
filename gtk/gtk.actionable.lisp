@@ -132,7 +132,7 @@
 
   Names are of the form \"win.save\" or \"app.quit\" for actions on the
   containing @class{gtk-application-window} widget or its associated
-  @class{gtk-application} object, respectively. This is the same form used
+  @class{gtk-application} instance, respectively. This is the same form used
   for actions in the @class{g-menu} object associated with the window.
   @begin[Example]{dictionary}
     @begin{pre}

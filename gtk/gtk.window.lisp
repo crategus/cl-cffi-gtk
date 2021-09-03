@@ -676,7 +676,7 @@
   @syntax[]{(gtk-window-application object) => application}
   @syntax[]{(setf (gtk-window-application object) application)}
   @argument[object]{a @class{gtk-window} widget}
-  @argument[application]{a @class{gtk-application} object, or @code{nil}}
+  @argument[application]{a @class{gtk-application} instance, or @code{nil}}
   @begin{short}
     Accessor of the @slot[gtk-window]{application} slot of the
     @class{gtk-window} class.

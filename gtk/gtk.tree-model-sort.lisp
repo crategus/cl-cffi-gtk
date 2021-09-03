@@ -200,7 +200,7 @@
            gtk-tree-model-sort-convert-child-path-to-path)
     (g-boxed-foreign gtk-tree-path :return)
  #+cl-cffi-gtk-documentation
- "@version{2020-3-10}
+ "@version{2021-3-10}
   @argument[model]{a @class{gtk-tree-model-sort} object}
   @argument[path]{a @class{gtk-tree-path} instance to convert}
   @return{A @class{gtk-tree-path} instance, or @code{nil}.}
