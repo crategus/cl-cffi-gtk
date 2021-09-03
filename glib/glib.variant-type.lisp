@@ -732,7 +732,7 @@
   @see-class{g-variant-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;; G_VARIANT_TYPE -> g-variant-type-checked
+;;; G_VARIANT_TYPE -> g-variant-type-checked               not exported
 ;;; ----------------------------------------------------------------------------
 
 ;; We call the private C function g_variant_type_checked_ to define a Lisp
@@ -756,8 +756,6 @@
   @see-class{g-variant-type}
   @see-function{g-variant-type-string-is-valid}"
   (string :string))
-
-(export 'g-variant-type-checked)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_free ()
@@ -957,12 +955,12 @@
   characters ('*', '?', or 'r').
 
   A @class{g-variant-type} instance may not have an indefinite type, so calling
-  this function on the result of the function @fun{g-variant-type-checked} will
+  this function on the result of the function @fun{g-variant-type-new} will
   always result in @em{true} being returned. Calling this function on an
   indefinite type like \"a*\", however, will result in @em{false} being
   returned.
   @see-class{g-variant-type}
-  @see-function{g-variant-type-checked}"
+  @see-function{g-variant-type-new}"
   (vtype (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-definite)
