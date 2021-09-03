@@ -3637,9 +3637,9 @@ int main( int argc, char *argv[] )
    <para>
     The function &gtk-text-buffer-insert; can be used to insert text into a text buffer at a position
     specified by an iterator or at the current cursor position. In the Lisp implementation the function
-    &gtk-text-buffer-insert; combines the functions &gtk-text-buffer-insert;,
-    &gtk-text-buffer-insert-at-cursor;, &gtk-text-buffer-insert-interactive;, and
-    &gtk-text-buffer-insert-interactive-at-cursor; into one function using the keyword arguments
+    &gtk-text-buffer-insert; combines the functions <code>gtk_text_buffer_insert()</code>,
+    <code>gtk_text_buffer_insert_at_cursor()</code>, <code>gtk_text_buffer_insert_interactive()</code>, and
+    <code>gtk_text_buffer_insert_interactive_at_cursor()</code>; into one function using the keyword arguments
     <code>position</code>, <code>interative</code>, and <code>editable</code>. As with the function
     &gtk-text-buffer-delete;, the text buffer is modified and hence all outstanding iterators become invalid,
     and the start and end iterators are re-initialized. Hence the same iterator can be used for a series of
@@ -3763,13 +3763,11 @@ int main( int argc, char *argv[] )
      </tr>
     </table>
     <para>
-     The created tag can then be applied to a range of text using the functions &gtk-text-buffer-apply-tag;
-     and &gtk-text-buffer-apply-tag-by-name;. The first function specifies the tag to be applied by a
-     &gtk-text-tag; object and the second function specifies the tag by it's name. The range of text over
-     with the tag is to applies is specified by start and end iterators. Tags applied to a range of text can
-     be removed by using the function &gtk-text-buffer-remove-tag;. This function also has the
-     &gtk-text-buffer-remove-tag-by-name; variant. All tags on a range of text can be removed in one go using
-     the function &gtk-text-buffer-remove-all-tags;.
+     The created tag can then be applied to a range of text using the function &gtk-text-buffer-apply-tag;.
+     This function specifies the tag to be applied by a &gtk-text-tag; object or specifies the tag by it's
+     name. The range of text over with the tag is to applies is specified by start and end iterators. Tags
+     applied to a range of text can be removed by using the function &gtk-text-buffer-remove-tag;. All tags
+     on a range of text can be removed in one go using the function &gtk-text-buffer-remove-all-tags;.
     </para>
 
     <figure id="figure-text-tags">
@@ -3799,9 +3797,7 @@ int main( int argc, char *argv[] )
    <bridgehead renderas='sect3'>More Functions for Applying and Removing tags</bridgehead>
    <para>
     In the previous section, the function &gtk-text-buffer-insert; was introduced. A variant
-    &gtk-text-buffer-insert-with-tags; of this function can be used to insert text with tags applied.
-    The variant &gtk-text-buffer-insert-with-tags-by-name; is also available, in which the tags to be applied
-    are specified by the tag names. 
+    &gtk-text-buffer-insert-with-tags; of this function can be used to insert text with tags applied. 
    </para>
 
    <bridgehead renderas='sect3'>Formatting the Entire Text View</bridgehead>
@@ -3917,8 +3913,7 @@ int main( int argc, char *argv[] )
      iterator at the position of <code>mark</code>.
     </para>
     <para>
-     When a mark is no longer required, it can be deleted using the functions &gtk-text-buffer-delete-mark;
-     or &gtk-text-buffer-delete-mark-by-name;.
+     When a mark is no longer required, it can be deleted using the functions &gtk-text-buffer-delete-mark;.
     </para>
    </section>
 

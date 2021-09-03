@@ -2117,10 +2117,6 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-apply-tag.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-apply-tag</code></ulink>">
-<!ENTITY gtk-text-buffer-apply-tag-by-name
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-text-buffer-apply-tag-by-name.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-apply-tag-by-name</code></ulink>">
 <!ENTITY gtk-text-buffer-bounds
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-bounds.html'>
@@ -2145,10 +2141,6 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-delete-mark.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-delete-mark</code></ulink>">
-<!ENTITY gtk-text-buffer-delete-mark-by-name
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-text-buffer-delete-mark-by-name.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-delete-mark-by-name</code></ulink>">
 <!ENTITY gtk-text-buffer-end-iter
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-end-iter.html'>
@@ -2165,18 +2157,6 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-insert.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-insert</code></ulink>">
-<!ENTITY gtk-text-buffer-insert-at-cursor
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-text-buffer-insert-at-cursor.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-insert-at-cursor</code></ulink>">
-<!ENTITY gtk-text-buffer-insert-interactive
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-text-buffer-insert-interactive.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-insert-interactive</code></ulink>">
-<!ENTITY gtk-text-buffer-insert-interactive-at-cursor
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-text-buffer-insert-interactive-at-cursor.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-insert-interactive-at-cursor</code></ulink>">
 <!ENTITY gtk-text-buffer-insert-pixbuf
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-insert-pixbuf.html'>
@@ -2185,11 +2165,6 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-insert-with-tags.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-insert-with-tags</code></ulink>">
-<!ENTITY gtk-text-buffer-insert-with-tags-by-name
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-text-buffer-insert-with-tags-by-name.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-insert-with-tags-by-name</code></ulink>">
-
 <!ENTITY gtk-text-buffer-iter-at-line
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-iter-at-line.html'>
@@ -2226,10 +2201,6 @@
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-remove-tag.html'>
           <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-remove-tag</code></ulink>">
-<!ENTITY gtk-text-buffer-remove-tag-by-name
-         "<ulink xmlns='http://docbook.org/ns/docbook'
-                 url='&api;gtk_fun_gtk-text-buffer-remove-tag-by-name.html'>
-          <code xmlns='http://docbook.org/ns/docbook'>gtk-text-buffer-remove-tag-by-name</code></ulink>">
 <!ENTITY gtk-text-buffer-remove-all-tags
          "<ulink xmlns='http://docbook.org/ns/docbook'
                  url='&api;gtk_fun_gtk-text-buffer-remove-all-tags.html'>
