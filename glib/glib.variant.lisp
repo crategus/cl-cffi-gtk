@@ -2803,24 +2803,26 @@ add_to_count (GVariant  *orig,
 ;;; g_variant_print ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_print" g-variant-print) g-string
+(defcfun ("g_variant_print" %g-variant-print) :string
+  (value (:pointer (:struct g-variant)))
+  (annotate :boolean))
+
+(defun g-variant-print (value &optional (annotate nil))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-1}
-  @argument[value]{a @type{g-variant} structure}
-  @argument[type-annotate]{@em{true} if type information should be included in
-    the output}
+ "@version{2021-8-15}
+  @argument[value]{a @type{g-variant} instance}
+  @argument[annotate]{@em{true} if type information should be included in the
+    output}
   @return{A string holding the result.}
   @begin{short}
     Pretty-prints @arg{value} in the format understood by the function
     @fun{g-variant-parse}.
   @end{short}
-
-  If @arg{type-annotate} is @em{true}, then type information is included in the
+  If @arg{annotate} is @em{true}, then type information is included in the
   output.
   @see-type{g-variant}
   @see-function{g-variant-parse}"
-  (value (:pointer (:struct g-variant)))
-  (type-annotate :boolean))
+  (%g-variant-print value annotate))
 
 (export 'g-variant-print)
 
@@ -3815,9 +3817,11 @@ add_to_count (GVariant  *orig,
 ;;; g_variant_parse ()
 ;;; ----------------------------------------------------------------------------
 
+;; FIXME: Does not work for an argument non-nil for VTYPE
+
 (defcfun ("g_variant_parse" %g-variant-parse-1)
     (:pointer (:struct g-variant))
-  (variant-type :pointer) ; must be the type :pointer
+  (vtype :pointer) ; must be the type :pointer
   (text :string)
   (limit :pointer)
   (endptr :pointer)
@@ -3825,32 +3829,29 @@ add_to_count (GVariant  *orig,
 
 (defcfun ("g_variant_parse" %g-variant-parse-2)
     (:pointer (:struct g-variant))
-  (variant-type (gobject:g-boxed-foreign g-variant-type))
+  (vtype (gobject:g-boxed-foreign g-variant-type))
   (text :string)
   (limit :pointer)
   (endptr :pointer)
   (err :pointer))
 
-(defun g-variant-parse (variant-type text)
+(defun g-variant-parse (vtype text)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-1}
-  @argument[variant-type]{a @class{g-variant-type} instance}
+ "@version{2021-8-15}
+  @argument[vtype]{a @class{g-variant-type} instance, or a valid type string}
   @argument[text]{a string containing a @type{g-variant} in text form}
-  @return{A @type{g-variant} structure.}
+  @return{A @type{g-variant} instance.}
   @begin{short}
     Parses a @type{g-variant} instance from a text representation.
   @end{short}
 
-  If @arg{variant-type} is non-@code{nil} then the value will be parsed to have
-  that type. This may result in additional parse errors (in the case that the
-  parsed value does not fit the type) but may also result in fewer errors (in
-  the case that the type would have been ambiguous, such as with empty arrays).
+  If @arg{vtype} is non-@code{nil} then the value will be parsed to have that
+  type. This may result in additional parse errors, in the case that the parsed
+  value does not fit the type, but may also result in fewer errors, in the case
+  that the type would have been ambiguous, such as with empty arrays.
 
   In the event that the parsing is successful, the resulting @type{g-variant}
-  instance is returned.
-
-  In case of any error, @code{nil} will be returned. If error is non-@code{nil}
-  then it will be set to reflect the error that occurred.
+  instance is returned. In case of any error, @code{nil} will be returned.
 
   Officially, the language understood by the parser is any string produced by
   the function @fun{g-variant-print}.
@@ -3858,24 +3859,32 @@ add_to_count (GVariant  *orig,
     @begin{pre}
 (g-variant-parse (g-variant-type-new \"b\") \"true\")
 => #.(SB-SYS:INT-SAP #X7F99C4012440)
-(g-variant-print * nil)
-=> \"true\"
+(g-variant-print *) => \"true\"
+(g-variant-parse \"b\" \"false\")
+=> #.(SB-SYS:INT-SAP #X564C855E8690)
+(g-variant-print *) => \"false\"
 (g-variant-parse (g-variant-type-new \"i\") \"100\")
 => #.(SB-SYS:INT-SAP #X7F99C4012CF0)
-(g-variant-print * nil)
-=> \"100\"
+(g-variant-print * nil) => \"100\"
+(g-variant-parse \"d\" \"100\")
+=> #.(SB-SYS:INT-SAP #X564C855F9900)
+(g-variant-print *) => \"100.0\"
     @end{pre}
   @end{dictionary}
   @see-type{g-variant}
   @see-function{g-variant-print}"
   (with-g-error (err)
-    (if variant-type
-        (%g-variant-parse-2 variant-type text (null-pointer) (null-pointer) err)
-        (%g-variant-parse-1 (null-pointer)
-                            text
-                            (null-pointer)
-                            (null-pointer)
-                            err))))
+    (cond ((stringp vtype)
+           (let ((vtype1 (g-variant-type-new vtype)))
+             (unwind-protect
+               (%g-variant-parse-2 vtype1
+                                   text (null-pointer) (null-pointer) err)
+               (g-variant-type-free vtype1))))
+          ((typep vtype 'g-variant-type)
+           (%g-variant-parse-2 vtype text (null-pointer) (null-pointer) err))
+          (t
+           (%g-variant-parse-1 (null-pointer)
+                               text (null-pointer) (null-pointer) err)))))
 
 (export 'g-variant-parse)
 
