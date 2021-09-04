@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.application-window.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -83,46 +83,45 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application-window 'type)
- "@version{*2020-5-15}
+ "@version{2021-9-3}
   @begin{short}
-    @sym{gtk-application-window} is a @class{gtk-window} subclass that offers
-    some extra functionality for better integration with @class{gtk-application}
-    features.
+    The @sym{gtk-application-window} class is a @class{gtk-window} subclass
+    that offers some extra functionality for better integration with
+    @class{gtk-application} features.
   @end{short}
   Notably, it can handle both the application menu as well as the menubar.
-  See the functions @fun{gtk-application-app-menu} and
-  @fun{gtk-application-menubar}.
+  See the @fun{gtk-application-app-menu} and @fun{gtk-application-menubar}
+  functions.
 
   This class implements the @class{g-action-group} and @class{g-action-map}
-  interfaces, to let you add window-specific actions that will be exported by
-  the associated @class{gtk-application}, together with its application-wide
-  actions. Window-specific actions are prefixed with the \"win.\" prefix and
-  application-wide actions are prefixed with the \"app.\" prefix. Actions must
-  be addressed with the prefixed name when referring to them from a
-  @class{g-menu-model} object.
+  interfaces, to let you add window specific actions that will be exported by
+  the associated @class{gtk-application} instance, together with its
+  application-wide actions. Window specific actions are prefixed with the
+  \"win.\" prefix and application-wide actions are prefixed with the \"app.\"
+  prefix. Actions must be addressed with the prefixed name when referring to
+  them from a @class{g-menu-model} object.
 
   Note that widgets that are placed inside an application window can also
   activate these actions, if they implement the @class{gtk-actionable}
   interface.
 
-  As with @class{gtk-application}, the GDK lock will be acquired when processing
-  actions arriving from other processes and should therefore be held when
-  activating actions locally if GDK threads are enabled.
+  As with the @class{gtk-application} class, the GDK lock will be acquired when
+  processing actions arriving from other processes and should therefore be held
+  when activating actions locally if GDK threads are enabled.
 
   The @slot[gtk-settings]{gtk-shell-shows-app-menu} and
-  @slot[gtk-settings]{gtk-shell-shows-menubar} settings tell GTK+ whether the
+  @slot[gtk-settings]{gtk-shell-shows-menubar} settings tell GTK whether the
   desktop environment is showing the application menu and menubar models outside
   the application as part of the desktop shell. For instance, on OS X, both
-  menus will be displayed remotely; on Windows neither will be. gnome-shell,
+  menus will be displayed remotely. On Windows neither will be. GNOME Shell,
   starting with version 3.4, will display the application menu, but not the
   menubar.
 
   If the desktop environment does not display the menubar, then the application
-  window will automatically show a @class{gtk-menu-bar} for it. See the
-  @class{gtk-application} docs for some screenshots of how this looks on
-  different platforms. This behaviour can be overridden with the
-  @code{show-menubar} property. If the desktop environment does not display the
-  application menu, then it will automatically be included in the menubar.
+  window will automatically show a @class{gtk-menu-bar} widget for it. This
+  behaviour can be overridden with the @code{show-menubar} property. If the
+  desktop environment does not display the application menu, then it will
+  automatically be included in the menubar.
 
   @b{Example:} An application window with a menubar
   @begin{pre}
@@ -147,20 +146,21 @@
   @end{pre}
 
   @subheading{Handling fallback yourself}
-  The XML format understood by @class{gtk-builder} for a @class{g-menu-model}
-  object consists of a toplevel @code{<menu>} element, which contains one or
-  more @code{<item>} elements. Each @code{<item>} element contains
-  @code{<attribute>} and @code{<link>} elements with a mandatory name attribute.
-  @code{<link>} elements have the same content model as @code{<menu>}. Instead
-  of @code{<link name=\"submenu\">} or @code{<link name=\"section\">}, you can
-  use @code{<submenu>} or @code{<section>} elements.
+  The XML format understood by the @class{gtk-builder} class for a
+  @class{g-menu-model} object consists of a toplevel @code{<menu>} element,
+  which contains one or more @code{<item>} elements. Each @code{<item>} element
+  contains @code{<attribute>} and @code{<link>} elements with a mandatory name
+  attribute. @code{<link>} elements have the same content model as
+  @code{<menu>}. Instead of @code{<link name=\"submenu\">} or
+  @code{<link name=\"section\">}, you can use @code{<submenu>} or
+  @code{<section>} elements.
 
   Attribute values can be translated using GNU gettext, like other
   @class{gtk-builder} content. @code{<attribute>} elements can be marked for
   translation with a translatable = \"yes\" attribute. It is also possible to
   specify message context and translator comments, using the context and
-  comments attributes. To make use of this, the @class{gtk-builder} must have
-  been given the GNU gettext domain to use.
+  comments attributes. To make use of this, the @class{gtk-builder} object must
+  have been given the GNU gettext domain to use.
 
   The following attributes are used when constructing menu items:
   @begin{itemize}
@@ -197,9 +197,7 @@
   @see-class{gtk-actionable}
   @see-class{gtk-menu-bar}
   @see-class{gtk-builder}
-  @see-class{g-menu-model}
-  @see-function{gtk-application-app-menu}
-  @see-function{gtk-application-menubar}")
+  @see-class{g-menu-model}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -214,31 +212,30 @@
   (Read / Write / Construct) @br{}
   If this property is @em{true}, the application window will display a menubar
   that includes the application menu and menubar, unless these are shown by the
-  desktop shell. See the functions @fun{gtk-application-app-menu} and
-  @fun{gtk-application-menubar}. If @em{false}, the applicaton window will not
-  display a menubar, regardless of whether the desktop shell is showing the
-  menus or not. @br{}
+  desktop shell. If @em{false}, the applicaton window will not display a
+  menubar, regardless of whether the desktop shell is showing the menus or not.
+  @br{}
   Default value: @code{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-window-show-menubar atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-window-show-menubar 'function)
- "@version{*2020-5-15}
-  @syntax[]{(gtk-application-window-show-menubar object) => show-menubar}
-  @syntax[]{(setf (gtk-application-window-show-menubar object) show-menubar)}
+ "@version{2021-9-3}
+  @syntax[]{(gtk-application-window-show-menubar object) => show}
+  @syntax[]{(setf (gtk-application-window-show-menubar object) show)}
   @argument[window]{a @class{gtk-application-window} widget}
-  @argument[show-menubar]{a boolean whether to show a menubar when needed}
+  @argument[show]{a boolean whether to show a menubar when needed}
   @begin{short}
     Accessor of the @slot[gtk-application-window]{show-menubar} slot of the
     @class{gtk-application-window} class.
   @end{short}
 
-  The slot access function @sym{gtk-application-window-show-menubar} returns
+  The @sym{gtk-application-window-show-menubar} slot access function returns
   whether the window will display a menubar for the application menu and
-  menubar as needed. The slot access function
-  @sym{(setf gtk-application-window-show-menubar)} sets whether the window will
-  display a menubar for the application menu and menubar as needed.
+  menubar as needed. The @sym{(setf gtk-application-window-show-menubar)} slot
+  access function sets whether the window will display a menubar for the
+  application menu and menubar.
   @see-class{gtk-application-window}")
 
 ;;; ----------------------------------------------------------------------------
@@ -248,7 +245,7 @@
 (defcfun ("gtk_application_window_new" gtk-application-window-new)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-15}
+ "@version{2021-9-3}
   @argument[application]{a @class{gtk-application} instance}
   @return{A newly created @class{gtk-application-window} widget.}
   @short{Creates a new application window.}
@@ -264,15 +261,15 @@
 
 (defcfun ("gtk_application_window_get_id" gtk-application-window-id) :uint
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-15}
+ "@version{2021-9-3}
   @argument[window]{a @class{gtk-application-window} widget}
   @begin{return}
     The unique ID for @arg{window}, or 0 if @arg{window} has not yet been
-    added to a @class{gtk-application}.
+    added to a @class{gtk-application} instance.
   @end{return}
   @begin{short}
     Returns the unique ID of the application window. If the application window
-    has not yet been added to a @class{gtk-application}, returns 0.
+    has not yet been added to a @class{gtk-application} instance, returns 0.
   @end{short}
   @see-class{gtk-application}
   @see-class{gtk-application-window}"
@@ -298,7 +295,7 @@
 (defcfun ("gtk_application_window_get_help_overlay"
            gtk-application-window-help-overlay) (g-object gtk-shortcuts-window)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-15}
+ "@version{2021-9-3}
   @syntax[]{(gtk-application-window-help-overlay window) => help-overlay}
   @syntax[]{(setf (gtk-application-window-help-overlay window) help-overlay)}
   @argument[window]{a @class{gtk-application-window} widget}
@@ -307,8 +304,8 @@
     Accessor of the shortcuts window associated with the application window.
   @end{short}
 
-  The function @sym{gtk-application-window-help-overlay} gets the shortcuts
-  window. The function @sym{(setf gtk-applicaton-window-help-overlay)}
+  The @sym{gtk-application-window-help-overlay} function gets the shortcuts
+  window. The @sym{(setf gtk-applicaton-window-help-overlay)} function
   associates a shortcuts window with the application window, and sets up an
   action with the name \"win.show-help-overlay\" to present it.
 
