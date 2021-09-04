@@ -7944,9 +7944,9 @@ lambda (buffer location text len)
     well as the menubar. See the functions &gtk-application-app-menu; and &gtk-application-menubar;.
    </para>
    <para>
-    This class implements the &g-action-group; and &g-action-map; interfaces, to let you add window-specific
+    This class implements the &g-action-group; and &g-action-map; interfaces, to let you add window specific
     actions that will be exported by the associated &gtk-application; object, together with its
-    application-wide actions. Window-specific actions are prefixed with the "win." prefix and application-wide
+    application-wide actions. Window specific actions are prefixed with the "win." prefix and application-wide
     actions are prefixed with the "app." prefix. Actions must be addressed with the prefixed name when
     referring to them from a &g-menu-model; object.
    </para>
@@ -7961,8 +7961,8 @@ lambda (buffer location text len)
    <para>
     The &gtk_settings_gtk-shell-shows-app-menu; and &gtk_settings_gtk-shell-shows-menubar; settings tell GTK
     whether the desktop environment is showing the application menu and menubar models outside the application
-    as part of the desktop shell. For instance, on OS X, both menus will be displayed remotely; on Windows
-    neither will be. gnome-shell (starting with version 3.4) will display the application menu, but not the
+    as part of the desktop shell. For instance, on OS X, both menus will be displayed remotely. On Windows
+    neither will be. GNOME Shell, starting with version 3.4, will display the application menu, but not the
     menubar.
    </para>
    <para>
@@ -7980,10 +7980,10 @@ lambda (buffer location text len)
     as <code>&#x3c;menu></code>.
    </para>
    <para>
-    Attribute values can be translated using the function <code>gettext()</code>, like other &gtk-builder;
-    content. <code>&#x3c;attribute></code> elements can be marked for translation with a translatable = "yes"
+    Attribute values can be translated using GNU gettext, like other &gtk-builder; content.
+    <code>&#x3c;attribute></code> elements can be marked for translation with a translatable = "yes"
     attribute. It is also possible to specify message context and translator comments, using the context and
-    comments attributes. To make use of this, the &gtk-builder; object must have been given the
+    comments attributes. To make use of this, the &gtk-builder; object must have been given the GNU
     gettext domain to use.
    </para>
 
