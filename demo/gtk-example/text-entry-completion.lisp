@@ -8,7 +8,7 @@
 (defun create-completion-model ()
   (let ((store (make-instance 'gtk-list-store
                               :column-types '("gchararray"))))
-    (gtk-list-store-set store (gtk-list-store-append store) "Gnome")
+    (gtk-list-store-set store (gtk-list-store-append store) "GNOME")
     (gtk-list-store-set store (gtk-list-store-append store) "total")
     (gtk-list-store-set store (gtk-list-store-append store) "totally")
     store))
@@ -57,6 +57,6 @@
                                         :label
                                         (format nil
                                                 "Try writing <b>total</b> or ~%~
-                                                 <b>Gnome</b> for example.~%~%")))
+                                                 <b>GNOME</b> for example.~%~%")))
       (gtk-container-add window hbox)
       (gtk-widget-show-all window))))
