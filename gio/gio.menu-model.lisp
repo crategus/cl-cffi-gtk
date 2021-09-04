@@ -166,9 +166,9 @@
   group. Which action group(s) provide actions depends on the context in which
   the menu model is used. E.g. when the model is exported as the application
   menu of a @class{gtk-application} instance, actions can be application-wide
-  or window-specific, and thus come from two different action groups. By
+  or window specific, and thus come from two different action groups. By
   convention, the application-wide actions have names that start with \"app.\",
-  while the names of window-specific actions start with \"win.\".
+  while the names of window specific actions start with \"win.\".
 
   While a wide variety of stateful actions is possible, the following is the
   minimum that is expected to be supported by all users of exported menu
@@ -261,16 +261,16 @@
 
 (defparameter +g-menu-attribute-action+ "action"
  #+cl-cffi-gtk-documentation
- "@version{2021-4-15}
+ "@version{2021-9-3}
   @variable-value{\"action\"}
   @begin{short}
     The menu item attribute which holds the action name of the item.
   @end{short}
   Action names are namespaced with an identifier for the action group in which
-  the action resides. For example, \"win.\" for window-specific actions and
+  the action resides. For example, \"win.\" for window specific actions and
   \"app.\" for application-wide actions.
-  See also the functions @fun{g-menu-model-get-item-attribute} and
-  @fun{g-menu-item-set-attribute}.
+  See also the @fun{g-menu-model-get-item-attribute} and
+  @fun{g-menu-item-set-attribute} functions.
   @see-class{g-menu-model}
   @see-function{g-menu-model-get-item-attribute}
   @see-function{g-menu-item-set-attribute}")

@@ -119,7 +119,7 @@
 
 (defun g-action-map-add-action-entries (map entries)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-2}
+ "@version{2021-9-3}
   @argument[map]{a @class{g-action-map} object}
   @argument[entries]{a list of descriptions for the actions}
   @begin{short}
@@ -127,7 +127,7 @@
     instances and adding them to a @class{g-action-map} object.
   @end{short}
 
-  Each action in the list @arg{entries} is constructed from the following
+  Each action in the @arg{entries} list is constructed from the following
   parameters:
   @begin[code]{table}
     @entry[name]{A string with the name of the action.}
@@ -136,10 +136,10 @@
       which case the default handler is used. For boolean-stated actions with
       no parameter, this is a toggle. For other state types, and parameter type
       equal to the state type, this will be a function that just calls the
-      callback function @code{change-state}, which you should provide.}
+      @code{change-state} callback function, which you should provide.}
     @entry[parameter-type]{The type of the parameter that must be
       passed to the activate function for this action, given as a single
-      @type{g-variant} type string, or @code{nil} for no parameter.}
+      @class{g-variant-type} type string, or @code{nil} for no parameter.}
     @entry[state]{The initial state for this action, given in
       @type{g-variant} text format. The state is parsed with no extra type
       information, so type tags must be added to the string if they are
@@ -151,7 +151,7 @@
   All values after name are optional. Additional optional fields may be added
   in the future.
   @begin[Example]{dictionary}
-    Using the function @sym{g-action-map-add-action-entries}:
+    Using the @sym{g-action-map-add-action-entries} function:
     @begin{pre}
 (defun activate-quit (action parameter)
   (declare (ignore action parameter)))
@@ -171,7 +171,9 @@
     @end{pre}
   @end{dictionary}
   @see-class{g-action-map}
-  @see-class{g-simple-action}"
+  @see-class{g-simple-action}
+  @see-type{g-variant}
+  @see-class{g-variant-type}"
   (dolist (entry entries)
     (let* ((action nil)
            (name (first entry))
