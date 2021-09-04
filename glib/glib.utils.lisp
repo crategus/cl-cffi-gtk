@@ -537,7 +537,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_setenv" g-setenv) :boolean
- "@version{2020-10-24}
+ "@version{2021-9-3}
   @argument[variable]{a string with the the environment variable to set, must
     not contain '='}
   @argument[value]{a string with the value for to set the variable to}
@@ -546,25 +546,26 @@
   @return{@em{False} if the environment variable could not be set.}
   @short{Sets an environment variable.}
 
-  Both the variable's name and value should be in the GLib file name encoding.
-  On UNIX, this means that they can be arbitrary byte strings. On Windows, they
-  should be in UTF-8.
+  Both the name and value of the variable should be in the GLib file name
+  encoding. On UNIX, this means that they can be arbitrary byte strings. On
+  Windows, they should be in UTF-8.
 
   Note that on some systems, when variables are overwritten, the memory used
   for the previous variables and its value is not reclaimed.
   @begin[Warning]{dictionary}
     Environment variable handling in UNIX is not thread-safe, and your program
-    may crash if one thread calls @sym{g-setenv} while another thread is calling
-    @code{getenv()}. And note that many functions, such as @code{gettext()},
-    call @code{getenv()} internally. This function is only safe to use at the
-    very start of your program, before creating any other threads or creating
-    objects that create worker threads of their own.
+    may crash if one thread calls the @sym{g-setenv} function while another
+    thread is calling the @code{getenv()} function. And note that many
+    functions, such as GNU gettext, call the @code{getenv()} function
+    internally. This function is only safe to use at the very start of your
+    program, before creating any other threads or creating objects that create
+    worker threads of their own.
 
-    If you need to set up the environment for a child process, you can use
-    @code{g_get_environ()} to get an environment array, modify that with
-    @code{g_environ_setenv()} and @code{g_environ_unsetenv()}, and then pass
-    that array directly to @code{execvpe()}, @code{g_spawn_async()}, or the
-    like.
+    If you need to set up the environment for a child process, you can use the
+    @code{g_get_environ()} function to get an environment array, modify that
+    with the @code{g_environ_setenv()} and @code{g_environ_unsetenv()}
+    functions, and then pass that array directly to the @code{execvpe()},
+    @code{g_spawn_async()} functions, or the like.
   @end{dictionary}
   @see-function{g-getenv}
   @see-function{g-environ}"

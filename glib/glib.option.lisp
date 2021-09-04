@@ -700,25 +700,24 @@ More descriptions.
 
 (defun g-option-context-set-translate-func (context func)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-3}
   @argument[context]{a @type{g-option-context} instance}
   @argument[func]{the @symbol{g-translate-func} callback function, or
     @code{nil}}
   @begin{short}
-    Sets the function which is used to translate the option contexts user
-    visible strings, for @code{--help} output.
+    Sets the function which is used to translate the user visible strings of
+    the option context, for @code{--help} output.
   @end{short}
-  If @arg{func} is @code{nil}, strings are not translated.
+  If the @arg{func} argument is @code{nil}, strings are not translated.
 
   Note that option groups have their own translation functions, this function
-  only affects the argument @code{parameter} of the function
-  @fun{g-option-context-new}, the argument @code{summary} of the function
-  @fun{g-option-context-summary}, and the argument @code{description} of the
-  function @fun{g-option-context-description}.
+  only affects the @code{parameter} argument of the @fun{g-option-context-new}
+  function, the @code{summary} argument of the @fun{g-option-context-summary}
+  function, and the @code{description} argument of the
+  @fun{g-option-context-description} function.
 
-  If you are using the function @code{gettext()}, you only need to set the
-  translation domain, see the function
-  @fun{g-option-context-set-translation-domain}.
+  If you are using GNU gettext, you only need to set the translation domain,
+  see the @fun{g-option-context-set-translation-domain} function.
   @see-type{g-option-context}
   @see-function{g-option-context-new}
   @see-function{g-option-context-summary}
@@ -744,12 +743,12 @@ More descriptions.
 (defcfun ("g_option_context_set_translation_domain"
            g-option-context-set-translation-domain) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-3}
   @argument[context]{a @type{g-option-context} instance}
   @argument[domain]{a string with the translation domain to use}
   @begin{short}
-    A convenience function to use the function @code{gettext()} for translating
-    user visible strings.
+    A convenience function to use GNU gettext for translating user visible
+    strings.
   @end{short}
   @see-type{g-option-context}"
   (context (:pointer (:struct g-option-context)))
@@ -1039,12 +1038,12 @@ More descriptions.
 
 (defun g-option-context-add-main-entries (context entries domain)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-3}
   @argument[context]{a @type{g-option-context} instance}
   @argument[entries]{a list of option entries}
   @argument[domain]{a string with a translation domain to use for translating
-    the @code{--help} output for the options in @arg{entries} with the function
-    @code{gettext()}, or @code{nil}}
+    the @code{--help} output for the options in @arg{entries} with GNU gettext,
+    or @code{nil}}
   @begin{short}
     A convenience function which creates a main group if it does not exist,
     adds the option entries to it and sets the translation domain.
@@ -1080,17 +1079,18 @@ More descriptions.
       @arg{arg-data} must point to a @code{GOptionArgFunc} callback function,
       which will be called to handle the extra argument. Otherwise,
       @arg{arg-data} is a pointer to a location to store the value, the required
-      type of the location depends on the @arg{arg} type. If @arg{arg} type is
-      @code{:string} or @code{:filename} the location will contain a newly
+      type of the location depends on the @arg{arg} type. If the @arg{arg} type
+      is @code{:string} or @code{:filename} the location will contain a newly
       allocated string if the option was given.}
     @entry[description]{A string with the description for the option in
       @code{--help} output. The description is translated using the
-      @code{translate-func} of the group, see the function
-      @fun{g-option-group-set-translation-domain}.}
+      @code{translate-func} callback function of the group, see the
+      @fun{g-option-group-set-translation-domain} function.}
     @entry[arg-description]{A string with the placeholder to use for the extra
       argument parsed by the option in @code{--help} output. The
-      @arg{arg-description} is translated using the @code{translate-func} of the
-      group, see the function @fun{g-option-group-set-translation-domain}.}
+      @arg{arg-description} argument is translated using the
+      @code{translate-func} callback function of the group, see the
+      @fun{g-option-group-set-translation-domain} function.}
   @end{table}
   @see-type{g-option-context}
   @see-symbol{g-option-flags}
@@ -1494,7 +1494,7 @@ More descriptions.
 
 (defun g-option-group-set-translate-func (group func)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-3}
   @argument[group]{a @type{g-option-group} instance}
   @argument[func]{the @symbol{g-translate-func} callback function}
   @begin{short}
@@ -1502,11 +1502,10 @@ More descriptions.
     @code{--help} output.
   @end{short}
   Different groups can use different @symbol{g-translate-func} functions. If
-  @arg{func} is @code{nil}, strings are not translated.
+  the @arg{func} argument is @code{nil}, strings are not translated.
 
-  If you are using the function @code{gettext()}, you only need to set the
-  translation domain, see the function
-  @fun{g-option-group-set-translation-domain}.
+  If you are using GNU gettext, you only need to set the translation domain,
+  see the @fun{g-option-group-set-translation-domain} function.
   @see-type{g-option-group}
   @see-symbol{g-translate-func}
   @see-function{g-option-group-set-translation-domain}"
@@ -1530,12 +1529,12 @@ More descriptions.
 (defcfun ("g_option_group_set_translation_domain"
            g-option-group-set-translation-domain) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-3}
   @argument[group]{a @type{g-option-group} instance}
   @argument[domain]{a string with the translation domain to use}
   @begin{short}
-    A convenience function to use the function @code{gettext()} for translating
-    user visible strings.
+    A convenience function to use GNU gettext for translating user visible
+    strings.
   @end{short}
   @see-type{g-option-group}"
   (group (:pointer (:struct g-option-group)))
