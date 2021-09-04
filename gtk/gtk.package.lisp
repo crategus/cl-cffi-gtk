@@ -79,7 +79,7 @@
   Free Pascal, and Eiffel.
   @begin[Application support]{section}
     @begin[GtkApplication]{subsection}
-      Application class
+      Application class.
 
       @about-symbol{gtk-application-inhibit-flags}
       @about-class{gtk-application}
@@ -105,7 +105,7 @@
       @about-function{gtk-application-actions-for-accel}
     @end{subsection}
     @begin[GtkApplicationWindow]{subsection}
-      @class{gtk-window} subclass with @class{gtk-application} support.
+      A @class{gtk-window} subclass with @class{gtk-application} support.
 
       @about-class{gtk-application-window}
       @about-generic{gtk-application-window-show-menubar}
