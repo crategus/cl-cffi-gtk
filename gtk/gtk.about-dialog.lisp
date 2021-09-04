@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -666,36 +666,32 @@
 (setf (gethash 'gtk-about-dialog-translator-credits atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-translator-credits 'function)
- "@version{2020-5-26}
-  @syntax[]{(gtk-about-dialog-translator-credits object) => translator-credits}
-  @syntax[]{(setf (gtk-about-dialog-translator-credits object) translator-credits)}
+ "@version{2021-9-3}
+  @syntax[]{(gtk-about-dialog-translator-credits object) => credits}
+  @syntax[]{(setf (gtk-about-dialog-translator-credits object) credits)}
   @argument[object]{a @class{gtk-about-dialog} widget}
-  @argument[translator-credits]{a string with the credits to the translators}
+  @argument[credits]{a string with the credits to the translators}
   @begin{short}
     Accessor of the @slot[gtk-about-dialog]{translator-credits} slot of the
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-translator-credits} returns the
+  The @sym{gtk-about-dialog-translator-credits} slot access function returns the
   translator credits string which is displayed in the translators tab of the
-  secondary credits dialog. The slot access function
-  @sym{(setf gtk-about-dialog-translator-credits)} sets the translator credits
-  string which is displayed in the translators tab of the secondary credits
-  dialog.
+  secondary credits dialog. The @sym{(setf gtk-about-dialog-translator-credits)}
+  slot access function sets the translator credits.
 
-  The intended use for this string is to display the translator of the
-  language which is currently used in the user interface. Using
-  @code{gettext()}, a simple way to achieve that is to mark the string for
-  translation:
+  The intended use for this string is to display the translator of the language
+  which is currently used in the user interface. Using GNU gettext, a simple way
+  to achieve that is to mark the string for translation:
   @begin{pre}
- gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
+gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
   @end{pre}
   It is a good idea to use the customary msgid \"translator-credits\" for this
   purpose, since translators will already know the purpose of that msgid, and
-  since @class{gtk-about-dialog} will detect if \"translator-credits\" is
-  untranslated and hide the tab.
-  @see-class{gtk-about-dialog}
-  @see-class{gtk-dialog}")
+  since the @class{gtk-about-dialog} widget will detect if
+  \"translator-credits\" is untranslated and hide the tab.
+  @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-version -----------------------------------------------
 

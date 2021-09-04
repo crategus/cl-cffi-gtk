@@ -977,18 +977,17 @@
 
 (defun gtk-action-group-set-translate-func (group func)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{2021-9-3}
   @argument[group]{a @class{gtk-action-group} object}
   @argument[func]{a @symbol{gtk-translate-func} callback function}
   @begin{short}
     Sets a function to be used for translating the label and tooltip of
-    action entires added by the function @fun{gtk-action-group-add-actions}.
+    action entires added by the @fun{gtk-action-group-add-actions} function.
   @end{short}
-  If you are using the function @code{gettext()}, it is enough to set the
-  translation domain with the function
-  @fun{gtk-action-group-set-translation-domain}.
+  If you are using GNU gettext, it is enough to set the translation domain with
+  the @fun{gtk-action-group-set-translation-domain} function.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-action-group-set-translate-func} has been deprecated
+    The @sym{gtk-action-group-set-translate-func} function has been deprecated
     since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}
@@ -1010,19 +1009,19 @@
 (defcfun ("gtk_action_group_set_translation_domain"
           gtk-action-group-set-translation-domain) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{2021-9-3}
   @argument[group]{a @class{gtk-action-group} object}
   @argument[domain]{a string with the translation domain to use for
-    @code{g_dgettext()} calls}
+    GLIB gettext calls}
   @begin{short}
-    Sets the translation domain and uses the function @code{g_dgettext()} for
-    translating the label and tooltip of action entries added by the function
-    @fun{gtk-action-group-add-actions}.
+    Sets the translation domain and uses GLIB gettext for translating the label
+    and tooltip of action entries added by the
+    @fun{gtk-action-group-add-actions} function.
   @end{short}
-  If you are not using the function @code{gettext()} for localization, see the
-  function @fun{gtk-action-group-set-translate-func}.
+  If you are not using GNU gettext for localization, see the
+  @fun{gtk-action-group-set-translate-func} function.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-action-group-set-translate-domain} has been deprecated
+    The @sym{gtk-action-group-set-translate-domain} function has been deprecated
     since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-action-group}

@@ -938,12 +938,12 @@
 ;;; gtk_dialog_set_alternative_button_order ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-dialog-set-alternative-button-order (dialog response-list)
+(defun gtk-dialog-set-alternative-button-order (dialog response)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-26}
+ "@version{2021-9-3}
   @argument[dialog]{a @class{gtk-dialog} window}
-  @argument[response-list]{a list of response IDs, which are positive integer
-    or values of the  @symbol{gtk-response-type} enumeration}
+  @argument[response]{a list of response IDs, which are positive integer or
+    values of the  @symbol{gtk-response-type} enumeration}
   @begin{short}
     Sets an alternative button order.
   @end{short}
@@ -951,7 +951,7 @@
   @em{true}, the dialog buttons are reordered according to the order of the
   response IDs passed to this function.
 
-  By default, GTK dialogs use the button order advocated by the Gnome Human
+  By default, GTK dialogs use the button order advocated by the GNOME Human
   Interface Guidelines with the affirmative button at the far right, and the
   cancel button left of it. But the built-in GTK dialogs and message dialogs
   do provide an alternative button order, which is more suitable on some
@@ -960,46 +960,42 @@
     Use this function after adding all the buttons to your dialog, as the
     following example shows:
     @begin{pre}
- (let (;; Create a dialog with three buttons
-       (dialog (gtk-dialog-new-with-buttons \"Demo Dialog\"
-                                            nil ; No Parent window
-                                            '(:modal)
-                                            \"gtk-cancel\"
-                                            :cancel
-                                            \"gtk-ok\"
-                                            :ok
-                                            \"gtk-apply\"
-                                            :apply)))
-   ;; Set the default button.
-   (gtk-widget-grab-default (gtk-dialog-widget-for-response dialog :ok))
-
-   ;; Allow alternative button order for the default screen.
-   (setf (gtk-settings-gtk-alternative-button-order
-           (gtk-settings-default))
-         t)
-
-   ;; Set the alternative button order.
-   (gtk-dialog-set-alternative-button-order dialog '(:ok :cancel :apply))
-
-   ...)
+(let (;; Create a dialog with three buttons
+      (dialog (gtk-dialog-new-with-buttons \"Demo Dialog\"
+                                           nil ; No Parent window
+                                           '(:modal)
+                                           \"gtk-cancel\"
+                                           :cancel
+                                           \"gtk-ok\"
+                                           :ok
+                                           \"gtk-apply\"
+                                           :apply)))
+  ;; Set the default button.
+  (gtk-widget-grab-default (gtk-dialog-widget-for-response dialog :ok))
+  ;; Allow alternative button order for the default screen.
+  (setf (gtk-settings-gtk-alternative-button-order
+            (gtk-settings-default))
+        t)
+  ;; Set the alternative button order.
+  (gtk-dialog-set-alternative-button-order dialog '(:ok :cancel :apply))
+  ...)
     @end{pre}
   @end{dictionary}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-dialog-set-alternative-button-order} has been
+    The @sym{gtk-dialog-set-alternative-button-order} function has been
     deprecated since version 3.10 and should not be used in newly written code.
   @end{dictionary}
   @see-class{gtk-dialog}
   @see-class{gtk-message-dialog}
   @see-symbol{gtk-response-type}"
-  (with-foreign-object (new-order 'gtk-response-type (length response-list))
-    (loop
-       for i from 0
-       for response in response-list
-       do (setf (mem-aref new-order 'gtk-response-type i) response))
+  (with-foreign-object (new-order 'gtk-response-type (length response))
+    (loop for i from 0
+          for id in response
+          do (setf (mem-aref new-order 'gtk-response-type i) id))
     (%gtk-dialog-set-alternative-button-order-from-array dialog
-                                                         (length response-list)
+                                                         (length response)
                                                          new-order))
-  response-list)
+  response)
 
 (export 'gtk-dialog-set-alternative-button-order)
 

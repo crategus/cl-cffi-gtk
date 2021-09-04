@@ -98,7 +98,7 @@
 (setf (gethash 'gtk-message-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-message-type atdoc:*external-symbols*)
- "@version{*2021-7-24}
+ "@version{2021-7-24}
   @begin{short}
     The type of message being displayed in the message dialog.
   @end{short}
@@ -139,15 +139,15 @@
 (setf (gethash 'gtk-buttons-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-buttons-type atdoc:*external-symbols*)
- "@version{*2021-7-24}
+ "@version{2021-9-3}
   @begin{short}
     Prebuilt sets of buttons for the dialog.
   @end{short}
-  If none of these choices are appropriate, simply use @code{:none} and call
-  the function @fun{gtk-dialog-add-buttons} to add your own buttons.
+  If none of these choices are appropriate, simply use the @code{:none} value
+  and call the @fun{gtk-dialog-add-buttons} function to add your own buttons.
 
-  Please note that @code{:ok}, @code{:yes-no} and @code{:ok-cancel} are
-  discouraged by the Gnome Human Interface Guidelines.
+  Please note that the @code{:ok}, @code{:yes-no} and @code{:ok-cancel} values
+  are discouraged by the GNOME Human Interface Guidelines.
   @begin{pre}
 (define-g-enum \"GtkButtonsType\" gtk-buttons-type
   (:export t
@@ -207,7 +207,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-message-dialog 'type)
- "@version{*2021-7-24}
+ "@version{2021-7-24}
   @begin{short}
     A @sym{gtk-message-dialog} widget presents a dialog with an image
     representing the type of message, Error, Question, etc., alongside some
@@ -529,7 +529,7 @@
 
 (defun gtk-message-dialog-new (parent flags type buttons message &rest args)
  #+cl-cffi-gtk-documentation
- "@version{*2021-7-24}
+ "@version{2021-7-24}
   @argument[parent]{transient @class{gtk-window} parent, or @code{nil} for none}
   @argument[flags]{a value of the @symbol{gtk-dialog-flags} flags}
   @argument[type]{a value of the @symbol{gtk-message-type} enumeration for the
