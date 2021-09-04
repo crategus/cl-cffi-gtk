@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.actionable.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -71,12 +71,14 @@
    "action-target" "GVariant" t t))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-actionable atdoc:*class-name-alias*) "Interface"
+(setf (gethash 'gtk-actionable atdoc:*class-name-alias*)
+      "Interface"
       (documentation 'gtk-actionable 'type)
- "@version{*2020-5-15}
+ "@version{2021-9-3}
   @begin{short}
     This interface provides a convenient way of associating widgets with
-    actions on a @class{gtk-application-window} or @class{gtk-application}.
+    actions on a @class{gtk-application-window} widget or
+    @class{gtk-application} instance.
   @end{short}
 
   It primarily consists of two properties: @code{action-name} and
@@ -84,9 +86,9 @@
   these properties.
 
   This interface is presently only meaningful if used on a widget that is, or
-  will be, located inside of a @class{gtk-application-window} and can only be
-  used to associate the widget with actions on that application window, or its
-  associated @class{gtk-application}.
+  will be, located inside of a @class{gtk-application-window} widget and can
+  only be used to associate the widget with actions on that application window,
+  or its associated @class{gtk-application} instance.
   @see-slot{gtk-actionable-action-name}
   @see-slot{gtk-actionable-action-target}
   @see-class{gtk-application}
@@ -109,23 +111,23 @@
 (setf (gethash 'gtk-actionable-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-actionable-action-name 'function)
- "@version{*2020-5-15}
-  @syntax[]{(gtk-actionable-action-name object) => action-name}
-  @syntax[]{(setf (gtk-actionable-action-name object) action-name)}
+ "@version{2021-9-3}
+  @syntax[]{(gtk-actionable-action-name object) => name}
+  @syntax[]{(setf (gtk-actionable-action-name object) name)}
   @argument[object]{a @class{gtk-actionable} widget}
-  @argument[action-name]{a string with the action name, or @code{nil}}
+  @argument[name]{a string with the action name, or @code{nil}}
   @begin{short}
     Accessor of the @slot[gtk-actionable]{action-name} slot of the
     @class{gtk-actionable} inferface.
   @end{short}
 
-  The slot access function @sym{gtk-actionable-action-name} gets the action
-  name for @arg{object}, or @code{nil} if none is set. The slot access function
-  @sym{(setf gtk-actionable-action-name)} specifies the name of the action with
-  which this widget should be associated.
+  The @sym{gtk-actionable-action-name} slot access function gets the action
+  name for @arg{object}, or @code{nil} if none is set. The
+  @sym{(setf gtk-actionable-action-name)} slot access function specifies the
+  name of the action with which this widget should be associated.
 
-  If the argument @arg{action-name} is @code{nil} then the widget will be
-  unassociated from any previous action.
+  If the @arg{name} argument is @code{nil} then the widget will be unassociated
+  from any previous action.
 
   Usually this function is used when the widget is located, or will be
   located, within the hierarchy of a @class{gtk-application-window} widget.
@@ -136,10 +138,10 @@
   for actions in the @class{g-menu} object associated with the window.
   @begin[Example]{dictionary}
     @begin{pre}
- (let ((button (make-instance 'gtk-button)))
-   (setf (gtk-actionable-action-name button) \"win.save\")
-   (gtk-actionable-action-name button))
- => \"win.save\"
+(let ((button (make-instance 'gtk-button)))
+  (setf (gtk-actionable-action-name button) \"win.save\")
+  (gtk-actionable-action-name button))
+=> \"win.save\"
     @end{pre}
   @end{dictionary}
   @see-class{gtk-actionable}
@@ -155,31 +157,30 @@
  "The @code{action-target} property of type @type{g-variant} (Read / Write)
   @br{}
   The parameter for action invocations. @br{}
-  Allowed values: a @type{g-variant} @br{}
+  Allowed values: a @type{g-variant} parameter @br{}
   Default value: @code{null-pointer}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-actionable-action-target atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-actionable-action-target 'function)
- "@version{*2020-5-15}
-  @syntax[]{(gtk-actionable-action-target object) => target-value}
-  @syntax[]{(setf (gtk-actionable-action-target object) target-value)}
+ "@version{2021-9-3}
+  @syntax[]{(gtk-actionable-action-target object) => value}
+  @syntax[]{(setf (gtk-actionable-action-target object) value)}
   @argument[object]{a @class{gtk-actionable} widget}
-  @argument[target-value]{a @type{g-variant} to set as the target value,
+  @argument[value]{a @type{g-variant} parameter to set as the target value,
     or @code{null-pointer}}
   @begin{short}
     Accessor of the @slot[gtk-actionable]{action-target} slot of the
     @class{gtk-actionable} inferface.
   @end{short}
 
-  The slot access function @sym{gtk-actionable-action-target} gets the current
-  target value of @arg{object}. The slot access function
-  @sym{(setf gtk-actionable-action-target)} sets the target value of an
-  actionable widget.
+  The @sym{gtk-actionable-action-target} slot access function gets the current
+  target value of @arg{object}. The @sym{(setf gtk-actionable-action-target)}
+  slot access function sets the target value of an actionable widget.
 
-  If the argument @arg{target-value} is @code{null-pointer} then the target
-  value is unset.
+  If the @arg{value} argument is a @code{null-pointer} then the target value is
+  unset.
 
   The target value has two purposes. First, it is used as the parameter to
   activation of the action associated with the @class{gtk-actionable} widget.
@@ -187,27 +188,27 @@
   - the widget is active if the state is equal to the given target.
 
   Consider the example of associating a set of buttons with a @class{g-action}
-  object with string state in a typical \"radio button\" situation. Each button
+  object with string state in a typical radio button situation. Each button
   will be associated with the same action, but with a different target value for
   that action. Clicking on a particular button will activate the action with
-  the target of that button, which will typically cause the action's state to
-  change to that value. Since the action's state is now equal to the target
-  value of the button, the button will now be rendered as active and the
+  the target of that button, which will typically cause the state of the action
+  to change to that value. Since the state of the action is now equal to the
+  target value of the button, the button will now be rendered as active and the
   other buttons, with different targets, rendered inactive.
   @begin[Example]{dictionary}
     @begin{pre}
- (let ((button (make-instance 'gtk-button)))
-   (setf (gtk-actionable-action-target button) (g-variant-new-int16 128))
-   (g-variant-int16 (gtk-actionable-action-target button)))
- => 128
+(let ((button (make-instance 'gtk-button)))
+  (setf (gtk-actionable-action-target button) (g-variant-new-int16 128))
+  (g-variant-int16 (gtk-actionable-action-target button)))
+=> 128
     @end{pre}
   @end{dictionary}
   @begin[Note]{dictionary}
-    The C implementation knows in addition the functions
+    The C implementation knows in addition the
     @code{gtk_application_get_action_target_value ()} and
-    @code{gtk_application_set_action_target_value ()}. In the Lisp
+    @code{gtk_application_set_action_target_value ()} functions. In the Lisp
     implementation these functions are replaced by the
-    @sym{gtk-application-action-target} accessor function.
+    @sym{gtk-application-action-target} slot access function.
   @end{dictionary}
   @see-class{gtk-actionable}
   @see-type{g-variant}
@@ -249,36 +250,36 @@
 (defcfun ("gtk_actionable_set_detailed_action_name"
            gtk-actionable-set-detailed-action-name) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-15}
+ "@version{2021-9-3}
   @argument[actionable]{a @class{gtk-actionable} widget}
-  @argument[detailed-action-name]{a string with the detailed action name}
+  @argument[name]{a string with the detailed action name}
   @begin{short}
     Sets the action name and associated string target value of an actionable
     widget.
   @end{short}
 
-  This allows for the effect of both the functions
-  @fun{gtk-actionable-action-name} and @fun{gtk-actionable-action-target}
-  in the common case that the target is string-valued.
+  This allows for the effect of both the @fun{gtk-actionable-action-name} and
+  @fun{gtk-actionable-action-target} functions in the common case that the
+  target is string-valued.
 
-  The argument @arg{detailed-action-name} is a string of the form
-  \"action::target\" where \"action\" is the action name and \"target\" is the
-  string to use as the target.
+  The @arg{name} argument is a string of the form \"action::target\" where
+  \"action\" is the action name and \"target\" is the string to use as the
+  target.
   @begin[Example]{dictionary}
     @begin{pre}
- (let ((button (make-instance 'gtk-button)))
-   (gtk-actionable-set-detailed-action-name button \"app::save\")
-   (values (gtk-actionable-action-name button)
-           (g-variant-string (gtk-actionable-action-target button))))
-  => \"app\"
-  => \"save\"
+(let ((button (make-instance 'gtk-button)))
+  (gtk-actionable-set-detailed-action-name button \"app::save\")
+  (values (gtk-actionable-action-name button)
+          (g-variant-string (gtk-actionable-action-target button))))
+=> \"app\"
+=> \"save\"
     @end{pre}
   @end{dictionary}
   @see-class{gtk-actionable}
   @see-function{gtk-actionable-action-name}
   @see-function{gtk-actionable-action-target}"
   (actionable (g-object gtk-actionable))
-  (detailed-action-name g-string))
+  (name :string))
 
 (export 'gtk-actionable-set-detailed-action-name)
 
