@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/crategus/application">
+    <file>font-select.png</file>
+    <file>color-select.png</file>
+    <file>emblem-favorite.png</file>
+    <file>preferences-system.png</file>
+    <file>document-page-setup.png</file>
+  </gresource>
+</gresources>

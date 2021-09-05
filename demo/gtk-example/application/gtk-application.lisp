@@ -1,4 +1,4 @@
-;;; gtk-applicaton.lisp
+;;; gtk-application.lisp
 
 (defpackage :gtk-application
   (:use :gtk :gdk :gdk-pixbuf :gobject
@@ -13,4 +13,8 @@
 
 (in-package :gtk-application)
 
-;;; 2021-9-2
+(defun sys-path (filename)
+  (let ((system-path (asdf:system-source-directory :gtk-application)))
+    (princ-to-string (merge-pathnames filename system-path))))
+
+;;; 2021-9-5

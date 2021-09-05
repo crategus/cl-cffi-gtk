@@ -2,16 +2,131 @@
 
 (in-package #:gtk-application)
 
+(defparameter *menu*
+"<interface>
+  <menu id='app-menu'>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>_New Window</attribute>
+        <attribute name='action'>app.new</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>_About Bloatpad</attribute>
+        <attribute name='hidden-when'>macos-menubar</attribute>
+        <attribute name='action'>app.about</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>_Quit</attribute>
+        <attribute name='hidden-when'>macos-menubar</attribute>
+        <attribute name='action'>app.quit</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id='menubar'>
+    <submenu>
+      <attribute name='label' translatable='yes'>_Edit</attribute>
+      <section>
+        <item>
+          <attribute name='label' translatable='yes'>_Copy</attribute>
+          <attribute name='action'>win.copy</attribute>
+        </item>
+        <item>
+          <attribute name='label' translatable='yes'>_Paste</attribute>
+          <attribute name='action'>win.paste</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <!-- action should never be missing (so always shown) -->
+          <attribute name='label'>Clear (always shown)</attribute>
+          <attribute name='action'>win.clear</attribute>
+          <attribute name='hidden-when'>action-missing</attribute>
+        </item>
+        <item>
+          <attribute name='label'>Clear (hidden when no text)</attribute>
+          <attribute name='hidden-when'>action-disabled</attribute>
+          <attribute name='action'>win.clear</attribute>
+        </item>
+        <item>
+          <attribute name='label'>Spell check (does nothing, hides)</attribute>
+          <attribute name='hidden-when'>action-missing</attribute>
+          <attribute name='action'>win.spell-check</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name='label' translatable='yes'>Accelerators...</attribute>
+          <attribute name='action'>app.edit-accels</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name='label' translatable='yes'>Shortcuts...</attribute>
+          <attribute name='action'>win.show-help-overlay</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name='label' translatable='yes'>_View</attribute>
+      <section>
+        <item>
+          <attribute name='label' translatable='yes'>_Fullscreen</attribute>
+          <attribute name='action'>win.fullscreen</attribute>
+        </item>
+        <item>
+          <attribute name='label' translatable='yes'>_Look Busy</attribute>
+          <attribute name='action'>win.busy</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu id='icon-menu'>
+      <attribute name='label' translatable='yes'>_Icons</attribute>
+    </submenu>
+    <submenu id='time-menu'>
+      <attribute name='label' translatable='yes'>Time</attribute>
+      <attribute name='submenu-action'>app.time-active</attribute>
+    </submenu>
+  </menu>
+</interface>")
+
+
 (defclass bloat-pad (gtk-application)
-  ()
-;  (:g-type-name . "BloatPad")
+  ((quit-inhibit :initarg :quit-inhibit
+                 :accessor bloat-pad-quit-inhibit)
+   (time :initarg :time
+         :initform nil
+         :accessor bloat-pad-time)
+   (timeout :initarg :timeout
+            :initform 0
+            :accessor bloat-pad-timeout))
+  (:g-type-name . "BloatPad")
   (:metaclass gobject-class))
 
-(register-object-type-implementation "BloatPad"
-                                     bloat-pad
-                                     "GtkApplication"
-                                     nil
-                                     nil)
+(register-object-type-implementation "BloatPad"              ; name
+                                     bloat-pad               ; class
+                                     "GtkApplication"        ; parent
+                                     nil                     ; interfaces
+                                     nil)                    ; properties
+
+;                                     (("quit-inhibit"
+;                                       "guint"
+;                                       bloat-pad-quit-inhibit
+;                                       t
+;                                       t)
+;                                      ("time"                ; prop-name
+;                                       "GMenu"               ; prop-type
+;                                       bloat-pad-time        ; prop-accessor
+;                                       t                     ; prop-reader
+;                                       t)                    ; prop-writer
+;                                      ("timeout"
+;                                       "guint"
+;                                       bloat-pad-timeout
+;                                       t
+;                                       t)))
 
 (defun new-window (application file)
   (declare (ignore file))
@@ -178,60 +293,19 @@
     ;; Destroy the about dialog
     (gtk-widget-destroy dialog)))
 
-(defvar *menu*
-  "<interface>
-    <menu id='app-menu'>
-     <section>
-      <item>
-       <attribute name='label' translatable='yes'>_New Window</attribute>
-       <attribute name='action'>app.new</attribute>
-       <attribute name='accel'>&lt;Primary&gt;n</attribute>
-      </item>
-     </section>
-     <section>
-      <item>
-       <attribute name='label' translatable='yes'>_About Bloatpad</attribute>
-       <attribute name='action'>app.about</attribute>
-      </item>
-     </section>
-     <section>
-      <item>
-       <attribute name='label' translatable='yes'>_Quit</attribute>
-       <attribute name='action'>app.quit</attribute>
-       <attribute name='accel'>&lt;Primary&gt;q</attribute>
-      </item>
-     </section>
-     </menu>
-    <menu id='menubar'>
-     <submenu>
-      <attribute name='label' translatable='yes'>_Edit</attribute>
-      <section>
-       <item>
-        <attribute name='label' translatable='yes'>_Copy</attribute>
-        <attribute name='action'>win.copy</attribute>
-        <attribute name='accel'>&lt;Primary&gt;c</attribute>
-       </item>
-       <item>
-        <attribute name='label' translatable='yes'>_Paste</attribute>
-        <attribute name='action'>win.paste</attribute>
-        <attribute name='accel'>&lt;Primary&gt;v</attribute>
-       </item>
-      </section>
-     </submenu>
-     <submenu>
-      <attribute name='label' translatable='yes'>_View</attribute>
-      <section>
-       <item>
-        <attribute name='label' translatable='yes'>_Fullscreen</attribute>
-        <attribute name='action'>win.fullscreen</attribute>
-        <attribute name='accel'>F11</attribute>
-       </item>
-      </section>
-     </submenu>
-    </menu>
-   </interface>")
-
 (defun bloat-pad-startup (application)
+
+  ;; Add more accelerators
+  (let ((accels '(("app.new" "<Primary>n")
+                  ("app.quit" "<Primary>q")
+                  ("win.copy" "<Primary>c")
+                  ("win.paste" "<Primary>p")
+                  ("win.justify::left" "<Primary>l")
+                  ("win.justify::center" "<Primary>m")
+                  ("win.justify::right" "<Primary>r"))))
+    (loop for (name accel) in accels
+          do (setf (gtk-application-accels-for-action application name) accel)))
+
   ;; Add action "new" to the application
   (let ((action (g-simple-action-new "new" nil)))
     ;; Connect a handler to the signal "activate"
@@ -270,6 +344,38 @@
     ;; Add the action to action map of the application
     (g-action-map-add-action application action))
 
+  ;; Add action "edit-accels" to the application
+  (let ((action (g-simple-action-new "edit-accels" nil)))
+
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (declare (ignore action parameter))
+         ;; Implement the functionality
+    ))
+    (g-action-map-add-action application action))
+
+  ;; Add action "time-active" to the application
+  (let ((action (g-simple-action-new-stateful "time-active"
+                                              nil
+                                              (g-variant-new-boolean nil))))
+
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (declare (ignore action parameter))
+         ;; Implement the functionality
+    ))
+    (g-action-map-add-action application action))
+
+  ;; Add action "clear-all" to the application
+  (let ((action (g-simple-action-new "clear-all" nil)))
+
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (declare (ignore action parameter))
+         ;; Implement the functionality
+    ))
+    (g-action-map-add-action application action))
+
   ;; Intitialize the application menu and the menubar
   (let ((builder (make-instance 'gtk-builder)))
     ;; Read the menus from a string
@@ -279,17 +385,56 @@
           (gtk-builder-object builder "app-menu"))
     ;; Set the menubar
     (setf (gtk-application-menubar application)
-          (gtk-builder-object builder "menubar"))))
+          (gtk-builder-object builder "menubar"))
+
+    ;; Populate the icon menu with icons
+
+    ;; The C example uses the function gtk-application-menu-by-id to get
+    ;; the menu from automatic loaded resources. This does not work in the
+    ;; Lisp example. TODO: Implement automatic loading of resources.
+    (let ((menu (gtk-builder-object builder "icon-menu")))
+
+;      (let* ((file (g-file-new-for-path (sys-path "color-select.png")))
+;             (icon (g-file-icon-new file))
+;             (item (g-menu-item-new "File Icon" nil)))
+
+;        (format t "file : ~a~%" file)
+;        (format t "icon : ~a~%" icon)
+
+;        (g-menu-item-set-icon item icon)
+;        (g-menu-append-item menu item))
+
+;      (let ((icon (gdk-pixbuf-new-from-resource
+;                            "/com/crategus/application/preferences-system.png"))
+;            (item (g-menu-item-new "Pixbuf" nil)))
+;        (g-menu-item-set-icon item icon)
+;        (g-menu-append-item menu item))
+
+      (let ((icon (g-themed-icon-new "edit-find"))
+            (item (g-menu-item-new "Themed Icon" nil)))
+        (g-menu-item-set-icon item icon)
+        (g-menu-append-item menu item))
+
+      (let ((icon (g-themed-icon-new "weather-severe-alert-symbolic"))
+            (item (g-menu-item-new "Symbolic Icon" nil)))
+        (g-menu-item-set-icon item icon)
+        (g-menu-append-item menu item))
+
+    )
+
+))
 
 (defun bloat-pad-open (application)
   (declare (ignore application))
   ;; Executed when the application is opened
-  nil)
+  +gdk-event-propagate+)
 
 (defun bloat-pad-shutdown (application)
-  (declare (ignore application))
   ;; Executed when the application is shut down
-  nil)
+  (unless (= 0 (bloat-pad-timeout application))
+    (g-source-remove (bloat-pad-timeout application))
+    (setf (bloat-pad-timeout application) 0))
+  +gdk-event-propagate+)
 
 (defmethod initialize-instance :after
     ((app bloat-pad) &key &allow-other-keys)
@@ -298,7 +443,7 @@
   (g-signal-connect app "open" #'bloat-pad-open)
   (g-signal-connect app "shutdown" #'bloat-pad-shutdown))
 
-(defun bloat-pad-new ()
+(defun bloatpad-new ()
   (unless (string= "Bloatpad" (g-application-name))
       (setf (g-application-name) "Bloatpad"))
   (make-instance 'bloat-pad
@@ -310,7 +455,15 @@
 (defun bloatpad (&optional (argv nil))
   (within-main-loop
     (let (;; Create an instance of the application Bloat Pad
-          (bloat-pad (bloat-pad-new)))
+          (bloatpad (bloatpad-new))
+          ;; Load resources
+          (resource (g-resource-load (sys-path "bloatpad.gresource"))))
+      ;; Register the resources
+      (g-resources-register resource)
+      ;; Set an accelerator to toggle fullscreen
+      (setf (gtk-application-accels-for-action bloatpad "win.fullscreen") "F11")
       ;; Run the application
-      (g-application-run bloat-pad argv)))
+      (g-application-run bloatpad argv)
+      ;; Unregister the resources
+      (g-resources-unregister resource)))
   (join-gtk-main))
