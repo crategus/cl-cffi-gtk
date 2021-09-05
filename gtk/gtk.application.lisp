@@ -941,28 +941,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_get_accels_for_action ()
-;;; gtk_application_set_accels_for_action () -> gtk-application-accels-for-action
+;;; gtk_application_set_accels_for_action ()
+;;; -> gtk-application-accels-for-action
 ;;; ----------------------------------------------------------------------------
 
 (defun (setf gtk-application-accels-for-action) (accels application name)
   (foreign-funcall "gtk_application_set_accels_for_action"
                    (g-object gtk-application) application
                    :string name
-                   g-strv accels
+                   g-strv (if (listp accels) accels (list accels))
                    :void)
   accels)
 
 (defcfun ("gtk_application_get_accels_for_action"
            gtk-application-accels-for-action) g-strv
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
-  @syntax[]{(gtk-application-accels-for-action application) => accels}
-  @syntax[]{(setf (gtk-application-accels-for-action application) accels)}
+ "@version{2021-9-4}
+  @syntax[]{(gtk-application-accels-for-action application name) => accels}
+  @syntax[]{(setf (gtk-application-accels-for-action application name) accels)}
   @argument[application]{a @class{gtk-application} instance}
   @argument[name]{a string with a detailed action name, specifying an action
     and target}
-  @argument[accels]{a list of strings of accelerators in the format understood
-    by the @fun{gtk-accelerator-parse} function}
+  @argument[accels]{a string or a list of strings of accelerators in the format
+    understood by the @fun{gtk-accelerator-parse} function}
   @begin{short}
     Accessor of the accelerators that are associated with the given action.
   @end{short}
@@ -988,7 +989,8 @@
 (export 'gtk-application-accels-for-action)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_application_get_actions_for_accel () -> gtk-application-actions-for-accel
+;;; gtk_application_get_actions_for_accel ()
+;;; -> gtk-application-actions-for-accel
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_application_get_actions_for_accel"
