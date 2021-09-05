@@ -269,11 +269,12 @@
       Interface for icons.
 
       @about-class{g-icon}
-      @about-class{g-icon-iface}
       @about-function{g-icon-hash}
       @about-function{g-icon-equal}
       @about-function{g-icon-to-string}
       @about-function{g-icon-new-for-string}
+      @about-function{g-icon-serialize}
+      @about-function{g-icon-deserialize}
     @end{subsection}
     @begin[GThemedIcon]{subsection}
       Icon theming support.

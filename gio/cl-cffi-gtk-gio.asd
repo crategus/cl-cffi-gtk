@@ -38,6 +38,7 @@
    (:file "gio.app-info")            ; Application information, launch contexts
    ;; Icons
    (:file "gio.icon")                ; Interface for icons
+   (:file "gio.file-icon")           ; Icons pointing to an image file
    (:file "gio.themed-icon")         ; Icon theming support
    (:file "gio.emblemed-icon")       ; Icon with emblems
    (:file "gio.emblem")              ; An object for emblems
