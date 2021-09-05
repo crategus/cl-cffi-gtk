@@ -1462,31 +1462,31 @@
     (g-object gdk-pixbuf)
   (info (:pointer (:struct gtk-icon-info)))
   (fg (g-boxed-foreign gdk-rgba))
-  (success-color (g-boxed-foreign gdk-rgba))
-  (warning-color (g-boxed-foreign gdk-rgba))
-  (error-color (g-boxed-foreign gdk-rgba))
-  (was-symbolic (:pointer :boolean))
+  (success (g-boxed-foreign gdk-rgba))
+  (warning (g-boxed-foreign gdk-rgba))
+  (error (g-boxed-foreign gdk-rgba))
+  (symbolic? (:pointer :boolean))
   (err :pointer))
 
-(defun gtk-icon-info-load-symbolic (info rgbafg rgbasucc rgbawarn rgbaerr)
+(defun gtk-icon-info-load-symbolic (info fg success warning error)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-5}
   @argument[info]{a @symbol{gtk-icon-info} instance}
-  @argument[rgbafg]{a @class{gdk-rgba} foreground color of the icon}
-  @argument[rgbasucc]{a @class{gdk-rgba} success color of the icon}
-  @argument[rgbawarn]{a @class{gdk-rgba} warning color of the icon}
-  @argument[rgbaerr]{a @class{gdk-rgba} error color of the icon}
+  @argument[fg]{a @class{gdk-rgba} foreground color}
+  @argument[success]{a @class{gdk-rgba} success color}
+  @argument[warning]{a @class{gdk-rgba} warning color}
+  @argument[error]{a @class{gdk-rgba} error color}
   @return{A @class{gdk-pixbuf} object representing the loaded icon.}
   @begin{short}
     Loads an icon, modifying it to match the system colours for the foreground,
     success, warning and error colors provided.
   @end{short}
   If the icon is not a symbolic one, the function will return the result from
-  the function @fun{gtk-icon-info-load-icon}.
+  the @fun{gtk-icon-info-load-icon} function.
 
   This allows loading symbolic icons that will match the system theme. Unless
-  you are implementing a widget, you will want to use the function
-  @fun{g-themed-icon-new-with-default-fallbacks} to load the icon.
+  you are implementing a widget, you will want to use the
+  @fun{g-themed-icon-new-with-default-fallbacks} function to load the icon.
 
   As implementation details, the icon loaded needs to be of SVG type, contain
   the \"symbolic\" term as the last component of the icon name, and use the
@@ -1499,10 +1499,10 @@
   (with-g-error (err)
     (with-foreign-object (symbolic? :boolean)
       (%gtk-icon-info-load-symbolic info
-                                    rgbafg
-                                    rgbasucc
-                                    rgbawarn
-                                    rgbaerr
+                                    fg
+                                    success
+                                    warning
+                                    error
                                     symbolic?
                                     err))))
 
