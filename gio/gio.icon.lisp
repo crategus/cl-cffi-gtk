@@ -33,7 +33,6 @@
 ;;; Types and Values
 ;;;
 ;;;     GIcon
-;;;     GIconIface
 ;;;
 ;;; Functions
 ;;;
@@ -100,50 +99,6 @@
   @see-class{g-themed-icon}
   @see-class{g-emblemed-icon}
   @see-class{g-loadable-icon}")
-
-;;; ----------------------------------------------------------------------------
-;;; struct GIconIface
-;;;
-;;; struct GIconIface {
-;;;   GTypeInterface g_iface;
-;;;
-;;;   /* Virtual Table */
-;;;
-;;;   guint       (* hash)        (GIcon   *icon);
-;;;   gboolean    (* equal)       (GIcon   *icon1,
-;;;                                GIcon   *icon2);
-;;;   gboolean    (* to_tokens)   (GIcon   *icon,
-;;;                    GPtrArray *tokens,
-;;;                                gint    *out_version);
-;;;   GIcon *     (* from_tokens) (gchar  **tokens,
-;;;                                gint     num_tokens,
-;;;                                gint     version,
-;;;                                GError **error);
-;;; };
-;;;
-;;; GIconIface is used to implement GIcon types for various different systems.
-;;; See GThemedIcon and GLoadableIcon for examples of how to implement this
-;;; interface.
-;;;
-;;; GTypeInterface g_iface;
-;;;     The parent interface.
-;;;
-;;; hash ()
-;;;     A hash for a given GIcon.
-;;;
-;;; equal ()
-;;;     Checks if two GIcons are equal.
-;;;
-;;; to_tokens ()
-;;;     Serializes a GIcon into tokens. The tokens must not contain any
-;;;     whitespace. Don't implement if the GIcon can't be serialized
-;;;     (Since 2.20).
-;;;
-;;; from_tokens ()
-;;;     Constructs a GIcon from tokens. Set the GError if the tokens are
-;;;     malformed. Don't implement if the GIcon can't be serialized
-;;;     (Since 2.20).
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_icon_hash ()
@@ -238,22 +193,21 @@
 
 (defun g-icon-new-for-string (str)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-15}
-  @argument[str]{a string obtained via the function @fun{g-icon-to-string}}
+ "@version{2021-9-5}
+  @argument[str]{a string obtained via the @fun{g-icon-to-string} function}
   @begin{return}
     An object implementing the @class{g-icon} interface or @code{nil} if an
     error is set.
   @end{return}
   @begin{short}
-    Generate a @class{g-icon} object from @arg{str}.
+    Generate a @class{g-icon} object from the @arg{str} argument.
   @end{short}
-  This function can fail if @arg{str} is not valid - see the function
-  @fun{g-icon-to-string} for discussion.
+  This function can fail if the @arg{str} argument is not valid - see the
+  @fun{g-icon-to-string} function for discussion.
 
   If your application or library provides one or more @class{g-icon}
-  implementations you need to ensure that each @class{g-type} type is
-  registered with the type system prior to calling the function
-  @fun{g-icon-new-for-string}.
+  implementations you need to ensure that each type is registered with the type
+  system prior to calling this function.
   @see-class{g-icon}
   @see-function{g-icon-to-string}"
   (with-g-error (err)
@@ -263,39 +217,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_icon_serialize ()
-;;;
-;;; GVariant * g_icon_serialize (GIcon *icon);
-;;;
-;;; Serializes a GIcon into a GVariant. An equivalent GIcon can be retrieved
-;;; back by calling g_icon_deserialize() on the returned value. As serialization
-;;; will avoid using raw icon data when possible, it only makes sense to
-;;; transfer the GVariant between processes on the same machine, (as opposed to
-;;; over the network), and within the same file system namespace.
-;;;
-;;; icon :
-;;;     a GIcon
-;;;
-;;; Returns :
-;;;     a GVariant, or NULL when serialization fails. The GVariant will not be
-;;;     floating.
-;;;
-;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_icon_serialize" g-icon-serialize) (:pointer (:struct g-variant))
+ #+cl-cffi-gtk-documentation
+ "@version{2021-9-5}
+  @argument[icon]{a @class{g-icon} object}
+  @return{A @type{g-variant} value, or @code{NULL} when serialization fails.
+    The @type{g-variant} value will not be floating.}
+  @begin{short}
+    Serializes a @class{g-icon} object into a @type{g-variant} value.
+  @end{short}
+  An equivalent @class{g-icon} object can be retrieved back by calling the
+  @fun{g-icon-deserialize} function on the returned value. As serialization will
+  avoid using raw icon data when possible, it only makes sense to transfer the
+  @type{g-variant} value between processes on the same machine, as opposed to
+  over the network, and within the same file system namespace.
+  @see-class{g-icon}
+  @see-type{g-variant}
+  @see-function{g-icon-deserialize}"
+  (icon (g-object g-icon)))
+
+(export 'g-icon-serialize)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_icon_deserialize ()
-;;;
-;;; GIcon * g_icon_deserialize (GVariant *value);
-;;;
-;;; Deserializes a GIcon previously serialized using g_icon_serialize().
-;;;
-;;; value :
-;;;     a GVariant created with g_icon_serialize().
-;;;
-;;; Returns :
-;;;     a GIcon, or NULL when deserialization fails.
-;;;
-;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_icon_deserialize" g-icon-deserialize) (g-object g-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-9-5}
+  @argument[value]{a @type{g-variant} value created with the
+    @fun{g-icon-serialize} function}
+  @return{A @class{g-icon} object, or @code{nil} when deserialization fails.}
+  @begin{short}
+    Deserializes a @class{g-icon} object previously serialized using
+    the @fun{g-icon-serialize} function.
+  @end{short}
+  @see-class{g-icon}
+  @see-function{g-icon-serialize}"
+  (value (:pointer (:struct g-variant))))
+
+(export 'g-icon-deserialize)
 
 ;;; --- End of file gio.icon.lisp ----------------------------------------------
