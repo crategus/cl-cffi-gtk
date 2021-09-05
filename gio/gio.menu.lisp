@@ -775,25 +775,25 @@
 
 (defcfun ("g_menu_item_set_icon" g-menu-item-set-icon) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-16}
+ "@version{2021-9-5}
   @argument[item]{a @class{g-menu-item} object}
   @argument[icon]{a @class{g-icon} object}
   @begin{short}
     Sets or unsets the icon on the menu item.
   @end{short}
 
-  This call is the same as calling the function @fun{g-icon-serialize} and using
-  the result as the value to the function @fun{g-menu-item-set-attribute-value}
+  This call is the same as calling the @fun{g-icon-serialize} function and using
+  the result as the value to the @fun{g-menu-item-attribute-value} function
   for \"icon\".
 
   This API is only intended for use with \"noun\" menu items. Things like
   bookmarks or applications in an \"Open With\" menu. Do not use it on menu
   items corresponding to verbs, e.g. stock icons for 'Save' or 'Quit'.
 
-  If @arg{icon} is @code{nil} then the icon is unset.
+  If the @arg{icon} argument is @code{nil} then the icon is unset.
   @see-class{g-menu-item}
   @see-function{g-icon-serialize}
-  @see-function{g-menu-item-set-attribute-value}"
+  @see-function{g-menu-item-attribute-value}"
   (item (g-object g-menu-item))
   (icon (g-object g-icon)))
 
