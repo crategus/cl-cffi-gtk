@@ -166,8 +166,8 @@
   Currently, the @sym{gtk-application} class handles GTK initialization,
   application uniqueness, session management, provides some basic scriptability
   and desktop shell integration by exporting actions and menus and manages a
-  list of toplevel windows whose life-cycle is automatically tied to the
-  life-cycle of the application.
+  list of toplevel windows whose life cycle is automatically tied to the
+  life cycle of the application.
 
   While the @sym{gtk-application} class works fine with plain @class{gtk-window}
   widgets, it is recommended to use it together with
@@ -186,8 +186,8 @@
   @class{gtk-builder} resource located at @file{\"gtk/menus.ui\"}, relative to
   the resource base path of the application, see the
   @fun{g-application-resource-base-path} function. The menu with the ID
-  \"app-menu\" is taken as the app menu of the application and the menu with
-  the ID \"menubar\" is taken as the menubar of the application. Additional
+  \"app-menu\" is taken as the application menu of the application and the menu
+  with the ID \"menubar\" is taken as the menubar of the application. Additional
   menus, most interesting submenus, can be named and accessed via the
   @fun{gtk-application-menu-by-id} function which allows for dynamic population
   of a part of the menu structure.
@@ -211,16 +211,16 @@
   information.
 
   If there is a resource located at @file{\"gtk/help-overlay.ui\"} which
-  defines a @class{gtk-shortcuts-window} widget with ID @code{help_overlay} then
+  defines a @class{gtk-shortcuts-window} widget with ID \"help_overlay\" then
   the @sym{gtk-application} instance associates an instance of this shortcuts
   window with each @class{gtk-application-window} widget and sets up keyboard
   accelerators, @kbd{Control-F1} and @kbd{Control-?}, to open it. To create a
   menu item that displays the shortcuts window, associate the item with the
-  action @code{win.show-help-overlay}.
+  \"win.show-help-overlay\" action.
 
   The @sym{gtk-application} instance optionally registers with a session manager
   of the users session, if you set the @code{register-session} property, and
-  offers various functionality related to the session life-cycle.
+  offers various functionality related to the session life cycle.
 
   An application can block various ways to end the session with the
   @fun{gtk-application-inhibit} function. Typical use cases for this kind of
@@ -231,13 +231,13 @@
   @begin[Example]{dictionary}
     A simple application.
     @begin{pre}
-(defun application-simple (&optional (argv nil))
+(defun application-simple (&rest argv)
   (within-main-loop
     (let (;; Create an application
           (app (make-instance 'gtk-application
                               :application-id \"com.crategus.application-simple\"
                               :flags :none)))
-      ;; Connect signal \"activate\" to the applicaton
+      ;; Connect signal \"activate\" to the application
       (g-signal-connect app \"activate\"
           (lambda (application)
             ;; Create an application window
@@ -256,13 +256,13 @@
               (gtk-widget-show-all window))))
       ;; Connect signal \"shutdown\" to the application
       (g-signal-connect app \"shutdown\"
-          (lambda (application)
-            (declare (ignore application))
-            ;; Leave the main loop on shutdown
-            (leave-gtk-main)))
+                        (lambda (application)
+                          (declare (ignore application))
+                          ;; Leave the main loop on shutdown
+                          (leave-gtk-main)))
       ;; Run the application
       (g-application-run app argv)))
-      (join-gtk-main))
+  (join-gtk-main))
     @end{pre}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -455,10 +455,10 @@
       "Accessor"
       (documentation 'gtk-application-register-session 'function)
  "@version{2021-9-3}
-  @syntax[]{(gtk-application-register-session object) => register}
-  @syntax[]{(setf (gtk-application-register-session object) register)}
+  @syntax[]{(gtk-application-register-session object) => setting}
+  @syntax[]{(setf (gtk-application-register-session object) setting)}
   @argument[object]{a @class{gtk-application} instance}
-  @argument[register]{a boolean whether to register with the session manager}
+  @argument[setting]{a boolean whether to register with the session manager}
   @begin{short}
     Accessor of the @slot[gtk-application]{register-session} slot of the
     @class{gtk-application} class.
@@ -536,8 +536,7 @@
   function.
 
   If no application ID is given then some features, most notably application
-  uniqueness, will be disabled. No application ID is only allowed with
-  GTK 3.6 or later.
+  uniqueness, will be disabled.
   @see-class{gtk-application}
   @see-symbol{g-application-flags}
   @see-function{g-application-id-is-valid}"
@@ -631,7 +630,7 @@
 (defcfun ("gtk_application_get_window_by_id" gtk-application-window-by-id)
     (g-object gtk-window)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
+ "@version{2021-9-8}
   @argument[application]{a @class{gtk-application} instance}
   @argument[id]{an unsigned integer identifier number}
   @return{The @class{gtk-application-window} widget with ID @arg{id}, or
@@ -641,8 +640,14 @@
   @end{short}
   The ID of an application window can be retrieved with the
   @fun{gtk-application-window-id} function.
+  @begin[Note]{dictionary}
+    Both a @class{gtk-window} and a @class{gtk-application-window} widget can be
+    added to an application, but only a @class{gtk-application-window} widget
+    has an ID.
+  @end{dictionary}
   @see-class{gtk-application}
   @see-class{gtk-application-window}
+  @see-class{gtk-window}
   @see-function{gtk-application-window-id}"
   (application (g-object gtk-application))
   (id :uint))
@@ -835,15 +840,16 @@
   (name :string)
   (parameter (:pointer (:struct g-variant))))
 
-(defun gtk-application-add-accelerator (application accel name parameter)
+(defun gtk-application-add-accelerator (application accel name
+                                                    &optional (parameter nil))
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
+ "@version{2021-9-8}
   @argument[application]{a @class{gtk-application} instance}
   @argument[accel]{a string representing an accelerator}
   @argument[name]{a string with the name of the action to activate}
-  @argument[parameter]{a @type{g-variant} parameter to pass when activating
-    the action, or @code{nil} if the action does not accept an activation
-    parameter}
+  @argument[parameter]{an optional @type{g-variant} parameter to pass when
+    activating the action, or @code{nil}, the default, if the action does not
+    accept an activation parameter}
   @begin{short}
     Installs an accelerator that will cause the named action to be activated
     when the key combination specificed by the accelerator is pressed.
@@ -893,13 +899,15 @@
   (name :string)
   (parameter (:pointer (:struct g-variant))))
 
-(defun gtk-application-remove-accelerator (application name parameter)
+(defun gtk-application-remove-accelerator (application name
+                                           &optional (parameter nil))
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
+ "@version{2021-9-8}
   @argument[application]{a @class{gtk-application} instance}
   @argument[name]{a string with the name of the action to activate}
-  @argument[parameter]{a @type{g-variant} parameter to pass when activating the
-    action, or @code{nil} if the action does not accept an activation parameter}
+  @argument[parameter]{an optional @type{g-variant} parameter to pass when
+    activating the action, or @code{nil}, the default, if the action does not
+    accept an activation parameter}
   @begin{short}
     Removes an accelerator that has been previously added with the
     @fun{gtk-application-add-accelerator} function.
