@@ -143,7 +143,7 @@
 (setf (gethash 'g-application-flags atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'g-application-flags atdoc:*external-symbols*)
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @begin{short}
     Flags used to define the behaviour of a @class{g-application} instance.
   @end{short}
@@ -170,31 +170,30 @@
     @entry[:is-launcher]{Do not try to become the primary instance.}
     @entry[:handles-open]{This application handles opening files in the primary
       instance. Note that this flag only affects the default implementation of
-      the virtual function @code{local_command_line()}, and has no effect if
-      the @code{:handles-command-line} flag is given. See the function
-      @fun{g-application-run} for details.}
+      the @code{local_command_line()} virtual function, and has no effect if
+      the @code{:handles-command-line} flag is given. See the
+      @fun{g-application-run} function for details.}
     @entry[:handles-command-line]{This application handles command line
       arguments in the primary instance. Note that this flag only affect the
-      default implementation of the virtual function
-      @code{local_command_line()}. See the function @fun{g-application-run} for
-      details.}
+      default implementation of the @code{local_command_line()} virtual
+      function. See the @fun{g-application-run} function for details.}
     @entry[:send-enviroment]{Send the environment of the launching process to
       the primary instance. Set this flag if your application is expected to
       behave differently depending on certain environment variables. For
       instance, an editor might be expected to use the @code{GIT_COMMITTER_NAME}
       environment variable when editing a GIT commit message. The environment
-      is available to the \"command-line\" signal handler, via the function
-      @fun{g-application-command-line-getenv}.}
+      is available to the \"command-line\" signal handler, via the
+      @fun{g-application-command-line-getenv} function.}
     @entry[:non-unique]{Make no attempts to do any of the typical
       single-instance application negotiation. The application neither attempts
       to become the owner of the application ID nor does it check if an
       existing owner already exists. Everything occurs in the local process.}
     @entry[:can-override-app-id]{Allow users to override the application ID
-      from the command line with the option @code{--gapplication-app-id}.}
+      from the command line with the @code{--gapplication-app-id} option.}
     @entry[:allow-replacement]{Allow another instance to take over the bus
       name. Since 2.60}
     @entry[:replace]{Take over from another instance. This flag is usually set
-      by passing the option @code{--gapplication-replace} on the command line.
+      by passing the @code{--gapplication-replace} option on the command line.
       Since 2.60}
   @end{table}
   @see-class{g-application}
@@ -237,7 +236,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-application 'type)
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @begin{short}
     The @sym{g-application} class is the foundation of an application.
   @end{short}
@@ -248,11 +247,11 @@
 
   The @sym{g-application} class provides convenient life cycle management by
   maintaining a \"use count\" for the primary application instance. The use
-  count can be changed using the functions @fun{g-application-hold} and
-  @fun{g-application-release}. If it drops to zero, the application exits.
-  Higher-level classes such as the @class{gtk-application} class employ the use
-  count to ensure that the application stays alive as long as it has any opened
-  windows.
+  count can be changed using the @fun{g-application-hold} and
+  @fun{g-application-release} functions. If it drops to zero, the application
+  exits. Higher-level classes such as the @class{gtk-application} class employ
+  the use count to ensure that the application stays alive as long as it has any
+  opened windows.
 
   Another feature that the @sym{g-application} class, optionally, provides is
   process uniqueness. Applications can make use of this functionality by
@@ -266,22 +265,22 @@
   for communication.
 
   The use of the @sym{g-application} class differs from some other commonly
-  used uniqueness libraries, such as @code{libunique}, in important ways. The
-  application is not expected to manually register itself and check if it is the
-  primary instance. Instead, the @code{main()} function of a @sym{g-application}
+  used uniqueness libraries, such as the libunique library, in important ways.
+  The application is not expected to manually register itself and check if it
+  is the primary instance. Instead, the main function of a @sym{g-application}
   instance should do very little more than instantiating the application
-  instance, possibly connecting signal handlers, then calling the function
-  @fun{g-application-run}. All checks for uniqueness are done internally. If the
-  application is the primary instance then the startup signal is emitted and the
-  mainloop runs. If the application is not the primary instance then a signal is
-  sent to the primary instance and the function @fun{g-application-run} promptly
-  returns. See the code examples below.
+  instance, possibly connecting signal handlers, then calling the
+  @fun{g-application-run} function. All checks for uniqueness are done
+  internally. If the application is the primary instance then the startup signal
+  is emitted and the mainloop runs. If the application is not the primary
+  instance then a signal is sent to the primary instance and the
+  @fun{g-application-run} function promptly returns.
 
-  If used, the expected form of an application identifier is the same as that of
-  of a D-Bus well-known bus name. Examples include: @code{com.example.MyApp},
-  @code{org.example.apps.Calculator}, @code{org._7_zip.Archiver}. For details
-  on valid application identifiers, see the function
-  @fun{g-application-id-is-valid}.
+  If used, the expected form of an application identifier is the same as that
+  of of a D-Bus well-known bus name. Examples include: \"com.example.MyApp\",
+  \"org.example.apps.Calculator\", \"org._7_zip.Archiver\". For details
+  on valid application identifiers, see the @fun{g-application-id-is-valid}
+  function.
 
   On Linux, the application identifier is claimed as a well-known bus name on
   the session bus of the user. This means that the uniqueness of the application
@@ -292,15 +291,15 @@
   method calls can be dispatched at any time, even if a main loop is not
   running. For this reason, you must ensure that any object paths that you wish
   to register are registered before a @sym{g-application} instance attempts to
-  acquire the bus name of your application, which happens in the function
-  @fun{g-application-register}. Unfortunately, this means that you cannot use
-  the function @fun{g-application-is-remote} to decide if you want to register
-  object paths.
+  acquire the bus name of your application, which happens in the
+  @fun{g-application-register} function. Unfortunately, this means that you
+  cannot use the @fun{g-application-is-remote} function to decide if you want to
+  register object paths.
 
   The @sym{g-application} class also implements the @class{g-action-group} and
   @class{g-action-map} interfaces and lets you easily export actions by adding
-  them with the function @fun{g-action-map-add-action}. When invoking an action
-  by calling the function @fun{g-action-group-activate-action} on the
+  them with the @fun{g-action-map-add-action} function. When invoking an action
+  by calling the @fun{g-action-group-activate-action} function on the
   application, it is always invoked in the primary instance. The actions are
   also exported on the session bus, and GIO provides the @code{GDBusActionGroup}
   wrapper to conveniently access them remotely. GIO provides a
@@ -322,12 +321,12 @@
   the @sym{g-application} instance passes some platform data from the launching
   instance to the primary instance, in the form of a @type{g-variant}
   dictionary mapping strings to variants. To use platform data, override the
-  virtual functions @code{before_emit} or @code{after_emit} in your
+  @code{before_emit} or @code{after_emit} virtual functions in your
   @sym{g-application} subclass. When dealing with
   @class{g-application-command-line} objects, the platform data is directly
-  available via the functions @fun{g-application-command-line-cwd},
+  available via the @fun{g-application-command-line-cwd},
   @fun{g-application-command-line-environ} and
-  @fun{g-application-command-line-get-platform-data}.
+  @fun{g-application-command-line-get-platform-data} functions.
 
   As the name indicates, the platform data may vary depending on the operating
   system, but it always includes the current directory, key \"cwd\", and
@@ -335,16 +334,16 @@
   values, of the calling process, key \"environ\". The environment is only
   added to the platform data if the @code{:send-enviroment} flag is set. A
   @sym{g-application} subclass can add own platform data by overriding
-  the virtual function @code{add_platform_data}. For instance, the
+  the @code{add_platform_data} virtual function. For instance, the
   @class{gtk-application} class adds startup notification data in this way.
 
   To parse command line arguments you may handle the \"command-line\" signal or
-  override the virtual function @code{local_command_line()}, to parse them in
+  override the @code{local_command_line()} virtual function, to parse them in
   either the primary instance or the local instance, respectively.
   @begin[Examples]{dictionary}
     An example to show the use of the signals of an application.
     @begin{pre}
-(defun application-open (&optional (argv nil))
+(defun application-open (&rest argv)
   (within-main-loop
     (let ((app (make-instance 'g-application
                               :application-id \"com.crategus.application-open\"
@@ -386,14 +385,15 @@
                           ;; Stop the main loop
                           (leave-gtk-main)))
       ;; Start the application
-      (g-application-run app argv))))
+      (g-application-run app argv)))
+  (join-gtk-main))
     @end{pre}
     An example to show the implementation of actions for an application.
     @begin{pre}
 (defun activate-action (app name)
   (let ((param-type (g-action-group-action-parameter-type app name))
         (state (g-action-group-action-state app name))
-        (enabled (g-action-group-get-action-enabled app name)))
+        (enabled (g-action-group-action-enabled app name)))
     ;; Print information about the action
     (format t \"     action name : ~A~%\" name)
     (format t \"  parameter type : ~A~%\" param-type)
@@ -404,7 +404,7 @@
     ;; Activate the action
     (g-action-group-activate-action app name state)))
 
-(defun application-action (&optional (argv nil))
+(defun application-action (&rest argv)
   (within-main-loop
     (let ((app (make-instance 'g-application
                               :application-id \"com.crategus.application-action\"
@@ -430,10 +430,8 @@
               (format t \"Action ~A is activated.~%\" (g-action-name action))
               (let ((state (g-variant-boolean (g-action-state action))))
                 (if state
-                    (setf (g-simple-action-state action)
-                          (g-variant-new-boolean nil))
-                    (setf (g-simple-action-state action)
-                          (g-variant-new-boolean t)))
+                    (setf (g-action-state action) (g-variant-new-boolean nil))
+                    (setf (g-action-state action) (g-variant-new-boolean t)))
                 (format t \"The state changed from ~A to ~A.~%~%\"
                           state
                           (not state)))))
@@ -454,7 +452,8 @@
                           ;; Stop the main loop
                           (leave-gtk-main)))
       ;; Start the application
-      (g-application-run app argv))))
+      (g-application-run app argv)))
+      (join-gtk-main))
     @end{pre}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -463,7 +462,7 @@
  lambda (application)    :run-last
       @end{pre}
       The signal is emitted on the primary instance when an activation occurs.
-      See the function @fun{g-application-activate}.
+      See the @fun{g-application-activate} function.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance which received the
           signal.}
@@ -473,7 +472,7 @@
  lambda (application cmdline)    :run-last
       @end{pre}
       The signal is emitted on the primary instance when a command line is not
-      handled locally. See the function @fun{g-application-run} and the
+      handled locally. See the @fun{g-application-run} function and the
       @class{g-application-command-line} documentation for more information.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance which received the
@@ -489,42 +488,42 @@
       @end{pre}
       The signal is emitted on the local instance after the parsing of the
       command line options has occurred. You can add options to be recognised
-      during command line option parsing using the functions
+      during command line option parsing using the
       @fun{g-application-add-main-option-entries} and
-      @fun{g-application-add-option-group}.
+      @fun{g-application-add-option-group} functions.
 
       Signal handlers can inspect options, along with values pointed to from
-      the @code{arg-data} of an installed option entry, in order to decide to
-      perform certain actions, including direct local handling, which may be
+      the @code{arg-data} field of an installed option entry, in order to decide
+      to perform certain actions, including direct local handling, which may be
       useful for options like @code{--version}.
 
       In the event that the application is marked with the
       @code{:handles-command-line} flag the \"normal processing\" will send the
       options dictionary to the primary instance where it can be read with the
-      function @fun{g-application-command-line-options-dict}. The signal
+      @fun{g-application-command-line-options-dict} function. The signal
       handler can modify the dictionary before returning, and the modified
       dictionary will be sent.
 
       In the event that the @code{:handles-command-line} flag is not set,
       \"normal processing\" will treat the remaining uncollected command line
       arguments as filenames or URIs. If there are no arguments, the application
-      is activated by the function @fun{g-application-activate}. One or more
-      arguments results in a call to the function @fun{g-application-open}.
+      is activated by the @fun{g-application-activate} function. One or more
+      arguments results in a call to the @fun{g-application-open} function.
 
       If you want to handle the local command line arguments for yourself by
-      converting them to calls to the functions @fun{g-application-open} or
-      @fun{g-action-group-activate-action} then you must be sure to register
-      the application first. You should probably not call the function
-      @fun{g-application-activate} for yourself, however, just return -1 and
-      allow the default handler to do it for you. This will ensure that the
-      @code{--gapplication-service} switch works properly, i.e. no activation
-      in that case.
+      converting them to calls to the @fun{g-application-open} or
+      @fun{g-action-group-activate-action} functions then you must be sure to
+      register the application first. You should probably not call the
+      @fun{g-application-activate} function for yourself, however, just return
+      -1 and allow the default handler to do it for you. This will ensure that
+      the @code{--gapplication-service} switch works properly, i.e. no
+      activation in that case.
 
       Note that this signal is emitted from the default implementation of the
-      virtual function @code{local_command_line()}. If you override that
+      @code{local_command_line()} virtual function. If you override that
       function and do not chain up then this signal will never be emitted.
 
-      You can override the virtual function @code{local_command_line()} if you
+      You can override the @code{local_command_line()} virtual function if you
       need more powerful capabilities than what is provided here, but this
       should not normally be required.
       @begin[code]{table}
@@ -543,7 +542,7 @@
       The signal is emitted only on the registered primary instance when a new
       instance has taken over. This can only happen if the application is using
       the @code{:allow-replacement} flag. The default handler for this signal
-      calls the function @fun{g-application-quit}. Since 2.60.
+      calls the @fun{g-application-quit} function. Since 2.60.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance which received the
           signal.}
@@ -554,7 +553,7 @@
  lambda (application files n-files hint)    :run-last
       @end{pre}
       The signal is emitted on the primary instance when there are files to
-      open. See the function @fun{g-application-open} for more information.
+      open. See the @fun{g-application-open} function for more information.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance which received the
           signal.}
@@ -577,7 +576,7 @@
  lambda (application)    :run-first
       @end{pre}
       The signal is emitted on the primary instance immediately after
-      registration. See the function @fun{g-application-register}.
+      registration. See the @fun{g-application-register} function.
       @begin[code]{table}
         @entry[application]{The @sym{g-application} instance which received the
           signal.}
@@ -614,7 +613,7 @@
 (setf (gethash 'g-application-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-action-group 'function)
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @syntax[]{(setf (g-application-action-group object) group)}
   @argument[object]{a @class{g-application} instance}
   @argument[group]{a @class{g-action-group} object, or @code{nil}}
@@ -626,7 +625,7 @@
   This used to be how actions were associated with a @class{g-application}
   instance. Now there is the @class{g-action-map} interface for that.
   @begin[Warning]{dictionary}
-    The function @sym{g-application-action-group} has been deprecated since
+    The @sym{g-application-action-group} function has been deprecated since
     version 2.32 and should not be used in newly written code. Use the
     @class{g-action-map} interface instead. Never ever mix use of this API with
     use of the @class{g-action-map} interface on the same application or things
@@ -651,23 +650,23 @@
 (setf (gethash 'g-application-application-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-application-id 'function)
- "@version{2027-7-27}
-  @syntax[]{(g-application-application-id object) => applicaton-id}
-  @syntax[]{(setf (g-application-application-id object) application-id)}
+ "@version{2021-9-9}
+  @syntax[]{(g-application-application-id object) => id}
+  @syntax[]{(setf (g-application-application-id object) id)}
   @argument[object]{a @class{g-application} instance}
-  @argument[application-id]{a string with the identifier of the application}
+  @argument[id]{a string with the identifier of the application}
   @begin{short}
     Accessor of the @slot[g-application]{application-id} slot of the
     @class{g-application} class.
   @end{short}
 
-  The slot access function @sym{g-application-application-id} gets the unique
-  identifier for the application. The slot access function
-  @sym{(setf g-application-application-id)} sets the unique identifier.
+  The @sym{g-application-application-id} slot access function gets the unique
+  identifier for the application. The @sym{(setf g-application-application-id)}
+  slot access function sets the unique identifier.
 
   The application ID can only be modified if the application has not yet been
-  registered. The application ID must be valid. See the function
-  @fun{g-application-id-is-valid}.
+  registered. The application ID must be valid. See the
+  @fun{g-application-id-is-valid} function.
   @see-class{g-application}
   @see-function{g-application-id-is-valid}")
 
@@ -683,7 +682,7 @@
 (setf (gethash 'g-application-flags atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-flags 'function)
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @syntax[]{(g-application-flags object) => flags}
   @syntax[]{(setf (g-application-flags object) flags)}
   @argument[object]{a @class{g-application} instance}
@@ -693,9 +692,9 @@
     @class{g-application} class.
   @end{short}
 
-  The slot access function @sym{g-application-flags} gets the flags for the
-  application. The slot access function @sym{(setf g-application-flags)}
-  sets the flags.
+  The @sym{g-application-flags} slot access function gets the flags for the
+  application. The @sym{(setf g-application-flags)} slot access function sets
+  the flags.
 
   The flags can only be modified if the application has not yet been registered.
   See the @symbol{g-application-flags} flags.
@@ -716,7 +715,7 @@
 (setf (gethash 'g-application-inactivity-timeout atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-inactivity-timeout 'function)
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @syntax[]{(g-application-inactivity-timeout object) => timeout}
   @syntax[]{(setf (g-application-inactivity-timeout object) timeout)}
   @argument[object]{a @class{g-application} instance}
@@ -726,15 +725,16 @@
     @class{g-application} class.
   @end{short}
 
-  The slot access function @sym{g-application-inactivity-timeout} gets the
-  current inactivity timeout for the application. The slot access function
-  @sym{(setf g-application-inactivity-timeout)} sets the inactivity timeout.
+  The @sym{g-application-inactivity-timeout} slot access function gets the
+  current inactivity timeout for the application. The
+  @sym{(setf g-application-inactivity-timeout)} slot access function sets the
+  inactivity timeout.
 
   This is the amount of time in milliseconds after the last call to the
-  function @fun{g-application-release} before the application stops running.
+  @fun{g-application-release} function before the application stops running.
 
   This call has no side effects of its own. The value set here is only used
-  for next time the function @fun{g-application-release} drops the use count to
+  for next time the @fun{g-application-release} function drops the use count to
   zero. Any timeouts currently in progress are not impacted.
   @see-class{g-application}
   @see-function{g-application-release}")
@@ -751,17 +751,18 @@
 (setf (gethash 'g-application-is-busy atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-is-busy 'function)
- "@version{2021-7-27}
-  @syntax[]{(g-application-is-busy object) => is-busy}
+ "@version{2021-9-9}
+  @syntax[]{(g-application-is-busy object) => setting}
   @argument[object]{a @class{g-application} instance}
-  @argument[is-busy]{@em{true} if the application is currenty marked as busy}
+  @argument[setting]{@em{true} if the application is currenty marked as busy}
   @begin{short}
     Accessor of the @slot[g-application]{is-busy} slot of the
     @class{g-application} class.
   @end{short}
 
-  Gets the current busy state of the application, as set through the functions
-  @fun{g-application-mark-busy} or @fun{g-application-bind-busy-property}.
+  Gets the current busy state of the application, as set through the
+  @fun{g-application-mark-busy} or @fun{g-application-bind-busy-property}
+  functions.
   @see-class{g-application}
   @see-function{g-application-mark-busy}
   @see-function{g-application-bind-busy-property}")
@@ -779,17 +780,17 @@
 (setf (gethash 'g-application-is-registered atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-is-registered 'function)
- "@version{2021-7-27}
-  @syntax[]{(g-application-is-registered object) => is-registered}
+ "@version{2021-9-9}
+  @syntax[]{(g-application-is-registered object) => setting}
   @argument[object]{a @class{g-application} instance}
-  @argument[is-registered]{@em{true} if the application is registered}
+  @argument[setting]{@em{true} if the application is registered}
   @begin{short}
     Accessor of the @slot[g-application]{is-registered} slot of the
     @class{g-application} class.
   @end{short}
 
   Checks if the application is registered. An application is registered if the
-  function @fun{g-application-register} has been successfully called.
+  @fun{g-application-register} function has been successfully called.
   @see-class{g-application}
   @see-function{g-application-register}")
 
@@ -805,10 +806,10 @@
 (setf (gethash 'g-application-is-remote atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-is-remote 'function)
- "@version{2021-7-27}
-  @syntax[]{(g-application-is-remote object) => is-remote}
+ "@version{2021-9-9}
+  @syntax[]{(g-application-is-remote object) => setting}
   @argument[object]{a @class{g-application} instance}
-  @argument[is-remote]{@em{true} if the application is remote}
+  @argument[setting]{@em{true} if the application is remote}
   @begin{short}
     Accessor of the @slot[g-application]{is-remote} slot of the
     @class{g-application} class.
@@ -819,9 +820,9 @@
   instance. Calls to perform actions on the application will result in the
   actions being performed by the primary instance.
 
-  The value of this property cannot be accessed before the function
-  @fun{g-application-register} has been called. See the function
-  @fun{g-application-is-registered}.
+  The value of this property cannot be accessed before the
+  @fun{g-application-register} function has been called. See the
+  @fun{g-application-is-registered} function.
   @see-class{g-application}
   @see-function{g-application-register}
   @see-function{g-applicatoin-is-registered}")
@@ -840,7 +841,7 @@
 (setf (gethash 'g-application-resource-base-path atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-resource-base-path 'function)
- "@version{2021-8-17}
+ "@version{2021-9-9}
   @syntax[]{(g-application-resource-base-path object) => path}
   @syntax[]{(setf (g-application-resource-base-path object) path)}
   @argument[object]{a @class{g-application} instance}
@@ -850,10 +851,10 @@
     @class{g-application} class.
   @end{short}
 
-  The slot access function @sym{g-application-resource-base-path} gets the
-  resource base path of the application. The slot access function
-  @sym{(setf g-application-resource-base-path)} sets or unsets the resource base
-  path.
+  The @sym{g-application-resource-base-path} slot access function gets the
+  resource base path of the application. The
+  @sym{(setf g-application-resource-base-path)} slot access function sets or
+  unsets the resource base path.
 
   The resource base path is used to automatically load various application
   resources such as menu layouts and action descriptions. The various types of
@@ -892,20 +893,19 @@
 
 (defcfun ("g_application_id_is_valid" g-application-id-is-valid) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
-  @argument[application-id]{a string with a potential application identifier}
-  @return{@em{True} if @arg{application-id} is valid.}
+ "@version{2021-9-9}
+  @argument[id]{a string with a potential application identifier}
+  @return{@em{True} if @arg{id} is a valid application ID.}
   @begin{short}
-    Checks if @arg{application-id} is a valid application identifier.
+    Checks if the @arg{id} argument is a valid application identifier.
   @end{short}
-  A valid ID is required for calls to the functions @fun{g-application-new} and
-  @fun{g-application-application-id}.
+  A valid application ID is required for calls to the @fun{g-application-new}
+  and @fun{g-application-application-id} functions.
 
-  For convenience, the restrictions on application identifiers are reproduced
-  here:
+  The restrictions on application identifiers are:
   @begin{itemize}
     @item{Application identifiers must contain only the ASCII characters
-      \"[A-Z][a-z][0-9]_-.\" and must not begin with a digit.}
+      \"[A-Z] [a-z] [0-9] _ - .\" and must not begin with a digit.}
     @item{Application identifiers must contain at least one '.' period
       character and thus at least three elements.}
     @item{Application identifiers must not begin or end with a '.' period
@@ -923,7 +923,7 @@
   @see-class{g-application}
   @see-function{g-application-new}
   @see-function{g-application-application-id}"
-  (application-id :string))
+  (id :string))
 
 (export 'g-application-id-is-valid)
 
@@ -933,22 +933,22 @@
 
 (declaim (inline g-application-new))
 
-(defun g-application-new (application-id flags)
+(defun g-application-new (id flags)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
-  @argument[application-id]{a string with the application ID}
+ "@version{2021-9-9}
+  @argument[id]{a string with the application ID}
   @argument[flags]{the @symbol{g-application-flags} application flags}
   @return{A new @class{g-application} instance.}
   @begin{short}
     Creates a new @class{g-application} instance.
   @end{short}
-  The application ID must be valid. See the function
-  @fun{g-application-id-is-valid}.
+  The application ID must be valid. See the @fun{g-application-id-is-valid}
+  function.
   @see-class{g-application}
   @see-symbol{g-application-flags}
   @see-function{g-application-id-is-valid}"
   (make-instance 'g-application
-                 :application-id application-id
+                 :application-id id
                  :flags flags))
 
 (export 'g-application-new)
@@ -1022,7 +1022,7 @@
 
 (defun g-application-register (application)
  #+cl-cffi-gtk-documentation
- "@version{2027-7-27}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @return{@em{True} if registration succeeded.}
   @begin{short}
@@ -1044,8 +1044,8 @@
   error @em{false} is returned.
   @begin[Note]{dictionary}
     The return value of this function is not an indicator that this instance is
-    or is not the primary instance of the application. See the function
-    @fun{g-application-is-remote} for that.
+    or is not the primary instance of the application. See the
+    @fun{g-application-is-remote} function for that.
   @end{dictionary}
   @see-class{g-application}
   @see-function{g-application-is-remote}"
@@ -1060,16 +1060,16 @@
 
 (defcfun ("g_application_hold" g-application-hold) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @begin{short}
     Increases the use count of the application.
   @end{short}
   Use this function to indicate that the application has a reason to continue
-  to run. For example, the function @sym{g-application-hold} is called by GTK
+  to run. For example, the @sym{g-application-hold} function is called by GTK
   when a toplevel window is on the screen.
 
-  To cancel the hold, call the function @fun{g-application-release}.
+  To cancel the hold, call the @fun{g-application-release} function.
   @see-class{g-application}
   @see-function{g-application-release}"
   (application (g-object g-application)))
@@ -1082,7 +1082,7 @@
 
 (defcfun ("g_application_release" g-application-release) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @begin{short}
     Decrease the use count of the application.
@@ -1090,7 +1090,7 @@
   When the use count reaches zero, the application will stop running.
 
   Never call this function except to cancel the effect of a previous call
-  to the function @fun{g-application-hold}.
+  to the @fun{g-application-hold} function.
   @see-class{g-application}
   @see-function{g-application-hold}"
   (application (g-object g-application)))
@@ -1103,18 +1103,16 @@
 
 (defcfun ("g_application_quit" g-application-quit) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @begin{short}
     Immediately quits the application.
   @end{short}
-  Upon return to the mainloop, the function @fun{g-application-run} will return,
-  calling only the 'shutdown' function before doing so.
+  Upon return to the mainloop, the @fun{g-application-run} function will return,
+  emitting only the \"shutdown\" signal before doing so.
 
-  The hold count is ignored.
-
-  The result of calling the function @fun{g-application-run} again after it
-  returns is unspecified.
+  The hold count is ignored. The result of calling the @fun{g-application-run}
+  function again after it returns is unspecified.
   @see-class{g-application}
   @see-function{g-application-run}"
   (application (g-object g-application)))
@@ -1127,7 +1125,7 @@
 
 (defcfun ("g_application_activate" g-application-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @begin{short}
     Activates the application.
@@ -1155,7 +1153,7 @@
 
 (defun g-application-open (application files hint)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @argument[files]{a list of strings with the file names}
   @argument[hint]{a string with a hint or an empty string \"\"}
@@ -1163,9 +1161,9 @@
     This results in the \"open\" signal being emitted in the primary instance.
   @end{short}
 
-  The argument @arg{hint} is simply passed through to the \"open\" signal. It
+  The @arg{hint} argument is simply passed through to the \"open\" signal. It
   is intended to be used by applications that have multiple modes for opening
-  files, e.g. \"view\" vs \"edit\". Unless you have a need for this
+  files, e.g. \"view\" versus \"edit\". Unless you have a need for this
   functionality, you should use an empty string \"\".
 
   The application must be registered before calling this function and it must
@@ -1260,25 +1258,25 @@
 
 (defun g-application-run (application argv)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @argument[argv]{a list of strings with command line parameters, or @code{nil}}
   @return{An integer with the exit status.}
   @begin{short}
     Runs the application.
   @end{short}
-  This function is intended to be run from @code{main()} and its return value
-  is intended to be returned by @code{main()}. Although you are expected to
-  pass the @code{argc}, @code{argv} parameters from @code{main()} to this
-  function, it is possible to pass @code{nil} if @code{argv} is not available
-  or command line handling is not required. Note that on Windows, @code{argc}
-  and @code{argv} are ignored, and the function
-  @code{g_win32_get_command_line()} is called internally, for proper support of
-  Unicode command line arguments.
+  This function is intended to be run from the main function and its return
+  value is intended to be returned by the main function. Although you are
+  expected to pass the @code{argv} parameters from the main function to this
+  function, it is possible to pass no arguments, if the command line arguments
+  are not available or command line handling is not required. Note that on
+  Windows, the command line arguments are ignored, and the
+  @code{g_win32_get_command_line()} function is called internally, for proper
+  support of Unicode command line arguments.
 
   The @class{g-application} instance will attempt to parse the command line
   arguments. You can add command line flags to the list of recognised options by
-  way of the function @fun{g-application-add-main-option-entries}. After this,
+  way of the @fun{g-application-add-main-option-entries} function. After this,
   the \"handle-local-options\" signal is emitted, from which the application
   can inspect the values of its option entries.
 
@@ -1300,7 +1298,7 @@
 
   If you are interested in doing more complicated local handling of the
   command line then you should implement your own @class{g-application} subclass
-  and override the virtual function @code{local_command_line()}. In this case,
+  and override the @code{local_command_line()} virtual function. In this case,
   you most likely want to return @em{true} from your @code{local_command_line()}
   implementation to suppress the default handling.
 
@@ -1312,24 +1310,24 @@
   If the @code{:is-service} flag is set, then the service will run for as much
   as 10 seconds with a use count of zero while waiting for the message that
   caused the activation to arrive. After that, if the use count falls to zero
-  the application will exit immediately, except in the case that the function
-  @fun{g-application-inactivity-timeout} is in use.
+  the application will exit immediately, except in the case that the
+  @fun{g-application-inactivity-timeout} function is in use.
 
-  This function sets the program name with the function @fun{g-prgname}, if not
-  already set, to the basename of @code{argv[0]}.
+  This function sets the program name with the @fun{g-prgname} function, if not
+  already set, to the basename of the first value of the command line arguments.
 
-  Much like the function @fun{g-main-loop-run}, this function will acquire the
+  Much like the @fun{g-main-loop-run} function, this function will acquire the
   main context for the duration that the application is running.
 
   Applications that are not explicitly flagged as services or launchers, i.e.
-  neither the @code{:is-service} or the @code{:is-launcher} are given as flags,
-  will check, from the default handler for the virtual function
-  @code{local_command_line}, if the @code{--gapplication-service} option was
+  neither the @code{:is-service} or the @code{:is-launcher} values are given as
+  flags, will check, from the default handler for the @code{local_command_line}
+  virtual function, if the @code{--gapplication-service} option was
   given in the command line. If this flag is present then normal command line
   processing is interrupted and the @code{:is-service} flag is set. This
   provides a \"compromise\" solution whereby running an application directly
   from the command line will invoke it in the normal way, which can be useful
-  for debugging. while still allowing applications to be D-Bus activated in
+  for debugging, while still allowing applications to be D-Bus activated in
   service mode. The D-Bus service file should invoke the executable with the
   @code{--gapplication-service} option as the sole command line argument. This
   approach is suitable for use by most graphical applications but should not be
@@ -1359,39 +1357,39 @@
 
 (defun g-application-add-main-option-entries (application entries)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @argument[entries]{a list of option entries}
   @begin{short}
     Adds main option entries to be handled by the application.
   @end{short}
 
-  This function is comparable to the function
-  @fun{g-option-context-add-main-entries}.
+  See the @fun{g-option-context-add-main-entries} function for a
+  documentation of the list of option entries.
 
   After the command line arguments are parsed, the \"handle-local-options\"
   signal will be emitted. At this point, the application can inspect the values
-  pointed to by @code{arg-data} in the given option entries.
+  pointed to by the @code{arg-data} field in the given option entries.
 
   Unlike the @type{g-option-context} implementation, the @class{g-application}
-  class supports giving a @code{NULL} for @code{arg-data} for a non-callback
-  option entry. This results in the argument in question being packed into a
-  @class{g-variant-dict} which is also passed to the \"handle-local-options\"
-  signal handler, where it can be inspected and modified. If the
-  @code{:handles-command-line} flag is set, then the resulting dictionary is
-  sent to the primary instance, where the function
-  @fun{g-application-command-line-options-dict} will return it. This \"packing\"
-  is done according to the type of the argument - booleans for normal flags,
-  strings for strings, bytestrings for filenames, etc. The packing only occurs
-  if the flag is given, i.e. we do not pack a \"false\" @type{g-variant} in the
-  case that a flag is missing.
+  class supports giving @code{nil} for the @code{arg-data} field for a
+  non-callback option entry. This results in the argument in question being
+  packed into a @class{g-variant-dict} parameter which is also passed to the
+  \"handle-local-options\" signal handler, where it can be inspected and
+  modified. If the @code{:handles-command-line} flag is set, then the resulting
+  dictionary is sent to the primary instance, where the
+  @fun{g-application-command-line-options-dict} function will return it. This
+  \"packing\" is done according to the type of the argument - booleans for
+  normal flags, strings for strings, bytestrings for filenames, etc. The packing
+  only occurs if the flag is given, i.e. we do not pack a @type{g-variant}
+  parameter in the case that a flag is missing.
 
   In general, it is recommended that all command line arguments are parsed
   locally. The options dictionary should then be used to transmit the result
-  of the parsing to the primary instance, where the function
-  @fun{g-variant-dict-lookup} can be used. For local options, it is possible to
-  either use @code{arg-data} in the usual way, or to consult, and potentially
-  remove, the option from the options dictionary.
+  of the parsing to the primary instance, where the @fun{g-variant-dict-lookup}
+  function can be used. For local options, it is possible to either use the
+  @code{arg-data} field in the usual way, or to consult, and potentially remove,
+  the option from the options dictionary.
 
   This function is new in GLib 2.40. Before then, the only real choice was to
   send all of the command line arguments, options and all, to the primary
@@ -1402,15 +1400,15 @@
   @code{:handles-command-line} flag is unset.
 
   If the \"handle-local-options\" signal needs to see the list of filenames,
-  then the use of @code{G_OPTION_REMAINING} is recommended. If @code{arg-data}
-  is @code{NULL} then @code{G_OPTION_REMAINING} can be used as a key into the
-  options dictionary. If you do use @code{G_OPTION_REMAINING} then you need to
-  handle these arguments for yourself because once they are consumed, they will
-  no longer be visible to the default handling, which treats them as filenames
-  to be opened.
+  then the use of @code{G_OPTION_REMAINING} is recommended. If the
+  @code{arg-data} field is @code{nil} then @code{G_OPTION_REMAINING} can be used
+  as a key into the options dictionary. If you do use @code{G_OPTION_REMAINING}
+  then you need to handle these arguments for yourself because once they are
+  consumed, they will no longer be visible to the default handling, which treats
+  them as filenames to be opened.
 
-  It is important to use the proper @type{g-variant} format when retrieving the
-  options with the function @fun{g-variant-dict-lookup}:
+  It is important to use the proper @type{g-variant} parameter format when
+  retrieving the options with the @fun{g-variant-dict-lookup} function:
   @begin{itemize}
     @item{for @code{:none}, use \"b\"}
     @item{for @code{:string}, use \"&s\"}
@@ -1421,7 +1419,12 @@
     @item{for @code{:string-array}, use \"&as\"}
     @item{for @code{:filename-array}, use \"^aay\"}
   @end{itemize}
-  @see-class{g-application}"
+  @see-class{g-application}
+  @see-type{g-option-context}
+  @see-class{g-variant-dict}
+  @see-function{g-option-context-add-main-entries}
+  @see-function{g-application-command-line-options-dict}
+  @see-function{g-variant-dict-lookup}"
   (let ((n-entries (length entries)))
     (with-foreign-object (entries-ptr '(:struct glib::g-option-entry)
                                       (1+ n-entries))
@@ -1484,43 +1487,46 @@
 
 (defcfun ("g_application_add_main_option" g-application-add-main-option) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
-  @argument[long-name]{a string with the long name of an option used to specify
-    it in a command line}
-  @argument[short-name]{a printable ASCII character with the short name of an
-    option}
+  @argument[long]{a string with the long name of an option used to specify it
+    in a command line}
+  @argument[short]{a printable ASCII character with the short name of an option}
   @argument[flags]{the @symbol{g-option-flags} flags}
   @argument[arg]{a @symbol{g-option-arg} value for the type of the option}
-  @argument[description]{a string with the description for the option in
+  @argument[desc]{a string with the description for the option in
     @code{--help} output}
-  @argument[arg-description]{a string with the placeholder to use for the extra
+  @argument[arg-desc]{a string with the placeholder to use for the extra
     argument parsed by the option in @code{--help} output}
   @begin{short}
-    Add an option to be handled by the application.
+    Adds an option to be handled by the application.
   @end{short}
 
-  Calling this function is the equivalent of calling the function
-  @fun{g-application-add-main-option-entries} with a single option entry that
-  has its @code{arg-data} member set to @code{NULL}.
+  Calling this function is the equivalent of calling the
+  @fun{g-application-add-main-option-entries} function with a single option
+  entry that has its the @code{arg-data} field set to @code{nil}.
 
-  The parsed arguments will be packed into a @class{g-variant-dict} which is
-  passed to the \"handle-local-options\" signal handler. If the
+  The parsed arguments will be packed into a @class{g-variant-dict} parameter
+  which is passed to the \"handle-local-options\" signal handler. If the
   @code{:handles-command-line} flag is set, then it will also be sent to the
-  primary instance. See the function @fun{g-application-add-main-option-entries}
+  primary instance. See the @fun{g-application-add-main-option-entries} function
   for more details.
 
-  See the function @fun{g-option-group-add-entries} for more documentation of
+  See the @fun{g-option-group-add-entries} function for more documentation of
   the arguments.
   @see-class{g-application}
-  @see-function{g-option-group-add-entries}"
+  @see-class{g-variant-dict}
+  @see-symbol{g-option-flags}
+  @see-symbol{g-option-arg}
+  @see-function{g-option-group-add-entries}
+  @see-function{g-application-add-main-option-entries}"
   (application (g-object g-application))
-  (long-name :string)
-  (short-name :char)
+  (long :string)
+  (short :char)
   (flags g-option-flags)
   (arg g-option-arg)
-  (description :string)
-  (arg-description :string))
+  (desc :string)
+  (arg-desc :string))
 
 (export 'g-application-add-main-option)
 
@@ -1530,7 +1536,7 @@
 
 (defcfun ("g_application_add_option_group" g-application-add-option-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @argument[group]{a @type{g-option-group} instance}
   @begin{short}
@@ -1538,11 +1544,11 @@
     application.
   @end{short}
 
-  This function is comparable to the function @fun{g-option-context-add-group}.
+  This function is comparable to the @fun{g-option-context-add-group} function.
 
-  Unlike the function @fun{g-application-add-main-option-entries}, this function
-  does not deal with @code{NULL} for @code{arg-data} and never transmits options
-  to the primary instance.
+  Unlike the @fun{g-application-add-main-option-entries} function, this function
+  does not deal with @code{nil} for the @code{arg-data} field and never
+  transmits options to the primary instance.
 
   The reason for that is because, by the time the options arrive at the primary
   instance, it is typically too late to do anything with them. Taking the GTK
@@ -1561,7 +1567,10 @@
   be parsed, but it does not cause you to be \"opted in\" to the new
   functionality whereby unrecognised options are rejected even if the
   @code{:handles-command-line} flag was given.
-  @see-class{g-application}"
+  @see-class{g-application}
+  @see-type{g-option-group}
+  @see-function{g-option-context-add-group}
+  @see-function{g-application-add-main-option-entries}"
   (application (g-object g-application))
   (group (:pointer (:struct g-option-group))))
 
@@ -1575,7 +1584,7 @@
 (defcfun ("g_application_set_option_context_parameter_string"
            g-application-set-option-context-parameter-string) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-12}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @argument[parameter]{a string which is displayed in the first line of
     @code{--help} output}
@@ -1584,12 +1593,12 @@
     application .
   @end{short}
 
-  This function registers the argument to be passed to the function
-  @fun{g-option-context-new} when the internal @type{g-option-context} instance
-  of the application is created.
+  This function registers the argument to be passed to the
+  @fun{g-option-context-new} function when the internal @type{g-option-context}
+  instance of the application is created.
 
-  See the function @fun{g-option-context-new} for more information about the
-  argument @arg{parameter}.
+  See the @fun{g-option-context-new} function for more information about the
+  @arg{parameter} argument.
 
   Since 2.56
   @see-class{g-application}
@@ -1609,14 +1618,14 @@
 (defcfun ("g_application_set_option_context_summary"
            g-application-set-option-context-summary) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-12}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @argument[summary]{a string to be shown in @code{--help} output before the
     list of options, or @code{nil}}
   @begin{short}
     Adds a summary to the application option context.
   @end{short}
-  See the function @fun{g-option-context-summary} for more information.
+  See the @fun{g-option-context-summary} function for more information.
 
   Since 2.56
   @see-class{g-application}
@@ -1635,14 +1644,14 @@
 (defcfun ("g_application_set_option_context_description"
            g-application-set-option-context-description) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-12}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @argument[description]{a string to be shown in @code{--help} output after the
     list of options, or @code{nil}}
   @begin{short}
     Adds a description to the application option context.
   @end{short}
-  See the function @fun{g-option-context-description} for more information.
+  See the @fun{g-option-context-description} function for more information.
 
   Since 2.56
   @see-class{g-application}
@@ -1667,7 +1676,7 @@
 (defcfun ("g_application_get_default" g-application-default)
     (g-object g-application)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @syntax[]{(g-application-default) => application}
   @syntax[]{(setf (g-application-default) application)}
   @argument[application]{the @class{g-application} instance to set as default,
@@ -1676,13 +1685,9 @@
     Accessor of the default application for the process.
   @end{short}
 
-  The function @sym{g-application-default} returns the default application
-  instance for this process. The function @sym{(setf g-application-default)}
+  The @sym{g-application-default} function returns the default application
+  instance for this process. The @sym{(setf g-application-default)} function
   sets or unsets the default application.
-
-  This function does not take its own reference on application. If the
-  application is destroyed then the default application will revert back to
-  @code{nil}.
 
   Normally there is only one application per process and it becomes the default
   when it is created. You can exercise more control over this by using this
@@ -1699,7 +1704,7 @@
 
 (defcfun ("g_application_mark_busy" g-application-mark-busy) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @begin{short}
     Increases the busy count of the application.
@@ -1709,8 +1714,8 @@
 
   The busy state will be exposed to other processes, so a session shell will
   use that information to indicate the state to the user, e.g. with a
-  spinner. To cancel the busy indication, use the function
-  @fun{g-application-unmark-busy}.
+  spinner. To cancel the busy indication, use the
+  @fun{g-application-unmark-busy} function.
   @see-class{g-application}
   @see-function{g-application-unmark-busy}"
   (application (g-object g-application)))
@@ -1723,7 +1728,7 @@
 
 (defcfun ("g_application_unmark_busy" g-application-unmark-busy) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-27}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @begin{short}
     Decreases the busy count of the application.
@@ -1732,7 +1737,7 @@
   processes.
 
   This function must only be called to cancel the effect of a previous call
-  to the function @fun{g-application-mark-busy}.
+  to the @fun{g-application-mark-busy} function.
   @see-class{g-application}
   @see-function{g-application-mark-busy}"
   (application (g-object g-application)))
@@ -1746,7 +1751,7 @@
 (defcfun ("g_application_bind_busy_property" g-application-bind-busy-property)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-12}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @argument[object]{a @class{g-object} instance}
   @argument[property]{a string with the name of a boolean property of
@@ -1754,11 +1759,12 @@
   @begin{short}
     Marks the application as busy while the property on the object is @em{true}.
   @end{short}
-  See the function @fun{g-application-mark-busy}.
+  See the @fun{g-application-mark-busy} function.
 
   The binding holds a reference to the application while it is active, but not
   to the object. Instead, the binding is destroyed when the object is finalized.
   @see-class{g-application}
+  @see-class{g-object}
   @see-function{g-application-mark-busy}"
   (application (g-object g-application))
   (object g-object)
@@ -1773,15 +1779,15 @@
 (defcfun ("g_application_unbind_busy_property"
            g-application-unbind-busy-property) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-12}
+ "@version{2021-9-9}
   @argument[application]{a @class{g-application} instance}
   @argument[object]{a @class{g-object} instance}
   @argument[property]{a string with the name of a boolean property of
     @arg{object}}
   @begin{short}
     Destroys a binding between the property and the busy state of the
-    application that was previously created with the function
-    @fun{g-application-bind-busy-property}.
+    application that was previously created with the
+    @fun{g-application-bind-busy-property} function.
   @end{short}
   @see-class{g-application}
   @see-class{g-object}
