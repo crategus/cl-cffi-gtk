@@ -70,7 +70,7 @@
 (setf (gethash 'g-action-map atdoc:*class-name-alias*)
       "Interface"
       (documentation 'g-action-map 'type)
- "@version{2021-5-11}
+ "@version{2021-9-8}
   @begin{short}
     The @sym{g-action-map} interface is implemented by @class{g-action-group}
     implementations that operate by containing a number of named
@@ -78,9 +78,8 @@
   @end{short}
 
   One useful application of this interface is to map the names of actions from
-  various action groups to unique, prefixed names, e.g. by prepending
-  @code{app.} or @code{win.}. This is the motivation for the 'map' part of the
-  interface name.
+  various action groups to unique, prefixed names, e.g. by prepending \"app.\"
+  or \"win.\". This is the motivation for the 'map' part of the interface name.
   @see-class{g-action}
   @see-class{g-action-group}
   @see-class{g-simple-action-group}")
@@ -92,12 +91,12 @@
 (defcfun ("g_action_map_lookup_action" g-action-map-lookup-action)
     (g-object g-action)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-11}
+ "@version{2021-9-8}
   @argument[map]{a @class{g-action-map} object}
   @argument[name]{a string with the name of an action}
   @return{A @class{g-action} object, or @code{nil}.}
   @begin{short}
-    Looks up the action with the name @arg{name} in the action map.
+    Looks up the action with the given name in the action map.
   @end{short}
   If no such action exists, returns @code{nil}.
   @see-class{g-action}
@@ -119,7 +118,7 @@
 
 (defun g-action-map-add-action-entries (map entries)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
+ "@version{2021-9-8}
   @argument[map]{a @class{g-action-map} object}
   @argument[entries]{a list of descriptions for the actions}
   @begin{short}
@@ -131,22 +130,23 @@
   parameters:
   @begin[code]{table}
     @entry[name]{A string with the name of the action.}
-    @entry[activate]{The callback to connect to the \"activate\" signal of the
-      action. Since GLib 2.40, this can be @code{nil} for stateful actions, in
-      which case the default handler is used. For boolean-stated actions with
-      no parameter, this is a toggle. For other state types, and parameter type
-      equal to the state type, this will be a function that just calls the
+    @entry[activate]{The callback function to connect to the \"activate\" signal
+      of the action. This can be @code{nil} for stateful actions, in which case
+      the default handler is used. For boolean-stated actions with no parameter,
+      this is a toggle. For other state types, and parameter type equal to the
+      state type, this will be a function that just calls the
       @code{change-state} callback function, which you should provide.}
     @entry[parameter-type]{The type of the parameter that must be
       passed to the activate function for this action, given as a single
-      @class{g-variant-type} type string, or @code{nil} for no parameter.}
+      @class{g-variant-type} parameter type string, or @code{nil} for no
+      parameter.}
     @entry[state]{The initial state for this action, given in
       @type{g-variant} text format. The state is parsed with no extra type
       information, so type tags must be added to the string if they are
       necessary. Stateless actions should give @code{nil} here.}
-    @entry[change-state]{The callback to connect to the \"change-state\"
-      signal of the action. All stateful actions should provide a handler here,
-      stateless actions should not.}
+    @entry[change-state]{The callback function to connect to the
+      \"change-state\" signal of the action. All stateful actions should
+      provide a handler here, stateless actions should not.}
   @end{table}
   All values after name are optional. Additional optional fields may be added
   in the future.
@@ -203,7 +203,7 @@
 
 (defun g-action-map-add-action (map action)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-11}
+ "@version{2021-9-18}
   @argument[map]{a @class{g-action-map} object}
   @argument[action]{a @class{g-action} object}
   @begin{short}
@@ -224,7 +224,7 @@
 
 (defcfun ("g_action_map_remove_action" g-action-map-remove-action) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-5-11}
+ "@version{2021-9-18}
   @argument[map]{a @class{g-action-map} object}
   @argument[name]{a string with the name of the action}
   @begin{short}
