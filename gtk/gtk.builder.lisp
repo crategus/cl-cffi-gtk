@@ -104,12 +104,13 @@
   (:invalid-id 13))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-builder-error atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-builder-error atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-builder-error atdoc:*external-symbols*)
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @begin{short}
-    Error codes that identify various errors that can occur while using the
-    @class{gtk-builder} class.
+    Error codes that identify various errors that can occur while parsing the
+    @class{gtk-builder} UI definition.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkBuilderError\" gtk-builder-error
@@ -131,8 +132,8 @@
   (:invalid-id 13))
   @end{pre}
   @begin[code]{table}
-    @entry[:invalid-type-function]{A type-func attribute did not name a
-      function that returns a @class{g-type}.}
+    @entry[:invalid-type-function]{A @code{type-func} attribute did not name a
+      function that returns a @class{g-type} type ID.}
     @entry[:unhandled-tag]{The input contained a tag that a @class{gtk-builder}
       object cannot handle.}
     @entry[:missing-attribute]{An attribute that is required by a
@@ -156,8 +157,7 @@
       class.}
     @entry[:invalid-id]{An object ID is unknown.}
   @end{table}
-  @see-class{gtk-builder}
-  @see-class{g-type}")
+  @see-class{gtk-builder}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBuilder
@@ -211,21 +211,21 @@
   stay around until the user explicitly destroys them with the
   @fun{gtk-widget-destroy} function. Other widgets will either be part of a
   larger hierarchy constructed by the builder, in which case you should not have
-  to worry about their lifecycle, or without a parent, in which case they have
+  to worry about their life cycle, or without a parent, in which case they have
   to be added to some container to make use of them.
 
   The @fun{gtk-builder-connect-signals} function and variants thereof can be
   used to connect handlers to the named signals in the UI description.
 
   @subheading{GtkBuilder UI Definitions}
-  The @sym{gtk-builder} class parses textual descriptions of user interfaces
-  which are specified in an XML format which can be roughly described by the
-  RELAX NG schema below. We refer to these descriptions as @sym{gtk-builder} UI
-  definitions or just UI definitions if the context is clear. Do not confuse
-  @sym{gtk-builder} UI Definitions with the deprecated @class{gtk-ui-manager}
-  UI Definitions, which are more limited in scope. It is common to use
-  @code{.ui} as the filename extension for files containing @sym{gtk-builder}
-  UI definitions.
+  The @sym{gtk-builder} implementation parses textual descriptions of user
+  interfaces which are specified in an XML format which can be roughly described
+  by the RELAX NG schema below. We refer to these descriptions as
+  @sym{gtk-builder} UI definitions or just UI definitions if the context is
+  clear. Do not confuse @sym{gtk-builder} UI Definitions with the deprecated
+  @class{gtk-ui-manager} UI Definitions, which are more limited in scope. It is
+  common to use @code{.ui} as the filename extension for files containing
+  @sym{gtk-builder} UI definitions.
   @begin{pre}
  start = element interface {
    attribute domain { text @} ?,
@@ -344,7 +344,7 @@
   name by applying heuristics. This works in most cases, but if necessary, it
   is possible to specify the name of the @code{_get_type()} explictly with the
   @code{\"type-func\"} attribute. As a special case, the @sym{gtk-builder}
-  class allows to use an object that has been constructed by a
+  implementation allows to use an object that has been constructed by a
   @class{gtk-ui-manager} object in another part of the UI definition by
   specifying the ID of the @class{gtk-ui-manager} object in the
   @code{\"constructor\"} attribute and the name of the object in the
@@ -371,19 +371,20 @@
   useful for string properties. It is also possible to specify a context to
   disambiguate short strings, and comments which may help the translators.
 
-  The @sym{gtk-builder} class can parse textual representations for the most
-  common property types: characters, strings, integers, floating point numbers,
-  booleans, strings like \"TRUE\", \"t\", \"yes\", \"y\", \"1\" are interpreted
-  as @em{true}, strings like \"FALSE\", \"f\", \"no\", \"n\", \"0\" are
-  interpreted as @em{false}), enumerations, can be specified by their name, nick
-  or integer value, flags, can be specified by their name, nick, integer value,
-  optionally combined with \"|\", e.g. \"GTK_VISIBLE | GTK_REALIZED\", and
-  colors, in a format understood by the @fun{gdk-rgba-parse} function. Objects
-  can be referred to by their name. Pixbufs can be specified as a filename of
-  an image file to load. In general, the @sym{gtk-builder} class allows forward
-  references to objects - an object does not have to be constructed before it
-  can be referred to. The exception to this rule is that an object has to be
-  constructed before it can be used as the value of a construct-only property.
+  The @sym{gtk-builder} implementation can parse textual representations for
+  the most common property types: characters, strings, integers, floating point
+  numbers, booleans, strings like \"TRUE\", \"t\", \"yes\", \"y\", \"1\" are
+  interpreted as @em{true}, strings like \"FALSE\", \"f\", \"no\", \"n\", \"0\"
+  are interpreted as @em{false}), enumerations, can be specified by their name,
+  nick or integer value, flags, can be specified by their name, nick, integer
+  value, optionally combined with \"|\", e.g. \"GTK_VISIBLE | GTK_REALIZED\",
+  and colors, in a format understood by the @fun{gdk-rgba-parse} function.
+  Objects can be referred to by their name. Pixbufs can be specified as a
+  filename of an image file to load. In general, the @sym{gtk-builder}
+  implementation allows forward references to objects - an object does not have
+  to be constructed before it can be referred to. The exception to this rule is
+  that an object has to be constructed before it can be used as the value of a
+  construct-only property.
 
   Signal handlers are set up with the @code{<signal>} element. The
   @code{\"name\"} attribute specifies the name of the signal, and the
@@ -450,10 +451,10 @@
 
   @subheading{Embedding other XML}
   Apart from the language for UI descriptions that has been explained in the
-  previous section, the @sym{gtk-builder} class can also parse XML fragments of
-  @code{GMenu} markup. The resulting @class{g-menu} object and its named
-  submenus are available via the @fun{gtk-builder-object} function like other
-  constructed objects.
+  previous section, the @sym{gtk-builder} implementation can also parse XML
+  fragments of @code{GMenu} markup. The resulting @class{g-menu} object and its
+  named submenus are available via the @fun{gtk-builder-object} function like
+  other constructed objects.
   @see-slot{gtk-builder-translation-domain}
   @see-class{gtk-buildable}")
 
@@ -468,7 +469,7 @@
   @br{}
   The translation domain used when translating property values that have been
   marked as translatable in interface descriptions. If the translation domain
-  is @code{nil}, the @sym{gtk-builder} class uses GNU gettext, otherwise
+  is @code{nil}, the @sym{gtk-builder} object uses GNU gettext, otherwise
   GLIB gettext. @br{}
   Default value: @code{nil}")
 
@@ -500,7 +501,7 @@
 
 (defun gtk-builder-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @return{A new @class{gtk-builder} object.}
   @begin{short}
     Creates a new builder object.
@@ -520,14 +521,13 @@
 (defcfun ("gtk_builder_new_from_file" gtk-builder-new-from-file)
     (g-object gtk-builder)
  #+cl-cffi-gtk-documentation
- "@version{*2021-2-7}
+ "@version{2021-9-23}
   @argument[filename]{a string with the filename}
   @return{A @class{gtk-builder} object containing the described interface.}
   @begin{short}
     Builds the @class{gtk-builder} UI definition from a user interface
     description file.
   @end{short}
-
   If there is an error opening the file or parsing the description then the
   program will be aborted. You should only ever attempt to parse user interface
   descriptions that are shipped as part of your program.
@@ -543,20 +543,20 @@
 (defcfun ("gtk_builder_new_from_resource" gtk-builder-new-from-resource)
     (g-object gtk-builder)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
-  @argument[resource-path]{a string with the @class{g-resource} path}
+ "@version{2021-9-23}
+  @argument[path]{a string with the @class{g-resource} path}
   @return{A @class{gtk-builder} object containing the described interface.}
   @begin{short}
     Builds the @class{gtk-builder} UI definition from a resource path.
   @end{short}
-  If there is an error locating the resurce or parsing the description then the
-  program will be aborted.
+  If there is an error locating the resource or parsing the description then
+  the program will be aborted.
   @see-class{gtk-builder}
   @see-class{g-resource}
   @see-function{gtk-builder-new}
   @see-function{gtk-builder-new-from-file}
   @see-function{gtk-builder-new-from-string}"
-  (resource-path :string))
+  (path :string))
 
 (export 'gtk-builder-new-from-resource)
 
@@ -571,7 +571,7 @@
 
 (defun gtk-builder-new-from-string (string)
  #+cl-cffi-gtk-documentation
- "@version{*2021-2-4}
+ "@version{2021-9-23}
   @argument[string]{a string with the user interface description}
   @return{A @class{gtk-builder} object containing the interface described by
     @arg{string}.}
@@ -579,7 +579,6 @@
     Builds the user interface described by @arg{string} in the
     @class{gtk-builder} UI definition format.
   @end{short}
-
   If there is an error parsing the string then the program will be aborted. You
   should not attempt to parse user interface description from untrusted
   sources.
@@ -680,7 +679,7 @@
 
 (defun gtk-builder-add-from-file (builder filename)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[filename]{a string with the name of the file to parse}
   @return{A positive value on success, 0 if an error occurred.}
@@ -688,8 +687,6 @@
     Parses a file containing a @class{gtk-builder} UI definition and merges it
     with the current contents of the builder.
   @end{short}
-
-  Upon errors 0 will be returned.
   @see-class{gtk-builder}
   @see-function{gtk-builder-add-from-resource}
   @see-function{gtk-builder-add-from-string}"
@@ -704,29 +701,25 @@
 
 (defcfun ("gtk_builder_add_from_resource" %gtk-builder-add-from-resource) :uint
   (builder (g-object gtk-builder))
-  (resource-path :string)
+  (path :string)
   (err :pointer))
 
-(defun gtk-builder-add-from-resource (builder resource-path)
+(defun gtk-builder-add-from-resource (builder path)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[resource-path]{a string with the path of the resouce file to parse}
+  @argument[path]{a string with the path of the resouce file to parse}
   @return{A positive value on success, 0 if an error occured.}
   @begin{short}
     Parses a resource file containing a @class{gtk-builder} UI definition and
     merges it with the current contents of the builder.
   @end{short}
-
-  Upon errors 0 will be returned and error will be assigned a @code{GError}
-  from the @code{GTK_BUILDER_ERROR}, @code{G_MARKUP_ERROR} or
-  @code{G_RESOURCE_ERROR} domain.
   @see-class{gtk-builder}
   @see-class{g-resource}
   @see-function{gtk-builder-add-from-file}
   @see-function{gtk-builder-add-from-string}"
   (with-g-error (err)
-    (%gtk-builder-add-from-resource builder resource-path err)))
+    (%gtk-builder-add-from-resource builder path err)))
 
 (export 'gtk-builder-add-from-resource)
 
@@ -742,7 +735,7 @@
 
 (defun gtk-builder-add-from-string (builder string)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[string]{the string to parse}
   @return{A positive value on success, 0 if an error occurred.}
@@ -750,8 +743,6 @@
     Parses a string containing a @class{gtk-builder} UI definition and merges
     it with the current contents of the builder.
   @end{short}
-
-  Upon errors 0 will be returned.
   @see-class{gtk-builder}
   @see-function{gtk-builder-add-from-file}
   @see-function{gtk-builder-add-from-resource}"
@@ -771,12 +762,12 @@
   (object-ids :pointer)
   (err :pointer))
 
-(defun gtk-builder-add-objects-from-file (builder filename object-ids)
+(defun gtk-builder-add-objects-from-file (builder filename ids)
  #+cl-cffi-gtk-documentation
- "@version{2021-2-25}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[filename]{a string with the name of the file to parse}
-  @argument[object-ids]{a list of strings with the object IDs to build}
+  @argument[ids]{a list of strings with the object IDs to build}
   @return{A positive value on success, 0 if an error occurred.}
   @begin{short}
     Parses a file containing a @class{gtk-builder} UI definition building only
@@ -787,25 +778,25 @@
     If you are adding an object that depends on an object that is not its
     child, for instance a @class{gtk-tree-view} widget that depends on its
     @class{gtk-tree-model} implementation, you have to explicitely list all of
-    them in @arg{object-ids}.
+    them in @arg{ids}.
   @end{dictionary}
   @see-class{gtk-builder}
   @see-function{gtk-builder-add-from-file}
   @see-function{gtk-builder-add-objects-from-string}
   @see-function{gtk-builder-add-objects-from-resource}"
-  (let ((ids (foreign-alloc :pointer :count (1+ (length object-ids)))))
+  (let ((ids-ptr (foreign-alloc :pointer :count (1+ (length ids)))))
     (loop for i from 0
-          for object-id in object-ids
-          do (setf (mem-aref ids :pointer i)
+          for object-id in ids
+          do (setf (mem-aref ids-ptr :pointer i)
                    (foreign-string-alloc object-id)))
     (unwind-protect
       (with-g-error (err)
-        (%gtk-builder-add-objects-from-file builder filename ids err))
+        (%gtk-builder-add-objects-from-file builder filename ids-ptr err))
       (progn
         (loop for i from 0
-              repeat (1- (length object-ids))
-              do (foreign-string-free (mem-aref ids :pointer i)))
-        (foreign-free ids)))))
+              repeat (1- (length ids))
+              do (foreign-string-free (mem-aref ids-ptr :pointer i)))
+        (foreign-free ids-ptr)))))
 
 (export 'gtk-builder-add-objects-from-file)
 
@@ -818,45 +809,43 @@
   (builder (g-object gtk-builder))
   (string :string)
   (length :int)
-  (object-ids :pointer)
+  (ids :pointer)
   (err :pointer))
 
-(defun gtk-builder-add-objects-from-string (builder string object-ids)
+(defun gtk-builder-add-objects-from-string (builder string ids)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[string]{the string to parse}
-  @argument[object-ids]{list of strings with the object IDs to build}
+  @argument[ids]{list of strings with the object IDs to build}
   @return{A positive value on success, 0 if an error occurred.}
   @begin{short}
     Parses a string containing a @class{gtk-builder} UI definition building only
     the requested objects and merges them with the current contents of builder.
   @end{short}
-
-  Upon errors 0 will be returned.
   @begin[Note]{dictionary}
     If you are adding an object that depends on an object that is not its child,
-    for instance a @class{gtk-tree-view} that depends on its
-    @class{gtk-tree-model}, you have to explicitely list all of them in
-    @arg{object-ids}.
+    for instance a @class{gtk-tree-view} widget that depends on its
+    @class{gtk-tree-model} implementation, you have to explicitely list all of
+    them in @arg{ids}.
   @end{dictionary}
   @see-class{gtk-builder}
   @see-function{gtk-builder-add-from-string}
   @see-function{gtk-builder-add-objects-from-file}
   @see-function{gtk-builder-add-objects-from-resource}"
-  (let ((ids (foreign-alloc :pointer :count (1+ (length object-ids)))))
+  (let ((ids-ptr (foreign-alloc :pointer :count (1+ (length ids)))))
     (loop for i from 0
-          for object-id in object-ids
-          do (setf (mem-aref ids :pointer i)
+          for object-id in ids
+          do (setf (mem-aref ids-ptr :pointer i)
                    (foreign-string-alloc object-id)))
     (unwind-protect
       (with-g-error (err)
-        (%gtk-builder-add-objects-from-string builder string -1 ids err))
+        (%gtk-builder-add-objects-from-string builder string -1 ids-ptr err))
       (progn
         (loop for i from 0
-              repeat (1- (length object-ids))
-              do (foreign-string-free (mem-aref ids :pointer i)))
-        (foreign-free ids)))))
+              repeat (1- (length ids))
+              do (foreign-string-free (mem-aref ids-ptr :pointer i)))
+        (foreign-free ids-ptr)))))
 
 (export 'gtk-builder-add-objects-from-string)
 
@@ -867,49 +856,45 @@
 (defcfun ("gtk_builder_add_objects_from_resource"
           %gtk-builder-add-objects-from-resource) :uint
   (builder (g-object gtk-builder))
-  (resource-path :string)
-  (object-ids :pointer)
+  (path :string)
+  (ids :pointer)
   (err :pointer))
 
-(defun gtk-builder-add-objects-from-resource (builder resource-path object-ids)
+(defun gtk-builder-add-objects-from-resource (builder path ids)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[resource-path]{a string with the path of the resource file to parse}
-  @argument[object-ids]{list of strings with the object IDs to build}
+  @argument[path]{a string with the path of the resource file to parse}
+  @argument[ids]{list of strings with the object IDs to build}
   @return{A positive value on success, 0 if an error occurred.}
   @begin{short}
     Parses a resource file containing a @class{gtk-builder} UI definition
     building only the requested objects and merges them with the current
     contents of builder.
   @end{short}
-
-  Upon errors 0 will be returned and error will be assigned a @code{GError} from
-  the @code{GTK_BUILDER_ERROR}, @code{G_MARKUP_ERROR} or @code{G_RESOURCE_ERROR}
-  domain.
   @begin[Note]{dictionary}
     If you are adding an object that depends on an object that is not its
     child, for instance a @class{gtk-tree-view} widget that depends on its
     @class{gtk-tree-model} implementation, you have to explicitely list all of
-    them in @arg{object-ids}.
+    them in @arg{ids}.
   @end{dictionary}
   @see-class{gtk-builder}
   @see-function{gtk-builder-add-from-resource}
   @see-function{gtk-builder-add-objects-from-file}
   @see-function{gtk-builder-add-objects-from-string}"
-  (let ((ids (foreign-alloc :pointer :count (1+ (length object-ids)))))
+  (let ((ids-ptr (foreign-alloc :pointer :count (1+ (length ids)))))
     (loop for i from 0
-          for object-id in object-ids
-          do (setf (mem-aref ids :pointer i)
+          for object-id in ids
+          do (setf (mem-aref ids-ptr :pointer i)
                    (foreign-string-alloc object-id)))
     (unwind-protect
       (with-g-error (err)
-        (%gtk-builder-add-objects-from-resource builder resource-path ids err))
+        (%gtk-builder-add-objects-from-resource builder path ids-ptr err))
       (progn
         (loop for i from 0
-              repeat (1- (length object-ids))
-              do (foreign-string-free (mem-aref ids :pointer i)))
-        (foreign-free ids)))))
+              repeat (1- (length ids))
+              do (foreign-string-free (mem-aref ids-ptr :pointer i)))
+        (foreign-free ids-ptr)))))
 
 (export 'gtk-builder-add-objects-from-resource)
 
@@ -958,7 +943,7 @@
 
 (defcfun ("gtk_builder_get_object" gtk-builder-object) g-object
  #+cl-cffi-gtk-documentation
- "@version{*2021-2-4}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[name]{a string with the name of object to get}
   @return{The @class{g-object} instance named @arg{name} or @code{nil} if it
@@ -980,17 +965,15 @@
 
 (defcfun ("gtk_builder_get_objects" gtk-builder-objects) (g-slist g-object)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
   @begin{return}
     A list containing all the @class{g-object} instances constructed by the
-    @class{gtk-builder} instance.
+    @class{gtk-builder} object.
   @end{return}
   @begin{short}
     Gets all objects that have been constructed by the builder.
   @end{short}
-  Note that this function does not increment the reference counts of the
-  returned objects.
   @see-class{gtk-builder}
   @see-class{g-object}
   @see-function{gtk-builder-object}"
@@ -1004,7 +987,7 @@
 
 (defcfun ("gtk_builder_expose_object" gtk-builder-expose-object) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[name]{a string with the name of the object exposed to the builder}
   @argument[object]{a @class{g-object} instance to expose}
@@ -1024,18 +1007,20 @@
 ;;; gtk_builder_connect_signals ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-builder-connect-signals (builder handlers-list)
+;; TODO: The documentation does not explain this implementation.
+
+(defun gtk-builder-connect-signals (builder handlers)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[handlers-list]{a list sent in as user data to all signals}
+  @argument[handlers]{a list sent in as user data to all signals}
   @begin{short}
-    This method is a simpler variation of the function
-    @fun{gtk-builder-connect-signals-full}.
+    This method is a simpler variation of the
+    @fun{gtk-builder-connect-signals-full} function.
   @end{short}
-  It uses @code{GModule}'s introspective features to look at the application's
-  symbol table. From here it tries to match the signal handler names given in
-  the interface description with symbols in the application and connects the
+  It uses introspective features of @code{GModule} to look at the symbol table
+  of the application. From here it tries to match the signal handler names given
+  in the interface description with symbols in the application and connects the
   signals. Note that this function can only be called once, subsequent calls
   will do nothing.
 
@@ -1055,7 +1040,7 @@
                         flags)
            (declare (ignore builder connect-object))
            (let ((handler (find handler-name
-                                handlers-list
+                                handlers
                                 :key 'first :test 'string=)))
              (when handler
                (g-signal-connect object
@@ -1068,62 +1053,51 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkBuilderConnectFunc ()
-;;;
-;;; void (*GtkBuilderConnectFunc) (GtkBuilder *builder,
-;;;                                GObject *object,
-;;;                                const gchar *signal_name,
-;;;                                const gchar *handler_name,
-;;;                                GObject *connect_object,
-;;;                                GConnectFlags flags,
-;;;                                gpointer user_data);
-;;;
-;;; This is the signature of a function used to connect signals. It is used by
-;;; the gtk_builder_connect_signals() and gtk_builder_connect_signals_full()
-;;; methods. It is mainly intended for interpreted language bindings, but could
-;;; be useful where the programmer wants more control over the signal connection
-;;; process. Note that this function can only be called once, subsequent calls
-;;; will do nothing.
-;;;
-;;; builder :
-;;;     a GtkBuilder
-;;;
-;;; object :
-;;;     object to connect a signal to
-;;;
-;;; signal_name :
-;;;     name of the signal
-;;;
-;;; handler_name :
-;;;     name of the handler
-;;;
-;;; connect_object :
-;;;     a GObject, if non-NULL, use g_signal_connect_object()
-;;;
-;;; flags :
-;;;     GConnectFlags to use
-;;;
-;;; user_data :
-;;;     user data
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(defbitfield connect-flags
-  :after
-  :swapped)
-
-(defcallback builder-connect-func-callback :void
+(defcallback gtk-builder-connect-func :void
     ((builder (g-object gtk-builder))
      (object g-object)
-     (signal-name (:string :free-from-foreign nil))
-     (handler-name (:string :free-from-foreign nil))
-     (connect-object g-object)
-     (flags connect-flags)
+     (signal (:string :free-from-foreign nil))
+     (handler (:string :free-from-foreign nil))
+     (connect g-object)
+     (flags g-connect-flags)
      (data :pointer))
   (restart-case
-    (funcall (get-stable-pointer-value data)
-             builder object signal-name handler-name connect-object flags)
+    (let ((ptr (get-stable-pointer-value data)))
+      (funcall ptr builder object signal handler connect flags))
     (return () nil)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-builder-connect-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-builder-connect-func atdoc:*external-symbols*)
+ "@version{2021-9-23}
+  @begin{short}
+    This is the signature of a callback function used to connect signals.
+  @end{short}
+  It is used by the @fun{gtk-builder-connect-signals} and
+  @fun{gtk-builder-connect-signals-full} functions. It is mainly intended for
+  interpreted language bindings, but could be useful where the programmer wants
+  more control over the signal connection process. Note that this function can
+  only be called once, subsequent calls will do nothing.
+  @begin{pre}
+ lambda (builder object signal-name handler-name connect-object flags)
+  @end{pre}
+  @begin[code]{table}
+    @entry[builder]{a @class{gtk-builder} object}
+    @entry[object]{a @class{g-object} instance to connect a signal to}
+    @entry[signal-name]{a string with the name of the signal}
+    @entry[handler-name]{a string  with the name of the handler}
+    @entry[connect-object]{a @class{g-object} instance, if non-@code{nil}, use
+      the @fun{g-signal-connect-object} function}
+    @entry[flags]{a value of the @symbol{g-connect-flags} flags to use}
+  @end{table}
+  @see-class{gtk-builder}
+  @see-function{gtk-builder-connect-signals}
+  @see-function{gtk-builder-connect-signals-full}")
+
+(export 'gtk-builder-connect-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_connect_signals_full ()
@@ -1137,19 +1111,20 @@
 
 (defun gtk-builder-connect-signals-full (builder func)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[func]{a function used to connect the signals}
+  @argument[func]{a @symbol{gtk-builder-connect-func} callback function used to
+    connect the signals}
   @begin{short}
     This function can be thought of the interpreted language binding version of
-    the function @fun{gtk-builder-connect-signals}, except that it does not
-    require @code{GModule} to function correctly.
+    the @fun{gtk-builder-connect-signals} function.
   @end{short}
   @see-class{gtk-builder}
+  @see-symbol{gtk-builder-connect-func}
   @see-function{gtk-builder-connect-signals}"
   (with-stable-pointer (ptr func)
     (%gtk-builder-connect-signals-full builder
-                                       (callback builder-connect-func-callback)
+                                       (callback gtk-builder-connect-func)
                                        ptr)))
 
 (export 'gtk-builder-connect-signals-full)
@@ -1169,7 +1144,7 @@
 (defcfun ("gtk_builder_get_application" gtk-builder-application)
     (g-object gtk-application)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @syntax[]{(gtk-builder-application builder) => application}
   @syntax[]{(setf (gtk-builder-application builder) application)}
   @argument[builder]{a @class{gtk-builder} object}
@@ -1178,21 +1153,19 @@
     Accessor of the application associated with the builder.
   @end{short}
 
-  The function @sym{gtk-builder-application} gets the application associated
-  with the builder. The function @sym{(setf gtk-builder-application)} sets the
-  application associated with the builder.
+  The @sym{gtk-builder-application} function gets the application associated
+  with the builder. The @sym{(setf gtk-builder-application)} function sets the
+  application.
 
   The application is used for creating action proxies as requested from XML
-  that the builder is loading.
-
-  By default, the builder uses the default application: the one from the
-  function @fun{g-application-default}. If you want to use another application
-  for constructing proxies, use the function
-  @sym{(setf gtk-builder-application)}.
+  that the builder is loading. By default, the builder uses the default
+  application: the one from the @fun{g-application-default} function. If you
+  want to use another application for constructing proxies, use the
+  @sym{(setf gtk-builder-application)} function.
 
   You only need this function if there is more than one
-  @class{g-application} object in your process. The argument
-  @arg{application} cannot be @code{nil}.
+  @class{g-application} instance in your process. The @arg{application}
+  argument cannot be @code{nil}.
   @see-class{gtk-builder}
   @see-class{gtk-application}
   @see-class{g-application}
@@ -1207,10 +1180,10 @@
 
 (defcfun ("gtk_builder_get_type_from_name" gtk-builder-type-from-name) g-type
  #+cl-cffi-gtk-documentation
- "@version{2020-11-27}
+ "@version{2021-9-23}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[type-name]{a string with the type name to lookup}
-  @return{The @class{g-type} found for @arg{type-name}.}
+  @argument[name]{a string with the type name to lookup}
+  @return{The @class{g-type} type ID found for @arg{name}.}
   @begin{short}
     Looks up a type by name, using the virtual function that the
     @class{gtk-builder} class has for that purpose.
@@ -1221,7 +1194,7 @@
   @see-class{gtk-buildable}
   @see-class{g-type}"
   (builder (g-object gtk-builder))
-  (type-name :string))
+  (name :string))
 
 (export 'gtk-builder-type-from-name)
 
