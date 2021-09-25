@@ -147,6 +147,7 @@
       @about-function{gtk-builder-object}
       @about-function{gtk-builder-objects}
       @about-function{gtk-builder-expose-object}
+      @about-symbol{gtk-builder-connect-func}
       @about-function{gtk-builder-connect-signals}
       @about-function{gtk-builder-connect-signals-full}
       @about-function{gtk-builder-application}
@@ -3847,13 +3848,16 @@ setup_tree (void)
       Base class for all widgets.
 
       @about-class{cairo-context}
-      @about-struct{gtk-requisition}
-      @about-function{gtk-requisition-width}
-      @about-function{gtk-requisition-height}
       @about-symbol{gtk-widget-help-type}
       @about-symbol{gtk-size-request-mode}
       @about-symbol{gtk-requested-size}
       @about-symbol{gtk-align}
+      @about-struct{gtk-requisition}
+      @about-function{gtk-requisition-width}
+      @about-function{gtk-requisition-height}
+      @about-function{gtk-requisition-new}
+      @about-function{gtk-requisition-copy}
+      @about-function{gtk-requisition-free}
       @about-class{gtk-widget}
       @about-generic{gtk-widget-app-paintable}
       @about-generic{gtk-widget-can-default}
@@ -3911,14 +3915,14 @@ setup_tree (void)
       @about-function{gtk-widget-queue-draw}
       @about-function{gtk-widget-queue-resize}
       @about-function{gtk-widget-queue-resize-no-redraw}
+      @about-function{gtk-widget-queue-allocate}
       @about-function{gtk-widget-frame-clock}
-      @about-function{gtk-widget-scale-factor}
       @about-symbol{gtk-tick-callback}
       @about-function{gtk-widget-add-tick-callback}
       @about-function{gtk-widget-remove-tick-callback}
-      @about-function{gtk-widget-size-request}
       @about-function{gtk-widget-get-child-requisition}
       @about-function{gtk-widget-size-allocate}
+      @about-function{gtk-widget-size-allocate-with-baseline}
       @about-function{gtk-widget-add-accelerator}
       @about-function{gtk-widget-remove-accelerator}
       @about-function{gtk-widget-set-accel-path}
@@ -3928,17 +3932,14 @@ setup_tree (void)
       @about-function{gtk-widget-activate}
       @about-function{gtk-widget-reparent}
       @about-function{gtk-widget-intersect}
-      @about-function{gtk-widget-is-focus}
       @about-function{gtk-widget-grab-focus}
       @about-function{gtk-widget-grab-default}
       @about-function{gtk-widget-state}
       @about-function{gtk-widget-parent-window}
       @about-function{gtk-widget-add-events}
-      @about-function{gtk-widget-set-device-events}
-      @about-function{gtk-widget-get-device-events}
+      @about-function{gtk-widget-device-events}
       @about-function{gtk-widget-add-device-events}
-      @about-function{gtk-widget-set-device-enabled}
-      @about-function{gtk-widget-get-device-enabled}
+      @about-function{gtk-widget-device-enabled}
       @about-function{gtk-widget-toplevel}
       @about-function{gtk-widget-ancestor}
       @about-function{gtk-widget-visual}
@@ -3946,9 +3947,7 @@ setup_tree (void)
       @about-function{gtk-widget-is-ancestor}
       @about-function{gtk-widget-translate-coordinates}
       @about-function{gtk-widget-hide-on-delete}
-      @about-function{gtk-widget-set-style}
       @about-function{gtk-widget-ensure-style}
-      @about-function{gtk-widget-get-style}
       @about-function{gtk-widget-reset-rc-styles}
       @about-function{gtk-widget-default-style}
       @about-function{gtk-widget-direction}
@@ -3961,27 +3960,16 @@ setup_tree (void)
       @about-function{gtk-widget-override-font}
       @about-function{gtk-widget-override-symbolic-color}
       @about-function{gtk-widget-override-cursor}
-      @about-function{gtk-widget-modify-style}
-      @about-function{gtk-widget-get-modifier-style}
-      @about-function{gtk-widget-modify-fg}
-      @about-function{gtk-widget-modify-bg}
-      @about-function{gtk-widget-modify-text}
-      @about-function{gtk-widget-modify-base}
-      @about-function{gtk-widget-modify-font}
-      @about-function{gtk-widget-modify-cursor}
       @about-function{gtk-widget-create-pango-context}
       @about-function{gtk-widget-pango-context}
+      @about-function{gtk-widget-font-options}
+      @about-function{gtk-widget-font-map}
       @about-function{gtk-widget-create-pango-layout}
-      @about-function{gtk-widget-render-icon}
-      @about-function{gtk-widget-render-icon-pixbuf}
-      @about-function{gtk-widget-pop-composite-child}
-      @about-function{gtk-widget-push-composite-child}
       @about-function{gtk-widget-queue-draw-area}
       @about-function{gtk-widget-queue-draw-region}
       @about-function{gtk-widget-set-redraw-on-allocate}
       @about-function{gtk-widget-mnemonic-activate}
       @about-function{gtk-widget-class-install-style-property}
-      @about-function{gtk-widget-class-install-style-property-parser}
       @about-function{gtk-widget-class-find-style-property}
       @about-function{gtk-widget-class-list-style-properties}
       @about-function{gtk-widget-region-intersect}
@@ -4004,6 +3992,7 @@ setup_tree (void)
       @about-function{gtk-widget-root-window}
       @about-function{gtk-widget-screen}
       @about-function{gtk-widget-has-screen}
+      @about-function{gtk-widget-size-request}
       @about-function{gtk-widget-thaw-child-notify}
       @about-function{gtk-widget-list-mnemonic-labels}
       @about-function{gtk-widget-add-mnemonic-label}
@@ -4021,54 +4010,43 @@ setup_tree (void)
       @about-function{gtk-widget-allocated-height}
       @about-function{gtk-widget-allocation}
       @about-function{gtk-widget-allocated-baseline}
-      @about-function{gtk-widget-get-clip}
-      @about-function{gtk-widget-set-clip}
+      @about-function{gtk-widget-clip}
       @about-function{gtk-widget-has-window}
       @about-function{gtk-widget-is-sensitive}
       @about-function{gtk-widget-is-visible}
-      @about-function{gtk-widget-set-visible}
       @about-function{gtk-widget-state-flags}
       @about-function{gtk-widget-unset-state-flags}
-      @about-function{gtk-widget-has-default}
-      @about-function{gtk-widget-has-focus}
       @about-function{gtk-widget-has-visible-focus}
       @about-function{gtk-widget-has-grab}
-      @about-function{gtk-widget-has-rc-style}
       @about-function{gtk-widget-is-drawable}
       @about-function{gtk-widget-is-toplevel}
       @about-function{gtk-widget-support-multidevice}
       @about-function{gtk-widget-realized}
       @about-function{gtk-widget-mapped}
-      @about-function{gtk-widget-get-requisition}
       @about-function{gtk-widget-device-is-shadowed}
-      @about-function{gtk-widget-get-modifier-mask}
+      @about-function{gtk-widget-modifier-mask}
       @about-function{gtk-widget-insert-action-group}
+      @about-function{gtk-widget-list-action-prefixes}
+      @about-function{gtk-widget-action-group}
       @about-function{gtk-widget-path}
       @about-function{gtk-widget-style-context}
       @about-function{gtk-widget-reset-style}
       @about-function{gtk-widget-class-css-name}
-      @about-function{gtk-requisition-new}
-      @about-function{gtk-requisition-copy}
-      @about-function{gtk-requisition-free}
       @about-function{gtk-widget-preferred-height}
       @about-function{gtk-widget-preferred-width}
       @about-function{gtk-widget-preferred-height-for-width}
       @about-function{gtk-widget-preferred-width-for-height}
+      @about-function{gtk-widget-preferred-height-and-baseline-for-width}
       @about-function{gtk-widget-request-mode}
       @about-function{gtk-widget-preferred-size}
       @about-function{gtk-distribute-natural-allocation}
-      @about-function{gtk-widget-get-valign}
-      @about-function{gtk-widget-set-valign}
-      @about-function{gtk-widget-get-vexpand}
-      @about-function{gtk-widget-set-vexpand}
-      @about-function{gtk-widget-get-vexpand-set}
-      @about-function{gtk-widget-set-vexpand-set}
+      @about-function{gtk-widget-valign-with-baseline}
       @about-function{gtk-widget-queue-compute-expand}
       @about-function{gtk-widget-compute-expand}
       @about-function{gtk-widget-init-template}
       @about-function{gtk-widget-class-set-template}
       @about-function{gtk-widget-class-set-template-from-resource}
-      @about-function{gtk-widget-get-template-child}
+      @about-function{gtk-widget-template-child}
       @about-function{gtk-widget-class-bind-template-child}
       @about-function{gtk-widget-class-bind-template-child-internal}
       @about-function{gtk-widget-class-bind-template-child-private}
@@ -4090,7 +4068,9 @@ setup_tree (void)
       @about-function{gtk-container-remove}
       @about-function{gtk-container-add-with-properties}
       @about-function{gtk-container-check-resize}
+      @about-symbol{gtk-callback}
       @about-function{gtk-container-foreach}
+      @about-function{gtk-container-forall}
       @about-function{gtk-container-children}
       @about-function{gtk-container-path-for-child}
       @about-function{gtk-container-set-reallocate-redraws}
@@ -4106,7 +4086,6 @@ setup_tree (void)
       @about-function{gtk-container-child-set-valist}
       @about-function{gtk-container-child-notify}
       @about-function{gtk-container-child-notify-by-pspec}
-      @about-function{gtk-container-forall}
       @about-function{gtk-container-propagate-draw}
       @about-function{gtk-container-focus-chain}
       @about-function{gtk-container-unset-focus-chain}

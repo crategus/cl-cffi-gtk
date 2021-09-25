@@ -97,7 +97,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gobject) t)
- "GObject provides the object system used for Pango and GTK+.
+ "GObject provides the object system used for Pango and GTK.
   This is the API documentation of a Lisp binding to GObject.
   @begin[Type Information]{section}
     The GLib Runtime type identification and management system.
@@ -278,91 +278,26 @@
   @begin[GObject]{section}
     The base object type.
 
-    GObject is the fundamental type providing the common attributes and methods
-    for all object types in GTK+, Pango and other libraries based on GObject.
-    The GObject class provides methods for object construction and destruction,
-    property access methods, and signal support. Signals are described in detail
-    in the
-    @url[https://developer.gnome.org/gobject/stable/signal.html]{GObject documentation}.
-
     @about-class{g-object}
-    @about-generic{pointer}
     @about-generic{g-object-has-reference}
+    @about-generic{g-object-pointer}
     @about-generic{g-object-signal-handlers}
-    @about-symbol{g-object-class}
-    @about-symbol{g-object-construct-param}
-    @about-symbol{g-parameter}
-    @about-class{g-initially-unowned}
-    @about-class{g-initially-unowned-class}
     @about-function{g-type-is-object}
     @about-function{g-is-object}
-    @about-function{g-is-object-class}
-    @about-function{g-object-class}
     @about-function{g-object-type}
     @about-function{g-object-type-name}
-    @about-function{g-object-class-type}
-    @about-function{g-object-class-name}
-    @about-function{g-object-class-install-property}
-    @about-function{g-object-class-install-properties}
     @about-function{g-object-class-find-property}
     @about-function{g-object-class-list-properties}
-    @about-function{g-object-class-override-property}
-    @about-function{g-object-interface-install-property}
     @about-function{g-object-interface-find-property}
     @about-function{g-object-interface-list-properties}
     @about-function{g-object-new}
-    @about-function{g-object-new-with-properties}
-    @about-function{g-object-newv}
-    @about-function{g-object-ref}
-    @about-function{g-object-unref}
-    @about-function{g-object-ref-sink}
-    @about-function{g-set-object}
-    @about-function{g-clear-object}
-    @about-function{g-object-is-floating}
-    @about-function{g-object-force-floating}
-    @about-symbol{GWeakNotify}
-    @about-function{g-object-weak-ref}
-    @about-function{g-object-weak-unref}
-    @about-function{g-object-add-weak-pointer}
-    @about-function{g-object-remove-weak-pointer}
-    @about-function{g-set-weak-pointer}
-    @about-function{g-clear-weak-pointer}
-    @about-symbol{GToggleNotify}
-    @about-function{g-object-add-toggle-ref}
-    @about-function{g-object-remove-toggle-ref}
-    @about-function{g-object-connect}
-    @about-function{g-object-disconnect}
-    @about-function{g-object-set}
-    @about-function{g-object-setv}
-    @about-function{g-object-get}
-    @about-function{g-object-getv}
     @about-function{g-object-notify}
-    @about-function{g-object-notify-by-pspec}
     @about-function{g-object-freeze-notify}
     @about-function{g-object-thaw-notify}
     @about-function{g-object-data}
     @about-function{g-object-set-data-full}
     @about-function{g-object-steal-data}
-    @about-function{g-object-dup-data}
-    @about-function{g-object-replace-data}
-    @about-function{g-object-get-qdata}
-    @about-function{g-object-set-qdata}
-    @about-function{g-object-set-qdata-full}
-    @about-function{g-object-steal-qdata}
-    @about-function{g-object-dup-qdata}
-    @about-function{g-object-replace-qdata}
     @about-function{g-object-property}
-    @about-function{g-object-new-valist}
-    @about-function{g-object-set-valist}
-    @about-function{g-object-get-valist}
-    @about-function{g-object-watch-closure}
-    @about-function{g-object-run-dispose}
-    @about-symbol{G_OBJECT_WARN_INVALID_PROPERTY_ID}
-    @about-function{g-weak-ref-init}
-    @about-function{g-weak-ref-clear}
-    @about-function{g-weak-ref-get}
-    @about-function{g-weak-ref-set}
-    @about-function{g-assert-finalize-object}
   @end{section}
   @begin[Enumeration and Flag Types]{section}
     The GLib type system provides fundamental types for enumeration and flags
