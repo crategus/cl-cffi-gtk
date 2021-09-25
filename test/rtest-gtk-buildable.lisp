@@ -1,7 +1,7 @@
 (def-suite gtk-buildable :in gtk-suite)
 (in-suite gtk-buildable)
 
-(defvar *dialog*
+(defvar *dialog-gtk-buildable*
 "<interface>
    <object class='GtkDialog' id='dialog1'>
      <child internal-child='vbox'>
@@ -24,6 +24,8 @@
    </object>
  </interface>")
 
+;;; --- Types and Values -------------------------------------------------------
+
 ;;;     GtkBuildable
 
 (test gtk-buildable-interface
@@ -43,19 +45,30 @@
                                    :TYPE-INITIALIZER "gtk_buildable_get_type"))
              (get-g-type-definition "GtkBuildable"))))
 
+;;; --- Functions --------------------------------------------------------------
+
 ;;;     gtk_buildable_set_name
 ;;;     gtk_buildable_get_name
 
-(test gtk-buildable-name
+(test gtk-buildable-name.1
   (let ((button (make-instance 'gtk-button)))
     (is-false (gtk-buildable-name button))
     (setf (gtk-buildable-name button) "button")
     (is (string= "button" (gtk-buildable-name button)))))
 
+(test gtk-buildable-name.2
+  (let* ((builder (gtk-builder-new-from-string *dialog-gtk-buildable*))
+         (dialog (gtk-builder-object builder "dialog1"))
+         (vbox (gtk-builder-object builder "vbox1"))
+         (hbuttonbox (gtk-builder-object builder "hbuttonbox1")))
+    (is (string= "dialog1" (gtk-buildable-name dialog)))
+    (is (string= "vbox1" (gtk-buildable-name vbox)))
+    (is (string= "hbuttonbox1" (gtk-buildable-name hbuttonbox)))))
+
 ;;;     gtk_buildable_add_child
 
 (test gtk-buildable-add-child
-  (let* ((builder (gtk-builder-new-from-string *dialog*))
+  (let* ((builder (gtk-builder-new-from-string *dialog-gtk-buildable*))
          (button-box (gtk-builder-object builder "hbuttonbox1"))
          (button1 (make-instance 'gtk-button))
          (label (make-instance 'gtk-label)))
@@ -77,9 +90,9 @@
 ;;;     gtk_buildable_get_internal_child
 
 (test gtk-buildable-internal-child
-  (let* ((builder (gtk-builder-new-from-string *dialog*))
+  (let* ((builder (gtk-builder-new-from-string *dialog-gtk-buildable*))
          (dialog (gtk-builder-object builder "dialog1")))
     (is (typep (gtk-buildable-internal-child dialog builder "action_area")
                 'gtk-button-box))))
 
-;;; 2020-11-27
+;;; 2021-9-13

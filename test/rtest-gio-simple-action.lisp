@@ -86,7 +86,7 @@
 
 ;;;   g_simple_action_new
 
-(test g-simple-action-new
+(test g-simple-action-new.1
   (let ((action (g-simple-action-new "action" (g-variant-type-new "b"))))
     (is (typep action 'g-simple-action))
     (is (string= "action" (g-simple-action-name action)))
@@ -94,6 +94,21 @@
     (is (string= "b"
                  (g-variant-type-dup-string
                    (g-simple-action-parameter-type action))))))
+
+(test g-simple-action-new.2
+  (let ((action (g-simple-action-new "action" "b")))
+    (is (typep action 'g-simple-action))
+    (is (string= "action" (g-simple-action-name action)))
+    (is (typep (g-simple-action-parameter-type action) 'g-variant-type))
+    (is (string= "b"
+                 (g-variant-type-dup-string
+                   (g-simple-action-parameter-type action))))))
+
+(test g-simple-action-new.3
+  (let ((action (g-simple-action-new "action" nil)))
+    (is (typep action 'g-simple-action))
+    (is (string= "action" (g-simple-action-name action)))
+    (is-false (g-simple-action-parameter-type action))))
 
 ;;;   g_simple_action_new_stateful
 
@@ -229,4 +244,4 @@
     ;; The state has not changed.
     (is (= 10 (g-variant-int32 (g-action-state action))))))
 
-;;; 2021-8-2
+;;; 2021-9-8

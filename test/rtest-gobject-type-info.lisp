@@ -439,7 +439,35 @@
 ;;;     g_type_parent
 ;;;     g_type_depth
 ;;;     g_type_next_base
-;;;     g_type_is_a
+
+;;;     g-type-is-a
+
+(test g-type-is-a
+  (is-true (g-type-is-a "gboolean" +g-type-boolean+))
+  (is-true (g-type-is-a "GtkTextIter" +g-type-boxed+))
+  (is-true (g-type-is-a "gchar" +g-type-char+))
+  (is-true (g-type-is-a "GChecksum" +g-type-checksum+))
+  (is-true (g-type-is-a "gdouble" +g-type-double+))
+  (is-true (g-type-is-a "GtkWindowType" +g-type-enum+))
+  (is-true (g-type-is-a "GtkApplicationInhibitFlags" +g-type-flags+))
+  (is-true (g-type-is-a "gfloat" +g-type-float+))
+  (is-true (g-type-is-a "GType" +g-type-gtype+))
+  (is-true (g-type-is-a "gint" +g-type-int+))
+  (is-true (g-type-is-a "gint64" +g-type-int64+))
+  (is-true (g-type-is-a "GtkActionable" +g-type-interface+))
+  (is-true (g-type-is-a "unknown" +g-type-invalid+))
+  (is-true (g-type-is-a "glong" +g-type-long+))
+  (is-true (g-type-is-a "void" +g-type-none+))
+  (is-true (g-type-is-a "GtkApplication" +g-type-object+))
+  (is-true (g-type-is-a "GParamBoolean" +g-type-param+))
+  (is-true (g-type-is-a "gpointer" +g-type-pointer+))
+  (is-true (g-type-is-a "gchararray" +g-type-string+))
+  (is-true (g-type-is-a "guchar" +g-type-uchar+))
+  (is-true (g-type-is-a "guint" +g-type-uint+))
+  (is-true (g-type-is-a "guint64" +g-type-uint64+))
+  (is-true (g-type-is-a "gulong" +g-type-ulong+))
+  (is-true (g-type-is-a "GVariant" +g-type-variant+))
+)
 
 ;;;     g-type-class-ref
 ;;;     g-type-class-unref
@@ -525,4 +553,4 @@
 ;;;     G_DEFINE_POINTER_TYPE                              not implemented
 ;;;     G_DEFINE_POINTER_TYPE_WITH_CODE                    not implemented
 
-;;; 2021-1-28
+;;; 2021-9-10

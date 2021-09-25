@@ -3,8 +3,73 @@
 
 ;;; --- Types and Values -------------------------------------------------------
 
-;;;     GtkWindowType                                  --> gtk.enumerations.lisp
-;;;     GtkWindowPosition                              --> gtk.enumerations.lisp
+;;;     GtkWindowType
+
+(test gtk-window-type
+  ;; Check the type
+  (is (g-type-is-enum "GtkWindowType"))
+  ;; Check the type initializer
+  (is (eq (gtype "GtkWindowType")
+          (gtype (foreign-funcall "gtk_window_type_get_type" g-size))))
+  ;; Check the registered name
+  (is (eq 'gtk-window-type
+          (registered-enum-type "GtkWindowType")))
+  ;; Check the names
+  (is (equal '("GTK_WINDOW_TOPLEVEL" "GTK_WINDOW_POPUP")
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkWindowType"))))
+  ;; Check the values
+  (is (equal '(0 1)
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkWindowType"))))
+  ;; Check the nick names
+  (is (equal '("toplevel" "popup")
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkWindowType"))))
+  ;; Check the enum definition
+  (is (equal '(DEFINE-G-ENUM "GtkWindowType"
+                             GTK-WINDOW-TYPE
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gtk_window_type_get_type")
+                             (:TOPLEVEL 0)
+                             (:POPUP 1))
+             (get-g-type-definition "GtkWindowType"))))
+
+;;;     GtkWindowPosition
+
+(test gtk-window-position
+  ;; Check the type
+  (is (g-type-is-enum "GtkWindowPosition"))
+  ;; Check the type initializer
+  (is (eq (gtype "GtkWindowPosition")
+          (gtype (foreign-funcall "gtk_window_position_get_type" g-size))))
+  ;; Check the registered name
+  (is (eq 'gtk-window-position
+          (registered-enum-type "GtkWindowPosition")))
+  ;; Check the names
+  (is (equal '("GTK_WIN_POS_NONE" "GTK_WIN_POS_CENTER" "GTK_WIN_POS_MOUSE"
+               "GTK_WIN_POS_CENTER_ALWAYS" "GTK_WIN_POS_CENTER_ON_PARENT")
+             (mapcar #'enum-item-name
+                     (get-enum-items "GtkWindowPosition"))))
+  ;; Check the values
+  (is (equal '(0 1 2 3 4)
+             (mapcar #'enum-item-value
+                     (get-enum-items "GtkWindowPosition"))))
+  ;; Check the nick names
+  (is (equal '("none" "center" "mouse" "center-always" "center-on-parent")
+             (mapcar #'enum-item-nick
+                     (get-enum-items "GtkWindowPosition"))))
+  ;; Check the enum definition
+  (is (equal '(DEFINE-G-ENUM "GtkWindowPosition"
+                             GTK-WINDOW-POSITION
+                             (:EXPORT T
+                              :TYPE-INITIALIZER "gtk_window_position_get_type")
+                             (:NONE 0)
+                             (:CENTER 1)
+                             (:MOUSE 2)
+                             (:CENTER-ALWAYS 3)
+                             (:CENTER-ON-PARENT 4))
+             (get-g-type-definition "GtkWindowPosition"))))
 
 ;;;     GtkWindow
 
@@ -28,31 +93,34 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkWindow"))))
   ;; Check the class properties
   (is (equal '("accept-focus" "app-paintable" "application" "attached-to"
-               "border-width" "can-default" "can-focus" "child" "composite-child"
-               "decorated" "default-height" "default-width" "deletable"
-               "destroy-with-parent" "double-buffered" "events" "expand"
-               "focus-on-click" "focus-on-map" "focus-visible" "gravity" "halign"
-               "has-default" "has-focus" "has-resize-grip" "has-tooltip"
-               "has-toplevel-focus" "height-request" "hexpand" "hexpand-set"
-               "hide-titlebar-when-maximized" "icon" "icon-name" "is-active" "is-focus"
-               "is-maximized" "margin" "margin-bottom" "margin-end" "margin-left"
-               "margin-right" "margin-start" "margin-top" "mnemonics-visible"
-               "modal" "name" "no-show-all" "opacity" "parent" "receives-default"
-               "resizable" "resize-grip-visible" "resize-mode" "role" "scale-factor"
-               "screen" "sensitive" "skip-pager-hint" "skip-taskbar-hint" "startup-id"
-               "style" "title" "tooltip-markup" "tooltip-text" "transient-for" "type"
-               "type-hint" "urgency-hint" "valign" "vexpand" "vexpand-set" "visible"
-               "width-request" "window" "window-position")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkWindow"))
-                          #'string-lessp)))
+               "border-width" "can-default" "can-focus" "child"
+               "composite-child" "decorated" "default-height" "default-width"
+               "deletable" "destroy-with-parent" "double-buffered" "events"
+               "expand" "focus-on-click" "focus-on-map" "focus-visible"
+               "gravity" "halign" "has-default" "has-focus" "has-resize-grip"
+               "has-tooltip" "has-toplevel-focus" "height-request" "hexpand"
+               "hexpand-set" "hide-titlebar-when-maximized" "icon" "icon-name"
+               "is-active" "is-focus" "is-maximized" "margin" "margin-bottom"
+               "margin-end" "margin-left" "margin-right" "margin-start"
+               "margin-top" "mnemonics-visible" "modal" "name" "no-show-all"
+               "opacity" "parent" "receives-default" "resizable"
+               "resize-grip-visible" "resize-mode" "role" "scale-factor"
+               "screen" "sensitive" "skip-pager-hint" "skip-taskbar-hint"
+               "startup-id" "style" "title" "tooltip-markup" "tooltip-text"
+               "transient-for" "type" "type-hint" "urgency-hint" "valign"
+               "vexpand" "vexpand-set" "visible" "width-request" "window"
+               "window-position")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkWindow"))
+                   #'string-lessp)))
   ;; Get the names of the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
                "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-               "separator-height" "separator-width" "text-handle-height"
-               "text-handle-width" "visited-link-color" "wide-separators"
-               "window-dragging" "decoration-button-layout" "decoration-resize-handle")
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging" "decoration-button-layout"
+               "decoration-resize-handle")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkWindow"))))
   ;; Get the names of the child properties
@@ -153,7 +221,7 @@
     (is-true  (gtk-window-resizable window))
     (is-false (gtk-window-resize-grip-visible window))
     (is-false (gtk-window-role window))
-    (is (eq 'gdk-screen (type-of (gtk-window-screen window))))
+    (is (typep (gtk-window-screen window) 'gdk-screen))
     (is-false (gtk-window-skip-pager-hint window))
     (is-false (gtk-window-skip-taskbar-hint window))
     ;; startup-id is not readable
@@ -163,30 +231,44 @@
     (is (eq :toplevel (gtk-window-type window)))
     (is (eq :normal (gtk-window-type-hint window)))
     (is-false (gtk-window-urgency-hint window))
-    (is (eq :none (gtk-window-window-position window)))
-))
+    (is (eq :none (gtk-window-window-position window)))))
 
 ;;; --- Style Properties -------------------------------------------------------
 
-;;;              gchar*  decoration-button-layout    Read
-;;;               gint   decoration-resize-handle    Read / Write
+(test gtk-window-style-properties
+  (let ((win (make-instance 'gtk-window)))
+    (is (= 0.04 (gtk-widget-style-property win "cursor-aspect-ratio")))
+    (is-false (gtk-widget-style-property win "cursor-color"))
+    (is-true (gtk-widget-style-property win "focus-line-pattern"))
+    (is (= 1 (gtk-widget-style-property win "focus-line-width")))
+    (is (= 1 (gtk-widget-style-property win "focus-padding")))
+    (is-true (gtk-widget-style-property win "interior-focus"))
+    (is-false (gtk-widget-style-property win "link-color"))
+    (is (= 16 (gtk-widget-style-property win "scroll-arrow-hlength")))
+    (is (= 16 (gtk-widget-style-property win "scroll-arrow-vlength")))
+    (is-false (gtk-widget-style-property win "secondary-cursor-color"))
+    (is (= 0 (gtk-widget-style-property win "separator-height")))
+    (is (= 0 (gtk-widget-style-property win "separator-width")))
+    (is (= 24 (gtk-widget-style-property win "text-handle-height")))
+    (is (= 20 (gtk-widget-style-property win "text-handle-width")))
+    (is-false (gtk-widget-style-property win "visited-link-color"))
+    (is-false (gtk-widget-style-property win "wide-separators"))
+    (is-false (gtk-widget-style-property win "window-dragging"))
+    (is (string= "menu:close"
+                 (gtk-widget-style-property win "decoration-button-layout")))
+    (is (= 20 (gtk-widget-style-property win "decoration-resize-handle")))))
 
 ;;; --- Signals ----------------------------------------------------------------
-
-;;;               void   activate-default            Action
-;;;               void   activate-focus              Action
-;;;           gboolean   enable-debugging            Action
-;;;               void   keys-changed                Run First
-;;;               void   set-focus                   Run Last
 
 (test gtk-window-signals
   ;; Check the list of signals
   (is (equal '("keys-changed" "set-focus" "activate-focus" "activate-default"
                "enable-debugging")
-             (mapcar #'g-signal-name (g-signal-list-ids "GtkWindow"))))
-
+             (mapcar #'g-signal-name
+                     (g-signal-list-ids "GtkWindow"))))
   ;; Query info for "activate-default"
-  (let ((query (g-signal-query (g-signal-lookup "activate-default" "GtkWindow"))))
+  (let ((query (g-signal-query (g-signal-lookup "activate-default"
+                                                "GtkWindow"))))
     (is (string= "activate-default" (g-signal-query-signal-name query)))
     (is (string= "GtkWindow" (g-type-name (g-signal-query-owner-type query))))
     (is (equal '(:RUN-LAST :ACTION)
@@ -195,7 +277,6 @@
     (is (equal '()
                (mapcar #'g-type-name (g-signal-query-param-types query))))
     (is-false (g-signal-query-signal-detail query)))
-
   ;; Query info for "activate-focus"
   (let ((query (g-signal-query (g-signal-lookup "activate-focus" "GtkWindow"))))
     (is (string= "activate-focus" (g-signal-query-signal-name query)))
@@ -206,9 +287,9 @@
     (is (equal '()
                (mapcar #'g-type-name (g-signal-query-param-types query))))
     (is-false (g-signal-query-signal-detail query)))
-
   ;; Query info for "enable-debugging"
-  (let ((query (g-signal-query (g-signal-lookup "enable-debugging" "GtkWindow"))))
+  (let ((query (g-signal-query (g-signal-lookup "enable-debugging"
+                                                "GtkWindow"))))
     (is (string= "enable-debugging" (g-signal-query-signal-name query)))
     (is (string= "GtkWindow" (g-type-name (g-signal-query-owner-type query))))
     (is (equal '(:RUN-LAST :ACTION)
@@ -217,7 +298,6 @@
     (is (equal '("gboolean")
                (mapcar #'g-type-name (g-signal-query-param-types query))))
     (is-false (g-signal-query-signal-detail query)))
-
   ;; Query info for "keys-changed"
   (let ((query (g-signal-query (g-signal-lookup "keys-changed" "GtkWindow"))))
     (is (string= "keys-changed" (g-signal-query-signal-name query)))
@@ -228,7 +308,6 @@
     (is (equal '()
                (mapcar #'g-type-name (g-signal-query-param-types query))))
     (is-false (g-signal-query-signal-detail query)))
-
   ;; Query info for "set-focus"
   (let ((query (g-signal-query (g-signal-lookup "set-focus" "GtkWindow"))))
     (is (string= "set-focus" (g-signal-query-signal-name query)))
@@ -243,29 +322,30 @@
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_window_new
+
+(test gtk-window-new
+  (is (typep (gtk-window-new :toplevel) 'gtk-window))
+  (is (typep (gtk-window-new :popup) 'gtk-window)))
+
 ;;;     gtk_window_set_title                               Accessor
 ;;;     gtk_window_set_wmclass
 ;;;     gtk_window_set_resizable                           Accessor
 ;;;     gtk_window_get_resizable                           Accessor
+
 ;;;     gtk_window_add_accel_group
 ;;;     gtk_window_remove_accel_group
+
+(test gtk-window-add-accel-group
+  (let ((window (gtk-window-new :toplevel))
+        (group (gtk-accel-group-new)))
+    (is-false (gtk-window-add-accel-group window group))
+    (is-false (gtk-window-remove-accel-group window group))))
+
 ;;;     gtk_window_activate_focus
 ;;;     gtk_window_activate_default
 ;;;     gtk_window_set_modal                               Accessor
 ;;;     gtk_window_set_default_geometry
-
-;;; --- gtk-window-set-geometry-hints ------------------------------------------
-
-;; TODO: It is a bad idea to try to show the toplevel window
-
-;(test gtk-window-set-geometry-hints
-;  (let ((toplevel (make-instance 'gtk-window :type :toplevel)))
-;    (gtk-widget-show toplevel)
-;    (is (eq 'gtk-window (type-of toplevel)))
-;    ;; TODO: Find a way to test the settiongs
-;    (gtk-window-set-geometry-hints toplevel nil (make-gdk-geometry) '(:min-size :max-size))
-;))
-
+;;;     gtk-window-set-geometry-hints
 ;;;     gtk_window_set_gravity                             Accessor
 ;;;     gtk_window_get_gravity                             Accessor
 ;;;     gtk_window_set_position
@@ -275,10 +355,15 @@
 ;;;     gtk_window_set_hide_titlebar_when_maximized        Accessor
 ;;;     gtk_window_set_screen                              Accessor
 ;;;     gtk_window_get_screen                              Accessor
-;;;     gtk_window_is_active
+;;;     gtk_window_is_active                               Accessor
 ;;;     gtk_window_is_maximized                            Accessor
-;;;     gtk_window_has_toplevel_focus
+;;;     gtk_window_has_toplevel_focus                      Accessor
 ;;;     gtk_window_list_toplevels
+
+(test gtk-window-list-toplevels
+  (is (every (lambda (obj) (typep obj 'gtk-window))
+             (gtk-window-list-toplevels))))
+
 ;;;     gtk_window_add_mnemonic
 ;;;     gtk_window_remove_mnemonic
 ;;;     gtk_window_mnemonic_activate
@@ -327,7 +412,8 @@
     (is (equal '(-1 -1)
                (multiple-value-list (gtk-window-default-size window))))
     (is (equal '(100 200)
-               (multiple-value-list (setf (gtk-window-default-size window) '(100 200)))))
+               (multiple-value-list (setf (gtk-window-default-size window)
+                                          '(100 200)))))
     (is (equal '(100 200)
                (multiple-value-list (gtk-window-default-size window))))))
 
@@ -384,4 +470,4 @@
 ;;;     gtk_window_get_titlebar
 ;;;     gtk_window_set_interactive_debugging
 
-;;; 2020-11-1
+;;; 2021-9-12

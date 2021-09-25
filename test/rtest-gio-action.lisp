@@ -55,12 +55,18 @@
 (test g-action-parameter-type.1
   ;; Initialize parameter-type with nil
   (let ((action (g-simple-action-new "simple" nil)))
-    ;; It is an error to access a null-pointer, we get an error
     (is-false (g-action-parameter-type action))))
 
 (test g-action-parameter-type.2
   ;; Initialize parameter-type with type boolean
   (let ((action (g-simple-action-new "simple" (g-variant-type-new "b"))))
+    (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
+    (is (string= "b"
+                 (g-variant-type-dup-string (g-action-parameter-type action))))))
+
+(test g-action-parameter-type.3
+  ;; Initialize parameter-type with type boolean as string
+  (let ((action (g-simple-action-new "simple" "b")))
     (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
     (is (string= "b"
                  (g-variant-type-dup-string (g-action-parameter-type action))))))
@@ -163,4 +169,4 @@
   (is (string= "test(12)"
                (g-action-print-detailed-name "test" (g-variant-new-int32 12)))))
 
-;;; 2021-8-2
+;;; 2021-9-8

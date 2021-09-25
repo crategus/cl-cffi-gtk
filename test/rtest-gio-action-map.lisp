@@ -23,11 +23,6 @@
 
 ;;; --- Functions --------------------------------------------------------------
 
-;;;     g_action_map_lookup_action
-;;;     g_action_map_add_action_entries
-
-;; Example in the documentation of g-action-map-add-action-entries
-
 (defun activate-quit (action parameter)
   (declare (ignore action parameter)))
 
@@ -43,6 +38,18 @@
         (group (g-simple-action-group-new)))
     (g-action-map-add-action-entries group entries)
     group))
+
+;;;     g_action_map_lookup_action
+
+(test g-action-map-lookup-action
+  (let ((group (create-action-group)))
+    (is (typep (g-action-map-lookup-action group "quit") 'g-simple-action))
+    (is (typep (g-action-map-lookup-action group "print") 'g-simple-action))
+    (is-false (g-action-map-lookup-action group "unknown"))))
+
+;;;     g_action_map_add_action_entries
+
+;; Example in the documentation of g-action-map-add-action-entries
 
 (test g-action-map-add-action-entries
   (let* ((group (create-action-group))
@@ -73,4 +80,4 @@
     (g-action-map-remove-action group "quit")
     (is-false (g-action-map-lookup-action group "quit"))))
 
-;;; 2021-8-2
+;;; 2021-9-8

@@ -1,60 +1,351 @@
-(def-suite gobject-base :in gobject-suite)
-(in-suite gobject-base)
+(def-suite g-object :in gobject-suite)
+(in-suite g-object)
+
+;;; --- Types and Values -------------------------------------------------------
 
 ;;;     GObject
-;;;     GObjectClass
-;;;     GParameter
-;;;     GObjectConstructParam
-;;;     GInitiallyUnowned
-;;;     GInitiallyUnownedClass
+
+(test g-object-class
+  ;; Type check
+  (is (g-type-is-object "GObject"))
+  ;; Check the registered name
+  (is (eq 'g-object
+          (registered-object-type-by-name "GObject")))
+  ;; Check the type initializer
+  (is (eq (gtype "GObject")
+          (gtype (foreign-funcall "g_object_get_type" g-size))))
+  ;; Check the parent, GObject has no parent
+  (is (eq (gtype nil)
+          (g-type-parent "GObject")))
+  ;; Check the children
+  #+win32
+  (is (or (equal '("GWin32RegistryKey" "GWin32AppInfoApplication"
+                   "GWin32AppInfoShellVerb" "GWin32AppInfoFileExtension"
+                   "GWin32AppInfoHandler" "GThemedIcon" "GWin32AppInfoURLSchema"
+                   "GInitiallyUnowned" "GBinding" "GAppLaunchContext"
+                   "GEmblemedIcon" "GEmblem" "GSimpleAction" "GPropertyAction"
+                   "GSimpleActionGroup" "GApplication" "GApplicationCommandLine"
+                   "GMenuModel" "GMenuItem" "GdkPixbuf" "GdkPixbufAnimation"
+                   "GdkPixbufLoader" "PangoRenderer" "PangoCoverage" "PangoFont"
+                   "PangoFontFamily" "PangoFontFace" "PangoFontMap"
+                   "PangoFontset" "PangoContext" "PangoLayout" "GdkCursor"
+                   "GdkDeviceTool" "GdkDevice" "GdkDeviceManager" "GdkScreen"
+                   "GdkVisual" "GdkDisplay" "GdkDisplayManager" "GdkSeat"
+                   "GdkMonitor" "GdkWindow" "GdkFrameClock" "GdkDrawingContext"
+                   "GdkGLContext" "GdkKeymap" "GdkDragContext" "GtkAccelGroup"
+                   "GtkAccelMap" "GtkClipboard" "GtkSettings" "GtkBuilder"
+                   "GtkIconFactory" "GtkCssProvider" "GtkUIManager"
+                   "GtkStyleContext" "GtkIconTheme" "GtkStyle" "GtkIMContext"
+                   "GtkWindowGroup" "GtkStatusIcon" "GtkTextTag" "GtkTextMark"
+                   "GtkTextBuffer" "GtkTextTagTable" "GtkTextChildAnchor"
+                   "GtkTreeModelSort" "GtkTreeModelFilter" "GtkTreeStore"
+                   "GtkTreeSelection" "GtkCellAreaContext" "GtkListStore"
+                   "GtkEntryBuffer" "GtkEntryCompletion" "GtkSizeGroup"
+                   "GtkTooltip" "GtkRecentManager" "GtkActionGroup" "GtkAction"
+                   "GtkEventController" "GtkPrintOperation" "GtkPrintContext"
+                   "GtkPrintSettings" "GtkPageSetup" "GdkWin32Selection"
+                   "GdkWindowImpl" "AtkObject" "AtkUtil" "AtkRelationSet"
+                   "AtkMisc" "GtkCssNode" "GtkStyleCascade" "GFileMonitor"
+                   "GVolumeMonitor" "GVfs" "GNotificationBackend" "GTypeModule"
+                   "GProxyResolverGnome" "GTlsBackendGnutls" "GLibproxyResolver"
+                   "GSettingsBackend" "GDummyProxyResolver" "GHttpProxy"
+                   "GSocks4aProxy" "GSocks5Proxy" "GDummyTlsBackend"
+                   "GNetworkMonitorBase" "GResourceFile" "GtkStyleProperty"
+                   "GtkCssImage" "GtkThemingEngine" "GtkCssStyle"
+                   "GtkCssGadget")
+                 (mapcar #'g-type-name (g-type-children "GObject")))
+          (equal '("GWin32RegistryKey" "GWin32AppInfoApplication"
+                   "GWin32AppInfoShellVerb" "GWin32AppInfoFileExtension"
+                   "GWin32AppInfoHandler" "GThemedIcon" "GWin32AppInfoURLSchema"
+                   "GInitiallyUnowned" "GBinding" "GAppLaunchContext"
+                   "GEmblemedIcon" "GEmblem" "GSimpleAction" "GPropertyAction"
+                   "GSimpleActionGroup" "GApplication" "GApplicationCommandLine"
+                   "GMenuModel" "GMenuItem" "GdkPixbuf" "GdkPixbufAnimation"
+                   "GdkPixbufLoader" "PangoRenderer" "PangoCoverage" "PangoFont"
+                   "PangoFontFamily" "PangoFontFace" "PangoFontMap"
+                   "PangoFontset" "PangoContext" "PangoLayout" "GdkCursor"
+                   "GdkDeviceTool" "GdkDevice" "GdkDeviceManager" "GdkScreen"
+                   "GdkVisual" "GdkDisplay" "GdkDisplayManager" "GdkSeat"
+                   "GdkMonitor" "GdkWindow" "GdkFrameClock" "GdkDrawingContext"
+                   "GdkGLContext" "GdkKeymap" "GdkDragContext" "GtkAccelGroup"
+                   "GtkAccelMap" "GtkClipboard" "GtkSettings" "GtkBuilder"
+                   "GtkIconFactory" "GtkCssProvider" "GtkUIManager"
+                   "GtkStyleContext" "GtkIconTheme" "GtkStyle" "GtkIMContext"
+                   "GtkWindowGroup" "GtkStatusIcon" "GtkTextTag" "GtkTextMark"
+                   "GtkTextBuffer" "GtkTextTagTable" "GtkTextChildAnchor"
+                   "GtkTreeModelSort" "GtkTreeModelFilter" "GtkTreeStore"
+                   "GtkTreeSelection" "GtkCellAreaContext" "GtkListStore"
+                   "GtkEntryBuffer" "GtkEntryCompletion" "GtkSizeGroup"
+                   "GtkTooltip" "GtkRecentManager" "GtkActionGroup" "GtkAction"
+                   "GtkEventController" "GtkPrintOperation" "GtkPrintContext"
+                   "GtkPrintSettings" "GtkPageSetup" "GdkWin32Selection"
+                   "GdkWindowImpl" "AtkObject" "AtkUtil" "AtkRelationSet"
+                   "AtkMisc")
+             (mapcar #'g-type-name (g-type-children "GObject")))))
+  #-win32
+  (is (or (equal '("GInitiallyUnowned" "GBinding" "GAppLaunchContext"
+                   "GThemedIcon" "GEmblemedIcon" "GEmblem" "GSimpleAction"
+                   "GPropertyAction" "GSimpleActionGroup" "GApplication"
+                   "GApplicationCommandLine" "GMenuModel" "GMenuItem"
+                   "GdkPixbuf" "GdkPixbufAnimation" "GdkPixbufLoader"
+                   "PangoRenderer" "PangoCoverage" "PangoFont" "PangoFontFamily"
+                   "PangoFontFace" "PangoFontMap" "PangoFontset" "PangoContext"
+                   "PangoLayout" "GdkCursor" "GdkDeviceTool" "GdkDevice"
+                   "GdkDeviceManager" "GdkScreen" "GdkVisual" "GdkDisplay"
+                   "GdkDisplayManager" "GdkSeat" "GdkMonitor" "GdkWindow"
+                   "GdkFrameClock" "GdkDrawingContext" "GdkGLContext"
+                   "GdkKeymap" "GdkDragContext" "GtkAccelGroup" "GtkAccelMap"
+                   "GtkClipboard" "GtkSettings" "GtkBuilder" "GtkIconFactory"
+                   "GtkCssProvider" "GtkUIManager" "GtkStyleContext"
+                   "GtkIconTheme" "GtkStyle" "GtkIMContext" "GtkWindowGroup"
+                   "GtkStatusIcon" "GtkTextTag" "GtkTextMark" "GtkTextBuffer"
+                   "GtkTextTagTable" "GtkTextChildAnchor" "GtkTreeModelSort"
+                   "GtkTreeModelFilter" "GtkTreeStore" "GtkTreeSelection"
+                   "GtkCellAreaContext" "GtkListStore" "GtkEntryBuffer"
+                   "GtkEntryCompletion" "GtkSizeGroup" "GtkTooltip"
+                   "GtkRecentManager" "GtkActionGroup" "GtkAction"
+                   "GtkEventController" "GtkPrintOperation" "GtkPrintContext"
+                   "GtkPrintSettings" "GtkPageSetup" "GtkPrinter"
+                   "GtkPrintBackend" "GtkPrintJob" "GdkWindowImpl"
+                   "GFileMonitor" "GVolumeMonitor" "GVfs" "GNotificationBackend"
+                   "GTypeModule" "GSettingsBackend" "GMemoryMonitorDBus"
+                   "GMemoryMonitorPortal" "GNetworkMonitorBase"
+                   "GProxyResolverPortal" "GDummyProxyResolver" "GHttpProxy"
+                   "GSocks4aProxy" "GSocks5Proxy" "GDummyTlsBackend" "GVfsIcon"
+                   "GVfsUriMapper" "GTask" "GInputStream" "GDBusAuthObserver"
+                   "GCredentials" "GIOStream" "GDBusConnection" "GDBusProxy"
+                   "GSocketAddress" "GSocket" "GSocketClient"
+                   "GSocketAddressEnumerator" "GOutputStream" "GDBusAuth"
+                   "GDBusAuthMechanism" "GSocketControlMessage" "GCancellable"
+                   "GDBusMessage" "GDBusMethodInvocation" "GLocalFile"
+                   "AtkObject" "GMountOperation" "AtkUtil" "AtkRelationSet"
+                   "SpiRegister" "SpiLeasing" "AtkMisc" "GtkStyleCascade"
+                   "GResourceFile" "GtkStyleProperty" "GtkCssImage"
+                   "GtkThemingEngine")
+                 (mapcar #'g-type-name (g-type-children "GObject")))
+          (equal '("GInitiallyUnowned" "GBinding" "GAppLaunchContext"
+                   "GThemedIcon" "GEmblemedIcon" "GEmblem" "GSimpleAction"
+                   "GPropertyAction" "GSimpleActionGroup" "GApplication"
+                   "GApplicationCommandLine" "GMenuModel" "GMenuItem"
+                   "GdkPixbuf" "GdkPixbufAnimation" "GdkPixbufLoader"
+                   "PangoRenderer" "PangoCoverage" "PangoFont" "PangoFontFamily"
+                   "PangoFontFace" "PangoFontMap" "PangoFontset" "PangoContext"
+                   "PangoLayout" "GdkCursor" "GdkDeviceTool" "GdkDevice"
+                   "GdkDeviceManager" "GdkScreen" "GdkVisual" "GdkDisplay"
+                   "GdkDisplayManager" "GdkSeat" "GdkMonitor" "GdkWindow"
+                   "GdkFrameClock" "GdkDrawingContext" "GdkGLContext"
+                   "GdkKeymap" "GdkDragContext" "GtkAccelGroup" "GtkAccelMap"
+                   "GtkClipboard" "GtkSettings" "GtkBuilder" "GtkIconFactory"
+                   "GtkCssProvider" "GtkUIManager" "GtkStyleContext"
+                   "GtkIconTheme" "GtkStyle" "GtkIMContext" "GtkWindowGroup"
+                   "GtkStatusIcon" "GtkTextTag" "GtkTextMark" "GtkTextBuffer"
+                   "GtkTextTagTable" "GtkTextChildAnchor" "GtkTreeModelSort"
+                   "GtkTreeModelFilter" "GtkTreeStore" "GtkTreeSelection"
+                   "GtkCellAreaContext" "GtkListStore" "GtkEntryBuffer"
+                   "GtkEntryCompletion" "GtkSizeGroup" "GtkTooltip"
+                   "GtkRecentManager" "GtkActionGroup" "GtkAction"
+                   "GtkEventController" "GtkPrintOperation" "GtkPrintContext"
+                   "GtkPrintSettings" "GtkPageSetup" "GtkPrinter"
+                   "GtkPrintBackend" "GtkPrintJob" "GdkWindowImpl"
+                   "GFileMonitor" "GVolumeMonitor" "GVfs" "GNotificationBackend"
+                   "GTypeModule" "GSettingsBackend" "GMemoryMonitorDBus"
+                   "GMemoryMonitorPortal" "GNetworkMonitorBase"
+                   "GProxyResolverPortal" "GDummyProxyResolver" "GHttpProxy"
+                   "GSocks4aProxy" "GSocks5Proxy" "GDummyTlsBackend" "GVfsIcon"
+                   "GVfsUriMapper" "GTask" "GInputStream" "GDBusAuthObserver"
+                   "GCredentials" "GIOStream" "GDBusConnection" "GDBusProxy"
+                   "GSocketAddress" "GSocket" "GSocketClient"
+                   "GSocketAddressEnumerator" "GOutputStream" "GDBusAuth"
+                   "GDBusAuthMechanism" "GSocketControlMessage" "GCancellable"
+                   "GDBusMessage" "GDBusMethodInvocation" "GLocalFile"
+                   "AtkObject" "GMountOperation" "AtkUtil" "AtkRelationSet"
+                   "SpiRegister" "SpiLeasing" "AtkMisc" "GtkStyleCascade"
+                   "GResourceFile" "GtkStyleProperty" "GtkCssImage"
+                   "GtkThemingEngine" "GtkCssNode" "GtkCssStyle" "GtkCssGadget")
+                 (mapcar #'g-type-name (g-type-children "GObject")))
+          (equal '("GInitiallyUnowned" "GBinding" "GAppLaunchContext"
+                   "GThemedIcon" "GEmblemedIcon" "GEmblem" "GSimpleAction"
+                   "GPropertyAction" "GSimpleActionGroup" "GApplication"
+                   "GApplicationCommandLine" "GMenuModel" "GMenuItem"
+                   "GdkPixbuf" "GdkPixbufAnimation" "GdkPixbufLoader"
+                   "PangoRenderer" "PangoCoverage" "PangoFont" "PangoFontFamily"
+                   "PangoFontFace" "PangoFontMap" "PangoFontset" "PangoContext"
+                   "PangoLayout" "GdkCursor" "GdkDeviceTool" "GdkDevice"
+                   "GdkDeviceManager" "GdkScreen" "GdkVisual" "GdkDisplay"
+                   "GdkDisplayManager" "GdkSeat" "GdkMonitor" "GdkWindow"
+                   "GdkFrameClock" "GdkDrawingContext" "GdkGLContext"
+                   "GdkKeymap" "GdkDragContext" "GtkAccelGroup" "GtkAccelMap"
+                   "GtkClipboard" "GtkSettings" "GtkBuilder" "GtkIconFactory"
+                   "GtkCssProvider" "GtkUIManager" "GtkStyleContext"
+                   "GtkIconTheme" "GtkStyle" "GtkIMContext" "GtkWindowGroup"
+                   "GtkStatusIcon" "GtkTextTag" "GtkTextMark" "GtkTextBuffer"
+                   "GtkTextTagTable" "GtkTextChildAnchor" "GtkTreeModelSort"
+                   "GtkTreeModelFilter" "GtkTreeStore" "GtkTreeSelection"
+                   "GtkCellAreaContext" "GtkListStore" "GtkEntryBuffer"
+                   "GtkEntryCompletion" "GtkSizeGroup" "GtkTooltip"
+                   "GtkRecentManager" "GtkActionGroup" "GtkAction"
+                   "GtkEventController" "GtkPrintOperation" "GtkPrintContext"
+                   "GtkPrintSettings" "GtkPageSetup" "GtkPrinter"
+                   "GtkPrintBackend" "GtkPrintJob" "GdkWindowImpl"
+                   "GFileMonitor" "GVolumeMonitor" "GVfs" "GNotificationBackend"
+                   "GTypeModule" "GSettingsBackend" "GMemoryMonitorDBus"
+                   "GMemoryMonitorPortal" "GNetworkMonitorBase"
+                   "GProxyResolverPortal" "GDummyProxyResolver" "GHttpProxy"
+                   "GSocks4aProxy" "GSocks5Proxy" "GDummyTlsBackend" "GVfsIcon"
+                   "GVfsUriMapper" "GTask" "GInputStream" "GDBusAuthObserver"
+                   "GCredentials" "GIOStream" "GDBusConnection" "GDBusProxy"
+                   "GSocketAddress" "GSocket" "GSocketClient"
+                   "GSocketAddressEnumerator" "GOutputStream" "GDBusAuth"
+                   "GDBusAuthMechanism" "GSocketControlMessage" "GCancellable"
+                   "GDBusMessage" "GDBusMethodInvocation" "GLocalFile"
+                   "AtkObject" "GMountOperation" "AtkUtil" "AtkRelationSet"
+                   "SpiRegister" "SpiLeasing" "AtkMisc" "GtkStyleCascade"
+                   "GResourceFile" "GtkStyleProperty" "GtkCssImage"
+                   "GtkThemingEngine" "GtkCssNode" "GtkCssStyle" "GtkCssGadget"
+                   "GdkPixbufAnimationIter" "LZWDecoder" "GtkActionMuxer"
+                   "GtkApplicationAccels" "GtkApplicationImpl"
+                   "GSimpleAsyncResult" "AtkRelation" "GtkActionHelper"
+                   "GtkIconInfo" "GFileIcon" "RsvgHandle" "GtkTextLayout"
+                   "GFileInfo" "GProxyDrive" "GProxyMount" "GProxyShadowMount"
+                   "GProxyVolume" "GMountTracker" "GtkTrashMonitor"
+                   "GDaemonFile" "GUnixFDList" "GDBusInterfaceSkeleton"
+                   "GSettings" "GtkFileSystem" "GDummyFile" "GtkPrinterOption"
+                   "GtkPrinterOptionSet" "CdClient" "CdDevice" "CdProfile"
+                   "CdSensor" "GtkCloudprintAccount" "GAppInfoMonitor"
+                   "GtkFileSystemModel" "GFileEnumerator" "GNetworkAddress"
+                   "GLibproxyResolver" "GProxyResolverGnome"
+                   "GSimpleProxyResolver" "GInetAddress" "GInetAddressMask"
+                   "GResolver")
+                 (mapcar #'g-type-name (g-type-children "GObject")))))
+  ;; Check the interfaces
+  (is (equal '()
+             (mapcar #'g-type-name (g-type-interfaces "GObject"))))
+  ;; Check the class properties
+  (is (equal '()
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GObject"))
+                   #'string-lessp)))
+  ;; Check the class definition
+  #+nil ; does not work for the g-object class
+  (is (equal '()
+             (get-g-type-definition "GObject")))
+)
+
+;;; --- Properties -------------------------------------------------------------
+
+(test g-object-properties
+  (let ((object (make-instance 'gtk-button)))
+    (is (pointerp (g-object-pointer object)))
+    (is (pointerp (g-object-pointer object)))
+    (is-true (g-object-has-reference object))
+    (is (typep (g-object-signal-handlers object) 'array))))
+
+(test g-object-pointer.1
+  (let* ((object (make-instance 'gtk-button))
+         (ptr (g-object-pointer object)))
+    (is (pointerp ptr))
+    (is (null-pointer-p (setf (g-object-pointer object) (null-pointer))))
+    (is (null-pointer-p (g-object-pointer object)))
+    (is (pointerp (setf (g-object-pointer object) ptr)))
+    (is (pointerp (g-object-pointer object)))))
+
+;; Use the abbreviation POINTER for G-OBJECT-POINTER
+(test g-object-pointer.2
+  (let* ((object (make-instance 'gtk-button))
+         (ptr (pointer object)))
+    (is (pointerp ptr))
+    (is (null-pointer-p (setf (pointer object) (null-pointer))))
+    (is (null-pointer-p (pointer object)))
+    (is (pointerp (setf (pointer object) ptr)))
+    (is (pointerp (pointer object)))))
+
+;;; --- Signals ----------------------------------------------------------------
+
+(test g-object-signals
+  ;; Check the list of signals
+  (is (equal '("notify")
+             (mapcar #'g-signal-name
+                     (g-signal-list-ids "GObject"))))
+
+  ;; Query info for "notify" signal
+  (let ((query (g-signal-query (g-signal-lookup "notify" "GObject"))))
+    (is (string= "notify" (g-signal-query-signal-name query)))
+    (is (string= "GObject" (g-type-name (g-signal-query-owner-type query))))
+    (is (equal '(:RUN-FIRST :NO-RECURSE :DETAILED :ACTION :NO-HOOKS)
+               (g-signal-query-signal-flags query)))
+    (is (string= "void" (g-type-name (g-signal-query-return-type query))))
+    (is (equal '("GParam")
+               (mapcar #'g-type-name (g-signal-query-param-types query))))
+    (is-false (g-signal-query-signal-detail query))))
+
+;;; --- Functions --------------------------------------------------------------
 
 ;;;     g-type-is-object
 
 (test g-type-is-object
-  (is-true  (g-type-is-object "GtkButton"))
+  ;; Check for the fundamental types
   (is-false (g-type-is-object "gboolean"))
-  (is-false (g-type-is-object "GtkWindowType")))
+  (is-false (g-type-is-object "GtkTextIter"))
+  (is-false (g-type-is-object "gchar"))
+  (is-false (g-type-is-object "GChecksum"))
+  (is-false (g-type-is-object "gdouble"))
+  (is-false (g-type-is-object "GtkWindowType"))
+  (is-false (g-type-is-object "GtkApplicationInhibitFlags"))
+  (is-false (g-type-is-object "gfloat"))
+  (is-false (g-type-is-object "GType"))
+  (is-false (g-type-is-object "gint"))
+  (is-false (g-type-is-object "gint64"))
+  (is-false (g-type-is-object "GtkActionable"))
+  (is-false (g-type-is-object "unknown"))
+  (is-false (g-type-is-object "glong"))
+  (is-false (g-type-is-object "void"))
+  (is-true  (g-type-is-object "GtkApplication"))
+  (is-false (g-type-is-object "GParamBoolean"))
+  (is-false (g-type-is-object "gpointer"))
+  (is-false (g-type-is-object "gchararray"))
+  (is-false (g-type-is-object "guchar"))
+  (is-false (g-type-is-object "guint"))
+  (is-false (g-type-is-object "guint64"))
+  (is-false (g-type-is-object "gulong"))
+  (is-false (g-type-is-object "GVariant"))
+  ;; Some more types
+  (is-true  (g-type-is-object "GObject"))
+  (is-true  (g-type-is-object "GtkWidget"))
+  (is-true  (g-type-is-object "GtkContainer"))
+  ;; Check for NIL
+  (is-false (g-type-is-object nil)))
 
 ;;;     g-is-object
 
 (test g-is-object
-  (is-true  (g-is-object (make-instance 'gtk-button))))
+  (is-true  (g-is-object (make-instance 'gtk-button)))
+  (is-true  (g-is-object (g-object-pointer (make-instance 'gtk-button))))
+  (is-false (g-is-object (g-param-spec-boolean "new" "nick" "blurb" nil nil))))
 
 ;;;     g-is-object-class
-
-(test g-is-object-class
-  (is-true  (g-is-object-class (g-type-class-ref "GtkButton"))))
-
 ;;;     g-object-class
-
-(test g-object-class
-  (is (g-is-object-class (g-object-class (make-instance 'gtk-button)))))
 
 ;;;     g-object-type
 
 (test g-object-type
   (is-false (g-object-type nil))
   (is (eq (gtype "GtkButton")
-          (g-object-type (make-instance 'gtk-button)))))
+          (g-object-type (make-instance 'gtk-button))))
+  (is (eq (gtype "GtkButton")
+          (g-object-type (g-object-pointer (make-instance 'gtk-button))))))
 
 ;;;     g-object-type-name
 
 (test g-object-type-name
   (is-false (g-object-type-name nil))
-  (is (string= "GtkButton" (g-object-type-name (make-instance 'gtk-button)))))
+  (is (string= "GtkButton"
+               (g-object-type-name (make-instance 'gtk-button))))
+  (is (string= "GtkButton"
+               (g-object-type-name
+                   (g-object-pointer (make-instance 'gtk-button))))))
 
 ;;;     g-object-class-type
-
-(test g-object-class-type
-  (is (eq (gtype "GtkButton")
-          (g-object-class-type (g-object-class (make-instance 'gtk-button))))))
-
 ;;;     g-object-class-name
-
-(test g-object-class-name
-  (is (string= "GtkButton"
-               (g-object-class-name (g-object-class (make-instance 'gtk-button))))))
-
 ;;;     g_object_class_install_property
 ;;;     g_object_class_install_properties
 
@@ -62,11 +353,14 @@
 
 (test g-object-class-find-property
   (is (g-is-param-spec (g-object-class-find-property "GtkLabel" "label")))
-  (is (g-is-param-spec (g-object-class-find-property (gtype-id (gtype "GtkLabel"))
-                                                     "label")))
-  (is (g-is-param-spec (g-object-class-find-property (gtype "GtkLabel") "label")))
-  ;; Unknown property-name returns nil
-  (is-false (g-object-class-find-property "GtkLabel" "xxx")))
+  (is (g-is-param-spec
+          (g-object-class-find-property (gtype-id (gtype "GtkLabel")) "label")))
+  (is (g-is-param-spec
+          (g-object-class-find-property (gtype "GtkLabel") "label")))
+  ;; Returns nil Unknown if the class does not have the property
+  (is-false (g-object-class-find-property "GtkLabel" "xxx"))
+  ;; Error when gtype is not GObject type
+  (signals (error) (g-object-class-find-property "unknown" "xxx")))
 
 ;;;     g-object-class-list-properties
 
@@ -86,7 +380,9 @@
                "single-line-mode" "angle" "max-width-chars"
                "track-visited-links" "lines" "xalign" "yalign")
              (mapcar #'g-param-spec-name
-                     (g-object-class-list-properties "GtkLabel")))))
+                     (g-object-class-list-properties "GtkLabel"))))
+  ;; Error when gtype is not GObject type
+  (signals (error) (g-object-class-list-properties "unknown")))
 
 ;;;     g_object_class_override_property
 ;;;     g_object_interface_install_property
@@ -95,12 +391,10 @@
 
 (test g-object-interface-find-property
   (is (g-is-param-spec (g-object-interface-find-property "GAction" "enabled")))
-  (is (g-is-param-spec (g-object-interface-find-property (gtype "GAction")
-                                                         "enabled")))
   (is (g-is-param-spec
-        (g-object-interface-find-property (gtype-id (gtype "GAction"))
-                                          "enabled")))
-  (is-false (g-object-interface-find-property "GAction" "xxx")))
+          (g-object-interface-find-property (gtype "GAction") "enabled")))
+  (is-false (g-object-interface-find-property "GAction" "xxx"))
+  (signals (error) (g-object-interface-find-property "unknwon" "xxx")))
 
 ;;;     g-object-interface-list-properties
 
@@ -113,7 +407,8 @@
                      (g-object-interface-list-properties "GAction"))))
   (is (equal '()
              (mapcar #'g-param-spec-name
-                     (g-object-interface-list-properties "GActionGroup")))))
+                     (g-object-interface-list-properties "GActionGroup"))))
+  (signals (error) (g-object-interface-list-properties "unknown")))
 
 ;;;     g-object-new
 
@@ -152,17 +447,15 @@
 
 ;;;     g-object-notify
 
-#+nil
 (test g-object-notify
   (let* ((message nil)
          (button (make-instance 'gtk-button))
          (handler-id (g-signal-connect button "notify::can-default"
                        (lambda (widget pspec)
-                         (declare (ignore widget))
                          (setf message
                                "Signal notify::can-default in g-object-notify")
-                         (is (g-is-param-spec pspec))
-                       ))))
+                         (is (gtype "GtkButton") (g-object-type widget))
+                         (is (g-is-param-spec pspec))))))
     (is (integerp handler-id))
     ;; Notify button
     (is-false (g-object-notify button "can-default"))
@@ -173,15 +466,14 @@
 ;;;     g-object-freeze-notify
 ;;;     g-object-thaw-notify
 
-#+nil
 (test g-object-freeze-notify.1
   (let* ((message nil)
          (button (make-instance 'gtk-button))
          (handler-id (g-signal-connect button "notify::can-default"
                        (lambda (widget pspec)
-                         (declare (ignore widget))
                          (setf message
                                (append message (list "notify::can-default")))
+                         (is (eq (gtype "GtkButton") (g-object-type widget)))
                          (is (g-is-param-spec pspec))))))
     (is (integerp handler-id))
     ;; Freeze the notify signal
@@ -197,16 +489,15 @@
 
 ;; Counter sample without g-object-freeze-notify
 
-#+nil
 (test g-object-freeze-notify.2
   (let* ((message nil)
          (button (make-instance 'gtk-button))
          (handler-id (g-signal-connect button "notify::can-default"
-                       (lambda (widget pspec)
-                         (declare (ignore widget))
-                         (setf message
-                               (append message (list "notify::can-default")))
-                         (is (g-is-param-spec pspec))))))
+                         (lambda (widget pspec)
+                           (setf message
+                                 (append message (list "notify::can-default")))
+                           (is (eq (gtype "GtkButton") (g-object-type widget)))
+                           (is (g-is-param-spec pspec))))))
     (is (integerp handler-id))
     ;; Freeze the notify signal
 ;    (g-object-freeze-notify button)
@@ -229,7 +520,7 @@
     (is (pointerp (g-object-data button "property")))
     (is (= 100 (pointer-address (g-object-data button "property"))))
     (is (pointerp (setf (g-object-data button "property")
-                        (pointer (make-instance 'gtk-label)))))
+                        (g-object-pointer (make-instance 'gtk-label)))))
     (is (pointerp (g-object-data button "property")))
     (is (typep (gobject::get-g-object-for-pointer
                    (g-object-data button "property"))
@@ -272,7 +563,6 @@
 
 ;;;     g_object_dup_data
 ;;;     g_object_replace_data
-
 ;;;     g_object_get_qdata
 ;;;     g_object_set_qdata
 ;;;     g_object_set_qdata_full
@@ -284,17 +574,24 @@
 
 (test g-object-property.1
   (let ((obj (make-instance 'gtk-label)))
-    (is (= 1.0d0 (setf (g-object-property (pointer obj) "angle") 1.0d0)))
-    (is (= 1.0d0 (g-object-property (pointer obj) "angle")))
-    (is (eq :start (setf (g-object-property (pointer obj) "ellipsize") :start)))
-    (is (eq :start (g-object-property (pointer obj) "ellipsize")))
-    (is (eq :fill (setf (g-object-property (pointer obj) "justify") :fill)))
-    (is (eq :fill (g-object-property (pointer obj) "justify")))
+    (is (= 1.0d0
+           (setf (g-object-property (g-object-pointer obj) "angle") 1.0d0)))
+    (is (= 1.0d0 (g-object-property (g-object-pointer obj) "angle")))
+    (is (eq :start
+            (setf (g-object-property (g-object-pointer obj) "ellipsize")
+                  :start)))
+    (is (eq :start (g-object-property (g-object-pointer obj) "ellipsize")))
+    (is (eq :fill
+            (setf (g-object-property (g-object-pointer obj) "justify") :fill)))
+    (is (eq :fill (g-object-property (g-object-pointer obj) "justify")))
     (is (string= "label"
-                 (setf (g-object-property (pointer obj) "label") "label")))
-    (is (string= "label" (g-object-property (pointer obj) "label")))
-    (is (= 10 (setf (g-object-property (pointer obj) "max-width-chars") 10)))
-    (is (= 10 (g-object-property (pointer obj) "max-width-chars")))))
+                 (setf (g-object-property (g-object-pointer obj) "label")
+                       "label")))
+    (is (string= "label" (g-object-property (g-object-pointer obj) "label")))
+    (is (= 10
+           (setf (g-object-property (g-object-pointer obj) "max-width-chars")
+                 10)))
+    (is (= 10 (g-object-property (g-object-pointer obj) "max-width-chars")))))
 
 (test g-object-property.2
   (let ((obj (make-instance 'gtk-label)))
@@ -317,10 +614,8 @@
 
 (test g-object-property.4
   (let ((obj (make-instance 'gtk-label :label "label")))
-;    (is (eq 'pango-attr-list (type-of (g-object-property obj "attributes"))))))
-    (is-false (g-object-property obj "attributes"))
-    (setf (g-object-property obj "attributes") (pango-attr-list-new))
-    (is (typep (g-object-property obj "attributes") 'pango-attr-list))))
+    ;; FIXME: Is  NIL the expected return value?
+    (is-false (g-object-property obj "attributes"))))
 
 (test g-object-property.5
   (let ((obj (make-instance 'gtk-label :label "label")))
@@ -333,13 +628,17 @@
 (test g-object-property.6
   (let ((obj (make-instance 'gtk-label :label "label")))
     (is (eq :none (g-object-property obj "ellipsize" "PangoEllipsizeMode")))
-    (setf (g-object-property obj "ellipsize" "PangoEllipsizeMode") :start)
+    (is (eq :start
+            (setf (g-object-property obj "ellipsize" "PangoEllipsizeMode")
+                  :start)))
     (is (eq :start (g-object-property obj "ellipsize")))))
 
 (test g-object-property.7
   (let ((obj (make-instance 'gtk-label :label "label")))
     (is (eq :left (g-object-property obj "justify")))
-    (is (eq :center (setf (g-object-property obj "justify" "GtkJustification") :center)))
+    (is (eq :center
+            (setf (g-object-property obj "justify" "GtkJustification")
+                  :center)))
     (is (eq :center (g-object-property obj "justify")))))
 
 (test g-object-property.8
@@ -359,7 +658,8 @@
   (let ((obj (make-instance 'gtk-label :label "label")))
     (is (= 16777215 (g-object-property obj "mnemonic-keyval" "guint")))
     ;; mnemonic-keyval is not writable
-;    (is (= 10000000 (setf (g-object-property obj "mnemonic-keyval" "guint") 10000000)))
+;    (is (= 10000000
+;            (setf (g-object-property obj "mnemonic-keyval" "guint") 10000000)))
 ;    (is (= 10000000 (g-object-property obj "mnmonic-keyval")))
   ))
 
@@ -378,4 +678,4 @@
 ;;;     g_weak_ref_set
 ;;;     g_assert_finalize_object
 
-;;; 2021-8-20
+;;; 2021-9-12

@@ -31,7 +31,7 @@
 
 (load "rtest-gio-application.lisp")
 (load "rtest-gio-application-command-line.lisp")
-;  gio.action-group.lisp
+(load "rtest-gio-action-group.lisp")
 (load "rtest-gio-action-map.lisp")
 (load "rtest-gio-simple-action-group.lisp")
 (load "rtest-gio-action.lisp")
@@ -47,4 +47,4 @@
 ;  not implemented              - GDBusMenuModel
 ;  not implemented              - GNotification
 
-;;; 2021-8-14
+;;; 2021-9-8

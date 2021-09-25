@@ -26,9 +26,7 @@
                         "action-target" "GVariant" T T))
              (get-g-type-definition "GtkActionable"))))
 
-;;; ----------------------------------------------------------------------------
-;;; Properties and Accessors
-;;; ----------------------------------------------------------------------------
+;;; --- Properties and Accessors -----------------------------------------------
 
 (test gtk-actionable-properties
   (let ((button (make-instance 'gtk-button)))
@@ -37,20 +35,26 @@
     ;; Default is null-pointer
     (is-true (null-pointer-p (gtk-actionable-action-target button)))
     ;; Set the name and the target
-    (gtk-actionable-set-detailed-action-name button "app::save")
-    (is (string= "app"
+    (gtk-actionable-set-detailed-action-name button "win.justify::left")
+    (is (string= "win.justify"
                  (gtk-actionable-action-name button)))
-    (is (string= "save"
+    (is (string= "left"
                  (g-variant-string (gtk-actionable-action-target button))))))
 
-;;; ----------------------------------------------------------------------------
-;;; Functions
-;;; ----------------------------------------------------------------------------
+;;; --- Functions --------------------------------------------------------------
 
-;;;    gtk_actionable_set_action_target
+;;;     gtk_actionable_set_action_target
 
-;;; --- gtk_actionable_set_detailed_action_name --------------------------------
+(test gtk-actionable-action-target
+  (let ((button (make-instance 'gtk-button)))
+    (is (null-pointer-p (gtk-actionable-action-target button)))
+    (setf (gtk-actionable-action-target button) (g-variant-new-int16 128))
+    (is (= 128 (g-variant-int16 (gtk-actionable-action-target button))))
+    (setf (gtk-actionable-action-target button) (null-pointer))
+    (is (null-pointer-p (gtk-actionable-action-target button)))))
+
+;;;     gtk_actionable_set_detailed_action_name
 
 ;;; See gtk-actionable-properties for an example
 
-;;; 2021-7-25
+;;; 2021-9-8

@@ -213,7 +213,7 @@
 
 (load "rtest-gtk-widget.lisp")
 (load "rtest-gtk-container.lisp")
-;    gtk.bin.lisp
+(load "rtest-gtk-bin.lisp")
 (load "rtest-gtk-menu-shell.lisp")
 ;    gtk.range.lisp
 ;    gtk.im-context.lisp
