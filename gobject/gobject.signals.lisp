@@ -683,23 +683,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GConnectFlags
-;;;
-;;; typedef enum {
-;;;   G_CONNECT_AFTER   = 1 << 0,
-;;;   G_CONNECT_SWAPPED = 1 << 1
-;;; } GConnectFlags;
-;;;
-;;; The connection flags are used to specify the behaviour of a signal's
-;;; connection.
-;;;
-;;; G_CONNECT_AFTER
-;;;     whether the handler should be called before or after the default handler
-;;;     of the signal.
-;;;
-;;; G_CONNECT_SWAPPED
-;;;     whether the instance and data should be swapped when calling the
-;;;     handler.
 ;;; ----------------------------------------------------------------------------
+
+(defbitfield g-connect-flags
+  :after
+  :swapped)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-connect-flags atdoc:*symbol-name-alias*)
+      "Bitfield"
+      (gethash 'g-connect-flags atdoc:*external-symbols*)
+ "@version{2021-9-23}
+  @begin{short}
+    The connection flags are used to specify the behaviour of the connection
+    of the signal.
+  @end{short}
+  @begin{pre}
+(defbitfield g-connect-flags
+  :after
+  :swapped)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:after]{Whether the handler should be called before or after the
+      default handler of the signal.}
+    @entry[:swapped]{Whether the instance and data should be swapped when
+      calling the handler.}
+  @end{table}
+  @see-function{g-signal-connect}")
+
+(export 'g-connect-flags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_SIGNAL_TYPE_STATIC_SCOPE
