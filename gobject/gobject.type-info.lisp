@@ -822,6 +822,19 @@
 
 ;;; ----------------------------------------------------------------------------
 
+(defvar *warn-unknown-gtype* t)
+
+(defun warn-unknown-gtype (name)
+  ;; Do not print a warning for types which are not derived from GObject
+  ;; FIXME: This is a hack.
+  (when (and *warn-unknown-gtype*
+             (or (numberp name)
+                 (not (member name '("AtkImplementorIface"
+                                     "LispArrayListStore"
+                                     "LispTreeStore")
+                              :test #'string=))))
+    (warn "GType ~A is not known to GObject." name)))
+
 ;; gtype-id replaces the accessor gtype-%id
 
 (defun gtype-id (gtype)
@@ -835,16 +848,6 @@
                  (setf (gtype-%id gtype) id
                        (gethash id *id-to-gtype*) gtype))
              id)))))
-
-(defun warn-unknown-gtype (name)
-  ;; Do not print a warning for types which are not derived from GObject
-  ;; TODO: This is a hack.
-  (when (or (numberp name)
-            (not (member name '("AtkImplementorIface"
-                                "LispArrayListStore"
-                                "LispTreeStore")
-                         :test #'equal)))
-    (warn "GType ~A is not known to GObject" name)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -916,6 +919,8 @@
     (string (gtype-from-name thing))
     (integer (gtype-from-id thing))))
 
+(export 'gtype)
+
 ;;; ----------------------------------------------------------------------------
 
 ;; Check for equality of types. This is faster than the function g-type-is-a.
@@ -942,17 +947,17 @@
               "Whether the type designator is mangled with
                the @code{G_SIGNAL_TYPE_STATIC_SCOPE} flag."))
   (:documentation
-    "@version{2020-11-1}
+    "@version{2021-9-9}
      @begin{short}
        Values of this CFFI foreign type @sym{g-type} identify the C GType.
      @end{short}
-     @sym{g-type} is designated by its name (a string) or a numeric identifier.
-     Functions accept @sym{g-type} designators as a string or integer and
-     return them as a string. The functions @fun{g-type-name} and
-     @fun{g-type-from-name} are used to convert between the name and the
-     numeric identifier. Numeric identifier of @sym{g-type} may be different
-     between different program runs. But string identifier of @sym{g-type} does
-     not change.
+     The @sym{g-type} type is designated by its name, a string, or a numeric
+     identifier. Functions accept @sym{g-type} type designators as a string or
+     integer and return them as a string. The @fun{g-type-name} and
+     @fun{g-type-from-name} functions are used to convert between the name and
+     the numeric identifier. Numeric identifier of @sym{g-type} may be different
+     between different program runs. But string identifier of a @sym{g-type}
+     type does not change.
      @begin[Examples]{dictionary}
        @begin{pre}
 +g-type-double+ => 60
@@ -987,9 +992,10 @@
   (:instance-type g-type))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-type-interface atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'g-type-interface atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'g-type-interface atdoc:*external-symbols*)
- "@version{2020-11-1}
+ "@version{2021-9-9}
   @short{An opaque structure used as the base of all interface types.}
   @begin{pre}
 (defcstruct g-type-interface
@@ -1011,9 +1017,10 @@
   (:type g-type))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-type-class atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'g-type-class atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'g-type-class atdoc:*external-symbols*)
- "@version{2020-11-1}
+ "@version{2021-9-9}
   @short{An opaque structure used as the base of all classes.}
   @begin{pre}
 (defcstruct g-type-class
@@ -1033,9 +1040,10 @@
   (:class (:pointer (:struct g-type-class))))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-type-instance atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'g-type-instance atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'g-type-instance atdoc:*external-symbols*)
- "@version{2020-11-1}
+ "@version{2021-9-9}
   @short{An opaque structure used as the base of all type instances.}
   @begin{pre}
 (defcstruct g-type-instance
@@ -1064,7 +1072,8 @@
   (:value-table :pointer))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-type-info atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'g-type-info atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'g-type-info atdoc:*external-symbols*)
  "@version{2013-8-28}
   @begin{short}
@@ -1150,7 +1159,8 @@
   :deep-derivable)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-type-fundamental-flags atdoc:*symbol-name-alias*) "Bitfield"
+(setf (gethash 'g-type-fundamental-flags atdoc:*symbol-name-alias*)
+      "Bitfield"
       (gethash 'g-type-fundamental-flags atdoc:*external-symbols*)
  "@version{2013-8-28}
   @begin{short}
@@ -1187,7 +1197,8 @@
   (:type-flags g-type-fundamental-flags))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-type-fundamental-info atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'g-type-fundamental-info atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'g-type-fundamental-info atdoc:*external-symbols*)
  "@version{2013-4-1}
   @begin{short}
@@ -1214,7 +1225,8 @@
   (:interface-data :pointer))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-interface-info atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'g-interface-info atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'g-interface-info atdoc:*external-symbols*)
  "@version{2013-8-28}
   @begin{short}
@@ -1251,7 +1263,8 @@
   (:lcopy-value :pointer))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-type-value-table atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'g-type-value-table atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'g-type-value-table atdoc:*external-symbols*)
  "@version{2013-8-28}
   @begin{short}
@@ -1490,7 +1503,8 @@
   (:instance-size :uint))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-type-query atdoc:*symbol-name-alias*) "CStruct"
+(setf (gethash 'g-type-query atdoc:*symbol-name-alias*)
+      "CStruct"
       (gethash 'g-type-query atdoc:*external-symbols*)
  "@version{2020-10-31}
   @begin{short}
@@ -1524,7 +1538,8 @@
   (:value-abstract #.(ash 1 5)))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-type-flags atdoc:*symbol-name-alias*) "Bitfield"
+(setf (gethash 'g-type-flags atdoc:*symbol-name-alias*)
+      "Bitfield"
       (gethash 'g-type-flags atdoc:*external-symbols*)
  "@version{2013-8-28}
   @short{Bit masks used to check or determine characteristics of a type.}
@@ -1554,11 +1569,11 @@
 
 (defcfun ("g_type_fundamental" g-type-fundamental) g-type
  #+cl-cffi-gtk-documentation
- "@version{2020-11-13}
+ "@version{2021-9-9}
   @argument[gtype]{a valid @class{g-type} ID}
-  @return{The fundamental type of the argument @arg{gtype}.}
+  @return{The fundamental @class{g-type} type of the @arg{gtype} argument.}
   @begin{short}
-    The fundamental type which is the ancestor of @arg{gtype}.
+    The fundamental type which is the ancestor of the @arg{gtype} argument.
   @end{short}
   Fundamental types are types that serve as ultimate bases for the derived
   types, thus they are the roots of distinct inheritance hierarchies.
@@ -2414,21 +2429,38 @@
 ;;; g_type_is_a ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_is_a" g-type-is-a) :boolean
- #+cl-cffi-gtk-documentation
- "@version{*2021-3-14}
-  @argument[gtype]{the @class{g-type} ID to check anchestry for}
-  @argument[is-a-type]{possible anchestor of @arg{gtype} or the interface
-    @arg{gtype} could conform to}
-  @return{@em{True} if @arg{gtype} is a @arg{is-a-type} holds true.}
-  @begin{short}
-    If @arg{is-a-type} is a derivable type, check whether @arg{gtype} is a
-    descendant of @arg{is-a-type}.
-  @end{short}
-  If @arg{is-a-type} is an interface, check whether @arg{gtype} conforms to it.
-  @see-class{g-type}"
+(defcfun ("g_type_is_a" %g-type-is-a) :boolean
   (gtype g-type)
   (is-a-type g-type))
+
+(defun g-type-is-a (gtype is-a-type)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-9-10}
+  @argument[gtype]{the @class{g-type} type ID to check anchestry for}
+  @argument[is-a-type]{possible anchestor of @arg{gtype} or the interface
+    that @arg{gtype} could conform to}
+  @return{@em{True} if the @arg{gtype} argument is a @arg{is-a-type}.}
+  @begin{short}
+    If the @arg{is-a-type} argument is a derivable type, check whether the
+    @arg{gtype} argument is a descendant of @arg{is-a-type}.
+  @end{short}
+  If @arg{is-a-type} is an interface, check whether @arg{gtype} conforms to it.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+(g-type-is-a \"gboolean\" +g-type-boolean+) => T
+(g-type-is-a \"GtkTextIter\" +g-type-boxed+) => T
+(g-type-is-a \"GtkWindowType\" +g-type-enum+) => T
+(g-type-is-a \"GtkApplicationInhibitFlags\" +g-type-flags+) => T
+(g-type-is-a \"GtkActionable\" +g-type-interface+) => T
+(g-type-is-a \"unknown\" +g-type-invalid+) => T
+(g-type-is-a \"GtkApplication\" +g-type-object+) => T
+(g-type-is-a \"GParamBoolean\" +g-type-param+) => T
+(g-type-is-a \"GVariant\" +g-type-variant+) => T
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-type}"
+  (let ((*warn-unknown-gtype* nil)) ; no warnings for the test function
+    (%g-type-is-a gtype is-a-type)))
 
 (export 'g-type-is-a)
 
