@@ -89,30 +89,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-application-command-line 'type)
- "@version{2021-5-7}
+ "@version{2021-9-18}
   @begin{short}
-    The @sym{g-application-command-line} class represents a command-line
+    The @sym{g-application-command-line} class represents a command line
     invocation of an application.
   @end{short}
   It is created by the @class{g-application} object and emitted in the
   \"command-line\" signal and virtual function.
 
   The class contains the list of arguments that the program was invoked with.
-  It is also possible to query if the command line invocation was local (i.e.
-  the current process is running in direct response to the invocation) or
-  remote (i.e. some other process forwarded the command line to this process).
+  It is also possible to query if the command line invocation was local, i.e.
+  the current process is running in direct response to the invocation, or
+  remote, i.e. some other process forwarded the command line to this process.
 
-  The @sym{g-application-command-line} object can provide the @code{argc} and
-  @code{argv} parameters for use with the @code{GOptionContext} command-line
-  parsing API, with the function @fun{g-application-command-line-get-arguments}.
+  The @sym{g-application-command-line} object can provide the command line
+  arguments for use with the @class{g-option-context} command line parsing API,
+  with the @fun{g-application-command-line-get-arguments} function.
 
-  The exit status of the originally-invoked process may be set and messages can
-  be printed to stdout or stderr of that process. The lifecycle of the
-  originally-invoked process is tied to the lifecycle of this object (i.e. the
-  process exits when the last reference is dropped).
+  The exit status of the originally invoked process may be set and messages can
+  be printed to stdout or stderr of that process. The life cycle of the
+  originally invoked process is tied to the life cycle of this object, i.e. the
+  process exits when the last reference is dropped.
 
-  The main use for the @sym{g-application-command-line} object (and the
-  \"command-line\" signal) is 'Emacs server' like use cases: You can set the
+  The main use for the @sym{g-application-command-line} object, and the
+  \"command-line\" signal, is 'Emacs server' like use cases: You can set the
   EDITOR environment variable to have e.g. GIT use your favourite editor to edit
   commit messages, and if you already have an instance of the editor running,
   the editing will happen in the running instance, instead of opening a new one.
@@ -124,30 +124,30 @@
     primary instance has returned, and the return value of the signal handler
     becomes the exit status of the launching instance.
     @begin{pre}
-(defun application-commandline (&optional (argv nil))
+(defun application-cmdline (&rest argv)
   (within-main-loop
     (let ((app (make-instance 'g-application
                               :application-id
-                              \"com.crategus.application-commandline\"
+                              \"com.crategus.application-cmdline\"
                               :inactivity-timeout 10000
-                              :flags :handles-command-line)))
-
+                              :flags :handles-command-line))
+          (argv (if argv argv #+sbcl sb-ext:*posix-argv*)))
       ;; Signal handler \"startup\"
       (g-signal-connect app \"startup\"
                         (lambda (application)
                           (declare (ignore application))
                           (format t \"Signal handler 'startup'~%\")))
-
       ;; Signal handler \"command-line\"
       (g-signal-connect app \"command-line\"
           (lambda (application cmdline)
             (declare (ignore application))
-            (let ((args (g-application-command-line-get-arguments cmdline)))
+            (let ((args (g-application-command-line-get-arguments cmdline))
+                  (data (g-application-command-line-get-platform-data cmdline)))
               (format t \"Signal handler 'command-line'~%\")
-              (format t \"  arguments : ~a~%\" args)
+              (format t \"     arguments : ~a~%\" args)
+              (format t \" platform-data : ~a~%\" data)
               ;; Return the exit status
               0)))
-
       ;; Signal handler \"shutdown\"
       (g-signal-connect app \"shutdown\"
                         (lambda (application)
@@ -155,9 +155,9 @@
                           (format t \"Signal handler 'shutdown'~%\")
                           ;; Stop the main loop
                           (leave-gtk-main)))
-
       ;; Start the application
-      (g-application-run app argv))))
+      (g-application-run app argv)))
+  (join-gtk-main))
     @end{pre}
   @end{dictionary}
   @see-slot{g-application-command-line-arguments}
