@@ -582,7 +582,7 @@
   @end{short}
   @see-class{pango-layout}
   @see-function{pango-layout-set-markup-with-accel}"
-  (%pango-layout-set-markup layout markup (length markup)))
+  (%pango-layout-set-markup layout markup -1))
 
 (export 'pango-layout-set-markup)
 
@@ -624,7 +624,7 @@
   (with-foreign-object (accel-char :uint32)
     (%pango-layout-set-markup-with-accel layout
                                          markup
-                                         (length markup)
+                                         -1
                                          accel-marker
                                          accel-char)
       (values (mem-ref accel-char :uint32))))
