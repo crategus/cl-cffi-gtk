@@ -7,9 +7,9 @@
   :depends-on (:cl-cffi-gtk)
   :components ((:file "gio-example")
                (:file "application-action")
-               (:file "application-commandline")
+               (:file "application-cmdline")
                (:file "application-open")
                (:file "emblemed-icon")
 ))
 
-;;; 2021-8-15
+;;; 2021-9-19

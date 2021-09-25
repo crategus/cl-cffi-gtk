@@ -18,7 +18,7 @@
   (format t " screensaver-active : ~a~%" (gtk-application-screensaver-active app))
 )
 
-(defun application-properties (&optional (argv nil))
+(defun application-properties (&rest argv)
   (within-main-loop
     (let (;; Create an application
           (app (make-instance 'gtk-application

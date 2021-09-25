@@ -28,6 +28,7 @@
            #:example-dialog-new-with-buttons
            #:example-dialog-ui
            #:example-drag-and-drop
+           #:example-drag-and-drop-action
            #:example-drag-and-drop-simple
            #:example-drawing-area
            #:example-drawing-area-input                ; Getting started

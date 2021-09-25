@@ -1,15 +1,19 @@
-;;;; Example Application Commandline (2021-5-7)
+;;;; Example Application Cmdline (2021-9-19)
 
 (in-package :gio-example)
 
-(defun application-commandline (&optional (argv nil))
+(defun application-cmdline (&rest argv)
   (within-main-loop
     (let ((app (make-instance 'g-application
                               :application-id
-                              "com.crategus.application-commandline"
+                              "com.crategus.application-cmdline"
                               :inactivity-timeout 10000
-                              :flags
-                              '(:send-enviroment :handles-command-line))))
+                              :flags :handles-command-line))
+          (argv (if argv argv #+sbcl sb-ext:*posix-argv*)))
+
+      (format t "Start Application.~%")
+      (format t "    ARGV : ~a~%" argv)
+      (format t " prgname : ~a~%" (g-prgname))
 
       ;; Signal handler "startup"
       (g-signal-connect app "startup"
@@ -38,4 +42,5 @@
                           (leave-gtk-main)))
 
       ;; Start the application
-      (g-application-run app argv))))
+      (g-application-run app argv)))
+  (join-gtk-main))

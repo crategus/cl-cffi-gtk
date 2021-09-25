@@ -1,14 +1,14 @@
-;;;; Simple Application (2021-8-12)
+;;;; Simple Application (2021-9-8)
 
 (in-package :gtk-application)
 
-(defun application-simple (&optional (argv nil))
+(defun application-simple (&rest argv)
   (within-main-loop
     (let (;; Create an application
           (app (make-instance 'gtk-application
                               :application-id "com.crategus.application-simple"
                               :flags :none)))
-      ;; Connect signal "activate" to the applicaton
+      ;; Connect signal "activate" to the application
       (g-signal-connect app "activate"
           (lambda (application)
             ;; Create an application window
@@ -27,10 +27,10 @@
               (gtk-widget-show-all window))))
       ;; Connect signal "shutdown" to the application
       (g-signal-connect app "shutdown"
-          (lambda (application)
-            (declare (ignore application))
-            ;; Leave the main loop on shutdown of the application
-            (leave-gtk-main)))
+                        (lambda (application)
+                          (declare (ignore application))
+                          ;; Leave the main loop on shutdown
+                          (leave-gtk-main)))
       ;; Run the application
       (g-application-run app argv)))
   (join-gtk-main))

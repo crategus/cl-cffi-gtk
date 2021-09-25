@@ -726,7 +726,7 @@
     ;; Add the action to action map of the application
     (g-action-map-add-action application action)))
 
-(defun gtk-demo (&optional (argv nil))
+(defun gtk-demo (&rest argv)
   (within-main-loop
     (unless (string= "GTK Lisp Demo" (g-application-name))
       (setf (g-application-name) "GTK Lisp Demo"))

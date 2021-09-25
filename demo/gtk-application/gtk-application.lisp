@@ -9,6 +9,7 @@
            #:application-properties
            #:application-simple
            #:bloatpad
+           #:sunny
 ))
 
 (in-package :gtk-application)
@@ -17,4 +18,4 @@
   (let ((system-path (asdf:system-source-directory :gtk-application)))
     (princ-to-string (merge-pathnames filename system-path))))
 
-;;; 2021-9-5
+;;; 2021-9-18

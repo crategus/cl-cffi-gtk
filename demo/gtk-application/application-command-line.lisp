@@ -1,12 +1,12 @@
-;;;; Application Command Line (2021-8-12)
+;;;; Application Command Line (2021-9-19)
 
 (in-package :gtk-application)
 
-(defun application-command-line (&optional (argv nil))
+(defun application-cmdline (&rest argv)
   (within-main-loop
     (let (;; Get the command line arguments and cons the programm name on the
           ;; list of arguments.
-          (argv (cons "application-command-line"
+          (argv (cons "application-cmdline"
                       (if argv argv (uiop:command-line-arguments))))
           (options '(("version" #\v :none :none nil "Print version and exit" nil)
                      ("small" #\Nul :none :none nil "Small game" nil)
@@ -34,30 +34,30 @@
                                   (g-application-quit app)))
               ;; Show the application window
               (gtk-widget-show-all window))))
-
       ;; Connect signal "handle-local-options"
       (g-signal-connect app "handle-local-options"
           (lambda (application options)
             (declare (ignore application))
-              (format t "in signal handler HANDLE-LOCAL-OPTIONS~%")
-              (format t "        prgname : ~a~%" (g-prgname))
-              (format t "        options : ~a~%" options)
-
+            (format t "in signal handler HANDLE-LOCAL-OPTIONS~%")
+            (format t "        prgname : ~a~%" (g-prgname))
+            (format t "        options : ~a~%" options)
+            (let ((status -1)) ; Default is to continue processing
               (cond ((g-variant-dict-contains options "version")
                      (format t "~%~a~%" (cl-cffi-gtk-build-info))
                      ;; Return zero to exit the application
                      ;; TODO: Does not work, the application is not shut down.
-                     0)
+                     (setf status 0)
+                     ;; We have to stop the main loop
+                     (leave-gtk-main))
                     (t
                      (when (g-variant-dict-contains options "small")
                        (format t "  found option small~%"))
                      (when (g-variant-dict-contains options "medium")
                        (format t "  found option medium~%"))
                      (when (g-variant-dict-contains options "big")
-                       (format t "  found option big~%"))
-                     ;; Return negative integer to continue processing
-                     -1))))
-
+                       (format t "  found option big~%"))))
+              ;; Return status
+              status)))
       ;; Connect signal "command-line"
       (g-signal-connect app "command-line"
           (lambda (application cmdline)
@@ -75,7 +75,6 @@
               (g-application-activate app)
               ;; Exit the application with status 0
               0)))
-
       ;; Connect signal "shutdown"
       (g-signal-connect app "shutdown"
           (lambda (application)

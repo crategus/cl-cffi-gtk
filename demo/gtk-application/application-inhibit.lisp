@@ -2,7 +2,7 @@
 
 (in-package :gtk-application)
 
-(defun application-inhibit (&optional (argv nil))
+(defun application-inhibit (&rest argv)
   (within-main-loop
     (let (;; Create an application
           (app (make-instance 'gtk-application

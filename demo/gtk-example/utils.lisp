@@ -72,5 +72,14 @@ sem venenatis, vitae ultricies arcu laoreet."))
     (gtk-container-forall widget
                           (lambda (widget)
                             (apply-css-to-widget provider widget)))))
+;; Get the pixbuf from an image
 
-;;;; 2021-6-4
+(defun get-pixbuf-from-image (image &optional (size 48))
+  (ecase (gtk-image-storage-type image)
+    (:icon-name (gtk-icon-theme-load-icon (gtk-icon-theme-default)
+                                          (gtk-image-icon-name image)
+                                          size
+                                          0))
+    (:pixbuf (gtk-image-pixbuf image))))
+
+;;;; 2021-9-24

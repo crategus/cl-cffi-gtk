@@ -1,4 +1,4 @@
-;;; Example Application Menu (2021-8-15)
+;;; Example Application Menu (2021-9-8)
 
 (in-package :gtk-application)
 
@@ -69,17 +69,17 @@
 
 (defun change-state (action parameter)
   (format t "~%in CHANGE-STATE~%")
-  (format t "     action : ~a~%" (g-simple-action-name action))
+  (format t "     action : ~a~%" (g-action-name action))
   (format t "  parameter : ~a~%" (g-variant-boolean parameter))
-  (setf (g-simple-action-state action) parameter))
+  (setf (g-action-state action) parameter))
 
 (defun change-radio-state (action parameter)
   (format t "~%in CHANGE-RADIO-STATE~%")
-  (format t "     action : ~a~%" (g-simple-action-name action))
+  (format t "     action : ~a~%" (g-action-name action))
   (format t "  parameter : ~a~%" (g-variant-string parameter))
-  (setf (g-simple-action-state action) parameter))
+  (setf (g-action-state action) parameter))
 
-(defun application-menu (&optional (argv nil))
+(defun application-menu (&rest argv)
   (within-main-loop
     (let (;; Create an application
           (app (make-instance 'gtk-application

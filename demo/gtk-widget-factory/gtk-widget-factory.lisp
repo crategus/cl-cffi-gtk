@@ -86,14 +86,14 @@
   (let ((settings (gtk-settings-default)))
     (setf (gtk-settings-gtk-application-prefer-dark-theme settings)
           (g-variant-boolean state))
-    (setf (g-simple-action-state action) state)))
+    (setf (g-action-state action) state)))
 
 (defun activate-change-transition-state (action state)
   (setf (gtk-stack-transition-type *toplevel-stack*)
         (if (g-variant-boolean state)
             :slide-left-right
             :none))
-  (setf (g-simple-action-state action) state))
+  (setf (g-action-state action) state))
 
 
 (defun activate-search ())
@@ -267,7 +267,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-widget-factory (&optional (argv nil))
+(defun gtk-widget-factory (&rest argv)
   (within-main-loop
     (let ((entries `(("about" ,#'activate-about nil nil nil)
                      ("quit" ,#'activate-quit nil nil nil)
@@ -288,7 +288,7 @@
       ;; Set actions für the application
       (g-action-map-add-action-entries *application* entries)
       ;; Set enabled to "false" for action "wine"
-;      (setf (g-simple-action-enabled (g-action-map-lookup-action app "wine")) nil)
+;      (setf (g-action-enabled (g-action-map-lookup-action app "wine")) nil)
 
       ;; Connect signal "activate" to the applicaton
       (g-signal-connect *application* "activate" #'activate)

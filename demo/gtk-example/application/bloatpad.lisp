@@ -1,4 +1,4 @@
-;;;; Application Bloatpad (2021-8-15)
+;;;; Application Bloatpad (2021-9-8)
 
 (in-package #:gtk-application)
 
@@ -191,7 +191,7 @@
              (if (g-variant-boolean parameter)
                  (gtk-window-fullscreen window)
                  (gtk-window-unfullscreen window))
-             (setf (g-simple-action-state action) parameter))))
+             (setf (g-action-state action) parameter))))
 
       ;; Add action "justify" to the application window
       (let ((action (g-simple-action-new-stateful
@@ -213,7 +213,7 @@
                       (setf (gtk-text-view-justification view) :center))
                      (t
                       (setf (gtk-text-view-justification view) :right)))
-               (setf (g-simple-action-state action) parameter)))))
+               (setf (g-action-state action) parameter)))))
 
       ;; Left justify toggle tool button for the toolbar
       (let ((button (make-instance 'gtk-toggle-tool-button

@@ -1,13 +1,17 @@
-;;;; Example Application Open (2021-5-5)
+;;;; Example Application Open (2021-9-19)
 
 (in-package :gio-example)
 
-(defun application-open (&optional (argv nil))
+(defun application-open (&rest argv)
   (within-main-loop
     (let ((app (make-instance 'g-application
                               :application-id "com.crategus.application-open"
                               :inactivity-timeout 10000
-                              :flags :handles-open)))
+                              :flags :handles-open))
+          (argv (if argv argv #+sbcl sb-ext:*posix-argv*)))
+      (format t "Start Application.~%")
+      (format t "    ARGV : ~a~%" argv)
+      (format t " prgname : ~a~%" (g-prgname))
       ;; Signal handler "startup"
       (g-signal-connect app "startup"
                         (lambda (application)
@@ -44,4 +48,5 @@
                           ;; Stop the main loop
                           (leave-gtk-main)))
       ;; Start the application
-      (g-application-run app argv))))
+      (g-application-run app argv)))
+  (join-gtk-main))
