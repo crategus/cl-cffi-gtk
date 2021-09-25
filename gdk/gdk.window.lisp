@@ -469,7 +469,7 @@
     The @sym{gdk-geometry} structure gives the window manager information about
     a window's geometry constraints.
   @end{short}
-  Normally you would set these on the GTK+ level using the function
+  Normally you would set these on the GTK level using the function
   @fun{gtk-window-set-geometry-hints}. @class{gtk-window} then sets the hints
   on the @class{gdk-window} it creates.
 
@@ -1291,7 +1291,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
   A @sym{gdk-window} object is a usually rectangular region on the screen.
   It is a low-level object, used to implement high-level objects such as
-  @class{gtk-widget} and @class{gtk-window} widgets on the GTK+ level. A
+  @class{gtk-widget} and @class{gtk-window} widgets on the GTK level. A
   @class{gtk-window} widget is a toplevel window, the thing a user might think
   of as a \"window\" with a titlebar and so on. A @class{gtk-window} widget
   may contain many @sym{gdk-window} objects. For example, each
@@ -1665,18 +1665,18 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
 (defcfun ("gdk_window_show_unraised" gdk-window-show-unraised) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-7}
+ "@version{2021-9-21}
   @argument[window]{a @class{gdk-window} object}
   @begin{short}
     Shows a window onscreen, but does not modify its stacking order.
   @end{short}
-  In contrast, the function @fun{gdk-window-show} will raise the window to the
+  In contrast, the @fun{gdk-window-show} function will raise the window to the
   top of the window stack.
 
-  On the X11 platform, in Xlib terms, this function calls the function
-  @code{XMapWindow()}, it also updates some internal GDK state, which means that
-  you cannot really use the function @code{XMapWindow()} directly on a GDK
-  window.
+  On the X11 platform, in Xlib terms, this function calls the
+  @code{XMapWindow()} function, it also updates some internal GDK state, which
+  means that you cannot really use the @code{XMapWindow()} function directly on
+  a GDK window.
   @see-class{gdk-window}
   @see-function{gdk-window-show}"
   (window (g-object gdk-window)))
@@ -1869,7 +1869,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
     Attempt to deiconify (unminimize) window.
   @end{short}
   On X11 the window manager may choose to ignore the request to deiconify. When
-  using GTK+, use the function @fun{gtk-window-deiconify} instead of the
+  using GTK, use the function @fun{gtk-window-deiconify} instead of the
   @class{gdk-window} variant. Or better yet, you probably want to use
   the function @fun{gtk-window-present}, which raises the window, focuses
   it, unminimizes it, and puts it on the current desktop.
@@ -2341,7 +2341,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
     Resizes the window, for toplevel windows, asks the window manager to
     resize the window.
   @end{short}
-  The window manager may not allow the resize. When using GTK+, use the
+  The window manager may not allow the resize. When using GTK, use the
   function @fun{gtk-window-resize} instead of this low-level GDK function.
 
   Windows may not be resized below 1x1.
@@ -2986,7 +2986,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
   This function only works for toplevel windows.
 
-  GTK+ will update this property automatically if the window background is
+  GTK will update this property automatically if the window background is
   opaque, as we know where the opaque regions are. If your window background
   is not opaque, please update this property in your \"style-updated\" handler.
   @see-class{gdk-window}
@@ -3040,7 +3040,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;; as otherwise GDK has no way of knowing when something paints over the
 ;;; GL-drawn regions.
 ;;;
-;;; This is typically called automatically by GTK+ and you don't need to care
+;;; This is typically called automatically by GTK and you don't need to care
 ;;; about this.
 ;;;
 ;;; Parameters
@@ -3140,7 +3140,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @sym{gdk-window-begin-paint-region} are conveniences for the programmer, so
   you can avoid doing that work yourself.
 
-  When using GTK+, the widget system automatically places calls to the
+  When using GTK, the widget system automatically places calls to the
   functions @sym{gdk-window-begin-paint-region} and @fun{gdk-window-end-paint}
   around emissions of the \"expose-event\" signal. That is, if you are writing
   an expose event handler, you can assume that the exposed area in
@@ -3235,7 +3235,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   calling the function @sym{gdk-window-begin-draw-frame}, the user may see
   flicker as individual drawing operations are performed in sequence.
 
-  When using GTK+, the widget system automatically places calls to the functions
+  When using GTK, the widget system automatically places calls to the functions
   @sym{gdk-window-begin-draw-frame} and @fun{gdk-window-end-draw-frame} around
   emissions of the \"draw\" signal. That is, if you are drawing the contents of
   the widget yourself, you can assume that the widget has a cleared background,
@@ -3638,7 +3638,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   slowly and noticeably, so you can see exactly what is being redrawn when, in
   what order.
 
-  The @code{--gtk-debug=updates} command line option passed to GTK+ programs
+  The @code{--gtk-debug=updates} command line option passed to GTK programs
   enables this debug option at application startup time. That is usually more
   useful than calling the function @fun{gdk-window-set-debug-updates} yourself,
   though you might want to use this function to enable updates sometime after
@@ -3750,11 +3750,11 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   The function @sym{(setf gdk-window-user-data)} sets the user data.
 
   For most purposes this function is deprecated in favor of the fucntion
-  @fun{g-object-data}. However, for historical reasons GTK+ stores the
+  @fun{g-object-data}. However, for historical reasons GTK stores the
   @class{gtk-widget} object that owns a @class{gdk-window} object as user data
   on the @class{gdk-window}. So, custom widget implementations should use this
-  function for that. If GTK+ receives an event for a @class{gdk-window} object,
-  and the user data for the window is non-@code{nil}, GTK+ will assume the user
+  function for that. If GTK receives an event for a @class{gdk-window} object,
+  and the user data for the window is non-@code{nil}, GTK will assume the user
   data is a @class{gtk-widget} object, and forward the event to that widget.
   @see-class{gdk-window}
   @see-class{gtk-widget}
@@ -3915,7 +3915,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 ;;;
 ;;; Adds an event filter to window, allowing you to intercept events before they
 ;;; reach GDK. This is a low-level operation and makes it easy to break GDK
-;;; and/or GTK+, so you have to know what you're doing. Pass NULL for window to
+;;; and/or GTK, so you have to know what you're doing. Pass NULL for window to
 ;;; get all events for all windows, instead of events for a specific window.
 ;;;
 ;;; If you are interested in X GenericEvents, bear in mind that XGetEventData()
@@ -4164,7 +4164,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   If you have not explicitly set the icon name for the window, using the
   function @fun{gdk-window-set-icon-name}, the icon name will be set to title as
   well. @arg{title} must be in UTF-8 encoding, as with all user-readable strings
-  in GDK/GTK+. @arg{title} may not be @code{nil}.
+  in GDK/GTK. @arg{title} may not be @code{nil}.
   @see-class{gdk-window}
   @see-function{gdk-window-set-icon-name}"
   (window (g-object gdk-window))
@@ -4184,7 +4184,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @begin{short}
     Sets the background color of the window.
   @end{short}
-  However, when using GTK+, set the background of a widget with the function
+  However, when using GTK, set the background of a widget with the function
   @fun{gtk-widget-modify-bg}, if you are implementing an application,
   or the function @fun{gtk-style-context-set-background}, if you are
   implementing a custom widget.
@@ -4520,18 +4520,18 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 (defcfun ("gdk_window_get_type_hint" gdk-window-type-hint)
     gdk-window-type-hint
  #+cl-cffi-gtk-documentation
- "@version{2020-9-24}
+ "@version{2021-9-9}
   @syntax[]{(gdk-window-type-hint window) => hint}
   @syntax[]{(setf (gdk-window-type-hint window) hint)}
-  @argument[window]{a toplevel @class{gdk-window} object}
-  @argument[hint]{a hint of type @symbol{gdk-window-type-hint} this window will
-    have}
+  @argument[window]{a @class{gdk-window} toplevel object}
+  @argument[hint]{a type hint of the @symbol{gdk-window-type-hint} enumeration
+    this window will have}
   @begin{short}
     The type hint set for the window.
   @end{short}
 
-  The function @sym{gdk-window-type-hint} returns the type hint set for a
-  the window. The function @sym{(setf gdk-window-type-hint)} sets the type hint.
+  The @sym{gdk-window-type-hint} function returns the type hint set for a
+  the window. The @sym{(setf gdk-window-type-hint)} function sets the type hint.
 
   The application can use this call to provide a hint to the window manager
   about the functionality of a window. The window manager can use this
@@ -4556,15 +4556,15 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @argument[top]{a @code{:int} with the top extent}
   @argument[bottom]{a @code{:int} with the bottom extent}
   @begin{short}
-    Newer GTK+ windows using client-side decorations use extra geometry around
+    Newer GTK windows using client-side decorations use extra geometry around
     their frames for effects like shadows and invisible borders.
   @end{short}
   Window managers that want to maximize windows or snap to edges need to know
   where the extents of the actual frame lie, so that users do not feel like
   windows are snapping against random invisible edges.
 
-  Note that this property is automatically updated by GTK+, so this function
-  should only be used by applications which do not use GTK+ to create toplevel
+  Note that this property is automatically updated by GTK, so this function
+  should only be used by applications which do not use GTK to create toplevel
   windows.
   @see-class{gdk-window}"
   (window (g-object gdk-window))
@@ -5164,7 +5164,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @argument[window]{a toplevel @class{gdk-window} object}
   @argument[role]{a string indicating its role}
   @begin{short}
-    When using GTK+, typically you should use the function @fun{gtk-window-role}
+    When using GTK, typically you should use the function @fun{gtk-window-role}
     instead of this low-level function.
   @end{short}
 
@@ -5193,7 +5193,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
   @argument[window]{a toplevel @class{gdk-window} object}
   @argument[startup-id]{a string with startup-notification identifier}
   @begin{short}
-    When using GTK+, typically you should use the function
+    When using GTK, typically you should use the function
     @fun{gtk-window-startup-id} instead of this low-level function.
   @end{short}
   @see-class{gdk-window}
