@@ -337,35 +337,34 @@
 ;;; g_set_application_name () -> g-application-name
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf g-application-name) (application-name)
+(defun (setf g-application-name) (name)
   (foreign-funcall "g_set_application_name"
-                   :string application-name
+                   :string name
                    :void)
-  application-name)
+  name)
 
 (defcfun ("g_get_application_name" g-application-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-10-23}
-  @syntax[]{(g-application-name) => application-name}
-  @syntax[]{(setf (g-application-name) application-name)}
-  @argument[application-name]{a string with the localized name of the
-    application}
+ "@version{2021-9-19}
+  @syntax[]{(g-application-name) => name}
+  @syntax[]{(setf (g-application-name) name)}
+  @argument[name]{a string with the localized name of the application}
   @begin{short}
     Accessor of a human readable name for the application.
   @end{short}
 
   This name should be localized if possible, and is intended for display to the
-  user. Contrast with the function @fun{g-prgname}, which gets a non-localized
-  name. If the function @sym{(setf g-application-name)} has not been called,
-  returns the result of the function @fun{g-prgname}, which may be @code{nil}
-  if the function @sym{(setf g-prgname)} has also not been called.
+  user. Contrast with the @fun{g-prgname} function, which gets a non-localized
+  name. If the @sym{(setf g-application-name)} function has not been called,
+  returns the result of the @fun{g-prgname} function, which may be @code{nil}
+  if the @sym{(setf g-prgname)} function has also not been called.
 
-  The function @fun{g-prgname} will be called automatically by
-  @code{gtk_init()}, but @sym{g-application-name} will not. Note that for
-  thread safety reasons, this function can only be called once.
+  The @fun{g-prgname} function will be called automatically by
+  @code{gtk_init()}, but the @sym{g-application-name} function will not. Note
+  that for thread safety reasons, this function can only be called once.
 
   The application name will be used in contexts such as error messages, or
-  when displaying an application's name in the task list.
+  when displaying the name of an application in the task list.
   @see-function{g-prgname}")
 
 (export 'g-application-name)
@@ -383,17 +382,17 @@
 
 (defcfun ("g_get_prgname" g-prgname) (:string :free-from-foreign niL)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-23}
+ "@version{2021-9-18}
   @syntax[]{(g-prgname) => prgname}
   @syntax[]{(setf (g-prgname) prgname)}
   @argument[prgname]{a string with the name of the program}
   @short{Accessor of the name of the program.}
 
-  This name should not be localized, contrast with the function
-  @fun{g-application-name}. If you are using GDK or GTK the program name is
-  set in the function @code{gdk_init()}, which is called by the function
-  @code{gtk_init()}. The program name is found by taking the last component of
-  @code{argv[0]}.
+  This name should not be localized, contrast with the @fun{g-application-name}
+  function. If you are using GDK or GTK the program name is set in the
+  @code{gdk_init()} function, which is called by the @code{gtk_init()} function.
+  The program name is found by taking the last component of the first command
+  line argument.
 
   Note that for thread-safety reasons this function can only be called once.
   @see-function{g-application-name}")

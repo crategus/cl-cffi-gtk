@@ -277,7 +277,7 @@
 (setf (gethash 'g-option-context atdoc:*type-name-alias*)
       "CStruct"
       (documentation 'g-option-context 'type)
- "@version{2021-8-11}
+ "@version{2021-9-18}
   @begin{short}
     The GOption command line parser is intended to be a simpler replacement for
     the popt library.
@@ -306,11 +306,10 @@ testtreemodel -r 1 --max-size 20 --rand --display=:1.0 -vb -- file1 file2
   @end{itemize}
   Another important feature of GOption is that it can automatically generate
   nicely formatted help output. Unless it is explicitly turned off with the
-  function @fun{g-option-context-help-enabled}, GOption will recognize the
+  @fun{g-option-context-help-enabled} function, GOption will recognize the
   @code{--help}, @code{-?}, @code{--help-all} and @code{--help-groupname}
   options, where @code{groupname} is the name of a @type{g-option-group}
-  instance, and write a text similar to the one shown in the following example.
-  @begin{pre}
+  instance, and write a text similar to the one shown in the following example.  @begin{pre}
 Usage:
   testtreemodel [OPTION...] - test tree model performance
 
@@ -331,14 +330,14 @@ Application Options:
   easy to incorporate options from multiple sources. The intended use for this
   is to let applications collect option groups from the libraries it uses, add
   them to their @sym{g-option-context} instance, and parse all options by a
-  single call to the function @fun{g-option-context-parse}. See the function
-  @fun{gtk-option-group} for an example.
+  single call to the @fun{g-option-context-parse} function. See the
+  @fun{gtk-option-group} function for an example.
 
   If an option is declared to be of type string or filename, GOption takes care
   of converting it to the right encoding. Strings are returned in UTF-8,
   filenames are returned in the GLib filename encoding. Note that this only
-  works if the function @code{setlocale()} has been called before the function
-  @fun{g-option-context-parse}.
+  works if the @code{setlocale()} function has been called before the
+  @fun{g-option-context-parse} function.
 
   Here is a complete example of setting up GOption to parse the example
   command line above and produce the example help output.
@@ -349,7 +348,7 @@ Application Options:
 (defvar beep (cffi:foreign-alloc :boolean :initial-element nil))
 (defvar randomize (cffi:foreign-alloc :boolean :initial-element nil))
 
-(defun main (argv)
+(defun main (&rest argv)
   (let ((entries '((\"repeats\"                        ; long-name
                     #\\r                              ; short-name
                     :none                            ; flags
@@ -405,24 +404,24 @@ Application Options:
           (format t \" randomize : ~a~%\" (mem-ref randomize :boolean))))
   ... ))
   @end{pre}
-  On UNIX systems, the argument @code{argv} that is passed to the function
-  @code{main} has no particular encoding, even to the extent that different
-  parts of it may have different encodings. In general, normal arguments and
-  flags will be in the current locale and filenames should be considered to be
-  opaque byte strings. Proper use of the @code{:filename} vs @code{:string}
-  option arguments is therefore important.
+  On UNIX systems, the @code{argv} argument that is passed to the main function
+  has no particular encoding, even to the extent that different parts of it may
+  have different encodings. In general, normal arguments and flags will be in
+  the current locale and filenames should be considered to be opaque byte
+  strings. Proper use of the @code{:filename} versus @code{:string} option
+  arguments is therefore important.
 
   Note that on Windows, filenames do have an encoding, but using a
-  @sym{g-option-context} instance with the argument @code{argv} as passed to the
-  function @code{main} will result in a program that can only accept command
-  line arguments with characters from the system codepage. This can cause
-  problems when attempting to deal with filenames containing Unicode characters
-  that fall outside of the codepage.
+  @sym{g-option-context} instance with the @code{argv} argument as passed to the
+  main function will result in a program that can only accept command line
+  arguments with characters from the system codepage. This can cause problems
+  when attempting to deal with filenames containing Unicode characters that fall
+  outside of the codepage.
 
-  A solution to this is to use the functions @code{g_win32_get_command_line()}
-  and @fun{g-option-context-parse-strv} which will properly handle full Unicode
-  filenames. If you are using a @class{g-application} instance, this is done
-  automatically for you.
+  A solution to this is to use the @code{g_win32_get_command_line()} and
+  @fun{g-option-context-parse-strv} functions which will properly handle full
+  Unicode filenames. If you are using a @class{g-application} instance, this is
+  done automatically for you.
   @see-type{g-option-group}
   @see-class{g-application}
   @see-symbol{g-option-arg}
@@ -783,9 +782,9 @@ More descriptions.
   (argv :pointer)
   (err :pointer))
 
-(defun g-option-context-parse (context argv)
+(defun g-option-context-parse (context &rest argv)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-18}
   @argument[context]{a @type{g-option-context} instance}
   @argument[argv]{a list of strings with the command line arguments}
   @return{@em{True} if the parsing was successful, @em{false} if an error
@@ -794,7 +793,7 @@ More descriptions.
     Parses the command line arguments, recognizing options which have been
     added to @arg{context}.
   @end{short}
-  A side-effect of calling this function is that the function @fun{g-prgname}
+  A side-effect of calling this function is that the @fun{g-prgname} function
   will be called.
 
   If the parsing is successful, any parsed arguments are removed from the
@@ -803,9 +802,9 @@ More descriptions.
   some of the options after it start with @code{-}. In case of an error,
   @arg{argv} is left unmodified.
 
-  If automatic @code{--help} support is enabled, see the function
-  @fun{g-option-context-help-enabled}, and the @arg{argv} list contains one
-  of the recognized help options, this function will produce help output to
+  If automatic @code{--help} support is enabled, see the
+  @fun{g-option-context-help-enabled} function, and the @arg{argv} list contains
+  one of the recognized help options, this function will produce help output to
   stdout and call @code{exit(0)}.
 
   Note that function depends on the current locale for automatic character set
@@ -833,29 +832,29 @@ More descriptions.
 
 (defun g-option-context-parse-strv (context arguments)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-18}
   @argument[context]{a @type{g-option-context} instance}
   @argument[arguments]{a list of strings with the command line arguments, which
     must be in UTF-8 on Windows, starting with GLib 2.62, @arg{arguments} can
-    be @code{nil}, which matches the function @fun{g-option-context-parse}}
+    be @code{nil}, which matches the @fun{g-option-context-parse} function}
   @return{@em{True} if the parsing was successful, @em{false} if an error
     occurred.}
   @begin{short}
     Parses the command line arguments.
   @end{short}
 
-  This function is similar to the function @fun{g-option-context-parse} except
+  This function is similar to the @fun{g-option-context-parse} function except
   that it respects the normal memory rules when dealing with a list of strings
-  instead of assuming that the passed-in list is the @code{argv} of the main
-  function.
+  instead of assuming that the passed-in list are the command line arguments of
+  the main function.
 
   In particular, strings that are removed from the arguments list will be freed
-  using the function @code{g_free()}.
+  using the @code{g_free()} function.
 
   On Windows, the strings are expected to be in UTF-8. This is in contrast to
-  the function @fun{g-option-context-parse} which expects them to be in the
-  system codepage, which is how they are passed as @code{argv} to
-  @code{main()}. See the function @code{g_win32_get_command_line()} for a
+  the @fun{g-option-context-parse} function which expects them to be in the
+  system codepage, which is how they are passed as the command line arguments to
+  the main function. See the @code{g_win32_get_command_line()} function for a
   solution.
 
   This function is useful if you are trying to use a @type{g-option-context}
@@ -922,20 +921,20 @@ More descriptions.
 (defcfun ("g_option_context_get_ignore_unkown_options"
            g-option-context-ignore-unknown-options) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-18}
   @syntax[]{(g-option-context-ignore-unknown-options context) => ignore}
   @syntax[]{(setf (g-option-context-ignore-unknown-options context) ignore)}
   @argument[context]{a @type{g-option-context} instance}
   @argument[ignore]{@em{true} to ignore unknown options, @em{false} to produce
     an error when unknown options are met}
   @begin{short}
-    The function @sym{g-option-context-ignore-unknown-options} returns whether
+    The @sym{g-option-context-ignore-unknown-options} function returns whether
     unknown options are ignored or not.
   @end{short}
-  The function @sym{(setf g-option-context-ignore-unknown-options)} sets
+  The @sym{(setf g-option-context-ignore-unknown-options)} function sets
   whether to ignore unknown options or not. If an argument is ignored, it is
-  left in the @code{argv} list after parsing. By default, the function
-  @fun{g-option-context-parse} treats unknown options as error.
+  left in the list of command line arguments after parsing. By default, the
+  @fun{g-option-context-parse} function treats unknown options as error.
 
   This setting does not affect non-option arguments, i.e. arguments which
   do not start with a dash. But note that GOption cannot reliably determine
@@ -992,14 +991,14 @@ More descriptions.
 (defcfun ("g_option_context_get_strict_posix" g-option-context-strict-posix)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-8-11}
+ "@version{2021-9-18}
   @argument[context]{a @type{g-option-context} instance}
   @argument[strict]{@em{true} if strict POSIX is enabled, @em{false} otherwise}
   @begin{short}
-    The function @sym{g-option-context-strict-posix} returns whether strict
+    The @sym{g-option-context-strict-posix} function returns whether strict
     POSIX code is enabled.
   @end{short}
-  The function @sym{(setf g-option-context-strict-posix)} sets strict POSIX
+  The @sym{(setf g-option-context-strict-posix)} function sets strict POSIX
   mode. By default, this mode is disabled.
 
   In strict POSIX mode, the first non-argument parameter encountered, e.g.
@@ -1020,7 +1019,7 @@ More descriptions.
   Using strict POSIX mode will allow parsing the global options up to the verb
   name while leaving the remaining options to be parsed by the relevant
   subcommand, which can be determined by examining the verb name, which should
-  be present in @code{argv[1]} after parsing.
+  be present in the second command line argument after parsing.
   @see-type{g-option-context}"
   (context (:pointer (:struct g-option-context))))
 
