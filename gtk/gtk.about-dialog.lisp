@@ -625,28 +625,28 @@
                                                'gtk-about-dialog) 't)
  "The @code{program-name} property of type @code{:string} (Read / Write) @br{}
   The name of the program. If this is not set, it defaults to the return value
-  of the function @fun{g-application-name}. @br{}
+  of the @fun{g-application-name} function. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-program-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-program-name 'function)
- "@version{2020-5-26}
-  @syntax[]{(gtk-about-dialog-program-name object) => program-name}
-  @syntax[]{(setf (gtk-about-dialog-program-name object) program-name)}
+ "@version{2021-9-19}
+  @syntax[]{(gtk-about-dialog-program-name object) => name}
+  @syntax[]{(setf (gtk-about-dialog-program-name object) name)}
   @argument[object]{a @class{gtk-about-dialog} widget}
-  @argument[program-name]{a string with the name of the program}
+  @argument[name]{a string with the name of the program}
   @begin{short}
     Accessor of the @slot[gtk-about-dialog]{program-name} slot of the
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-program-name} returns the
-  program name displayed in the about dialog. The slot access function
-  @sym{(setf gtk-about-dialog-program-name)} sets the name to display in the
-  about dialog. If this is not set, it defaults to the return value of the
-  function @fun{g-application-name}.
+  The @sym{gtk-about-dialog-program-name} slot access function returns the
+  program name displayed in the about dialog. The
+  @sym{(setf gtk-about-dialog-program-name)} slot access function sets the
+  program name. If this is not set, it defaults to the return value of the
+  @fun{g-application-name} function.
   @see-class{gtk-about-dialog}
   @see-function{g-application-name}")
 

@@ -188,7 +188,7 @@
                                                'gtk-image-menu-item) 't)
  "The @code{accel-group} property of type @class{gtk-accel-group}
   (Write) @br{}
-  The accel group to use for stock accelerator keys.")
+  The accelerator group to use for stock accelerator keys.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-accel-group atdoc:*function-name-alias*)
@@ -203,10 +203,10 @@
     @class{gtk-image-menu-item} class.
   @end{short}
 
-  Specifies an accel group to add the menu items accelerator to, this only
-  applies to stock items so a stock item must already be set. Make sure to call
-  the functions @fun{gtk-image-menu-item-use-stock} and
-  @fun{gtk-menu-item-label} with a valid stock item first.
+  Specifies an accelerator group to add the menu items accelerator to, this
+  only applies to stock items so a stock item must already be set. Make sure to
+  call the @fun{gtk-image-menu-item-use-stock} and @fun{gtk-menu-item-label}
+  functions with a valid stock item first.
 
   If you want this menu item to have changeable accelerators then you should
   not need this. See the function @fun{gtk-image-menu-item-new-from-stock}.

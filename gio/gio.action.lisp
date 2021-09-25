@@ -199,17 +199,16 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parameter-type" 'g-action) 't)
  "The @code{parameter-type} property of type @class{g-variant-type} (Read) @br{}
-  The type of the parameter that must be given when activating the action.
-  @br{}")
+  The type of the parameter that must be given when activating the action.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-parameter-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-parameter-type 'function)
- "@version{2021-8-1}
-  @syntax[]{(g-action-parameter-type object) => type}
+ "@version{2021-9-8}
+  @syntax[]{(g-action-parameter-type object) => vtype}
   @argument[object]{a @class{g-action} object}
-  @argument[type]{the @class{g-variant-type} parameter type}
+  @argument[vtype]{the @class{g-variant-type} parameter type}
   @begin{short}
     Accessor of the @slot[g-action]{parameter-type} slot of the
     @class{g-action} class.
@@ -218,12 +217,12 @@
   Queries the type of the parameter that must be given when activating the
   action.
 
-  When activating the action using the function @fun{g-action-activate}, the
-  @type{g-variant} given to that function must be of the type returned by
-  this function.
+  When activating the action using the @fun{g-action-activate} function, the
+  @type{g-variant} parameter given to that function must be of the type returned
+  by this function.
 
-  In the case that this function returns a @code{NULL} pointer, you must not
-  give any @type{g-variant}, but @code{nil} instead.
+  In the case that this function returns a @code{nil}, you must not give any
+  @type{g-variant} parameter, but a @code{null-pointer} instead.
   @see-class{g-action}
   @see-class{g-variant-type}
   @see-type{g-variant}
@@ -264,14 +263,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "state-type" 'g-action) 't)
  "The @code{state-type} property of type @class{g-variant-type} (Read) @br{}
-  The @class{g-variant-type} of the state that the action has, or @code{nil} if
-  the action is stateless. @br{}")
+  The @class{g-variant-type} parameter type of the state that the action has,
+  or @code{nil} if the action is stateless. @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-state-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state-type 'function)
- "@version{2021-8-1}
+ "@version{2021-9-9}
   @syntax[]{(g-action-state-type object) => vtype}
   @argument[object]{a @class{g-action} object}
   @argument[vtype]{the @class{g-variant-type} state type, if the action is
@@ -283,17 +282,19 @@
 
   Queries the type of the state of the action.
 
-  If the action is stateful, e.g. created with the function
-  @fun{g-simple-action-new-stateful}, then this function returns the
-  @class{g-variant-type} of the state. This is the type of the initial value
-  given as the state. All calls to the function @fun{g-action-change-state} must
-  give a @type{g-variant} of this type and the function @fun{g-action-state}
-  will return a @type{g-variant} of the same type.
+  If the action is stateful, e.g. created with the
+  @fun{g-simple-action-new-stateful} function, then this function returns the
+  @class{g-variant-type} parameter type of the state. This is the type of the
+  initial value given as the state. All calls to the @fun{g-action-change-state}
+  function must give a @type{g-variant} parameter of this type and the
+  @fun{g-action-state} function will return a @type{g-variant} parameter of the
+  same type.
 
-  If the action is not stateful, e.g. created with the function
-  @fun{g-simple-action-new}, then this function will return @code{nil}. In that
-  case, the function @fun{g-action-state} will return a @code{NULL} pointer and
-  you must not call the function @fun{g-action-change-state}.
+  If the action is not stateful, e.g. created with the
+  @fun{g-simple-action-new} function, then this function will return @code{nil}.
+  In that case, the @fun{g-action-state} function will return a
+  @code{null-pointer} and you must not call the @fun{g-action-change-state}
+  function.
   @see-class{g-action}
   @see-class{g-variant-type}
   @see-type{g-variant}
@@ -339,21 +340,21 @@
 (defcfun ("g_action_get_state_hint" g-action-state-hint)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2021-8-1}
+ "@version{2021-9-9}
   @argument[action]{a @class{g-action} object}
   @return{The @type{g-variant} state range hint.}
   @begin{short}
     Requests a hint about the valid range of values for the state of the action.
   @end{short}
 
-  If a @code{NULL} pointer is returned it either means that the action is not
+  If a @code{null-pointer} is returned it either means that the action is not
   stateful or that there is no hint about the valid range of values for the
   state of the action.
 
-  If a @type{g-variant} array is returned then each item in the array is a
-  possible value for the state. If a @type{g-variant} pair, i.e. two-tuple,
-  is returned then the tuple specifies the inclusive lower and upper bound of
-  valid values for the state.
+  If a @type{g-variant} parameter array is returned then each item in the array
+  is a possible value for the state. If a @type{g-variant} parameter pair, i.e.
+  two-tuple, is returned then the tuple specifies the inclusive lower and upper
+  bound of valid values for the state.
 
   In any case, the information is merely a hint. It may be possible to have a
   state value outside of the hinted range and setting a value within the range

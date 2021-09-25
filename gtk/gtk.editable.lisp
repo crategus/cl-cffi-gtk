@@ -265,7 +265,7 @@
   @see-class{gtk-editable}"
   (with-foreign-object (pos :int)
     (setf (mem-ref pos :int) position)
-    (%gtk-editable-insert-text editable text (length text) pos)
+    (%gtk-editable-insert-text editable text -1 pos)
     (mem-ref pos :int)))
 
 (export 'gtk-editable-insert-text)

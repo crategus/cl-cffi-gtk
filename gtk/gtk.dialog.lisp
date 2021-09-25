@@ -116,7 +116,7 @@
 (setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gtk-dialog-flags atdoc:*external-symbols*)
- "@version{*2021-7-24}
+ "@version{2021-9-23}
   @short{Flags used to influence the dialog construction.}
   @begin{pre}
 (define-g-flags \"GtkDialogFlags\" gtk-dialog-flags
@@ -127,10 +127,10 @@
   (:use-header-bar      #.(ash 1 2)))
   @end{pre}
   @begin[code]{table}
-    @entry[:modal]{Make the constructed dialog modal, see the function
-      @fun{gtk-window-modal}.}
+    @entry[:modal]{Make the constructed dialog modal, see the
+    @fun{gtk-window-modal} function.}
     @entry[:destroy-with-parent]{Destroy the dialog when its parent is
-      destroyed, see the function @fun{gtk-window-destroy-with-parent}.}
+      destroyed, see the @fun{gtk-window-destroy-with-parent} function.}
     @entry[:use-header-bar]{Create the dialog with actions in the header bar
       instead of an action area.}
   @end{table}
@@ -161,10 +161,10 @@
 (setf (gethash 'gtk-response-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-response-type atdoc:*external-symbols*)
- "@version{*2021-7-27}
+ "@version{2021-9-23}
   @begin{short}
-    Predefined values for use as response IDs in the function
-    @fun{gtk-dialog-add-button}.
+    Predefined values for use as response IDs in the @fun{gtk-dialog-add-button}
+    function.
   @end{short}
   All predefined values are negative, GTK leaves positive values for application
   defined response IDs.
@@ -570,7 +570,7 @@
 
 (defcfun ("gtk_dialog_run" gtk-dialog-run) gtk-response-type
  #+cl-cffi-gtk-documentation
- "@version{*2021-1-24}
+ "@version{2021-1-24}
   @argument[dialog]{a @class{gtk-dialog} window}
   @return{The response ID, which is a positive integer or a value of the
     @symbol{gtk-response-type} enumeration.}

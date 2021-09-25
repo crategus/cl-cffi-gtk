@@ -174,19 +174,19 @@
       @end{table}
     @subheading{The \"accel-changed\" signal}
       @begin{pre}
- lambda (accel-group keyval modifier accel-closure)    : Has Details
+ lambda (group keyval modifier func)    :has-details
       @end{pre}
-      The \"accel-changed\" signal is emitted when an entry is added to or
-      removed from the accel group. Widgets like @class{gtk-accel-label} which
+      The signal is emitted when an entry is added to or removed from the
+      accelerator group. Widgets like the @class{gtk-accel-label} widget which
       display an associated accelerator should connect to this signal, and
-      rebuild their visual representation if the @arg{accel-closure} is theirs.
+      rebuild their visual representation if @arg{accel-closure} is theirs.
       @begin[code]{table}
-        @entry[accel-group]{The @sym{gtk-accel-group} object which received the
+        @entry[group]{The @sym{gtk-accel-group} object which received the
           signal.}
-        @entry[keyval]{The accelerator keyval of type @code{:uint}.}
-        @entry[modifier]{The modifier combination of type
-          @symbol{gdk-modifier-type} of the accelerator.}
-        @entry[accel-closure]{The @symbol{g-closure} callback of the
+        @entry[keyval]{An unsigned integer with the accelerator keyval.}
+        @entry[modifier]{The @symbol{gdk-modifier-type} modifier combination of
+          the accelerator.}
+        @entry[func]{The @symbol{g-closure} callback function of the
           accelerator.}
       @end{table}
   @end{dictionary}
@@ -209,7 +209,7 @@
 (setf (documentation (atdoc:get-slot-from-name "is-locked"
                                                'gtk-accel-group) 't)
  "The @code{is-locked} property of type @code{:boolean} (Read) @br{}
-  Is the accel group locked. @br{}
+  Is the accelerator group locked. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -219,7 +219,7 @@
  "@version{2020-8-23}
   @syntax[]{(gtk-accel-group-is-locked object) => is-locked}
   @argument[object]{a @class{gtk-accel-group} object}
-  @argument[is-locked]{a boolean whether the accel group is locked}
+  @argument[is-locked]{a boolean whether the accelerator group is locked}
   @begin{short}
     Accessor of the @slot[gtk-accel-group]{is-locked} slot of the
     @class{gtk-accel-group} class.
@@ -258,8 +258,8 @@
     @class{gtk-accel-group} class.
   @end{short}
 
-  The slot access function @sym{gtk-accel-group-modifer-mask} gets the modifier
-  mask for this accel group. For example, @code{:control-mask},
+  The @sym{gtk-accel-group-modifer-mask} slot access function gets the modifier
+  mask for this accelerator group. For example, @code{:control-mask},
   @code{:shift-mask}, etc.
   @see-class{gtk-accel-group}
   @see-symbol{gdk-modifier-type}")
@@ -273,7 +273,7 @@
  "@version{2020-8-23}
   @return{A new @class{gtk-accel-group} object.}
   @begin{short}
-    Creates a new accel group.
+    Creates a new accelerator group.
   @end{short}
   @see-class{gtk-accel-group}"
   (make-instance 'gtk-accel-group))
@@ -873,8 +873,8 @@
 
   The default mod mask is @code{'(:control-mask :shift-mask :mod1-mask
   :super-mask :hyper-mask :meta-mask)}, that is, Control, Shift, Alt, Super,
-  Hyper and Meta. Other modifiers will by default be ignored by the
-  accel group. You must include at least the three modifiers Control, Shift and
+  Hyper and Meta. Other modifiers will by default be ignored by the accelerator
+  group. You must include at least the three modifiers Control, Shift and
   Alt in any value you pass to this function.
 
   The default mod mask should be changed on application startup, before using

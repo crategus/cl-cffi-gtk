@@ -453,7 +453,7 @@
                           (leave-gtk-main)))
       ;; Start the application
       (g-application-run app argv)))
-      (join-gtk-main))
+  (join-gtk-main))
     @end{pre}
   @end{dictionary}
   @begin[Signal Details]{dictionary}

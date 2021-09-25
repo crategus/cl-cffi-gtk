@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.bin.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -88,7 +88,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-bin 'type)
- "@version{2025-5-25}
+ "@version{2021-9-12}
   @begin{short}
     The @sym{gtk-bin} widget is a container with just one child.
   @end{short}
@@ -109,12 +109,12 @@
 
 (defcfun ("gtk_bin_get_child" gtk-bin-child) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2021-3-12}
+ "@version{2021-9-12}
   @argument[bin]{a @class{gtk-bin} widget}
   @return{The @class{gtk-widget} child widget of @arg{bin}.}
   @begin{short}
-    Gets the child widget of the bin widget, or @code{nil} if @arg{bin}
-    contains no child widget.
+    Gets the child widget of the bin widget, or @code{nil} if the @arg{bin}
+    argument contains no child widget.
   @end{short}
   @see-class{gtk-bin}
   @see-class{gtk-widget}"

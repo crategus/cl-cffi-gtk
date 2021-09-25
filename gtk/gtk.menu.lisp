@@ -457,7 +457,7 @@ menu
 (setf (documentation (atdoc:get-slot-from-name "accel-group" 'gtk-menu) 't)
  "The @code{accel-group} property of type @class{gtk-accel-group} (Read / Write)
   @br{}
-  The accel group holding accelerators for the menu.")
+  The acceleratir group holding accelerators for the menu.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-accel-group atdoc:*function-name-alias*)
@@ -473,9 +473,10 @@ menu
     class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-accel-group} gets the accel group
-  which holds global accelerators for the menu. The slot access function
-  @sym{(setf gtk-menu-accel-group)} sets the accel group.
+  The @sym{gtk-menu-accel-group} slot access function gets the accelerator group
+  which holds global accelerators for the menu. The
+  @sym{(setf gtk-menu-accel-group)} slot access function sets the accelerator
+  group.
 
   This accelerator group needs to also be added to all windows that this menu
   is being used in with the function @fun{gtk-window-add-accel-group}, in order

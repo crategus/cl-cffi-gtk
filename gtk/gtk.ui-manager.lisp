@@ -642,7 +642,9 @@
  "@version{*2021-7-24}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @return{The @class{gtk-accel-group} object.}
-  @short{Returns the accel group associated with the UI manager.}
+  @begin{short}
+    Returns the accelerator group associated with the UI manager.
+  @end{short}
   @begin[Warning]{dictionary}
     The function @sym{gtk-ui-manager-accel-group} has been deprecated since
     version 3.10 and should not be used in newly written code.
@@ -680,7 +682,7 @@
   element is the menuitem to which the menu is attached, not the menu itself.
 
   Also note that the widgets constructed by a UI manager are not tied to the
-  lifecycle of the UI manager. If you add the widgets returned by this
+  life cycle of the UI manager. If you add the widgets returned by this
   function to some container or explicitly reference them, they will survive
   the destruction of the UI manager.
   @begin[Warning]{dictionary}

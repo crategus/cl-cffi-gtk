@@ -216,7 +216,7 @@
 (setf (gethash 'gtk-justification atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-justification atdoc:*external-symbols*)
- "@version{*2021-5-23}
+ "@version{2021-5-23}
   @begin{short}
     Used for justifying the text inside a @class{gtk-label} widget. See also
     the @class{gtk-alignment} widget.
@@ -310,7 +310,7 @@
 (setf (gethash 'gtk-orientation atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-orientation atdoc:*external-symbols*)
- "@version{*2021-5-13}
+ "@version{2021-5-13}
   @begin{short}
     Represents the orientation of widgets which can be switched between
     horizontal and vertical orientation on the fly, like the @class{gtk-toolbar}
@@ -591,7 +591,7 @@
 (setf (gethash 'gtk-shadow-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-shadow-type atdoc:*external-symbols*)
- "@version{*2021-5-23}
+ "@version{2021-5-23}
   @begin{short}
     Used to change the appearance of an outline typically provided by a
     @class{gtk-frame} widget.
@@ -778,14 +778,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-direction atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-text-direction atdoc:*external-symbols*)
- "@version{2020-4-22}
+ "@version{2021-9-8}
   @begin{short}
-    This direction controls the primary direction for widgets containing text,
-    and also the direction in which the children of a container are packed.
+    The text direction controls the primary direction for widgets containing
+    text, and also the direction in which the children of a container are
+    packed.
   @end{short}
-  The ability to set the direction is present in order so that correct
+  The ability to set the text direction is present in order so that correct
   localization into languages with right-to-left reading directions can be done.
   Generally, applications will let the default reading direction present, except
   for containers where the containers are arranged in an order that is
@@ -799,6 +800,11 @@
   (:ltr 1)
   (:rtl 2))
   @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No direction.}
+    @entry[:ltr]{Left to right text direction.}
+    @entry[:rtl]{Right to left text direction.}
+  @end{table}
   @see-function{gtk-widget-direction}
   @see-function{gtk-widget-default-direction}")
 

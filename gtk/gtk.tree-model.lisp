@@ -1026,7 +1026,7 @@
   filled with a unique stamp per model. This stamp is for catching errors
   resulting from using invalid iterators with a model.
 
-  The lifecycle of an iterator can be a little confusing at first. Iterators
+  The life cycle of an iterator can be a little confusing at first. Iterators
   are expected to always be valid for as long as the model is unchanged (and
   does not emit a signal). The model is considered to own all outstanding
   iterators and nothing needs to be done to free them from the user's point of

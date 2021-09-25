@@ -177,7 +177,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-action 'type)
- "@version{*2021-7-24}
+ "@version{2021-7-24}
   @begin{short}
     Actions represent operations that the user can be perform, along with some
     information how it should be presented in the interface.
@@ -537,7 +537,7 @@
 (setf (gethash 'gtk-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-name 'function)
- "@version{*2021-7-24}
+ "@version{2021-7-24}
   @syntax[]{(gtk-action-name object) => name}
   @argument[object]{a @class{gtk-action} object}
   @argument[name]{a string with the name of the action}
@@ -1157,25 +1157,25 @@
 
 (defcfun ("gtk_action_block_activate" gtk-action-block-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-20}
+ "@version{2021-9-8}
   @argument[action]{a @class{gtk-action} object}
   @short{Disable activation signals from the action.}
 
   This is needed when updating the state of your @class{gtk-activatable} proxy
-  widget could result in calling the function @fun{gtk-action-activate}, this
+  widget could result in calling the @fun{gtk-action-activate} function, this
   is a convenience function to avoid recursing in those cases, updating toggle
   state for instance.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-action-block-activate} has been deprecated since
-    version 3.10 and should not be used in newly written code. Use the function
-    @fun{g-simple-action-enabled} to disable the @class{g-simple-action} object
-    instead.
+    The @sym{gtk-action-block-activate} function has been deprecated since
+    version 3.10 and should not be used in newly written code. Use the
+    @fun{g-simple-action-enabled} function to disable the
+    @class{g-simple-action} object instead.
   @end{dictionary}
   @see-class{gtk-action}
   @see-class{gtk-activatable}
   @see-class{g-simple-action}
   @see-function{gtk-action-activate}
-  @see-function{g-simple-action-enbaled}"
+  @see-function{g-simple-action-enabled}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-block-activate)
@@ -1278,7 +1278,7 @@
   @argument[action]{a @class{gtk-action} object}
   @argument[group]{a @class{gtk-accel-group} object or @code{nil}}
   @begin{short}
-    Sets the accel group in which the accelerator for this action will be
+    Sets the accelerator group in which the accelerator for this action will be
     installed.
   @end{short}
   @begin[Warning]{dictionary}
