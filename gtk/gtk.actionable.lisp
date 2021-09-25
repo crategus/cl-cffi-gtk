@@ -164,20 +164,21 @@
 (setf (gethash 'gtk-actionable-action-target atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-actionable-action-target 'function)
- "@version{2021-9-3}
+ "@version{2021-9-8}
   @syntax[]{(gtk-actionable-action-target object) => value}
   @syntax[]{(setf (gtk-actionable-action-target object) value)}
   @argument[object]{a @class{gtk-actionable} widget}
-  @argument[value]{a @type{g-variant} parameter to set as the target value,
-    or @code{null-pointer}}
+  @argument[value]{a @type{g-variant} parameter as the target value, or
+    @code{null-pointer}}
   @begin{short}
     Accessor of the @slot[gtk-actionable]{action-target} slot of the
     @class{gtk-actionable} inferface.
   @end{short}
 
   The @sym{gtk-actionable-action-target} slot access function gets the current
-  target value of @arg{object}. The @sym{(setf gtk-actionable-action-target)}
-  slot access function sets the target value of an actionable widget.
+  target value of an actionable widget. The
+  @sym{(setf gtk-actionable-action-target)} slot access function sets the target
+  value.
 
   If the @arg{value} argument is a @code{null-pointer} then the target value is
   unset.
@@ -250,7 +251,7 @@
 (defcfun ("gtk_actionable_set_detailed_action_name"
            gtk-actionable-set-detailed-action-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
+ "@version{2021-9-8}
   @argument[actionable]{a @class{gtk-actionable} widget}
   @argument[name]{a string with the detailed action name}
   @begin{short}
@@ -267,12 +268,13 @@
   target.
   @begin[Example]{dictionary}
     @begin{pre}
-(let ((button (make-instance 'gtk-button)))
-  (gtk-actionable-set-detailed-action-name button \"app::save\")
-  (values (gtk-actionable-action-name button)
-          (g-variant-string (gtk-actionable-action-target button))))
-=> \"app\"
-=> \"save\"
+(setq button (make-instance 'gtk-button))
+=> #<GTK-BUTTON {1004A8C973@}>
+(gtk-actionable-set-detailed-action-name button \"win.justify::left\")
+(values (gtk-actionable-action-name button)
+        (g-variant-string (gtk-actionable-action-target button)))
+=> \"win.justify\"
+=> \"left\"
     @end{pre}
   @end{dictionary}
   @see-class{gtk-actionable}
