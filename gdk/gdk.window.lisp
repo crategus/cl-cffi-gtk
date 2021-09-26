@@ -4807,11 +4807,10 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 (export 'gdk-window-root-coords)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_window_get_pointer () -> gdk-window-pointer
+;;; gdk_window_get_pointer () -> gdk-window-pointer        not exported
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_get_pointer" %gdk-window-pointer)
-    (g-object gdk-window)
+(defcfun ("gdk_window_get_pointer" %gdk-window-pointer) (g-object gdk-window)
   (window (g-object gdk-window))
   (x (:pointer :int))
   (y (:pointer :int))
@@ -4865,16 +4864,16 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
 (defun gdk-window-device-position (window device)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-24}
+ "@version{2021-9-25}
   @argument[window]{a @class{gdk-window} object}
-  @argument[device]{a @class{gdk-device} to query}
+  @argument[device]{a @class{gdk-device} object to query}
   @begin{return}
     @code{win}  -- the @class{gdk-window} object underneath @arg{device}, as
-                   with the function @fun{gdk-device-window-at-position}, or
-                   @code{nil} if the window is not known to GDK @br{}
-    @code{x}    -- a @code{:int} with the x coordinate of the device @br{}
-    @code{y}    -- a @code{:int} with the y coordinate of the device @br{}
-    @code{mask} -- the modifier mask of type @symbol{gdk-modifier-type}
+    with the @fun{gdk-device-window-at-position} function, or @code{nil} if the
+    window is not known to GDK @br{}
+    @code{x} -- an integer with the x coordinate of the device @br{}
+    @code{y} -- an integer with the y coordinate of the device @br{}
+    @code{mask} -- the @symbol{gdk-modifier-type} flags
   @end{return}
   @begin{short}
     Obtains the current device position and modifier state. The position is
@@ -4910,16 +4909,16 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 
 (defun gdk-window-device-position-double (window device)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-28}
+ "@version{2021-9-25}
   @argument[window]{a @class{gdk-window} object}
   @argument[device]{a @class{gdk-device} object to query to}
   @begin{return}
-    @code{win}  -- the @class{gdk-window} object underneath device, as with the
-                   function @fun{gdk-device-window-at-position}, or
-                   @code{nil} if the window is not known to GDK @br{}
-    @code{x}    -- a @code{:double} with the x coordinate of the device @br{}
-    @code{y}    -- a @code{:double} with the y coordinate of the device  @br{}
-    @code{mask} -- the flags of type @symbol{gdk-modifer-type}
+    @code{win} -- the @class{gdk-window} object underneath device, as with the
+    @fun{gdk-device-window-at-position} function, or @code{nil} if the window
+    is not known to GDK @br{}
+    @code{x} -- an double float with the x coordinate of the device @br{}
+    @code{y} -- an double float with the y coordinate of the device  @br{}
+    @code{mask} -- the @symbol{gdk-modifer-type} flags
   @end{return}
   @begin{short}
     Obtains the current device position in doubles and the modifier state.
