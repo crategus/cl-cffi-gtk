@@ -54,7 +54,7 @@
    (:file "gtk.main-loop")             ; Main event loop, and events
    (:file "gtk.accel-group")           ; Accelerator Groups
    (:file "gtk.accel-map")             ; Loadable keyboard accelerator
-   (:file "gtk.selections")            ; Inter-process communication
+   (:file "gtk.selection")             ; Inter-process communication
    (:file "gtk.drag-and-drop")         ; Controlling drag and drop
 ;   (:file "gtk.stock-item")            ; Stock Items
    (:file "gtk.clipboard")             ; Storing data on clipboards
