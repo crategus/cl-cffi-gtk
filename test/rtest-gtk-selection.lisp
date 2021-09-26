@@ -1,7 +1,7 @@
-(def-suite gtk-selections :in gtk-suite)
-(in-suite gtk-selections)
+(def-suite gtk-selection :in gtk-suite)
+(in-suite gtk-selection)
 
-(defvar *verbose-gtk-selections* nil)
+(defvar *verbose-gtk-selection* nil)
 
 ;;;     GtkSelectionData
 
@@ -12,6 +12,7 @@
   (is (eq (gtype "GtkSelectionData")
           (gtype (foreign-funcall "gtk_selection_data_get_type" g-size)))))
 
+#+nil
 (test gtk-selection-data-new
   (let ((selection (gtk-selection-data-new)))
     (is (string= "NONE" (gtk-selection-data-selection selection)))
@@ -284,7 +285,7 @@
 
       (g-signal-connect widget "selection-clear-event"
          (lambda (widget event)
-           (when *verbose-gtk-selections*
+           (when *verbose-gtk-selection*
              (format t "~&SELECTION-CLEAR-EVENT ~A~%" widget)
              (format t "    event = ~A~%" event))))
 
@@ -496,4 +497,4 @@
 ;;;     gtk_selection_data_copy
 ;;;     gtk_selection_data_free
 
-;;; 2020-11-13
+;;; 2021-9-25
