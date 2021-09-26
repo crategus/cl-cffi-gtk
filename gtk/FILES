@@ -274,7 +274,7 @@ GTK+ Core Reference
     gtk.settings.lisp                - GtkSettings                 - GTK+ 3.24 &
     gtk.bindings.lisp                - Bindings                    - GTK+ 3.24 %
     gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.24
-    gtk.selections.lisp              - Selections                  - GTK+ 3.24 &
+    gtk.selection.lisp               - Selections                  - GTK+ 3.24 &
     gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.24 %
 
 Theming in GTK+

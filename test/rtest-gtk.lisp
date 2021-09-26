@@ -269,7 +269,7 @@
 (load "rtest-gtk-settings.lisp")
 ;    gtk.bindings.lisp
 ;    gtk.enumerations.lisp
-(load "rtest-gtk-selections.lisp")
+(load "rtest-gtk-selection.lisp")
 ;    gtk.mount-operation.lisp
 
 ;;;  Theming in GTK+
