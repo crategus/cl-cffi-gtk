@@ -577,4 +577,4 @@
 
 (export 'gdk-selection-send-notify-for-display)
 
-;;; --- End of file gdk.selections.lisp ----------------------------------------
+;;; --- End of file gdk.selection.lisp -----------------------------------------

@@ -70,7 +70,7 @@
                (:file "gdk.events")           ; Functions for handling events
                (:file "gdk.general")          ; Miscellaneous functions
                (:file "gdk.key-values")       ; Manipulating keyboard codes
-               (:file "gdk.selections")       ; Transfering data
+               (:file "gdk.selection")        ; Transfering data
                (:file "gdk.drag-and-drop")    ; Drag and drop handling
                (:file "gdk.app")              ; Notification for applications
                (:file "gdk.pango")            ; Using Pango in GDK

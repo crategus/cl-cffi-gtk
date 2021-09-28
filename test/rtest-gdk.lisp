@@ -16,14 +16,12 @@
 (load "rtest-gdk-visual.lisp")
 (load "rtest-gdk-cursor.lisp")
 (load "rtest-gdk-window.lisp")
-
 (load "rtest-gdk-frame-clock.lisp")
 (load "rtest-gdk-frame-timings.lisp")
-
 (load "rtest-gdk-events.lisp")
 (load "rtest-gdk-event-structures.lisp")
 (load "rtest-gdk-key-values.lisp")
-(load "rtest-gdk-selections.lisp")
+(load "rtest-gdk-selection.lisp")
 (load "rtest-gdk-color.lisp")
 
-;;; 2020-11-11
+;;; 2021-9-28

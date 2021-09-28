@@ -30,7 +30,7 @@ List of files for the GDK Library
   gdk.events.lisp           - Events                 - GDK 3.24 &
   gdk.event-structures.lisp - Event Structures       - GDK 3.24
   gdk.key-values.lisp       - Key Values             - GDK 3.24
-  gdk.selections.lisp       - Selections             - GDK 3.24
+  gdk.selection.lisp        - Selections             - GDK 3.24
   gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.24
   gdk.properties.lisp       - Properties and Atoms   - GDK 3.24 &
   gdk.threads.lisp          - Threads                - GDK 3.24

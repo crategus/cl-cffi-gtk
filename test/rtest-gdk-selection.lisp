@@ -1,7 +1,7 @@
-(def-suite gdk-selections :in gdk-suite)
-(in-suite gdk-selections)
+(def-suite gdk-selection :in gdk-suite)
+(in-suite gdk-selection)
 
-(defparameter *verbose-gdk-selections* nil)
+(defparameter *verbose-gdk-selection* nil)
 
 ;;;     GDK_SELECTION_PRIMARY
 ;;;     GDK_SELECTION_SECONDARY
@@ -112,7 +112,7 @@
       ;; FIXME: Works not as expeceted. We do not get data from the clipboard.
       (multiple-value-bind (length data type format)
           (gdk-selection-property-get window)
-        (when *verbose-gdk-selections*
+        (when *verbose-gdk-selection*
           (format t "~%PROPERTY-GET~%")
           (format t " length : ~a~%" length)
           (format t "   data : ~a~%" data)
@@ -125,4 +125,4 @@
 
 ;; TODO: Implement a test.
 
-;;; 2021-3-27
+;;; 2021-9-28
