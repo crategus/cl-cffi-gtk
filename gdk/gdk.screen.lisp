@@ -296,8 +296,8 @@
 
   This functionality is not implemented in the Windows backend.
 
-  For setting an overall opacity for a top-level window, see the function
-  @fun{gdk-window-set-opacity}.
+  For setting an overall opacity for a toplevel window, see the
+  @fun{gdk-window-set-opacity} function.
   @see-class{gdk-screen}
   @see-class{gdk-visual}
   @see-function{gdk-window-set-opacity}"

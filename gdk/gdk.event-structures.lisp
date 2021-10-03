@@ -731,19 +731,20 @@
 (setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gdk-modifier-type atdoc:*external-symbols*)
- "@version{*2021-5-13}
+ "@version{2021-5-13}
   @begin{short}
     A set of bit-flags to indicate the state of modifier keys and mouse buttons
     in various event types.
   @end{short}
-  Typical modifier keys are Shift, Control, Meta, Super, Hyper, Alt, Compose,
-  Apple, CapsLock or ShiftLock.
+  Typical modifier keys are @kbd{Shift}, @kbd{Control}, @kbd{Meta}, @kbd{Super},
+  @kbd{Hyper}, @kbd{Alt}, @kbd{Compose}, @kbd{Apple}, @kbd{CapsLock} or
+  @kbd{ShiftLock} keys.
 
   Like the X Window System, GDK supports 8 modifier keys and 5 mouse buttons.
 
-  GDK recognizes which of the Meta, Super or Hyper keys are mapped to Mod2 -
-  Mod5, and indicates this by setting the @code{:super-mask}, @code{:hyper-mask}
-  or @code{:meta-mask} mask in the state field of key events.
+  GDK recognizes which of the @kbd{Meta}, @kbd{Super} or @kbd{Hyper} keys are
+  mapped to Mod2 - Mod5, and indicates this by setting the @code{:super-mask},
+  @code{:hyper-mask} or @code{:meta-mask} mask in the state field of key events.
 
   Note that GDK may add internal values to events which include reserved
   values such as @code{GDK_MODIFIER_RESERVED_13_MASK}. Your code should
@@ -777,13 +778,13 @@
   (:modifier-mask #x5c001fff))
   @end{pre}
   @begin[code]{table}
-    @entry[:shift-mask]{The Shift key.}
+    @entry[:shift-mask]{The @kbd{Shift} key.}
     @entry[:lock-mask]{A Lock key, depending on the modifier mapping of the
-      X server this may either be CapsLock or ShiftLock.}
-    @entry[:control-mask]{The Control key.}
+      X server this may either be the @kbd{CapsLock} or @kbd{ShiftLock} key.}
+    @entry[:control-mask]{The @kbd{Control} key.}
     @entry[:mod1-mask]{The fourth modifier key. It depends on the modifier
       mapping of the X server which key is interpreted as this modifier, but
-      normally it is the Alt key.}
+      normally it is the @kbd{Alt} key.}
     @entry[:mod2-mask]{The fifth modifier key. It depends on the modifier
       mapping of the X server which key is interpreted as this modifier.}
     @entry[:mod3-mask]{The sixth modifier key. It depends on the modifier
@@ -1518,8 +1519,8 @@
     @entry[time]{An unsigned integer with the time of the event in
       milliseconds.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
-      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-      buttons.}
+      state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+      @kbd{Alt} keys, and the pointer buttons.}
     @entry[keyval]{The key that was pressed or released. See the
       @file{gdk/gdkkeysyms.h} header file for a complete list of GDK key codes.}
     @entry[length]{An integer with the length of the @code{string} field.}
@@ -1588,8 +1589,8 @@
   @syntax[]{(setf (gdk-event-key-state instance) state)}
   @argument[instance]{a @class{gdk-event-key} instance}
   @argument[state]{a @symbol{gdk-modifier-type} bit-mask representing the
-      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-      buttons.}
+      state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+      @kbd{Alt} keys, and the pointer buttons.}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-key} structure.
   @end{short}
@@ -1794,8 +1795,8 @@
     @entry[axes]{The @arg{x}, @arg{y} fields translated to the axes of the
       device.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
-      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-      buttons.}
+      state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+      @kbd{Alt} keys, and the pointer buttons.}
     @entry[button]{An unsigned integer with the button which was pressed or
       released, numbered from 1 to 5. Normally button 1 is the left mouse
       button, 2 is the middle button, and 3 is the right button. On 2-button
@@ -1913,8 +1914,8 @@
   @syntax[]{(setf (gdk-event-button-state instance) state)}
   @argument[instance]{a @class{gdk-event-button} instance}
   @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-    buttons}
+    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+    @kbd{Alt} keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-button} structure.
   @end{short}
@@ -2067,8 +2068,8 @@
     @entry[axes]{The @arg{x}, @arg{y} fields translated to the axes of the
       device.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
-      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-      buttons.}
+      state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+      @kbd{Alt} keys, and the pointer buttons.}
     @entry[sequence]{The @class{gdk-event-sequence} event sequence that the
       event belongs to.}
     @entry[emulating-pointer]{Whether the event should be used for emulating
@@ -2185,8 +2186,8 @@
   @syntax[]{(setf (gdk-event-touch-state instance) state)}
   @argument[instance]{a @class{gdk-event-touch} instance}
   @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-    buttons}
+    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+    @kbd{Alt} keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-touch} structure.
   @end{short}
@@ -2345,8 +2346,8 @@
     @entry[y]{The double float y coordinate of the pointer relative to the
       window.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
-      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-      buttons.}
+      state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+      @kbd{Alt} keys, and the pointer buttons.}
     @entry[direction]{The @symbol{gdk-scroll-direction} direction to scroll to,
       one of @code{:up}, @code{:down}, @code{:left}, @code{:right} or
       @code{:smooth}.}
@@ -2445,8 +2446,8 @@
   @syntax[]{(setf (gdk-event-scroll-state instance) state)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
   @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-    buttons}
+    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+    @kbd{Alt} keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-scroll} structure.
   @end{short}
@@ -2651,8 +2652,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[axes]{The @arg{x}, @arg{y} fields translated to the axes of the
       device.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
-      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-      buttons.}
+      state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+      @kbd{Alt} keys, and the pointer buttons.}
     @entry[is-hint]{Set to 1 if this event is just a hint, see the
       @code{:pointer-motion-hint-mask} value of the @symbol{gdk-event-mask}
       flags.}
@@ -2766,8 +2767,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
   @syntax[]{(setf (gdk-event-motion-state instance) state)}
   @argument[instance]{a @class{gdk-event-motion} instance}
   @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-    buttons}
+    state of the modifier keys, e.g. @kbd{Control}, @kbd{Shift} and @kbd{Alt}
+    keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-motion} structure.
   @end{short}
@@ -3088,8 +3089,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[detail]{The @symbol{gdk-notify-type} kind of crossing that happened.}
     @entry[focus]{@em{True} if @arg{window} is the focus window or an inferior.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
-      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-      buttons.}
+      state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+      @kbd{Alt} keys, and the pointer buttons.}
   @end{table}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
@@ -3297,8 +3298,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
   @syntax[]{(setf (gdk-event-crossing-state instance) state)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
   @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-    buttons}
+    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+    @kbd{Alt} keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-crossing}
     structure.
@@ -4455,8 +4456,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[y-root]{The double float y coordinate of the pointer, relative to
       the root of the screen.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
-      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-      buttons.}
+      state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+      @kbd{Alt} keys, and the pointer buttons.}
   @end{table}
   Since 3.18
   @see-slot{gdk-event-type}
@@ -4665,8 +4666,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
   @syntax[]{(setf (gdk-event-touchpad-swipe-state instance) state)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
   @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-    buttons}
+    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+    @kbd{Alt} keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-touchpad-swipe}
     structure.
@@ -4732,8 +4733,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[y-root]{The double float y coordinate of the pointer, relative to
       the root of the screen.}
     @entry[state]{The @symbol{gdk-modifier-type} bit-mask representing the
-      state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-      buttons.}
+      state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+      @kbd{Alt} keys, and the pointer buttons.}
   @end{table}
   Since 3.18
   @see-slot{gdk-event-type}
@@ -4985,8 +4986,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
   @syntax[]{(setf (gdk-event-touchpad-pinch-state instance) state)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
   @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. Control, Shift and Alt, and the pointer
-    buttons}
+    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
+    @kbd{Alt} keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-touchpad-pinch}
     structure.

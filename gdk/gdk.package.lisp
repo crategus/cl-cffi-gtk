@@ -34,7 +34,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gdk) t)
- "GDK is an intermediate layer which isolates GTK+ from the details of the
+ "GDK is an intermediate layer which isolates GTK from the details of the
   windowing system. This is the API documentation of a Lisp binding to GDK.
   @begin[General]{section}
     This section describes the GDK initialization functions and miscellaneous
@@ -572,7 +572,7 @@
   @begin[Events]{section}
     Functions for handling events from the window system.
 
-    In GTK+ applications the events are handled automatically in the function
+    In GTK applications the events are handled automatically in the function
     @fun{gtk-main-do-event} and passed on to the appropriate widgets, so these
     functions are rarely needed. Though some of the fields in the Event
     Structures are useful.
@@ -949,42 +949,26 @@
     Functions for transfering data via the X selection mechanism.
 
     The X selection mechanism provides a way to transfer arbitrary chunks of
-    data between programs. A selection is a essentially a named clipboard,
-    identified by a string interned as a @symbol{gdk-atom}. By claiming
-    ownership of a selection, an application indicates that it will be
-    responsible for supplying its contents. The most common selections are
+    data between programs. A selection is essentially a named clipboard,
+    identified by a string interned as an atom of type @symbol{gdk-atom}. By
+    claiming ownership of a selection, an application indicates that it will
+    be responsible for supplying its contents. The most common selections are
     @code{\"PRIMARY\"} and @code{\"CLIPBOARD\"}.
 
     The contents of a selection can be represented in a number of formats,
     called targets. Each target is identified by an atom. A list of all possible
     targets supported by the selection owner can be retrieved by requesting the
     special target @code{\"TARGETS\"}. When a selection is retrieved, the data
-    is accompanied by a type (an atom), and a format (an integer, representing
-    the number of bits per item). See Properties and Atoms for more information.
+    is accompanied by a type (an atom), and a format (an integer), representing
+    the number of bits per item.
 
     The functions in this section only contain the lowlevel parts of the
     selection protocol. A considerably more complicated implementation is needed
-    on top of this. GTK+ contains such an implementation and programmers should
+    on top of this. GTK contains such an implementation and programmers should
     use those functions instead of the ones presented here. If you plan to
     implement selection handling directly on top of the functions here, you
     should refer to the X Inter-client Communication Conventions Manual (ICCCM).
 
-    @about-variable{+gdk-selection-primary+}
-    @about-variable{+gdk-selection-secondary+}
-    @about-variable{+gdk-selection-clipboard+}
-    @about-variable{+gdk-target-bitmap+}
-    @about-variable{+gdk-target-colormap+}
-    @about-variable{+gdk-target-drawable+}
-    @about-variable{+gdk-target-pixmap+}
-    @about-variable{+gdk-target-string+}
-    @about-variable{+gdk-selection-type-atom+}
-    @about-variable{+gdk-selection-type-bitmap+}
-    @about-variable{+gdk-selection-type-colormap+}
-    @about-variable{+gdk-selection-type-drawable+}
-    @about-variable{+gdk-selection-type-integer+}
-    @about-variable{+gdk-selection-type-pixmap+}
-    @about-variable{+gdk-selection-type-window+}
-    @about-variable{+gdk-selection-type-string+}
     @about-function{gdk-selection-owner-set}
     @about-function{gdk-selection-owner-set-for-display}
     @about-function{gdk-selection-owner-get}
@@ -1056,11 +1040,11 @@
     performance reasons. So e.g. you must coordinate accesses to the same
     @code{GHashTable} from multiple threads.
 
-    GTK+, however, is not thread safe. You should only use GTK+ and GDK from
+    GTK, however, is not thread safe. You should only use GTK and GDK from
     the thread @code{gtk_init()} and @code{gtk_main()} were called on. This is
     usually referred to as the \"main thread\".
 
-    Signals on GTK+ and GDK types, as well as non-signal callbacks, are emitted
+    Signals on GTK and GDK types, as well as non-signal callbacks, are emitted
     in the main thread.
 
     You can schedule work in the main thread safely from other threads by using
@@ -1110,13 +1094,13 @@ got_value (gpointer user_data)
     @about-function{gdk-threads-add-timeout-seconds-full}
   @end{section}
   @begin[Pango Interaction]{section}
-    Pango is the text layout system used by GDK and GTK+. The functions and
+    Pango is the text layout system used by GDK and GTK. The functions and
     types in this section are used to obtain clip regions for
     @class{pango-layout}'s, and to get @class{pango-context}'s that can be
     used with GDK.
 
     Creating a @class{pango-layout} object is the first step in rendering text,
-    and requires getting a handle to a @class{pango-context}. For GTK+ programs,
+    and requires getting a handle to a @class{pango-context}. For GTK programs,
     you will usually want to use the functions @fun{gtk-widget-pango-context},
     or @fun{gtk-widget-create-pango-layout}, rather than using the lowlevel
     function @fun{gdk-pango-context-for-screen}. Once you have a
@@ -1214,7 +1198,7 @@ got_value (gpointer user_data)
     Functions to support using Cairo.
 
     Cairo is a graphics library that supports vector graphics and image
-    compositing that can be used with GDK. GTK+ does all of its drawing using
+    compositing that can be used with GDK. GTK does all of its drawing using
     Cairo.
 
     GDK does not wrap the Cairo API, instead it allows to create Cairo contexts

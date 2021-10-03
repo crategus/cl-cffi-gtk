@@ -149,14 +149,14 @@
   In order to use a keymap to interpret a key event, it is necessary to first
   convert the keyboard state into an effective group and level. This is done
   via a set of rules that varies widely according to type of keyboard and user
-  configuration. The function @fun{gdk-keymap-translate-keyboard-state} accepts
+  configuration. The @fun{gdk-keymap-translate-keyboard-state} function accepts
   a keyboard state - consisting of hardware keycode pressed, active modifiers,
   and active group - applies the appropriate rules, and returns the group/level
   to be used to index the keymap, along with the modifiers which did not affect
   the group and level, i.e. it returns \"unconsumed modifiers\". The keyboard
   group may differ from the effective group used for keymap lookups because
-  some keys do not have multiple groups - e.g. the Enter key is always in group
-  0 regardless of keyboard state.
+  some keys do not have multiple groups - e.g. the @kbd{Enter} key is always in
+  group 0 regardless of keyboard state.
 
   Note that the function @fun{gdk-keymap-translate-keyboard-state} also returns
   the keyval, i.e. it goes ahead and performs the keymap lookup in addition to
@@ -437,21 +437,21 @@
     used to determine the group or level
   @end{return}
   @begin{short}
-    Translates the contents of @arg{keycode}, @arg{state}, and @arg{group} into
-    a keyval, effective group, and level.
+    Translates the contents of the @arg{keycode}, @arg{state}, and @arg{group}
+    arguments into a keyval, effective group, and level.
   @end{short}
   Modifiers that affected the translation and are thus unavailable for
-  application use are returned in @arg{consumed}. The return value
-  @arg{effective} is the group that was actually used for the translation. Some
-  keys such as Enter are not affected by the active keyboard group. The level is
-  derived from state. For convenience, the @class{gdk-event-key} event already
-  contains the translated keyval, so this function is not as useful as you might
-  think.
+  application use are returned in @arg{consumed}. The @arg{effective} return
+  value is the group that was actually used for the translation. Some keys such
+  as the @kbd{Enter} key are not affected by the active keyboard group. The
+  level is derived from @rg{state}. For convenience, the @class{gdk-event-key}
+  event already contains the translated keyval, so this function is not as
+  useful as you might think.
 
   The @arg{consumed} flags gives modifiers that should be masked out from
   @arg{state} when comparing this key press to a hot key. For instance, on a
-  US keyboard, the @code{plus} symbol is shifted, so when comparing a key press
-  to a @code{<Control>plus} accelerator @code{<Shift>} should be masked out.
+  US keyboard, the @kbd{Plus} symbol is shifted, so when comparing a key press
+  to a @kbd{<Control>Plus} accelerator the @kbd{Shift} key should be masked out.
   @begin{pre}
 /* We want to ignore irrelevant modifiers like ScrollLock */
 #define ALL_ACCELS_MASK (GDK_CONTROL_MASK | GDK_SHIFT_MASK |
@@ -881,7 +881,8 @@ if (keyval == GDK_PLUS &&
   @begin{short}
     Obtains the upper-case and lower-case versions of the @arg{keyval} symbol.
   @end{short}
-  Examples of keyvals are GDK_KEY_a, GDK_KEY_Enter, GDK_KEY_F1, etc.
+  Examples of keyvals are @code{GDK_KEY_a}, @code{GDK_KEY_Enter},
+  @code{GDK_KEY_F1}, etc.
   @see-class{gdk-keymap}"
   (with-foreign-objects ((lower :uint) (upper :uint))
     (%gdk-keyval-convert-case symbol lower upper)
