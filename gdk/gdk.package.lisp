@@ -953,13 +953,13 @@
     identified by a string interned as an atom of type @symbol{gdk-atom}. By
     claiming ownership of a selection, an application indicates that it will
     be responsible for supplying its contents. The most common selections are
-    @code{\"PRIMARY\"} and @code{\"CLIPBOARD\"}.
+    \"PRIMARY\" and \"CLIPBOARD\".
 
     The contents of a selection can be represented in a number of formats,
     called targets. Each target is identified by an atom. A list of all possible
     targets supported by the selection owner can be retrieved by requesting the
-    special target @code{\"TARGETS\"}. When a selection is retrieved, the data
-    is accompanied by a type (an atom), and a format (an integer), representing
+    special target \"TARGETS\". When a selection is retrieved, the data is
+    accompanied by a type (an atom), and a format (an integer), representing
     the number of bits per item.
 
     The functions in this section only contain the lowlevel parts of the
@@ -969,6 +969,32 @@
     implement selection handling directly on top of the functions here, you
     should refer to the X Inter-client Communication Conventions Manual (ICCCM).
 
+    The C library has the following constants to refer to selections, targets,
+    and selection types. In the Lisp library the corresponding strings are used.
+    These strings are automatically converted to the corresponding
+    @symbol{gdk-atom} type.
+    @begin[code]{table}
+      @entry[GDK_SELECTION_PRIMARY]{\"PRIMARY\"}
+      @entry[GDK_SELECTION_SECONDARY]{\"SECONDARY\"}
+      @entry[GDK_SELECTION_CLIPBOARD]{\"CLIPBOARD\"}
+    @end{table}
+    @begin[code]{table}
+      @entry[GDK_TARGET_BITMAP]{\"BITMAP\"}
+      @entry[GDK_TARGET_COLORMAP]{\COLORMAP\"}
+      @entry[GDK_TARGET_DRAWABLE]{\"DRAWABLE\"}
+      @entry[GDK_TARGET_PIXMAP]{\"PIXMAP\"}
+      @entry[GDK_TARGET_STRING]{\"STRING\"}
+    @end{table}
+    @begin[code]{table}
+      @entry[GDK_SELECTION_TYPE_ATOM]{\"ATOM\"}
+      @entry[GDK_SELECTION_TYPE_BITMAP]{\"BITMAP\"}
+      @entry[GDK_SELECTION_TYPE_COLORMAP]{\"COLORMAP\"}
+      @entry[GDK_SELECTION_TYPE_DRAWABLE]{\"DRAWABLE\"}
+      @entry[GDK_SELECTION_TYPE_INTEGER]{\"INTEGER\"}
+      @entry[GDK_SELECTION_TYPE_PIXMAP]{\"PIXMAP\"}
+      @entry[GDK_SELECTION_TYPE_WINDOW]{\"WINDOW\"}
+      @entry[GDK_SELECTION_TYPE_STRING]{\"STRING\"}
+    @end{table}
     @about-function{gdk-selection-owner-set}
     @about-function{gdk-selection-owner-set-for-display}
     @about-function{gdk-selection-owner-get}
