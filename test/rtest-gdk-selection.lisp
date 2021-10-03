@@ -3,23 +3,6 @@
 
 (defparameter *verbose-gdk-selection* nil)
 
-;;;     GDK_SELECTION_PRIMARY
-;;;     GDK_SELECTION_SECONDARY
-;;;     GDK_SELECTION_CLIPBOARD
-;;;     GDK_TARGET_BITMAP
-;;;     GDK_TARGET_COLORMAP
-;;;     GDK_TARGET_DRAWABLE
-;;;     GDK_TARGET_PIXMAP
-;;;     GDK_TARGET_STRING
-;;;     GDK_SELECTION_TYPE_ATOM
-;;;     GDK_SELECTION_TYPE_BITMAP
-;;;     GDK_SELECTION_TYPE_COLORMAP
-;;;     GDK_SELECTION_TYPE_DRAWABLE
-;;;     GDK_SELECTION_TYPE_INTEGER
-;;;     GDK_SELECTION_TYPE_PIXMAP
-;;;     GDK_SELECTION_TYPE_WINDOW
-;;;     GDK_SELECTION_TYPE_STRING
-
 ;;;     gdk_selection_owner_set
 ;;;     gdk_selection_owner_get
 
@@ -40,7 +23,9 @@
       ;; Unset the owner
       (is-true (gdk-selection-owner-set nil
                                         "PRIMARY"
-                                        +gdk-current-time+ nil)))))
+                                        +gdk-current-time+ nil))
+      ;; No owner
+      (is-false (gdk-selection-owner-get "PRIMARY")))))
 
 (test gdk-selection-owner.2
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
@@ -55,7 +40,8 @@
       (is (eq window (gdk-selection-owner-get "SECONDARY")))
       (is-true (gdk-selection-owner-set nil
                                         "SECONDARY"
-                                        +gdk-current-time+ nil)))))
+                                        +gdk-current-time+ nil))
+      (is-false (gdk-selection-owner-get "SECONDARY")))))
 
 (test gdk-selection-owner.3
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
@@ -70,7 +56,8 @@
       (is (eq window (gdk-selection-owner-get "CLIPBOARD")))
       (is-true (gdk-selection-owner-set nil
                                         "CLIPBOARD"
-                                        +gdk-current-time+ nil)))))
+                                        +gdk-current-time+ nil))
+      (is-false (gdk-selection-owner-get "CLIPBOARD")))))
 
 ;;;     gdk_selection_owner_set_for_display
 ;;;     gdk_selection_owner_get_for_display
@@ -81,7 +68,9 @@
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-window widget)))
+      ;; No owner
       (is-false (gdk-selection-owner-get-for-display display "PRIMARY"))
+      ;; Set the owner
       (is-true (gdk-selection-owner-set-for-display display
                                                     window
                                                     "PRIMARY"
@@ -89,10 +78,13 @@
                                                     nil))
       (is (eq window
               (gdk-selection-owner-get-for-display display "PRIMARY")))
+      ;; Unset the owner
       (is-true (gdk-selection-owner-set-for-display display
                                                     nil
                                                     "PRIMARY"
-                                                    +gdk-current-time+ nil)))))
+                                                    +gdk-current-time+ nil))
+      ;; No owner
+      (is-false (gdk-selection-owner-get-for-display display "PRIMARY")))))
 
 ;;;     gdk_selection_convert
 ;;;     gdk_selection_property_get
@@ -101,21 +93,23 @@
   (let ((clipboard (gtk-clipboard-default (gdk-display-default)))
         (widget (make-instance 'gtk-window :type :toplevel)))
     (is (string= "CLIPBOARD" (gtk-clipboard-selection clipboard)))
-    ;; Put some text in  the default clipboard
-    (gtk-clipboard-set-text clipboard "This is the text.")
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-window widget)))
       (gdk-selection-owner-set window "CLIPBOARD" +gdk-current-time+ nil)
-      (gdk-selection-convert window "CLIPBOARD" "STRING" +gdk-current-time+)
       (is (eq window (gdk-selection-owner-get "CLIPBOARD")))
+      ;; Put some text in  the default clipboard
+      (gtk-clipboard-set-text clipboard "This is the text.")
       ;; FIXME: Works not as expeceted. We do not get data from the clipboard.
+      ;; What is the correct usage of the GDK-SELECTION-CONVERT function.
+      (gdk-selection-convert window "CLIPBOARD" "STRING" +gdk-current-time+)
       (multiple-value-bind (length data type format)
           (gdk-selection-property-get window)
         (when *verbose-gdk-selection*
           (format t "~%PROPERTY-GET~%")
           (format t " length : ~a~%" length)
           (format t "   data : ~a~%" data)
+          (format t "        : ~a~%" (convert-from-foreign data :string))
           (format t "   type : ~a~%" type)
           (format t " format : ~a~%" format)))
       (gdk-selection-owner-set nil "CLIPBOARD" +gdk-current-time+ nil))))
@@ -125,4 +119,4 @@
 
 ;; TODO: Implement a test.
 
-;;; 2021-9-28
+;;; 2021-10-3

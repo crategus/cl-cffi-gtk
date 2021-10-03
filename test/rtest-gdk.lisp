@@ -22,6 +22,7 @@
 (load "rtest-gdk-event-structures.lisp")
 (load "rtest-gdk-key-values.lisp")
 (load "rtest-gdk-selection.lisp")
+(load "rtest-gdk-drag-and-drop.lisp")
 (load "rtest-gdk-color.lisp")
 
 ;;; 2021-9-28
