@@ -67,7 +67,7 @@
 (in-package :gdk)
 
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_PRIMARY
+;;; GDK_SELECTION_PRIMARY                                  not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -80,11 +80,8 @@
   @see-variable{+gdk-selection-secondary+}
   @see-variable{+gdk-selection-clipboard+}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-primary+ atdoc:*variable-name-alias*) "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_SECONDARY
+;;; GDK_SELECTION_SECONDARY                                not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -97,12 +94,8 @@
   @see-variable{+gdk-selection-primary+}
   @see-variable{+gdk-selection-clipboard+}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-secondary+ atdoc:*variable-name-alias*)
-      "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_CLIPBOARD
+;;; GDK_SELECTION_CLIPBOARD                                not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -115,12 +108,8 @@
   @see-variable{+gdk-selection-primary+}
   @see-variable{+gdk-selection-secondary+}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-clipboard+ atdoc:*variable-name-alias*)
-      "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_TARGET_BITMAP
+;;; GDK_TARGET_BITMAP                                      not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -131,11 +120,8 @@
   A @symbol{gdk-atom} representing the @code{\"BITMAP\"} selection target.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-target-bitmap+ atdoc:*variable-name-alias*) "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_TARGET_COLORMAP
+;;; GDK_TARGET_COLORMAP                                    not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -146,11 +132,8 @@
   A @symbol{gdk-atom} representing the @code{\"COLORMAP\"} selection target.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-target-colormap+ atdoc:*variable-name-alias*) "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_TARGET_DRAWABLE
+;;; GDK_TARGET_DRAWABLE                                    not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -161,11 +144,8 @@
   A @symbol{gdk-atom} representing the @code{\"DRAWABLE\"} selection target.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-target-drawable+ atdoc:*variable-name-alias*) "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_TARGET_PIXMAP
+;;; GDK_TARGET_PIXMAP                                      not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -176,11 +156,8 @@
   A @symbol{gdk-atom} representing the @code{\"PIXMAP\"} selection target.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-target-pixmap+ atdoc:*variable-name-alias*) "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_TARGET_STRING
+;;; GDK_TARGET_STRING                                      not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -191,11 +168,8 @@
   A @symbol{gdk-atom} representing the @code{\"STRING\"} selection target.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-target-string+ atdoc:*variable-name-alias*) "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_TYPE_ATOM
+;;; GDK_SELECTION_TYPE_ATOM                                not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -206,12 +180,8 @@
   A @symbol{gdk-atom} representing the @code{\"ATOM\"} selection type.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-type-atom+ atdoc:*variable-name-alias*)
-      "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_TYPE_BITMAP
+;;; GDK_SELECTION_TYPE_BITMAP                              not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -222,12 +192,8 @@
   A @symbol{gdk-atom} representing the @code{\"BITMAP\"} selection type.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-type-bitmap+ atdoc:*variable-name-alias*)
-      "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_TYPE_COLORMAP
+;;; GDK_SELECTION_TYPE_COLORMAP                            not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -238,12 +204,8 @@
   A @symbol{gdk-atom} representing the @code{\"COLORMAP\"} selection type.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-type-colormap+ atdoc:*variable-name-alias*)
-      "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_TYPE_DRAWABLE
+;;; GDK_SELECTION_TYPE_DRAWABLE                            not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -254,12 +216,8 @@
   A @symbol{gdk-atom} representing the @code{\"DRAWABLE\"} selection type.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-type-drawable+ atdoc:*variable-name-alias*)
-      "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_TYPE_INTEGER
+;;; GDK_SELECTION_TYPE_INTEGER                             not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -270,12 +228,8 @@
   A @symbol{gdk-atom} representing the @code{\"INTEGER\"} selection type.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-type-integer+ atdoc:*variable-name-alias*)
-      "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_TYPE_PIXMAP
+;;; GDK_SELECTION_TYPE_PIXMAP                              not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -286,11 +240,8 @@
   A @symbol{gdk-atom} representing the @code{\"PIXMAP\"} selection type.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-pixmap+ atdoc:*variable-name-alias*) "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_TYPE_WINDOW
+;;; GDK_SELECTION_TYPE_WINDOW                              not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -301,12 +252,8 @@
   A @symbol{gdk-atom} representing the @code{\"WINDOW\"} selection type.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-type-window+ atdoc:*variable-name-alias*)
-      "Constant")
-
 ;;; ----------------------------------------------------------------------------
-;;; GDK_SELECTION_TYPE_STRING
+;;; GDK_SELECTION_TYPE_STRING                              not implemented
 ;;; ----------------------------------------------------------------------------
 
 #+nil
@@ -317,19 +264,15 @@
   A @symbol{gdk-atom} representing the @code{\"STRING\"} selection type.
   @see-symbol{gdk-atom}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash '+gdk-selection-type-string+ atdoc:*variable-name-alias*)
-      "Constant")
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_selection_owner_set ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_owner_set" gdk-selection-owner-set) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-3-27}
+ "@version{2021-10-3}
   @argument[owner]{a @class{gdk-window} object or @code{nil} to indicate that
-    the owner for the given @arg{selection} should be unset}
+    the owner for the given selection should be unset}
   @argument[selection]{a @symbol{gdk-atom} as a string identifying a selection}
   @argument[time]{an unsigned integer with the timestamp to use when setting
     the selection}
@@ -340,9 +283,11 @@
   @begin{short}
     Sets the owner of the given selection.
   @end{short}
-  If @arg{time} is older than the timestamp given last time the owner was set
-  for the given selection, the request will be ignored.
+  If the @arg{time} argument is older than the timestamp given last time the
+  owner was set for the given selection, the request will be ignored.
   @see-class{gdk-window}
+  @see-class{gdk-event-selection}
+  @see-symbol{gdk-event-type}
   @see-symbol{gdk-atom}"
   (owner (g-object gdk-window))
   (selection gdk-atom-as-string)
@@ -356,14 +301,13 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_owner_set_for_display"
-          gdk-selection-owner-set-for-display) :boolean
+           gdk-selection-owner-set-for-display) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-3-27}
-  @argument[display]{the @class{gdk-display} object}
+ "@version{2021-10-3}
+  @argument[display]{a @class{gdk-display} object}
   @argument[owner]{a @class{gdk-window} object or @code{nil} to indicate that
-    the owner for the given should be unset}
-  @argument[selection]{a @symbol{gdk-atom} as as string identifying a
-    selection}
+    the owner for the given selection should be unset}
+  @argument[selection]{a @symbol{gdk-atom} as string identifying a selection}
   @argument[time]{an unsigned integer with the timestamp to use when setting
     the selection}
   @argument[send]{if @em{true}, and the new owner is different from the current
@@ -371,12 +315,14 @@
   @return{@em{True} if the selection owner was successfully changed to
     @arg{owner}, otherwise @code{nil}.}
   @begin{short}
-    Sets the owner as the current owner of the selection selection.
+    Sets the owner of the given selection.
   @end{short}
-  If @arg{time} is older than the timestamp given last time the owner was set
-  for the given selection, the request will be ignored.
+  If the @arg{time} argument is older than the timestamp given last time the
+  owner was set for the given selection, the request will be ignored.
   @see-class{gdk-display}
   @see-class{gdk-window}
+  @see-class{gdk-event-selection}
+  @see-symbol{gdk-event-type}
   @see-symbol{gdk-atom}"
   (display (g-object gdk-display))
   (owner (g-object gdk-window))
@@ -393,7 +339,7 @@
 (defcfun ("gdk_selection_owner_get" gdk-selection-owner-get)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-27}
+ "@version{2021-10-3}
   @argument[selection]{a @symbol{gdk-atom} as a string indentifying a selection}
   @begin{return}
     If there is a selection owner for this window, and it is a window
@@ -419,13 +365,15 @@
 (defcfun ("gdk_selection_owner_get_for_display"
            gdk-selection-owner-get-for-display) (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-27}
+ "@version{2021-10-3}
   @argument[display]{a @class{gdk-display} object}
   @argument[selection]{a @symbol{gdk-atom} as a string indentifying a selection}
   @return{If there is a selection owner for this window, and it is a window
     known to the current process, the @class{gdk-window} object that owns the
     selection, otherwise @code{nil}.}
-  @short{Determine the owner of the given selection.}
+  @begin{short}
+    Determine the owner of the given selection.
+  @end{short}
   Note that the return value may be owned by a different process if a foreign
   window was previously created for that window, but a new foreign window will
   never be created by this call.
@@ -443,7 +391,7 @@
 
 (defcfun ("gdk_selection_convert" gdk-selection-convert) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-3-27}
+ "@version{2021-10-3}
   @argument[requestor]{a @class{gdk-window} object}
   @argument[selection]{a @symbol{gdk-atom} as a string identifying the selection
     to get the contents of}
@@ -472,48 +420,44 @@
 (defcfun ("gdk_selection_property_get" %gdk-selection-property-get) :int
   (requestor (g-object gdk-window))
   (data :pointer)
-  (prop-type :pointer)
-  (prop-format :pointer))
+  (ptype :pointer)
+  (format :pointer))
 
 (defun gdk-selection-property-get (requestor)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-27}
-  @argument[requestor]{the @class{gdk-window} object on which the data is
-    stored}
+ "@version{2021-10-3}
+  @argument[requestor]{a @class{gdk-window} object on which the data is stored}
   @begin{return}
     @code{length} -- an integer with the length of the retrieved data @br{}
-    @code{data} -- a pointer to the retrieved data @br{}
+    @code{data} -- a foreign pointer to the retrieved data @br{}
     @code{type} -- a @symbol{gdk-atom} as as string with the type of the
     property @br{}
     @code{format} -- an integer with the format of the property
   @end{return}
   @begin{short}
     Retrieves selection data that was stored in response to a call to the
-    function @fun{gdk-selection-convert}.
+    @fun{gdk-selection-convert} function.
   @end{short}
   This function will not be used by applications, who should use the
   @class{gtk-clipboard} API instead.
 
   If the retrieval failed, @code{nil} will be returned, otherwise, it will be
-  non-@code{nil} and the returned data should be freed with @code{g_free()}
-  when you are finished using it. The length of the allocated memory is one
-  more than the length of the returned data, and the final byte will always be
-  zero, to ensure nul-termination of strings.
+  non-@code{nil} and the returned data should be freed with the @fun{g-free}
+  function when you are finished using it. The length of the allocated memory
+  is one more than the length of the returned data, and the final byte will
+  always be zero, to ensure nul-termination of strings.
   @see-class{gdk-window}
   @see-class{gtk-clipboard}
   @see-symbol{gdk-atom}
   @see-function{gdk-selection-convert}"
   (with-foreign-objects ((data :pointer)
-                         (prop-type 'gdk-atom)
-                         (prop-format :int))
-    (let ((length (%gdk-selection-property-get requestor
-                                               data
-                                               prop-type
-                                               prop-format)))
+                         (ptype 'gdk-atom)
+                         (format :int))
+    (let ((length (%gdk-selection-property-get requestor data ptype format)))
       (values length
               data
-              (mem-ref prop-type 'gdk-atom-as-string)
-              (mem-ref prop-format :int)))))
+              (mem-ref ptype 'gdk-atom-as-string)
+              (mem-ref format :int)))))
 
 (export 'gdk-selection-property-get)
 
@@ -523,7 +467,7 @@
 
 (defcfun ("gdk_selection_send_notify" gdk-selection-send-notify) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-3-25}
+ "@version{2021-10-3}
   @argument[requestor]{a @class{gdk-window} object to which to deliver response}
   @argument[selection]{a @symbol{gdk-atom} as a string with the selection that
     was requested}
@@ -537,7 +481,9 @@
     Sends a response to the @code{:selection-request} event.
   @end{short}
   @see-class{gdk-window}
-  @see-symbol{gdk-atom}"
+  @see-symbol{gdk-atom}
+  @see-class{gdk-event-selection}
+  @see-symbol{gdk-event-type}"
   (requestor (g-object gdk-window))
   (selection gdk-atom-as-string)
   (target gdk-atom-as-string)
@@ -553,7 +499,7 @@
 (defcfun ("gdk_selection_send_notify_for_display"
           gdk-selection-send-notify-for-display) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-3-25}
+ "@version{2021-10-3}
   @argument[display]{a @class{gdk-display} object where @arg{requestor} is
     realized}
   @argument[requestor]{a @class{gdk-window} object to which to deliver response}
@@ -565,9 +511,13 @@
     which the selection owner stored the data, or \"NONE\" to indicate that the
     request was rejected}
   @argument[time]{an unsigned integer with the timestamp}
-  @short{Send a response to the @code{:selection-request} event.}
+  @begin{short}
+    Send a response to the @code{:selection-request} event.
+  @end{short}
   @see-class{gdk-display}
-  @see-class{gdk-window}"
+  @see-class{gdk-window}
+  @see-class{gdk-event-selection}
+  @see-symbol{gdk-event-type}"
   (display (g-object gdk-display))
   (requestor (g-object gdk-window))
   (selection gdk-atom-as-string)
