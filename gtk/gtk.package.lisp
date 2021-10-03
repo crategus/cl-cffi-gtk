@@ -1873,7 +1873,7 @@ gtk_tree_store_set (store, &iter,
 GtkTreeIter iter1;  /* Parent iter */
 GtkTreeIter iter2;  /* Child iter  */
 
-gtk_tree_store_append (store, &iter1, NULL);  /* Acquire a top-level iterator */
+gtk_tree_store_append (store, &iter1, NULL);  /* Acquire a toplevel iterator */
 gtk_tree_store_set (store, &iter1,
                     TITLE_COLUMN, \"The Art of Computer Programming\",
                     AUTHOR_COLUMN, \"Donald E. Knuth\",
@@ -4838,36 +4838,19 @@ setup_tree (void)
     @begin[Selections]{subsection}
       The selection mechanism provides the basis for different types of
       communication between processes. In particular, drag and drop and the
-      @class{gtk-clipboard} object work via selections. You will very seldom or
-      never need to use most of the functions in this section directly. The
-      @class{gtk-clipboard} object provides a nicer interface to the same
-      functionality.
+      @class{gtk-clipboard} implementation work via selections. You will very
+      seldom or never need to use most of the functions in this section
+      directly. The @class{gtk-clipboard} implementation provides a nicer
+      interface to the same functionality.
 
       Some of the datatypes defined in this section are used in the
-      @class{gtk-clipboard} object and Drag and Drop API's as well. The
-      @class{gtk-target-entry} and @class{gtk-target-list} structures represent
-      lists of data types that are supported when sending or receiving data.
-      The @class{gtk-selection-data} object is used to store a chunk of data
-      along with the data type and other associated information.
+      @class{gtk-clipboard} implementation and Drag and Drop APIs as well. The
+      @class{gtk-target-list} structure represent lists of data types that are
+      supported when sending or receiving data. The @class{gtk-selection-data}
+      structure is used to store a chunk of data along with the data type and
+      other associated information.
 
-      @about-struct{gtk-selection-data}
-      @about-function{gtk-selection-data-selection}
-      @about-function{gtk-selection-data-target}
-      @about-function{gtk-selection-data-type}
-      @about-function{gtk-selection-data-format}
-      @about-function{gtk-selection-data-data}
-      @about-function{gtk-selection-data-length}
-      @about-function{gtk-selection-data-display}
-      @about-function{gtk-selection-data-new}
-      @about-function{gtk-selection-data-copy}
-      @about-struct{gtk-target-entry}
-      @about-function{gtk-target-entry-target}
-      @about-function{gtk-target-entry-flags}
-      @about-function{gtk-target-entry-info}
-      @about-function{gtk-target-entry-new}
-      @about-function{gtk-target-entry-copy}
       @about-class{gtk-target-list}
-      @about-class{gtk-target-pair}
       @about-function{gtk-target-list-new}
       @about-function{gtk-target-list-ref}
       @about-function{gtk-target-list-unref}
@@ -4887,6 +4870,8 @@ setup_tree (void)
       @about-function{gtk-selection-add-targets}
       @about-function{gtk-selection-clear-targets}
       @about-function{gtk-selection-convert}
+      @about-class{gtk-selection-data}
+      @about-function{gtk-selection-data-copy}
       @about-function{gtk-selection-data-set}
       @about-function{gtk-selection-data-text}
       @about-function{gtk-selection-data-pixbuf}
@@ -4896,7 +4881,14 @@ setup_tree (void)
       @about-function{gtk-selection-data-targets-include-text}
       @about-function{gtk-selection-data-targets-include-uri}
       @about-function{gtk-selection-data-targets-include-rich-text}
+      @about-function{gtk-selection-data-selection}
+      @about-function{gtk-selection-data-data}
+      @about-function{gtk-selection-data-length}
       @about-function{gtk-selection-data-data-with-length}
+      @about-function{gtk-selection-data-data-type}
+      @about-function{gtk-selection-data-display}
+      @about-function{gtk-selection-data-format}
+      @about-function{gtk-selection-data-target}
       @about-function{gtk-targets-include-image}
       @about-function{gtk-targets-include-text}
       @about-function{gtk-targets-include-uri}
