@@ -166,15 +166,16 @@
 
 (defcfun ("g_malloc" g-malloc) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2021-4-9}
+ "@version{2021-9-28}
   @argument[n-bytes]{a @type{g-size} type with the number of bytes to allocate}
   @return{A foreign pointer to the allocated memory.}
   @begin{short}
     Allocates @arg{n-bytes} bytes of memory.
   @end{short}
-  If @arg{n-bytes} is 0 @sym{g-malloc} returns a foreign @code{null}-pointer.
+  If @arg{n-bytes} is 0 the @sym{g-malloc} function returns a foreign
+  @code{null}-pointer.
   @see-type{g-size}
-  @see{g-free}"
+  @see-function{g-free}"
   (n-bytes g-size))
 
 (export 'g-malloc)
@@ -184,12 +185,13 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_free" g-free) :void
- "@version{2021-4-8}
+ "@version{2021-9-28}
   @argument[mem]{a foreign pointer to the memory to free}
   @begin{short}
-    Frees the memory pointed to by the foreign pointer @arg{mem}.
+    Frees the memory pointed to by the @arg{mem} foreign pointer.
   @end{short}
-  If @arg{mem} is a @code{null}-pointer @sym{g-free} simply returns.
+  If the @arg{mem} argument is a @code{null}-pointer the @sym{g-free} function
+  simply returns.
   @see{g-malloc}"
   (mem :pointer))
 

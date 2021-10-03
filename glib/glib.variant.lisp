@@ -426,7 +426,7 @@
 (setf (gethash 'g-variant-class atdoc:*symbol-name-alias*) "Enum"
       (gethash 'g-variant-class atdoc:*external-symbols*)
  "@version{2020-12-1}
-  @short{The range of possible top-level types of @type{g-variant} instances.}
+  @short{The range of possible toplevel types of @type{g-variant} instances.}
   @begin{pre}
 (defcenum g-variant-class
   (:boolean     #.(char-code #\b))
@@ -983,7 +983,7 @@ add_to_count (GVariant  *orig,
   @argument[value]{a @type{g-variant} instance}
   @return{The @symbol{g-variant-class} value of @arg{value}.}
   @begin{short}
-    Classifies @arg{value} according to its top-level type.
+    Classifies @arg{value} according to its toplevel type.
   @end{short}
   @see-type{g-variant}
   @see-symbol{g-variant-class}"
