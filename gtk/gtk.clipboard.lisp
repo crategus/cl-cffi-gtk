@@ -412,17 +412,17 @@
 (setf (gethash 'gtk-clipboard-get-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-clipboard-get-func atdoc:*external-symbols*)
- "@version{2021-3-27}
+ "@version{2021-10-3}
   @begin{short}
     A function that will be called to provide the contents of the selection.
   @end{short}
   If multiple types of data were advertised, the requested type can be
-  determined from the info parameter or by checking the target field of
-  @arg{selection}. If the data could successfully be converted into then it
-  should be stored into the selection data object by calling the function
-  @fun{gtk-selection-data-set} (or related functions such as the function
-  @fun{gtk-selection-data-set-text}). If no data is set, the requestor will be
-  informed that the attempt to get the data failed.
+  determined from the info parameter or by checking the target field of the
+  @arg{selection} argument. If the data could successfully be converted into
+  then it should be stored into the selection data object by calling the
+  @fun{gtk-selection-data-set}  function, or related functions such as the
+  @fun{gtk-selection-data-set-text} function. If no data is set, the requestor
+  will be informed that the attempt to get the data failed.
   @begin{pre}
  lambda (clipboard selection info)
   @end{pre}
@@ -431,12 +431,11 @@
     @entry[selection]{A @class{gtk-selection-data} instance in which the
       requested data should be stored.}
     @entry[info]{The info field corresponding to the requested target from the
-      @class{gtk-target-entry} array passed to the functions
-      @fun{gtk-clipboard-set-with-data} or @fun{gtk-clipboard-set-with-owner}.}
+      target entries passed to the @fun{gtk-clipboard-set-with-data} or
+      @fun{gtk-clipboard-set-with-owner} functions.}
   @end{table}
   @see-class{gtk-clipboard}
   @see-class{gtk-selection-data}
-  @see-class{gtk-target-entry}
   @see-function{gtk-clipboard-set-with-data}")
 
 (export 'gtk-clipboard-get-func)
@@ -585,17 +584,18 @@
   (clipboard (g-object gtk-clipboard))
   (targets :pointer)
   (n-targets :int)
-  (get-func :pointer)
+  (func :pointer)
   (clear-func :pointer)
   (data :pointer))
 
 (defun gtk-clipboard-set-with-data (clipboard targets func)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{2021-10-3}
   @argument[clipboard]{a @class{gtk-clipboard} object}
-  @argument[targets]{a list of @class{gtk-target-entry} instances containing
-    information about the available forms for the clipboard data}
-  @argument[func]{a callback function to call to get the actual clipboard data}
+  @argument[targets]{a list of target entries containing information about the
+    available forms for the clipboard data}
+  @argument[func]{a @symbol{gtk-clipboard-get-func} callback function to call
+    to get the actual clipboard data}
   @return{@em{True} if setting the clipboard data succeeded. If setting the
     clipboard data failed the provided callback functions will be ignored.}
   @begin{short}
@@ -604,14 +604,25 @@
     the actual data when it is requested.
   @end{short}
   @see-class{gtk-clipboard}
-  @see-class{gtk-target-entry}"
-  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
-    (%gtk-clipboard-set-with-data clipboard
-                                  targets-ptr
-                                  n-targets
-                                  (callback gtk-clipboard-get-func)
-                                  (callback stable-pointer-destroy-notify-cb)
-                                  (allocate-stable-pointer func))))
+  @see-symbol{gtk-clipboard-get-func}"
+  (let ((n-targets (length targets)))
+    (with-foreign-object (targets-ptr '(:struct %gtk-target-entry) n-targets)
+      (loop for i from 0 below n-targets
+            for target-ptr = (mem-aptr targets-ptr
+                                       '(:struct %gtk-target-entry) i)
+            for entry = (pop targets)
+            do (with-foreign-slots ((target flags info)
+                                    target-ptr
+                                    (:struct %gtk-target-entry))
+                 (setf target (first entry))
+                 (setf flags (second entry))
+                 (setf info (third entry))))
+      (%gtk-clipboard-set-with-data clipboard
+                                    targets-ptr
+                                    n-targets
+                                    (callback gtk-clipboard-get-func)
+                                    (callback stable-pointer-destroy-notify-cb)
+                                    (allocate-stable-pointer func)))))
 
 (export 'gtk-clipboard-set-with-data)
 

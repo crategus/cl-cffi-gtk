@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-view.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -563,14 +563,14 @@
       @end{table}
     @subheading{The \"row-activated\" signal}
       @begin{pre}
- lambda (view path column)    : Action
+ lambda (view path column)    :action
       @end{pre}
-      The signal is emitted when the function @fun{gtk-tree-view-row-activated}
+      The signal is emitted when the @fun{gtk-tree-view-row-activated} function
       is called or the user double clicks a tree view row. It is also emitted
-      when a non-editable row is selected and one of the keys: Space,
-      Shift+Space, Return or Enter is pressed. For selection handling refer to
-      the tree widget conceptual overview as well as the
-      @class{gtk-tree-selection} API documentation.
+      when a non-editable row is selected and one of the @kbd{Space},
+      @kbd{Shift+Space}, @kbd{Return} or @kbd{Enter} keys is pressed. For
+      selection handling refer to the tree widget conceptual overview as well
+      as the @class{gtk-tree-selection} API documentation.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-tree-view} widget on which the signal is
           emitted.}
@@ -1193,9 +1193,9 @@
     @class{gtk-tree-view} class.
   @end{short}
 
-  This function tells GTK+ that the user interface for your application
+  This function tells GTK that the user interface for your application
   requires users to read across tree rows and associate cells with one another.
-  By default, GTK+ will then render the tree view with alternating row colors.
+  By default, GTK will then render the tree view with alternating row colors.
   Do not use it just because you prefer the appearance of the ruled tree. That
   is a question for the theme. Some themes will draw tree rows in alternating
   colors even when rules are turned off, and users who prefer that appearance
@@ -2754,24 +2754,34 @@
 
 (defun gtk-tree-view-enable-model-drag-dest (view targets actions)
  #+cl-cffi-gtk-documentation
- "@version{2021-2-26}
+ "@version{2021-10-2}
   @argument[view]{a @class{gtk-tree-view} widget}
-  @argument[targets]{the table of @class{gtk-target-entry} instances that the
-    drag will support}
+  @argument[targets]{a list of target entries that the drag will support}
   @argument[actions]{the @symbol{gdk-drag-action} bitmask of possible actions
     for a drag from this widget}
   @begin{short}
-    Turns @arg{view} into a drop destination for automatic DND.
+    Turns the tree view into a drop destination for automatic DND.
   @end{short}
-  Calling this method sets \"reorderable\" to @code{nil}.
+  Calling this method sets \"reorderable\" to the @code{false} value.
   @see-class{gtk-tree-view}
-  @see-class{gtk-target-entry}
-  @see-symbol{gdk-drag-action}"
-  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
-    (%gtk-tree-view-enable-model-drag-dest view
-                                           targets-ptr
-                                           n-targets
-                                           actions)))
+  @see-symbol{gdk-drag-action}
+  @see-function{gtk-tree-view-reorderable}"
+  (let ((n-targets (length targets)))
+    (with-foreign-object (targets-ptr '(:struct %gtk-target-entry) n-targets)
+      (loop for i from 0 below n-targets
+            for target-ptr = (mem-aptr targets-ptr
+                                       '(:struct %gtk-target-entry) i)
+            for entry = (pop targets)
+            do (with-foreign-slots ((target flags info)
+                                    target-ptr
+                                    (:struct %gtk-target-entry))
+                 (setf target (first entry))
+                 (setf flags (second entry))
+                 (setf info (third entry))))
+      (%gtk-tree-view-enable-model-drag-dest view
+                                             targets-ptr
+                                             n-targets
+                                             actions))))
 
 (export 'gtk-tree-view-enable-model-drag-dest)
 
@@ -2782,37 +2792,46 @@
 (defcfun ("gtk_tree_view_enable_model_drag_source"
           %gtk-tree-view-enable-model-drag-source) :void
   (view (g-object gtk-tree-view))
-  (start-button-mask gdk-modifier-type)
+  (mask gdk-modifier-type)
   (targets :pointer)
   (n-targets :int)
   (actions gdk-drag-action))
 
-(defun gtk-tree-view-enable-model-drag-source (view button-mask targets actions)
+(defun gtk-tree-view-enable-model-drag-source (view mask targets actions)
  #+cl-cffi-gtk-documentation
- "@version{2021-2-26}
+ "@version{2021-10-2}
   @argument[view]{a @class{gtk-tree-view} widget}
-  @argument[button-mask]{mask of type @symbol{gdk-modifier-type} of allowed
-    buttons to start drag}
-  @argument[targets]{the table of @class{gtk-target-entry} instances that the
-    drag will support}
+  @argument[mask]{a @symbol{gdk-modifier-type} mask of allowed buttons to start
+    drag}
+  @argument[targets]{a list of target entries that the drag will support}
   @argument[actions]{the @symbol{gdk-drag-action} bitmask of possible actions
     for a drag from this widget}
   @begin{short}
     Turns the tree view into a drag source for automatic DND.
   @end{short}
   Calling this method sets the @slot[gtk-tree-view]{reorderable} property to
-  @code{nil}.
+  the @code{false} value.
   @see-class{gtk-tree-view}
-  @see-class{gtk-target-entry}
   @see-symbol{gdk-modifier-type}
   @see-symbol{gdk-drag-action}
   @see-function{gtk-tree-view-reorderable}"
-  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
-    (%gtk-tree-view-enable-model-drag-source view
-                                             button-mask
-                                             targets-ptr
-                                             n-targets
-                                             actions)))
+  (let ((n-targets (length targets)))
+    (with-foreign-object (targets-ptr '(:struct %gtk-target-entry) n-targets)
+      (loop for i from 0 below n-targets
+            for target-ptr = (mem-aptr targets-ptr
+                                       '(:struct %gtk-target-entry) i)
+            for entry = (pop targets)
+            do (with-foreign-slots ((target flags info)
+                                    target-ptr
+                                    (:struct %gtk-target-entry))
+                 (setf target (first entry))
+                 (setf flags (second entry))
+                 (setf info (third entry))))
+      (%gtk-tree-view-enable-model-drag-source view
+                                               mask
+                                               targets-ptr
+                                               n-targets
+                                               actions))))
 
 (export 'gtk-tree-view-enable-model-drag-source)
 

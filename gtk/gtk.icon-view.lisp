@@ -307,25 +307,25 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-cursor-item\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
       A keybinding signal which gets emitted when the user activates the
       currently focused item. Applications should not connect to it, but may
-      emit it with the function @fun{g-signal-emit} if they need to control
-      activation programmatically. The default bindings for this signal are
-      Space, Return and Enter.
+      emit it with the @fun{g-signal-emit} function if they need to control
+      activation programmatically. The default bindings for this signal are the
+      @kbd{Space}, @kbd{Return} and @kbd{Enter} keys.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-icon-view} widget on which the signal is
           emitted.}
       @end{table}
     @subheading{The \"item-activated\" signal}
       @begin{pre}
- lambda (view path)    : Run Last
+ lambda (view path)    :run-last
       @end{pre}
-      The signal is emitted when the function @fun{gtk-icon-view-item-activated}
+      The signal is emitted when the @fun{gtk-icon-view-item-activated} function
       is called or the user double clicks an item. It is also emitted when a
-      non-editable item is selected and one of the keys: Space, Return or Enter
-      is pressed.
+      non-editable item is selected and one of the @kbd{Space}, @kbd{Return} or
+      @kbd{Enter} keys is pressed.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-icon-view} widget on which the signal is
           emitted.}
@@ -333,18 +333,18 @@
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (view step count)    : Action
+ lambda (view step count)    :action
       @end{pre}
       The signal is a keybinding signal which gets emitted when the user
       initiates a cursor movement. Applications should not connect to it, but
-      may emit it with the function @fun{g-signal-emit} if they need to control
+      may emit it with the @fun{g-signal-emit} function if they need to control
       the cursor programmatically. The default bindings for this signal include
       @begin{itemize}
         @item{Arrow keys which move by individual steps.}
-        @item{Home/End keys which move to the first/last item.}
-        @item{PageUp/PageDown which move by \"pages\".}
+        @item{@kbd{Home}/@kbd{End} keys which move to the first/last item.}
+        @item{@kbd{PageUp}/@kbd{PageDown} which move by \"pages\".}
       @end{itemize}
-      All of these will extend the selection when combined with the Shift
+      All of these will extend the selection when combined with the @kbd{Shift}
       modifier.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-icon-view} widget which received the signal.}
@@ -354,12 +354,13 @@
       @end{table}
     @subheading{The \"select-all\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
       A keybinding signal which gets emitted when the user selects all items.
-      Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit} if they need to control selection programmatically.
-      The default binding for this signal is Ctrl-a.
+      Applications should not connect to it, but may emit it with the
+      @fun{g-signal-emit} function if they need to control selection
+      programmatically. The default binding for this signal is the @kbd{Ctrl-a}
+      key.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-icon-view} widget on which the signal is
           emitted.}
@@ -388,26 +389,27 @@
      @end{table}
     @subheading{The \"toggle-cursor-item\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
       A keybinding signal which gets emitted when the user toggles whether the
       currently focused item is selected or not. The exact effect of this depend
       on the selection mode. Applications should not connect to it, but may emit
-      it with the function @fun{g-signal-emit} if they need to control selection
-      programmatically. There is no default binding for this signal is
-      Ctrl-Space.
+      it with the @fun{g-signal-emit} function if they need to control selection
+      programmatically. The default binding for this signal is the
+      @kbd{Ctrl-Space} key.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-icon-view} widget on which the signal is
           emitted.}
       @end{table}
     @subheading{The \"unselect-all\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
       A keybinding signal which gets emitted when the user unselects all items.
-      Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit} if they need to control selection programmatically.
-      The default binding for this signal is Ctrl-Shift-a.
+      Applications should not connect to it, but may emit it with the
+      @fun{g-signal-emit} function if they need to control selection
+      programmatically. The default binding for this signal is the
+      @kbd{Ctrl-Shift-a} key.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-icon-view} widget on which the signal is
           emitted.}
@@ -1723,33 +1725,40 @@
   (n-targets :int)
   (actions gdk-drag-action))
 
-(defun gtk-icon-view-enable-model-drag-source (view
-                                               start-button-mask
-                                               targets
-                                               actions)
+(defun gtk-icon-view-enable-model-drag-source (view mask targets actions)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-9}
+ "@version{2021-10-2}
   @argument[view]{a @class{gtk-icon-view} widget}
-  @argument[start-button-mask]{the @symbol{gdk-modifier-mask} flags of allowed
-    buttons to start drag}
-  @argument[targets]{a list of @class{gtk-target-entry} instances that the drag
-    will support}
+  @argument[mask]{the @symbol{gdk-modifier-type} flags of allowed buttons to
+    start drag}
+  @argument[targets]{a list of target entries that the drag will support}
   @argument[actions]{the @symbol{gdk-drag-action} bitmask of possible actions
     for a drag from this widget}
   @begin{short}
     Turns the icon view into a drag source for automatic DND.
   @end{short}
   Calling this method sets the @slot[gtk-icon-view]{reorderable} property to
-  @em{false}.
+  the @em{false} value.
   @see-class{gtk-icon-view}
   @see-symbol{gdk-modifier-type}
   @see-symbol{gdk-drag-action}"
-  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
-    (%gtk-tree-view-enable-model-drag-source view
-                                             start-button-mask
-                                             targets-ptr
-                                             n-targets
-                                             actions)))
+  (let ((n-targets (length targets)))
+    (with-foreign-object (targets-ptr '(:struct %gtk-target-entry) n-targets)
+      (loop for i from 0 below n-targets
+            for target-ptr = (mem-aptr targets-ptr
+                                       '(:struct %gtk-target-entry) i)
+            for entry = (pop targets)
+            do (with-foreign-slots ((target flags info)
+                                    target-ptr
+                                    (:struct %gtk-target-entry))
+                 (setf target (first entry))
+                 (setf flags (second entry))
+                 (setf info (third entry))))
+      (%gtk-icon-view-enable-model-drag-source view
+                                               mask
+                                               targets-ptr
+                                               n-targets
+                                               actions))))
 
 (export 'gtk-icon-view-enable-model-drag-source)
 
@@ -1766,24 +1775,34 @@
 
 (defun gtk-icon-view-enable-model-drag-dest (view targets actions)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-9}
+ "@version{2021-10-2}
   @argument[view]{a @class{gtk-icon-view} widget}
-  @argument[targets]{a list of @class{gtk-target-entry} instances that the drag
-    will support}
+  @argument[targets]{a list target entries that the drag will support}
   @argument[actions]{the @symbol{gdk-drag-action} bitmask of possible actions
     for a drag to this widget}
   @begin{short}
     Turns the icon view into a drop destination for automatic DND.
   @end{short}
   Calling this method sets the @slot[gtk-icon-view]{reorderable} property to
-  @em{false}.
+  the @em{false} value.
   @see-class{gtk-icon-view}
   @see-symbol{gdk-drag-action}"
-  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
-    (%gtk-icon-view-enable-model-drag-dest view
-                                           targets-ptr
-                                           n-targets
-                                           actions)))
+  (let ((n-targets (length targets)))
+    (with-foreign-object (targets-ptr '(:struct %gtk-target-entry) n-targets)
+      (loop for i from 0 below n-targets
+            for target-ptr = (mem-aptr targets-ptr
+                                       '(:struct %gtk-target-entry) i)
+            for entry = (pop targets)
+            do (with-foreign-slots ((target flags info)
+                                    target-ptr
+                                    (:struct %gtk-target-entry))
+                 (setf target (first entry))
+                 (setf flags (second entry))
+                 (setf info (third entry))))
+      (%gtk-icon-view-enable-model-drag-dest view
+                                             targets-ptr
+                                             n-targets
+                                             actions))))
 
 (export 'gtk-icon-view-enable-model-drag-dest)
 

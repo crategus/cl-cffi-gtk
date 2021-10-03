@@ -607,17 +607,22 @@ gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tool_palette_get_drag_target_group"
-           gtk-tool-palette-drag-target-group)
-    (g-boxed-foreign gtk-target-entry)
+          %gtk-tool-palette-drag-target-group) :pointer)
+
+(defun gtk-tool-palette-drag-target-group ()
  #+cl-cffi-gtk-documentation
- "@version{2021-3-14}
-  @return{The @class{gtk-target-entry} instance for a dragged group.}
+ "@version{2021-10-2}
+  @return{A list with the target entry for a dragged group.}
   @begin{short}
-    Get the target entry for a dragged @class{gtk-tool-item-group} widget.
+    Gets the target entry for a dragged @class{gtk-tool-item-group} widget.
   @end{short}
   @see-class{gtk-tool-palette}
-  @see-class{gtk-tool-item-group}
-  @see-class{gtk-target-entry}")
+  @see-class{gtk-tool-item-group}"
+  (let ((target-ptr (%gtk-tool-palette-drag-target-group)))
+    (with-foreign-slots ((target flags info)
+                         target-ptr
+                         (:struct %gtk-target-entry))
+      (list target flags info))))
 
 (export 'gtk-tool-palette-drag-target-group)
 
@@ -627,17 +632,22 @@ gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tool_palette_get_drag_target_item"
-           gtk-tool-palette-drag-target-item)
-    (g-boxed-foreign gtk-target-entry)
+          %gtk-tool-palette-drag-target-item) :pointer)
+
+(defun gtk-tool-palette-drag-target-item ()
  #+cl-cffi-gtk-documentation
- "@version{2021-3-14}
-  @return{The @class{gtk-target-entry} instance for a dragged item.}
+ "@version{2021-10-2}
+  @return{A list with the target entry for a dragged item.}
   @begin{short}
     Gets the target entry for a dragged @class{gtk-tool-item} widget.
   @end{short}
   @see-class{gtk-tool-palette}
-  @see-class{gtk-tool-item}
-  @see-class{gtk-target-entry}")
+  @see-class{gtk-tool-item}"
+  (let ((target-ptr (%gtk-tool-palette-drag-target-item)))
+    (with-foreign-slots ((target flags info)
+                         target-ptr
+                         (:struct %gtk-target-entry))
+      (list target flags info))))
 
 (export 'gtk-tool-palette-drag-target-item)
 
