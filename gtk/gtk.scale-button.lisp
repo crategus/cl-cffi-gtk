@@ -128,8 +128,8 @@
       @begin{pre}
  lambda (button)    :action
       @end{pre}
-      The \"popdown\" signal is a keybinding signal which gets emitted to
-      popdown the scale widget. The default binding for this signal is Escape.
+      The signal is a keybinding signal which gets emitted to popdown the scale
+      widget. The default binding for this signal is the @kbd{Escape} key.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-scale-button} widget which received the
           signal.}
@@ -138,9 +138,9 @@
       @begin{pre}
  lambda (button)    :action
       @end{pre}
-      The \"popup\" signal is a keybinding signal which gets emitted to popup
-      the scale widget. The default bindings for this signal are Space, Enter
-      and Return.
+      The signal is a keybinding signal which gets emitted to popup the scale
+      widget. The default bindings for this signal are the @kbd{Space},
+      @kbd{Enter} and @kbd{Return} keys.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-scale-button} widget which received the
           signal.}

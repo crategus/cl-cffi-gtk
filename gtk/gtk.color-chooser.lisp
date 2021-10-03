@@ -89,11 +89,12 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"color-activated\" signal}
       @begin{pre}
- lambda (chooser color)    : Run First
+ lambda (chooser color)    :run-first
       @end{pre}
       Emitted when a color is activated from the color chooser. This usually
       happens when the user clicks a color swatch, or a color is selected and
-      the user presses one of the keys Space, Shift+Space, Return or Enter.
+      the user presses one of the @kbd{Space}, @kbd{Shift+Space}, @kbd{Return}
+      or @kbd{Enter} keys.
       @begin[code]{table}
         @entry[chooser]{The @sym{gtk-color-chooser} widget which received
           the signal.}

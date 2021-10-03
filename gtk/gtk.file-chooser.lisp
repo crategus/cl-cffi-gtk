@@ -579,13 +579,13 @@
       @end{table}
     @subheading{The \"file-activated\" signal}
       @begin{pre}
- lambda (chooser)    : Run Last
+ lambda (chooser)    :run-last
       @end{pre}
       This signal is emitted when the user \"activates\" a file in the file
       chooser. This can happen by double-clicking on a file in the file list,
-      or by pressing Enter. Normally you do not need to connect to this signal.
-      It is used internally by the @class{gtk-file-chooser-dialog} class to
-      know when to activate the default button in the dialog.
+      or by pressing the @kbd{Enter} key. Normally you do not need to connect to
+      this signal. It is used internally by the @class{gtk-file-chooser-dialog}
+      class to know when to activate the default button in the dialog.
       @begin[code]{table}
         @entry[chooser]{The @sym{gtk-file-chooser} widget which received the
           signal.}

@@ -400,7 +400,7 @@
  "The @code{spacing} property of type @code{:int} (Read / Write) @br{}
   Space to put between the label and the child. @br{}
   @em{Warning:} The @code{spacing} property has been deprecated since version
-  3.20 and should not be used in newly-written code. This property is deprecated
+  3.20 and should not be used in newly written code. This property is deprecated
   and ignored. Use margins on the child instead. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")

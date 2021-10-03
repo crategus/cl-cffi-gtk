@@ -79,14 +79,15 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"editing-done\" signal}
       @begin{pre}
- lambda (cell-editable)    : Run Last
+ lambda (cell-editable)    :run-last
       @end{pre}
       This signal is a sign for the cell renderer to update its value from the
-      @arg{cell-editable}. Implementations of @sym{gtk-cell-editable} are
-      responsible for emitting this signal when they are done editing, e.g.
-      @class{gtk-entry} is emitting it when the user presses Enter. The function
-      @fun{gtk-cell-editable-editing-done} is a convenience method for emitting
-      the \"editing-done\" signal.
+      @arg{cell-editable} argument. Implementations of the
+      @sym{gtk-cell-editable} class are responsible for emitting this signal
+      when they are done editing, e.g. the @class{gtk-entry} widget is emitting
+      it when the user presses the @kbd{Enter} key. The
+      @fun{gtk-cell-editable-editing-done} function is a convenience method for
+      emitting the \"editing-done\" signal.
       @begin[code]{table}
         @entry[cell-editable]{The @sym{gtk-cell-editable} object on which the
           signal was emitted.}

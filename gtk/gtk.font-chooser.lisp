@@ -179,11 +179,11 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"font-activated\" signal}
       @begin{pre}
- lambda (fontchooser fontname)    : Run First
+ lambda (fontchooser fontname)    :run-first
       @end{pre}
       Emitted when a font is activated. This usually happens when the user
       double clicks an item, or an item is selected and the user presses one
-      of the keys Space, Shift+Space, Return or Enter.
+      of the @kbd{Space}, @kbd{Shift+Space}, @kbd{Return} or @kbd{Enter} keys.
       @begin[code]{table}
         @entry[fontchooser]{The @sym{gtk-font-chooser} widget which received
           the signal.}

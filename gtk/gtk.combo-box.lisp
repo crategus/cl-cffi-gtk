@@ -349,19 +349,20 @@
       @end{table}
     @subheading{The \"popdown\" signal}
       @begin{pre}
- lambda (combo)    : Action
+ lambda (combo)    :action
       @end{pre}
       A keybinding signal which gets emitted to popdown the combo box list. The
-      default bindings for this signal are Alt+Up and Escape.
+      default bindings for this signal are the @kbd{Alt+Up} and @kbd{Escape}
+      keys.
       @begin[code]{table}
         @entry[combo]{The @sym{gtk-combo-box} widget that received the signal.}
       @end{table}
     @subheading{The \"popup\" signal}
       @begin{pre}
- lambda (combo)    : Action
+ lambda (combo)    :action
       @end{pre}
       A keybinding signal which gets emitted to popup the combo box list. The
-      default binding for this signal is Alt+Down.
+      default binding for this signal is the @kbd{Alt+Down} key.
       @begin[code]{table}
         @entry[combo]{The @sym{gtk-combo-box} widget that received the signal.}
       @end{table}

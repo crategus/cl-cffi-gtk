@@ -284,12 +284,12 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"editing-canceled\" signal}
       @begin{pre}
- lambda (renderer)    : Run First
+ lambda (renderer)    :run-first
       @end{pre}
       This signal gets emitted when the user cancels the process of editing a
       cell. For example, an editable cell renderer could be written to cancel
-      editing when the user presses Escape. See also the function
-      @fun{gtk-cell-renderer-stop-editing}.
+      editing when the user presses the @kbd{Escape} key. See also the
+      @fun{gtk-cell-renderer-stop-editing} function.
       @begin[code]{table}
         @entry[renderer]{The @sym{gtk-cell-renderer} object which received the
           signal.}

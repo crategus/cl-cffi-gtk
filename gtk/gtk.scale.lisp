@@ -204,7 +204,7 @@
         The @code{value-spacing} style property of type @code{:int} (Read) @br{}
         Space between value text and the slider/trough area. @br{}
         @em{Warning:} The @code{value-spacing} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use min-height/min-width CSS properties on the value element
         instead. The value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}

@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.text-view.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -458,44 +458,44 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"backspace\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
       This signal is a keybinding signal which gets emitted when the user asks
-      for it. The default bindings for this signal are Backspace and
-      Shift-Backspace.
+      for it. The default bindings for this signal are the @kbd{Backspace} and
+      @kbd{Shift-Backspace} keys.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
     @subheading{The \"copy-clipboard\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
       This  signal is a keybinding signal which gets emitted to copy the
       selection to the clipboard. The default bindings for this signal are
-      Ctrl-c and Ctrl-Insert.
+      the @kbd{Ctrl-c} and @kbd{Ctrl-Insert} keys.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
     @subheading{The \"cut-clipboard\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
       This signal is a keybinding signal which gets emitted to cut the selection
-      to the clipboard. The default bindings for this signal are Ctrl-x and
-      Shift-Delete.
+      to the clipboard. The default bindings for this signal are the
+      @kbd{Ctrl-x} and @kbd{Shift-Delete} keys.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
     @subheading{The \"delete-from-cursor\" signal}
       @begin{pre}
- lambda (view type count)    : Action
+ lambda (view type count)    :action
       @end{pre}
-      This signal is a keybinding signal which gets emitted when the user
-      initiates a text deletion. If the type is @code{:chars}, GTK+ deletes the
+      The signal is a keybinding signal which gets emitted when the user
+      initiates a text deletion. If the type is @code{:chars}, GTK deletes the
       selection if there is one, otherwise it deletes the requested number of
-      characters. The default bindings for this signal are Delete for deleting
-      a character, Ctrl-Delete for deleting a word and Ctrl-Backspace for
-      deleting a word backwords.
+      characters. The default bindings for this signal are the @kbd{Delete} key
+      for deleting a character, the @kbd{Ctrl-Delete} key for deleting a word
+      and the @kbd{Ctrl-Backspace} key for deleting a word backwords.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
         @entry[type]{The granularity of the deletion, as a value of the
@@ -545,27 +545,27 @@
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (view step count extended-selection)    : Action
+ lambda (view step count extend)    :action
       @end{pre}
-      This signal is a keybinding signal which gets emitted when the user
+      The signal is a keybinding signal which gets emitted when the user
       initiates a cursor movement. If the cursor is not visible in the text
       view, this signal causes the viewport to be moved instead. Applications
-      should not connect to it, but may emit it with the function
-      @fun{g-signal-emit} if they need to control the cursor programmatically.
-      The default bindings for this signal come in two variants, the variant
-      with the Shift modifier extends the selection, the variant without the
-      Shift modifer does not. There are too many key combinations to list them
-      all here. Arrow keys move by individual characters/lines Ctrl-arrow key
-      combinations move by words/paragraphs Home/End keys move to the ends of
-      the buffer PageUp/PageDown keys move vertically by pages
-      Ctrl-PageUp/PageDown keys move horizontally by pages.
+      should not connect to it, but may emit it with the @fun{g-signal-emit}
+      function if they need to control the cursor programmatically. The default
+      bindings for this signal come in two variants, the variant with the
+      @kbd{Shift} modifier extends the selection, the variant without the
+      @kbd{Shift} modifer does not. There are too many key combinations to list
+      them all here. Arrow keys move by individual characters/lines.
+      @kbd{Ctrl}-arrow key combinations move by words/paragraphs.
+      @kbd{Home}/@kbd{End} keys move to the ends of the buffer.
+      @kbd{PageUp}/@kbd{PageDown} keys move vertically by pages.
+      @kbd{Ctrl-PageUp}/@kbd{PageDown} keys move horizontally by pages.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
         @entry[step]{The granularity of the move, as a value of the
           @symbol{gtk-movement-step} enumeration.}
         @entry[count]{An integer with the number of step units to move.}
-        @entry[extend-selection]{@em{True} if the move should extend the
-          selection.}
+        @entry[extend]{@em{True} if the move should extend the selection.}
       @end{table}
     @subheading{The \"move-viewport\" signal}
       @begin{pre}
@@ -583,11 +583,11 @@
       @end{table}
     @subheading{The \"paste-clipboard\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
-      This signal is a keybinding signal which gets emitted to paste the
+      The signal is a keybinding signal which gets emitted to paste the
       contents of the clipboard into the text view. The default bindings for
-      this signal are Ctrl-v and Shift-Insert.
+      this signal are the @kbd{Ctrl-v} and @code{Shift-Insert} keys.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -623,12 +623,12 @@
       @end{table}
     @subheading{The \"select-all\" signal}
       @begin{pre}
- lambda (view select)    : Action
+ lambda (view select)    :action
       @end{pre}
-      This signal is a keybinding signal which gets emitted to select or
-      unselect the complete contents of the text view. The default bindings for
-      this signal are Ctrl-a and Ctrl-/ for selecting and Shift-Ctrl-a and
-      Ctrl-\ for unselecting.
+      The signal is a keybinding signal which gets emitted to select or unselect
+      the complete contents of the text view. The default bindings for the
+      signal are the @kbd{Ctrl-a} and @kbd{Ctrl-/} keys for selecting and
+      @kbd{Shift-Ctrl-a} and @kbd{Ctrl-\} keys for unselecting.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-viw} widget which received the signal.}
         @entry[select]{@em{True} to select, @em{false} to unselect.}

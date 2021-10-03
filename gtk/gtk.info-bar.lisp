@@ -233,7 +233,7 @@
       @end{pre}
       The signal is a keybinding signal which gets emitted when the user uses a
       keybinding to dismiss the info bar. The default binding for this signal
-      is the Escape key. @br{}
+      is the @kbd{Escape} key. @br{}
       @begin[code]{table}
         @entry[infobar]{The @sym{gtk-info-bar} widget on which the signal is
           emitted.}
@@ -510,10 +510,10 @@
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[response-id]{an integer with a response ID}
   @begin{short}
-    Sets the last widget in the info bar's action area with the given
+    Sets the last widget in the action area of the info bar with the given
     response ID as the default widget for the dialog.
   @end{short}
-  Pressing \"Enter\" normally activates the default widget.
+  Pressing the @kbd{Enter} key normally activates the default widget.
 
   Note that this function currently requires the info bar to be added to a
   widget hierarchy.

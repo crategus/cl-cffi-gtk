@@ -86,10 +86,11 @@
   that have a nontrivial Compose file. The syntax of these files is described
   in the Compose(5) manual page.
 
-  @sym{gtk-im-context-simple} also supports numeric entry of Unicode characters
-  by typing Ctrl-Shift-u, followed by a hexadecimal Unicode codepoint. For
-  example, Ctrl-Shift-u 1 2 3 Enter yields U+0123 LATIN SMALL LETTER G WITH
-  CEDILLA, i.e. ģ.
+  @subheading{Unicode characters}
+  The @sym{gtk-im-context-simple} class also supports numeric entry of Unicode
+  characters by typing the @kbd{Ctrl-Shift-u} key, followed by a hexadecimal
+  Unicode codepoint. For example, @kbd{Ctrl-Shift-u 1 2 3 Enter} yields U+0123
+  LATIN SMALL LETTER G WITH CEDILLA, i.e. ģ.
   @see-class{gtk-im-context}")
 
 ;;; ----------------------------------------------------------------------------

@@ -546,7 +546,8 @@
       or disables interactive debugging. When the @arg{toggle} argument is
       @em{true}, interactive debugging is toggled on or off, when it is
       @em{false}, the debugger will be pointed at the widget under the pointer.
-      The default bindings for this signal are Ctrl-Shift-I and Ctrl-Shift-D.
+      The default bindings for this signal are the @kbd{Ctrl-Shift-I} and
+      @kbd{Ctrl-Shift-D} keys.
       @begin[code]{table}
         @entry[window]{The @sym{gtk-window} widget on which the signal is
           emitted.}
@@ -2248,12 +2249,12 @@
   The @sym{gtk-window-default-widget} returns the default widget for the window.
   The @sym{(setf gtk-window-default-widget)} sets or unsets the default widget.
 
-  The default widget is the widget that is activated when the user presses
-  @kbd{Enter} in a dialog for example. When setting, rather than unsetting, the
-  default widget it is generally easier to call the @fun{gtk-widget-grab-focus}
-  function on the widget. Before making a widget the default widget, you must
-  call the @fun{gtk-widget-can-default} function on the widget you would like
-  to make the default.
+  The default widget is the widget that is activated when the user presses the
+  @kbd{Enter} key in a dialog for example. When setting, rather than unsetting,
+  the default widget it is generally easier to call the
+  @fun{gtk-widget-grab-focus} function on the widget. Before making a widget the
+  default widget, you must call the @fun{gtk-widget-can-default} function on the
+  widget you would like to make the default.
   @begin[Note]{dictionary}
     The C library has the @code{gtk_window_set_default ()} function, which is
     implemented as the @sym{(setf gtk-window-default-widget)} function in the

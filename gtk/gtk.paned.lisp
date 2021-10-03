@@ -219,22 +219,22 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"accept-position\" signal}
       @begin{pre}
- lambda (widget)    : Action
+ lambda (widget)    :action
       @end{pre}
-      The \"accept-position\" signal is a keybinding signal which gets emitted
-      to accept the current position of the handle when moving it using key
-      bindings. The default binding for this signal is Return or Space.
+      The signal is a keybinding signal which gets emitted to accept the current
+      position of the handle when moving it using key bindings. The default
+      binding for this signal is the @kbd{Return} or @kbd{Space} key.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-paned} widget that received the signal.}
       @end{table}
     @subheading{The \"cancel-position\" signal}
       @begin{pre}
- lambda (widget)    : Action
+ lambda (widget)    :action
       @end{pre}
-      The \"cancel-position\" signal is a keybinding signal which gets emitted
-      to cancel moving the position of the handle using key bindings. The
-      position of the handle will be reset to the value prior to moving it.
-      The default binding for this signal is Escape.
+      The signal is a keybinding signal which gets emitted to cancel moving the
+      position of the handle using key bindings. The position of the handle will
+      be reset to the value prior to moving it. The default binding for this
+      signal is the @kbd{Escape}.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-paned} widget that received the signal.}
       @end{table}

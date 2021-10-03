@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.flow-box.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -132,20 +132,19 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-flow-box-child 'type)
  "@version{2020-5-8}
-  @begin{short}
-  @end{short}
+  @short{}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
  lambda (child)
       @end{pre}
-      The \"activate\" signal is emitted when the user activates a child widget
-      in a @class{gtk-flow-box}, either by clicking or double-clicking, or by
-      using the Space or Enter key. While this signal is used as a keybinding
-      signal, it can be used by applications for their own purposes.
+      The signal is emitted when the user activates a child widget in a
+      @class{gtk-flow-box} widget, either by clicking or double-clicking, or by
+      using the @kbd{Space} or @kbd{Enter} key. While this signal is used as a
+      keybinding signal, it can be used by applications for their own purposes.
       @begin[code]{table}
         @entry[child]{The @sym{gtk-flow-box-child} widget on which the signal
-        is emitted.}
+          is emitted.}
       @end{table}
   @end{dictionary}
   @see-class{gtk-flow-box}")
@@ -215,7 +214,7 @@
   the function @fun{gtk-container-add}, and a @class{gtk-flow-box-child} widget
   will automatically be inserted between the box and the widget.
 
-  Also see @class{gtk-list-box}. @sym{gtk-flow-box} was added in GTK+ 3.12.
+  Also see @class{gtk-list-box}. @sym{gtk-flow-box} was added in GTK 3.12.
   @begin[CSS nodes]{dictionary}
     @begin{pre}
   flowbox
@@ -257,16 +256,17 @@
       @begin{pre}
  lambda (flowbox step count)
       @end{pre}
-      The \"move-cursor\" signal is a keybinding signal which gets emitted when
-      the user initiates a cursor movement. Applications should not connect to
-      it, but may emit it with the function @fun{g-signal-emit} if they need to
-      control the cursor programmatically.
+      The signal is a keybinding signal which gets emitted when the user
+      initiates a cursor movement. Applications should not connect to it, but
+      may emit it with the @fun{g-signal-emit} function if they need to control
+      the cursor programmatically.
 
       The default bindings for this signal come in two variants, the variant
-      with the Shift modifier extends the selection, the variant without the
-      Shift modifer does not. There are too many key combinations to list them
-      all here. Arrow keys move by individual children. Home/End keys move to
-      the ends of the box. PageUp/PageDown keys move vertically by pages.
+      with the @kbd{Shift} modifier extends the selection, the variant without
+      the @kbd{Shift} modifer does not. There are too many key combinations to
+      list them all here. Arrow keys move by individual children.
+      @kbd{Home}/@kbd{End} keys move to the ends of the box.
+      @kbd{PageUp}/@kbd{PageDown} keys move vertically by pages.
       @begin[code]{table}
         @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
           is emitted.}
@@ -280,9 +280,9 @@
       @begin{pre}
  lambda (flowbox)
       @end{pre}
-      The \"select-all\" signal is a keybinding signal which gets emitted to
-      select all children of the box, if the selection mode permits it. The
-      default bindings for this signal is Ctrl-a.
+      The signal is a keybinding signal which gets emitted to select all
+      children of the box, if the selection mode permits it. The default
+      bindings for this signal is the @kbd{Ctrl-a} key.
       @begin[code]{table}
         @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
         is emitted.}
@@ -302,23 +302,23 @@
       @begin{pre}
  lambda (flowbox)
       @end{pre}
-      The \"toggle-cursor-child\" signal is a keybinding signal which toggles
-      the selection of the child that has the focus. The default binding for
-      this signal is Ctrl-Space.
+      The signal is a keybinding signal which toggles the selection of the
+      child that has the focus. The default binding for this signal is the
+      @kbd{Ctrl-Space} key.
       @begin[code]{table}
-        @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
-        is emitted.}
+        @entry[flowbox]{The @sym{gtk-flow-box} widget on which the signal is
+          emitted.}
       @end{table}
     @subheading{The \"unselect-all\" signal}
       @begin{pre}
  lambda (flowbox)
       @end{pre}
-      The \"unselect-all\" signal is a keybinding signal which gets emitted to
-      unselect all children of the box, if the selection mode permits it. The
-      default bindings for this signal is Ctrl-Shift-a.
+      The signal is a keybinding signal which gets emitted to unselect all
+      children of the box, if the selection mode permits it. The default
+      bindings for this signal is the @kbd{Ctrl-Shift-a} key.
       @begin[code]{table}
-        @entry[flowbox]{The @sym{gtk-flow-box} container on which the signal
-        is emitted.}
+        @entry[flowbox]{The @sym{gtk-flow-box} widget on which the signal is
+          emitted.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-flow-box-activate-on-single-click}

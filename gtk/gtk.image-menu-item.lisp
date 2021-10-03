@@ -129,10 +129,10 @@
   @class{gtk-image} widget instead.
 
   Furthermore, if you would like to display keyboard accelerator, you must pack
-  the accel label into the box using the function @fun{gtk-box-pack-end} and
+  the accel label into the box using the @fun{gtk-box-pack-end} function and
   align the label, otherwise the accelerator will not display correctly. The
   following code snippet adds a keyboard accelerator to the menu item, with a
-  key binding of Ctrl+M:
+  key binding of the @kbd{Ctrl+M} key:
   @begin{pre}
 (defun create-image-menu-item-with-accel ()
   (let ((box (make-instance 'gtk-box

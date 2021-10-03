@@ -405,18 +405,18 @@
       @end{table}
     @subheading{The \"move-focus-out\" signal}
       @begin{pre}
- lambda (window direction-type)    : Action
+ lambda (window direction)    :action
       @end{pre}
       The signal is a keybinding signal which gets emitted when focus is moved
       away from the scrolled window by a keybinding. The \"move-focus\" signal
-      is emitted with @arg{direction-type} on this scrolled windows toplevel
-      parent in the container hierarchy. The default bindings for this signal
-      are Tab+Ctrl and Tab+Ctrl+Shift.
+      is emitted with the @arg{direction} value on this scrolled windows
+      toplevel parent in the container hierarchy. The default bindings for this
+      signal are the @kbd{Tab+Ctrl} and @kbd{Tab+Ctrl+Shift} keys.
       @begin[code]{table}
         @entry[window]{The @sym{gtk-scrolled-window} widget which received the
           signal.}
-        @entry[direction-type]{Either the value @code{:tab-forward} or
-          @code{:tab-backward} of the @symbol{gtk-direction-type} enumeration.}
+        @entry[direction]{Either the @code{:tab-forward} or @code{:tab-backward}
+          value of the @symbol{gtk-direction-type} enumeration.}
       @end{table}
       @subheading{The \"scroll-child\" signal}
         @begin{pre}

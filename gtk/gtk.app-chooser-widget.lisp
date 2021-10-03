@@ -138,12 +138,12 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"application-activated\" signal}
       @begin{pre}
- lambda (widget application)    : Run First
+ lambda (widget application)    :run-first
       @end{pre}
-      Emitted when an application item is activated from the widget's list.
+      Emitted when an application item is activated from the list of the widget.
       This usually happens when the user double clicks an item, or an item is
-      selected and the user presses one of the keys Space, Shift+Space, Return
-      or Enter.
+      selected and the user presses one of the @kbd{Space}, @kbd{Shift+Space},
+      @kbd{Return} or @kbd{Enter} keys.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-app-chooser-widget} widget which received
           the signal.}

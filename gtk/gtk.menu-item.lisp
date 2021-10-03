@@ -185,7 +185,7 @@
         The @code{arrow-spacing} style property of type @code{:int} (Read) @br{}
         Space between label and arrow. @br{}
         @em{Warning:} The @code{arrow-spacing} style property has been deprecated
-        since version 3.20 and should not be used in newly-written code. Use the
+        since version 3.20 and should not be used in newly written code. Use the
         standard margin CSS property on the arrow node. The value of this style
         property is ignored. @br{}
         Allowed values: >= 0 @br{}
@@ -217,7 +217,7 @@
         The @code{toggle-spacing} style property of type @code{:int} (Read)@br{}
         Space between icon and label. @br{}
         @em{Warning:} The @code{toggle-spacing} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use the standard margin CSS property on the check or radio nodes.
         The value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}

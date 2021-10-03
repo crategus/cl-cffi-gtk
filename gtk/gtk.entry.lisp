@@ -652,9 +652,10 @@
  lambda (entry)    :action
       @end{pre}
       A keybinding signal which gets emitted when the user activates the entry.
-      Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit} if they need to control activation programmatically.
-      The default bindings for this signal are all forms of the Enter key.
+      Applications should not connect to it, but may emit it with the
+      @fun{g-signal-emit} function if they need to control activation
+      programmatically. The default bindings for this signal are all forms of
+      the @kbd{Enter} key.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget on which the signal is
           emitted.}
@@ -664,7 +665,8 @@
  lambda (entry)    :action
       @end{pre}
       A keybinding signal which gets emitted when the user asks for it. The
-      default bindings for this signal are Backspace and Shift-Backspace.
+      default bindings for this signal are the @kbd{Backspace} and
+      @kbd{Shift-Backspace} keys.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
@@ -673,8 +675,8 @@
  lambda (entry)    :action
       @end{pre}
       A keybinding signal which gets emitted to copy the selection to the
-      clipboard. The default bindings for this signal are Ctrl-c and
-      Ctrl-Insert.
+      clipboard. The default bindings for this signal are the @kbd{Ctrl-c} and
+      @kbd{Ctrl-Insert} keys.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
@@ -683,8 +685,8 @@
  lambda (entry)    :action
       @end{pre}
       A keybinding signal which gets emitted to cut the selection to the
-      clipboard. The default bindings for this signal are Ctrl-x and
-      Shift-Delete.
+      clipboard. The default bindings for this signal are the @kbd{Ctrl-x} and
+      @kbd{Shift-Delete} keys.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
@@ -696,8 +698,8 @@
       deletion. If the type is @code{:chars} of the @symbol{gtk-delete-type}
       enumeration, GTK deletes the selection if there is one, otherwise it
       deletes the requested number of characters. The default bindings for this
-      signal are Delete for deleting a character and Ctrl-Delete for deleting a
-      word.
+      signal are the @kbd{Delete} key for deleting a character and the
+      @kbd{Ctrl-Delete} key for deleting a word.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
         @entry[type]{The granularity of the deletion, as a value of the
@@ -745,8 +747,8 @@
  lambda (entry)    :action
       @end{pre}
       A keybinding signal which gets emitted to present the Emoji chooser for
-      the entry. The default bindings for this signal are Ctrl-. and Ctrl-;
-      Since 3.22
+      the entry. The default bindings for this signal are the @kbd{Ctrl-.} and
+      @kbd{Ctrl-;} keys. Since 3.22
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
@@ -757,15 +759,15 @@
       A keybinding signal which gets emitted when the user initiates a cursor
       movement. If the cursor is not visible in the entry, this signal causes
       the viewport to be moved instead. Applications should not connect to it,
-      but may emit it with the function @fun{g-signal-emit} if they need to
+      but may emit it with the @fun{g-signal-emit} function if they need to
       control the cursor programmatically. The default bindings for this signal
-      come in two variants, the variant with the Shift modifier extends the
-      selection, the variant without the Shift modifer does not. There are too
-      many key combinations to list them all here.
+      come in two variants, the variant with the @kbd{Shift} modifier extends
+      the selection, the variant without the @kbd{Shift} modifer does not. There
+      are too many key combinations to list them all here.
       @begin{itemize}
         @item{Arrow keys move by individual characters/lines.}
-        @item{Ctrl-arrow key combinations move by words/paragraphs.}
-        @item{Home/End keys move to the ends of the buffer.}
+        @item{@kbd{Ctrl}-arrow key combinations move by words/paragraphs.}
+        @item{@kbd{Home}/@kbd{End} keys move to the ends of the buffer.}
       @end{itemize}
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
@@ -780,7 +782,7 @@
       @end{pre}
       A keybinding signal which gets emitted to paste the contents of the
       clipboard into the text view. The default bindings for this signal are
-      Ctrl-v and Shift-Insert.
+      the @kbd{Ctrl-v} and @kbd{Shift-Insert} keys.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}
       @end{table}
@@ -885,7 +887,7 @@
  "The @code{activates-default} property of type @code{:boolean} (Read / Write)
   @br{}
   Whether to activate the default widget, such as the default button in a
-  dialog, when Enter is pressed. @br{}
+  dialog, when the @kbd{Enter} key is pressed. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -896,20 +898,20 @@
   @syntax[]{(gtk-entry-activates-default object) => setting}
   @syntax[]{(setf (gtk-entry-activates-default object) setting)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[setting]{@em{true} to activate window's default widget on Enter
-    keypress}
+  @argument[setting]{@em{true} to activate the default widget of the window on
+    @kbd{Enter} keypress}
   @begin{short}
     Accessor of the @slot[gtk-entry]{activates-default} slot of the
     @class{gtk-entry} class.
   @end{short}
 
-  The slot access function @sym{gtk-entry-activates-default} retrieves whether
-  to activate the default widget, when Enter is pressed.
+  The @sym{gtk-entry-activates-default} slot access function retrieves whether
+  to activate the default widget, when the @kbd{Enter} key is pressed.
 
-  If @arg{setting} is @em{true}, pressing Enter in the entry will activate the
-  default widget for the window containing the entry. This usually means that
-  the dialog box containing the entry will be closed, since the default widget
-  is usually one of the dialog buttons.
+  If the @arg{setting} argument is @em{true}, pressing the @kbd{Enter} key in
+  the entry will activate the default widget for the window containing the
+  entry. This usually means that the dialog box containing the entry will be
+  closed, since the default widget is usually one of the dialog buttons.
 
   If @arg{setting} is @em{true}, the entry calls the function
   @fun{gtk-window-activate-default} on the window containing the entry,

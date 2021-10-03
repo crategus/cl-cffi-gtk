@@ -871,11 +871,12 @@
   @sym{(setf gtk-accelerator-default-mod-mask)} sets the modifiers that will
   be considered significant for keyboard accelerators.
 
-  The default mod mask is @code{'(:control-mask :shift-mask :mod1-mask
-  :super-mask :hyper-mask :meta-mask)}, that is, Control, Shift, Alt, Super,
-  Hyper and Meta. Other modifiers will by default be ignored by the accelerator
-  group. You must include at least the three modifiers Control, Shift and
-  Alt in any value you pass to this function.
+  The default modifier mask is @code{'(:control-mask :shift-mask :mod1-mask
+  :super-mask :hyper-mask :meta-mask)}, that is, @kbd{Control}, @kbd{Shift},
+  @kbd{Alt}, @kbd{Super}, @kbd{Hyper} and @kbd{Meta}. Other modifiers will by
+  default be ignored by the accelerator group. You must include at least the
+  three modifiers @kbd{Control}, @kbd{Shift} and @kbd{Alt} in any value you pass
+  to this function.
 
   The default mod mask should be changed on application startup, before using
   any accelerator groups.

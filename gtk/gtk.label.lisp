@@ -382,13 +382,13 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-current-link\" signal}
       @begin{pre}
- lambda (label)    : Action
+ lambda (label)    :action
       @end{pre}
       A keybinding signal which gets emitted when the user activates a link in
-      the label. Applications may also emit the signal with the function
-      @fun{g-signal-emit} if they need to control activation of URIs
+      the label. Applications may also emit the signal with the
+      @fun{g-signal-emit} function if they need to control activation of URIs
       programmatically. The default bindings for this signal are all forms of
-      the Enter key.
+      the @kbd{Enter} key.
       @begin[code]{table}
         @entry[label]{The @sym{gtk-label} widget on which the signal was
           emitted.}
@@ -408,31 +408,31 @@
       @end{table}
     @subheading{The \"copy-clipboard\" signal}
       @begin{pre}
- lambda (label)    : Action
+ lambda (label)    :action
       @end{pre}
-      The \"copy-clipboard\" signal is a keybinding signal which gets emitted to
-      copy the selection to the clipboard. The default binding for this signal
-      is Ctrl-c.
+      The signal is a keybinding signal which gets emitted to copy the selection
+      to the clipboard. The default binding for this signal is the @kbd{Ctrl-c}
+      key.
       @begin[code]{table}
         @entry[label]{The @sym{gtk-label} widget which received the signal.}
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (entry step count extended-selection)    : Action
+ lambda (entry step count extended-selection)    :action
       @end{pre}
-      The \"move-cursor\" signal is a keybinding signal which gets emitted when
-      the user initiates a cursor movement. If the cursor is not visible in
-      entry, this signal causes the viewport to be moved instead. Applications
-      should not connect to it, but may emit it with the function
-      @fun{g-signal-emit} if they need to control the cursor programmatically.
-      The default bindings for this signal come in two variants, the variant
-      with the Shift modifier extends the selection, the variant without the
-      Shift modifer does not. There are too many key combinations to list them
-      all here.
+      The signal is a keybinding signal which gets emitted when the user
+      initiates a cursor movement. If the cursor is not visible in entry, this
+      signal causes the viewport to be moved instead. Applications should not
+      connect to it, but may emit it with the @fun{g-signal-emit} function if
+      they need to control the cursor programmatically. The default bindings
+      for this signal come in two variants, the variant with the @kbd{Shift}
+      modifier extends the selection, the variant without the @kbd{Shift}
+      modifer does not. There are too many key combinations to list them all
+      here.
       @begin{itemize}
         @item{Arrow keys move by individual characters/lines.}
-        @item{Ctrl-arrow key combinations move by words/paragraphs.}
-        @item{Home/End keys move to the ends of the buffer.}
+        @item{@kbd{Ctrl}-arrow key combinations move by words/paragraphs.}
+        @item{@kbd{Home}/@kbd{End} keys move to the ends of the buffer.}
       @end{itemize}
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-label} widget which received the signal.}

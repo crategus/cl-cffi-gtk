@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.file-chooser-widget.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -147,7 +147,7 @@
       @end{pre}
       A keybinding signal which gets emitted when the user asks for it. This is
       used to make the file chooser show the user's home folder in the file
-      list. The default binding for this signal is Alt + Home.
+      list. The default binding for this signal is the @kbd{Alt+Home} key.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-file-chooser-widget} object which received
           the signal.}

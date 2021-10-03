@@ -463,7 +463,7 @@
       (gethash 'gtk-align atdoc:*external-symbols*)
  "@version{2021-9-14}
   @begin{short}
-    Controls how a widget deals with extra space in a single (x or y) dimension.
+    Controls how a widget deals with extra space in a single x or y dimension.
   @end{short}
 
   Alignment only matters if the widget receives a \"too large\" allocation, for
@@ -976,7 +976,7 @@
         @em{Warning:} The @code{link-color} style property has been
         deprecated since version 3.12 and should not be used in newly written
         code. Links now use a separate state flags for selecting different
-        theming, this style property is ignored.
+        theming. This style property is ignored.
       @end{entry}
       @begin[scroll-arrow-hlength]{entry}
         The @code{scroll-arrow-hlength} style property of type @code{:int}
@@ -1006,7 +1006,7 @@
         @em{Warning:} The @code{separator-height} style property has been
         deprecated since version 3.20 and should not be used in newly written
         code. Use the standard min-height CSS property on the separator elements
-        to size separators; the value of this style property is ignored. @br{}
+        to size separators. The value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 0
       @end{entry}
@@ -1018,7 +1018,7 @@
         @em{Warning:} The @code{separator-width} style property has been
         deprecated since version 3.20 and should not be used in newly written
         code. Use the standard min-height CSS property on the separator elements
-        to size separators; the value of this style property is ignored. @br{}
+        to size separators. The value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 0
       @end{entry}
@@ -1043,7 +1043,7 @@
         @em{Warning:} The @code{visited-link-color} style property has been
         deprecated since version 3.12 and should not be used in newly written
         code. Links now use a separate state flags for selecting different
-        theming, this style property is ignored.
+        theming. This style property is ignored.
       @end{entry}
       @begin[wide-separators]{entry}
         The @code{wide-separators} style property of type @code{:boolean}
@@ -1104,9 +1104,9 @@
  lambda (widget signal)    :run-last
       @end{pre}
       Determines whether an accelerator that activates the signal identified by
-      @arg{signal-id} can currently be activated. This signal is present to
-      allow applications and derived widgets to override the default handling
-      for determining whether an accelerator can be activated.
+      @arg{signal} can currently be activated. This signal is present to allow
+      applications and derived widgets to override the default handling for
+      determining whether an accelerator can be activated.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[signal]{An unsigned integer with the ID of a signal installed on
@@ -1422,7 +1422,7 @@ drag_data_received (GtkWidget          *widget,
       made based solely on the cursor position and the type of the data, the
       handler may inspect the dragged data by calling the @fun{gtk-drag-data}
       function and defer the @fun{gdk-drag-status} function call to the
-      \"drag-data-received\" signal handler. Note that you cannot not pass the
+      \"drag-data-received\" signal handler. Note that you cannot pass the
       @code{:drop}, @code{:motion} or @code{:all} values of the
       @symbol{gtk-dest-defaults} flags to the @fun{gtk-drag-dest-set} function
       when using the \"drag-motion\" signal that way.
@@ -1611,10 +1611,10 @@ drag_data_received (GtkWidget        *widget,
       @begin{pre}
  lambda (widget event)    : run-last
       @end{pre}
-      Emitted when a pointer or keyboard grab on a window belonging to widget
-      gets broken. On X11, this happens when the grab window becomes unviewable,
-      i.e. it or one of its ancestors is unmapped, or if the same application
-      grabs the pointer or keyboard again.
+      Emitted when a pointer or keyboard grab on a GDK window belonging to
+      the widget gets broken. On X11, this happens when the grab window becomes
+      unviewable, i.e. it or one of its ancestors is unmapped, or if the same
+      application grabs the pointer or keyboard again.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-grab-broken} event.}
@@ -1989,12 +1989,11 @@ drag_data_received (GtkWidget        *widget,
       @end{table}
     @subheading{The \"show-help\" signal}
       @begin{pre}
- lambda (widget help-type)    :action
+ lambda (widget help)    :action
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[help-type]{A value of the @symbol{gtk-widget-help-type}
-          enumeration.}
+        @entry[help]{A value of the @symbol{gtk-widget-help-type} enumeration.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked
           for the event, @em{false} to propagate the event further.}
       @end{table}
@@ -3927,10 +3926,9 @@ drag_data_received (GtkWidget        *widget,
   This function is only for use in widget implementations.
   @begin[Note]{dictionary}
     You cannot call the @sym{gtk-widget-queue-resize} function on a widget from
-    inside its implementation of the @code{GtkWidgetClass::size_allocate}
-    virtual method. Calls to the @sym{gtk-widget-queue-resize} function from
-    inside the @code{GtkWidgetClass::size_allocate} virtual method will be
-    silently ignored.
+    inside its implementation of the @code{size_allocate} virtual method. Calls
+    to the @sym{gtk-widget-queue-resize} function from inside the
+    @code{size_allocate} virtual method will be silently ignored.
   @end{dictionary}
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
@@ -3966,8 +3964,7 @@ drag_data_received (GtkWidget        *widget,
  "@version{2021-9-21}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Flags the widget for a rerun of the @code{GtkWidgetClass::size_allocate}
-    function.
+    Flags the widget for a rerun of the @code{size_allocate} function.
   @end{short}
   Use this function instead of the @fun{gtk-widget-queue-resize} function when
   the  size request of the widget did not change but it wants to reposition its
@@ -4459,8 +4456,9 @@ drag_data_received (GtkWidget        *widget,
     For widgets that can be \"activated\", buttons, menu items, etc., this
     function activates them.
   @end{short}
-  Activation is what happens when you press Enter on a widget during key
-  navigation. If the widget is not activatable, the function returns @em{false}.
+  Activation is what happens when you press the @kbd{Enter} key on a widget
+  during key navigation. If the widget is not activatable, the function returns
+  @em{false}.
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
@@ -4561,12 +4559,12 @@ drag_data_received (GtkWidget        *widget,
   this yourself by calling the @fun{gtk-widget-can-default} function with a
   @em{true} value.
 
-  The default widget is activated when the user presses Enter in a window.
-  Default widgets must be activatable, that is, the @fun{gtk-widget-activate}
-  function should affect them. Note that @class{gtk-entry} widgets require the
-  @slot[gtk-widget]{activates-default} property set to @em{true} before they
-  activate the default widget when Enter is pressed and the @class{gtk-entry}
-  widget is focused.
+  The default widget is activated when the user presses the @kbd{Enter} key in
+  a window. Default widgets must be activatable, that is, the
+  @fun{gtk-widget-activate} function should affect them. Note that
+  @class{gtk-entry} widgets require the @slot[gtk-widget]{activates-default}
+  property set to @em{true} before they activate the default widget when the
+  @kbd{Enter} key is pressed and the @class{gtk-entry} widget is focused.
   @see-class{gtk-widget}
   @see-class{gtk-entry}
   @see-function{gtk-widget-activate}
@@ -4777,7 +4775,7 @@ drag_data_received (GtkWidget        *widget,
     The @sym{gtk-widget-device-enabled} function returns whether the device can
     interact with the widget and its children.
   @end{short}
-  The @sym{(setf gtk-widget-device-enabled} function enables or disables the
+  The @sym{(setf gtk-widget-device-enabled)} function enables or disables the
   device to interact with the widget and all its children.
 
   It does so by descending through the @class{gdk-window} object hierarchy and
@@ -4964,7 +4962,7 @@ drag_data_received (GtkWidget        *widget,
   @see-class{gtk-widget}
   @see-function{gtk-widget-ancestor}"
   (widget (g-object gtk-widget))
-  (container (g-object gtk-widget)))
+  (ancestor (g-object gtk-widget)))
 
 (export 'gtk-widget-is-ancestor)
 

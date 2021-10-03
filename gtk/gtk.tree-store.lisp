@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-store.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
 ;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
@@ -233,8 +233,8 @@
     @begin{pre}
 (let ((model (gtk-tree-store-new \"gchararray\" \"gchararray\" \"guint\")))
   ;; First Book
-  (let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
-    ;; Set the top-level row
+  (let ((iter (gtk-tree-store-append model nil))) ; Toplevel iterator
+    ;; Set the toplevel row
     (gtk-tree-store-set model
                         iter
                         \"The Art of Computer Programming\"

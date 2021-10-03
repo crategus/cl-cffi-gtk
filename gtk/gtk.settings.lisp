@@ -1960,12 +1960,12 @@
  "The @code{gtk-keynav-cursor-only} property of type @code{:boolean}
   (Read / Write) @br{}
   When @em{true}, keyboard navigation should be able to reach all widgets by
-  using the cursor keys only. Tab, Shift etc. keys cannot be expected to be
-  present on the used input device. @br{}
+  using the cursor keys only. the @kbd{Tab}, @kbd{Shift} etc. keys cannot be
+  expected to be present on the used input device. @br{}
   @em{Warning:} The @code{gtk-keynav-cursor-only} property has been deprecated
   since version 3.10 and should not be used in newly written code. Generally,
   the behavior for touchscreen input should be performed dynamically based on
-  the function @fun{gdk-event-source-device}. @br{}
+  the @fun{gdk-event-source-device} function. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -1983,13 +1983,13 @@
   @end{short}
 
   When @em{true}, keyboard navigation should be able to reach all widgets by
-  using the cursor keys only. Tab, Shift etc. keys cannot be expected to be
-  present on the used input device.
+  using the cursor keys only. The @kbd{Tab}, @kbd{Shift} etc. keys cannot be
+  expected to be present on the used input device.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-settings-gtk-keynav-cursor-only} has been deprecated
+    The @sym{gtk-settings-gtk-keynav-cursor-only} function has been deprecated
     since version 3.10 and should not be used in newly written code. Generally,
     the behavior for touchscreen input should be performed dynamically based on
-    the function @fun{gdk-event-source-device}.
+    the @fun{gdk-event-source-device} function.
   @end{dictionary}
   @see-class{gtk-settings}
   @see-function{gdk-event-source-device}")

@@ -101,24 +101,24 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"next-match\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
-      The \"next-match\" signal is a keybinding signal which gets emitted when
-      the user initiates a move to the next match for the current search string.
+      The signal is a keybinding signal which gets emitted when the user
+      initiates a move to the next match for the current search string.
       Applications should connect to it, to implement moving between matches.
-      The default bindings for this signal is Ctrl-g.
+      The default bindings for this signal is the @kbd{Ctrl-g} key.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
       @end{table}
     @subheading{The \"previous-match\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
-      The \"previous-match\" signal is a keybinding signal which gets emitted
-      when the user initiates a move to the previous match for the current
-      search string. Applications should connect to it, to implement moving
-      between matches. The default bindings for this signal is Ctrl-Shift-g.
+      The signal is a keybinding signal which gets emitted when the user
+      initiates a move to the previous match for the current search string.
+      Applications should connect to it, to implement moving between matches.
+      The default bindings for this signal is the @kbd{Ctrl-Shift-g} key.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
@@ -135,12 +135,12 @@
       @end{table}
     @subheading{The \"stop-search\" signal}
       @begin{pre}
- lambda (entry)    : Action
+ lambda (entry)    :action
       @end{pre}
-      The \"stop-search\" signal is a keybinding signal which gets emitted when
-      the user stops a search via keyboard input. Applications should connect
-      to it, to implement hiding the search entry in this case. The default
-      bindings for this signal is Escape.
+      The signal is a keybinding signal which gets emitted when the user stops
+      a search via keyboard input. Applications should connect to it, to
+      implement hiding the search entry in this case. The default bindings for
+      this signal is the @kbd{Escape} key.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-search-entry} widget on which the signal was
           emitted.}
@@ -180,12 +180,12 @@
   @return{@var{+gdk-event-stop+} if the key press event resulted in a search
     beginning or continuing, @var{+gdk-event-propagate+} otherwise.}
   @begin{short}
-    This function should be called when the top-level window which contains the
+    This function should be called when the toplevel window which contains the
     search entry received a key event.
   @end{short}
-  If the entry is part of a search bar, it is preferable to call the function
-  @fun{gtk-search-bar-handle-event} instead, which will reveal the entry in
-  addition to passing the event to this function.
+  If the entry is part of a search bar, it is preferable to call the
+  @fun{gtk-search-bar-handle-event} function instead, which will reveal the
+  entry in addition to passing the event to this function.
 
   If the key event is handled by the search entry and starts or continues a
   search, @var{+gdk-event-stop+} will be returned. The caller should ensure that

@@ -233,11 +233,11 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"item-activated\" signal}
       @begin{pre}
- lambda (chooser)    : Run Last
+ lambda (chooser)    :run-last
       @end{pre}
       This signal is emitted when the user \"activates\" a recent item in the
       recent chooser. This can happen by double-clicking on an item in the
-      recently used resources list, or by pressing Enter.
+      recently used resources list, or by pressing the @kbd{Enter} key.
       @begin[code]{table}
         @entry[chooser]{The @sym{gtk-recent-chooser} object which received the
           signal.}

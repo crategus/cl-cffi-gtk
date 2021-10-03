@@ -96,9 +96,10 @@
   @image[search-bar]{}
 
   For keyboard presses to start a search, events will need to be forwarded from
-  the top-level window that contains the search bar. See the function
-  @func{gtk-search-bar-handle-event} for example code. Common shortcuts such as
-  Ctrl+F should be handled as an application action, or through the menu items.
+  the toplevel window that contains the search bar. See the
+  @func{gtk-search-bar-handle-event} function for example code. Common shortcuts
+  such as the @kbd{Ctrl+F} should be handled as an application action, or
+  through the menu items.
 
   You will also need to tell the search bar about which entry you are using as
   your search entry using the function @fun{gtk-search-bar-connect-entry}. The
@@ -301,7 +302,7 @@ main (gint argc,
     entered in the search entry, and revealing the search bar if necessary,
     @var{+gdk-event-propagate+} otherwise.}
   @begin{short}
-    This function should be called when the top-level window which contains the
+    This function should be called when the toplevel window which contains the
     search bar received a key event.
   @end{short}
 

@@ -124,11 +124,11 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"close\" signal}
       @begin{pre}
- lambda (shortcutswindow)    : Action
+ lambda (shortcutswindow)    :action
       @end{pre}
-      The \"close\" signal is a keybinding signal which gets emitted when the
-      user uses a keybinding to close the window. The default binding for this
-      signal is the Escape key.
+      The signal is a keybinding signal which gets emitted when the user uses a
+      keybinding to close the window. The default binding for this signal is the
+      @kbd{Escape} key.
       @begin[code]{table}
         @entry[shortcutswindow]{The @sym{gtk-shortcuts-window} object.}
       @end{table}

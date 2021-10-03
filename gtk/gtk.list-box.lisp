@@ -338,7 +338,7 @@
       @end{pre}
       The signal is a keybinding signal which gets emitted to select all
       children of the box, if the selection mode permits it. The default
-      bindings for this signal is Ctrl-a.
+      bindings for this signal is the @kbd{Ctrl-a} key.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} widget on which the signal is
           emitted.}
@@ -366,7 +366,7 @@
       @end{pre}
         The signal is a keybinding signal which gets emitted to unselect all
         children of the box, if the selection mode permits it. The default
-        bindings for this signal is Ctrl-Shift-a.
+        bindings for this signal is the @kbd{Ctrl-Shift-a} key.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} widget on which the signal is
           emitted.}
@@ -1148,7 +1148,7 @@
 ;;; Called for list boxes that are bound to a GListModel with
 ;;; gtk_list_box_bind_model() for each item that gets added to the model.
 ;;;
-;;; Versions of GTK+ prior to 3.18 called gtk_widget_show_all() on the rows
+;;; Versions of GTK prior to 3.18 called gtk_widget_show_all() on the rows
 ;;; created by the GtkListBoxCreateWidgetFunc, but this forced all widgets
 ;;; inside the row to be shown, and is no longer the case. Applications should
 ;;; be updated to show the desired row widgets.
