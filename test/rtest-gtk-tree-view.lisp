@@ -10,7 +10,8 @@
   (is (g-type-is-enum "GtkTreeViewDropPosition"))
   ;; Check the type initializer
   (is (eq (gtype "GtkTreeViewDropPosition")
-          (gtype (foreign-funcall "gtk_tree_view_drop_position_get_type" g-size))))
+          (gtype (foreign-funcall "gtk_tree_view_drop_position_get_type"
+                 g-size))))
   ;; Check the registered name
   (is (eq 'gtk-tree-view-drop-position
           (registered-enum-type "GtkTreeViewDropPosition")))
@@ -32,7 +33,8 @@
   (is (equal '(DEFINE-G-ENUM "GtkTreeViewDropPosition"
                              GTK-TREE-VIEW-DROP-POSITION
                              (:EXPORT T
-                              :TYPE-INITIALIZER "gtk_tree_view_drop_position_get_type")
+                              :TYPE-INITIALIZER
+                              "gtk_tree_view_drop_position_get_type")
                              (:BEFORE 0)
                              (:AFTER 1)
                              (:INTO-OR-BEFORE 2)
@@ -53,8 +55,10 @@
   (is (eq 'gtk-tree-view-grid-lines
           (registered-enum-type "GtkTreeViewGridLines")))
   ;; Check the names
-  (is (equal '("GTK_TREE_VIEW_GRID_LINES_NONE" "GTK_TREE_VIEW_GRID_LINES_HORIZONTAL"
-               "GTK_TREE_VIEW_GRID_LINES_VERTICAL" "GTK_TREE_VIEW_GRID_LINES_BOTH")
+  (is (equal '("GTK_TREE_VIEW_GRID_LINES_NONE"
+               "GTK_TREE_VIEW_GRID_LINES_HORIZONTAL"
+               "GTK_TREE_VIEW_GRID_LINES_VERTICAL"
+               "GTK_TREE_VIEW_GRID_LINES_BOTH")
              (mapcar #'enum-item-name
                      (get-enum-items "GtkTreeViewGridLines"))))
   ;; Check the values
@@ -69,7 +73,8 @@
   (is (equal '(DEFINE-G-ENUM "GtkTreeViewGridLines"
                              GTK-TREE-VIEW-GRID-LINES
                              (:EXPORT T
-                              :TYPE-INITIALIZER "gtk_tree_view_grid_lines_get_type")
+                              :TYPE-INITIALIZER
+                              "gtk_tree_view_grid_lines_get_type")
                              (:NONE 0)
                              (:HORIZONTAL 1)
                              (:VERTICAL 2)
@@ -96,31 +101,37 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkScrollable")
              (mapcar #'g-type-name (g-type-interfaces "GtkTreeView"))))
   ;; Check the class properties
-  (is (equal '("activate-on-single-click" "app-paintable" "border-width" "can-default"
-               "can-focus" "child" "composite-child" "double-buffered" "enable-grid-lines"
-               "enable-search" "enable-tree-lines" "events" "expand" "expander-column"
-               "fixed-height-mode" "focus-on-click" "hadjustment" "halign" "has-default"
-               "has-focus" "has-tooltip" "headers-clickable" "headers-visible"
-               "height-request" "hexpand" "hexpand-set" "hover-expand" "hover-selection"
-               "hscroll-policy" "is-focus" "level-indentation" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start" "margin-top" "model"
-               "name" "no-show-all" "opacity" "parent" "receives-default" "reorderable"
-               "resize-mode" "rubber-banding" "rules-hint" "scale-factor" "search-column"
-               "sensitive" "show-expanders" "style" "tooltip-column" "tooltip-markup"
-               "tooltip-text" "ubuntu-almost-fixed-height-mode" "vadjustment" "valign"
-               "vexpand" "vexpand-set" "visible" "vscroll-policy" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkTreeView"))
-                          #'string-lessp)))
+  (is (equal '("activate-on-single-click" "app-paintable" "border-width"
+               "can-default" "can-focus" "child" "composite-child"
+               "double-buffered" "enable-grid-lines" "enable-search"
+               "enable-tree-lines" "events" "expand" "expander-column"
+               "fixed-height-mode" "focus-on-click" "hadjustment" "halign"
+               "has-default" "has-focus" "has-tooltip" "headers-clickable"
+               "headers-visible" "height-request" "hexpand" "hexpand-set"
+               "hover-expand" "hover-selection" "hscroll-policy" "is-focus"
+               "level-indentation" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top" "model"
+               "name" "no-show-all" "opacity" "parent" "receives-default"
+               "reorderable" "resize-mode" "rubber-banding" "rules-hint"
+               "scale-factor" "search-column" "sensitive" "show-expanders"
+               "style" "tooltip-column" "tooltip-markup" "tooltip-text"
+               "ubuntu-almost-fixed-height-mode" "vadjustment" "valign"
+               "vexpand" "vexpand-set" "visible" "vscroll-policy"
+               "width-request" "window")
+             (sort (mapcar #'g-param-spec-name
+                           (g-object-class-list-properties "GtkTreeView"))
+                   #'string-lessp)))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging" "allow-rules"
-               "even-row-color" "expander-size" "grid-line-pattern" "grid-line-width"
-               "horizontal-separator" "indent-expanders" "odd-row-color" "tree-line-pattern"
-               "tree-line-width" "vertical-separator")
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging" "allow-rules"
+               "even-row-color" "expander-size" "grid-line-pattern"
+               "grid-line-width" "horizontal-separator" "indent-expanders"
+               "odd-row-color" "tree-line-pattern" "tree-line-width"
+               "vertical-separator")
              (mapcar #'g-param-spec-name
                      (gtk-widget-class-list-style-properties "GtkTreeView"))))
   ;; Get the names of the child properties
@@ -238,22 +249,23 @@
 ;;;     gtk_tree_view_new
 
 (test gtk-tree-view-new
-  (is (eq 'gtk-tree-view (type-of (gtk-tree-view-new)))))
+  (is (typep (gtk-tree-view-new) 'gtk-tree-view)))
 
 ;;;     gtk_tree_view_new_with_model
 
 (test gtk-tree-view-new-with-model
-  (is (eq 'gtk-tree-view (type-of (gtk-tree-view-new-with-model nil))))
-  (is (eq 'gtk-tree-view
-          (type-of (gtk-tree-view-new-with-model (create-and-fill-list-store))))))
+  (is (typep (gtk-tree-view-new-with-model nil) 'gtk-tree-view))
+  (is (typep (gtk-tree-view-new-with-model (create-and-fill-list-store))
+             'gtk-tree-view)))
 
 ;;;     gtk_tree_view_get_selection
 
 (test gtk-tree-view-selection
-  (is (eq 'gtk-tree-selection
-          (type-of (gtk-tree-view-selection (gtk-tree-view-new)))))
-  (is (eq 'gtk-tree-selection
-          (type-of (gtk-tree-view-selection (gtk-tree-view-new-with-model (create-and-fill-list-store)))))))
+  (is (typep (gtk-tree-view-selection (gtk-tree-view-new)) 'gtk-tree-selection))
+  (is (typep (gtk-tree-view-selection
+                 (gtk-tree-view-new-with-model
+                     (create-and-fill-list-store)))
+             'gtk-tree-selection)))
 
 ;;;     gtk_tree_view_columns_autosize
 
@@ -261,8 +273,12 @@
 
 (test gtk-tree-view-append-column
   (let ((view (gtk-tree-view-new)))
-    (is (= 1 (gtk-tree-view-append-column view (make-instance 'gtk-tree-view-column))))
-    (is (= 2 (gtk-tree-view-append-column view (make-instance 'gtk-tree-view-column))))))
+    (is (= 1
+           (gtk-tree-view-append-column view
+                                        (make-instance 'gtk-tree-view-column))))
+    (is (= 2
+           (gtk-tree-view-append-column view
+                                        (make-instance 'gtk-tree-view-column))))))
 
 ;;;     gtk_tree_view_remove_column
 
@@ -284,10 +300,22 @@
 
 (test gtk-tree-view-insert-column
   (let ((view (gtk-tree-view-new)))
-    (is (= 1 (gtk-tree-view-insert-column view (make-instance 'gtk-tree-view-column) -1)))
-    (is (= 2 (gtk-tree-view-insert-column view (make-instance 'gtk-tree-view-column)  0)))
-    (is (= 3 (gtk-tree-view-insert-column view (make-instance 'gtk-tree-view-column)  0)))
-    (is (= 4 (gtk-tree-view-insert-column view (make-instance 'gtk-tree-view-column)  1)))))
+    (is (= 1
+           (gtk-tree-view-insert-column view
+                                        (make-instance 'gtk-tree-view-column)
+                                        -1)))
+    (is (= 2
+          (gtk-tree-view-insert-column view
+                                       (make-instance 'gtk-tree-view-column)
+                                       0)))
+    (is (= 3
+           (gtk-tree-view-insert-column view
+                                        (make-instance 'gtk-tree-view-column)
+                                        0)))
+    (is (= 4
+           (gtk-tree-view-insert-column view
+                                        (make-instance 'gtk-tree-view-column)
+                                        1)))))
 
 ;;;     gtk_tree_view_insert_column_with_attributes
 ;;;     gtk_tree_view_insert_column_with_data_func
@@ -296,9 +324,13 @@
 
 (test gtk-tree-view-n-columns
   (let ((view (gtk-tree-view-new)))
-    (is (= 1 (gtk-tree-view-append-column view (make-instance 'gtk-tree-view-column))))
+    (is (= 1
+           (gtk-tree-view-append-column view
+                                        (make-instance 'gtk-tree-view-column))))
     (is (= 1 (gtk-tree-view-n-columns view)))
-    (is (= 2 (gtk-tree-view-append-column view (make-instance 'gtk-tree-view-column))))
+    (is (= 2
+           (gtk-tree-view-append-column view
+                                        (make-instance 'gtk-tree-view-column))))
     (is (= 2 (gtk-tree-view-n-columns view)))))
 
 ;;;     gtk_tree_view_get_column
@@ -330,8 +362,7 @@
     (is (= 2 (gtk-tree-view-append-column view column2)))
     (is (= 3 (gtk-tree-view-append-column view column3)))
     ;; Get tree view columns
-    (is (eq 'gtk-tree-view-column
-            (type-of (first (gtk-tree-view-columns view)))))))
+    (is (typep (first (gtk-tree-view-columns view)) 'gtk-tree-view-column))))
 
 ;;;     gtk_tree_view_move_column_after
 
@@ -374,8 +405,32 @@
 ;;;     gtk_tree_view_convert_tree_to_widget_coords
 ;;;     gtk_tree_view_convert_widget_to_bin_window_coords
 ;;;     gtk_tree_view_convert_widget_to_tree_coords
+
 ;;;     gtk_tree_view_enable_model_drag_dest
+
+(test gtk-tree-view-enable-model-drag-dest
+  (let ((targets '(("text/html" :none 0)
+                   ("STRING" :none 1)
+                   ("number" :none 2)
+                   ("image/jpeg" :none 3)
+                   ("text/uri-list" :none 4)))
+        (view (make-instance 'gtk-tree-view)))
+    (is-false (gtk-tree-view-enable-model-drag-dest view targets :copy))))
+
 ;;;     gtk_tree_view_enable_model_drag_source
+
+(test gtk-tree-view-enable-model-drag-source
+  (let ((targets '(("text/html" :none 0)
+                   ("STRING" :none 1)
+                   ("number" :none 2)
+                   ("image/jpeg" :none 3)
+                   ("text/uri-list" :none 4)))
+        (view (make-instance 'gtk-tree-view)))
+    (is-false (gtk-tree-view-enable-model-drag-source view
+                                                      :button1-mask
+                                                      targets
+                                                      :copy))))
+
 ;;;     gtk_tree_view_unset_rows_drag_source
 ;;;     gtk_tree_view_unset_rows_drag_dest
 ;;;     gtk_tree_view_set_drag_dest_row
@@ -408,3 +463,4 @@
 ;;;     gtk_tree_view_set_tooltip_cell
 ;;;     gtk_tree_view_get_tooltip_context
 
+;;; 2021-10-2

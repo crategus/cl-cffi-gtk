@@ -3,6 +3,52 @@
 
 (defvar *verbose-gtk-selection* nil)
 
+;;;   GtkTargetFlags  <-- gtk.drag-and-drop.lisp
+
+(test gtk-target-flags
+  ;; Check the type
+  (is (g-type-is-flags "GtkTargetFlags"))
+  ;; Check the registered name
+  (is (eq 'gtk-target-flags
+          (registered-flags-type "GtkTargetFlags")))
+  ;; Check the type initializer
+  (is (eq (gtype "GtkTargetFlags")
+          (gtype (foreign-funcall "gtk_target_flags_get_type" g-size))))
+  ;; Check the names
+  (is (equal '("GTK_TARGET_SAME_APP" "GTK_TARGET_SAME_WIDGET"
+               "GTK_TARGET_OTHER_APP" "GTK_TARGET_OTHER_WIDGET")
+             (mapcar #'flags-item-name
+                     (get-flags-items "GtkTargetFlags"))))
+  ;; Check the values
+  (is (equal '(1 2 4 8)
+             (mapcar #'flags-item-value
+                     (get-flags-items "GtkTargetFlags"))))
+  ;; Check the nick names
+  (is (equal '("same-app" "same-widget" "other-app" "other-widget")
+             (mapcar #'flags-item-nick
+                     (get-flags-items "GtkTargetFlags"))))
+  ;; Check the flags definition
+  (is (equal '(DEFINE-G-FLAGS "GtkTargetFlags"
+                              GTK-TARGET-FLAGS
+                              (:EXPORT T
+                               :TYPE-INITIALIZER "gtk_target_flags_get_type")
+                              (:SAME-APP 1)
+                              (:SAME-WIDGET 2)
+                              (:OTHER-APP 4)
+                              (:OTHER-WIDGET 8))
+             (get-g-type-definition "GtkTargetFlags"))))
+
+;;;   GtkTargetEntry
+
+;;;   GtkTargetList
+
+(test gtk-target-list-structure
+  ;; Type check
+  (is (g-type-is-a (gtype "GtkTargetList") +g-type-boxed+))
+  ;; Check the type initializer
+  (is (eq (gtype "GtkTargetList")
+          (gtype (foreign-funcall "gtk_target_list_get_type" g-size)))))
+
 ;;;     GtkSelectionData
 
 (test gtk-selection-data-structure
@@ -12,70 +58,23 @@
   (is (eq (gtype "GtkSelectionData")
           (gtype (foreign-funcall "gtk_selection_data_get_type" g-size)))))
 
-#+nil
-(test gtk-selection-data-new
-  (let ((selection (gtk-selection-data-new)))
-    (is (string= "NONE" (gtk-selection-data-selection selection)))
-    (is (string= "NONE" (gtk-selection-data-target selection)))
-    (is (string= "NONE" (gtk-selection-data-type selection)))
-    (is (= 0 (gtk-selection-data-format selection)))
-    (is (null-pointer-p (gtk-selection-data-data selection)))
-    (is (= 0 (gtk-selection-data-length selection)))
-    (is-false (gtk-selection-data-display selection))))
-
-;;;   GtkTargetFlags  <-- gtk.drag-and-drop.lisp
-;;;   GtkTargetEntry
-;;;   GtkTargetList
-
 ;;;   gtk_target_entry_new
-
-(test gtk-target-entry-new
-  (let ((target-entry (gtk-target-entry-new :target "BITMAP"
-                                            :flags :same-app
-                                            :info 0)))
-    (is (string= "BITMAP" (gtk-target-entry-target target-entry)))
-    (is (eq :same-app (gtk-target-entry-flags target-entry)))
-    (is (= 0 (gtk-target-entry-info target-entry)))))
-
 ;;;   gtk_target_entry_copy
-
-(test gtk-target-entry-copy
-  (let* ((target-entry (gtk-target-entry-new :target "BITMAP"
-                                             :flags :same-app
-                                             :info 0))
-         (target-copy (gtk-target-entry-copy target-entry)))
-    (is (string= "BITMAP" (gtk-target-entry-target target-copy)))
-    (is (eq :same-app (gtk-target-entry-flags target-copy)))
-    (is (= 0 (gtk-target-entry-info target-copy)))))
-
 ;;;   gtk_target_entry_free
 
 ;;;   gtk_target_list_new
 
 (test gtk-target-list-new
-  (let ((target-list
-         (gtk-target-list-new (list (gtk-target-entry-new :target "text/html"
-                                                          :flags 0
-                                                          :info 0)
-                                    (gtk-target-entry-new :target "STRING"
-                                                          :flags 0
-                                                          :info 1)
-                                    (gtk-target-entry-new :target "number"
-                                                          :flags 0
-                                                          :info 2)
-                                    (gtk-target-entry-new :target "image/jpeg"
-                                                          :flags 0
-                                                          :info 3)
-                                    (gtk-target-entry-new :target "text/uri-list"
-                                                          :flags 0
-                                                          :info 4)))))
-    (is (= 0 (gtk-target-list-find target-list "text/html")))
-    (is (= 1 (gtk-target-list-find target-list "STRING")))
-    (is (= 2 (gtk-target-list-find target-list "number")))
-    (is (= 3 (gtk-target-list-find target-list "image/jpeg")))
-    (is (= 4 (gtk-target-list-find target-list "text/uri-list")))
-
-    (is-false (gtk-target-list-find target-list "xxx"))))
+  (let ((tlist (gtk-target-list-new '(("text/html" :none 0)
+                                      ("STRING" :none 1)
+                                      ("number" :none 2)
+                                      ("image/jpeg" :none 3)
+                                      ("text/uri-list" :none 4)))))
+    (is (= 0 (gtk-target-list-find tlist "text/html")))
+    (is (= 1 (gtk-target-list-find tlist "STRING")))
+    (is (= 2 (gtk-target-list-find tlist "number")))
+    (is (= 3 (gtk-target-list-find tlist "image/jpeg")))
+    (is (= 4 (gtk-target-list-find tlist "text/uri-list")))))
 
 ;;;   gtk_target_list_ref
 ;;;   gtk_target_list_unref
@@ -83,81 +82,79 @@
 ;;;   gtk_target_list_add
 
 (test gtk-target-list-add
-  (let ((target-list (gtk-target-list-new)))
-    (gtk-target-list-add target-list "text/html" 0 0)
-    (gtk-target-list-add target-list "STRING" 0 1)
-    (gtk-target-list-add target-list "number" 0 2)
-    (gtk-target-list-add target-list "image/jpeg" 0 3)
-    (gtk-target-list-add target-list "text/uri-list" 0 4)
-
-    (is (= 0 (gtk-target-list-find target-list "text/html")))
-    (is (= 1 (gtk-target-list-find target-list "STRING")))
-    (is (= 2 (gtk-target-list-find target-list "number")))
-    (is (= 3 (gtk-target-list-find target-list "image/jpeg")))
-    (is (= 4 (gtk-target-list-find target-list "text/uri-list")))
-
-    (is-false (gtk-target-list-find target-list "xxx"))))
+  (let ((tlist (gtk-target-list-new)))
+    ;; Add the target entries
+    (gtk-target-list-add tlist "text/html" 0 0)
+    (gtk-target-list-add tlist "STRING" 0 1)
+    (gtk-target-list-add tlist "number" 0 2)
+    (gtk-target-list-add tlist "image/jpeg" 0 3)
+    (gtk-target-list-add tlist "text/uri-list" 0 4)
+    ;; Check the added target entries
+    (is (= 0 (gtk-target-list-find tlist "text/html")))
+    (is (= 1 (gtk-target-list-find tlist "STRING")))
+    (is (= 2 (gtk-target-list-find tlist "number")))
+    (is (= 3 (gtk-target-list-find tlist "image/jpeg")))
+    (is (= 4 (gtk-target-list-find tlist "text/uri-list")))
+    ;; Check for an unknown target entry
+    (is-false (gtk-target-list-find tlist "unknown"))))
 
 ;;;   gtk_target_list_add_table
 
 (test gtk-target-list-add-table
-  (let ((target-list (gtk-target-list-new)))
-    (gtk-target-list-add-table target-list
-                               (list (gtk-target-entry-new :target "text/html"
-                                                           :flags 0
-                                                           :info 0)
-                                     (gtk-target-entry-new :target "STRING"
-                                                           :flags 0
-                                                           :info 1)
-                                     (gtk-target-entry-new :target "number"
-                                                           :flags 0
-                                                           :info 2)
-                                     (gtk-target-entry-new :target "image/jpeg"
-                                                           :flags 0
-                                                           :info 3)
-                                     (gtk-target-entry-new :target "text/uri-list"
-                                                           :flags 0
-                                                           :info 4)))
-    (is (= 0 (gtk-target-list-find target-list "text/html")))
-    (is (= 1 (gtk-target-list-find target-list "STRING")))
-    (is (= 2 (gtk-target-list-find target-list "number")))
-    (is (= 3 (gtk-target-list-find target-list "image/jpeg")))
-    (is (= 4 (gtk-target-list-find target-list "text/uri-list")))
-
-    (is-false (gtk-target-list-find target-list "xxx"))))
+  (let ((tlist (gtk-target-list-new)))
+    (gtk-target-list-add-table tlist '(("text/html" :none 0)
+                                       ("STRING" :none 1)
+                                       ("number" :none 2)
+                                       ("image/jpeg" :none 3)
+                                       ("text/uri-list" :none 4)))
+    (is (= 0 (gtk-target-list-find tlist "text/html")))
+    (is (= 1 (gtk-target-list-find tlist "STRING")))
+    (is (= 2 (gtk-target-list-find tlist "number")))
+    (is (= 3 (gtk-target-list-find tlist "image/jpeg")))
+    (is (= 4 (gtk-target-list-find tlist "text/uri-list")))))
 
 ;;;   gtk_target_list_add_text_targets
 
 (test gtk-target-list-add-text-targets
-  (let ((target-list (gtk-target-list-new)))
-    (gtk-target-list-add-text-targets target-list 0)
-    (is (equal '("UTF8_STRING"
+  (let ((tlist (gtk-target-list-new)))
+    (gtk-target-list-add-text-targets tlist 0)
+    (is (equal #-win32
+               '("UTF8_STRING"
                  "COMPOUND_TEXT"
                  "TEXT"
                  "STRING"
                  "text/plain;charset=utf-8"
                  "text/plain")
-               (mapcar #'gtk-target-entry-target
-                       (gtk-target-table-new-from-list target-list))))))
+               #+win32
+               '("UTF8_STRING"
+                 "COMPOUND_TEXT"
+                 "TEXT"
+                 "STRING"
+                 "text/plain;charset=utf-8"
+                 "text/plain;charset=CP1252"
+                 "text/plain")
+               (mapcar #'first
+                       (gtk-target-table-new-from-list tlist))))))
 
 ;;;   gtk_target_list_add_image_targets
 
 (test gtk-target-list-add-image-targets.1
-  (let ((target-list (gtk-target-list-new)))
-    (gtk-target-list-add-image-targets target-list 0 t)
+  (let ((tlist (gtk-target-list-new)))
+    (gtk-target-list-add-image-targets tlist 0 t)
     (is (equal '("application/ico" "image/bmp" "image/ico" "image/icon"
                  "image/jpeg" "image/png" "image/tiff"
                  "image/vnd.microsoft.icon" "image/x-bmp" "image/x-ico"
                  "image/x-icon" "image/x-MS-bmp" "image/x-win-bitmap"
                  "text/ico")
-               (stable-sort (mapcar #'gtk-target-entry-target
-                                    (gtk-target-table-new-from-list target-list))
-                            #'string-lessp)))))
+               (sort (mapcar #'first
+                             (gtk-target-table-new-from-list tlist))
+                     #'string-lessp)))))
 
 (test gtk-target-list-add-image-targets.2
-  (let ((target-list (gtk-target-list-new)))
-    (gtk-target-list-add-image-targets target-list 0 nil)
-    (is (equal '("application/ico" "application/x-navi-animation" "image/bmp"
+  (let ((tlist (gtk-target-list-new)))
+    (gtk-target-list-add-image-targets tlist 0 nil)
+    (is (equal #-win32
+               '("application/ico" "application/x-navi-animation" "image/bmp"
                  "image/gif" "image/ico" "image/icon" "image/jpeg" "image/png"
                  "image/qtif" "image/svg" "image/svg+xml"
                  "image/svg+xml-compressed" "image/svg-xml" "image/tiff"
@@ -168,9 +165,23 @@
                  "image/x-portable-pixmap" "image/x-quicktime" "image/x-tga"
                  "image/x-win-bitmap" "image/x-wmf" "image/x-xbitmap"
                  "image/x-xpixmap" "text/ico" "text/xml-svg")
-               (stable-sort (mapcar #'gtk-target-entry-target
-                                    (gtk-target-table-new-from-list target-list))
-                            #'string-lessp)))))
+               #+win32
+               '("application/emf" "application/ico" "application/x-emf"
+                 "application/x-navi-animation" "image/bmp" "image/emf"
+                 "image/gif" "image/ico" "image/icon" "image/jpeg" "image/png"
+                 "image/qtif" "image/svg" "image/svg+xml"
+                 "image/svg+xml-compressed" "image/svg-xml" "image/tiff"
+                 "image/vnd.adobe.svg+xml" "image/vnd.microsoft.icon"
+                 "image/wmf" "image/x-bmp" "image/x-emf" "image/x-icns"
+                 "image/x-ico" "image/x-icon" "image/x-mgx-emf" "image/x-MS-bmp"
+                 "image/x-portable-anymap" "image/x-portable-bitmap"
+                 "image/x-portable-graymap" "image/x-portable-pixmap"
+                 "image/x-quicktime" "image/x-tga" "image/x-win-bitmap"
+                 "image/x-wmf" "image/x-wmf" "image/x-xbitmap" "image/x-xpixmap"
+                 "text/ico" "text/xml-svg")
+               (sort (mapcar #'first
+                             (gtk-target-table-new-from-list tlist))
+                     #'string-lessp)))))
 
 ;;;   gtk_target_list_add_uri_targets
 
@@ -178,7 +189,7 @@
   (let ((target-list (gtk-target-list-new)))
     (gtk-target-list-add-uri-targets target-list 0)
     (is (equal '("text/uri-list")
-               (mapcar #'gtk-target-entry-target
+               (mapcar #'first
                        (gtk-target-table-new-from-list target-list))))))
 
 ;;;   gtk_target_list_add_rich_text_targets
@@ -188,7 +199,7 @@
         (buffer (make-instance 'gtk-text-buffer)))
     (gtk-target-list-add-rich-text-targets target-list 0 nil buffer)
     (is (equal '("application/x-gtk-text-buffer-rich-text")
-               (mapcar #'gtk-target-entry-target
+               (mapcar #'first
                        (gtk-target-table-new-from-list target-list))))))
 
 (test gtk-target-list-add-rich-text-targets.2
@@ -196,7 +207,7 @@
         (buffer (make-instance 'gtk-text-buffer)))
     (gtk-target-list-add-rich-text-targets target-list 0 t buffer)
     (is (equal '()
-               (mapcar #'gtk-target-entry-target
+               (mapcar #'first
                        (gtk-target-table-new-from-list target-list))))))
 
 ;;;   gtk_target_list_remove
@@ -214,27 +225,39 @@
 ;;;   gtk_target_table_new_from_list
 
 (test gtk-target-table-new-from-list
-  (let ((target-list (gtk-target-list-new)))
+  (let ((tlist (gtk-target-list-new)))
 
-    (gtk-target-list-add target-list "text/html" 0 0)
-    (is (equal '("text/html")
-               (mapcar #'gtk-target-entry-target
-                       (gtk-target-table-new-from-list target-list))))
+    (gtk-target-list-add tlist "text/html" 0 0)
+    (gtk-target-list-add tlist "text/plain" :same-app 1)
+    (gtk-target-list-add tlist "text" '(:same-app :same-widget) 2)
+    (is (equal '(("text/html" nil 0)
+                 ("text/plain" (:same-app) 1)
+                 ("text" (:same-app :same-widget) 2))
+               (gtk-target-table-new-from-list tlist)))
 
-    (gtk-target-list-remove target-list "text/html")
+    (gtk-target-list-remove tlist "text/html")
+    (gtk-target-list-remove tlist "text/plain")
+    (gtk-target-list-remove tlist "text")
     (is (equal '()
-               (mapcar #'gtk-target-entry-target
-                       (gtk-target-table-new-from-list target-list))))
+               (gtk-target-table-new-from-list tlist)))
 
-    (gtk-target-list-add-text-targets target-list 0)
-    (is (equal '("UTF8_STRING"
-                 "COMPOUND_TEXT"
-                 "TEXT"
-                 "STRING"
-                 "text/plain;charset=utf-8"
-                 "text/plain")
-               (mapcar #'gtk-target-entry-target
-                       (gtk-target-table-new-from-list target-list))))))
+    (gtk-target-list-add-text-targets tlist 99)
+    (is (equal #-win32
+               '(("UTF8_STRING" NIL 99)
+                 ("COMPOUND_TEXT" NIL 99)
+                 ("TEXT" NIL 99)
+                 ("STRING" NIL 99)
+                 ("text/plain;charset=utf-8" NIL 99)
+                 ("text/plain" NIL 99))
+               #+win32
+               '(("UTF8_STRING" nil 99)
+                 ("COMPOUND_TEXT" nil 99)
+                 ("TEXT" nil 99)
+                 ("STRING" nil 99)
+                 ("text/plain;charset=utf-8" nil 99)
+                 ("text/plain;charset=CP1252" nil 99)
+                 ("text/plain" nil 99))
+               (gtk-target-table-new-from-list tlist)))))
 
 ;;;   gtk_selection_owner_set
 
@@ -316,6 +339,19 @@
 )))
 
 ;;;   gtk_selection_add_targets
+
+(test gtk-selection-add-targets
+  (let ((widget (make-instance 'gtk-window :type :toplevel)))
+    ;; Realize the toplevel widget to create a gdk-window
+    (gtk-widget-realize widget)
+    (let ((window (gtk-widget-window widget)))
+      ;; Check the presence of a gdk-window
+      (is (eq 'gdk-window (type-of window)))
+
+      (gtk-selection-add-targets widget
+                                 "PRIMARY"
+                                 '(("TEXT" 0) ("PIXBUF" 1) ("IMAGE" 2)))
+)))
 
 ;;;   gtk_selection_clear_targets
 
@@ -497,4 +533,4 @@
 ;;;     gtk_selection_data_copy
 ;;;     gtk_selection_data_free
 
-;;; 2021-9-25
+;;; 2021-9-28

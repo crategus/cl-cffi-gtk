@@ -2,6 +2,7 @@
 (in-suite gtk-box)
 
 ;; GtkPrinterOptionWidget is a child of GtkBox
+#-win32
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (foreign-funcall "gtk_printer_option_widget_get_type" g-size))
 

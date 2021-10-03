@@ -101,7 +101,7 @@
 (load "rtest-gtk-tree-view.lisp")
 ;    gtk.tree-view-drag-and-drop.lisp
 ;    gtk.cell-view.lisp
-;    gtk.icon-view.lisp
+(load "rtest-gtk-icon-view.lisp")
 ;    gtk.tree-sortable.lisp
 ;    gtk.tree-model-sort.lisp
 ;    gtk.tree-model-filter.lisp
@@ -265,7 +265,7 @@
 (load "rtest-gtk-accel-group.lisp")
 (load "rtest-gtk-accel-map.lisp")
 (load "rtest-gtk-clipboard.lisp")
-;    gtk.drag-and-drop.lisp
+(load "rtest-gtk-drag-and-drop.lisp")
 (load "rtest-gtk-settings.lisp")
 ;    gtk.bindings.lisp
 ;    gtk.enumerations.lisp
@@ -285,4 +285,4 @@
 (load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-action.lisp")
 
-;;; 2021-8-20
+;;; 2021-10-2
