@@ -7887,7 +7887,7 @@ lambda (buffer location text len)
    <para>
     Currently, the &gtk-application; class handles GTK initialization, application uniqueness, session
     management, provides some basic scriptability and desktop shell integration by exporting actions and menus
-    and manages a list of toplevel windows whose life-cycle is automatically tied to the life-cycle of your
+    and manages a list of toplevel windows whose life-cycle is automatically tied to the life cycle of your
     application.
    </para>
    <para>
@@ -7925,7 +7925,7 @@ lambda (buffer location text len)
    <para>
     The &gtk-application; object optionally registers with a session manager of the users session, if you set
     the &gtk_application_register-session; property, and offers various functionality related to the session
-    life-cycle.
+    life cycle.
    </para>
    <para>
     An application can block various ways to end the session with the function &gtk-application-inhibit;.
@@ -9665,7 +9665,7 @@ JustifyLeft
     </para>
     <para>
      <emphasis>Note.</emphasis> The widgets that are constructed by a UI manager are not tied to the
-     life-cycle of that UI manager. It does acquire a reference to them, but when you add the widgets
+     life cycle of that UI manager. It does acquire a reference to them, but when you add the widgets
      returned by this function to a container or if you explicitly ref them, they will survive the
      destruction of the UI manager.
     </para>
