@@ -1,198 +1,53 @@
-;;;; Clipboard - 2021-3-26
+;;;; Example Clipboard - 2021-9-26
 
 (in-package :gtk-example)
 
-#|
-void
-copy_button_clicked (GtkWidget *button,
-                     gpointer   user_data)
-{
-  GtkWidget *entry;
-  GtkClipboard *clipboard;
+(defun button-press-event-handler (image event num)
 
-  entry = GTK_WIDGET (user_data);
+  (format t "BUTTON-PRESS-EVENT-HANDLER~%")
+  (format t "  button : ~a~%" (gdk-event-button-button event))
 
-  /* Get the clipboard object */
-  clipboard = gtk_widget_get_clipboard (entry,
-                                        GDK_SELECTION_CLIPBOARD);
+  (unless (= 1 (gdk-event-button-button event))
+    (let ((menu (gtk-menu-new)))
 
-  /* Set clipboard text */
-  gtk_clipboard_set_text (clipboard, gtk_entry_get_text (GTK_ENTRY (entry)), -1);
-}
-|#
+      (let ((item (gtk-menu-item-new-with-mnemonic "_Copy")))
+        (gtk-menu-shell-append menu item)
+        (g-signal-connect item "activate"
+                          (lambda (widget)
+                            (format t "COPY activated ~a~%" widget)
+                            (let ((pixbuf (get-pixbuf-from-image image))
+                                  (clipboard (gtk-clipboard-get "CLIPBOARD")))
+                              (gtk-clipboard-set-image clipboard pixbuf))))
+        (when (= 2 num)
+          (setf (gtk-widget-sensitive item) nil))
+      )
 
+      (let ((item (gtk-menu-item-new-with-mnemonic "_Paste")))
+        (gtk-menu-shell-append menu item)
+        (g-signal-connect item "activate"
+                          (lambda (widget)
+                            (format t "PASTE activated ~a~%" widget)
+                            (let* ((clipboard (gtk-clipboard-get "CLIPBOARD"))
+                                   (pixbuf (gtk-clipboard-wait-for-image clipboard)))
+                              (when pixbuf
+                                (gtk-image-set-from-pixbuf image pixbuf)))))
+        (when (= 1 num)
+          (setf (gtk-widget-sensitive item) nil))
+      )
 
-#|
-void
-paste_received (GtkClipboard *clipboard,
-                const gchar  *text,
-                gpointer      user_data)
-{
-  GtkWidget *entry;
+      (let ((item (gtk-menu-item-new-with-mnemonic "_Clear")))
+        (gtk-menu-shell-append menu item)
+        (g-signal-connect item "activate"
+                          (lambda (widget)
+                            (format t "CLEAR activated~%")
+                            (gtk-image-set-from-icon-name image "broken-image" :dialog)))
+        (when (= 1 num)
+          (setf (gtk-widget-sensitive item) nil)))
 
-  entry = GTK_WIDGET (user_data);
-
-  /* Set the entry text */
-  if(text)
-    gtk_entry_set_text (GTK_ENTRY (entry), text);
-}
-|#
-
-
-#|
-void
-paste_button_clicked (GtkWidget *button,
-                     gpointer   user_data)
-{
-  GtkWidget *entry;
-  GtkClipboard *clipboard;
-
-  entry = GTK_WIDGET (user_data);
-
-  /* Get the clipboard object */
-  clipboard = gtk_widget_get_clipboard (entry,
-                                        GDK_SELECTION_CLIPBOARD);
-
-  /* Request the contents of the clipboard, contents_received will be
-     called when we do get the contents.
-   */
-  gtk_clipboard_request_text (clipboard,
-                              paste_received, entry);
-}
-
-static GdkPixbuf *
-get_image_pixbuf (GtkImage *image)
-{
-  const gchar *icon_name;
-  GtkIconSize size;
-  GtkIconTheme *icon_theme;
-  int width;
-
-  switch (gtk_image_get_storage_type (image))
-    {
-    case GTK_IMAGE_PIXBUF:
-      return g_object_ref (gtk_image_get_pixbuf (image));
-    case GTK_IMAGE_ICON_NAME:
-      gtk_image_get_icon_name (image, &icon_name, &size);
-      icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (image)));
-      gtk_icon_size_lookup (size, &width, NULL);
-      return gtk_icon_theme_load_icon (icon_theme,
-                                       icon_name,
-                                       width,
-                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                       NULL);
-    default:
-      g_warning ("Image storage type %d not handled",
-                 gtk_image_get_storage_type (image));
-      return NULL;
-    }
-}
-
-static void
-drag_begin (GtkWidget      *widget,
-            GdkDragContext *context,
-            gpointer        data)
-{
-  GdkPixbuf *pixbuf;
-
-  pixbuf = get_image_pixbuf (GTK_IMAGE (data));
-  gtk_drag_set_icon_pixbuf (context, pixbuf, -2, -2);
-  g_object_unref (pixbuf);
-}
-
-void
-drag_data_get (GtkWidget        *widget,
-               GdkDragContext   *context,
-               GtkSelectionData *selection_data,
-               guint             info,
-               guint             time,
-               gpointer          data)
-{
-  GdkPixbuf *pixbuf;
-
-  pixbuf = get_image_pixbuf (GTK_IMAGE (data));
-  gtk_selection_data_set_pixbuf (selection_data, pixbuf);
-  g_object_unref (pixbuf);
-}
-
-static void
-drag_data_received (GtkWidget        *widget,
-                    GdkDragContext   *context,
-                    gint              x,
-                    gint              y,
-                    GtkSelectionData *selection_data,
-                    guint             info,
-                    guint32           time,
-                    gpointer          data)
-{
-  GdkPixbuf *pixbuf;
-
-  if (gtk_selection_data_get_length (selection_data) > 0)
-    {
-      pixbuf = gtk_selection_data_get_pixbuf (selection_data);
-      gtk_image_set_from_pixbuf (GTK_IMAGE (data), pixbuf);
-      g_object_unref (pixbuf);
-    }
-}
-
-static void
-copy_image (GtkMenuItem *item,
-            gpointer     data)
-{
-  GtkClipboard *clipboard;
-  GdkPixbuf *pixbuf;
-
-  clipboard = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
-  pixbuf = get_image_pixbuf (GTK_IMAGE (data));
-
-  gtk_clipboard_set_image (clipboard, pixbuf);
-  g_object_unref (pixbuf);
-}
-
-static void
-paste_image (GtkMenuItem *item,
-             gpointer     data)
-{
-  GtkClipboard *clipboard;
-  GdkPixbuf *pixbuf;
-
-  clipboard = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
-  pixbuf = gtk_clipboard_wait_for_image (clipboard);
-
-  if (pixbuf)
-    {
-      gtk_image_set_from_pixbuf (GTK_IMAGE (data), pixbuf);
-      g_object_unref (pixbuf);
-    }
-}
-
-static gboolean
-button_press (GtkWidget      *widget,
-              GdkEventButton *button,
-              gpointer        data)
-{
-  GtkWidget *menu;
-  GtkWidget *item;
-
-  if (button->button != GDK_BUTTON_SECONDARY)
-    return FALSE;
-
-  menu = gtk_menu_new ();
-
-  item = gtk_menu_item_new_with_mnemonic (_("_Copy"));
-  g_signal_connect (item, "activate", G_CALLBACK (copy_image), data);
-  gtk_widget_show (item);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
-  item = gtk_menu_item_new_with_mnemonic (_("_Paste"));
-  g_signal_connect (item, "activate", G_CALLBACK (paste_image), data);
-  gtk_widget_show (item);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
-  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) button);
-  return TRUE;
-}
-|#
+      (gtk-widget-show-all menu)
+      (gtk-menu-popup-at-pointer menu event)
+    )
+))
 
 (defun example-clipboard ()
   (within-main-loop
@@ -222,8 +77,7 @@ button_press (GtkWidget      *widget,
                                 :spacing 6
                                 :border-width 6
                                 :orientation :horizontal))
-
-         )
+          (selection nil))
 
       ;; Signal handler for the window to handle the signal "destroy".
       (g-signal-connect window "destroy"
@@ -235,23 +89,37 @@ button_press (GtkWidget      *widget,
       (g-signal-connect button1 "clicked"
           (lambda (widget)
             (declare (ignore widget))
-      ))
+            (format t "Copy button clicked.~%")
+            ;; Get the clipboard
+            (let ((clipboard (gtk-widget-clipboard entry1 "CLIPBOARD")))
+              ;; Set clipboard text
+              (gtk-clipboard-set-text clipboard (gtk-entry-text entry1)))))
 
       ;; Paste button clicked
-      (g-signal-connect button1 "clicked"
+      (g-signal-connect button2 "clicked"
           (lambda (widget)
             (declare (ignore widget))
-      ))
-
-
+            (format t "Paste button clicked.~%")
+            ;; Get the clipboard
+            (let ((clipboard (gtk-widget-clipboard entry2 "CLIPBOARD")))
+              ;; Request the contents of the clipboard, contents_received will
+              ;; be called when we do get the contents.
+              (gtk-clipboard-request-text clipboard
+                                          ;;gtk-clipboard-text-received-func
+                                          (lambda (clipboard text)
+                                            (declare (ignore clipboard))
+                                            (when text
+                                              (setf (gtk-entry-text entry2)
+                                                    text)))))))
 
       ;; Pack and show the widgets
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
+                                         :use-markup t
+                                         :xalign 0.0
+                                         :margin-top 6
                                          :label
-                                         (format nil
-                                                 "Copy will copy the text in ~
-                                                 the entry to the clipboard.")))
+                                         "<b>Copy text in Clipboard</b>"))
 
       (gtk-box-pack-start hbox1 entry1)
       (gtk-box-pack-start hbox1 button1)
@@ -259,11 +127,11 @@ button_press (GtkWidget      *widget,
 
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
+                                         :use-markup t
+                                         :xalign 0.0
+                                         :margin-top 6
                                          :label
-                                         (format nil
-                                                 "Paste will paste the ~
-                                                 clipboard to the entry to the ~
-                                                 entry.")))
+                                         "<b>Paste text from Clipboard</b>"))
 
       (gtk-box-pack-start hbox2 entry2)
       (gtk-box-pack-start hbox2 button2)
@@ -271,94 +139,83 @@ button_press (GtkWidget      *widget,
 
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
+                                         :use-markup t
+                                         :xalign 0.0
+                                         :margin-top 12
                                          :label
-                                         (format nil
-                                                 "Images can be transferred ~
-                                                 via the clipboard, too.")))
+                                         "<b>Transfer image via Clipbord</b>"))
+
+      ;; Create the first image
+      (let ((image (gtk-image-new-from-icon-name "dialog-warning" :dialog))
+            (ebox (make-instance 'gtk-event-box)))
+        (gtk-container-add ebox image)
+        (gtk-container-add hbox3 ebox)
+
+        ;; make ebox a drag source
+        (gtk-drag-source-set ebox :button1-mask nil :copy)
+        (gtk-drag-source-add-image-targets ebox)
+
+        (g-signal-connect ebox "drag-begin"
+            (lambda (widget context)
+              (declare (ignore widget))
+              (format t "in DRAG-BEGIN~%")
+              (let ((pixbuf (get-pixbuf-from-image image)))
+                (gtk-drag-set-icon-pixbuf context pixbuf 0 0))
+              nil))
+
+        (g-signal-connect ebox "drag-data-get"
+            (lambda (widget context data info time)
+              (declare (ignore widget context info time))
+              (format t "in DRAG-DATA-GET~%")
+              (let ((pixbuf (get-pixbuf-from-image image)))
+                (when (setf (gtk-selection-data-pixbuf data) pixbuf)
+                  ;; Workaround: Save data in global selection
+                  (setf selection (gtk-selection-data-copy data))))
+              nil))
+
+        ;; Context menu on ebox
+        (g-signal-connect ebox "button-press-event"
+                               (lambda (widget event)
+                                 (declare (ignore widget))
+                                 (button-press-event-handler image event 1))))
+
+      ;; Create the second image
+      (let ((image (gtk-image-new-from-icon-name "broken-image" :dialog))
+            (ebox (make-instance 'gtk-event-box)))
+        (gtk-container-add ebox image)
+        (gtk-container-add hbox3 ebox)
+
+        ;; Accept drops on ebox
+        (gtk-widget-add-events ebox :all-events-mask)
+        (gtk-drag-dest-set ebox '(:motion :highlight) nil :copy)
+        (gtk-drag-dest-add-image-targets ebox)
+
+        (g-signal-connect ebox "drag-drop"
+           (lambda (widget context x y time)
+             (declare (ignore x y))
+             (format t "in DRAG-DROP~%")
+             (gtk-drag-data widget context "image/png" time)
+             ;; Return true for successful drop
+             t))
+
+        (g-signal-connect ebox "drag-data-received"
+            (lambda (widget context x y data info time)
+              (declare (ignore widget context x y data info time))
+              (format t "in DRAG-DATA-RECEIVED~%")
+              ;; Workaround: Copy data from global selection
+              (setf data (gtk-selection-data-copy selection))
+              (let ((pixbuf (gtk-selection-data-pixbuf data)))
+                (when pixbuf
+                  (gtk-image-set-from-pixbuf image pixbuf))
+                (gtk-drag-finish context nil nil time))))
+
+        ;; Context menu on ebox
+        (g-signal-connect ebox "button-press-event"
+                               (lambda (widget event)
+                                 (declare (ignore widget))
+                                 (button-press-event-handler image event 2))))
 
       (gtk-box-pack-start vbox hbox3)
       (gtk-container-add window vbox)
 
-      (gtk-widget-show-all window)
-  )))
-
-#|
-GtkWidget *
-do_clipboard (GtkWidget *do_widget)
-{
-      GtkWidget *vbox, *hbox;
-      GtkWidget *label;
-      GtkWidget *entry, *button;
-      GtkWidget *ebox, *image;
-      GtkClipboard *clipboard;
-
-      gtk_window_set_screen (GTK_WINDOW (window),
-                             gtk_widget_get_screen (do_widget));
-
-
-      /* Create the first image */
-      image = gtk_image_new_from_icon_name ("dialog-warning",
-                                            GTK_ICON_SIZE_BUTTON);
-      ebox = gtk_event_box_new ();
-      gtk_container_add (GTK_CONTAINER (ebox), image);
-      gtk_container_add (GTK_CONTAINER (hbox), ebox);
-
-      /* make ebox a drag source */
-      gtk_drag_source_set (ebox, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
-      gtk_drag_source_add_image_targets (ebox);
-      g_signal_connect (ebox, "drag-begin",
-                        G_CALLBACK (drag_begin), image);
-      g_signal_connect (ebox, "drag-data-get",
-                        G_CALLBACK (drag_data_get), image);
-
-      /* accept drops on ebox */
-      gtk_drag_dest_set (ebox, GTK_DEST_DEFAULT_ALL,
-                         NULL, 0, GDK_ACTION_COPY);
-      gtk_drag_dest_add_image_targets (ebox);
-      g_signal_connect (ebox, "drag-data-received",
-                        G_CALLBACK (drag_data_received), image);
-
-      /* context menu on ebox */
-      g_signal_connect (ebox, "button-press-event",
-                        G_CALLBACK (button_press), image);
-
-      /* Create the second image */
-      image = gtk_image_new_from_icon_name ("process-stop",
-                                            GTK_ICON_SIZE_BUTTON);
-      ebox = gtk_event_box_new ();
-      gtk_container_add (GTK_CONTAINER (ebox), image);
-      gtk_container_add (GTK_CONTAINER (hbox), ebox);
-
-      /* make ebox a drag source */
-      gtk_drag_source_set (ebox, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
-      gtk_drag_source_add_image_targets (ebox);
-      g_signal_connect (ebox, "drag-begin",
-                        G_CALLBACK (drag_begin), image);
-      g_signal_connect (ebox, "drag-data-get",
-                        G_CALLBACK (drag_data_get), image);
-
-      /* accept drops on ebox */
-      gtk_drag_dest_set (ebox, GTK_DEST_DEFAULT_ALL,
-                         NULL, 0, GDK_ACTION_COPY);
-      gtk_drag_dest_add_image_targets (ebox);
-      g_signal_connect (ebox, "drag-data-received",
-                        G_CALLBACK (drag_data_received), image);
-
-      /* context menu on ebox */
-      g_signal_connect (ebox, "button-press-event",
-                        G_CALLBACK (button_press), image);
-
-      /* tell the clipboard manager to make the data persistent */
-      clipboard = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
-      gtk_clipboard_set_can_store (clipboard, NULL, 0);
-    }
-
-  if (!gtk_widget_get_visible (window))
-    gtk_widget_show_all (window);
-  else
-    gtk_widget_destroy (window);
-
-  return window;
-}
-|#
-
+      (gtk-widget-show-all window))))

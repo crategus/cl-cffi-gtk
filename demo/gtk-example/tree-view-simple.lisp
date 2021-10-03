@@ -7,8 +7,8 @@
   (defun create-and-fill-model-simple ()
     (let ((model (gtk-tree-store-new "gchararray" "gchararray" "guint")))
       ;; First Book
-      (let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
-        ;; Set the top-level row
+      (let ((iter (gtk-tree-store-append model nil))) ; Toplevel iterator
+        ;; Set the toplevel row
         (gtk-tree-store-set model
                             iter
                             "The Art of Computer Programming"
@@ -31,14 +31,14 @@
                             ""
                             1998))
       ;; Second Book
-      (let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
+      (let ((iter (gtk-tree-store-append model nil))) ; Toplevel iterator
         (gtk-tree-store-set model
                             iter
                             "Let Over Lambda"
                             "Doug Hoyte"
                             2008))
       ;; Third Book
-      (let ((iter (gtk-tree-store-append model nil))) ; Top-level iterator
+      (let ((iter (gtk-tree-store-append model nil))) ; Toplevel iterator
         (gtk-tree-store-set model
                             iter
                             "On Lisp"

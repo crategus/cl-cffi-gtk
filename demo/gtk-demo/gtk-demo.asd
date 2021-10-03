@@ -12,7 +12,6 @@
                (:file "app-chooser-button")
                (:file "app-chooser-dialog")
                (:file "assistant")
-               (:file "clipboard")
                (:file "color-chooser-widget")
                (:file "color-chooser-palette")
                (:file "cursor")

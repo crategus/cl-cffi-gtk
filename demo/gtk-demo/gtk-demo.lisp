@@ -347,6 +347,18 @@
        "../gtk-example/print-operation.lisp"
        "DO-PRINT-OPERATION"))
 
+     ;; Drag and Drop, Clipboard
+     "Drag and Drop, Clipboard"
+     (("Drag and Drop Simple"
+       "../gtk-example/drag-and-drop-simple.lisp"
+       "EXAMPLE-DRAG-AND-DROP-SIMPLE")
+      ("Drag and Drop with Action"
+       "../gtk-example/drag-and-drop-action.lisp"
+       "EXAMPLE-DRAG-AND-DROP-ACTION")
+      ("Clipboard"
+       "../gtk-example/clipboard.lisp"
+       "EXAMPLE-CLIPBOARD"))
+
      ;; Cairo demos
      "Cairo"
      (("Cairo Stroke"

@@ -1,4 +1,6 @@
-;;;; Drag and Drop - 2021-3-22
+;;;; Drag and Drop - 2021-10-1
+
+;; TODO: Finish this example
 
 (in-package #:gtk-example)
 
@@ -10,20 +12,32 @@
 (defvar target-string 1)
 (defvar target-rootwin 2)
 
-(defvar target-list
-        (list (gtk-target-entry-new :target "INTEGER"
-                                    :flags 0
-                                    :info target-int32)
-              (gtk-target-entry-new :target "STRING"
-                                    :flags 0
-                                    :info target-string)
-              (gtk-target-entry-new :target "text/plain"
-                                    :flags 0
-                                    :info target-string)
-              (gtk-target-entry-new :target "application/x-rootwindow-drop"
-                                    :flags 0
-                                    :info target-rootwin)))
+(defvar targets
+        (list (list "INTEGER" 0 target-int32)
+              (list "STRING" 0 target-string)
+              (list "text/plain" 0 target-string)
+              (list "application/x-rootwindow-drop" 0 target-rootwin)))
 
+(defun print-context (context)
+  (format t "~%")
+  (format t "   actions : ~a~%" (gdk-drag-context-actions context))
+  (format t " suggested : ~a~%" (gdk-drag-context-suggested-action context))
+  (format t "  selected : ~a~%" (gdk-drag-context-selected-action context))
+  (format t "   targets : ~a~%" (gdk-drag-context-list-targets context))
+  (format t "    device : ~a~%" (gdk-drag-context-device context))
+  (format t "    source : ~a~%" (gdk-drag-context-source-window context))
+  (format t "      dest : ~a~%" (gdk-drag-context-dest-window context))
+  (format t "  protocol : ~a~%" (gdk-drag-context-protocol context)))
+
+(defun print-selection (selection)
+  (format t "~%")
+  (format t " selection : ~a~%" (gtk-selection-data-selection selection))
+  (format t "    target : ~a~%" (gtk-selection-data-target selection))
+  (format t " data-type : ~a~%" (gtk-selection-data-data-type selection))
+  (format t "    format : ~a~%" (gtk-selection-data-format selection))
+  (format t "      data : ~a~%" (gtk-selection-data-data selection))
+  (format t "    length : ~a~%" (gtk-selection-data-length selection))
+  (format t "   display : ~a~%" (gtk-selection-data-display selection)))
 
 (defun example-drag-and-drop ()
   (within-main-loop
@@ -50,14 +64,14 @@
 
       ;; Make the "well label" a DnD destination
       (gtk-drag-dest-set well-dest             ; widget that will accept a drop
-                         '(::all) ; default actions for dest Dnd
-                         target-list           ; list of targets to support
+                         '(:motion :highlight) ; default actions for dest Dnd
+                         targets               ; list of targets to support
                          '(:copy))             ; what to with dropped data
 
       ;; Make the "coin-button" a DnD source
       (gtk-drag-source-set coin-source         ; widget will be dragable
                            '(:button1-mask)    ; modifier that will start drag
-                           target-list         ; lists of targets to support
+                           targets             ; lists of targets to support
                            '(:copy))           ; what to do with dropped data
 
       ;; Connect all possible destination signals
@@ -79,19 +93,16 @@
               (format t "     x, y : ~a, ~a~%" x y)
               (format t "     time : ~a~%" time)
 
-              (format t "   actions : ~a~%" (gdk-drag-context-actions context))
-              (format t " suggested : ~a~%" (gdk-drag-context-suggested-action context))
-              (format t "  selected : ~a~%" (gdk-drag-context-selected-action context))
-              (format t "   targets : ~a~%" (gdk-drag-context-list-targets context))
-              (format t "    device : ~a~%" (gdk-drag-context-device context))
-              (format t "    source : ~a~%" (gdk-drag-context-source-window context))
-              (format t "      dest : ~a~%" (gdk-drag-context-dest-window context))
-              (format t "  protocol : ~a~%" (gdk-drag-context-protocol context))
+              (print-context context)
 
               (gtk-drag-data widget context "STRING" time)
 
               t)))
 
+      ;; Emitted when the data has been received from the source. It should
+      ;; check the GtkSelectionData sent by the source, and do something with
+      ;; it. Finally it needs to finish the operation by calling
+      ;; gtk_drag_finish, which will emit the "data-delete" signal if told to.
       (g-signal-connect well-dest "drag-data-received"
           (lambda (widget context x y selection info time)
             (format t "~%DRAG-DATA-RECEIVED~%")
@@ -101,8 +112,13 @@
             (format t "selection : ~a~%" selection)
             (format t "     info : ~a~%" info)
             (format t "     time : ~a~%" time)
+
+            (print-context context)
+            (print-selection selection)
+
       ))
 
+      ;; Emitted when a drag leaves the destination
       (g-signal-connect well-dest "drag-leave"
           (lambda (widget context time)
             (format t "~%DRAG-LEAVE~%")
@@ -110,16 +126,10 @@
             (format t "   context : ~a~%" context)
             (format t "      time : ~a~%" time)
 
-            (format t "   actions : ~a~%" (gdk-drag-context-actions context))
-            (format t " suggested : ~a~%" (gdk-drag-context-suggested-action context))
-            (format t "  selected : ~a~%" (gdk-drag-context-selected-action context))
-            (format t "   targets : ~a~%" (gdk-drag-context-list-targets context))
-            (format t "    device : ~a~%" (gdk-drag-context-device context))
-            (format t "    source : ~a~%" (gdk-drag-context-source-window context))
-            (format t "      dest : ~a~%" (gdk-drag-context-dest-window context))
-            (format t "  protocol : ~a~%" (gdk-drag-context-protocol context))
+            (print-context context)
       ))
 
+      ;; Emitted when a drag is over the destination
       (g-signal-connect well-dest "drag-motion"
           (lambda (widget context x y time)
              (declare (ignore widget context x y time))
@@ -128,6 +138,9 @@
 ;            (format t "   context : ~a~%" context)
 ;            (format t "      x, y : ~a~%" x y)
 ;            (format t "      time : ~a~%" time)
+
+            ;; Fancy stuff here. This signal spams the console something
+            ;; horrible.
       ))
 
       ;; Connect all possible source signals
@@ -135,29 +148,23 @@
       ;; Emitted when DnD begins. This is often used to present custom graphics.
       (g-signal-connect coin-source "drag-begin"
           (lambda (widget context)
-            (let ((name (gtk-widget-name widget)))
-              (format t "~%DRAG-BEGIN for ~A~%" name)
-              (format t "    widget : ~a~%" widget)
-              (format t "   context : ~a~%" context)
+            (format t "~%DRAG-BEGIN~%")
+            (format t "    widget : ~a~%" widget)
+            (format t "   context : ~a~%" context)
 
-              (format t "   actions : ~a~%" (gdk-drag-context-actions context))
-              (format t " suggested : ~a~%" (gdk-drag-context-suggested-action context))
-              (format t "  selected : ~a~%" (gdk-drag-context-selected-action context))
-              (format t "   targets : ~a~%" (gdk-drag-context-list-targets context))
-              (format t "    device : ~a~%" (gdk-drag-context-device context))
-              (format t "    source : ~a~%" (gdk-drag-context-source-window context))
-              (format t "      dest : ~a~%" (gdk-drag-context-dest-window context))
-              (format t "  protocol : ~a~%" (gdk-drag-context-protocol context))
-      )))
+            (print-context context)
+
+            nil))
 
       ;; Emitted when DnD ends. This is used to clean up any leftover data.
       (g-signal-connect coin-source "drag-end"
           (lambda (widget context)
-            (let ((name (gtk-widget-name widget)))
-              (format t "~%DRAG-END for ~A~%" name)
-              (format t "   widget : ~a~%" widget)
-              (format t "  context : ~a~%" context)
-      )))
+            (format t "~%DRAG-END~%")
+            (format t "   widget : ~a~%" widget)
+            (format t "  context : ~a~%" context)
+
+            (print-context context)
+      ))
 
       ;; Emitted when the destination requests data from the source via
       ;; gtk_drag_get_data. It should attempt to provide its data in the form
@@ -179,6 +186,9 @@
             (format t "   target : ~a~%" target)
             (format t "     time : ~a~%" time)
 
+            (print-context context)
+            (print-selection selection)
+
             (cond ((= target-int32 target)
                    (format t "found INTEGER target~%")
                    (with-foreign-object (integer-data :int)
@@ -188,28 +198,29 @@
                                              32 ; DWORD
                                              integer-data
                                              (foreign-type-size :int))
-
-                     (setf (gtk-selection-data-format selection) 32)
-                     (setf (gtk-selection-data-data selection) integer-data)
-                     (setf (gtk-selection-data-length selection) (foreign-type-size :int))
-
-                     (format t "selection : ~a~%" selection)
-
                   ))
                   ((= target-string target)
                    (format t "found STRING target~%")
                    (setf (gtk-selection-data-text selection) "text message")
-                   (format t "selection : ~a~%" selection)
+                   (print-selection selection)
                   )
                   (t
                    (format t "found no target~%")))
-            t))
+            nil))
 
+      ;; Emitted after "drag-data-received" is handled, and gtk_drag_finish is
+      ;; called with the "delete" parameter set to TRUE (when DnD is
+      ;; GDK_ACTION_MOVE).
       (g-signal-connect coin-source "drag-data-delete"
           (lambda (widget context)
+
             (format t "~%DRAG-DATA-DELETE~%")
             (format t "   widget : ~a~%" widget)
             (format t "  context : ~a~%" context)
+
+            (print-context context)
+
+            ;; We are not moving or deleting anything here.
       ))
 
       ;; Pack and show the widgets

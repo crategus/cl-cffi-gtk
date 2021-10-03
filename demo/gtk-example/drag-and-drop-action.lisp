@@ -1,13 +1,13 @@
-;;;; Drag and Drop Simple - 2021-9-25
+;;;; Drag and Drop with Action - 2021-9-25
 
 (in-package #:gtk-example)
 
-(defun example-drag-and-drop-simple ()
+(defun example-drag-and-drop-action ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :border-width 12
-                                 :title "Drag and Drop Simple"))
+                                 :title "Drag and Drop with Action"))
           (grid (make-instance 'gtk-grid
                                :orientation :horizontal
                                :border-width 8))
@@ -23,17 +23,18 @@
             (image (gtk-image-new-from-icon-name "dialog-question" :dialog)))
 
         ;; Make source a drag source
-        (gtk-drag-source-set source '(:button1-mask) nil '(:copy))
+        (gtk-drag-source-set source '(:button1-mask) nil '(:ask))
         (gtk-drag-source-add-image-targets source)
 
         (g-signal-connect source "drag-begin"
-           (lambda (widget context)
-             (declare (ignore widget))
-             (format t "~%DRAG-BEGIN ~a~%" context)
-             (let ((pixbuf (get-pixbuf-from-image image)))
-               ;; Set pixbuf of image as the icon for the drag
-               (gtk-drag-set-icon-pixbuf context pixbuf 0 0))
-             nil))
+            (lambda (widget context)
+              (declare (ignore widget))
+              (format t "DRAG-BEGIN ~a~%" context)
+              (let ((pixbuf (get-pixbuf-from-image image)))
+                ;; Set pixbuf of image as the icon for the drag
+                (gtk-drag-set-icon-pixbuf context pixbuf 0 0))
+              ;; Return value not documented
+              nil))
 
         (g-signal-connect source "drag-data-get"
             (lambda (widget context data info time)
@@ -60,8 +61,7 @@
 
         ;; Accept drops on dest
         (gtk-widget-add-events dest '(:all-events-mask))
-        ;; FIXME: The :ALL value of gtk-dest-defaults does not work
-        (gtk-drag-dest-set dest '(:motion :highlight) nil '(:copy))
+        (gtk-drag-dest-set dest '(:motion :highlight) nil '(:ask :copy))
         (gtk-drag-dest-add-image-targets dest)
 
         (g-signal-connect dest "drag-drop"
@@ -73,20 +73,45 @@
              t))
 
         (g-signal-connect dest "drag-data-received"
-            (lambda (widget context x y data info time)
-              (declare (ignore x y info))
-              (format t "~&DRAG-DATA-RECEIVED ~a~%" context)
-              ;; FIXME: Copy the selection data from the global SELECTION. This
-              ;; is a workaround. The passed in DATA does not contain the pixbuf
-              (setf data (gtk-selection-data-copy selection))
-              (let* ((pixbuf (gtk-selection-data-pixbuf data))
-                     (image (gtk-image-new-from-pixbuf pixbuf)))
-                (setf (gtk-button-image widget) image)
-                (gtk-drag-finish context nil nil time))
-              nil))
+          (lambda (widget context x y data info time)
+            (declare (ignore x y info))
+            (format t "~&DRAG-DATA-RECEIVED ~a~%" context)
+            (setf data (gtk-selection-data-copy selection))
+            (let* ((pixbuf (gtk-selection-data-pixbuf data))
+                   (image (gtk-image-new-from-pixbuf pixbuf))
+                   (action (gdk-drag-context-selected-action context)))
+              (format t "     ~a~%" data)
+              (format t "   data : ~a~%" (gtk-selection-data-data selection))
+              (format t " pixbuf : ~a~%" pixbuf)
+              (format t " action : ~a~%" action)
+              (cond ((and pixbuf (member :ask action))
+                     (let* ((dialog (make-instance 'gtk-message-dialog
+                                                   :message-type :info
+                                                   :buttons :ok-cancel
+                                                   :text "Confirm Drag and Drop"))
+                            (response (gtk-dialog-run dialog)))
+                      (gtk-widget-destroy dialog)
+                      (format t "  response : ~a~%" response)
+
+                      (if (eq :ok response)
+                          (progn
+                            (format t "  Drag is sucessfull.~%")
+                            (setf (gtk-button-image widget) image)
+                            (gtk-drag-finish context t nil time))
+                          (progn
+                            (format t "  Drag is canceled.~%")
+                            (gtk-drag-finish context nil nil time)))
+                    ))
+                    (t
+                     (gtk-drag-finish context nil nil time)))
+
+            )
+            ;; Return value not documented
+            nil))
 
         ;; Pack widgets in the grid
         (gtk-container-add grid dest))
+
       ;; Pack and show the widgets
       (gtk-container-add window grid)
       (gtk-widget-show-all window))))

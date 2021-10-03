@@ -27,15 +27,9 @@
   (defun create-view-and-model-drag-and-drop ()
     (let* ((model (create-and-fill-model-simple))
            (view (gtk-tree-view-new-with-model model))
-           (targets (list (gtk-target-entry-new :target "STRING"
-                                                :flags 0
-                                                :info target-string)
-                          (gtk-target-entry-new :target "text/plain"
-                                                :flags 0
-                                                :info target-string)
-                          (gtk-target-entry-new :target "text/uri-list"
-                                                :flags 0
-                                                :info target-url))))
+           (targets (list (list "STRING" 0 target-string)
+                          (list "text/plain" 0 target-string)
+                          (list "text/uri-list" 0 target-url))))
 
       ;; Create renderer for first column
       (let* ((renderer (gtk-cell-renderer-text-new))
@@ -52,10 +46,11 @@
             (declare (ignore context x y info time))
             (format t "Drag data received in the tree view.~%")
             (format t "GtkSelectionData: ~a~%" data)
+            (format t "~a~%" (gtk-selection-data-data-type data))
             (format t "~a~%"
                     (foreign-string-to-lisp (gtk-selection-data-data data)))
 
-            (when (string= "STRING" (gtk-selection-data-type data))
+            (when (string= "STRING" (gtk-selection-data-data-type data))
 
               (let ((model (gtk-tree-view-model widget))
                     (url (foreign-string-to-lisp (gtk-selection-data-data data))))

@@ -7,7 +7,7 @@
   (format t "Event 'selection-received' event: ~A~%" selection-data)
   (cond ((< (gtk-selection-data-length selection-data) 0)
          (format t "Selection retrieval failed.~%"))
-        ((not (string= "ATOM" (gtk-selection-data-type selection-data)))
+        ((not (string= "ATOM" (gtk-selection-data-data-type selection-data)))
          (format t "Selection 'Targets' was not returned as atoms.~%"))
         (t
           (format t "All is fine: ~A~%" (gtk-selection-data-data selection-data))

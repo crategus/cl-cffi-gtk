@@ -1,3 +1,5 @@
+;;;; Example Pointer Device - 2021-9-25
+
 (in-package :gtk-example)
 
 (defun create-event-box-for-pointer-device ()
@@ -35,7 +37,9 @@
 
               (format t "Position     : ~d, ~d~%" x y)
               (format t "History      : ~a~%~%"
-                        (gdk-device-history device (gtk-widget-window event-box) 0 100))
+                        (gdk-device-history device
+                                            (gtk-widget-window event-box)
+                                            0 100))
           ))
                 +gdk-event-stop+))
     ;; Add the image to the event box
@@ -55,5 +59,3 @@
       (gtk-container-add window (create-event-box-for-pointer-device))
       ;; Show the window.
       (gtk-widget-show-all window))))
-
-;; 2020-11-5
