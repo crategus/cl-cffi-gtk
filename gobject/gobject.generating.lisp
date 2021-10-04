@@ -135,10 +135,8 @@
 (defvar *strip-prefix* "")
 
 (defun accessor-name (class-name property-name)
-  (intern (format nil "~A-~A"
-                      (symbol-name class-name)
-                      (lispify-name property-name))
-          *lisp-name-package*))
+  (format-symbol *lisp-name-package*
+                 "~A-~A" class-name (lispify-name property-name)))
 
 (defun lispify-name (name)
   (with-output-to-string (stream)
@@ -225,10 +223,10 @@
      :g-property-type ,(if (gobject-property-p property)
                            (gobject-property-type property)
                            (cffi-property-type property))
-     :accessor ,(intern (format nil "~A-~A"
-                                (symbol-name class-name)
-                                (property-name property))
-                        (symbol-package class-name))
+     :accessor ,(format-symbol (symbol-package class-name)
+                               "~A-~A"
+                               class-name
+                               (property-name property))
      ,@(when (if (gobject-property-p property)
                  t
                  (not (null (cffi-property-writer property))))
@@ -266,10 +264,10 @@
                          (find-package
                            ,(package-name (symbol-package name))))
                (mapcar (lambda (property)
-                         `(export ',(intern (format nil "~A-~A"
-                                                       (symbol-name name)
-                                                       (property-name property))
-                                              (symbol-package name))
+                         `(export ',(format-symbol (symbol-package name)
+                                                   "~A-~A"
+                                                   name
+                                                   (property-name property))
                                    (find-package
                                      ,(package-name (symbol-package name)))))
                         properties)))))
@@ -293,12 +291,10 @@
          (cons `(export ',name
                         (find-package ,(package-name (symbol-package name))))
                (mapcar (lambda (property)
-                         `(export ',(intern (format nil "~A-~A"
-                                                    (symbol-name name)
-                                                    (property-name property))
-                                            (symbol-package name))
-                                  (find-package
-                                   ,(package-name (symbol-package name)))))
+                         `(export ',(format-symbol (symbol-package name)
+                                                   "~A-~A"
+                                                   name
+                                                   (property-name property))))
                        properties)))
      (eval-when (:compile-toplevel :load-toplevel :execute)
        (setf (gethash ,g-type-name *known-interfaces*) ',name))))

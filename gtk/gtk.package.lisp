@@ -38,6 +38,7 @@
 (defpackage :gtk
   (:use :cl :cl-user :cffi
    :gobject :gdk :gdk-pixbuf :glib :gio :pango :cairo :iter :bordeaux-threads)
+  (:import-from :alexandria :format-symbol)
   (:export #:cl-cffi-gtk-build-info))
 
 (in-package :gtk)
