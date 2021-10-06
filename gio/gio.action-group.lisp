@@ -145,7 +145,7 @@
       @begin{pre}
  lambda (group name)    :detailed
       @end{pre}
-      Signals that a new action was just added to the group. This signal is
+      Signals that a new action was just added to the group. The signal is
       emitted after the action has been added and is now visible.
       @begin[code]{table}
         @entry[group]{The @sym{g-action-group} object that changed.}

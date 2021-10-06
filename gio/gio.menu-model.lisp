@@ -205,7 +205,7 @@
       @end{pre}
       Emitted when a change has occured to the menu. The only changes that can
       occur to a menu is that items are removed or added. Items may not change,
-      except by being removed and added back in the same location. This signal
+      except by being removed and added back in the same location. The signal
       is capable of describing both of those changes at the same time.
 
       The signal means that starting at the index position, removed items were
