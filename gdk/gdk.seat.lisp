@@ -168,9 +168,9 @@
       @end{table}
     @subheading{The \"tool-removed\" signal}
       @begin{pre}
- lambda (seat tool)    : Run Last
+ lambda (seat tool)    :run-last
       @end{pre}
-      This signal is emitted whenever a tool is no longer known to this seat.
+      The signal is emitted whenever a tool is no longer known to this seat.
       Since 3.22
       @begin[code]{table}
         @entry[seat]{The @sym{gdk-seat} object on which the signal is emitted.}
@@ -292,8 +292,8 @@
   thus use @code{:all-pointing} most commonly.
 
   Grabs are used for operations which need complete control over the events
-  corresponding to the given capabilities. For example in GTK+ this is used
-  for Drag and Drop operations, popup menus and such.
+  corresponding to the given capabilities. For example in GTK this is used
+  for drag and drop operations, popup menus and such.
 
   Note that if the event mask of a @class{gdk-window} object has selected both
   button press and button release events, or touch begin and touch end, then a

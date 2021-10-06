@@ -118,9 +118,9 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"display-opened\" signal}
       @begin{pre}
- lambda (manager display)    : Run Last
+ lambda (manager display)    :run-last
       @end{pre}
-      This signal is emitted when a display is opened.
+      The signal is emitted when a display is opened.
       @begin[code]{table}
         @entry[manager]{The @sym{gdk-display-manager} object on which the
           signal is emitted.}

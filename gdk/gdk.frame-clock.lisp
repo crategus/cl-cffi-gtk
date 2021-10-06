@@ -170,72 +170,72 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"after-paint\" signal}
       @begin{pre}
- lambda (clock)    : Run Last
+ lambda (clock)    :run-last
       @end{pre}
-      This signal ends processing of the frame. Applications should generally
+      The signal ends processing of the frame. Applications should generally
       not handle this signal.
       @begin[code]{table}
         @entry[clock]{The @sym{gdk-frame-clock} object emitting the signal.}
       @end{table}
     @subheading{The \"before-paint\" signal}
       @begin{pre}
- lambda (clock)    : Run Last
+ lambda (clock)    :run-last
       @end{pre}
-      This signal begins processing of the frame. Applications should generally
+      The signal begins processing of the frame. Applications should generally
       not handle this signal.
       @begin[code]{table}
         @entry[clock]{The @sym{gdk-frame-clock} object emitting the signal.}
       @end{table}
     @subheading{The \"flush-events\" signal}
       @begin{pre}
- lambda (clock)    : Run Last
+ lambda (clock)    :run-last
       @end{pre}
-      This signal is used to flush pending motion events that are being batched
+      The signal is used to flush pending motion events that are being batched
       up and compressed together. Applications should not handle this signal.
       @begin[code]{table}
         @entry[clock]{The @sym{gdk-frame-clock} object emitting the signal.}
       @end{table}
     @subheading{The \"layout\" signal}
       @begin{pre}
- lambda (clock)    : Run Last
+ lambda (clock)    :run-last
       @end{pre}
-      This signal is emitted as the second step of toolkit and application
+      The signal is emitted as the second step of toolkit and application
       processing of the frame. Any work to update sizes and positions of
-      application elements should be performed. GTK+ normally handles this
+      application elements should be performed. GTK normally handles this
       internally.
       @begin[code]{table}
         @entry[clock]{The @sym{gdk-frame-clock} object emitting the signal.}
       @end{table}
     @subheading{The \"paint\" signal}
       @begin{pre}
- lambda (clock)    : Run Last
+ lambda (clock)    :run-last
       @end{pre}
-      This signal is emitted as the third step of toolkit and application
+      The signal is emitted as the third step of toolkit and application
       processing of the frame. The frame is repainted. GDK normally handles
-      this internally and produces expose events, which are turned into GTK+
+      this internally and produces expose events, which are turned into GTK
       \"draw\" signals.
       @begin[code]{table}
         @entry[clock]{The @sym{gdk-frame-clock} object emitting the signal.}
       @end{table}
     @subheading{The \"resume-events\" signal}
       @begin{pre}
- lambda (clock)    : Run Last
+ lambda (clock)    :run-last
       @end{pre}
-      This signal is emitted after processing of the frame is finished, and is
-      handled internally by GTK+ to resume normal event processing. Applications
+      The signal is emitted after processing of the frame is finished, and is
+      handled internally by GTK to resume normal event processing. Applications
       should not handle this signal.
       @begin[code]{table}
         @entry[clock]{The @sym{gdk-frame-clock} object emitting the signal.}
       @end{table}
     @subheading{The \"update\" signal}
       @begin{pre}
- lambda (clock)    : Run Last
+ lambda (clock)    :run-last
       @end{pre}
-      This signal is emitted as the first step of toolkit and application
-      processing of the frame. Animations should be updated using the function
-      @fun{gdk-frame-clock-frame-time}. Applications can connect directly to
-      this signal, or use the function @fun{gtk-widget-add-tick-callback} as a
-      more convenient interface.
+      The signal is emitted as the first step of toolkit and application
+      processing of the frame. Animations should be updated using the
+      @fun{gdk-frame-clock-frame-time} function. Applications can connect
+      directly to this signal, or use the @fun{gtk-widget-add-tick-callback}
+      function as a more convenient interface.
       @begin[code]{table}
         @entry[clock]{The @sym{gdk-frame-clock} object emitting the signal.}
       @end{table}
@@ -282,7 +282,7 @@
   frame processed. If you are displaying animated content and want to
   continually request the @code{:update} phase for a period of time, you should
   use the function @fun{gdk-frame-clock-begin-updating} instead, since this
-  allows GTK+ to adjust system parameters to get maximally smooth animations.
+  allows GTK to adjust system parameters to get maximally smooth animations.
   @see-class{gdk-frame-clock}
   @see-symbol{gdk-frame-clock-phase}
   @see-function{gdk-frame-clock-begin-updating}"
@@ -403,7 +403,7 @@
     Retrieves a @fun{gdk-frame-timings} structure holding timing information for
     the current frame or a recent frame.
   @end{short}
-  The @class{gkd-frame-timings} object may not yet be complete. See the function
+  The @class{gdk-frame-timings} object may not yet be complete. See the function
   @fun{gdk-frame-timings-complete}.
   @see-class{gdk-frame-clock}
   @see-class{gdk-frame-timings}

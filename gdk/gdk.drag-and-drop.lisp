@@ -102,8 +102,8 @@
       (gethash 'gdk-drag-cancel-reason atdoc:*external-symbols*)
  "@version{2021-10-3}
   @begin{short}
-    Used in the @class{gdk-drag-context} object to the reason of a cancelled
-    DND operation.
+    Used in the @class{gdk-drag-context} object to indicate the reason of a
+    cancelled DND operation.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkDragCancelReason\" gdk-drag-cancel-reason
@@ -231,7 +231,8 @@
 (setf (documentation 'gdk-drag-context 'type)
  "@version{2021-10-3}
   @begin{short}
-    These functions provide a low level interface for drag and drop.
+    The @class{gdk-drag-context} class and the correspondig functions provide a
+    low level interface for drag and drop.
   @end{short}
   The X backend of GDK supports both the Xdnd and Motif drag and drop protocols
   transparently, the Win32 backend supports the WM_DROPFILES protocol.
@@ -244,7 +245,7 @@
     @begin{pre}
  lambda (context action)    :run-last
     @end{pre}
-    A new action is being chosen for the drag and drop operation. This signal
+    A new action is being chosen for the drag and drop operation. The signal
     will only be emitted if the @sym{gtk-drag-context} object manages the drag
     and drop operation. See the @fun{gdk-drag-context-manage-dnd} function for
     more information. Since 3.20
@@ -257,7 +258,7 @@
     @begin{pre}
  lambda (context reason)    :run-last
     @end{pre}
-    The drag and drop operation was cancelled. This signal will only be emitted
+    The drag and drop operation was cancelled. The signal will only be emitted
     if the @sym{gdk-drag-context} object manages the drag and drop operation.
     See the @fun{gdk-drag-context-manage-dnd} function for more information.
     Since 3.20
@@ -390,9 +391,9 @@
   @begin{short}
     Inform GDK if the drop ended successfully.
   @end{short}
-  Passing @em{false} for success may trigger a drag cancellation animation.
-  This function is called by the drag source, and should be the last call
-  before dropping the reference to the drag context. The
+  Passing @em{false} for @@arg{success 0 may trigger a drag cancellation
+  animation. This function is called by the drag source, and should be the last
+  call before dropping the reference to the drag context. The
   @class{gdk-drag-context} object will only take the first
   @sym{gdk-drag-drop-done} function call as effective, if this function is
   called multiple times, all subsequent calls will be ignored.
@@ -691,7 +692,7 @@
   @argument[window]{a @class{gdk-window} destination window}
   @argument[target]{a @class{gdk-window} object where the drop should happen,
     this may be @arg{window} or a proxy window, or @code{nil} if @arg{window}
-    does not support Drag and Drop}
+    does not support drag and drop}
   @return{The supported @symbol{gdk-drag-protocol} DND protocol.}
   @begin{short}
     Finds out the DND protocol supported by a window.
@@ -804,7 +805,7 @@
   @argument[context]{a @class{gdk-drag-context} object}
   @argument[device]{a @class{gdk-device} object associated to @arg{context}}
   @begin{short}
-    Associates a device to the drag context, so all Drag and Drop events for
+    Associates a device to the drag context, so all drag and drop events for
     the drag context are emitted as if they came from this device.
   @end{short}
   @see-class{gdk-drag-context}

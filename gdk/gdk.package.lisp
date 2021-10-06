@@ -967,7 +967,7 @@
     on top of this. GTK contains such an implementation and programmers should
     use those functions instead of the ones presented here. If you plan to
     implement selection handling directly on top of the functions here, you
-    should refer to the X Inter-client Communication Conventions Manual (ICCCM).
+    should refer to the X Inter-Client Communication Conventions Manual (ICCCM).
 
     The C library has the following constants to refer to selections, targets,
     and selection types. In the Lisp library the corresponding strings are used.
@@ -1004,7 +1004,7 @@
     @about-function{gdk-selection-send-notify}
     @about-function{gdk-selection-send-notify-for-display}
   @end{section}
-  @begin[Drag And Drop]{section}
+  @begin[Drag and Drop]{section}
     Functions for controlling drag and drop handling.
 
     @about-symbol{gdk-drag-cancel-reason}

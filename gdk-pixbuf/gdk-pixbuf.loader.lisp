@@ -121,11 +121,11 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"area-prepared\" signal}
       @begin{pre}
- lambda (loader)    : Run Last
+ lambda (loader)    :run-last
       @end{pre}
-      This signal is emitted when the pixbuf loader has allocated the pixbuf
+      The signal is emitted when the pixbuf loader has allocated the pixbuf
       in the desired size. After this signal is emitted, applications can call
-      the function @fun{gdk-pixbuf-loader-pixbuf} to fetch the partially-loaded
+      the @fun{gdk-pixbuf-loader-pixbuf} function to fetch the partially-loaded
       pixbuf.
       @begin[code]{table}
         @entry[loader]{The @sym{gdk-pixbuf-loader} object which received
@@ -133,9 +133,9 @@
       @end{table}
     @subheading{The \"area-updated\" signal}
       @begin{pre}
-  lambda (loader x y width height)    : Run Last
+  lambda (loader x y width height)    :run-last
       @end{pre}
-      This signal is emitted when a significant area of the image being loaded
+      The signal is emitted when a significant area of the image being loaded
       has been updated. Normally it means that a complete scanline has been read
       in, but it could be a different area as well. Applications can use this
       signal to know when to repaint areas of an image that is being loaded.
@@ -151,9 +151,9 @@
       @end{table}
     @subheading{The \"closed\" signal}
       @begin{pre}
-   lambda (loader)    : Run Last
+   lambda (loader)    :run-last
       @end{pre}
-      This signal is emitted when the function @fun{gdk-pixbuf-loader-close} is
+      The signal is emitted when the @fun{gdk-pixbuf-loader-close} function is
       called. It can be used by different parts of an application to receive
       notification when an image loader is closed by the code that drives it.
       @begin[code]{table}
@@ -162,13 +162,13 @@
       @end{table}
     @subheading{The \"size-prepared\" signal}
       @begin{pre}
- lambda (loader width height)    : Run Last
+ lambda (loader width height)    :run-last
       @end{pre}
-      This signal is emitted when the pixbuf loader has been fed the initial
+      The signal is emitted when the pixbuf loader has been fed the initial
       amount of data that is required to figure out the size of the image that
-      it will create. Applications can call the function
-      @fun{gdk-pixbuf-loader-set-size} in response to this signal to set the
-      desired size to which the image should be scaled.
+      it will create. Applications can call the @fun{gdk-pixbuf-loader-set-size}
+      function in response to this signal to set the desired size to which the
+      image should be scaled.
       @begin[code]{table}
         @entry[loader]{The @sym{gdk-pixbuf-loader} object which received the
           signal.}

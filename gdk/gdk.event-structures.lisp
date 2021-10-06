@@ -3743,7 +3743,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     structure.
   @end{short}
   @see-class{gdk-event-selection}
-  @see-symbol{gkd-window}")
+  @see-symbol{gdk-window}")
 
 (export 'gdk-event-selection-requestor)
 
@@ -4033,7 +4033,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @class{gdk-event-window-state} structure.
   @end{short}
   @see-class{gdk-event-window-state}
-  @see-symbol{gkd-window-state}")
+  @see-symbol{gdk-window-state}")
 
 (export 'gdk-event-window-state-changed-mask)
 
@@ -4208,7 +4208,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     structure.
   @end{short}
   @see-class{gdk-event-owner-change}
-  @see-class{gkd-window}")
+  @see-class{gdk-window}")
 
 (export 'gdk-event-owner-change-owner)
 

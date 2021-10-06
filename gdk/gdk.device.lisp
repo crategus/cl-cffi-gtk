@@ -240,7 +240,7 @@
  "@version{2020-11-8}
   @begin{short}
     An enumeration describing the way in which a device axis (valuator) maps
-    onto the predefined valuator types that GTK+ understands.
+    onto the predefined valuator types that GTK understands.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkAxisUse\" gdk-axis-use
@@ -1374,8 +1374,8 @@ get_device_settings (GdkDevice *device)
   This overrides any previous grab on the device by this client.
 
   Device grabs are used for operations which need complete control over the
-  given device events, either pointer or keyboard. For example in GTK+ this
-  is used for Drag and Drop operations, popup menus and such.
+  given device events, either pointer or keyboard. For example in GTK this
+  is used for drag and drop operations, popup menus and such.
 
   Note that if the event mask of an X window has selected both button press
   and button release events, then a button press event will cause an automatic

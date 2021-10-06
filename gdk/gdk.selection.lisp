@@ -313,7 +313,7 @@
   @argument[send]{if @em{true}, and the new owner is different from the current
     owner, the current owner will be sent a @code{:selection-clear} event}
   @return{@em{True} if the selection owner was successfully changed to
-    @arg{owner}, otherwise @code{nil}.}
+    @arg{owner}, otherwise @em{false}.}
   @begin{short}
     Sets the owner of the given selection.
   @end{short}

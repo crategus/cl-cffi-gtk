@@ -95,8 +95,8 @@
 ;;; Any arguments used by GDK are removed from the array and argc and argv are
 ;;; updated accordingly.
 ;;;
-;;; GTK+ initializes GDK in gtk_init() and so this function is not usually
-;;; needed by GTK+ applications.
+;;; GTK initializes GDK in gtk_init() and so this function is not usually
+;;; needed by GTK applications.
 ;;;
 ;;; argc :
 ;;;     the number of command line arguments
@@ -116,8 +116,8 @@
 ;;; Any arguments used by GDK are removed from the array and argc and argv are
 ;;; updated accordingly.
 ;;;
-;;; GTK+ initializes GDK in gtk_init() and so this function is not usually
-;;; needed by GTK+ applications.
+;;; GTK initializes GDK in gtk_init() and so this function is not usually
+;;; needed by GTK applications.
 ;;;
 ;;; argc :
 ;;;     the number of command line arguments
@@ -182,7 +182,7 @@
   If the application open windows, this function is normally called after
   opening the application's initial set of windows.
 
-  GTK+ will call this function automatically after opening the first
+  GTK will call this function automatically after opening the first
   @class{gtk-window} object unless the function
   @fun{gtk-window-set-auto-startup-notification} is called to disable that
   feature.
@@ -206,7 +206,7 @@
     using a given startup notification identifier.
   @end{short}
 
-  GTK+ will call this function automatically for @class{gtk-window} object with
+  GTK will call this function automatically for @class{gtk-window} object with
   custom startup notification identifier unless the function
   @fun{gtk-window-set-auto-startup-notification} is called to disable that
   feature.
@@ -478,8 +478,8 @@
   This overrides any previous pointer grab by this client.
 
   Pointer grabs are used for operations which need complete control over mouse
-  events, even if the mouse leaves the application. For example in GTK+ it is
-  used for Drag and Drop, for dragging the handle in the @class{gtk-paned}
+  events, even if the mouse leaves the application. For example in GTK it is
+  used for drag and drop, for dragging the handle in the @class{gtk-paned}
   widgets.
 
   Note that if the event mask of an X window has selected both button press
