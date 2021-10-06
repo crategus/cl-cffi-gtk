@@ -694,7 +694,7 @@
   @see-class{gdk-pixbuf}
   @see-function{gdk-pixbuf-option}"
   (src-pixbuf (g-object gdk-pixbuf))
-  (dest-pixbuf (g-object gkd-pixbuf)))
+  (dest-pixbuf (g-object gdk-pixbuf)))
 
 (export 'gdk-pixbuf-copy-options)
 
