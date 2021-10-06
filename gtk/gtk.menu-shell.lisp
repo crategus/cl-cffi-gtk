@@ -202,7 +202,7 @@
       @begin{pre}
  lambda (menushell)    :run-first
       @end{pre}
-      This signal is emitted when a menu shell is deactivated.
+      The signal is emitted when a menu shell is deactivated.
       @begin[code]{table}
         @entry[menushell]{The @sym{gtk-menu-shell} widget which received the
           signal.}
@@ -252,7 +252,7 @@
       @begin{pre}
  lambda (menushell)    :run-first
       @end{pre}
-      This signal is emitted when a selection has been completed within a menu
+      The signal is emitted when a selection has been completed within a menu
       shell.
       @begin[code]{table}
         @entry[menushell]{The @sym{gtk-menu-shell} widget which received the

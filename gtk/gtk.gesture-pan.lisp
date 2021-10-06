@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.gesture-pan.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -132,16 +132,16 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"pan\" signal}
     @begin{pre}
- lambda (gesture n-press x y)    : Run Last
+ lambda (gesture n-press x y)    :run-last
     @end{pre}
-    This signal is emitted once a panning gesture along the expected axis is
+    The signal is emitted once a panning gesture along the expected axis is
     detected.
     @begin[code]{table}
       @entry[gesture]{The @sym{gtk-gesture-pan} object which received the
         signal.}
-      @entry[direction]{Current direction of the pan gesture of type
-        @symbol{gtk-pan-direction}.}
-      @entry[offset]{A @code{:double} with the offset along the gesture
+      @entry[direction]{Current @symbol{gtk-pan-direction} value of the pan
+        gesture.}
+      @entry[offset]{A double float with the offset along the gesture
         orientation.}
     @end{table}
   @end{dictionary}

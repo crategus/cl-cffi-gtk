@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.editable.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -137,36 +137,36 @@
       @end{table}
     @subheading{The \"delete-text\" signal}
       @begin{pre}
- lambda (editable start-pos end-pos)    : Run Last
+ lambda (editable start end)    :run-last
       @end{pre}
-      This signal is emitted when text is deleted from the widget by the user.
+      The signal is emitted when text is deleted from the widget by the user.
       The default handler for this signal will normally be responsible for
       deleting the text, so by connecting to this signal and then stopping the
-      signal with the function @fun{g-signal-stop-emission}, it is possible to
+      signal with the @fun{g-signal-stop-emission} function, it is possible to
       modify the range of deleted text, or prevent it from being deleted
-      entirely. The @arg{start-pos} and @arg{end-pos} parameters are interpreted
-      as for the function @fun{gtk-editable-delete-text}.
+      entirely. The @arg{start} and @arg{end} parameters are interpreted as for
+      the @fun{gtk-editable-delete-text} function.
       @begin[code]{table}
         @entry[editable]{The @sym{gtk-editable} widget which received the
           signal.}
-        @entry[start-pos]{An integer with the starting position.}
-        @entry[end-pos]{An integer with the end position.}
+        @entry[start]{An integer with the starting position.}
+        @entry[end]{An integer with the end position.}
       @end{table}
     @subheading{The \"insert-text\" signal}
       @begin{pre}
- lambda (editable new-text new-text-length position)    : Run Last
+ lambda (editable text length position)    :run-last
       @end{pre}
-      This signal is emitted when text is inserted into the widget by the user.
+      The signal is emitted when text is inserted into the widget by the user.
       The default handler for this signal will normally be responsible for
       inserting the text, so by connecting to this signal and then stopping the
-      signal with the function @fun{g-signal-stop-emission}, it is possible to
+      signal with the @fun{g-signal-stop-emission} function, it is possible to
       modify the inserted text, or prevent it from being inserted entirely.
       @begin[code]{table}
         @entry[editable]{The @sym{gtk-editable} widget which received the
           signal.}
-        @entry[new-text]{A string with the new text to insert.}
-        @entry[new-text-length]{An integer with the length of the new text, in
-          bytes, or -1 if @arg{new-text} is nul-terminated.}
+        @entry[text]{A string with the new text to insert.}
+        @entry[length]{An integer with the length of the new text, in bytes, or
+          -1 if @arg{text} is nul-terminated.}
         @entry[position]{A pointer to the position, in characters, at which to
           insert the new text. This is an in-out parameter. After the signal
           emission is finished, it should point after the newly inserted text.}

@@ -460,7 +460,7 @@
       @begin{pre}
  lambda (view)    :action
       @end{pre}
-      This signal is a keybinding signal which gets emitted when the user asks
+      The signal is a keybinding signal which gets emitted when the user asks
       for it. The default bindings for this signal are the @kbd{Backspace} and
       @kbd{Shift-Backspace} keys.
       @begin[code]{table}
@@ -470,9 +470,9 @@
       @begin{pre}
  lambda (view)    :action
       @end{pre}
-      This  signal is a keybinding signal which gets emitted to copy the
-      selection to the clipboard. The default bindings for this signal are
-      the @kbd{Ctrl-c} and @kbd{Ctrl-Insert} keys.
+      The signal is a keybinding signal which gets emitted to copy the
+      selection to the clipboard. The default bindings for this signal are the
+      @kbd{Ctrl-c} and @kbd{Ctrl-Insert} keys.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}
@@ -480,7 +480,7 @@
       @begin{pre}
  lambda (view)    :action
       @end{pre}
-      This signal is a keybinding signal which gets emitted to cut the selection
+      The signal is a keybinding signal which gets emitted to cut the selection
       to the clipboard. The default bindings for this signal are the
       @kbd{Ctrl-x} and @kbd{Shift-Delete} keys.
       @begin[code]{table}
@@ -506,7 +506,7 @@
       @begin{pre}
  lambda (view granularity location start end)    : Run Last
       @end{pre}
-      This signal is emitted when the selection needs to be extended at
+      The signal is emitted when the selection needs to be extended at
       @arg{location}.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
@@ -526,8 +526,8 @@
       @begin{pre}
  lambda (view string)
       @end{pre}
-      This signal is a keybinding signal which gets emitted when the user
-      initiates the insertion of a fixed string at the cursor. This signal has
+      The signal is a keybinding signal which gets emitted when the user
+      initiates the insertion of a fixed string at the cursor. The signal has
       no default bindings.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
@@ -569,9 +569,9 @@
       @end{table}
     @subheading{The \"move-viewport\" signal}
       @begin{pre}
- lambda (view step count)    : Action
+ lambda (view step count)    :action
       @end{pre}
-      This signal is a keybinding signal which can be bound to key combinations
+      The signal is a keybinding signal which can be bound to key combinations
       to allow the user to move the viewport, i.e. change what part of the text
       view is visible in a containing scrolled window. There are no default
       bindings for this signal.
@@ -593,9 +593,9 @@
       @end{table}
     @subheading{The \"populate-popup\" signal}
       @begin{pre}
- lambda (view popup)    : Run Last
+ lambda (view popup)    :run-last
       @end{pre}
-      This signal gets emitted before showing the context menu of the text view.
+      The signal gets emitted before showing the context menu of the text view.
       If you need to add items to the context menu, connect to this signal and
       append your items to the popup, which will be a @class{gtk-menu} widget
       in this case. If the @code{populate-all} property is @em{true}, this
@@ -611,11 +611,11 @@
       @end{table}
     @subheading{The \"preedit-changed\" signal}
       @begin{pre}
- lambda (view preedit)    : Action
+ lambda (view preedit)    :action
       @end{pre}
       If an input method is used, the typed text will not immediately be
       committed to the buffer. So if you are interested in the text, connect to
-      this signal. This signal is only emitted if the text at the given position
+      this signal. The signal is only emitted if the text at the given position
       is actually editable.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} object which received the signal.}
@@ -635,11 +635,11 @@
       @end{table}
     @subheading{The \"set-anchor\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
-      This signal is a keybinding signal which gets emitted when the user
+      The signal is a keybinding signal which gets emitted when the user
       initiates setting the \"anchor\" mark. The \"anchor\" mark gets placed at
-      the same position as the \"insert\" mark. This signal has no default
+      the same position as the \"insert\" mark. The signal has no default
       bindings.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
@@ -655,11 +655,11 @@
       @end{table}
     @subheading{The \"toggle-overwrite\" signal}
       @begin{pre}
- lambda (view)    : Action
+ lambda (view)    :action
       @end{pre}
-      This signal is a keybinding signal which gets emitted to toggle the
+      The signal is a keybinding signal which gets emitted to toggle the
       overwrite mode of the text view. The default bindings for this signal is
-      Insert.
+      the @kbd{Insert} key.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
       @end{table}

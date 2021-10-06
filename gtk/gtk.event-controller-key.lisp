@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.event-controller-key.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,7 +75,7 @@
     where you need access to key events.
   @end{short}
 
-  This object was added in GTK+ 3.24.
+  This object was added in GTK 3.24.
   @begin[Signal Details]{dictionary}
     @subheading{The \"focus-in\" signal}
       @begin{pre}
@@ -106,31 +106,33 @@
       @end{table}
     @subheading{The \"key-pressed\" signal}
       @begin{pre}
-  lambda (controller keyval keycode state)    : Run Last
+  lambda (controller keyval keycode state)    :run-last
       @end{pre}
-      This signal is emitted whenever a key is pressed. Since 3.24
+      The signal is emitted whenever a key is pressed. Since 3.24
       @begin[code]{table}
         @entry[controller]{The @sym{gtk-event-controller-key} object on
           which received the signal.}
-        @entry[keyval]{The pressed key of type @code{:uint}.}
-        @entry[keycode]{The raw code of the pressed key of type @code{:uint}.}
-        @entry[state]{The bitmask, representing the state of modifier keys and
-          pointer buttons of type @symbol{gdk-modifier-type}.}
+        @entry[keyval]{An unsigned integer with the pressed key.}
+        @entry[keycode]{An unsigned integer with the raw code of the pressed
+          key.}
+        @entry[state]{The @symbol{gdk-modifier-type} bitmask representing the
+          state of modifier keys and pointer buttons.}
         @entry[Returns]{@em{True} if the key press was handled, @em{false}
           otherwise.}
       @end{table}
     @subheading{The \"key-released\" signal}
       @begin{pre}
-  lambda (controller keyval keycode state)    : Run Last
+  lambda (controller keyval keycode state)    :run-last
       @end{pre}
-      This signal is emitted whenever a key is released. Since 3.24
+      The signal is emitted whenever a key is released. Since 3.24
       @begin[code]{table}
         @entry[controller]{The @sym{gtk-event-controller-key} object on
           which received the signal.}
-        @entry[keyval]{The released key of type @code{:uint}.}
-        @entry[keycode]{The raw code of the released key of type @code{:uint}.}
-        @entry[state]{The bitmask, representing the state of modifier keys and
-          pointer buttons of type @symbol{gdk-modifier-type}.}
+        @entry[keyval]{An unsigned integer with the released key.}
+        @entry[keycode]{An unsigned integer with the raw code of the released
+          key.}
+        @entry[state]{The @symbol{gdk-modifier-type} bitmask representing the
+          state of modifier keys and pointer buttons.}
       @end{table}
     @subheading{The \"modifiers\" signal}
       @begin{pre}

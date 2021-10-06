@@ -1075,7 +1075,7 @@
       Emitted when a button typically from a mouse is pressed. To receive this
       signal, the @class{gdk-window} object associated to the widget needs to
       enable the @code{:button-press-mask} mask of the @symbol{gdk-event-mask}
-      flags. This signal will be sent to the grab widget if there is one.
+      flags. The signal will be sent to the grab widget if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[event]{The @class{gdk-event-button} event which triggered this
@@ -1090,7 +1090,7 @@
       Emitted when a button typically from a mouse is released. To receive this
       signal, the @class{gdk-window} object associated to the widget needs to
       enable the @code{:button-realease-mask} mask of the
-      @symbol{gdk-event-mask} flags. This signal will be sent to the grab widget
+      @symbol{gdk-event-mask} flags. The signal will be sent to the grab widget
       if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
@@ -1104,7 +1104,7 @@
  lambda (widget signal)    :run-last
       @end{pre}
       Determines whether an accelerator that activates the signal identified by
-      @arg{signal} can currently be activated. This signal is present to allow
+      @arg{signal} can currently be activated. The signal is present to allow
       applications and derived widgets to override the default handling for
       determining whether an accelerator can be activated.
       @begin[code]{table}
@@ -1530,7 +1530,7 @@ drag_data_received (GtkWidget        *widget,
       Emitted when the pointer enters the GDK window of the widget. To receive
       this signal, the @class{gdk-window} object associated to the widget needs
       to enable the @code{:enter-notify-mask} mask of the
-      @symbol{gdk-event-mask} flags. This signal will be sent to the grab widget
+      @symbol{gdk-event-mask} flags. The signal will be sent to the grab widget
       if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
@@ -1656,7 +1656,7 @@ drag_data_received (GtkWidget        *widget,
  lambda (widget toplevel)    :run-last
       @end{pre}
       Emitted when the anchored state of a widget changes. A widget is anchored
-      when its toplevel ancestor is a @class{gtk-window} widget. This signal is
+      when its toplevel ancestor is a @class{gtk-window} widget. The signal is
       emitted when a widget changes from un-anchored to anchored or vice-versa.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object on which the signal is
@@ -1715,7 +1715,7 @@ drag_data_received (GtkWidget        *widget,
       Emitted when the pointer leaves the GDK window of the widget. To receive
       this signal, the @class{gdk-window} object associated to the widget needs
       to enable the @code{:leave-notify-mask} mask of the
-      @symbol{gdk-event-mask} flags. This signal will be sent to the grab widget
+      @symbol{gdk-event-mask} flags. The signal will be sent to the grab widget
       if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
@@ -1774,7 +1774,7 @@ drag_data_received (GtkWidget        *widget,
       Emitted when the pointer moves over the GDK window of the widget. To
       receive this signal, the @class{gdk-window} object associated to the
       widget needs to enable the @code{:pointer-motion-mask} mask of the
-      @symbol{gdk-event-mask} flags. This signal will be sent to the grab widget
+      @symbol{gdk-event-mask} flags. The signal will be sent to the grab widget
       if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
@@ -1835,7 +1835,7 @@ drag_data_received (GtkWidget        *widget,
       @end{pre}
       To receive this signal the @class{gdk-window} object associated to the
       widget needs to enable the @code{:proximity-in-mask} mask of the
-      @symbol{gdk-event-mask} flags. This signal will be sent to the grab widget
+      @symbol{gdk-event-mask} flags. The signal will be sent to the grab widget
       if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
@@ -1850,7 +1850,7 @@ drag_data_received (GtkWidget        *widget,
       @end{pre}
       To receive this signal the @class{gdk-window} object associated to the
       widget needs to enable the @code{:proximity-out-mask} mask of the
-      @symbol{gdk-event-mask} flags. This signal will be sent to the grab widget
+      @symbol{gdk-event-mask} flags. The signal will be sent to the grab widget
       if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
@@ -4696,7 +4696,7 @@ drag_data_received (GtkWidget        *widget,
   @syntax[]{(gtk-widget-device-events widget device) => events}
   @syntax[]{(setf (gtk-widget-device-events widget device) events)}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[device]{a @class{gkd-device} object}
+  @argument[device]{a @class{gdk-device} object}
   @argument[events]{a @symbol{gdk-event-mask} event mask}
   @begin{short}
     Accessor of the events mask for the widget corresponding to a specific
@@ -4736,7 +4736,7 @@ drag_data_received (GtkWidget        *widget,
  #+cl-cffi-gtk-documentation
  "@version{2021-9-21}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[device]{a @class{gkd-device} object}
+  @argument[device]{a @class{gdk-device} object}
   @argument[events]{a @symbol{gdk-event-mask} event mask}
   @begin{short}
     Adds the device events in the @arg{events} bitfield to the event mask for

@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-editable.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -79,30 +79,30 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"editing-done\" signal}
       @begin{pre}
- lambda (cell-editable)    :run-last
+ lambda (editable)    :run-last
       @end{pre}
-      This signal is a sign for the cell renderer to update its value from the
-      @arg{cell-editable} argument. Implementations of the
-      @sym{gtk-cell-editable} class are responsible for emitting this signal
-      when they are done editing, e.g. the @class{gtk-entry} widget is emitting
-      it when the user presses the @kbd{Enter} key. The
-      @fun{gtk-cell-editable-editing-done} function is a convenience method for
-      emitting the \"editing-done\" signal.
+      The signal is a sign for the cell renderer to update its value from the
+      @arg{editable} argument. Implementations of the @sym{gtk-cell-editable}
+      class are responsible for emitting the signal when they are done editing,
+      e.g. the @class{gtk-entry} widget is emitting it when the user presses the
+      @kbd{Enter} key. The @fun{gtk-cell-editable-editing-done} function is a
+      convenience method for emitting the \"editing-done\" signal.
       @begin[code]{table}
-        @entry[cell-editable]{The @sym{gtk-cell-editable} object on which the
-          signal was emitted.}
+        @entry[editable]{The @sym{gtk-cell-editable} object on which the signal
+          was emitted.}
       @end{table}
     @subheading{The \"remove-widget\" signal}
       @begin{pre}
- lambda (cell-editable)    : Run Last
+ lambda (editable)    :run-last
       @end{pre}
-      This signal is meant to indicate that the cell is finished editing, and
-      the widget may now be destroyed. Implementations of
-      @sym{gtk-cell-editable} are responsible for emitting this signal when they
-      are done editing. It must be emitted after the \"editing-done\" signal, to
-      give the cell renderer a chance to update the cell's value before the
-      widget is removed. The function @fun{gtk-cell-editable-remove-widget} is
-      a convenience method for emitting the \"remove-widget\" signal.
+      The signal is meant to indicate that the cell is finished editing, and
+      the widget may now be destroyed. Implementations of the
+      @sym{gtk-cell-editable} class are responsible for emitting the signal when
+      they are done editing. It must be emitted after the \"editing-done\"
+      signal, to give the cell renderer a chance to update the value of the cell
+      before the widget is removed. The @fun{gtk-cell-editable-remove-widget}
+      function is a convenience method for emitting the \"remove-widget\"
+      signal.
       @begin[code]{table}
         @entry[cell-editable]{The @sym{gtk-cell-editable} object on which the
           signal was emitted.}

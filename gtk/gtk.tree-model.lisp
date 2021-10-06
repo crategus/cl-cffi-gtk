@@ -1112,9 +1112,9 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"row-changed\" signal}
       @begin{pre}
- lambda (model path iter)    : Run Last
+ lambda (model path iter)    :run-last
       @end{pre}
-      This signal is emitted when a row in the model has changed.
+      The signal is emitted when a row in the model has changed.
       @begin[code]{table}
         @entry[model]{The @sym{gtk-tree-model} object on which the signal
           is emitted.}
@@ -1125,9 +1125,9 @@
       @end{table}
     @subheading{The \"row-deleted\" signal}
       @begin{pre}
- lambda (model path)    : Run First
+ lambda (model path)    :run-first
       @end{pre}
-      This signal is emitted when a row has been deleted. Note that no iterator
+      The signal is emitted when a row has been deleted. Note that no iterator
       is passed to the signal handler, since the row is already deleted. This
       should be called by models after a row has been removed. The location
       pointed to by path should be the location that the row previously was at.
@@ -1139,9 +1139,9 @@
       @end{table}
     @subheading{The \"row-has-child-toggled\" signal}
       @begin{pre}
- lambda (model path iter)    : Run Last
+ lambda (model path iter)    :run-last
       @end{pre}
-      This signal is emitted when a row has gotten the first child row or lost
+      The signal is emitted when a row has gotten the first child row or lost
       its last child row.
       @begin[code]{table}
         @entry[model]{The @sym{gtk-tree-model} object on which the signal
@@ -1152,10 +1152,10 @@
       @end{table}
     @subheading{The \"row-inserted\" signal}
       @begin{pre}
- lambda (model path iter)    : Run First
+ lambda (model path iter)    :run-first
       @end{pre}
-      This signal is emitted when a new row has been inserted in the model.
-      Note that the row may still be empty at this point, since it is a common
+      The signal is emitted when a new row has been inserted in the model. Note
+      that the row may still be empty at this point, since it is a common
       pattern to first insert an empty row, and then fill it with the desired
       values.
       @begin[code]{table}
@@ -1167,10 +1167,10 @@
       @end{table}
     @subheading{The \"rows-reordered\" signal}
       @begin{pre}
- lambda (model path iter new-order)    : Run First
+ lambda (model path iter new-order)    :run-first
       @end{pre}
-      This signal is emitted when the children of a node in the
-      @class{gtk-tree-model} object have been reordered. Note that this signal
+      The signal is emitted when the children of a node in the
+      @class{gtk-tree-model} object have been reordered. Note that the signal
       is not emitted when rows are reordered by DND, since this is implemented
       by removing and then reinserting the row.
       @begin[code]{table}

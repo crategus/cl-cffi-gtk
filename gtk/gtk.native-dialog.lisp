@@ -234,7 +234,7 @@
 ;;; gtk_native_dialog_set_transient_for (GtkNativeDialog *self,
 ;;;                                      GtkWindow *parent);
 ;;;
-;;; Dialog windows should be set transient for the main application window they
+;;; Dialogs should be set transient for the main application window they
 ;;; were spawned from. This allows window managers to e.g. keep the dialog on
 ;;; top of the main window, or center the dialog over the main window.
 ;;;

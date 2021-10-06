@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.recent-chooser.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -227,7 +227,7 @@
     @sym{gtk-recent-chooser} is an interface that can be implemented by widgets
     displaying the list of recently used files.
   @end{short}
-  In GTK+, the main objects that implement this interface are
+  In GTK, the main objects that implement this interface are
   @class{gtk-recent-chooser-widget}, @class{gtk-recent-chooser-dialog} and
   @class{gtk-recent-chooser-menu}.
   @begin[Signal Details]{dictionary}
@@ -235,7 +235,7 @@
       @begin{pre}
  lambda (chooser)    :run-last
       @end{pre}
-      This signal is emitted when the user \"activates\" a recent item in the
+      The signal is emitted when the user \"activates\" a recent item in the
       recent chooser. This can happen by double-clicking on an item in the
       recently used resources list, or by pressing the @kbd{Enter} key.
       @begin[code]{table}
@@ -246,7 +246,7 @@
       @begin{pre}
  lambda (chooser)    : Run Last
       @end{pre}
-      This signal is emitted when there is a change in the set of selected
+      The signal is emitted when there is a change in the set of selected
       recently used resources. This can happen when a user modifies the
       selection with the mouse or the keyboard, or when explicitely calling
       functions to change the selection.

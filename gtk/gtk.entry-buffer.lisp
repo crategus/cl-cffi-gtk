@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.entry-buffer.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -105,9 +105,9 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"deleted-text\" signal}
       @begin{pre}
- lambda (buffer position n-chars)    : Run First
+ lambda (buffer position n-chars)    :run-first
       @end{pre}
-      This signal is emitted after text is deleted from the buffer.
+      The signal is emitted after text is deleted from the buffer.
       @begin[code]{table}
         @entry[buffer]{A @sym{gtk-entry-buffer} object.}
         @entry[position]{An integer with the position the text was deleted at.}
@@ -116,13 +116,13 @@
       @end{table}
     @subheading{The \"inserted-text\" signal}
       @begin{pre}
- lambda (buffer position chars n-chars)    : Run First
+ lambda (buffer position chars n-chars)    :run-first
       @end{pre}
-      This signal is emitted after text is inserted into the buffer.
+      The signal is emitted after text is inserted into the buffer.
       @begin[code]{table}
         @entry[buffer]{A @sym{gtk-entry-buffer} object.}
-        @entry[position]{An integer With the position the text was inserted at.}
-        @entry[chars]{The text that was inserted.}
+        @entry[position]{An integer with the position the text was inserted at.}
+        @entry[chars]{A string with the text that was inserted.}
         @entry[n-chars]{An integer with the number of characters that were
           inserted.}
       @end{table}

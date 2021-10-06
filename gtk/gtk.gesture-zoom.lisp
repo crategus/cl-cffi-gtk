@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.gesture-zoom.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -72,14 +72,14 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"scale-changed\" signal}
     @begin{pre}
-  lambda (gesture scale)    : Run First
+  lambda (gesture scale)    :run-first
     @end{pre}
-    This signal is emitted whenever the distance between both tracked sequences
+    The signal is emitted whenever the distance between both tracked sequences
     changes.
     @begin[code]{table}
       @entry[gesture]{The @sym{gtk-gesture-zoom} object on which the signal
         is emitted.}
-      @entry[scale]{A @code{:double} with the scale delta, taking the initial
+      @entry[scale]{A double float with the scale delta, taking the initial
         state as 1:1.}
     @end{table}
   @end{dictionary}

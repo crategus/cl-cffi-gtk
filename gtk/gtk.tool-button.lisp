@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tool-button.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -162,9 +162,9 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"clicked\" signal}
       @begin{pre}
- lambda (button)    : Action
+ lambda (button)    :action
       @end{pre}
-      This signal is emitted when the tool button is clicked with the mouse or
+      The signal is emitted when the tool button is clicked with the mouse or
       activated with the keyboard.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-tool-button} widget that emitted the

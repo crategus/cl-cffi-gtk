@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-renderer.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -286,7 +286,7 @@
       @begin{pre}
  lambda (renderer)    :run-first
       @end{pre}
-      This signal gets emitted when the user cancels the process of editing a
+      The signal gets emitted when the user cancels the process of editing a
       cell. For example, an editable cell renderer could be written to cancel
       editing when the user presses the @kbd{Escape} key. See also the
       @fun{gtk-cell-renderer-stop-editing} function.
@@ -296,15 +296,15 @@
       @end{table}
     @subheading{The \"editing-started\" signal}
       @begin{pre}
- lambda (renderer editable path)    : Run First
+ lambda (renderer editable path)    :run-first
       @end{pre}
-      This signal gets emitted when a cell starts to be edited. The intended
+      The signal gets emitted when a cell starts to be edited. The intended
       use of this signal is to do special setup on editable, e.g. adding a
       @class{gtk-entry-completion} object or setting up additional columns in a
-      @class{gtk-combo-box} widget. Note that GTK+ does not guarantee that cell
+      @class{gtk-combo-box} widget. Note that GTK does not guarantee that cell
       renderers will continue to use the same kind of widget for editing in
-      future releases, therefore you should check the type of editable before
-      doing any specific setup.
+      future releases, therefore you should check the type of the @arg{editable}
+      argument before doing any specific setup.
       @begin[code]{table}
         @entry[renderer]{The @sym{gtk-cell-renderer} object which received the
           signal.}

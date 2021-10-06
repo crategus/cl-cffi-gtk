@@ -1616,9 +1616,9 @@
   @sym{(setf gtk-window-transient-for)} slot access function sets the parent
   window.
 
-  Dialog windows should be set transient for the main application window they
-  were spawned from. This allows window managers to e.g. keep the dialog on
-  top of the main window, or center the dialog over the main window. The
+  Dialogs should be set transient for the main application window they were
+  spawned from. This allows window managers to e.g. keep the dialog on top of
+  the main window, or center the dialog over the main window. The
   @fun{gtk-dialog-new-with-buttons} function and other convenience functions
   in GTK will sometimes call the @sym{gtk-window-transient-for} function on
   your behalf.

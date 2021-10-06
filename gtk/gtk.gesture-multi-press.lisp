@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.gesture-multi-press.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -76,7 +76,7 @@
     to recognize multiple clicks on a nearby zone, which can be listened for
     through the \"pressed\" signal.
   @end{short}
-  Whenever time or distance between clicks exceed the GTK+ defaults, \"stopped\"
+  Whenever time or distance between clicks exceed the GTK defaults, \"stopped\"
   is emitted, and the click counter is reset.
 
   Callers may also restrict the area that is considered valid for a > 1
@@ -86,42 +86,43 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"pressed\" signal}
       @begin{pre}
- lambda (gesture n-press x y)    : Run Last
+ lambda (gesture n-press x y)    :run-last
       @end{pre}
-      This signal is emitted whenever a button or touch press happens.
+      The signal is emitted whenever a button or touch press happens.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-multi-press} object which
         received the signal.}
-        @entry[n-press]{A @code{:int} with how many touch/button presses
-          happened with this one.}
-        @entry[x]{A @code{:double} with the x coordinate, in widget allocation
+        @entry[n-press]{An integer with how many touch/button presses happened
+          with this one.}
+        @entry[x]{A double float with the x coordinate, in widget allocation
           coordinates.}
-        @entry[y]{A @code{:double} with the y coordinate, in widget allocation
+        @entry[y]{A double float with the y coordinate, in widget allocation
           coordinates.}
       @end{table}
     @subheading{The \"released\" signal}
       @begin{pre}
- lambda (gesture n-press x y)    : Run Last
+ lambda (gesture n-press x y)    :run-last
       @end{pre}
-      This signal is emitted when a button or touch is released. @arg{n-press}
-      will report the number of press that is paired to this event, note that
-      \"stopped\" may have been emitted between the press and its release,
-      @arg{n-press} will only start over at the next press.
+      The signal is emitted when a button or touch is released. The
+      @arg{n-press} argument will report the number of press that is paired to
+      this event, note that the \"stopped\" signal may have been emitted between
+      the press and its release, the @arg{n-press} argument will only start over
+      at the next press.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-multi-press} object which
         received the signal.}
-        @entry[n-press]{Number of type @code{:int} of press that is paired with
+        @entry[n-press]{An integer with the number of press that is paired with
           this release.}
-        @entry[x]{A @code{:double} with the x coordinate, in widget allocation
+        @entry[x]{A double float with the x coordinate, in widget allocation
           coordinates.}
-        @entry[y]{A @code{:double} with the y coordinate, in widget allocation
+        @entry[y]{A double float with the y coordinate, in widget allocation
           coordinates.}
       @end{table}
     @subheading{The \"stopped\" signal}
       @begin{pre}
- lambda (gesture)    : Run Last
+ lambda (gesture)    :run-last
       @end{pre}
-      This signal is emitted whenever any time/distance threshold has been
+      The signal is emitted whenever any time/distance threshold has been
       exceeded.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-multi-press} object which

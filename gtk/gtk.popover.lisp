@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.popover.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -170,7 +170,7 @@
   The position of a popover relative to the widget it is attached to can also be
   changed through the function @fun{gtk-popover-position}.
 
-  By default, @sym{gtk-popover} performs a GTK+ grab, in order to ensure input
+  By default, @sym{gtk-popover} performs a GTK grab, in order to ensure input
   events get redirected to it while it is shown, and also so the popover is
   dismissed in the expected situations, clicks outside the popover, or the Esc
   key being pressed. If no such modal behavior is desired on a popover, the
@@ -222,9 +222,9 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"closed\" signal}
       @begin{pre}
- lambda (popover)    : Run Last
+ lambda (popover)    :run-last
       @end{pre}
-      This signal is emitted when the popover is dismissed either through API or
+      The signal is emitted when the popover is dismissed either through API or
       user interaction.
       @begin[code]{table}
         @entry[popover]{The @sym{gtk-popover} widget which received the signal.}

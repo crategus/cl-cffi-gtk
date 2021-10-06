@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.socket.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -112,7 +112,7 @@ g_print (\"The ID of the sockets window is
   returns a non-@code{nil} value, then the plug has been successfully created
   inside of the socket.
 
-  When GTK+ is notified that the embedded window has been destroyed, then it
+  When GTK is notified that the embedded window has been destroyed, then it
   will destroy the socket as well. You should always, therefore, be prepared
   for your sockets to be destroyed at any time when the main event loop is
   running. To prevent this from happening, you can connect to the
@@ -123,23 +123,23 @@ g_print (\"The ID of the sockets window is
   toolkits, e.g. Qt, allowing the same level of integration when embedding a
   Qt widget in GTK or vice versa.
 
-  The @class{gtk-plug} and @sym{gtk-socket} widgets are only available when GTK+
+  The @class{gtk-plug} and @sym{gtk-socket} widgets are only available when GTK
   is compiled for the X11 platform and @code{GDK_WINDOWING_X11} is defined. They
   can only be used on a @code{gdk-x11-display}.
   @begin[Signal Details]{dictionary}
     @subheading{The \"plug-added\" signal}
       @begin{pre}
- lambda (socket)    : Run Last
+ lambda (socket)    :run-last
       @end{pre}
-      This signal is emitted when a client is successfully added to the socket.
+      The signal is emitted when a client is successfully added to the socket.
       @begin[code]{table}
         @entry[socket]{The @sym{gtk-socket} object which received the signal.}
       @end{table}
     @subheading{The \"plug-removed\" signal}
       @begin{pre}
- lambda (socket)    : Run Last
+ lambda (socket)    :run-last
       @end{pre}
-      This signal is emitted when a client is removed from the socket. The
+      The signal is emitted when a client is removed from the socket. The
       default action is to destroy the @sym{gtk-socket} widget, so if you want
       to reuse it you must add a signal handler that returns @em{true}.
       @begin[code]{table}

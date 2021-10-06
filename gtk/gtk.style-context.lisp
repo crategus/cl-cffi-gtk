@@ -534,9 +534,9 @@
  lambda (context)    :run-first
       @end{pre}
       The signal is emitted when there is a change in the style context. For a
-      style context returned by the function @fun{gtk-widget-style-context}, the
+      style context returned by the @fun{gtk-widget-style-context} function, the
       \"style-updated\" signal of the @class{gtk-widget} class might be more
-      convenient to use. This signal is useful when using the theming layer
+      convenient to use. The signal is useful when using the theming layer
       standalone.
       @begin[code]{table}
         @entry[context]{The @sym{gtk-style-context} object which received the

@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tool-item.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -134,19 +134,19 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"create-menu-proxy\" signal}
       @begin{pre}
- lambda (tool-item)    : Run Last
+ lambda (item)    :run-last
       @end{pre}
-      This signal is emitted when the toolbar needs information from
-      @arg{tool-item} about whether the item should appear in the toolbar
-      overflow menu. In response the tool item should either.
+      The signal is emitted when the toolbar needs information from @arg{item}
+      about whether the item should appear in the toolbar overflow menu. In
+      response the tool item should either.
       @begin{itemize}
         @begin{item}
-          Call the function @fun{gtk-tool-item-set-proxy-menu-item} with a
+          Call the @fun{gtk-tool-item-set-proxy-menu-item} function with a
           @code{NULL} pointer and return @em{true} to indicate that the item
           should not appear in the overflow menu,
         @end{item}
         @begin{item}
-          call the function @fun{gtk-tool-item-set-proxy-menu-item} with a new
+          call the @fun{gtk-tool-item-set-proxy-menu-item} function with a new
           menu item and return @em{true}, or
         @end{item}
         @begin{item}
@@ -156,27 +156,26 @@
         @end{item}
       @end{itemize}
       The toolbar may cache the result of this signal. When the tool item
-      changes how it will respond to this signal it must call the function
-      @fun{gtk-tool-item-rebuild-menu} to invalidate the cache and ensure that
-      the toolbar rebuilds its overflow menu.
+      changes how it will respond to this signal it must call the
+      @fun{gtk-tool-item-rebuild-menu} function to invalidate the cache and
+      ensure that the toolbar rebuilds its overflow menu.
       @begin[code]{table}
-        @entry[tool-item]{The @sym{gtk-tool-item} widget the signal was emitted
-          on.}
+        @entry[item]{The @sym{gtk-tool-item} widget the signal was emitted on.}
         @entry[Returns]{@em{True} if the signal was handled, @em{false} if not.}
       @end{table}
     @subheading{The \"toolbar-reconfigured\" signal}
       @begin{pre}
- lambda (tool-item)    : Run Last
+ lambda (item)    :run-last
       @end{pre}
-      This signal is emitted when some property of the toolbar that the item is
-      a child of changes. For custom subclasses of @sym{gtk-tool-item}, the
-      default handler of this signal use the functions
+      The signal is emitted when some property of the toolbar that the item is
+      a child of changes. For custom subclasses of the @sym{gtk-tool-item}
+      class, the default handler of this signal use the
       @fun{gtk-tool-shell-orientation}, @fun{gtk-tool-shell-style},
       @fun{gtk-tool-shell-icon-size}, or @fun{gtk-tool-shell-relief-style}
-      to find out what the toolbar should look like and change themselves
-      accordingly.
+      functions to find out what the toolbar should look like and change
+      themselves accordingly.
       @begin[code]{table}
-        @entry[tool-item]{The @sym{gtk-tool-item} widget the signal was emitted
+        @entry[item]{The @sym{gtk-tool-item} widget the signal was emitted
           on.}
       @end{table}
   @end{dictionary}

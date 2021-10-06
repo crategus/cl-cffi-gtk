@@ -736,7 +736,7 @@
  lambda (entry string)    :action
       @end{pre}
       A keybinding signal which gets emitted when the user initiates the
-      insertion of a fixed string at the cursor. This signal has no default
+      insertion of a fixed string at the cursor. The signal has no default
       bindings.
       @begin[code]{table}
         @entry[entry]{The @sym{gtk-entry} widget which received the signal.}

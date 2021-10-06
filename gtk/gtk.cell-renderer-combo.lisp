@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-renderer-combo.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -97,30 +97,30 @@
   @code{text-column} property. Further properties of the combo box can be
   set in a handler for the \"editing-started\" signal.
 
-  The @sym{gtk-cell-renderer-combo} cell renderer was added in GTK+ 2.6.
+  The @sym{gtk-cell-renderer-combo} cell renderer was added in GTK 2.6.
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (combo path-string new-iter)    : Run Last
+ lambda (combo path iter)    :run-last
       @end{pre}
-      This signal is emitted each time after the user selected an item in the
-      combo box, either by using the mouse or the arrow keys. Contrary to
-      @class{gtk-combo-box}, the \"changed\" signal is not emitted for changes
-      made to a selected item in the entry. The argument @arg{new-iter}
+      The signal is emitted each time after the user selected an item in the
+      combo box, either by using the mouse or the arrow keys. Contrary to the
+      @class{gtk-combo-box} widget, the \"changed\" signal is not emitted for
+      changes made to a selected item in the entry. The @arg{iter} argument
       corresponds to the newly selected item in the combo box and it is relative
-      to the @class{gtk-tree-model} set via the model property on
-      @sym{gtk-cell-renderer-combo}. Note that as soon as you change the model
-      displayed in the tree view, the tree view will immediately cease the
+      to the @class{gtk-tree-model} object set via the model property on the
+      @sym{gtk-cell-renderer-combo} object. Note that as soon as you change the
+      model displayed in the tree view, the tree view will immediately cease the
       editing operating. This means that you most probably want to refrain from
       changing the model until the combo cell renderer emits the edited or
       \"editing-canceled\" signal.
       @begin[code]{table}
         @entry[combo]{The @sym{gtk-cell-renderer-combo} object on which the
           signal is emitted.}
-        @entry[path-string]{A string of the path identifying the edited cell
-          (relative to the tree view model).}
-        @entry[new-iter]{The @class{gtk-tree-iter} selected in the combo box
-          (relative to the combo box model).}
+        @entry[path]{A string of the path identifying the edited cell, relative
+          to the tree view model.}
+        @entry[iter]{The @class{gtk-tree-iter} instance selected in the combo
+           box, relative to the combo box model.}
        @end{table}
   @end{dictionary}
   @see-slot{gtk-cell-renderer-combo-has-entry}

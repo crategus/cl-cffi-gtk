@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.file-chooser.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -401,8 +401,8 @@
     @fun{gtk-file-chooser-filename} to the functions @code{open()} or
     @code{fopen()}, you may not be able to directly set it as the text of a
     @class{gtk-label} widget unless you convert it first to UTF-8, which all
-    GTK+ widgets expect. You should use the function @fun{g-filename-to-utf8}
-    to convert filenames into strings that can be passed to GTK+ widgets.
+    GTK widgets expect. You should use the function @fun{g-filename-to-utf8}
+    to convert filenames into strings that can be passed to GTK widgets.
 
   @subheading{Adding a Preview Widget}
     You can add a custom preview widget to a file chooser and then get
@@ -514,9 +514,9 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"confirm-overwrite\" signal}
       @begin{pre}
- lambda (chooser)    : Run Last
+ lambda (chooser)    :run-last
       @end{pre}
-      This signal gets emitted whenever it is appropriate to present a
+      The signal gets emitted whenever it is appropriate to present a
       confirmation dialog when the user has selected a file name that already
       exists. The signal only gets emitted when the file chooser is in
       @code{:save} mode.
@@ -530,11 +530,11 @@
       A signal handler for this signal must return a value of the
       @symbol{gtk-file-chooser-confirmation} enumeration, which indicates the
       action to take. If the handler determines that the user wants to select
-      a different filename, it should return @code{:select-again}. If it
-      determines that the user is satisfied with his choice of file name, it
-      should return @code{:accept-filename}. On the other hand, if it
+      a different filename, it should return the @code{:select-again} value. If
+      it determines that the user is satisfied with his choice of file name, it
+      should return the @code{:accept-filename} value. On the other hand, if it
       determines that the stock confirmation dialog should be used, it should
-      return @code{:confirm}. The following example illustrates this.
+      return the @code{:confirm} value. The following example illustrates this.
 
       @b{Example:} Custom confirmation
       @begin{pre}
@@ -564,9 +564,9 @@
       @end{table}
     @subheading{The \"current-folder-changed\" signal}
       @begin{pre}
- lambda (chooser)    : Run Last
+ lambda (chooser)    :run-last
       @end{pre}
-      This signal is emitted when the current folder in a file chooser changes.
+      The signal is emitted when the current folder in a file chooser changes.
       This can happen due to the user performing some action that changes
       folders, such as selecting a bookmark or visiting a folder on the file
       list. It can also happen as a result of calling a function to explicitly
@@ -581,10 +581,10 @@
       @begin{pre}
  lambda (chooser)    :run-last
       @end{pre}
-      This signal is emitted when the user \"activates\" a file in the file
+      The signal is emitted when the user \"activates\" a file in the file
       chooser. This can happen by double-clicking on a file in the file list,
       or by pressing the @kbd{Enter} key. Normally you do not need to connect to
-      this signal. It is used internally by the @class{gtk-file-chooser-dialog}
+      the signal. It is used internally by the @class{gtk-file-chooser-dialog}
       class to know when to activate the default button in the dialog.
       @begin[code]{table}
         @entry[chooser]{The @sym{gtk-file-chooser} widget which received the
@@ -592,36 +592,33 @@
       @end{table}
     @subheading{The \"selection-changed\" signal}
       @begin{pre}
- lambda (chooser)    : Run Last
+ lambda (chooser)    :run-last
       @end{pre}
-      This signal is emitted when there is a change in the set of selected
-      files in a file chooser. This can happen when the user modifies the
-      selection with the mouse or the keyboard, or when explicitly calling
-      functions to change the selection. Normally you do not need to connect to
-      this signal, as it is easier to wait for the file chooser to finish
-      running.
+      The signal is emitted when there is a change in the set of selected files
+      in a file chooser. This can happen when the user modifies the selection
+      with the mouse or the keyboard, or when explicitly calling functions to
+      change the selection. Normally you do not need to connect to the signal,
+      as it is easier to wait for the file chooser to finish running.
       @begin[code]{table}
         @entry[chooser]{The @sym{gtk-file-chooser} widget which received the
           signal.}
       @end{table}
     @subheading{The \"update-preview\" signal}
       @begin{pre}
- lambda (chooser)    : Run Last
+ lambda (chooser)    :run-last
       @end{pre}
-      This signal is emitted when the preview in a file chooser should be
+      The signal is emitted when the preview in a file chooser should be
       regenerated. For example, this can happen when the currently selected
       file changes. You should use this signal if you want your file chooser
-      to have a preview widget.
-
-      Once you have installed a preview widget with the function
-      @fun{gtk-file-chooser-preview-widget}, you should update it
-      when this signal is emitted. You can use the functions
+      to have a preview widget. Once you have installed a preview widget with
+      the @fun{gtk-file-chooser-preview-widget} function, you should update it
+      when the signal is emitted. You can use the
       @fun{gtk-file-chooser-preview-filename} or
-      @fun{gtk-file-chooser-preview-uri} to get the name of the file to
-      preview. Your widget may not be able to preview all kinds of files. Your
-      callback must call the function
-      @fun{gtk-file-chooser-preview-widget-active} to inform the file chooser
-      about whether the preview was generated successfully or not.
+      @fun{gtk-file-chooser-preview-uri} functions to get the name of the file
+      to preview. Your widget may not be able to preview all kinds of files.
+      Your callback function must call the
+      @fun{gtk-file-chooser-preview-widget-active} function to inform the file
+      chooser about whether the preview was generated successfully or not.
       @begin[code]{table}
         @entry[chooser]{The @sym{gtk-file-chooser} widget which received the
           signal.}

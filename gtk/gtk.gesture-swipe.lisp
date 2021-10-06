@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.gesture-swipe.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -82,16 +82,16 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"swipe\" signal}
     @begin{pre}
- lambda (gesture velocity-x velocity-y)    : Run Last
+ lambda (gesture velocity-x velocity-y)    :run-last
     @end{pre}
-    This signal is emitted when the recognized gesture is finished, velocity
+    The signal is emitted when the recognized gesture is finished, velocity
     and direction are a product of previously recorded events.
     @begin[code]{table}
       @entry[gesture]{The @sym{gtk-gesture-multi-press} object which
         received the signal.}
-      @entry[velocity-x]{A @code{:double} with the velocity in the x axis,
+      @entry[velocity-x]{A double float with the velocity in the x axis,
         in pixels/sec.}
-      @entry[velocity-y]{A @code{:double} with the velocity in the y axis,
+      @entry[velocity-y]{A double float with the velocity in the y axis,
         in pixels/sec.}
     @end{table}
   @end{dictionary}

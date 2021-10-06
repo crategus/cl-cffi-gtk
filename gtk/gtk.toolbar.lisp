@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.toolbar.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
 ;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
@@ -260,7 +260,7 @@
       @begin{pre}
  lambda (toolbar focus-home)    : Action
       @end{pre}
-      A keybinding signal used internally by GTK+. This signal cannot be used in
+      A keybinding signal used internally by GTK. The signal cannot be used in
       application code.
       @begin[code]{table}
         @entry[toolbar]{The @sym{gtk-toolbar} widget which emitted the signal.}

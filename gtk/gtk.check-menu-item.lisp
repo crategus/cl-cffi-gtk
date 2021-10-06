@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.check-menu-item.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -142,14 +142,14 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
- lambda (checkmenuitm)    : Run First
+ lambda (item)    :run-first
       @end{pre}
-      This signal is emitted when the state of the check box is changed.
-      A signal handler can use the slot access function
-      @fun{gtk-check-menu-item-active} to discover the new state.
+      The signal is emitted when the state of the check box is changed. A signal
+      handler can use the @fun{gtk-check-menu-item-active} function to discover
+      the new state.
       @begin[code]{table}
-        @entry[checkmenuitem]{The @class{gtk-check-menu-item} widget which
-          received the signal.}
+        @entry[item]{The @class{gtk-check-menu-item} widget which received the
+          signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-check-menu-item-active}

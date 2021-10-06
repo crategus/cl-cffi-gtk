@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.font-selection-dialog.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; The documentation has been copied from the GTK 3 Reference Manual
 ;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -76,7 +76,7 @@
   To change the text which is shown in the preview area, use the function
   @fun{gtk-font-selection-dialog-set-preview-text}.
 
-  In GTK+ 3.2, @sym{gtk-font-selection-dialog} has been deprecated in favor of
+  In GTK 3.2, @sym{gtk-font-selection-dialog} has been deprecated in favor of
   @class{gtk-font-chooser-dialog}.
 
   @subheading{GtkFontSelectionDialog as GtkBuildable}
@@ -99,7 +99,7 @@
 ;;; Creates a new GtkFontSelectionDialog.
 ;;;
 ;;; title :
-;;;     the title of the dialog window
+;;;     the title of the dialog
 ;;;
 ;;; Returns :
 ;;;     a new GtkFontSelectionDialog

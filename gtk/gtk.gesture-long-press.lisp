@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.gesture-long-press.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -85,27 +85,27 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"cancelled\" signal}
       @begin{pre}
- lambda (gesture)    : Run Last
+ lambda (gesture)    :run-last
       @end{pre}
-      This signal is emitted whenever a press moved too far, or was released
-      before \"pressed\" happened.
+      The signal is emitted whenever a press moved too far, or was released
+      before the \"pressed\" signal happened.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-long-press} object which received
           the signal.}
       @end{table}
     @subheading{The \"pressed\" signal}
       @begin{pre}
- lambda (gesture x y)    : Run Last
+ lambda (gesture x y)    :run-last
       @end{pre}
-      This signal is emitted whenever a press goes unmoved/unreleased longer
-      than what the GTK+ defaults tell.
+      The signal is emitted whenever a press goes unmoved/unreleased longer
+      than what the GTK defaults tell.
       @begin[code]{table}
         @entry[gesture]{The @sym{gtk-gesture-long-press} object which received
           the signal.}
-        @entry[x]{A @code{:double} with the x coordinate where the press
-          happened, relative to the widget allocation.}
-        @entry[y]{A @code{:double} with the y coordinate where the press
-          happened, relative to the widget allocation.}
+        @entry[x]{A double float with the x coordinate where the press happened,
+          relative to the widget allocation.}
+        @entry[y]{A double float with the y coordinate where the press happened,
+          relative to the widget allocation.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-gesture-long-press-delay-factor}

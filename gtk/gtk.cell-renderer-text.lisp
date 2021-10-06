@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-renderer-text.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -277,15 +277,15 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"edited\" signal}
       @begin{pre}
- lambda (renderer pathstr text)    : Run Last
+ lambda (renderer path text)    :run-last
       @end{pre}
-      This signal is emitted after @arg{renderer} has been edited. It is the
-      responsibility of the application to update the model and store
-      @arg{text} at the position indicated by @arg{pathstr}.
+      The signal is emitted after @arg{renderer} has been edited. It is the
+      responsibility of the application to update the model and store @arg{text}
+      at the position indicated by @arg{path}.
       @begin[code]{table}
         @entry[renderer]{The @sym{gtk-cell-renderer-text} object which received
           the signal.}
-        @entry[pathstr]{A string with the path identifying the edited cell.}
+        @entry[path]{A string with the path identifying the edited cell.}
         @entry[text]{A string with the new text.}
       @end{table}
   @end{dictionary}

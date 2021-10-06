@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-area.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -153,7 +153,7 @@
   unless they are implementing a cell-layouting widget themselves.
 
   @subheading{Requesting area sizes}
-    As outlined in @class{gtk-widget}'s geometry management section, GTK+ uses a
+    As outlined in @class{gtk-widget}'s geometry management section, GTK uses a
     height-for-width geometry management system to compute the sizes of widgets
     and user interfaces. @sym{gtk-cell-area} uses the same semantics to
     calculate the size of an area for an arbitrary number of
@@ -473,27 +473,29 @@
       @end{table}
     @subheading{The \"apply-attributes\" signal}
       @begin{pre}
- lambda (area model iter is-expander is-expanded)    : Run First
+ lambda (area model iter is-expander is-expanded)    :run-first
       @end{pre}
-      This signal is emitted whenever applying attributes to area from model.
+      The signal is emitted whenever applying attributes to the cell area from
+      the model.
       @begin[code]{table}
-        @entry[area]{The @sym{gtk-cell-area} to apply the attributes to.}
-        @entry[model]{The @class{gtk-tree-model} to apply the attributes from.}
-        @entry[iter]{The @class{gtk-tree-iter} indicating which row to apply the
-          attributes of.}
+        @entry[area]{The @sym{gtk-cell-area} object to apply the attributes to.}
+        @entry[model]{The @class{gtk-tree-model} object to apply the attributes
+          from.}
+        @entry[iter]{The @class{gtk-tree-iter} instance indicating which row to
+          apply the attributes of.}
         @entry[is-expander]{Whether the view shows children for this row.}
         @entry[is-expanded]{Whether the view is currently showing the children
           of this row.}
       @end{table}
     @subheading{The \"focus-changed\" signal}
       @begin{pre}
- lambda (area renderer path)    : Run First
+ lambda (area renderer path)    :run-first
       @end{pre}
-      Indicates that focus changed on this area. This signal is emitted either
-      as a result of focus handling or event handling.
-      It is possible that the signal is emitted even if the currently focused
-      renderer did not change, this is because focus may change to the same
-      renderer in the same cell area for a different row of data.
+      Indicates that focus changed on the cell area. The signal is emitted
+      either as a result of focus handling or event handling. It is possible
+      that the signal is emitted even if the currently focused renderer did not
+      change, this is because focus may change to the same renderer in the same
+      cell area for a different row of data.
       @begin[code]{table}
         @entry[area]{The @sym{gtk-cell-area} where focus changed.}
         @entry[renderer]{The @class{gtk-cell-renderer} that has focus.}

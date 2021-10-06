@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.gesture-rotate.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,15 +75,15 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"angle-changed\" signal}
     @begin{pre}
- lambda (gesture angle angle-delta)    : Run First
+ lambda (gesture angle delta)    :run-first
     @end{pre}
-    This signal is emitted when the angle between both tracked points changes.
+    The signal is emitted when the angle between both tracked points changes.
     @begin[code]{table}
       @entry[gesture]{The @sym{gtk-gesture-rotate} object which received the
         signal.}
-      @entry[angle]{A @code{:double} with the current angle in radians.}
-      @entry[angle-delta]{A @code{:double} with the difference with the
-        starting angle, in radians.}
+      @entry[angle]{A double float with the current angle in radians.}
+      @entry[delta]{A double float with the difference with the starting angle,
+        in radians.}
     @end{table}
   @end{dictionary}
   @see-class{gtk-gesture-zoom}")
