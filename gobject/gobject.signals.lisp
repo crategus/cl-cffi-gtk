@@ -404,7 +404,7 @@
     @entry[:no-recurse]{Signals being emitted for an object while currently
       being in emission for this very object will not be emitted recursively,
       but instead cause the first emission to be restarted.}
-    @entry[:detailed]{This signal supports \"::detail\" appendices to the
+    @entry[:detailed]{The signal supports \"::detail\" appendices to the
       signal name upon handler connections and emissions.}
     @entry[:action]{Action signals are signals that may freely be emitted on
       alive objects from user code via the function @fun{g-signal-emit} and
