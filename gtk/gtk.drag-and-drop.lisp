@@ -207,11 +207,11 @@
   @end{short}
 
   The default behaviors listed in the @arg{flags} argument have an effect
-  similar to installing default handlers for the Drag and Drop signals,
-  \"drag-motion\", \"drag-drop\", ... of the widget. They all exist for
+  similar to installing default handlers \"drag-motion\", \"drag-drop\", ...
+  for the drag and drop signals of the widget. They all exist for
   convenience. When passing the @code{:all} value for instance it is sufficient
   to connect to the \"drag-data-received\" signal of the widget to get
-  primitive, but consistent Drag and Drop support.
+  primitive, but consistent drag and drop support.
 
   Things become more complicated when you try to preview the dragged data, as
   described in the documentation for the \"drag-motion\" signal. The default
@@ -238,6 +238,9 @@
           (gdk-drag-status context :copy time)
           (gdk-drag-status context :move time)))))
   @end{pre}
+  @see-class{gtk-widget}
+  @see-symbol{gtk-dest-defaults}
+  @see-symbol{gtk-drag-action}
   @see-function{gtk-drag-dest-target-list}
   @see-function{gtk-drag-dest-find-target}
   @see-function{gdk-drag-status}
@@ -374,11 +377,11 @@
     or @code{nil} for none}
   @begin{short}
     The @sym{gtk-drag-dest-target-list} function returns the list of targets
-    this widget can accept from Drag and Drop.
+    this widget can accept from drag and drop.
   @end{short}
-  The @sym{(setf gtk-drag-dest-target-list)} function sets the target types
-  that this widget can accept from Drag and Drop. The widget must first be made
-  into a drag destination with the @fun{gtk-drag-dest-set} function.
+  The @sym{(setf gtk-drag-dest-target-list)} function sets the target types.
+  The widget must first be made into a drag destination with the
+  @fun{gtk-drag-dest-set} function.
   @see-class{gtk-widget}
   @see-class{gtk-target-list}
   @see-function{gtk-drag-dest-set}"
@@ -626,12 +629,12 @@
   The function only needs to be used when the application is starting drags
   itself, and is not needed when the @fun{gtk-drag-source-set} function is used.
 
-  The event is used to retrieve the timestamp that will be used internally to
-  grab the pointer. If the @arg{event} argument is @code{nil}, then the
-  @var{+gdk-current-time+} value will be used. However, you should try to pass
-  a real event in all cases, since that can be used by GTK to get information
-  about the start position of the drag, for example if the event is a
-  @code{:motion-notify} event.
+  The @arg{event} argument is used to retrieve the timestamp that will be used
+  internally to grab the pointer. If the @arg{event} argument is @code{nil},
+  then the @var{+gdk-current-time+} value will be used. However, you should try
+  to pass a real event in all cases, since that can be used by GTK to get
+  information about the start position of the drag, for example if the event is
+  a @code{:motion-notify} event.
 
   Generally there are three cases when you want to start a drag by hand by
   calling this function:
@@ -705,11 +708,11 @@
   The function only needs to be used when the application is starting drags
   itself, and is not needed when the @fun{gtk-drag-source-set} function is used.
 
-  The event is used to retrieve the timestamp that will be used internally to
-  grab the pointer. If the @arg{event} argument is @code{nil}, then the
-  @var{+gdk-current-time+} value will be used. However, you should try to pass
-  a real event in all cases, since that can be used to get information about the
-  drag.
+  The @arg{event} argument is used to retrieve the timestamp that will be used
+  internally to grab the pointer. If the @arg{event} argument is @code{nil},
+  then the @var{+gdk-current-time+} value will be used. However, you should try
+  to pass a real event in all cases, since that can be used to get information
+  about the drag.
 
   Generally there are three cases when you want to start a drag by hand by
   calling this function:
@@ -772,7 +775,8 @@
 
   If a drag is cancelled in this way, the result argument of the \"drag-failed\"
   handler is set to the @code{:error} value.
-  @see-class{gdk-drag-context}"
+  @see-class{gdk-drag-context}
+  @see-function{gtk-drag-begin-with-coordinates}"
   (context (g-object gdk-drag-context)))
 
 (export 'gtk-drag-cancel)
@@ -836,7 +840,7 @@
  "@version{2021-10-3}
   @argument[context]{a @class{gdk-drag-context} object for a drag, this must be
     called with a drag context for the source side of a drag}
-  @argument[id]{a string with the ID of the stock icon to use for the drag}
+  @argument[stock]{a string with the ID of the stock icon to use for the drag}
   @argument[x]{an integer with the x offset within the icon of the hotspot}
   @argument[y]{an integer with the y offset within the icon of the hotspot}
   @begin{short}
@@ -847,9 +851,10 @@
     version 3.10 and should not be used in newly written code. Use the
     @fun{gtk-drag-set-icon-name} function instead.
   @end{dictionary}
-  @see-class{gdk-drag-context}"
+  @see-class{gdk-drag-context}
+  @see-function{gtk-drag-set-icon-name}"
   (context (g-object gdk-drag-context))
-  (stock-id :string)
+  (stock :string)
   (x :int)
   (y :int))
 
@@ -926,7 +931,7 @@
     Sets the icon for a given drag from the given icon.
   @end{short}
   See the documentation for the @fun{gtk-drag-set-icon-name} function for more
-  details about using icons in Drag and Drop.
+  details about using icons in drag and drop.
   @see-class{gdk-drag-context}
   @see-class{g-icon}
   @see-function{gtk-drag-set-icon-name}"
@@ -970,7 +975,7 @@
   @begin{short}
     Checks to see if a mouse drag starting at (@arg{start-x}, @arg{start-y})
     and ending at (@arg{current-x}, @arg{current-y}) has passed the GTK drag
-    threshold, and thus should trigger the beginning of a Drag and Drop
+    threshold, and thus should trigger the beginning of a drag and drop
     operation.
   @end{short}
   @see-class{gtk-widget}"
@@ -1043,7 +1048,6 @@
   @end{short}
   @see-class{gtk-widget}
   @see-class{gdk-pixbuf}
-  @see-function{gtk-drag-source-set-icon-stock}
   @see-function{gtk-drag-source-set-icon-name}
   @see-function{gtk-drag-source-set-icon-gicon}"
   (widget (g-object gtk-widget))
@@ -1059,7 +1063,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2021-10-3}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[id]{a string with the ID of the stock icon to use}
+  @argument[stock]{a string with the ID of the stock icon to use}
   @begin{short}
     Sets the icon that will be used for drags from a particular source to a
     stock icon.
@@ -1072,7 +1076,7 @@
   @see-class{gtk-widget}
   @see-function{gtk-drag-source-set-icon-name}"
   (widget (g-object gtk-widget))
-  (id :string))
+  (stock :string))
 
 (export 'gtk-drag-source-set-icon-stock)
 
@@ -1159,7 +1163,7 @@
     targets, or @code{nil} for none}
   @begin{short}
     The @sym{gtk-drag-source-target-list} function gets the list of targets
-    this widget can provide for Drag and Drop.
+    this widget can provide for drag and drop.
   @end{short}
   The @sym{(setf gtk-drag-source-target-list)} function changes the target
   types.
