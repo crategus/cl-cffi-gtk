@@ -143,7 +143,7 @@
 (setf (gethash 'g-application-flags atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'g-application-flags atdoc:*external-symbols*)
- "@version{2021-9-9}
+ "@version{*2021-10-8}
   @begin{short}
     Flags used to define the behaviour of a @class{g-application} instance.
   @end{short}
@@ -182,7 +182,7 @@
       behave differently depending on certain environment variables. For
       instance, an editor might be expected to use the @code{GIT_COMMITTER_NAME}
       environment variable when editing a GIT commit message. The environment
-      is available to the \"command-line\" signal handler, via the
+      is available to the \"command-line\" signal handler via the
       @fun{g-application-command-line-getenv} function.}
     @entry[:non-unique]{Make no attempts to do any of the typical
       single-instance application negotiation. The application neither attempts
@@ -197,7 +197,8 @@
       Since 2.60}
   @end{table}
   @see-class{g-application}
-  @see-function{g-application-run}")
+  @see-function{g-application-run}
+  @see-function{g-application-command-line-getenv}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GApplication
@@ -236,7 +237,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-application 'type)
- "@version{2021-9-9}
+ "@version{*2021-10-8}
   @begin{short}
     The @sym{g-application} class is the foundation of an application.
   @end{short}
@@ -272,7 +273,7 @@
   instance, possibly connecting signal handlers, then calling the
   @fun{g-application-run} function. All checks for uniqueness are done
   internally. If the application is the primary instance then the startup signal
-  is emitted and the mainloop runs. If the application is not the primary
+  is emitted and the main loop runs. If the application is not the primary
   instance then a signal is sent to the primary instance and the
   @fun{g-application-run} function promptly returns.
 
@@ -344,116 +345,106 @@
     An example to show the use of the signals of an application.
     @begin{pre}
 (defun application-open (&rest argv)
-  (within-main-loop
-    (let ((app (make-instance 'g-application
-                              :application-id \"com.crategus.application-open\"
-                              :inactivity-timeout 10000
-                              :flags :handles-open)))
-      ;; Signal handler \"startup\"
-      (g-signal-connect app \"startup\"
-                        (lambda (application)
-                          (declare (ignore application))
-                          (format t \"The application is in startup.~%\")))
-      ;; Signal handler \"activate\"
-      (g-signal-connect app \"activate\"
-                        (lambda (application)
-                          (declare (ignore application))
-                          (format t \"The application is in activate.~%\")
-                          ;; Note: when doing a longer-lasting action here that
-                          ;; returns to the mainloop, you should use
-                          ;; g-application-hold and g-application-release to
-                          ;; keep the application alive until the action is
-                          ;; completed.
-                        ))
-      ;; Signal handler \"open\"
-      (g-signal-connect app \"open\"
-                        (lambda (application files n-files hint)
-                          (declare (ignore application))
-                          (format t \"The application is in open.~%\")
-                          (format t \" n-files : ~A~%\" n-files)
-                          (format t \"    hint : ~A~%\" hint)
+  (let ((app (make-instance 'g-application
+                            :application-id \"com.crategus.application-open\"
+                            :flags :handles-open))
+        (argv (if argv argv (uiop:command-line-arguments))))
+    ;; Print information about the application
+    (format t \"Start application~%\")
+    (format t \"      arg : ~a~%\" argv)
+    (format t \"  prgname : ~a~%\" (g-prgname))
+    ;; Signal handler \"startup\"
+    (g-signal-connect app \"startup\"
+                      (lambda (application)
+                        (declare (ignore application))
+                        (format t \"The application is in STARTUP~%\")))
+    ;; Signal handler \"activate\"
+    (g-signal-connect app \"activate\"
+                      (lambda (application)
+                        (declare (ignore application))
+                        (format t \"The application is in ACTIVATE~%\")
+                        ;; Note: when doing a longer-lasting action here that
+                        ;; returns to the main loop, you should use
+                        ;; g-application-hold and g-application-release to
+                        ;; keep the application alive until the action is
+                        ;; completed.
+                      ))
+    ;; Signal handler \"open\"
+    (g-signal-connect app \"open\"
+                      (lambda (application files n-files hint)
+                        (declare (ignore application))
+                          (format t \"The application is in OPEN~%\")
+                          (format t \"  n-files : ~A~%\" n-files)
+                          (format t \"     hint : ~A~%\" hint)
                           ;; The argument FILES is a C pointer to an array of
                           ;; GFile objects. We list the pathnames of the files.
                           (dotimes (i n-files)
                             (let ((file (mem-aref files '(g-object g-file) i)))
                               (format t \" ~a~%\" (g-file-path file))))))
-      ;; Signal handler \"shutdown\"
-      (g-signal-connect app \"shutdown\"
-                        (lambda (application)
-                          (declare (ignore application))
-                          (format t \"The application is in shutdown.~%\")
-                          ;; Stop the main loop
-                          (leave-gtk-main)))
-      ;; Start the application
-      (g-application-run app argv)))
-  (join-gtk-main))
+    ;; Signal handler \"shutdown\"
+    (g-signal-connect app \"shutdown\"
+                      (lambda (application)
+                        (declare (ignore application))
+                        (format t \"The application is in SHUTDOWN~%\")))
+    ;; Run the application
+    (g-application-run app argv)))
     @end{pre}
     An example to show the implementation of actions for an application.
     @begin{pre}
 (defun activate-action (app name)
-  (let ((param-type (g-action-group-action-parameter-type app name))
+  (let ((ptype (g-action-group-action-parameter-type app name))
         (state (g-action-group-action-state app name))
         (enabled (g-action-group-action-enabled app name)))
     ;; Print information about the action
     (format t \"     action name : ~A~%\" name)
-    (format t \"  parameter type : ~A~%\" param-type)
+    (format t \"  parameter type : ~A~%\" ptype)
     (unless (null-pointer-p state)
       (format t \"      state type : ~A~%\" (g-variant-type-string state)))
     (format t \"           state : ~A~%\" state)
-    (format t \"         enabled : ~A~%~%\" enabled)
+    (format t \"         enabled : ~A~%\" enabled)
     ;; Activate the action
     (g-action-group-activate-action app name state)))
 
 (defun application-action (&rest argv)
-  (within-main-loop
-    (let ((app (make-instance 'g-application
-                              :application-id \"com.crategus.application-action\"
-                              :inactivity-timeout 10000
-                              :flags :none)))
-      ;; Create the action \"simple-action\"
-      (let ((action (g-simple-action-new \"simple-action\" nil)))
-        ;; Connect a handler to the signal activate
-        (g-signal-connect action \"activate\"
-            (lambda (action parameter)
-              (declare (ignore parameter))
-              (format t \"Action ~A is activated.~%~%\" (g-action-name action))))
-        ;; Add the action to the action map of the application
-        (g-action-map-add-action app action))
-      ;; Create the action \"toggle-action\"
-      (let ((action (g-simple-action-new-stateful \"toggle-action\"
-                                                  \"b\"
-                                                  (g-variant-new-boolean nil))))
-        ;; Connect a handler to the signal activate
-        (g-signal-connect action \"activate\"
-            (lambda (action parameter)
-              (declare (ignore parameter))
-              (format t \"Action ~A is activated.~%\" (g-action-name action))
-              (let ((state (g-variant-boolean (g-action-state action))))
-                (if state
-                    (setf (g-action-state action) (g-variant-new-boolean nil))
-                    (setf (g-action-state action) (g-variant-new-boolean t)))
-                (format t \"The state changed from ~A to ~A.~%~%\"
-                          state
-                          (not state)))))
-        ;; Add the action to the action map of the application
-        (g-action-map-add-action app action))
-      ;; Signal handler \"activate\"
-      (g-signal-connect app \"activate\"
-                        (lambda (application)
-                          (format t \"The application is in activate.~%~%\")
-                          ;; Activate the actions and print information
-                          (activate-action application \"simple-action\")
-                          (activate-action application \"toggle-action\")))
-      ;; Signal handler \"shutdown\"
-      (g-signal-connect app \"shutdown\"
-                        (lambda (application)
-                          (declare (ignore application))
-                          (format t \"The application is in shutdown.~%\")
-                          ;; Stop the main loop
-                          (leave-gtk-main)))
-      ;; Start the application
-      (g-application-run app argv)))
-  (join-gtk-main))
+  (let ((app (make-instance 'g-application
+                            :application-id \"com.crategus.application-action\"
+                            :flags :none)))
+    ;; Create the \"simple-action\" action
+    (let ((action (g-simple-action-new \"simple-action\" nil)))
+      ;; Connect a handler to the \"activate\" signal
+      (g-signal-connect action \"activate\"
+          (lambda (action parameter)
+            (declare (ignore parameter))
+            (format t \"Action ~A is activated.~%\" (g-action-name action))))
+      ;; Add the action to the action map of the application
+      (g-action-map-add-action app action))
+    ;; Create the \"toggle-action\" action
+    (let ((action (g-simple-action-new-stateful \"toggle-action\"
+                                                \"b\"
+                                                (g-variant-new-boolean nil))))
+      ;; Connect a handler to the \"activate\" signal
+      (g-signal-connect action \"activate\"
+          (lambda (action parameter)
+            (declare (ignore parameter))
+            (format t \"Action ~A is activated.~%\" (g-action-name action))
+            (let ((state (g-variant-boolean (g-action-state action))))
+              (if state
+                  (setf (g-action-state action) (g-variant-new-boolean nil))
+                  (setf (g-action-state action) (g-variant-new-boolean t)))
+              (format t \"The state changed from ~A to ~A.~%\"
+                        state
+                        (not state)))))
+      ;; Add the action to the action map of the application
+      (g-action-map-add-action app action))
+    ;; Signal handler \"activate\"
+    (g-signal-connect app \"activate\"
+                      (lambda (application)
+                        (format t \"The application is in activate.~%\")
+                        ;; Activate the actions and print information
+                        (activate-action application \"simple-action\")
+                        (activate-action application \"toggle-action\")))
+    ;; Run the application
+    (g-application-run app argv)))
     @end{pre}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -650,7 +641,7 @@
 (setf (gethash 'g-application-application-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-application-id 'function)
- "@version{2021-9-9}
+ "@version{*2021-10-13}
   @syntax[]{(g-application-application-id object) => id}
   @syntax[]{(setf (g-application-application-id object) id)}
   @argument[object]{a @class{g-application} instance}
@@ -682,7 +673,7 @@
 (setf (gethash 'g-application-flags atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-flags 'function)
- "@version{2021-9-9}
+ "@version{*2021-10-13}
   @syntax[]{(g-application-flags object) => flags}
   @syntax[]{(setf (g-application-flags object) flags)}
   @argument[object]{a @class{g-application} instance}
@@ -715,7 +706,7 @@
 (setf (gethash 'g-application-inactivity-timeout atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-inactivity-timeout 'function)
- "@version{2021-9-9}
+ "@version{*2021-10-13}
   @syntax[]{(g-application-inactivity-timeout object) => timeout}
   @syntax[]{(setf (g-application-inactivity-timeout object) timeout)}
   @argument[object]{a @class{g-application} instance}
@@ -732,7 +723,6 @@
 
   This is the amount of time in milliseconds after the last call to the
   @fun{g-application-release} function before the application stops running.
-
   This call has no side effects of its own. The value set here is only used
   for next time the @fun{g-application-release} function drops the use count to
   zero. Any timeouts currently in progress are not impacted.
@@ -751,7 +741,7 @@
 (setf (gethash 'g-application-is-busy atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-is-busy 'function)
- "@version{2021-9-9}
+ "@version{*2021-10-13}
   @syntax[]{(g-application-is-busy object) => setting}
   @argument[object]{a @class{g-application} instance}
   @argument[setting]{@em{true} if the application is currenty marked as busy}
@@ -780,7 +770,7 @@
 (setf (gethash 'g-application-is-registered atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-is-registered 'function)
- "@version{2021-9-9}
+ "@version{*2021-10-13}
   @syntax[]{(g-application-is-registered object) => setting}
   @argument[object]{a @class{g-application} instance}
   @argument[setting]{@em{true} if the application is registered}
@@ -806,7 +796,7 @@
 (setf (gethash 'g-application-is-remote atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-is-remote 'function)
- "@version{2021-9-9}
+ "@version{*2021-10-13}
   @syntax[]{(g-application-is-remote object) => setting}
   @argument[object]{a @class{g-application} instance}
   @argument[setting]{@em{true} if the application is remote}
@@ -818,11 +808,9 @@
   Checks if the application is remote. If the application is remote then it
   means that another instance of the application already exists, the 'primary'
   instance. Calls to perform actions on the application will result in the
-  actions being performed by the primary instance.
-
-  The value of this property cannot be accessed before the
-  @fun{g-application-register} function has been called. See the
-  @fun{g-application-is-registered} function.
+  actions being performed by the primary instance. The value of this property
+  cannot be accessed before the @fun{g-application-register} function has been
+  called. See the @fun{g-application-is-registered} function.
   @see-class{g-application}
   @see-function{g-application-register}
   @see-function{g-applicatoin-is-registered}")
@@ -841,7 +829,7 @@
 (setf (gethash 'g-application-resource-base-path atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-application-resource-base-path 'function)
- "@version{2021-9-9}
+ "@version{*2021-10-13}
   @syntax[]{(g-application-resource-base-path object) => path}
   @syntax[]{(setf (g-application-resource-base-path object) path)}
   @argument[object]{a @class{g-application} instance}
@@ -859,24 +847,20 @@
   The resource base path is used to automatically load various application
   resources such as menu layouts and action descriptions. The various types of
   resources will be found at fixed names relative to the given resource base
+  path. By default, the resource base path is determined from the application ID
+  by prefixing '/' and replacing each '.' with '/'. This is done at the time
+  that the @class{g-application} instance is constructed. Changes to the
+  application ID after that point will not have an impact on the resource base
   path.
-
-  By default, the resource base path is determined from the application ID by
-  prefixing '/' and replacing each '.' with '/'. This is done at the time that
-  the @class{g-application} instance is constructed. Changes to the application
-  ID after that point will not have an impact on the resource base path.
 
   As an example, if the application has an ID of \"org.example.app\" then the
   default resource base path will be \"/org/example/app\". If this is a
   @class{gtk-application} instance, and you have not manually changed the
   resource base path, then GTK will then search for the menus of the application
-  at \"/org/example/app/gtk/menus.ui\".
-
-  See the @class{g-resource} documentation for more information about adding
-  resources to your application.
-
-  You can disable automatic resource loading functionality by setting the
-  resource base path to @code{nil}.
+  at \"/org/example/app/gtk/menus.ui\". See the @class{g-resource} documentation
+  for more information about adding resources to your application. You can
+  disable automatic resource loading functionality by setting the resource base
+  path to @code{nil}.
 
   Changing the resource base path once the application is running is not
   recommended. The point at which the resource base path is consulted for
@@ -1108,8 +1092,8 @@
   @begin{short}
     Immediately quits the application.
   @end{short}
-  Upon return to the mainloop, the @fun{g-application-run} function will return,
-  emitting only the \"shutdown\" signal before doing so.
+  Upon return to the main loop, the @fun{g-application-run} function will
+  return, emitting only the \"shutdown\" signal before doing so.
 
   The hold count is ignored. The result of calling the @fun{g-application-run}
   function again after it returns is unspecified.
@@ -1125,7 +1109,7 @@
 
 (defcfun ("g_application_activate" g-application-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-9}
+ "@version{*2021-10-10}
   @argument[application]{a @class{g-application} instance}
   @begin{short}
     Activates the application.
@@ -1143,17 +1127,15 @@
 ;;; g_application_open ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: The argument FILES is wrong. It must be of type GFile**.
-
 (defcfun ("g_application_open" %g-application-open) :void
   (application (g-object g-application))
-  (files g-strv)
+  (files :pointer)
   (n-files :int)
   (hint :string))
 
 (defun g-application-open (application files hint)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-9}
+ "@version{2021-10-8}
   @argument[application]{a @class{g-application} instance}
   @argument[files]{a list of strings with the file names}
   @argument[hint]{a string with a hint or an empty string \"\"}
@@ -1168,84 +1150,92 @@
 
   The application must be registered before calling this function and it must
   have the @code{:handles-open} flag set.
-  @see-class{g-application}"
-  (%g-application-open application files (length files) hint))
+  @begin[Note]{dictionary}
+    The Lisp implementation converts the list of file names with the
+    @fun{g-file-new-for-path} function to an foreign C array of @class{g-file}
+    objects.
+  @end{dictionary}
+  @see-class{g-application}
+  @see-class{g-file}
+  @see-function{g-file-new-for-path}"
+  (let ((n-files (length files)))
+    (with-foreign-object (files-ptr :pointer n-files)
+      (loop for i from 0 below n-files
+            for file in files
+            for file-ptr = (g-object-pointer (g-file-new-for-path file))
+            do (setf (mem-aref files-ptr :pointer i) file-ptr))
+      (%g-application-open application files-ptr n-files hint))))
 
 (export 'g-application-open)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_send_notification ()
-;;;
-;;; void
-;;; g_application_send_notification (GApplication *application,
-;;;                                  const gchar *id,
-;;;                                  GNotification *notification);
-;;;
-;;; Sends a notification on behalf of application to the desktop shell. There is
-;;; no guarantee that the notification is displayed immediately, or even at all.
-;;;
-;;; Notifications may persist after the application exits. It will be
-;;; D-Bus-activated when the notification or one of its actions is activated.
-;;;
-;;; Modifying notification after this call has no effect. However, the object
-;;; can be reused for a later call to this function.
-;;;
-;;; id may be any string that uniquely identifies the event for the application.
-;;; It does not need to be in any special format. For example, "new-message"
-;;; might be appropriate for a notification about new messages.
-;;;
-;;; If a previous notification was sent with the same id , it will be replaced
-;;; with notification and shown again as if it was a new notification. This
-;;; works even for notifications sent from a previous execution of the
-;;; application, as long as id is the same string.
-;;;
-;;; id may be NULL, but it is impossible to replace or withdraw notifications
-;;; without an id.
-;;;
-;;; If notification is no longer relevant, it can be withdrawn with
-;;; g_application_withdraw_notification().
-;;;
-;;; application :
-;;;     a GApplication
-;;;
-;;; id :
-;;;     id of the notification, or NULL.
-;;;
-;;; notification :
-;;;     the GNotification to send
-;;;
-;;; Since 2.40
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_send_notification" g-application-send-notification)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{*2021-10-13}
+  @argument[application]{a @class{g-application} instance}
+  @argument[id]{a string with the ID of the notification, or @code{nil}}
+  @argument[notification]{a @class{g-notification} instance to send}
+  @begin{short}
+    Sends a notification on behalf of the application to the desktop shell.
+  @end{short}
+  There is no guarantee that the notification is displayed immediately, or even
+  at all.
+  Notifications may persist after the application exits. It will be D-Bus
+  activated when the notification or one of its actions is activated. Modifying
+  notification after this call has no effect. However, the object can be reused
+  for a later call to this function. The @arg{id} argument may be any string
+  that uniquely identifies the event for the application. It does not need to be
+  in any special format. For example, \"new-message\" might be appropriate for a
+  notification about new messages. If a previous notification was sent with the
+  same @arg{id}, it will be replaced with notification and shown again as if it
+  was a new notification. This works even for notifications sent from a previous
+  execution of the application, as long as id is the same string. The @arg{id}
+  argument may be @code{nil}, but it is impossible to replace or withdraw
+  notifications without an ID.
+
+  If the notification is no longer relevant, it can be withdrawn with the
+  @fun{g-application-withdraw-notification} function.
+  @see-class{g-application}
+  @see-function{g-application-withdraw-notification}"
+  (application (g-object g-application))
+  (id :string)
+  (notification (g-object g-notification)))
+
+(export 'g-application-send-notification)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_withdraw_notification ()
-;;;
-;;; void
-;;; g_application_withdraw_notification (GApplication *application,
-;;;                                      const gchar *id);
-;;;
-;;; Withdraws a notification that was sent with
-;;; g_application_send_notification().
-;;;
-;;; This call does nothing if a notification with id does not exist or the
-;;; notification was never sent.
-;;;
-;;; This function works even for notifications sent in previous executions of
-;;; this application, as long id is the same as it was for the sent
-;;; notification.
-;;;
-;;; Note that notifications are dismissed when the user clicks on one of the
-;;; buttons in a notification or triggers its default action, so there is no
-;;; need to explicitly withdraw the notification in that case.
-;;;
-;;; application :
-;;;     a GApplication
-;;;
-;;; id :
-;;;     id of a previously sent notification
-;;;
-;;; Since 2.40
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_withdraw_notification"
+           g-application-withdraw-notification) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-10-8}
+  @argument[application]{a @class{g-application} instance}
+  @argument[id]{a string with the ID of a previously sent notification}
+  @begin{short}
+    Withdraws a notification that was sent with the
+    @fun{g-application-send-notification} function.
+  @end{short}
+  This call does nothing if a notification with @arg{id} does not exist or the
+  notification was never sent.
+
+  This function works even for notifications sent in previous executions of this
+  application, as long @arg{id} is the same as it was for the sent notification.
+
+  Note that notifications are dismissed when the user clicks on one of the
+  buttons in a notification or triggers its default action, so there is no need
+  to explicitly withdraw the notification in that case.
+  @see-class{g-application}
+  @see-function{g-application-send-notification}"
+  (application (g-object g-application))
+  (id :string))
+
+(export 'g-application-withdraw-notification)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_run ()
@@ -1258,7 +1248,7 @@
 
 (defun g-application-run (application argv)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-9}
+ "@version{*2021-10-8}
   @argument[application]{a @class{g-application} instance}
   @argument[argv]{a list of strings with command line parameters, or @code{nil}}
   @return{An integer with the exit status.}
@@ -1357,7 +1347,7 @@
 
 (defun g-application-add-main-option-entries (application entries)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-9}
+ "@version{*2021-10-10}
   @argument[application]{a @class{g-application} instance}
   @argument[entries]{a list of option entries}
   @begin{short}
