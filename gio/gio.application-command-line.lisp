@@ -120,44 +120,50 @@
   GIT does not return until the editing is done.
   @begin[Example]{dictionary}
     Normally, the command line is completely handled in the \"command-line\"
-    handler. The launching instance exits once the signal handler in the
+    signal handler. The launching instance exits once the signal handler in the
     primary instance has returned, and the return value of the signal handler
     becomes the exit status of the launching instance.
     @begin{pre}
 (defun application-cmdline (&rest argv)
-  (within-main-loop
-    (let ((app (make-instance 'g-application
-                              :application-id
-                              \"com.crategus.application-cmdline\"
-                              :inactivity-timeout 10000
-                              :flags :handles-command-line))
-          (argv (if argv argv #+sbcl sb-ext:*posix-argv*)))
-      ;; Signal handler \"startup\"
-      (g-signal-connect app \"startup\"
-                        (lambda (application)
-                          (declare (ignore application))
-                          (format t \"Signal handler 'startup'~%\")))
-      ;; Signal handler \"command-line\"
-      (g-signal-connect app \"command-line\"
-          (lambda (application cmdline)
-            (declare (ignore application))
-            (let ((args (g-application-command-line-get-arguments cmdline))
-                  (data (g-application-command-line-get-platform-data cmdline)))
-              (format t \"Signal handler 'command-line'~%\")
-              (format t \"     arguments : ~a~%\" args)
-              (format t \" platform-data : ~a~%\" data)
-              ;; Return the exit status
-              0)))
-      ;; Signal handler \"shutdown\"
-      (g-signal-connect app \"shutdown\"
-                        (lambda (application)
-                          (declare (ignore application))
-                          (format t \"Signal handler 'shutdown'~%\")
-                          ;; Stop the main loop
-                          (leave-gtk-main)))
-      ;; Start the application
-      (g-application-run app argv)))
-  (join-gtk-main))
+  (let ((app (make-instance 'g-application
+                            :application-id
+                            \"com.crategus.application-cmdline\"
+                            :flags :handles-command-line))
+        (argv (if argv argv (uiop:command-line-arguments))))
+    ;; Print info about the application
+    (format t \"Start application~%\")
+    (format t \"       argv : ~a~%\" argv)
+    (format t \"    prgname : ~a~%\" (g-prgname))
+    ;; Signal handler \"command-line\"
+    (g-signal-connect app \"command-line\"
+        (lambda (application cmdline)
+          (declare (ignore application))
+          (let ((args (g-application-command-line-get-arguments cmdline)))
+            (format t \"Signal handler COMMAND-LINE~%\")
+            (format t \"  arguments : ~a~%\" args)
+            ;; Return the exit status
+            0)))
+    ;; Run the application
+    (g-application-run app argv)))
+    @end{pre}
+    This is the output, when executing the example from the Lisp prompt:
+    @begin{pre}
+(gio-example:application-cmdline \"file1\" \"file2\")
+=> Start application
+        argv : (file1 file2)
+     prgname : sbcl
+   Signal handler COMMAND-LINE
+         arguments : (file1 file2)
+   0
+    @end{pre}
+    A stand-alone executable for the example has the following output:
+    @begin{pre}
+./application-cmdline file1 file2
+=> Start application
+          argv : (file1 file2)
+       prgname : application-cmdline
+   Signal handler COMMAND-LINE
+     arguments : (file1 file2)
     @end{pre}
   @end{dictionary}
   @see-slot{g-application-command-line-arguments}
@@ -282,20 +288,21 @@
 
 (defun g-application-command-line-get-arguments (cmdline)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-7}
+ "@version{*2021-10-8}
   @argument[cmdline]{a @class{g-application-command-line} instance}
   @return{The list of strings containing the command line arguments.}
   @begin{short}
     Gets the list of arguments that was passed on the command line.
   @end{short}
-
-  The strings in the list may contain non-UTF-8 data on UNIX (such as
-  filenames or arguments given in the system locale) but are always in UTF-8
+  The strings in the list may contain non-UTF-8 data on UNIX, such as
+  filenames or arguments given in the system locale, but are always in UTF-8
   on Windows.
 
-  If you wish to use the return value with @code{GOptionContext}, you must use
-  the function @code{g_option_context_parse_strv()}.
-  @see-class{g-application-command-line}"
+  If you wish to use the return value with the @type{g-option-context}
+  implementation, you must use the @fun{g-option-context-parse-strv} function.
+  @see-class{g-application-command-line}
+  @see-type{g-option-context}
+  @see-function{g-option-context-parse-strv}"
   (with-foreign-object (argc :int)
     (%g-application-command-line-get-arguments cmdline argc)))
 
@@ -334,13 +341,13 @@
 
 (defcfun ("g_application_command_line_get_environ"
            g-application-command-line-environ) (g-strv :free-from-foreign nil)
- "@version{2021-8-3}
+ "@version{*2021-10-10}
   @argument[cmdline]{a @class{g-application-command-line} object}
   @return{A list of strings with the environment strings, or @code{nil} if they
     were not sent.}
   @begin{short}
     Gets the contents of the 'environ' variable of the command line invocation,
-    as would be returned by the function @fun{g-environ}.
+    as would be returned by the @fun{g-environ} function.
   @end{short}
   Each item in the list of the form @code{NAME} = @code{VALUE}. The strings may
   contain non-UTF8 data.
@@ -350,7 +357,7 @@
   possible that the environment is still not available, due to invocation
   messages from other applications.
 
-  See the function @fun{g-application-command-line-getenv} if you are only
+  See the @fun{g-application-command-line-getenv} function if you are only
   interested in the value of a single environment variable.
   @see-class{g-application-command-line}
   @see-function{g-application-command-line-getenv}
@@ -418,30 +425,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_create_file_for_arg ()
-;;;
-;;; GFile *
-;;; g_application_command_line_create_file_for_arg
-;;;                                (GApplicationCommandLine *cmdline,
-;;;                                 const gchar *arg);
-;;;
-;;; Creates a GFile corresponding to a filename that was given as part of the
-;;; invocation of cmdline .
-;;;
-;;; This differs from g_file_new_for_commandline_arg() in that it resolves
-;;; relative pathnames using the current working directory of the invoking
-;;; process rather than the local process.
-;;;
-;;; cmdline :
-;;;     a GApplicationCommandLine
-;;;
-;;; arg :
-;;;     an argument from cmdline .
-;;;
-;;; Returns :
-;;;     a new GFile.
-;;;
-;;; Since 2.36
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_command_line_create_file_for_arg"
+           g-application-command-line-create-file-for-arg) (g-object g-file)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-10-8}
+  @argument[cmdline]{a @class{g-application-command-line} object}
+  @argument[arg]{a string with an argument from @arg{cmdline}}
+  @return{A new @class{g-file} object.}
+  @begin{short}
+    Creates a @class{g-file} object corresponding to a filename that was given
+    as part of the invocation of the command line.
+  @end{short}
+
+  This differs from the @fun{g-file-new-for-commandline-arg} function in that
+  it resolves relative pathnames using the current working directory of the
+  invoking process rather than the local process.
+  @see-class{g-application-command-line}
+  @see-class{g-file}
+  @see-function{g-file-new-for-commandline-arg}"
+  (cmdline (g-object g-application-command-line))
+  (arg :string))
+
+(export 'g-application-command-line-create-file-for-arg)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_command_line_getenv ()
@@ -485,7 +492,7 @@
 (defcfun ("g_application_command_line_get_platform_data"
            g-application-command-line-get-platform-data)
     (:pointer (:struct g-variant))
- "@version{2021-8-3}
+ "@version{*2021-10-10}
   @argument[cmdline]{a @class{g-application-command-line} object}
   @return{A @type{g-variant} dictionary with the platform data, or a @code{NULL}
     pointer.}
@@ -546,7 +553,7 @@
 
   In the case that the command line invocation is local, the situation is
   slightly more complicated. If the command line invocation results in the
-  mainloop running, i.e. because the use-count of the application increased to
+  main loop running, i.e. because the use-count of the application increased to
   a non-zero value, then the application is considered to have been
   'successful' in a certain sense, and the exit status is always zero. If the
   application use count is zero, though, the exit status of the local
