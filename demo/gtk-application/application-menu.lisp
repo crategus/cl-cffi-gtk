@@ -1,4 +1,4 @@
-;;; Example Application Menu (2021-9-8)
+;;; Example Application Menu - 2021-10-10
 
 (in-package :gtk-application)
 
@@ -80,64 +80,50 @@
   (setf (g-action-state action) parameter))
 
 (defun application-menu (&rest argv)
-  (within-main-loop
-    (let (;; Create an application
-          (app (make-instance 'gtk-application
-                              :application-id "com.crategus.application-menu"
-                              :flags :none)))
-      ;; Connect signal "startup" to the application
-      (g-signal-connect app "startup"
-          (lambda (application)
-            ;; Intitialize the application menu and the menubar
-            (let ((builder (make-instance 'gtk-builder)))
-              ;; Read the menus from a string
-              (gtk-builder-add-from-string builder *menu-ui*)
-              ;; Set the application menu
-              (setf (gtk-application-app-menu application)
-                    (gtk-builder-object builder "app-menu"))
-              ;; Set the menubar
-              (setf (gtk-application-menubar application)
-                    (gtk-builder-object builder "menubar")))))
-      ;; Connect signal "activate" to the application
-      (g-signal-connect app "activate"
-          (lambda (application)
-            ;; Create an application window
-            (let (;; Define action entries for the menu items
-                  (entries (list
-                             (list "toolbar" nil nil "true" #'change-state)
-                             (list "statusbar" nil nil "false" #'change-state)
-                             (list "fullscreen" nil nil "false" #'change-state)
-                             (list "sources"
-                                   nil
-                                   "s"
-                                   "'vala'"
-                                   #'change-radio-state)
-                             (list "markup"
-                                   nil
-                                   "s"
-                                   "'html'"
-                                   #'change-radio-state)))
-                  (window (make-instance 'gtk-application-window
-                                         :application application
-                                         :title "Application Menu"
-                                         :default-width 500
-                                         :default-height 300)))
-              ;; Connect signal "destroy" to the application window
-              (g-signal-connect window "destroy"
-                                (lambda (widget)
-                                  (declare (ignore widget))
-                                  ;; Quit the application
-                                  (g-application-quit app)))
-              ;; Add the action entries to the application window
-              (g-action-map-add-action-entries window entries)
-              ;; Show the application window
-              (gtk-widget-show-all window))))
-      ;; Connect signal "shutdown" to the application
-      (g-signal-connect app "shutdown"
-          (lambda (application)
-            (declare (ignore application))
-            ;; Leave the main loop on shutdown
-            (leave-gtk-main)))
-      ;; Run the application
-      (g-application-run app argv)))
-      (join-gtk-main))
+  (let (;; Create an application
+        (app (make-instance 'gtk-application
+                            :application-id "com.crategus.application-menu"
+                            :flags :none)))
+    ;; Connect signal "startup" to the application
+    (g-signal-connect app "startup"
+        (lambda (application)
+          ;; Intitialize the application menu and the menubar
+          (let ((builder (make-instance 'gtk-builder)))
+            ;; Read the menus from a string
+            (gtk-builder-add-from-string builder *menu-ui*)
+            ;; Set the application menu
+            (setf (gtk-application-app-menu application)
+                  (gtk-builder-object builder "app-menu"))
+            ;; Set the menubar
+            (setf (gtk-application-menubar application)
+                  (gtk-builder-object builder "menubar")))))
+    ;; Connect signal "activate" to the application
+    (g-signal-connect app "activate"
+        (lambda (application)
+          ;; Create an application window
+          (let (;; Define action entries for the menu items
+                (entries (list
+                           (list "toolbar" nil nil "true" #'change-state)
+                           (list "statusbar" nil nil "false" #'change-state)
+                           (list "fullscreen" nil nil "false" #'change-state)
+                           (list "sources"
+                                 nil
+                                 "s"
+                                 "'vala'"
+                                 #'change-radio-state)
+                           (list "markup"
+                                 nil
+                                 "s"
+                                 "'html'"
+                                 #'change-radio-state)))
+                (window (make-instance 'gtk-application-window
+                                       :application application
+                                       :title "Application Menu"
+                                       :default-width 480
+                                       :default-height 300)))
+            ;; Add the action entries to the application window
+            (g-action-map-add-action-entries window entries)
+            ;; Show the application window
+            (gtk-widget-show-all window))))
+    ;; Run the application
+    (g-application-run app argv)))

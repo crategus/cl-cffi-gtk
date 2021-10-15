@@ -28,7 +28,7 @@
 
 #+sbcl
 (defun main()
-  (let ((argv sb-ext:*posix-argv*)
+  (let ((argv (uiop:command-line-arguments))
         (entries '(("repeats" #\r (:in-main) :int repeats "Average over N repetitions" "N")
                    ("max-size" #\m (:in-main) :int max-size "Test up to 2^M items" "M")
                    ("verbose" #\v (:in-main) :none verbose "Be verbose" nil)

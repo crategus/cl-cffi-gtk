@@ -1,4 +1,4 @@
-;;;; Simple Application (2021-8-17)
+;;;; Application Properties - 2021-10-12
 
 (in-package :gtk-application)
 
@@ -10,31 +10,25 @@
   (format t "      is-registered : ~a~%" (g-application-is-registered app))
   (format t "          is-remote : ~a~%" (g-application-is-remote app))
   (format t " resource-base-path : ~a~%" (g-application-resource-base-path app))
-  (format t "~%")
   (format t "      active-window : ~a~%" (gtk-application-active-window app))
   (format t "           app-menu : ~a~%" (gtk-application-app-menu app))
   (format t "            menubar : ~a~%" (gtk-application-menubar app))
   (format t "   register-session : ~a~%" (gtk-application-register-session app))
-  (format t " screensaver-active : ~a~%" (gtk-application-screensaver-active app))
-)
+  (format t " screensaver-active : ~a~%" (gtk-application-screensaver-active app)))
 
 (defun application-properties (&rest argv)
-  (within-main-loop
     (let (;; Create an application
           (app (make-instance 'gtk-application
                               :application-id
                               "com.crategus.application-properties"
                               :register-session t
-                              :inactivity-timeout 10000
+                              :inactivity-timeout 5000
                               :flags :send-enviroment)))
       ;; Connect signal "startup" to the application
       (g-signal-connect app "startup"
           (lambda (application)
             (format t "~%in signal STARTUP~%")
-            (application-print-properties application)
-
-      ))
-
+            (application-print-properties application)))
       ;; Connect signal "activate" to the applicaton
       (g-signal-connect app "activate"
           (lambda (application)
@@ -46,22 +40,12 @@
                                          :default-height 300)))
               (format t "~%in signal ACTIVATE~%")
               (application-print-properties application)
-
-              ;; Connect signal "destroy" to the application window
-              (g-signal-connect window "destroy"
-                                (lambda (widget)
-                                  (declare (ignore widget))
-                                  ;; Quit the application
-                                  (g-application-quit app)))
               ;; Show the application window
               (gtk-widget-show-all window))))
       ;; Connect signal "shutdown" to the application
       (g-signal-connect app "shutdown"
           (lambda (application)
             (format t "~%in signal SHUTDOWN~%")
-            (application-print-properties application)
-            ;; Leave the main loop on shutdown of the application
-            (leave-gtk-main)))
+            (application-print-properties application)))
       ;; Run the application
       (g-application-run app argv)))
-  (join-gtk-main))

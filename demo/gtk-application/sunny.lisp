@@ -1,8 +1,6 @@
-;;;; Example Sunny (2021-9-18)
+;;;; Example Sunny - 2021-10-13
 
 (in-package :gtk-application)
-
-(defvar *sunny-application* nil)
 
 (defparameter *sunny-menus*
 "<interface>
@@ -29,36 +27,11 @@
   ()
   (:metaclass gobject-class))
 
-(defun sys-path (filename)
-  (let ((system-path (asdf:system-source-directory :gtk-application)))
-    (princ-to-string (merge-pathnames filename system-path))))
-
-(defun read-file (filename)
-  (with-open-file (instream filename :direction :input :if-does-not-exist nil)
-    (when instream
-      (let ((string (make-string (file-length instream))))
-        (read-sequence string instream)
-        string))))
-
-(defun clear-buffer (buffer)
-  (multiple-value-bind (start end)
-      (gtk-text-buffer-bounds buffer)
-    (gtk-text-buffer-delete buffer start end)))
-
-(defun load-file-buffer (buffer filename)
-  (with-open-file (stream filename)
-    (clear-buffer buffer)
-    (do ((line (read-line stream nil)
-               (read-line stream nil)))
-        ((null line))
-      (gtk-text-buffer-insert buffer line)
-      (gtk-text-buffer-insert buffer (format nil "~%")))))
-
-(defun new-application-window (application filename)
+(defun new-sunny-window (application filename)
   (let ((window (make-instance 'gtk-application-window
                                :application application
                                :title "Sunny"
-                               :show-menu-bar t
+                               :show-menubar nil
                                :icon-name "sunny"
                                :default-width 480
                                :default-height 320))
@@ -70,115 +43,89 @@
                                  :vexpand t))
         (textview (make-instance 'gtk-text-view))
         (overlay (make-instance 'gtk-overlay)))
-
-    (format t "New Application window.~%")
-    (format t "   application : ~a~%" application)
-    (format t "      filename : ~a~%" filename)
-    (format t "       windows : ~a~%" (gtk-application-windows application))
-
+    (declare (ignorable header))
+    ;; TODO: Does not work as expected. The application window has no menu, when
+    ;; setting the titlebar.
+;    (gtk-widget-show header)
 ;    (setf (gtk-window-titlebar window) header)
-
-    ;; Connect signal "destroy" to the application window
-    (g-signal-connect window "destroy"
-        (lambda (widget)
-          (declare (ignore widget))
-          (let ((windows (gtk-application-windows *sunny-application*)))
-            (format t "Signal destroy.~%")
-            (format t "  windows : ~a~%" windows)
-;          (unless windows
-;            ;; Quit the application
-;            (g-application-quit application))
-)))
-
+    ;; Load the file into the buffer
     (when filename
       (let ((buffer (gtk-text-view-buffer textview)))
-        (format t "    buffer : ~a~%" buffer)
-        (load-file-buffer buffer (sys-path filename))
-    ))
-
+        (load-file-into-buffer buffer (sys-path filename))))
+    ;; Pack and show the widgets
     (gtk-container-add scrolled textview)
     (gtk-container-add overlay scrolled)
     (gtk-container-add window overlay)
-
     (gtk-widget-show-all window)))
 
-(defun new-activated (action parameter)
+(defun sunny-action-new (application action parameter)
   (declare (ignore action parameter))
-  (format t "New Activated.~%")
-  (g-application-activate *sunny-application*))
+  (g-application-activate application))
 
-(defun about-activated (action parameter)
-  (declare (ignore action parameter))
-  (format t "About Activated.~&")
+(defun sunny-action-about (application action parameter)
+  (declare (ignore application action parameter))
   (gtk-show-about-dialog nil
+                         :modal t
                          :program-name "Sunny"
                          :title "About Sunny"
                          :logo-icon-name "sunny"
                          :comments "A cheap Bloatpad clone."))
 
-(defun quit-activated (action parameter)
+(defun sunny-action-quit (application action parameter)
   (declare (ignore action parameter))
-  (let* ((application *sunny-application*)
-         (windows (gtk-application-windows application)))
-    (format t "Quit activated.~%")
-    (format t "  application : ~a~%" application)
-    (format t "      windows : ~a~%" windows)
+  (let ((windows (gtk-application-windows application)))
     (dolist (window windows)
       (gtk-widget-destroy window))))
-;    (g-application-quit application)))
 
 (defun sunny (&rest argv)
-  (within-main-loop
-    (let (;; Create the application
-          (app (make-instance 'sunny
-                              :application-id "com.crategus.sunny"
-                              :flags '(:handles-open))))
-      (setf *sunny-application* app)
-      ;; Connect signal "activate" to the application
-      (g-signal-connect app "activate"
-                            (lambda (application)
-                              (format t "Application is in activate.~%")
-                              (new-application-window application nil)))
-
-      ;; Connect signal "startup" to the application
-      (g-signal-connect app "startup"
-          (lambda (application)
-            (format t "Application is in startup.~%")
-            (let ((entries (list (list "about" #'about-activated nil nil nil)
-                                 (list "quit" #'quit-activated nil nil nil)
-                                 (list "new" #'new-activated nil nil)))
-                  (builder (make-instance 'gtk-builder)))
-
-            (setf (g-application-name) "Sunny")
-            (g-action-map-add-action-entries application entries)
-
-            ;; Read the menus from a string
-            (gtk-builder-add-from-string builder *sunny-menus*)
-            ;; Set the application menu
-            (setf (gtk-application-app-menu application)
-                  (gtk-builder-object builder "app-menu")))))
-
-      ;; Connect signal "open" to the application
-      (g-signal-connect app "open"
-          (lambda (application files n-files hint)
-            (declare (ignore hint))
-            (format t "Application is in open.~%")
-
-            (dotimes (i n-files)
-              (let* ((file (mem-aref files '(g-object g-file) i))
-                     (filename (g-file-basename file)))
-                (format t "  filename : ~a~%" filename)
-                (new-application-window application filename)))
-
-      ))
-
-      ;; Connect signal "shutdown" to the application
-      (g-signal-connect app "shutdown"
-                        (lambda (application)
-                          (declare (ignore application))
-                          (format t "Application in shutdown.~%")
-                          ;; Leave the main loop on shutdown
-                          (leave-gtk-main)))
-      ;; Run the application
-      (g-application-run app argv)))
-  (join-gtk-main))
+  (let ((argv (cons "sunny" (if argv argv (uiop:command-line-arguments))))
+        ;; Create the application
+        (app (make-instance 'sunny
+                            :application-id "com.crategus.sunny"
+                            :flags :handles-open)))
+    ;; Connect signal "startup" to the application
+    (g-signal-connect app "startup"
+        (lambda (application)
+          (let ((actions (list (list "about"
+                                     #'(lambda (action parameter)
+                                         (sunny-action-about application
+                                                             action
+                                                             parameter))
+                                     nil nil nil)
+                               (list "quit"
+                                     #'(lambda (action parameter)
+                                         (sunny-action-quit application
+                                                            action
+                                                            parameter))
+                                     nil nil nil)
+                               (list "new"
+                                     #'(lambda (action parameter)
+                                         (sunny-action-new application
+                                                           action
+                                                           parameter))
+                                     nil nil)))
+                (builder (make-instance 'gtk-builder)))
+          ;; Set the application name
+          (unless (g-application-name)
+            (setf (g-application-name) "Sunny"))
+          ;; Add the actions
+          (g-action-map-add-action-entries application actions)
+          ;; Read the menus from a string
+          (gtk-builder-add-from-string builder *sunny-menus*)
+          ;; Set the application menu
+          (setf (gtk-application-app-menu application)
+                (gtk-builder-object builder "app-menu")))))
+    ;; Connect signal "open" to the application
+    (g-signal-connect app "open"
+        (lambda (application files n-files hint)
+          (declare (ignore hint))
+          (dotimes (i n-files)
+            (let* ((file (mem-aref files '(g-object g-file) i))
+                   (filename (g-file-basename file)))
+              (new-sunny-window application filename)))))
+    ;; Connect signal "activate" to the application
+    (g-signal-connect app "activate"
+                          (lambda (application)
+                            (new-sunny-window application nil)))
+    ;; Run the application
+    (g-application-run app argv)))

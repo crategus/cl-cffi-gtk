@@ -55,7 +55,9 @@
                                     :label "[a well]"))
           (directions-label (make-instance 'gtk-label
                                            :label
-                                           "drag a coin and drop it")))
+                                           "drag a coin and drop it"))
+          ;; Workaround: Global variable to store the selection data
+          (selection nil))
       ;; Signal handler for the window to handle the signal "destroy".
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -104,23 +106,39 @@
       ;; it. Finally it needs to finish the operation by calling
       ;; gtk_drag_finish, which will emit the "data-delete" signal if told to.
       (g-signal-connect well-dest "drag-data-received"
-          (lambda (widget context x y selection info time)
+          (lambda (widget context x y data info time)
+
             (format t "~%DRAG-DATA-RECEIVED~%")
             (format t "   widget : ~a~%" widget)
             (format t "  context : ~a~%" context)
             (format t "     x, y : ~a, ~a~%" x y)
-            (format t "selection : ~a~%" selection)
+            (format t "selection : ~a~%" data)
             (format t "     info : ~a~%" info)
             (format t "     time : ~a~%" time)
 
             (print-context context)
-            (print-selection selection)
 
-      ))
+            ;; Workaround: Copy selection data from the global
+            (setf data (gtk-selection-data-copy selection))
+            (print-selection data)
+
+            (let ((success nil) (delete nil))
+
+              ;; Deal with what we are given from source
+              (when (and (not (null-pointer-p (gtk-selection-data-data data)))
+                         (>= (gtk-selection-data-length data) 0))
+                (format t "DnD data received.~%")
+              )
+
+              (unless success
+                (format t "DnD data transfer failed.~%"))
+              (gtk-drag-finish context success delete time)
+      )))
 
       ;; Emitted when a drag leaves the destination
       (g-signal-connect well-dest "drag-leave"
           (lambda (widget context time)
+
             (format t "~%DRAG-LEAVE~%")
             (format t "    widget : ~a~%" widget)
             (format t "   context : ~a~%" context)
@@ -177,17 +195,16 @@
       ;; selection mechanism which, via X properties, is only capable of storing
       ;; data in blocks of 8, 16, or 32 bit units.
       (g-signal-connect coin-source "drag-data-get"
-          (lambda (widget context selection target time)
+          (lambda (widget context data target time)
 
             (format t "~%DRAG-DATA-GET~%")
             (format t "   widget : ~a~%" widget)
             (format t "  context : ~a~%" context)
-            (format t "selection : ~a~%" selection)
+            (format t "selection : ~a~%" data)
             (format t "   target : ~a~%" target)
             (format t "     time : ~a~%" time)
 
             (print-context context)
-            (print-selection selection)
 
             (cond ((= target-int32 target)
                    (format t "found INTEGER target~%")
@@ -206,6 +223,10 @@
                   )
                   (t
                    (format t "found no target~%")))
+            ;; Workaround: Store selection data in a global
+            (setf selection (gtk-selection-data-copy data))
+            (print-selection data)
+               
             nil))
 
       ;; Emitted after "drag-data-received" is handled, and gtk_drag_finish is
