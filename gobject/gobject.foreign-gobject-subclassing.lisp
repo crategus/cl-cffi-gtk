@@ -439,8 +439,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defmacro register-object-type-implementation (name class parent interfaces properties)
-  (unless (stringp parent)
-    (setf parent (gtype-name (gtype parent))))
+  (let ((*warn-unknown-gtype* nil))
+    (unless (stringp parent)
+      (setf parent (gtype-name (gtype parent)))))
 
   `(progn
      (setf (gethash ,name *registered-types*)
