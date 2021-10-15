@@ -382,12 +382,13 @@
 
 (defcfun ("g_get_prgname" g-prgname) (:string :free-from-foreign niL)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-18}
+ "@version{*2021-10-8}
   @syntax[]{(g-prgname) => prgname}
   @syntax[]{(setf (g-prgname) prgname)}
   @argument[prgname]{a string with the name of the program}
-  @short{Accessor of the name of the program.}
-
+  @begin{short}
+    Accessor of the name of the program.
+  @end{short}
   This name should not be localized, contrast with the @fun{g-application-name}
   function. If you are using GDK or GTK the program name is set in the
   @code{gdk_init()} function, which is called by the @code{gtk_init()} function.

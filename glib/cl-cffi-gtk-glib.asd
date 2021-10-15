@@ -27,7 +27,7 @@
 
 (defsystem :cl-cffi-gtk-glib
   :name :cl-cffi-gtk-glib
-  :version "2.28.1"                          ; Version of the GLib Library
+  :version "2.48"                           ; Minimum required C library version
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t

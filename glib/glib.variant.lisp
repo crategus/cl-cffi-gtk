@@ -507,8 +507,6 @@
 (gobject::define-g-boxed-opaque g-variant-dict "GVariantDict"
   :alloc (error "GVariantDict cannot be created from the Lisp side."))
 
-;(defcstruct g-variant-dict)
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-variant-dict atdoc:*class-name-alias*)
       "GBoxed"
@@ -529,18 +527,18 @@
 
   It is possible to use @sym{g-variant-dict} structures allocated on the stack
   or on the heap. When using a stack-allocated @sym{g-variant-dict} structure,
-  you begin with a call to the function @fun{g-variant-dict-init} and free the
-  resources with a call to the function @fun{g-variant-dict-clear}.
+  you begin with a call to the @fun{g-variant-dict-init} function  and free the
+  resources with a call to the @fun{g-variant-dict-clear} function.
 
   Heap-allocated @sym{g-variant-dict} structures follows normal refcounting
-  rules: you allocate it with the function @fun{g-variant-dict-new} and use
-  the functions @fun{g-variant-dict-ref} and @fun{g-variant-dict-unref}.
+  rules: you allocate it with the @fun{g-variant-dict-new} function and use
+  the @fun{g-variant-dict-ref} and @fun{g-variant-dict-unref} functions.
 
-  The function @fun{g-variant-dict-end} is used to convert the
-  @sym{g-variant-dict} structure back into a dictionary-type @type{g-variant}.
+  The @fun{g-variant-dict-end} function is used to convert the
+  @sym{g-variant-dict} structure back into a @type{g-variant} dictionary type.
   When used with stack-allocated instances, this also implicitly frees all
   associated memory, but for heap-allocated instances, you must still call the
-  function @fun{g-variant-dict-unref} afterwards.
+  @fun{g-variant-dict-unref} function afterwards.
 
   You will typically want to use a heap-allocated @sym{g-variant-dict} structure
   when you expose it as part of an API. For most other uses, the stack-allocated
@@ -881,13 +879,13 @@ add_to_count (GVariant  *orig,
 (defcfun ("g_variant_get_type_string" g-variant-type-string)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-11}
+ "@version{*2021-10-8}
   @argument[value]{a @type{g-variant} instance}
   @return{The type string for the type of @arg{value}.}
   @begin{short}
     Returns the type string of @arg{value}.
   @end{short}
-  @begin[Example]{dictionary}
+  @begin[Examples]{dictionary}
     @begin{pre}
 (g-variant-type-string (g-variant-new-double 10.0d0)) => \"d\"
 (g-variant-type-string (g-variant-new-string \"test\")) => \"s\"
@@ -1186,13 +1184,21 @@ add_to_count (GVariant  *orig,
 (defcfun ("g_variant_new_boolean" g-variant-new-boolean)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{*2021-11-5}
+ "@version{*2021-10-8}
   @argument[value]{a boolean value}
   @return{A floating reference to a new boolean @type{g-variant} instance.}
   @begin{short}
     Creates a new boolean @type{g-variant} instance -- either @em{true} or
     @em{false}.
   @end{short}
+  @begin[Examples]{dictionary}
+    @begin{pre}
+(g-variant-new-boolean nil) => #.(SB-SYS:INT-SAP #X5602D1E4F100)
+(g-variant-boolean *) => NIL
+(g-variant-new-boolean t) => #.(SB-SYS:INT-SAP #X5602D1E4F160)
+(g-variant-boolean *) => T
+    @end{pre}
+  @end{dictionary}
   @see-type{g-variant}"
   (value :boolean))
 
@@ -1631,13 +1637,15 @@ add_to_count (GVariant  *orig,
 
 (defcfun ("g_variant_get_boolean" g-variant-boolean) :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-11}
+ "@version{*2021-10-8}
   @argument[value]{a boolean @type{g-variant} instance}
   @return{The boolean values @em{true} or @em{false}.}
-  @short{Returns the boolean value of @arg{value}.}
+  @begin{short}
+    Returns the boolean value of @arg{value}.
+  @end{short}
   It is an error to call this function with a value of any type other than
-  a @class{g-variant-type} with the type string \"b\".
-  @begin[Example]{dictionary}
+  a @class{g-variant-type} type with the type string \"b\".
+  @begin[Examples]{dictionary}
     @begin{pre}
 (g-variant-boolean (g-variant-new-boolean nil)) => NIL
 (g-variant-boolean (g-variant-new-boolean t)) => T
@@ -3619,26 +3627,18 @@ add_to_count (GVariant  *orig,
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_dict_contains ()
-;;;
-;;; gboolean
-;;; g_variant_dict_contains (GVariantDict *dict,
-;;;                          const gchar *key);
-;;;
-;;; Checks if key exists in dict .
-;;;
-;;; dict :
-;;;     a GVariantDict
-;;;
-;;; key :
-;;;     the key to look up in the dictionary
-;;;
-;;; Returns :
-;;;     TRUE if key is in dict
-;;;
-;;; Since 2.40
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_dict_contains" g-variant-dict-contains) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{*2021-10-10}
+  @argument[dict]{a @class{g-variant-dict} instance}
+  @argument[key]{a string with the key to look up in the dictionary}
+  @return{@em{True} if @arg{key} is in the dictionary}
+  @begin{short}
+    Checks if the key exists in the dictionary.
+  @end{short}
+  @see-class{g-variant-dict}"
   (dict (gobject::g-boxed-foreign g-variant-dict))
   (key :string))
 
@@ -3855,7 +3855,7 @@ add_to_count (GVariant  *orig,
 
   Officially, the language understood by the parser is any string produced by
   the function @fun{g-variant-print}.
-  @begin[Example]{dictionary}
+  @begin[Examples]{dictionary}
     @begin{pre}
 (g-variant-parse (g-variant-type-new \"b\") \"true\")
 => #.(SB-SYS:INT-SAP #X7F99C4012440)

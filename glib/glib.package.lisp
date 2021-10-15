@@ -40,7 +40,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :glib) t)
  "GLib is a general-purpose utility library, which provides many useful data
-  types, macros, type conversions, string utilities, file utilities, a mainloop
+  types, macros, type conversions, string utilities, file utilities, a main loop
   abstraction, and so on. It works on many UNIX-like platforms, as well as
   Windows and OS X. GLib is released under the GNU Library General Public
   License (GNU LGPL).
