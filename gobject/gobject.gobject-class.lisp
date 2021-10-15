@@ -111,46 +111,52 @@
 ;; Called from the method initialize-instance for a gobject-class.
 
 (defun initialize-gobject-class-g-type (class)
-
-  (log-for :subclass
-           ":subclass INITIALIZE-GOBJECT-CLASS-G-TYPE for class ~a ~a~%"
-           class
-           (gtype (gobject-class-direct-g-type-name class)))
-
-  (if (gobject-class-g-type-initializer class)
-      ;; We have a g-type-initializer function
-      (let* ((initializer-fn-ptr (foreign-symbol-pointer
-                                   (gobject-class-g-type-initializer class)))
-             (gtype (when initializer-fn-ptr
-                      (foreign-funcall-pointer initializer-fn-ptr nil g-type))))
-        (if (null initializer-fn-ptr)
-            (warn "Type initializer for class '~A' (GType '~A') is invalid: ~
-                   foreign symbol '~A'"
+  ;; We get warnings from the second part of the if-statement for
+  ;; objects which we have subclassed. We switch off the warnings.
+  (let ((*warn-unknown-gtype* nil))
+    (log-for :subclass
+             ":subclass INITIALIZE-GOBJECT-CLASS-G-TYPE for class ~a ~a~%"
+             class
+             (gtype (gobject-class-direct-g-type-name class)))
+    (if (gobject-class-g-type-initializer class)
+        ;; We have a g-type-initializer function
+        (let* ((initializer-fn-ptr (foreign-symbol-pointer
+                                     (gobject-class-g-type-initializer class)))
+               (gtype (when initializer-fn-ptr
+                        (foreign-funcall-pointer initializer-fn-ptr
+                                                 nil
+                                                 g-type))))
+          (if (null initializer-fn-ptr)
+              (warn "Type initializer for class '~A' (GType '~A') is invalid: ~
+                     foreign symbol '~A'"
+                    (gobject-class-direct-g-type-name class)
+                    (class-name class)
+                    (gobject-class-g-type-initializer class))
+              (progn
+                (when (eq (gtype +g-type-invalid+) gtype)
+                  (warn "Declared GType name '~A' for class '~A' is invalid ~
+                        ('~A' returned 0)"
+                        (gobject-class-direct-g-type-name class)
+                        (class-name class)
+                        (gobject-class-g-type-initializer class)))
+                (unless (eq gtype
+                            (gtype (gobject-class-direct-g-type-name class)))
+                  (warn "Declared GType name '~A' for class '~A' does not ~
+                         match actual GType name '~A'"
+                        (gobject-class-direct-g-type-name class)
+                        (class-name class)
+                        (gtype-name gtype))))))
+        ;; We have no g-type-initializer function. This code prints warnings
+        ;; for subclasses. Consider to remove the code.
+        (when (zerop (gtype-id
+                         (gtype (gobject-class-direct-g-type-name class))))
+          ;; This is a hack to avoid a warning when loading the library.
+          (when (and *warn-unknown-gtype* ; a hack we never get a warning
+                     (not (string= "AtkImplementorIface"
+                                   (gobject-class-direct-g-type-name class))))
+            (warn "Declared GType name '~A' for class '~A' is invalid."
                   (gobject-class-direct-g-type-name class)
-                  (class-name class)
-                  (gobject-class-g-type-initializer class))
-            (progn
-              (when (eq (gtype +g-type-invalid+) gtype)
-                (warn "Declared GType name '~A' for class '~A' is invalid ~
-                      ('~A' returned 0)"
-                      (gobject-class-direct-g-type-name class)
-                      (class-name class)
-                      (gobject-class-g-type-initializer class)))
-              (unless (eq gtype
-                          (gtype (gobject-class-direct-g-type-name class)))
-                (warn "Declared GType name '~A' for class '~A' does not match ~
-                      actual GType name '~A'"
-                      (gobject-class-direct-g-type-name class)
-                      (class-name class)
-                      (gtype-name gtype))))))
-      ;; We have no g-type-initializer function
-      (when (zerop (gtype-id (gtype (gobject-class-direct-g-type-name class))))
-        ;; This is a hack to avoid a warning when loading the library.
-        (when (not (string= "AtkImplementorIface"
-                            (gobject-class-direct-g-type-name class)))
-          (warn "Declared GType name '~A' for class '~A' is invalid."
-                (gobject-class-direct-g-type-name class)
-                (class-name class))))))
+                  (class-name class)))))))
 
 ;;; ----------------------------------------------------------------------------
 
