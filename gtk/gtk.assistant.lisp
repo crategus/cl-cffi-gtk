@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.assistant.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -128,19 +128,20 @@
   (:custom   5))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-assistant-page-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-assistant-page-type atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-assistant-page-type atdoc:*external-symbols*)
- "@version{*2020-5-28}
+ "@version{2021-10-6}
   @begin{short}
     An enumeration for determining the page role inside the
-    @class{gtk-assistant}. It is used to handle buttons sensitivity and
+    @class{gtk-assistant} widget. It is used to handle buttons sensitivity and
     visibility.
   @end{short}
 
-  Note that an assistant needs to end its page flow with a page of type
-  @code{:confirm}, @code{:summary} or @code{:progress} to be correct. The Cancel
-  button will only be shown if the page is not \"committed\". See the function
-  @fun{gtk-assistant-commit} for details.
+  Note that an assistant needs to end its page flow with a page of
+  @code{:confirm}, @code{:summary} or @code{:progress} types to be correct. The
+  Cancel button will only be shown if the page is not \"committed\". See the
+  @fun{gtk-assistant-commit} function for details.
   @begin{pre}
 (define-g-enum \"GtkAssistantPageType\" gtk-assistant-page-type
   (:export t
@@ -166,7 +167,7 @@
       will be shown.}
     @entry[:custom]{Used for when other page types are not appropriate. No
       buttons will be shown, and the application must add its own buttons
-      through the function @fun{gtk-assistant-add-action-widget}.}
+      through the @fun{gtk-assistant-add-action-widget} function.}
   @end{table}
   @see-class{gtk-assistant}
   @see-function{gtk-assistant-commit}
@@ -189,30 +190,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-assistant 'type)
- "@version{*2020-5-28}
+ "@version{2021-10-6}
   @begin{short}
-    A @sym{gtk-assistant} is a widget used to represent a generally complex
+    A @sym{gtk-assistant} widget is used to represent a generally complex
     operation splitted in several steps, guiding the user through its pages and
     controlling the page flow to collect the necessary data.
   @end{short}
 
   @image[assistant]{}
 
-  The design of @sym{gtk-assistant} is that it controls what buttons to show and
-  to make sensitive, based on what it knows about the page sequence and the type
-  of each page, in addition to state information like the page completion and
-  committed status.
+  The design of the @sym{gtk-assistant} widget is that it controls what buttons
+  to show and to make sensitive, based on what it knows about the page sequence
+  and the type of each page, in addition to state information like the page
+  completion and committed status.
 
-  If you have a case that does not quite fit in @sym{gtk-assistant}'s way of
-  handling buttons, you can use the @code{:custom} page type of the
+  If you have a case that does not quite fit in an assistants way of handling
+  buttons, you can use the @code{:custom} page type of the
   @symbol{gtk-assistant-page-type} enumeration and handle buttons yourself.
   @begin[GtkAssistant as GtkBuildable]{dictionary}
     The @sym{gtk-assistant} implementation of the @class{gtk-buildable}
     interface exposes the \"action-area\" as internal children with the
     name @code{\"action-area\"}.
 
-    To add pages to an assistant in @class{gtk-builder}, simply add it as a
-    @code{<child>} to the @sym{gtk-assistant} window, and set its child
+    To add pages to an assistant in a @class{gtk-builder} object, simply add it
+    as a @code{<child>} to the @sym{gtk-assistant} widget and set its child
     properties as necessary.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
@@ -221,7 +222,7 @@
         The @code{complete} child property of type @code{:boolean}
         (Read / Write) @br{}
         Setting the @code{complete} child property to @em{true} marks a page
-        as complete, i.e. all the required fields are filled out. GTK+ uses
+        as complete, i.e. all the required fields are filled out. GTK uses
         this information to control the sensitivity of the navigation buttons.
         @br{}
         Default value: @em{false} @br{}
@@ -238,7 +239,7 @@
         This image used to be displayed in the page header. @br{}
         @em{Warning:} The @code{header-image} child property has been deprecated
         since version 3.2 and should not be used in newly written code. Since
-        GTK+ 3.2, a header is no longer shown. Add your header decoration to the
+        GTK 3.2, a header is no longer shown. Add your header decoration to the
         page content instead.
       @end{entry}
       @begin[page-type]{entry}
@@ -253,7 +254,7 @@
         The image used to be displayed in the sidebar. @br{}
         @em{Warning:} The @code{sidebar-image} child property has been
         deprecated since version 3.2 and should not be used in newly written
-        code. Since GTK+ 3.2, the sidebar image is no longer shown.
+        code. Since GTK 3.2, the sidebar image is no longer shown.
       @end{entry}
       @begin[title]{entry}
         The @code{title} child property of type @code{:string} (Read / Write)
@@ -270,7 +271,7 @@
         @br{}
         Number of pixels around the content pages. @br{}
         @em{Warning:} The @code{content-padding} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. This style property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 1
@@ -280,7 +281,7 @@
         @br{}
         Number of pixels around the header. @br{}
         @em{Warning:} The @code{content-padding} has been deprecated since
-        version 3.20 and should not be used in newly-written code. This style
+        version 3.20 and should not be used in newly written code. This style
         property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 6
@@ -290,14 +291,14 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"apply\" signal}
       @begin{pre}
- lambda (assistant)    : Run Last
+ lambda (assistant)    :run-last
       @end{pre}
-      The \"apply\" signal is emitted when the apply button is clicked. The
-      default behavior of the @sym{gtk-assistant} is to switch to the page after
-      the current page, unless the current page is the last one. A handler for
-      the \"apply\" signal should carry out the actions for which the wizard has
-      collected data. If the action takes a long time to complete, you might
-      consider putting a page of type @code{:progress} of the
+      The signal is emitted when the apply button is clicked. The default
+      behavior of the assistant is to switch to the page after the current page,
+      unless the current page is the last one. A handler for the \"apply\"
+      signal should carry out the actions for which the wizard has collected
+      data. If the action takes a long time to complete, you might consider
+      putting a page of type @code{:progress} of the
       @symbol{gtk-assistant-page-type} enumeration after the confirmation page
       and handle this operation within the \"prepare\" signal of the progress
       page.
@@ -307,20 +308,20 @@
     @end{table}
     @subheading{The \"cancel\" signal}
       @begin{pre}
- lambda (assistant)    : Run Last
+ lambda (assistant)    :run-last
       @end{pre}
-      The \"cancel\" signal is emitted when then the cancel button is clicked.
+      The signal is emitted when then the cancel button is clicked.
       @begin[code]{table}
         @entry[assistant]{The @sym{gtk-assistant} widget which received the
           signal.}
       @end{table}
     @subheading{The \"close\" signal}
       @begin{pre}
- lambda (assistant)    : Run Last
+ lambda (assistant)    :run-last
       @end{pre}
-      The \"close\" signal is emitted either when the close button of a summary
-      page is clicked, or when the apply button in the last page in the flow
-      of type @code{:confirm} of the @symbol{gtk-assistant-page-type}
+      The signal is emitted either when the close button of a summary page is
+      clicked, or when the apply button in the last page in the flow of
+      @code{:confirm} type of the @symbol{gtk-assistant-page-type}
       enumeration is clicked.
       @begin[code]{table}
         @entry[assistant]{The @sym{gtk-assistant} widget which received the
@@ -328,7 +329,7 @@
       @end{table}
     @subheading{The \"escape\" signal}
       @begin{pre}
- lambda (assistant)    : Action
+ lambda (assistant)    :action
       @end{pre}
       No documentation.
       @begin[code]{table}
@@ -337,11 +338,11 @@
       @end{table}
     @subheading{The \"prepare\" signal}
       @begin{pre}
- lambda (assistant page)    : Run Last
+ lambda (assistant page)    :run-last
       @end{pre}
-      The \"prepare\" signal is emitted when a new page is set as the assistants
-      current page, before making the new page visible. A handler for this
-      signal can do any preparations which are necessary before showing page.
+      The signal is emitted when a new page is set as the assistants current
+      page, before making the new page visible. A handler for this signal can
+      do any preparations which are necessary before showing page.
       @begin[code]{table}
         @entry[assistant]{The @sym{gtk-assistant} widget which received the
           signal.}
@@ -363,7 +364,7 @@
 (setf (gethash 'gtk-assistant-child-complete atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-complete 'function)
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{(gtk-assistant-child-complete container child) => complete}
   @syntax[]{(setf (gtk-assistant-child-complete container child) complete)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -375,7 +376,7 @@
   @end{short}
 
   Setting the @code{complete} child property to @em{true} marks a page as
-  complete, i.e. all the required fields are filled out. GTK+ uses this
+  complete, i.e. all the required fields are filled out. GTK uses this
   information to control the sensitivity of the navigation buttons.
   @see-class{gtk-assistant}")
 
@@ -390,7 +391,7 @@
 (setf (gethash 'gtk-assistant-child-has-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-has-padding 'function)
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{(gtk-assistant-child-complete container child) => has-padding}
   @syntax[]{(setf (gtk-assistant-child-complete container child) has-padding)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -417,7 +418,7 @@
 (setf (gethash 'gtk-assistant-child-header-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-header-image 'function)
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{(gtk-assistant-child-header-image container child) => image}
   @syntax[]{(setf (gtk-assistant-child-header-image container child) image)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -431,7 +432,7 @@
   This image used to be displayed in the page header.
   @begin[Warning]{dictionary}
     The @code{header-image} child property has been deprecated since version 3.2
-    and should not be used in newly written code. Since GTK+ 3.2, a header is no
+    and should not be used in newly written code. Since GTK 3.2, a header is no
     longer shown. Add your header decoration to the page content instead.
   @end{dictionary}
   @see-class{gtk-assistant}")
@@ -446,7 +447,7 @@
 (setf (gethash 'gtk-assistant-child-page-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-page-type 'function)
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{(gtk-assistant-child-page-type container child) => page-type}
   @syntax[]{(setf (gtk-assistant-child-page-type container child) page-type)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -470,7 +471,7 @@
 (setf (gethash 'gtk-assistant-child-sidebar-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-sidebar-image 'function)
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{(gtk-assistant-child-sidebar-image container child) => image}
   @syntax[]{(setf (gtk-assistant-child-sidebar-image container child) image)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -484,7 +485,7 @@
   The image used to be displayed in the sidebar.
   @begin[Warning]{dictionary}
     The @code{sidebar-image} child property has been deprecated since version
-    3.2 and should not be used in newly written code. Since GTK+ 3.2, the
+    3.2 and should not be used in newly written code. Since GTK 3.2, the
     sidebar image is no longer shown.
   @end{dictionary}
   @see-class{gtk-assistant}")
@@ -499,7 +500,7 @@
 (setf (gethash 'gtk-assistant-child-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-title 'function)
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{(gtk-assistant-child-title container child) => title}
   @syntax[]{(setf (gtk-assistant-child-title container child) title)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -519,7 +520,7 @@
 
 (defun gtk-assistant-new ()
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @return{A @class{gtk-assistant} widget.}
   @begin{short}
     Creates a new assistant.
@@ -543,7 +544,7 @@
 
 (defcfun ("gtk_assistant_get_current_page" gtk-assistant-current-page) :int
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page-num]{an integer with the index of the page to switch to,
     starting from 0, if negative, the last page will be used. If greater than
@@ -571,7 +572,7 @@
 
 (defcfun ("gtk_assistant_get_n_pages" gtk-assistant-n-pages) :int
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @return{An integer with the number of pages in @arg{assistant}.}
   @begin{short}
@@ -589,7 +590,7 @@
 (defcfun ("gtk_assistant_get_nth_page" gtk-assistant-nth-page)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page-num]{an integer with the index of a page in @arg{assistant},
     or -1 to get the last page}
@@ -609,7 +610,7 @@
 
 (defcfun ("gtk_assistant_prepend_page" gtk-assistant-prepend-page) :int
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} object}
   @return{An integer with the index starting at 0 of the inserted page.}
@@ -631,7 +632,7 @@
 
 (defcfun ("gtk_assistant_append_page" gtk-assistant-append-page) :int
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} object}
   @return{An integer with the index starting at 0 of the inserted page.}
@@ -653,7 +654,7 @@
 
 (defcfun ("gtk_assistant_insert_page" gtk-assistant-insert-page) :int
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} object}
   @argument[position]{an integer with the index starting at 0 at which to
@@ -678,7 +679,7 @@
 
 (defcfun ("gtk_assistant_remove_page" gtk-assistant-remove-page) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page-num]{an integer with the index of a page in the assistant,
     or -1 to remove the last page}
@@ -730,7 +731,7 @@
 
 (defun gtk-assistant-set-forward-page-func (assistant func)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[func]{a page forwarding function, or @code{nil} to use the default
     one}
@@ -766,7 +767,7 @@
 
 (defun gtk-assistant-page-type (assistant page)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{gtk-assistant-page-type assistant page) => page-type}
   @syntax[]{(setf (gtk-assistant-page-type assistant page) page-type)}
   @argument[assistant]{a @class{gtk-assistant} widget}
@@ -796,7 +797,7 @@
 
 (defun gtk-assistant-page-title (assistant page)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} page of @arg{assistant}}
   @argument[title]{a string with the new title for @arg{page}}
@@ -826,7 +827,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_assistant_set_page_header_image has been deprecated since version 3.2
-;;; and should not be used in newly-written code. Since GTK+ 3.2, a header is no
+;;; and should not be used in newly written code. Since GTK 3.2, a header is no
 ;;; longer shown; add your header decoration to the page content instead.
 ;;;
 ;;; Sets a header image for page.
@@ -852,7 +853,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_assistant_get_page_header_image has been deprecated since version 3.2
-;;; and should not be used in newly-written code. Since GTK+ 3.2, a header is no
+;;; and should not be used in newly written code. Since GTK 3.2, a header is no
 ;;; longer shown; add your header decoration to the page content instead.
 ;;;
 ;;; Gets the header image for page.
@@ -880,7 +881,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_assistant_set_page_side_image has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Since GTK+ 3.2, sidebar images are
+;;; should not be used in newly written code. Since GTK 3.2, sidebar images are
 ;;; not shown anymore.
 ;;;
 ;;; Sets a side image for page.
@@ -909,7 +910,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_assistant_get_page_side_image has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Since GTK+ 3.2, sidebar images are
+;;; should not be used in newly written code. Since GTK 3.2, sidebar images are
 ;;; not shown anymore.
 ;;;
 ;;; Gets the side image for page.
@@ -936,7 +937,7 @@
 
 (defun gtk-assistant-page-complete (assistant page)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{(gtk-assistant-page-complete assistant page) => complete}
   @syntax[]{(setf (gtk-assistant-page-complete assistant page) complete)}
   @argument[assistant]{a @class{gtk-assistant} widget}
@@ -966,7 +967,7 @@
   (setf (gtk-assistant-child-has-padding assistant page) has-padding))
 
 (defun gtk-assistant-page-has-padding (assistant page)
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @syntax[]{(gtk-assistant-page-has-padding assistant page) => has-padding}
   @syntax[]{(setf (gtk-assistant-page-has-padding assistant page) has-padding)}
   @argument[assistant]{a @class{gtk-assistant} widget}
@@ -993,7 +994,7 @@
 (defcfun ("gtk_assistant_add_action_widget" gtk-assistant-add-action-widget)
     :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} object}
   @begin{short}
@@ -1014,7 +1015,7 @@
            gtk-assistant-remove-action-widget)
     :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} object}
   @begin{short}
@@ -1034,13 +1035,13 @@
 (defcfun ("gtk_assistant_update_buttons_state"
           gtk-assistant-update-buttons-state) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Forces the assistant to recompute the buttons state.
   @end{short}
 
-  GTK+ automatically takes care of this in most situations, e.g. when the user
+  GTK automatically takes care of this in most situations, e.g. when the user
   goes to a different page, or when the visibility or completeness of a page
   changes. One situation where it can be necessary to call this function is when
   changing a value on the current page affects the future page flow of the
@@ -1056,7 +1057,7 @@
 
 (defcfun ("gtk_assistant_commit" gtk-assistant-commit) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Erases the visited page history so the back button is not shown on the
@@ -1078,7 +1079,7 @@
 
 (defcfun ("gtk_assistant_next_page" gtk-assistant-next-page) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Navigate to the next page.
@@ -1100,7 +1101,7 @@
 
 (defcfun ("gtk_assistant_previous_page" gtk-assistant-previous-page) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-28}
+ "@version{2020-5-28}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Navigate to the previous visited page.
