@@ -4,19 +4,28 @@
 ;;;   g_size
 
 (test g-size
+  #-windows
   (is (eq :unsigned-long (cffi::canonicalize-foreign-type 'g-size)))
+  #+windows 
+  (is (eq :unsigned-long-long (cffi::canonicalize-foreign-type 'g-size)))
   (is (= 8 (foreign-type-size 'g-size))))
 
 ;;;   g_ssize
   
 (test g-ssize
   (is (eq :long (cffi::canonicalize-foreign-type 'g-ssize)))
-  (is (= 8 (foreign-type-size 'g-ssize))))
+  #-windows
+  (is (= 8 (foreign-type-size 'g-ssize)))
+  #+windows
+  (is (= 4 (foreign-type-size 'g-ssize)))) 
 
 ;;;   g_offset
   
 (test g-offset
+  #-windows
   (is (eq :unsigned-long (cffi::canonicalize-foreign-type 'g-offset)))
+  #+windows
+  (is (eq :unsigned-long-long (cffi::canonicalize-foreign-type 'g-offset)))
   (is (= 8 (foreign-type-size 'g-offset))))
 
 ;;;   g_malloc
@@ -53,4 +62,4 @@
 (test g-slist
   (is (equal '(a b c) (translate-to-foreign '(a b c) 'g-slist-type))))
 
-;;; 2021-4-9
+;;; 2021-10-14

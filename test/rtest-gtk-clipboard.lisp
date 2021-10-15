@@ -36,12 +36,30 @@
                        NIL)
              (get-g-type-definition "GtkClipboard"))))
 
-;;; Signals
+;;; --- Signals ----------------------------------------------------------------
 
 ;;;     void    owner-change    Run First
 
-;;; Functions
-;;;
+(test gtk-clipboard-signals
+  ;; Check the list of signals
+  (is (equal '("owner-change")
+             (mapcar #'g-signal-name
+                     (g-signal-list-ids "GtkClipboard"))))
+  ;; Query info for "owner-change" signal
+  (let ((query (g-signal-query (g-signal-lookup "owner-change"
+                                                "GtkClipboard"))))
+    (is (string= "owner-change" (g-signal-query-signal-name query)))
+    (is (string= "GtkClipboard"
+                 (g-type-name (g-signal-query-owner-type query))))
+    (is (equal '(:RUN-FIRST)
+               (g-signal-query-signal-flags query)))
+    (is (string= "void" (g-type-name (g-signal-query-return-type query))))
+    (is (equal '("GdkEvent")
+               (mapcar #'g-type-name (g-signal-query-param-types query))))
+    (is-false (g-signal-query-signal-detail query))))
+
+;;; --- Functions --------------------------------------------------------------
+
 ;;;     GtkClipboardReceivedFunc
 ;;;     GtkClipboardTextReceivedFunc
 ;;;     GtkClipboardImageReceivedFunc
@@ -50,36 +68,79 @@
 ;;;     GtkClipboardURIReceivedFunc
 ;;;     GtkClipboardGetFunc
 ;;;     GtkClipboardClearFunc
-;;;
+
 ;;;     gtk-clipboard-get
 
-(test gtk-clipbard-get
+(test gtk-clipboard-get.1
   (is (typep (gtk-clipboard-get "CLIPBOARD") 'gtk-clipboard))
   (is (typep (gtk-clipboard-get "PRIMARY") 'gtk-clipboard))
   (is (typep (gtk-clipboard-get "SECONDARY") 'gtk-clipboard)))
 
+(test gtk-clipboard-get.2
+  (let ((clipboard (gtk-clipboard-get "myclipboard")))
+    (is (typep clipboard 'gtk-clipboard))
+    (is (eq clipboard (gtk-clipboard-get "myclipboard")))
+    (is (not (eq clipboard (gtk-clipboard-get "PRIMARY"))))))
+
 ;;;     gtk-clipboard-for-display
 
-(test gtk-clipboard-get-for-display
+(test gtk-clipboard-for-display.1
   (let ((display (gdk-display-default)))
     (is (typep (gtk-clipboard-for-display display "CLIPBOARD") 'gtk-clipboard))
     (is (typep (gtk-clipboard-for-display display "PRIMARY") 'gtk-clipboard))
     (is (typep (gtk-clipboard-for-display display "SECONDARY") 'gtk-clipboard))))
 
-;;;     gtk_clipboard_get_display
+(test gtk-clipboard-for-display.2
+  (let* ((display (gdk-display-default))
+         (clipboard (gtk-clipboard-for-display display "myclipboard")))
+    (is (typep clipboard 'gtk-clipboard))
+    (is (eq clipboard (gtk-clipboard-for-display display "myclipboard")))
+    (is (not (eq clipboard (gtk-clipboard-for-display display "PRIMARY"))))))
+
+;;;     gtk-clipboard-display
 
 (test gtk-clipboard-display
   (let ((clipboard (gtk-clipboard-get "CLIPBOARD")))
-    (is (typep (gtk-clipboard-display clipboard) 'gdk-display))))
+    (is (typep (gtk-clipboard-display clipboard) 'gdk-display))
+    (is (eq (gdk-display-default) (gtk-clipboard-display clipboard)))))
 
-;;;     gtk_clipboard_get_default ()
+;;;     gtk-clipboard-default
 
 (test gtk-clipboard-default
   (is (typep (gtk-clipboard-default (gdk-display-default)) 'gtk-clipboard)))
 
 ;;;     gtk_clipboard_set_with_data
+
+(test gtk-clipboard-set-with-data
+  (flet ((get-func (clipboard selection info)
+           (format t "in GTK-CLIPBOARD-GET-FUNC callback~%")
+           (format t "  clipboard : ~a~%" clipboard)
+           (format t "  selection : ~a~%" selection)
+           (format t "       info : ~a~%" info)
+           (setf (gtk-selection-data-text selection) "Text")
+           (format t "       text : ~a~%" (gtk-selection-data-text selection)))
+         (received-func (clipboard selection)
+           (format t "in GKT-CLIPBOARD-RECEIVED-FUNC callback~%")
+           (format t "  clipboard : ~a~%" clipboard)
+           (format t "  selection : ~a~%" selection)
+           (format t "       text : ~a~%" (gtk-selection-data-text selection))))
+  (let ((targets '(("text/html" 0 0)
+                   ("STRING" 0 1)
+                   ("number" 0 2)
+                   ("image/jpeg" 0 3)
+                   ("text/uri-list" 0 4)))
+       (clipboard (gtk-clipboard-get "PRIMARY")))
+
+    (is-true (gtk-clipboard-set-with-data clipboard targets #'get-func))
+
+    (is-false (gtk-clipboard-request-contents clipboard "STRING" #'received-func))
+
+)))
+
 ;;;     gtk_clipboard_set_with_owner
 ;;;     gtk_clipboard_get_owner
+
+;;  not implemented
 
 ;;;     gtk_clipboard_clear
 
@@ -199,4 +260,4 @@
   (let ((clipboard (gtk-clipboard-default (gdk-display-default))))
     (is (string= "CLIPBOARD" (gtk-clipboard-selection clipboard)))))
 
-;;; 2021-3-28
+;;; 2021-10-15

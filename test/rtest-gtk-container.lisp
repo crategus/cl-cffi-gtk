@@ -49,6 +49,7 @@
   ;; Check the parent
   (is (eq (gtype "GtkWidget") (g-type-parent "GtkContainer")))
   ;; Check the children
+  #-windows
   (is (or (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkGrid" "GtkListBox"
                    "GtkFlowBox" "GtkStack" "GtkHeaderBar" "GtkPaned" "GtkLayout"
                    "GtkNotebook" "GtkFixed" "GtkTextView" "GtkTreeView"
@@ -60,6 +61,16 @@
                    "GtkNotebook" "GtkFixed" "GtkTextView" "GtkTreeView"
                    "GtkIconView" "GtkToolItemGroup" "GtkToolbar"
                    "GtkToolPalette" "GtkSocket" "GtkTable" "GtkPathBar")
+                 (mapcar #'g-type-name (g-type-children "GtkContainer")))))
+
+  #+windows
+  (is (or (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkGrid" "GtkListBox" 
+                   "GtkFlowBox" "GtkStack" "GtkHeaderBar" "GtkPaned" "GtkLayout"
+                   "GtkNotebook" "GtkFixed" "GtkTextView" "GtkTreeView"
+                   "GtkIconView" "GtkToolItemGroup" "GtkToolbar"
+                   "GtkToolPalette" "GtkTable")
+                 (mapcar #'g-type-name (g-type-children "GtkContainer")))
+          (equal '()
                  (mapcar #'g-type-name (g-type-children "GtkContainer")))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
@@ -413,4 +424,4 @@
 
 ;;;     gtk_container_class_handle_border_width
 
-;;; 2021-1-27
+;;; 2021-10-14

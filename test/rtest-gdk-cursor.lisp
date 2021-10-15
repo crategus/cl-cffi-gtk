@@ -1,6 +1,10 @@
 (def-suite gdk-cursor :in gdk-suite)
 (in-suite gdk-cursor)
 
+#+windows
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (foreign-funcall "gdk_win32_cursor_get_type" g-size))
+
 ;;; --- GdkCursorType ----------------------------------------------------------
 
 (test gdk-cursor-type
@@ -160,7 +164,11 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GdkCursor")))
   ;; Check the children
+  #-windows
   (is (equal '("GdkX11Cursor")
+             (mapcar #'g-type-name (g-type-children "GdkCursor"))))
+  #+windows
+  (is (equal '("GdkWin32Cursor")
              (mapcar #'g-type-name (g-type-children "GdkCursor"))))
   ;; Check the interfaces
   (is (equal '()
@@ -218,7 +226,10 @@
 (test gdk-cursor-new-from-name
   (let ((display (gdk-display-default)))
     (is (typep (gdk-cursor-new-from-name display "pointer") 'gdk-cursor))
-    (is-false (gdk-cursor-new-from-name display "abc"))))
+    #-windows
+    (is-false (gdk-cursor-new-from-name display "abc"))
+    #+windows ; On Windows returns a cursor for an unknown name
+    (is-true (gdk-cursor-new-from-name display "abc"))))
 
 ;;; --- gdk-cursor-new-for-display ---------------------------------------------
 
@@ -239,7 +250,9 @@
     (multiple-value-bind (surface x-hot y-hot)
         (gdk-cursor-surface cursor)
       (is-true (pointerp surface))
-      (is (= 11.0d0 x-hot))
-      (is (=  7.0d0 y-hot)))))
+      #-windows (is (= 11.0d0 x-hot))
+      #+windows (is (=  6.0d0 x-hot))
+      #-windows (is (=  7.0d0 y-hot))
+      #+windows (is (=  0.0d0 y-hot)))))
 
-;;; 2020-11-10
+;;; 2021-10-14

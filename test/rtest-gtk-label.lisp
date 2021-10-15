@@ -262,10 +262,16 @@
 
 (test gtk-label-layout-offsets
   (let ((label (gtk-label-new "some text")))
+    #-windows
     (multiple-value-bind (x-offset y-offset)
         (gtk-label-layout-offsets label)
       (is (= -34 x-offset))
-      (is (=  -9 y-offset)))))
+      (is (=  -9 y-offset)))
+    #+windows
+    (multiple-value-bind (x-offset y-offset)
+        (gtk-label-layout-offsets label)
+      (is (= -26 x-offset))
+      (is (=  -8 y-offset)))))
 
 ;;;     gtk_label_new_with_mnemonic
 
@@ -326,4 +332,4 @@
   (let ((label (make-instance 'gtk-label :label "some text")))
     (is-false (gtk-label-current-uri label))))
 
-;;; 2021-8-2
+;;; 2021-10-14

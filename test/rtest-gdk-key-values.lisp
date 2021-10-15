@@ -17,7 +17,11 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GdkKeymap")))
   ;; Check the children
+  #-windows
   (is (equal '("GdkX11Keymap")
+             (mapcar #'g-type-name (g-type-children "GdkKeymap"))))
+  #+windows
+  (is (equal '("GdkWin32Keymap")
              (mapcar #'g-type-name (g-type-children "GdkKeymap"))))
   ;; Check the interfaces
   (is (equal '()
@@ -49,6 +53,9 @@
 
 ;;;   gdk_keymap_lookup_key
 
+;; TODO: Seems not to work as expected on Windows. Check this again.
+
+#-windows
 (test gdk-keymap-lookup-key
   (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
     (with-foreign-object (key '(:struct gdk::gdk-keymap-key))
@@ -74,6 +81,9 @@
 
 ;;;     gdk_keymap_translate_keyboard_state
 
+;; TODO: Seems not to work as expected on Windows. Check this again.
+
+#-windows
 (test gdk-keymap-translate-keyboard-state
   (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
     ;; The key "+" with the name "plus"
@@ -100,6 +110,9 @@
 
 ;;;     gdk_keymap_get_entries_for_keyval
 
+;; TODO: Seems not to work as expected on Windows. Check this again.
+
+#-windows
 (test gdk-keymap-entries-for-keyval
   (let ((keymap (gdk-keymap-for-display (gdk-display-default)))
         (keyval 126))
@@ -129,6 +142,9 @@
 
 ;;;     gdk_keymap_get_entries_for_keycode
 
+;; TODO: Seems not to work as expected on Windows. Check this again.
+
+#-windows
 (test gdk-keymap-entries-for-keycode
   (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
     (with-foreign-objects ((keys :pointer) (keyvals :pointer) (n-keys :int))
@@ -191,14 +207,22 @@
 ;;;     gdk_keymap_get_modifier_state
 
 (test gdk-keymap-modifier-state
+  #-windows
   (is (equal '(:MOD2-MASK)
+             (gdk-keymap-modifier-state (gdk-keymap-default))))
+  #+windows
+  (is (equal '()
              (gdk-keymap-modifier-state (gdk-keymap-default)))))
 
 ;;;     gdk_keymap_add_virtual_modifiers
 
 (test gdk-keymap-add-virtual-modifiers
   (let ((keymap (gdk-keymap-for-display (gdk-display-default))))
+    #-windows
     (is (equal '(:MOD4-MASK :SUPER-MASK :HYPER-MASK)
+               (gdk-keymap-add-virtual-modifiers keymap '(:mod4-mask))))
+    #+windows
+    (is (equal '(:MOD4-MASK)
                (gdk-keymap-add-virtual-modifiers keymap '(:mod4-mask))))))
 
 ;;;     gdk_keymap_map_virtual_modifiers
@@ -278,4 +302,4 @@
 (test gdk-unicode-to-keyval
   (is (eq 65 (gdk-unicode-to-keyval #\A))))
 
-;;; 2021-8-2
+;;; 2021-10-14

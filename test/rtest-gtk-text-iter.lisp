@@ -82,6 +82,7 @@ dann benutzen Sie es immer noch.")
 ;;;     gtk_text_iter_get_line
 ;;;     gtk_text_iter_set_line
 
+#-windows
 (test gtk-text-iter-line
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text *gtk-text-iter-sample-text*))
@@ -338,4 +339,4 @@ dann benutzen Sie es immer noch.")
 ;;;     gtk_text_iter_in_range
 ;;;     gtk_text_iter_order
 
-;;; 2021-8-19
+;;; 2021-10-14

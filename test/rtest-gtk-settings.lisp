@@ -359,7 +359,9 @@
   (let ((settings (gtk-settings-default)))
     ;; FIXME: GHashTable is not implemented
     (signals (error) (gtk-settings-color-hash settings))
+    #-windows
     (is-false (gtk-settings-gtk-alternative-button-order settings))
+    #-windows
     (is-false (gtk-settings-gtk-alternative-sort-arrows settings))
     (is-false (gtk-settings-gtk-application-prefer-dark-theme settings))
     (is-true  (gtk-settings-gtk-auto-mnemonics settings))
@@ -370,9 +372,11 @@
     (is-true  (gtk-settings-gtk-cursor-blink settings))
     (is (integerp (gtk-settings-gtk-cursor-blink-time settings)))
     (is (integerp (gtk-settings-gtk-cursor-blink-timeout settings)))
+    #-windows
     (is (stringp (gtk-settings-gtk-cursor-theme-name settings)))
     (is (integerp (gtk-settings-gtk-cursor-theme-size settings)))
     (is-true  (gtk-settings-gtk-decoration-layout settings))
+    #-windows
     (is-true  (gtk-settings-gtk-dialogs-use-header settings))
     (is (integerp (gtk-settings-gtk-dnd-drag-threshold settings)))
     (is (integerp (gtk-settings-gtk-double-click-distance settings)))
@@ -391,11 +395,13 @@
     (is-false (gtk-settings-gtk-file-chooser-backend settings))
     (is (stringp (gtk-settings-gtk-font-name settings)))
     (is (integerp (gtk-settings-gtk-fontconfig-timestamp settings)))
+    #-windows
     (is (stringp (gtk-settings-gtk-icon-sizes settings)))
     (is (stringp (gtk-settings-gtk-icon-theme-name settings)))
     (is (stringp (gtk-settings-gtk-im-module settings)))
     (is (eq :callback (gtk-settings-gtk-im-preedit-style settings)))
     (is (eq :callback (gtk-settings-gtk-im-status-style settings)))
+    #-windows
     (is (stringp (gtk-settings-gtk-key-theme-name settings)))
     (is-false (gtk-settings-gtk-keynav-cursor-only settings))
     (is-false (gtk-settings-gtk-keynav-use-caret settings))
@@ -407,6 +413,7 @@
     (is-false (gtk-settings-gtk-menu-images settings))
     (is (integerp (gtk-settings-gtk-menu-popdown-delay settings)))
     (is (integerp (gtk-settings-gtk-menu-popup-delay settings)))
+    #-windows
     (is (stringp (gtk-settings-gtk-modules settings)))
     (is-true  (gtk-settings-gtk-primary-button-warps-slider settings))
     (is (stringp (gtk-settings-gtk-print-backends settings)))
@@ -422,6 +429,7 @@
     (is-false (gtk-settings-gtk-show-input-method-menu settings))
     (is-false (gtk-settings-gtk-show-unicode-menu settings))
     (is (stringp (gtk-settings-gtk-sound-theme-name settings)))
+    #-windows
     (is-true  (gtk-settings-gtk-split-cursor settings))
     (is (stringp (gtk-settings-gtk-theme-name settings)))
     (is (integerp (gtk-settings-gtk-timeout-expand settings)))
@@ -461,4 +469,4 @@
 ;;;     gtk_settings_reset_property ()
 
 
-;;; 2020-11-20
+;;; 2021-10-14

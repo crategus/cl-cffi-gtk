@@ -343,7 +343,10 @@
 ;;;     GParamSpecLong
 
 (test g-param-spec-long-struct
+  #-windows
   (is (= 32 (foreign-type-size '(:struct g-param-spec-long))))
+  #+windows
+  (is (= 24 (foreign-type-size '(:struct g-param-spec-long))))
   (is (equal '(:PARENT-INSTANCE :MINIMUM :MAXIMUM :DEFAULT-VALUE)
              (foreign-slot-names '(:struct g-param-spec-long)))))
 
@@ -410,7 +413,10 @@
 ;;;     GParamSpecULong
 
 (test g-param-spec-ulong-struct
+  #-windows
   (is (= 32 (foreign-type-size '(:struct g-param-spec-ulong))))
+  #+windows
+  (is (= 24 (foreign-type-size '(:struct g-param-spec-ulong))))
   (is (equal '(:PARENT-INSTANCE :MINIMUM :MAXIMUM :DEFAULT-VALUE)
              (foreign-slot-names '(:struct g-param-spec-ulong)))))
 
@@ -1120,4 +1126,4 @@
 ;;;     g_value_set_variant
 ;;;     g_value_take_variant
 
-;;; 2020-10-9
+;;; 2020-10-14

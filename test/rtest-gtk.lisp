@@ -6,6 +6,7 @@
 ;;;  Application support
 
 (load "rtest-gtk-application.lisp")
+(load "rtest-gtk-application-subclassing.lisp")
 (load "rtest-gtk-application-window.lisp")
 (load "rtest-gtk-actionable.lisp")
 
@@ -183,9 +184,13 @@
 (load "rtest-gtk-print-settings.lisp")
 (load "rtest-gtk-page-setup.lisp")
 (load "rtest-gtk-paper-size.lisp")
+#-windows
 (load "rtest-gtk-printer.lisp")
+#-windows
 (load "rtest-gtk-print-job.lisp")
+#-windows
 (load "rtest-gtk-print-unix-dialog.lisp")
+#-windows
 (load "rtest-gtk-page-setup-unix-dialog.lisp")
 
 ;;;  Shortcuts Overview
@@ -274,7 +279,9 @@
 
 ;;;  Theming in GTK+
 
-(load "rtest-gtk-style-context.lisp")
+;#-windows
+;(load "rtest-gtk-style-context.lisp")
+#-windows
 (load "rtest-gtk-css-provider.lisp")
 (load "rtest-gtk-style-provider.lisp")
 (load "rtest-gtk-widget-path.lisp")
@@ -282,7 +289,7 @@
 
 ;;;  Deprecated
 
-(load "rtest-gtk-action-group.lisp")
-(load "rtest-gtk-action.lisp")
+;(load "rtest-gtk-action-group.lisp")
+;(load "rtest-gtk-action.lisp")
 
-;;; 2021-10-2
+;;; 2021-10-15

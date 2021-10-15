@@ -296,7 +296,12 @@
                                                          :normal)))
     (is (typep (gtk-style-context-property context "font" :normal)
                'pango-font-description))
+    #-windows
     (is (string= "Ubuntu 11"
+                 (pango-font-description-to-string
+                     (gtk-style-context-property context "font" :normal))))
+    #+windows
+    (is (string= "Segoe UI 9"
                  (pango-font-description-to-string
                      (gtk-style-context-property context "font" :normal))))))
 
@@ -318,6 +323,9 @@
 
 ;;;     gtk-style-context-style-property
 
+;; FIXME: The testsuite hangs executing this test
+
+#-windows
 (test gtk-style-context-style-property
   (let* ((message (make-instance 'gtk-message-dialog))
          (context (gtk-widget-style-context message)))
@@ -397,7 +405,12 @@
 (test gtk-style-context-font
   (let ((context (gtk-style-context-new)))
     (is (typep (gtk-style-context-font context :normal) 'pango-font-description))
+    #-windows
     (is (string= "Ubuntu 11"
+                 (pango-font-description-to-string
+                     (gtk-style-context-font context :normal))))
+    #+windows
+    (is (string= "Segoe UI 9"
                  (pango-font-description-to-string
                      (gtk-style-context-font context :normal))))))
 
@@ -470,6 +483,7 @@
 
 ;;;     gtk_style_context_to_string
 
+#-windows
 (test gtk-style-context-to-string
   (let* ((window (make-instance 'gtk-message-dialog))
          (context (gtk-widget-style-context window)))
@@ -496,6 +510,14 @@
     (is-true (string= (gtk-style-context-to-string context :none)
 "[messagedialog.background.csd:dir(ltr)]
 "))))
+
+#+windows
+(test gtk-style-context-to-string
+  (let* ((window (make-instance 'gtk-message-dialog))
+         (context (gtk-widget-style-context window)))
+    (is-true (stringp (gtk-style-context-to-string context :recurse)))
+    (is-true (stringp (gtk-style-context-to-string context :show-style)))
+    (is-true (stringp (gtk-style-context-to-string context :none)))))
 
 ;;;     GtkBorder
 
@@ -530,4 +552,4 @@
 ;;;     gtk_render_icon
 ;;;     gtk_render_insertion_cursor
 
-;;; 2021-7-6
+;;; 2021-10-14

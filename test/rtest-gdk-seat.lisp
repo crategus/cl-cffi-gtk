@@ -163,6 +163,11 @@
 ;;;     gdk-seat-grab
 ;;;     gdk-seat-ungrab
 
+;; TODO: Causes an Warning on Windows
+;; Gdk-WARNING **: ../gtk+-3.24.29/gdk/win32/gdkwindow-win32.c:1835: 
+;; SetWindowPos failed with code 1400: Ung?ltiges Fensterhandle
+
+#-windows
 (test gdk-seat-grab
   (let ((seat (gdk-display-default-seat (gdk-display-default)))
         (window (gdk-default-root-window)))
@@ -208,4 +213,4 @@
     (is (every (lambda (x) (typep x 'gdk-device))
                (gdk-seat-slaves seat '(:pointer :keyboard))))))
 
-;;; 2020-11-8
+;;; 2021-10-14

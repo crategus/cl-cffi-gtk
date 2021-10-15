@@ -180,11 +180,22 @@
   (let ((source (make-instance 'gtk-button)))
     (is-false (gtk-drag-source-set source :button1-mask nil :copy))
     (is-false (gtk-drag-source-add-text-targets source))
+    #-windows
     (is (equal '(("UTF8_STRING" NIL 0)
                  ("COMPOUND_TEXT" NIL 0)
                  ("TEXT" NIL 0)
                  ("STRING" NIL 0)
                  ("text/plain;charset=utf-8" NIL 0)
+                 ("text/plain" NIL 0))
+               (gtk-target-table-new-from-list
+                   (gtk-drag-source-target-list source))))
+    #+windows
+    (is (equal '(("UTF8_STRING" NIL 0) 
+                 ("COMPOUND_TEXT" NIL 0) 
+                 ("TEXT" NIL 0)
+                 ("STRING" NIL 0)
+                 ("text/plain;charset=utf-8" NIL 0) 
+                 ("text/plain;charset=CP1252" NIL 0)
                  ("text/plain" NIL 0))
                (gtk-target-table-new-from-list
                    (gtk-drag-source-target-list source))))))
@@ -222,4 +233,4 @@
                (gtk-target-table-new-from-list
                    (gtk-drag-source-target-list source))))))
 
-;;; 2021-10-1
+;;; 2021-10-14

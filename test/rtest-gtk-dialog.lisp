@@ -97,11 +97,19 @@
   (is (eq (gtype "GtkWindow")
           (g-type-parent "GtkDialog")))
   ;; Check the children
+  #-windows
   (is (equal '("GtkMessageDialog" "GtkAboutDialog" "GtkColorChooserDialog"
                "GtkColorSelectionDialog" "GtkFileChooserDialog"
                "GtkFontChooserDialog" "GtkFontSelectionDialog"
                "GtkRecentChooserDialog" "GtkAppChooserDialog"
                "GtkPrintUnixDialog" "GtkPageSetupUnixDialog")
+             (mapcar #'g-type-name
+                     (g-type-children "GtkDialog"))))
+  #+windows
+  (is (equal '("GtkMessageDialog" "GtkAboutDialog" "GtkColorChooserDialog"
+               "GtkColorSelectionDialog" "GtkFileChooserDialog"
+               "GtkFontChooserDialog" "GtkFontSelectionDialog"
+               "GtkRecentChooserDialog" "GtkAppChooserDialog")
              (mapcar #'g-type-name
                      (g-type-children "GtkDialog"))))
   ;; Check the interfaces
@@ -156,34 +164,67 @@
 
 ;;; --- Properties -------------------------------------------------------------
 
+(test gtk-dialog-properties.1
+  (let ((dialog (make-instance 'gtk-dialog)))
+    (is (= 0 (gtk-dialog-use-header-bar dialog)))))
+
+(test gtk-dialog-properties.2
+  (let ((dialog (make-instance 'gtk-dialog :use-header-bar 1)))
+    (is (= 1 (gtk-dialog-use-header-bar dialog)))))
+
+;;; --- Style Properties -------------------------------------------------------
+
 (test gtk-dialog-style-properties
-  (let ((widget (make-instance 'gtk-dialog)))
-    (is (= 0.04 (gtk-widget-style-property widget "cursor-aspect-ratio")))
-    (is-false (gtk-widget-style-property widget "cursor-color"))
-    (is (equal "" (gtk-widget-style-property widget "focus-line-pattern")))
-    (is (= 1 (gtk-widget-style-property widget "focus-line-width")))
-    (is-true (integerp (gtk-widget-style-property widget "focus-padding")))
-    (is-true (gtk-widget-style-property widget "interior-focus"))
-    (is-false (gtk-widget-style-property widget "link-color"))
-    (is (= 16 (gtk-widget-style-property widget "scroll-arrow-hlength")))
-    (is (= 16 (gtk-widget-style-property widget "scroll-arrow-vlength")))
-    (is-false (gtk-widget-style-property widget "secondary-cursor-color"))
-    (is-true (integerp (gtk-widget-style-property widget "separator-height")))
-    (is-true (integerp (gtk-widget-style-property widget "separator-width")))
-    (is (= 24 (gtk-widget-style-property widget "text-handle-height")))
-    (is (= 20 (gtk-widget-style-property widget "text-handle-width")))
-    (is-false (gtk-widget-style-property widget "visited-link-color"))
-    (is-false  (gtk-widget-style-property widget "wide-separators"))
-    (is-false (gtk-widget-style-property widget "window-dragging"))
-    (is (= 0 (gtk-widget-style-property widget "action-area-border")))
-    (is (= 4 (gtk-widget-style-property widget "button-spacing")))
-    (is (= 2 (gtk-widget-style-property widget "content-area-border")))
-    (is (= 0 (gtk-widget-style-property widget "content-area-spacing")))))
+  (let ((dialog (make-instance 'gtk-dialog)))
+    (is (= 0 (gtk-widget-style-property dialog "action-area-border")))
+    (is (= 4 (gtk-widget-style-property dialog "button-spacing")))
+    (is (= 2 (gtk-widget-style-property dialog "content-area-border")))
+    (is (= 0 (gtk-widget-style-property dialog "content-area-spacing")))))
+
+;;; --- Signals ----------------------------------------------------------------
+
+;;;     void   close                   Action
+
+(test gtk-dialog-signal-close
+  ;; Check the list of signals
+  (is (member "close"
+              (mapcar #'g-signal-name (g-signal-list-ids "GtkDialog"))
+              :test #'string=))
+  ;; Query info for "close" signal
+  (let ((query (g-signal-query (g-signal-lookup "close" "GtkDialog"))))
+    (is (string= "close" (g-signal-query-signal-name query)))
+    (is (string= "GtkDialog" (g-type-name (g-signal-query-owner-type query))))
+    (is (equal '(:ACTION :RUN-LAST)
+               (sort (g-signal-query-signal-flags query) #'string<)))
+    (is (string= "void" (g-type-name (g-signal-query-return-type query))))
+    (is (equal '()
+               (sort (mapcar #'g-type-name (g-signal-query-param-types query))
+                     #'string<)))
+    (is-false (g-signal-query-signal-detail query))))
+
+;;;     void   response                Run Last
+
+(test gtk-dialog-signal-response
+  ;; Check the list of signals
+  (is (member "response"
+              (mapcar #'g-signal-name (g-signal-list-ids "GtkDialog"))
+              :test #'string=))
+  ;; Query info for "response" signal
+  (let ((query (g-signal-query (g-signal-lookup "response" "GtkDialog"))))
+    (is (string= "response" (g-signal-query-signal-name query)))
+    (is (string= "GtkDialog" (g-type-name (g-signal-query-owner-type query))))
+    (is (equal '(:RUN-LAST)
+               (sort (g-signal-query-signal-flags query) #'string<)))
+    (is (string= "void" (g-type-name (g-signal-query-return-type query))))
+    (is (equal '("gint")
+               (sort (mapcar #'g-type-name (g-signal-query-param-types query))
+                     #'string<)))
+    (is-false (g-signal-query-signal-detail query))))
 
 ;;; --- Functions --------------------------------------------------------------
 
-;;;     gtk_dialog_new
-;;;     gtk_dialog_new_with_buttons
+;;;     gtk-dialog-new
+;;;     gtk-dialog-new-with-buttons
 
 (test gtk-dialog-new
   (is (typep (gtk-dialog-new) 'gtk-dialog))
@@ -196,15 +237,70 @@
 
 ;;;     gtk_dialog_run
 ;;;     gtk_dialog_response
-;;;     gtk_dialog_add_button
-;;;     gtk_dialog_add_buttons
-;;;     gtk_dialog_add_action_widget
-;;;     gtk_dialog_set_default_response
-;;;     gtk_dialog_set_response_sensitive
+
+;;;     gtk-dialog-add-button
+
+(test gtk-dialog-add-button
+  (let ((dialog (make-instance 'gtk-dialog)))
+    ;; No button in the action area
+    (is (= 0 (length (gtk-container-children (gtk-dialog-action-area dialog)))))
+    (is (equal '() (gtk-container-children (gtk-dialog-action-area dialog))))
+    ;; Add first button to the action area
+    (is (typep (gtk-dialog-add-button dialog "button1" 1) 'gtk-button))
+    (is (= 1 (length (gtk-container-children (gtk-dialog-action-area dialog)))))
+    (is (every #'(lambda (x) (typep x 'gtk-button))
+               (gtk-container-children (gtk-dialog-action-area dialog))))
+    ;; Add another button to the action area
+    (is (typep (gtk-dialog-add-button dialog "button2" 2) 'gtk-button))
+    (is (= 2 (length (gtk-container-children (gtk-dialog-action-area dialog)))))
+    (is (every #'(lambda (x) (typep x 'gtk-button))
+               (gtk-container-children (gtk-dialog-action-area dialog))))))
+
+;;;     gtk-dialog-add-buttons
+
+(test gtk-dialog-add-buttons
+  (let ((dialog (make-instance 'gtk-dialog)))
+    ;; No button in the action area
+    (is (= 0 (length (gtk-container-children (gtk-dialog-action-area dialog)))))
+    (is (equal '() (gtk-container-children (gtk-dialog-action-area dialog))))
+    ;; Add two buttons
+    (is-false (gtk-dialog-add-buttons dialog "button1" 1 "button2" 2))
+    (is (= 2 (length (gtk-container-children (gtk-dialog-action-area dialog)))))
+    (is (every #'(lambda (x) (typep x 'gtk-button))
+               (gtk-container-children (gtk-dialog-action-area dialog))))))
+
+;;;     gtk-dialog-add-action-widget
+
+(test gtk-dialog-add-action-widget
+  (let ((dialog (make-instance 'gtk-dialog))
+        (widget (make-instance 'gtk-button :label "BUTTON")))
+    (is-false (gtk-dialog-add-action-widget dialog widget 1))
+    (is (member widget
+               (gtk-container-children (gtk-dialog-action-area dialog))
+               :test #'eq))))
+
+;;;     gtk-dialog-set-default-response
+
+(test gtk-dialog-set-default-response
+  (let ((dialog (make-instance 'gtk-dialog)))
+    (is-false (gtk-dialog-add-buttons dialog "button1" 1 "button2" 2))
+    (is-false (gtk-dialog-set-default-response dialog 2))))
+
+;;;     gtk-dialog-set-response-sensitive
+
+(test gtk-dialog-set-response-sensitive
+  (let ((dialog (make-instance 'gtk-dialog)))
+    (is-false (gtk-dialog-add-buttons dialog "button1" 1 "button2" 2))
+    (is-false (gtk-dialog-set-response-sensitive dialog 1 t))
+    (is-false (gtk-dialog-set-response-sensitive dialog 2 nil))
+    (let ((buttons (gtk-container-children (gtk-dialog-action-area dialog))))
+      (is-true (gtk-widget-sensitive (first buttons)))
+      (is-false (gtk-widget-sensitive (second buttons))))))
+
 ;;;     gtk_dialog_get_response_for_widget
 ;;;     gtk_dialog_get_widget_for_response
 
-;;;     gtk_dialog_get_action_area
+;;;     gtk-dialog-action-area
 
 (test gtk-dialog-action-area
   (let ((dialog (gtk-dialog-new-with-buttons "title"
@@ -213,7 +309,7 @@
     (is (every (lambda (x) (typep x 'gtk-button))
                (gtk-container-children (gtk-dialog-action-area dialog))))))
 
-;;;     gtk_dialog_get_content_area
+;;;     gtk-dialog-content-area
 
 (test gtk-dialog-content-area
   (let ((dialog (gtk-dialog-new-with-buttons "title"
@@ -226,4 +322,4 @@
 ;;;     gtk_dialog_set_alternative_button_order
 ;;;     gtk_dialog_set_alternative_button_order_from_array
 
-;;; 2021-9-26
+;;; 2021-10-15

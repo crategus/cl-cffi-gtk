@@ -62,7 +62,11 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GdkMonitor")))
   ;; Check the children
+  #-windows
   (is (equal '("GdkX11Monitor" "GdkBroadwayMonitor")
+             (mapcar #'g-type-name (g-type-children "GdkMonitor"))))
+  #+windows
+  (is (equal '("GdkWin32Monitor" "GdkBroadwayMonitor")
              (mapcar #'g-type-name (g-type-children "GdkMonitor"))))
   ;; Check the interfaces
   (is (equal '()
@@ -113,7 +117,7 @@
     ;; gdk-monitor-model
     (is (stringp (gdk-monitor-model monitor)))
     ;; gdk-monitor-refresh-rate
-    (is (<= 60000 (gdk-monitor-refresh-rate monitor)))
+    (is (integerp (gdk-monitor-refresh-rate monitor)))
     ;; gdk-monitor-scale-factor
     (is (= 1 (gdk-monitor-scale-factor monitor)))
     ;; gdk-monitor-subpixel-layout
@@ -147,4 +151,4 @@
   (let ((monitor (gdk-display-primary-monitor (gdk-display-default))))
     (is-true (gdk-monitor-is-primary monitor))))
 
-;;; 2021-8-20
+;;; 2021-10-14

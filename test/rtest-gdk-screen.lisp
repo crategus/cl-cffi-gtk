@@ -17,7 +17,11 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GdkScreen")))
   ;; Check the children
+  #-windows
   (is (equal '("GdkX11Screen")
+             (mapcar #'g-type-name (g-type-children "GdkScreen"))))
+  #+windows
+  (is (equal '("GdkWin32Screen")
              (mapcar #'g-type-name (g-type-children "GdkScreen"))))
   ;; Check the interfaces
   (is (equal '()
@@ -200,10 +204,10 @@
 (test gdk-screen-monitor-workarea
   (is (typep (gdk-screen-monitor-workarea (gdk-screen-default) 0) 'gdk-rectangle))
   (let ((rect (gdk-screen-monitor-workarea (gdk-screen-default) 0)))
-    (is (<=  0 (gdk-rectangle-x rect)))
-    (is (<= 27 (gdk-rectangle-y rect)))
+    (is (<= 0 (gdk-rectangle-x rect)))
+    (is (<= 0 (gdk-rectangle-y rect)))
     (is (>= (gdk-screen-width) (gdk-rectangle-width rect)))
-    (is (<= 741 (gdk-rectangle-height rect)))))
+    (is (>= (gdk-screen-height) (gdk-rectangle-height rect)))))
 
 ;;;     gdk-screen-monitor-at-point                        deprecated
 
@@ -213,6 +217,7 @@
 
 ;;;     gdk-screen-monitor-at-window                       deprecated
 
+#-windows
 (test gdk-screen-monitor-at-window
   (let ((screen (gdk-screen-default)))
     (is (= 0 (gdk-screen-monitor-at-window screen (gdk-screen-root-window screen))))))
@@ -229,6 +234,7 @@
 
 ;;;     gdk-screen-monitor-plug-name                       deprecated
 
+#-windows
 (test gdk-screen-monitor-plug-name
   (is (stringp (gdk-screen-monitor-plug-name (gdk-screen-default) 0))))
 
@@ -241,10 +247,11 @@
 
 (test gdk-screen-setting
   (let ((screen (gdk-display-default-screen (gdk-display-default))))
-    (is (= 400 (gdk-screen-setting screen "gtk-double-click-time" "gint")))))
+    (is (integerp (gdk-screen-setting screen "gtk-double-click-time" "gint")))))
 
 ;;;     gdk-screen-active-window                           deprecated
 
+#-windows
 (test gdk-screen-active-window
   (is (typep (gdk-screen-active-window (gdk-screen-default)) 'gdk-window)))
 
@@ -255,4 +262,4 @@
   (is (every (lambda (x) (typep x 'gdk-window))
              (gdk-screen-window-stack (gdk-screen-default)))))
 
-;;; 2021-8-20
+;;; 2021-10-14

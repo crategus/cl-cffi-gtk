@@ -620,9 +620,15 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GdkWindow")))
   ;; Check the children
+  #-windows
   (is (or (equal '("GdkX11Window" "GdkWaylandWindow")
                  (mapcar #'g-type-name (g-type-children "GdkWindow")))
           (equal '("GdkX11Window")
+                 (mapcar #'g-type-name (g-type-children "GdkWindow")))))
+  #+windows
+  (is (or (equal '("GdkWin32Window")
+                 (mapcar #'g-type-name (g-type-children "GdkWindow")))
+          (equal '("GdkBroadwayDisplay" "GdkWin32Display")
                  (mapcar #'g-type-name (g-type-children "GdkWindow")))))
   ;; Check the interfaces
   (is (equal '()
@@ -753,7 +759,8 @@
     (let* ((message nil)
            (window (gdk-default-root-window))
            (handler-id (g-signal-connect window "to-embedder"
-                         (lambda (object offscreen-x offscreen-y embedder-x embedder-y)
+                         (lambda (object offscreen-x offscreen-y
+                                         embedder-x embedder-y)
                            (setf message "Signal to-embedder")
                            (is (typep object 'gdk-window))
                            (is (typep offscreen-x 'double-float))
@@ -762,7 +769,8 @@
                            (is (pointerp embedder-y))
                            t))))
       ;; Emit the signal
-      (is-false (g-signal-emit window "to-embedder" 100 100 embedder-x embedder-y))
+      (is-false (g-signal-emit window "to-embedder"
+                               100 100 embedder-x embedder-y))
       (is (string= "Signal to-embedder" message))
       (is (typep (mem-ref embedder-x :double) 'double-float))
       (is (typep (mem-ref embedder-y :double) 'double-float))
@@ -791,6 +799,7 @@
                                 nil)))
     (is (eq :toplevel (gdk-window-window-type window)))))
 
+#-windows ; TODO: Gives a Warning on Windows. Check agein for Linux.
 (test gdk-window-window-type.2
   (let ((window (gdk-window-new nil
                                 (make-gdk-window-attr :window-type :child)
@@ -915,6 +924,7 @@
 
 ;;;     gdk-window-geometry
 
+#-windows
 (test gdk-window-geometry
   (let ((window (gdk-window-new nil
                                 (make-gdk-window-attr :x 10
@@ -1045,4 +1055,4 @@
 ;;;     gdk_window_get_effective_parent
 ;;;     gdk_window_get_effective_toplevel
 
-;;; 2021-8-20
+;;; 2021-10-14

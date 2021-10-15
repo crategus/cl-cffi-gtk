@@ -20,6 +20,7 @@
   ;; Check the parent
   (is (eq (gtype "GtkContainer") (g-type-parent "GtkBox")))
   ;; Check the children
+  #-windows
   (is (or (equal '("GtkHBox" "GtkVBox" "GtkStackSwitcher" "GtkButtonBox"
                    "GtkStatusbar" "GtkInfoBar" "GtkColorChooserWidget"
                    "GtkColorSelection" "GtkFileChooserWidget"
@@ -37,6 +38,17 @@
                    "GtkAppChooserWidget" "GtkShortcutsSection"
                    "GtkShortcutsGroup" "GtkShortcutsShortcut"
                    "GtkPrinterOptionWidget")
+                 (mapcar #'g-type-name (g-type-children "GtkBox")))))
+  #+windows
+  (is (or (equal '("GtkHBox" "GtkVBox" "GtkStackSwitcher" "GtkButtonBox"
+                   "GtkStatusbar" "GtkInfoBar" "GtkColorChooserWidget"
+                   "GtkColorSelection" "GtkFileChooserWidget"
+                   "GtkFileChooserButton" "GtkFontChooserWidget"
+                   "GtkFontSelection" "GtkRecentChooserWidget"
+                   "GtkAppChooserWidget" "GtkShortcutsSection"
+                   "GtkShortcutsGroup" "GtkShortcutsShortcut")
+                 (mapcar #'g-type-name (g-type-children "GtkBox")))
+          (equal '()
                  (mapcar #'g-type-name (g-type-children "GtkBox")))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -249,4 +261,4 @@
     ;; Retrieve the center widget
     (is (eq 'gtk-button (type-of (gtk-box-center-widget box))))))
 
-;;; 2021-8-20
+;;; 2021-10-14

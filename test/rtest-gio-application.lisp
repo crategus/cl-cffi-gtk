@@ -203,7 +203,7 @@
                           (when *g-application-verbose*
                             (format t "The application is in activate.~%"))
                           ;; Note: when doing a longer-lasting action that
-                          ;; returns to the mainloop, you should use
+                          ;; returns to the main loop, you should use
                           ;; g-application-hold and g-application-release to
                           ;; keep the application alive until the action is
                           ;; completed.
@@ -263,7 +263,39 @@
 ;;;     g_application_release
 ;;;     g_application_quit
 ;;;     g_application_activate
+
 ;;;     g_application_open
+
+;; TODO: This example gives an error:
+;; GLib-GIO-CRITICAL **: 20:48:15.580: g_application_open:
+;; assertion 'application->priv->is_registered' failed
+
+#+nil
+(test g-application-open
+  (let* ((app (make-instance 'g-application
+                             :flags :handles-open))
+         (files (list "file1" "file2" "file3"))
+         (n-files (length files))
+         (hint "hint"))
+
+    (g-signal-connect app "open"
+        (lambda (application files n-files hint)
+          (declare (ignore application hint))
+          (format t "in OPEN signal handler~%")
+          (dotimes (i n-files)
+            (let ((file (mem-aref files '(g-object g-file) i)))
+              (format t "~a~%" (g-file-path file))))))
+
+    (with-foreign-object (files-ptr :pointer n-files)
+      (loop for i from 0 below n-files
+            for file in files
+            for file-ptr = (g-object-pointer (g-file-new-for-path file))
+            do (format t "  i : ~a  ~a  ~a~%" i file files)
+               (setf (mem-aref files-ptr :pointer i) file-ptr))
+      (gio::%g-application-open app files-ptr n-files hint)
+
+)))
+
 ;;;     g_application_send_notification
 ;;;     g_application_withdraw_notification
 ;;;     g_application_run
@@ -280,4 +312,4 @@
 ;;;     g_application_bind_busy_property
 ;;;     g_application_unbind_busy_property
 
-;;; 2021-7-27
+;;; 2021-10-15

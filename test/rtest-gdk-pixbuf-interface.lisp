@@ -16,9 +16,15 @@
 
 (test gdk-pixbuf-formats
   (is (every #'pointerp (gdk-pixbuf-formats)))
+  #-windows
   (is (equal '("wmf" "ani" "bmp" "gif" "icns" "ico" "jpeg" "png" "pnm" "qtif"
                "svg" "tga" "tiff" "xbm" "xpm")
-             (mapcar #'gdk-pixbuf-format-name (gdk-pixbuf-formats)))))
+             (mapcar #'gdk-pixbuf-format-name (gdk-pixbuf-formats))))
+  #+windows
+  (is (equal '("ani" "bmp" "emf" "gif" "icns" "ico" "jpeg" "png" "pnm" "qtif"
+               "svg" "tga" "tiff" "wmf" "wmf" "xbm" "xpm")
+             (sort (mapcar #'gdk-pixbuf-format-name (gdk-pixbuf-formats))
+                   #'string<))))
 
 ;;;     gdk_pixbuf_format_copy
 ;;;     gdk_pixbuf_format_free
@@ -64,4 +70,4 @@
 ;;;     GdkPixbufModulePreparedFunc
 ;;;     GdkPixbufModuleUpdatedFunc
 
-;;; 2020-11-22
+;;; 2021-10-14

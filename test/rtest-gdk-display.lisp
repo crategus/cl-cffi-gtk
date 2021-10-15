@@ -17,8 +17,16 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GdkDisplay")))
   ;; Check the children
+  #-windows
   (is (equal '("GdkX11Display" "GdkBroadwayDisplay" "GdkWaylandDisplay")
              (mapcar #'g-type-name (g-type-children "GdkDisplay"))))
+  #+windows
+  (is (or (equal '("GdkWin32Display")
+                 (sort (mapcar #'g-type-name (g-type-children "GdkDisplay")) 
+                       #'string<))
+          (equal '("GdkBroadwayDisplay" "GdkWin32Display")
+                 (sort (mapcar #'g-type-name (g-type-children "GdkDisplay")) 
+                       #'string<))))
   ;; Check the interfaces
   (is (equal '()
              (mapcar #'g-type-name (g-type-interfaces "GdkDisplay"))))
@@ -162,7 +170,10 @@
 ;;;     gdk-display-name
 
 (test gdk-display-name
-  (is (string= ":0" (gdk-display-name (gdk-display-default)))))
+  #-windows
+  (is (string= ":0" (gdk-display-name (gdk-display-default))))
+  #+windows
+  (is (string= "1\\WinSta0\\Default" (gdk-display-name (gdk-display-default)))))
 
 ;;;     gdk_display_get_n_screens                          deprecated
 ;;;     gdk_display_get_screen                             deprecated
@@ -213,11 +224,21 @@
 ;;;     gdk-display-close
 ;;;     gdk-display-is-closed
 
+;; If we close the default display on Windows, we cannnot reopen it. All tests
+;; which need the default display will fail.
+;; TODO: Check this again on Linux.
+
+#-windows
 (test gdk-display-close
-  (let ((display (gdk-display-default)))
+  (let* ((display (gdk-display-default))
+         (name (gdk-display-name display)))
     (is-false (gdk-display-is-closed display))
+    ;; Close the display
     (is-false (gdk-display-close display))
-    (is-true (gdk-display-is-closed display))))
+    (is-true (gdk-display-is-closed display))
+    ;; Open the display
+    (is-true (gdk-display-open name))
+    (is-false (gdk-display-is-closed display))))
 
 ;;;     gdk_display_get_event
 ;;;     gdk_display_peek_event
@@ -250,13 +271,22 @@
 
 (test gdk-display-cursor-size
   (let ((display (gdk-display-default)))
+    #-windows
     (is (= 24 (gdk-display-default-cursor-size display)))
+    #+windows
+    (is (= 32 (gdk-display-default-cursor-size display)))
+    #-windows
     (is (equal '(128 128)
+                (multiple-value-list
+                    (gdk-display-maximal-cursor-size display))))
+    #+windows
+    (is (equal '(32 32)
                 (multiple-value-list
                     (gdk-display-maximal-cursor-size display))))))
 
 ;;;     gdk-display-default-group
 
+#-windows ; gdk_display_get_default_group not implemented on Windows
 (test gdk-display-default-group
   (let ((display (gdk-display-default)))
     (is (typep (gdk-display-default-group display) 'gdk-window))))
@@ -272,6 +302,7 @@
 ;;;     gdk-display-supports-clipboard-persistence
 ;;;     gdk-display-store-clipboard
 
+#-windows ; gdk_display_get_default_group not implemented on Windows
 (test gdk-display-clipboard
   (let* ((display (gdk-display-default))
          (window (gdk-display-default-group display)))
@@ -341,9 +372,10 @@
 
 ;;;     gdk-display-monitor-at-window
 
+#-windows ; gdk_display_get_default_group not implemented on Windows
 (test gdk-display-monitor-at-window
   (let* ((display (gdk-display-default))
          (window (gdk-display-default-group display)))
     (is (typep (gdk-display-monitor-at-window display window) 'gdk-monitor))))
 
-;;; 2021-8-20
+;;; 2021-10-14

@@ -144,9 +144,14 @@
 
 (test gtk-icon-theme-list-contexts
   (let ((theme (gtk-icon-theme-default)))
+    #-windows
     (is (equal '("Emotes" "UI" "Emblems" "Actions" "Legacy" "Animations"
                  "Stock" "Categories" "Devices" "Places" "stock" "Applications"
                  "Status" "MimeTypes")
+               (gtk-icon-theme-list-contexts theme)))
+    #+windows
+    (is (equal '("UI" "Emblems" "Actions" "Places" "Categories" "Legacy"
+                 "Devices" "Emotes" "Status" "Applications" "MimeTypes")
                (gtk-icon-theme-list-contexts theme)))))
 
 ;;;     gtk_icon_theme_list_icons
@@ -168,7 +173,11 @@
 
 (test gtk-icon-theme-example-icon-name
   (let ((theme (gtk-icon-theme-default)))
+    #-windows
     (is (string= "directory-x-normal"
+                 (gtk-icon-theme-example-icon-name theme)))
+    #+windows
+    (is (string= "folder"
                  (gtk-icon-theme-example-icon-name theme)))))
 
 ;;;     gtk_icon_theme_rescan_if_needed
@@ -194,7 +203,10 @@
 (test gtk-icon-info-base-size
   (let* ((theme (gtk-icon-theme-default))
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 0)))
-    (is (= 24 (gtk-icon-info-base-size icon-info)))))
+    #-windows
+    (is (= 24 (gtk-icon-info-base-size icon-info)))
+    #+windows
+    (is (= 16 (gtk-icon-info-base-size icon-info)))))
 
 ;;;     gtk_icon_info_get_base_scale
 
@@ -207,10 +219,12 @@
 
 (test gtk-icon-info-filename
   (let ((theme (gtk-icon-theme-default)))
-    (is (string= "/usr/share/icons/Humanity/devices/24/battery.svg"
-                 (gtk-icon-info-filename (gtk-icon-theme-lookup-icon theme "battery" 0 0))))
-    (is (string= "/usr/share/icons/Humanity/actions/16/edit-cut.svg"
-                 (gtk-icon-info-filename (gtk-icon-theme-lookup-icon theme "edit-cut" 0 0))))))
+    (is (stringp
+            (gtk-icon-info-filename
+                (gtk-icon-theme-lookup-icon theme "battery" 0 0))))
+    (is (stringp
+            (gtk-icon-info-filename
+                (gtk-icon-theme-lookup-icon theme "edit-cut" 0 0))))))
 
 ;;;     gtk_icon_info_get_builtin_pixbuf
 
@@ -264,4 +278,4 @@
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 :force-symbolic)))
     (is-true (gtk-icon-info-is-symbolic icon-info))))
 
-;;; 2020-12-4
+;;; 2021-10-14

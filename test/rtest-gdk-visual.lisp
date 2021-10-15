@@ -88,7 +88,11 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GdkVisual")))
   ;; Check the children
+  #-windows
   (is (equal '("GdkX11Visual")
+             (mapcar #'g-type-name (g-type-children "GdkVisual"))))
+  #+windows
+  (is (equal '()
              (mapcar #'g-type-name (g-type-children "GdkVisual"))))
   ;; Check the interfaces
   (is (equal '()
@@ -225,12 +229,14 @@
 
 ;;;     gdk-visual-best-with-type                          deprecated
 
+#-windows
 (test gdk-visual-best-with-type
   (is (eq 'gdk-visual (type-of (gdk-visual-best-with-type :true-color))))
   (is (eq 'gdk-visual (type-of (gdk-visual-best-with-type :direct-color)))))
 
 ;;;     gdk-visual-best-with-both                          deprecated
 
+#-windows
 (test gdk-visual-best-with-both
   (is (eq 'gdk-visual (type-of (gdk-visual-best-with-both 32 :true-color))))
   (is (eq 'gdk-visual (type-of (gdk-visual-best-with-both 24 :true-color))))
@@ -242,4 +248,4 @@
 (test gdk-visual-screen
   (is (eq 'gdk-screen (type-of (gdk-visual-screen (gdk-visual-system))))))
 
-;;; 2020-11-10
+;;; 2021-10-14

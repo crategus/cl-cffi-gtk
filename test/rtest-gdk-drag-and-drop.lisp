@@ -120,8 +120,13 @@
 
 ;;;     GdkDragContext
 
+#-windows
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (foreign-funcall "gdk_x11_drag_context_get_type" g-size))
+
+#+windows
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (foreign-funcall "gdk_win32_drag_context_get_type" g-size))
 
 (test gdk-drag-context
   ;; Type check
@@ -135,7 +140,11 @@
   ;; Check the parent
   (is (eq (gtype "GObject") (g-type-parent "GdkDragContext")))
   ;; Check the children
+  #-windows
   (is (equal '("GdkX11DragContext")
+             (mapcar #'g-type-name (g-type-children "GdkDragContext"))))
+  #+windows
+  (is (equal '("GdkWin32DragContext")
              (mapcar #'g-type-name (g-type-children "GdkDragContext"))))
   ;; Check the interfaces
   (is (equal '()
@@ -269,4 +278,4 @@
 ;;;     gdk_drag_context_set_hotspot
 ;;;     gdk_drag_context_manage_dnd
 
-;;; 2021-10-3
+;;; 2021-10-14

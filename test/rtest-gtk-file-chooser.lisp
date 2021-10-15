@@ -110,17 +110,13 @@
 
 (test gtk-file-chooser-shortcut-folder
   (let ((chooser (make-instance 'gtk-file-chooser-widget)))
-
     (is (equal '() (gtk-file-chooser-list-shortcut-folders chooser)))
-
     (is-true (gtk-file-chooser-add-shortcut-folder chooser "unknown"))
-    (is (equal '("/home/dieter/Lisp/lisp-projects/cl-gtk/test/unknown")
+    (is (every #'stringp
                (gtk-file-chooser-list-shortcut-folders chooser)))
-
+    (is (= 1 (length (gtk-file-chooser-list-shortcut-folders chooser))))
     (is-true (gtk-file-chooser-remove-shortcut-folder chooser "unknown"))
-    (is (equal '() (gtk-file-chooser-list-shortcut-folders chooser)))
-
-))
+    (is (equal '() (gtk-file-chooser-list-shortcut-folders chooser)))))
 
 ;;;     gtk_file_chooser_add_shortcut_folder_uri
 ;;;     gtk_file_chooser_remove_shortcut_folder_uri
@@ -149,4 +145,4 @@
 ;;;     gtk_file_chooser_set_file
 ;;;     gtk_file_chooser_unselect_file
 
-;;; 2021-2-4
+;;; 2021-10-14

@@ -93,44 +93,44 @@
 ;;;     g-user-name
 
 (test g-user-name
-  (is (string= "dieter" (g-user-name))))
+  (is (stringp (g-user-name))))
 
 ;;;     g-real-name
 
 (test g-real-name
-  (is (string= "dieter" (g-real-name))))
+  (is (stringp (g-real-name))))
 
 ;;;     g-user-cache-dir
 
 (test g-user-cache-dir
-  (is (string= "/home/dieter/.cache" (g-user-cache-dir))))
+  (is (stringp (g-user-cache-dir))))
 
 ;;;     g-user-data-dir
 
 (test g-user-data-dir
-  (is (string= "/home/dieter/.local/share" (g-user-data-dir))))
+  (is (stringp (g-user-data-dir))))
 
 ;;;     g-user-config-dir
 
 (test g-user-config-dir
-  (is (string= "/home/dieter/.config" (g-user-config-dir))))
+  (is (stringp (g-user-config-dir))))
 
 ;;;     g-user-runtime-dir
 
 (test g-user-runtime-dir
-  (is (string= "/run/user/1000" (g-user-runtime-dir))))
+  (is (stringp (g-user-runtime-dir))))
 
 ;;;     g-user-special-dir
 
 (test g-get-user-special-dir
- (is (string= "/home/dieter/Schreibtisch" (g-user-special-dir :desktop)))
- (is (string= "/home/dieter/Dokumente" (g-user-special-dir :documents)))
- (is (string= "/home/dieter/Downloads" (g-user-special-dir :download)))
- (is (string= "/home/dieter/Musik" (g-user-special-dir :music)))
- (is (string= "/home/dieter/Bilder" (g-user-special-dir :pictures)))
- (is (string= "/home/dieter/Öffentlich" (g-user-special-dir :public-share)))
- (is (string= "/home/dieter/Vorlagen" (g-user-special-dir :templates)))
- (is (string= "/home/dieter/Videos" (g-user-special-dir :videos))))
+ (is (stringp (g-user-special-dir :desktop)))
+ (is (stringp (g-user-special-dir :documents)))
+ (is (stringp (g-user-special-dir :download)))
+ (is (stringp (g-user-special-dir :music)))
+ (is (stringp (g-user-special-dir :pictures)))
+ (is (stringp (g-user-special-dir :public-share)))
+ (is (stringp (g-user-special-dir :templates)))
+ (is (stringp (g-user-special-dir :videos))))
 
 ;;;     g-system-data-dirs
 
@@ -158,7 +158,7 @@
 ;;;     g-tmp-dir
 
 (test g-tmp-dir
-  (is (string= "/tmp" (g-tmp-dir))))
+  (is (stringp (g-tmp-dir))))
 
 ;;;     g_get_current_dir
 
@@ -221,4 +221,4 @@
 ;;;     g_qsort_with_data
 ;;;     g_nullify_pointer
 
-;;; 2020-12-12
+;;; 2021-10-14

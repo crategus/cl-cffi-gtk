@@ -32,7 +32,6 @@
 (test g-signal-query
   (let* ((signal-id (g-signal-lookup "clicked" "GtkButton"))
          (query (g-signal-query signal-id)))
-
       (is (= signal-id (g-signal-query-signal-id query)))
       (is (string= "clicked" (g-signal-query-signal-name query)))
       (is (string= "GtkButton" (g-type-name (g-signal-query-owner-type query))))
@@ -71,11 +70,13 @@
 (test g-signal-list-ids
   (is (equal '()
              (mapcar #'g-signal-name (g-signal-list-ids "gboolean"))))
-  (is (equal '("keys-changed" "set-focus" "activate-focus" "activate-default"
-               "enable-debugging")
-             (mapcar #'g-signal-name (g-signal-list-ids "GtkWindow"))))
-  (is (equal '("activate" "clicked" "pressed" "released" "enter" "leave")
-             (mapcar #'g-signal-name (g-signal-list-ids "GtkButton")))))
+  (is (equal '("activate-default" "activate-focus" "enable-debugging" 
+               "keys-changed" "set-focus")
+             (sort (mapcar #'g-signal-name (g-signal-list-ids "GtkWindow"))
+                   #'string<)))
+  (is (equal '("activate" "clicked" "enter" "leave" "pressed" "released")
+             (sort (mapcar #'g-signal-name (g-signal-list-ids "GtkButton"))
+                   #'string<))))
 
 ;;;     g-signal-emit
 
@@ -284,4 +285,4 @@
 ;;;     g_signal_accumulator_true_handled
 ;;;     g_clear_signal_handler
 
-;;; 2021-8-20
+;;; 2021-10-14

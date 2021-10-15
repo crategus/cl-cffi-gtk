@@ -149,11 +149,13 @@ dargestellt werden.")
 
 ;;;   gtk_text_buffer_get_char_count
 
+#-windows
 (test gtk-text-buffer-char-count.1
   (let ((buffer (gtk-text-buffer-new)))
     (setf (gtk-text-buffer-text buffer) *sample-text-1*)
     (is (= 1866 (gtk-text-buffer-char-count buffer)))))
 
+#-windows
 (test gtk-text-buffer-char-count.2
   (let ((buffer (gtk-text-buffer-new)))
     (setf (gtk-text-buffer-text buffer) *sample-text-2*)
@@ -405,4 +407,4 @@ dargestellt werden.")
 ;;;     gtk_text_buffer_unregister_deserialize_format
 ;;;     gtk_text_buffer_unregister_serialize_format
 
-;;; 2021-8-18
+;;; 2021-10-14
