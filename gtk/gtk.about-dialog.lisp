@@ -315,9 +315,7 @@
   @see-slot{gtk-about-dialog-website-label}
   @see-slot{gtk-about-dialog-wrap-license}
   @see-class{gtk-dialog}
-  @see-symbol{gtk-license}
-  @see-function{gtk-dialog-run}
-  @see-function{gtk-show-uri}")
+  @see-symbol{gtk-license}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -377,7 +375,7 @@
   The @sym{gtk-about-dialog-authors} slot access function returns the strings
   which are displayed in the authors tab of the secondary credits dialog. The
   @sym{(setf gtk-about-dialog-authors)} slot access function sets the strings.
-  @begin[Example]{dictionary}
+  @begin[Examples]{dictionary}
     @begin{pre}
 (setq about (make-instance 'gtk-about-dialog))
 => ABOUT
@@ -832,14 +830,14 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
  #+cl-cffi-gtk-documentation
  "@version{2021-10-6}
   @argument[about]{a @class{gtk-about-dialog} widget}
-  @argument[section-name]{a string with the name of the section}
+  @argument[section]{a string with the name of the section}
   @argument[people]{a list of strings of the people who belong to that section}
   @begin{short}
     Creates a new section in the Credits page.
   @end{short}
   @see-class{gtk-about-dialog}"
   (about (g-object gtk-about-dialog))
-  (section-name :string)
+  (section :string)
   (people g-strv))
 
 (export 'gtk-about-dialog-add-credit-section)
