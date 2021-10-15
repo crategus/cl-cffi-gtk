@@ -142,8 +142,10 @@
 (setf (gethash 'gtk-license atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-license atdoc:*external-symbols*)
- "@version{*2021-7-24}
-  @short{The type of license for an application.}
+ "@version{2021-10-6}
+  @begin{short}
+    The type of license for an application.
+  @end{short}
   This enumeration can be expanded at later date.
   @begin{pre}
 (define-g-enum \"GtkLicense\" gtk-license
@@ -246,50 +248,50 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-about-dialog 'type)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @begin{short}
-    The @sym{gtk-about-dialog} offers a simple way to display information about
-    a program like its logo, name, copyright, website and license.
+    The @sym{gtk-about-dialog} widget offers a simple way to display information
+    about a program like its logo, name, copyright, website and license.
   @end{short}
   It is also possible to give credits to the authors, documenters, translators
-  and artists who have worked on the program. An about dialog is typically
+  and artists who have worked on the program. The about dialog is typically
   opened when the user selects the About option from the Help menu. All parts
-  of the dialog are optional.
+  of the about dialog are optional.
 
   @image[aboutdialog]{}
 
-  About dialog often contain links and email addresses. @sym{gtk-about-dialog}
-  displays these as clickable links. By default, it calls the function
-  @fun{gtk-show-uri} when a user clicks one. The behaviour can be overridden
-  with the \"activate-link\" signal.
+  The about dialog often contain links and email addresses. The about dialog
+  displays these as clickable links. By default, it calls the @fun{gtk-show-uri}
+  function when a user clicks one. The behaviour can be overridden with the
+  \"activate-link\" signal.
 
-  To make constructing a @sym{gtk-about-dialog} as convenient as possible, you
-  can use the function @fun{gtk-show-about-dialog} which constructs and shows
-  a dialog and keeps it around so that it can be shown again.
+  To make constructing an about dialog as convenient as possible, you can use
+  the @fun{gtk-show-about-dialog} function which constructs and shows an about
+  dialog and keeps it around so that it can be shown again.
 
-  Note that GTK sets a default title of \"About @code{%s}\" on the dialog
+  Note that GTK sets a default title of \"About @code{%s}\" on the about dialog
   window where @code{%s} is replaced by the name of the application, but in
   order to ensure proper translation of the title, applications should set the
-  title property explicitly when constructing a @sym{gtk-about-dialog}, as shown
-  in the following example:
+  title property explicitly when constructing a @sym{gtk-about-dialog} widget,
+  as shown in the following example:
   @begin{pre}
 (gtk-show-about-dialog nil
                        :program-name \"ExampleCode\"
                        :logo example-logo
                        :title \"About ExampleCode\")
   @end{pre}
-  It is also possible to show a @sym{gtk-about-dialog} like any other
-  @class{gtk-dialog}, e.g. using the function @fun{gtk-dialog-run}. In this
-  case, you might need to know that the \"Close\" button returns the
+  It is also possible to show a @sym{gtk-about-dialog} widget like any other
+  @class{gtk-dialog} widget, e.g. using the @fun{gtk-dialog-run} function. In
+  this case, you might need to know that the \"Close\" button returns the
   @code{:cancel} response ID.
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-link\" signal}
       @begin{pre}
- lambda (dialog uri)    : Run Last
+ lambda (dialog uri)    :run-last
       @end{pre}
       The signal which gets emitted to activate a URI. Applications may connect
-      to it to override the default behaviour, which is to call the function
-      @fun{gtk-show-uri}.
+      to it to override the default behaviour, which is to call the
+      @fun{gtk-show-uri} function.
       @begin[code]{table}
         @entry[dialog]{The @sym{gtk-about-dialog} widget on which the signal
           was emitted.}
@@ -327,14 +329,14 @@
 (setf (documentation (atdoc:get-slot-from-name "artists" 'gtk-about-dialog) 't)
  "The @code{artists} property of type @type{g-strv} (Read / Write) @br{}
   The people who contributed artwork to the program, as a list of strings. Each
-  string may contain email addresses and URLs, which will be displayed as links,
-  see the introduction for more details.")
+  string may contain email addresses and URLs, which will be displayed as
+  links.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-artists atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-artists 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-artists object) => artists}
   @syntax[]{(setf (gtk-about-dialog-artists object) artists)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -345,11 +347,9 @@
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-artists} returns the strings
+  The @sym{gtk-about-dialog-artists} slot access function returns the strings
   which are displayed in the artists tab of the secondary credits dialog. The
-  slot access function @sym{(setf gtk-about-dialog-artists)} function sets the
-  strings which are displayed in the artists tab of the secondary credits
-  dialog.
+  @sym{(setf gtk-about-dialog-artists)} slot access function sets the strings.
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-authors -----------------------------------------------
@@ -358,14 +358,13 @@
 (setf (documentation (atdoc:get-slot-from-name "authors" 'gtk-about-dialog) 't)
  "The @code{authors} property of type @type{g-strv} (Read / Write) @br{}
   The authors of the program, as a list of strings. Each string may contain
-  email addresses and URLs, which will be displayed as links, see the
-  introduction for more details.")
+  email addresses and URLs, which will be displayed as links.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-authors atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-authors 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-authors object) => authors}
   @syntax[]{(setf (gtk-about-dialog-authors object) authors)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -375,18 +374,17 @@
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-authors} returns the strings
+  The @sym{gtk-about-dialog-authors} slot access function returns the strings
   which are displayed in the authors tab of the secondary credits dialog. The
-  slot access function @sym{(setf gtk-about-dialog-authors)} sets the strings
-  which are displayed in the authors tab of the secondary credits dialog.
+  @sym{(setf gtk-about-dialog-authors)} slot access function sets the strings.
   @begin[Example]{dictionary}
     @begin{pre}
- (setq about (make-instance 'gtk-about-dialog))
+(setq about (make-instance 'gtk-about-dialog))
 => ABOUT
- (setf (gtk-about-dialog-artists about)
-       (list \"first author\" \"second author\"))
+(setf (gtk-about-dialog-artists about)
+      (list \"first author\" \"second author\"))
 => (\"first author\" \"second author\")
- (gtk-about-dialog-artists about)
+(gtk-about-dialog-artists about)
 => (\"first author\" \"second author\")
     @end{pre}
   @end{dictionary}
@@ -406,7 +404,7 @@
 (setf (gethash 'gtk-about-dialog-comments atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-comments 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-comments object) => comments}
   @syntax[]{(setf (gtk-about-dialog-comments object) comments)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -416,8 +414,8 @@
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-comments} returns the comments
-  string. The slot access function @sym{(setf gtk-about-dialog-comments)} sets
+  The @sym{gtk-about-dialog-comments} slot access function returns the comments
+  string. The @sym{(setf gtk-about-dialog-comments)} slot access function sets
   the comments string to display in the about dialog.
   @see-class{gtk-about-dialog}")
 
@@ -434,7 +432,7 @@
 (setf (gethash 'gtk-about-dialog-copyright atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-copyright 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-copyright object) => copyright}
   @syntax[]{(setf (gtk-about-dialog-copyright object) copyright)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -444,10 +442,9 @@
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-copyright} returns the
-  copyright string. The slot access function
-  @sym{(setf gtk-about-dialog-copyright)} sets the copyright string to display
-  in the about dialog.
+  The @sym{gtk-about-dialog-copyright} slot access function returns the
+  copyright string. The @sym{(setf gtk-about-dialog-copyright)} slot access
+  function sets the copyright string to display in the about dialog.
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-documenters -------------------------------------------
@@ -463,7 +460,7 @@
 (setf (gethash 'gtk-about-dialog-documenters atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-documenters 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-documenters object) => documenters}
   @syntax[]{(setf (gtk-about-dialog-documenters object) documenters)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -473,11 +470,10 @@
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-documenters} returns the
+  The @sym{gtk-about-dialog-documenters} slot access function returns the
   strings which are displayed in the documenters tab of the secondary credits
-  dialog. The slot access function @sym{(setf gtk-about-dialog-documenters)}
-  sets the strings which are displayed in the documenters tab of the secondary
-  credits dialog.
+  dialog. The @sym{(setf gtk-about-dialog-documenters)} slot access function
+  sets the strings.
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-license -----------------------------------------------
@@ -490,7 +486,7 @@
   Note that the text is only wrapped in the text view if the @code{wrap-license}
   property is set to @em{true}. Otherwise the text itself must contain the
   intended linebreaks. When setting this property to a non-@code{nil} value, the
-  @code{license-type} property is set to the value @code{:custom} of the
+  @code{license-type} property is set to the @code{:custom} value of the
   @symbol{gtk-license} enumeration as a side effect. @br{}
   Default value: @code{nil}")
 
@@ -498,7 +494,7 @@
 (setf (gethash 'gtk-about-dialog-license atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-license 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-license object) => license}
   @syntax[]{(setf (gtk-about-dialog-license object) license)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -508,10 +504,10 @@
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-license} returns the license
-  information. The slot access function @sym{(setf gtk-about-dialog-license)}
+  The @sym{gtk-about-dialog-license} slot access function returns the license
+  information. The @sym{(setf gtk-about-dialog-license)} slot access function
   sets the license information to be displayed in the secondary license dialog.
-  If the argument @arg{license} is @code{nil}, the license button is hidden.
+  If the @arg{license} argument is @code{nil}, the license button is hidden.
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-license-type ------------------------------------------
@@ -522,12 +518,12 @@
  "The @code{license-type} property of type @symbol{gtk-license} (Read / Write)
   @br{}
   The license of the program, as a value of the @symbol{gtk-license}
-  enumeration. The @sym{gtk-about-dialog} will automatically fill out a standard
+  enumeration. The about dialog will automatically fill out a standard
   disclaimer and link the user to the appropriate online resource for the
-  license text. If @code{:unknown} is used, the link used will be the same
-  specified in the @code{website} property. If @code{:custom} is used, the
-  current contents of the @code{license} property are used. For any other
-  @symbol{gtk-license} value, the contents of the @code{license} property
+  license text. If the @code{:unknown} value is used, the link used will be the
+  same specified in the @code{website} property. If the @code{:custom} value is
+  used, the current contents of the @code{license} property are used. For any
+  other @symbol{gtk-license} value, the contents of the @code{license} property
   are also set by this property as a side effect. @br{}
   Default value: @code{:unkown}")
 
@@ -535,7 +531,7 @@
 (setf (gethash 'gtk-about-dialog-license-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-license-type 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-license-type object) => license-type}
   @syntax[]{(setf (gtk-about-dialog-license-type object) license-type)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -545,12 +541,12 @@
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-license-type} retrieves the
-  license type of type @symbol{gtk-license}. The slot access function
-  @sym{(setf gtk-about-dialog-license-type)} sets the license of of the
-  application showing the about dialog from a list of known licenses. This
-  function overrides the license set using the function
-  @fun{gtk-about-dialog-license}.
+  The @sym{gtk-about-dialog-license-type} slot access function retrieves the
+  license type of type @symbol{gtk-license}. The
+  @sym{(setf gtk-about-dialog-license-type)} slot access function sets the
+  license of of the application showing the about dialog from a list of known
+  licenses. This function overrides the license set using the
+  @fun{gtk-about-dialog-license} function.
   @see-class{gtk-about-dialog}
   @see-symbol{gtk-license}
   @see-function{gtk-about-dialog-license}")
@@ -567,7 +563,7 @@
 (setf (gethash 'gtk-about-dialog-logo atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-logo 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-logo object) => logo}
   @syntax[]{(setf (gtk-about-dialog-logo object) logo)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -577,11 +573,10 @@
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-logo} returns the pixbuf
-  displayed as logo in the about dialog. The slot access function
-  @sym{(setf gtk-about-dialog-logo)} sets the pixbuf to be displayed as logo in
-  the about dialog. If it is @code{nil}, the default window icon set with the
-  function @fun{gtk-window-set-default-icon} will be used.
+  The @sym{gtk-about-dialog-logo} slot access function returns the pixbuf
+  displayed as logo in the about dialog. The @sym{(setf gtk-about-dialog-logo)}
+  slot access function sets the pixbuf. If it is @code{nil}, the default window
+  icon set with the @fun{gtk-window-set-default-icon} function will be used.
   @see-class{gtk-about-dialog}
   @see-class{gdk-pixbuf}
   @see-function{gtk-window-set-default-icon}")
@@ -600,7 +595,7 @@
 (setf (gethash 'gtk-about-dialog-logo-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-logo-icon-name 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-logo-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-about-dialog-logo-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -611,10 +606,11 @@
   @end{short}
 
   The @sym{gtk-about-dialog-logo-icon-name} slot access function returns the
-  icon name displayed as logo in the about dialog. The slot access function
-  @sym{(setf gtk-about-dialog-logo-icon-name)} sets the pixbuf to be displayed
-  as logo in the about dialog. If it is @code{nil}, the default window icon set
-  with the function @fun{gtk-window-set-default-icon} will be used.
+  icon name displayed as logo in the about dialog. The
+  @sym{(setf gtk-about-dialog-logo-icon-name)} slot access function sets the
+  pixbuf to be displayed as logo in the about dialog. If it is @code{nil}, the
+  default window icon set with the @fun{gtk-window-set-default-icon} function
+  will be used.
   @see-class{gtk-about-dialog}
   @see-function{gtk-window-set-default-icon}")
 
@@ -632,7 +628,7 @@
 (setf (gethash 'gtk-about-dialog-program-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-program-name 'function)
- "@version{2021-9-19}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-program-name object) => name}
   @syntax[]{(setf (gtk-about-dialog-program-name object) name)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -666,7 +662,7 @@
 (setf (gethash 'gtk-about-dialog-translator-credits atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-translator-credits 'function)
- "@version{2021-9-3}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-translator-credits object) => credits}
   @syntax[]{(setf (gtk-about-dialog-translator-credits object) credits)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -687,10 +683,10 @@
   @begin{pre}
 gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
   @end{pre}
-  It is a good idea to use the customary msgid \"translator-credits\" for this
+  It is a good idea to use the customary \"translator-credits\" msgid for this
   purpose, since translators will already know the purpose of that msgid, and
-  since the @class{gtk-about-dialog} widget will detect if
-  \"translator-credits\" is untranslated and hide the tab.
+  since the @class{gtk-about-dialog} widget will detect if the
+  \"translator-credits\" property is untranslated and hide the tab.
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-version -----------------------------------------------
@@ -705,7 +701,7 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
 (setf (gethash 'gtk-about-dialog-version atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-version 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-version object) => version}
   @syntax[]{(setf (gtk-about-dialog-version object) version)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -715,8 +711,8 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-version} returns the version
-  string. The slot access function @sym{(gtk-about-dialog-version)} sets the
+  The @sym{gtk-about-dialog-version} slot access function returns the version
+  string. The @sym{(gtk-about-dialog-version)} slot access function sets the
   version string to display in the about dialog.
   @see-class{gtk-about-dialog}")
 
@@ -733,7 +729,7 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
 (setf (gethash 'gtk-about-dialog-website atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-website 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-website object) => website}
   @syntax[]{(setf (gtk-about-dialog-website object) website)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -744,8 +740,8 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-website} returns the website
-  URL. The slot access function @sym{(setf gtk-about-dialog-website)} sets the
+  The @sym{gtk-about-dialog-website} slot access function returns the website
+  URL. The @sym{(setf gtk-about-dialog-website)} slot access function sets the
   URL string starting with \"http://\" to use for the website link.
   @see-class{gtk-about-dialog}")
 
@@ -762,7 +758,7 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
 (setf (gethash 'gtk-about-dialog-website-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-website-label 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-website-label object) => label}
   @syntax[]{(setf (gtk-about-dialog-website-label object) label)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -773,10 +769,10 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-website-label} returns the
-  label used for the website link. The slot access function
-  @sym{(setf gtk-about-dialog-website-label)} sets the label to be used for the
-  website link.
+  The @sym{gtk-about-dialog-website-label} slot access function returns the
+  label used for the website link. The
+  @sym{(setf gtk-about-dialog-website-label)} slot access function sets the
+  label to be used for the website link.
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-wrap-license ------------------------------------------
@@ -792,7 +788,7 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
 (setf (gethash 'gtk-about-dialog-wrap-license atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-wrap-license 'function)
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @syntax[]{(gtk-about-dialog-wrap-license object) => wrap-license}
   @syntax[]{(setf (gtk-about-dialog-wrap-license object) wrap-license)}
   @argument[object]{a @class{gtk-about-dialog} widget}
@@ -803,10 +799,10 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
     @class{gtk-about-dialog} class.
   @end{short}
 
-  The slot access function @sym{gtk-about-dialog-wrap-license} returns whether
-  the license text in the about dialog is automatically wrapped. The slot access
-  function @sym{(setf gtk-about-dialog-wrap-license)} sets whether the license
-  text in the about dialog is automatically wrapped.
+  The @sym{gtk-about-dialog-wrap-license} slot access function returns whether
+  the license text in the about dialog is automatically wrapped. The
+  @sym{(setf gtk-about-dialog-wrap-license)} slot access function sets whether
+  the license text in the about dialog is automatically wrapped.
   @see-class{gtk-about-dialog}")
 
 ;;; ----------------------------------------------------------------------------
@@ -817,9 +813,11 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
 
 (defun gtk-about-dialog-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @return{A newly created @class{gtk-about-dialog} widget.}
-  @short{Creates a new about dialog.}
+  @begin{short}
+    Creates a new about dialog.
+  @end{short}
   @see-class{gtk-about-dialog}"
   (make-instance 'gtk-about-dialog))
 
@@ -832,7 +830,7 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
 (defcfun ("gtk_about_dialog_add_credit_section"
            gtk-about-dialog-add-credit-section) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-26}
+ "@version{2021-10-6}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[section-name]{a string with the name of the section}
   @argument[people]{a list of strings of the people who belong to that section}
@@ -853,7 +851,7 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
 (let ((about-dialog (null-pointer)))
   (defun gtk-show-about-dialog (parent &rest args)
    #+cl-cffi-gtk-documentation
-   "@version{*2021-7-24}
+   "@version{2021-10-6}
     @argument[parent]{a @class{gtk-window} transient parent, or @code{nil}
       for none}
     @argument[args]{pairs of property name and property value}
