@@ -425,7 +425,7 @@
   @argument[info]{an unsigned integer ID that will be passed back to the
     application}
   @begin{short}
-    Appends another target to a @class{gtk-target-list} instance.
+    Appends another target entry to a target list.
   @end{short}
   @see-class{gtk-target-list}
   @see-symbol{gtk-target-flags}"
@@ -591,12 +591,13 @@
   @argument[target]{a @symbol{gdk-atom} as a string with the interned atom
     representing the target to search for}
   @begin{return}
-    Application info as an unsigned integer for target, or @code{nil}.
+    Application info as an unsigned integer for @arg{target}, or @code{nil}.
   @end{return}
   @begin{short}
-    Looks up a given target in a @class{gtk-target-list} instance.
+    Looks up a given target in a target list.
   @end{short}
-  @see-class{gtk-target-list}"
+  @see-class{gtk-target-list}
+  @see-symbol{gdk-atom}"
   (with-foreign-object (info :uint)
     (when (%gtk-target-list-find tlist target info)
       (mem-ref info :uint))))
@@ -723,8 +724,8 @@
   @argument[info]{a unsigned integer which will be passed back to the
     application}
   @begin{short}
-    Appends a specified @arg{target} to the list of supported targets for a
-    given @arg{widget} and @arg{selection}.
+    Appends a specified target to the list of supported targets for a given
+    widget and selection.
   @end{short}
   @see-class{gtk-widget}
   @see-symbol{gdk-atom}
@@ -774,7 +775,7 @@
   @argument[widget]{a @class{gtk-widget} object}
   @argument[selection]{a @symbol{gdk-atom} as a string representing a selection}
   @begin{short}
-    Remove all targets registered for the given @arg{selection} for the widget.
+    Remove all targets registered for the given selection for the widget.
   @end{short}
   @see-class{gtk-widget}
   @see-symbol{gdk-atom}"
@@ -805,7 +806,6 @@
     Requests the contents of a selection.
   @end{short}
   When received, a \"selection-received\" signal will be generated.
-  @see-class{gtk-selection-data}
   @see-class{gtk-widget}
   @see-symbol{gdk-atom}
   @see-variable{+gdk-current-time+}"
@@ -826,7 +826,7 @@
   @argument[selection]{a @class{gtk-selection-data} instance}
   @argument[type]{a @symbol{gdk-atom} as a string with the type of selection
     data}
-  @argument[format]{an integer with the format (number of bits in a unit)}
+  @argument[format]{an integer with the format, number of bits in a unit}
   @argument[data]{a pointer to the data, will be copied}
   @argument[length]{an integer with the length of the data}
   @begin{short}
@@ -869,10 +869,9 @@
     selection data as a UTF-8 string.
   @end{short}
   The @sym{(setf gtk-selection-data-text)} function sets the contents of the
-  selection. The string is converted to the form determined by the
-  @fun{gtk-selection-data-target} function.
-  @see-class{gtk-selection-data}
-  @see-function{gtk-selection-data-target}"
+  selection. The string is converted to the form determined by the target
+  of the selection.
+  @see-class{gtk-selection-data}"
   (selection (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-text)
@@ -902,9 +901,8 @@
     selection data as a @class{gdk-pixbuf} object.
   @end{short}
   The @sym{(setf gtk-selection-data-pixbuf)} function sets the contents of the
-  selection.
-
-  The pixbuf is converted to the form determined by the target of the selection.
+  selection. The pixbuf is converted to the form determined by the target of
+  the selection.
   @see-class{gtk-selection-data}
   @see-class{gdk-pixbuf}"
   (selection (g-boxed-foreign gtk-selection-data)))
@@ -935,12 +933,9 @@
     selection data as a list of URIs.
   @end{short}
   The @sym{(setf gtk-selection-data-uris)} function sets the contents of the
-  selection.
-
-  The string is converted to the form determined by the
-  @fun{gtk-selection-data-target} function.
-  @see-class{gtk-selection-data}
-  @see-function{gtk-selection-data-target}"
+  selection. The string is converted to the form determined by the target
+  of the selection.
+  @see-class{gtk-selection-data}"
   (selection (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-uris)
@@ -1251,7 +1246,6 @@
     Determines if any of the targets in the @arg{targets} argument can be used
     to provide a @class{gdk-pixbuf} object.
   @end{short}
-  @see-class{gtk-selection-data}
   @see-class{gdk-atom}
   @see-class{gdk-pixbuf}"
   (let ((n-targets (length targets)))
@@ -1281,8 +1275,7 @@
     Determines if any of the targets in the @arg{targets} argument can be used
     to provide text.
   @end{short}
-  @see-class{gtk-selection-data}
-  @see-class{gkd-atom}"
+  @see-class{gdk-atom}"
   (let ((n-targets (length targets)))
     (with-foreign-object (targets-ar :pointer n-targets)
       (loop for i from 0 below n-targets
@@ -1310,8 +1303,7 @@
     Determines if any of the targets in the @arg{targets} argument can be used
     to provide an URI list.
   @end{short}
-  @see-class{gtk-selection-data}
-  @see-class{gkd-atom}"
+  @see-class{gdk-atom}"
   (let ((n-targets (length targets)))
     (with-foreign-object (targets-ar :pointer n-targets)
       (loop for i from 0 below n-targets
@@ -1342,8 +1334,7 @@
     Determines if any of the targets in the @arg{targets} argument can be used
     to provide rich text.
   @end{short}
-  @see-class{gtk-selection-data}
-  @see-class{gkd-atom}
+  @see-class{gdk-atom}
   @see-class{gtk-text-buffer}"
   (let ((n-targets (length targets)))
     (with-foreign-object (targets-ar :pointer n-targets)
@@ -1365,7 +1356,7 @@
   @begin{short}
     Removes all handlers and unsets ownership of all selections for a widget.
   @end{short}
-  Called when @arg{widget} is being destroyed. This function will not generally
+  Called when the widget is being destroyed. This function will not generally
   be called by applications.
   @see-class{gtk-selection-data}
   @see-class{gtk-widget}"
@@ -1381,11 +1372,11 @@
     (g-boxed-foreign gtk-selection-data)
  #+cl-cffi-gtk-documentation
  "@version{2021-10-3}
+  @argument[data]{a @class{gtk-selection-data} instance}
   @begin{short}
     Copies a @class{gtk-selection-data} instance.
   @end{short}
-  @see-class{gtk-selection-data}
-  @see-function{gtk-selection-data-new}"
+  @see-class{gtk-selection-data}"
   (data (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-copy)
