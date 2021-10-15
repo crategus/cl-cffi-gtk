@@ -215,7 +215,7 @@
 
 (defun cl-cffi-gtk-build-info ()
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-13}
+ "@version{*2021-10-10}
   @begin{short}
     Provides informations about the installation and the versions of the
     loaded libraries.

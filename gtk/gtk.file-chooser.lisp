@@ -1278,19 +1278,19 @@
     Accessor of the current folder of the file chooser.
   @end{short}
 
-  The function @sym{gtk-file-chooser-current-folder} gets the current folder
-  of the file chooser as a local filename. The function
-  @sym{(setf gtk-file-chooser-current-folder)} sets the current folder.
+  The @sym{gtk-file-chooser-current-folder} function gets the current folder
+  of the file chooser as a local filename. The
+  @sym{(setf gtk-file-chooser-current-folder)} function sets the current folder.
 
   The user will be shown the full contents of the current folder, plus user
   interface elements for navigating to other folders.
 
   Note that this is the folder that the file chooser is currently displaying,
-  e.g. \"/home/username/Documents\", which is not the same as the
-  currently-selected folder if the chooser is in @code{:select-folder} mode,
-  e.g. \"/home/username/Documents/selected-folder/\". To get the
-  currently-selected folder in that mode, use the function
-  @fun{gtk-file-chooser-uri} as the usual way to get the selection.
+  e.g. @file{/home/username/Documents}, which is not the same as the
+  currently selected folder if the chooser is in @code{:select-folder} mode,
+  e.g. @file{/home/username/Documents/selected-folder/}. To get the
+  currently selected folder in that mode, use the @fun{gtk-file-chooser-uri}
+  function as the usual way to get the selection.
 
   In general, you should not use this function. See the section on setting up
   a file chooser dialog for the rationale behind this.
@@ -1452,20 +1452,20 @@
     Accessor of the URI for the current folder of the file chooser.
   @end{short}
 
-  The function @sym{gtk-file-chooser-current-folder-uri} gets the current
+  The @sym{gtk-file-chooser-current-folder-uri} function gets the current
   folder of the file chooser as an URI. This function will also return
   @code{nil} if the file chooser was unable to load the last folder that was
   requested from it. For example, as would be for calling this function on a
   nonexistent folder.
 
   Note that this is the folder that the file chooser is currently displaying,
-  e.g. \"file:///home/username/Documents\", which is not the same as the
-  currently-selected folder if the chooser is in @code{:select-folder}, e.g.
-  \"file:///home/username/Documents/selected-folder/\". To get the
-  currently-selected folder in that mode, use the function
-  @fun{gtk-file-chooser-uri} as the usual way to get the selection.
+  e.g. @file{file:///home/username/Documents}, which is not the same as the
+  currently selected folder if the chooser is in @code{:select-folder}, e.g.
+  @file{file:///home/username/Documents/selected-folder/}. To get the
+  currently selected folder in that mode, use the @fun{gtk-file-chooser-uri}
+  function as the usual way to get the selection.
 
-  The function @sym{(setf gtk-file-chooser-current-folder-uri)} sets the
+  The @sym{(setf gtk-file-chooser-current-folder-uri)} function sets the
   current folder for the file chooser from an URI. The user will be shown the
   full contents of the current folder, plus user interface elements for
   navigating to other folders.

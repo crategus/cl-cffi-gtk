@@ -1437,7 +1437,7 @@
   Normally that this function does not return until the rendering of all pages
   is complete. You can connect to the \"status-changed\" signal on the print
   operation to obtain some information about the progress of the print
-  operation. Furthermore, it may use a recursive mainloop to show the print
+  operation. Furthermore, it may use a recursive main loop to show the print
   dialog.
 
   If you call the function @fun{gtk-print-operation-allow-async} the operation
@@ -1584,7 +1584,7 @@
   identical to the passed in @arg{page-setup}, otherwise it contains the
   modifications done in the dialog.
 
-  Note that this function may use a recursive mainloop to show the page setup
+  Note that this function may use a recursive main loop to show the page setup
   dialog. See the @code{gtk_print_run_page_setup_dialog_async()} function if
   this is a problem.
   @see-class{gtk-print-operation}

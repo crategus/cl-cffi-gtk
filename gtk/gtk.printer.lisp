@@ -786,7 +786,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-4-9}
   @argument[func]{a function to call for each printer}
-  @argument[wait]{if @em{true}, wait in a recursive mainloop until all printers
+  @argument[wait]{if @em{true}, wait in a recursive main loop until all printers
     are enumerated; otherwise return early}
   @begin{short}
     Calls a function for all printers.

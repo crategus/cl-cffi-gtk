@@ -116,7 +116,7 @@
 ;;; gtk_font_selection_dialog_get_font_name has been deprecated since version
 ;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
 ;;;
-;;; Gets the currently-selected font name.
+;;; Gets the currently selected font name.
 ;;;
 ;;; Note that this can be a different string than what you set with
 ;;; gtk_font_selection_dialog_set_font_name(), as the font selection widget may

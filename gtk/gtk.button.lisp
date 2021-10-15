@@ -505,30 +505,30 @@
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-button) 't)
  "The @code{label} property of type @code{:string} (Read / Write / Construct)
   @br{}
-  Text of the label widget inside the button, if the button contains a label
-  widget. @br{}
+  Text of the label inside the button, if the button contains a label. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-button-label atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-button-label atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-button-label 'function)
- "@version{*2021-5-18}
+ "@version{*2021-10-11}
   @syntax[]{(gtk-button-label object) => label}
   @syntax[]{(setf (gtk-button-label object) label)}
   @argument[object]{a @class{gtk-button} widget}
-  @argument[label]{a string with the text of the label widget}
+  @argument[label]{a string with the text of the label}
   @begin{short}
     Accessor of the @slot[gtk-button]{label} slot of the @class{gtk-button}
     class.
   @end{short}
 
-  The slot access function @sym{gtk-button-label} fetches the text from the
-  label of the button. The slot access function @sym{(setf gtk-button-label)}
+  The @sym{gtk-button-label} slot access function fetches the text from the
+  label of the button. The @sym{(setf gtk-button-label)} slot access function
   sets the text.
 
   If the label text has not been set the return value will be @code{nil}. This
-  will be the case if you create an empty button with the function
-  @fun{gtk-button-new} to use as a container.
+  will be the case if you create an empty button with the @fun{gtk-button-new}
+  function to use as a container.
 
   This text is also used to select the stock item if the
   @slot[gtk-button]{use-stock} property is used.

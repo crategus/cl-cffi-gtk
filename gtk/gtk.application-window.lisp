@@ -83,7 +83,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application-window 'type)
- "@version{2021-9-3}
+ "@version{*2021-10-10}
   @begin{short}
     The @sym{gtk-application-window} class is a @class{gtk-window} subclass
     that offers some extra functionality for better integration with
@@ -236,8 +236,7 @@
   The @sym{gtk-application-window-show-menubar} slot access function returns
   whether the window will display a menubar for the application menu and
   menubar as needed. The @sym{(setf gtk-application-window-show-menubar)} slot
-  access function sets whether the window will display a menubar for the
-  application menu and menubar.
+  access function sets whether the window will display a menubar.
   @see-class{gtk-application-window}")
 
 ;;; ----------------------------------------------------------------------------

@@ -3741,7 +3741,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_show_all" gtk-widget-show-all) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-16}
+ "@version{*2021-10-10}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Recursively shows a widget, and any child widgets if the widget is a

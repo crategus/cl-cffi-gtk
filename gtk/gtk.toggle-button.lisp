@@ -102,7 +102,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toggle-button 'type)
- "@version{*2021-5-18}
+ "@version{*2021-10-11}
   @begin{short}
     A @sym{gtk-toggle-button} widget is a @class{gtk-button} widget which will
     remain \"pressed-in\" when clicked.
@@ -111,21 +111,21 @@
 
   @image[toggle-button]{}
 
-  A toggle button is created by calling either the functions
-  @fun{gtk-toggle-button-new} or @fun{gtk-toggle-button-new-with-label}. If
-  using the former, it is advisable to pack a widget, such as a
-  @class{gtk-label} or a @class{gtk-image} widget, into the container of the
-  toggle button. See the @class{gtk-button} widget for more information.
+  A toggle button is created by calling either the @fun{gtk-toggle-button-new}
+  or @fun{gtk-toggle-button-new-with-label} functions. If using the former, it
+  is advisable to pack a widget, such as a @class{gtk-label} or a
+  @class{gtk-image} widget, into the container of the toggle button. See the
+  @class{gtk-button} widget for more information.
 
   The state of a @sym{gtk-toggle-button} widget can be set and retrieved using
-  the function @fun{gtk-toggle-button-active}.
+  the @fun{gtk-toggle-button-active} function.
 
-  To simply switch the state of a toggle button, use the function
-  @fun{gtk-toggle-button-toggled}.
+  To simply switch the state of a toggle button, use the
+  @fun{gtk-toggle-button-toggled} function.
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-toggle-button} widget has a single CSS node with name
-    @code{button}. To differentiate it from a plain @class{gtk-button}, it gets
-    the @code{.toggle} style class.
+    The @sym{gtk-toggle-button} implementation has a single CSS node with name
+    @code{button}. To differentiate it from a plain button, it gets the
+    @code{.toggle} style class.
   @end{dictionary}
   @begin[Example]{dictionary}
     This example from the GTK tutorial has two toggle buttons. The toggle
@@ -217,7 +217,7 @@
 (setf (gethash 'gtk-toggle-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-active 'function)
- "@version{*2021-2-5}
+ "@version{*2021-10-11}
   @syntax[]{(gtk-toggle-button-active object) => is-active}
   @syntax[]{(setf (gtk-toggle-button-active object) is-active)}
   @argument[object]{a @class{gtk-toggle-button} widget}
@@ -227,10 +227,11 @@
     @class{gtk-toggle-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-toggle-button-active} queries a toggle
+  The @sym{gtk-toggle-button-active} slot access function queries a toggle
   button and returns its current state. Returns @em{true} if the toggle button
-  is pressed in and @em{false} if it is raised. The slot access function
-  @sym{(setf gtk-toggle-button-active)} sets the status of the toggle button.
+  is pressed in and @em{false} if it is raised. The
+  @sym{(setf gtk-toggle-button-active)} slot access function sets the status of
+  the toggle button.
 
   This action causes the \"toggled\" signal to be emitted.
   @see-class{gtk-toggle-button}")

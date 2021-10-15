@@ -63,7 +63,7 @@
 ;;; the user finished with the dialog.
 ;;;
 ;;; There is also a gtk_native_dialog_run() helper that makes it easy to run
-;;; any native dialog in a modal way with a recursive mainloop, similar to
+;;; any native dialog in a modal way with a recursive main loop, similar to
 ;;; gtk_dialog_run().
 ;;;
 ;;; See Also

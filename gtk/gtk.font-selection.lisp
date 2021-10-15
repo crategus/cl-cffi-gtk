@@ -265,7 +265,7 @@
     @class{gtk-font-chooser}.
 
   @begin{short}
-    Gets the currently-selected font name.
+    Gets the currently selected font name.
   @end{short}
 
   Note that this can be a different string than what you set with the function
@@ -300,7 +300,7 @@
     Use @class{gtk-font-chooser}.
 
   @begin{short}
-    Sets the currently-selected font.
+    Sets the currently selected font.
   @end{short}
 
   Note that the @arg{fontsel} needs to know the screen in which it will appear

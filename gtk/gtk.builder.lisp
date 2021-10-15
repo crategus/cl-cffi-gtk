@@ -182,7 +182,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-builder 'type)
- "@version{2021-9-3}
+ "@version{*2021-10-10}
   @begin{short}
     A @sym{gtk-builder} object is an auxiliary object that reads textual
     descriptions of a user interface and instantiates the described objects.
@@ -735,7 +735,7 @@
 
 (defun gtk-builder-add-from-string (builder string)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-23}
+ "@version{*2021-10-10}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[string]{the string to parse}
   @return{A positive value on success, 0 if an error occurred.}
@@ -943,13 +943,13 @@
 
 (defcfun ("gtk_builder_get_object" gtk-builder-object) g-object
  #+cl-cffi-gtk-documentation
- "@version{2021-9-23}
+ "@version{*2021-10-10}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[name]{a string with the name of object to get}
+  @argument[name]{a string with the name of the object to get}
   @return{The @class{g-object} instance named @arg{name} or @code{nil} if it
     could not be found in the object tree.}
   @begin{short}
-    Gets the object named @arg{name}.
+    Gets the object named @arg{name} from the @class{gtk-builder} UI definition.
   @end{short}
   @see-class{gtk-builder}
   @see-class{g-object}
