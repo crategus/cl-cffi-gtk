@@ -26,10 +26,10 @@ File types and applications
 Icons
 
   gio.icon.lisp                - GIcon                             - GIO 2.68
-  gio.file-icon.lisp           - GFileIcon                         - GIO 2.68 &
+  gio.file-icon.lisp           - GFileIcon                         - GIO 2.68
 
   not implemented              - GBytesIcon
-  not implemented              - GLoadableIcon
+  gio.loadable-icon.lisp       - GLoadableIcon                     - GIO 2.68 &
 
   gio.themed-icon.lisp         - GThemedIcon                       - GIO 2.68
   gio.emblemed-icon.lisp       - Icon with emblems                 - GIO 2.68
@@ -56,11 +56,12 @@ Application support
 
   not implemented              - GMemoryMonitor
 
-  gio.menu-model-lisp          - GMenuModel                        - GIO 2.36.4%
+  gio.menu-model.lisp          - GMenuModel                        - GIO 2.36.4%
   gio.menu.lisp                - GMenu                             - GIO 2.38.1%
 
   not implemented              - GMenuModel exporter
   not implemented              - GDBusMenuModel
-  not implemented              - GNotification
 
-;;; 2021-9-5
+  gio.notification.lisp        - GNotification                     - GIO 2.68
+
+;;; 2021-10-8

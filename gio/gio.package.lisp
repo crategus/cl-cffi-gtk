@@ -48,7 +48,7 @@
       @about-symbol{g-file-copy-flags}
       @about-symbol{g-file-monitor-flags}
       @about-symbol{g-file-measure-flags}
-      @about-symbol{g-file-system-preview-type}
+      @about-symbol{g-filesystem-preview-type}
       @about-class{g-file}
       @about-function{GFileProgressCallback}
       @about-function{GFileReadMoreCallback}
@@ -63,7 +63,7 @@
       @about-function{g-file-dup}
       @about-function{g-file-hash}
       @about-function{g-file-equal}
-      @about-function{g-file-get-basename}
+      @about-function{g-file-basename}
       @about-function{g-file-path}
       @about-function{g-file-peek-path}
       @about-function{g-file-get-uri}
@@ -276,6 +276,22 @@
       @about-function{g-icon-serialize}
       @about-function{g-icon-deserialize}
     @end{subsection}
+    @begin[GFileIcon]{subsection}
+      Icons pointing to an image file.
+
+      @about-class{g-file-icon}
+      @about-generic{g-file-icon-file}
+      @about-function{g-file-icon-new}
+      @about-function{g-file-icon-get-file}
+    @end{subsection}
+    @begin[GLoadableIcon]{subsection}
+      Loadable Icons.
+
+      @about-class{g-loadable-icon}
+      @about-function{g-loadable-icon-load}
+      @about-function{g-loadable-icon-load-async}
+      @about-function{g-loadable-icon-load-finish}
+    @end{subsection}
     @begin[GThemedIcon]{subsection}
       Icon theming support.
 
@@ -318,7 +334,22 @@
     @about-symbol{g-resource-lookup-flags}
     @about-symbol{g-static-resource}
     @about-symbol{g-resource-error}
-    @about-class{g-resource}
+    @about-class{g-resource};;; GFileIcon
+;;;
+;;;     Icons pointing to an image file
+;;;
+;;; Types and Values
+;;;
+;;;     GFileIcon
+;;;
+;;; Functions
+;;;
+;;;     g_file_icon_new
+;;;     g_file_icon_get_file
+;;;
+;;; Properties
+;;;
+;;;     GFile*   file
     @about-function{g-resource-load}
     @about-function{g-resource-new-from-data}
     @about-function{g-resource-ref}
@@ -364,7 +395,7 @@
       @about-function{g-application-open}
       @about-function{g-application-run}
       @about-function{g-application-send-notification}
-      @about-function{g-application-withdraw_notification}
+      @about-function{g-application-withdraw-notification}
       @about-function{g-application-add-main-option-entries}
       @about-function{g-application-add-main-option}
       @about-function{g-application-add-option-group}
@@ -536,6 +567,24 @@
       @about-function{g-menu-item-attribute-value}
       @about-function{g-menu-item-attribute}
       @about-function{g-menu-item-link}
+    @end{subsection}
+    @begin[GNotification]{subsection}
+      User Notifications, pop up messages.
+
+      @about-symbol{g-notification-priority}
+      @about-class{g-notification}
+      @about-function{g-notification-new}
+      @about-function{g-notification-set-title}
+      @about-function{g-notification-set-body}
+      @about-function{g-notification-set-icon}
+      @about-function{g-notification-set-priority}
+      @about-function{g-notification-set-urgent}
+      @about-function{g-notification-set-default-action}
+      @about-function{g-notification-set-default-action-and-target}
+      @about-function{g-notification-set-default-action-and-target-value}
+      @about-function{g-notification-add-button}
+      @about-function{g-notification-add-button-with-target}
+      @about-function{g-notification-add-button-with-target-value}
     @end{subsection}
   @end{section}")
 

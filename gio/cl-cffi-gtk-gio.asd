@@ -1,10 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cl-cffi-gtk-gio.asd
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
-;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -26,7 +23,7 @@
 
 (defsystem :cl-cffi-gtk-gio
   :name :cl-cffi-gtk-gio
-  :version "2.38.1"                  ; Version of GIO
+  :version "2.48"                    ; Minimum required C library version
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -38,6 +35,7 @@
    (:file "gio.app-info")            ; Application information, launch contexts
    ;; Icons
    (:file "gio.icon")                ; Interface for icons
+   (:file "gio.loadable-icon")       ; Interface for loadable icons
    (:file "gio.file-icon")           ; Icons pointing to an image file
    (:file "gio.themed-icon")         ; Icon theming support
    (:file "gio.emblemed-icon")       ; Icon with emblems
@@ -52,9 +50,10 @@
    (:file "gio.property-action")     ; A GAction reflecting a GObject property
    (:file "gio.simple-action-group") ; Simple GActionGroup implementation
    (:file "gio.application")         ; Core application class
-   (:file "gio.application-command-line") ; Command-line invocation of an application
+   (:file "gio.application-command-line") ; Command-line invocation
    (:file "gio.menu-model")          ; Class representing the contents of a menu
    (:file "gio.menu")                ; Simple implementation of GMenuModel
+   (:file "gio.notification")        ; User Notifications, pop up messages
    ;; File Operations
    (:file "gio.file")                ; File and Directory Handling
   )
