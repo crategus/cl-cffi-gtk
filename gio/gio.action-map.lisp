@@ -118,7 +118,7 @@
 
 (defun g-action-map-add-action-entries (map entries)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-8}
+ "@version{*2021-10-10}
   @argument[map]{a @class{g-action-map} object}
   @argument[entries]{a list of descriptions for the actions}
   @begin{short}
@@ -203,7 +203,7 @@
 
 (defun g-action-map-add-action (map action)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-18}
+ "@version{*2021-10-8}
   @argument[map]{a @class{g-action-map} object}
   @argument[action]{a @class{g-action} object}
   @begin{short}

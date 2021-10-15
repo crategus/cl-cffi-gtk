@@ -183,7 +183,7 @@
 (setf (gethash 'g-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-name 'function)
- "@version{2021-8-1}
+ "@version{*2021-10-8}
   @syntax[]{(g-action-name object) => name}
   @argument[action]{a @class{g-action} object}
   @argument[name]{a string with the name of the action}
@@ -241,7 +241,7 @@
 (setf (gethash 'g-action-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state 'function)
- "@version{2021-8-1}
+ "@version{*2021-10-8}
   @syntax[]{(g-action-state object) => state}
   @argument[object]{a @class{g-action} object}
   @argument[state]{the current @type{g-variant} state of the action}
@@ -249,11 +249,10 @@
     Accessor of the @slot[g-action]{state} slot of the @class{g-action} class.
   @end{short}
 
-  Queries the current state of the action.
-
-  If the action is not stateful then a @code{NULL} pointer will be returned. If
-  the action is stateful then the type of the return value is the type given
-  by the function @fun{g-action-state-type}.
+  Queries the current state of the action. If the action is not stateful then a
+  @code{NULL} pointer will be returned. If the action is stateful then the type
+  of the return value is the type given by the @fun{g-action-state-type}
+  function.
   @see-class{g-action}
   @see-type{g-variant}
   @see-function{g-action-state-type}")

@@ -309,19 +309,24 @@
 
 (defun g-simple-action-new (name vtype)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-17}
+ "@version{*2021-10-8}
   @argument[name]{a string with the name of the action}
-  @argument[vtype]{the @class{g-variant-type} type or a type string of the
+  @argument[vtype]{the @class{g-variant-type} type or a type string for the
     parameter to the activate function}
   @return{A new @class{g-simple-action} object.}
   @begin{short}
     Creates a new action.
   @end{short}
-  The created action is stateless. See the function
-  @fun{g-simple-action-new-stateful} for a stateful action.
+  The created action is stateless. See the @fun{g-simple-action-new-stateful}
+  function for a stateful action.
+  @begin[Note]{dictionary}
+    A type string for the @arg{vtype} argument is converted to the
+    @class{g-variant-type} type with the @fun{g-variant-type-new} function.
+  @end{dictionary}
   @see-class{g-simple-action}
   @see-class{g-variant-type}
-  @see-function{g-simple-action-new-stateful}"
+  @see-function{g-simple-action-new-stateful}
+  @see-function{g-variant-type-new}"
   (if (stringp vtype)
       (let ((vtype1 (g-variant-type-new vtype)))
         (unwind-protect
@@ -341,7 +346,7 @@
 
 (defun g-simple-action-new-stateful (name vtype state)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-17}
+ "@version{*2021-10-8}
   @argument[name]{a string with the name of the action}
   @argument[vtype]{the @class{g-variant-type} type or a type string of the
     parameter to the activate function}
@@ -350,8 +355,12 @@
   @begin{short}
     Creates a new stateful action.
   @end{short}
-  The argument @arg{state} is the initial state of the action. All future state
+  The @arg{state} argument is the initial state of the action. All future state
   values must have the same @class{g-variant-type} type as the initial state.
+  @begin[Note]{dictionary}
+    A type string for the @arg{vtype} argument is converted to the
+    @class{g-variant-type} type with the @fun{g-variant-type-new} function.
+  @end{dictionary}
   @see-class{g-simple-action}
   @see-function{g-simple-action-new}
   @see-type{g-variant}

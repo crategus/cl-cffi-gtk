@@ -592,10 +592,10 @@
 ;;; receive queries about the new state of the menu (and particularly added
 ;;; menu items) while signal handlers are running.
 ;;;
-;;; The implementation must dispatch this call directly from a mainloop entry
+;;; The implementation must dispatch this call directly from a main loop entry
 ;;; and not in response to calls -- particularly those from the GMenuModel API.
 ;;; Said another way: the menu must not change while user code is running
-;;; without returning to the mainloop.
+;;; without returning to the main loop.
 ;;;
 ;;; model :
 ;;;     a GMenuModel
