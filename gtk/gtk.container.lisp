@@ -449,7 +449,7 @@
 
 (defcfun ("gtk_container_add" gtk-container-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-12}
+ "@version{*2021-10-11}
   @argument[container]{a @class{gtk-container} widget}
   @argument[widget]{a @class{gtk-widget} child widget to be placed inside
     @arg{container}}
