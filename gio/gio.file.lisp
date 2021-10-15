@@ -198,82 +198,6 @@
 ;;; Prerequisites
 ;;;
 ;;;     GFile requires GObject.
-;;;
-;;; Description
-;;;
-;;; GFile is a high level abstraction for manipulating files on a virtual file
-;;; system. GFiles are lightweight, immutable objects that do no I/O upon
-;;; creation. It is necessary to understand that GFile objects do not represent
-;;; files, merely an identifier for a file. All file content I/O is implemented
-;;; as streaming operations (see GInputStream and GOutputStream).
-;;;
-;;; To construct a GFile, you can use: g_file_new_for_path() if you have a path.
-;;; g_file_new_for_uri() if you have a URI. g_file_new_for_commandline_arg()
-;;; for a command line argument. g_file_new_tmp() to create a temporary file
-;;; from a template. g_file_parse_name() from a utf8 string gotten from
-;;; g_file_get_parse_name().
-;;;
-;;; One way to think of a GFile is as an abstraction of a pathname. For normal
-;;; files the system pathname is what is stored internally, but as GFiles are
-;;; extensible it could also be something else that corresponds to a pathname
-;;; in a userspace implementation of a filesystem.
-;;;
-;;; GFiles make up hierarchies of directories and files that correspond to the
-;;; files on a filesystem. You can move through the file system with GFile
-;;; using g_file_get_parent() to get an identifier for the parent directory,
-;;; g_file_get_child() to get a child within a directory,
-;;; g_file_resolve_relative_path() to resolve a relative path between two
-;;; GFiles. There can be multiple hierarchies, so you may not end up at the
-;;; same root if you repeatedly call g_file_get_parent() on two different files.
-;;;
-;;; All GFiles have a basename (get with g_file_get_basename()). These names are
-;;; byte strings that are used to identify the file on the filesystem (relative
-;;; to its parent directory) and there is no guarantees that they have any
-;;; particular charset encoding or even make any sense at all. If you want to
-;;; use filenames in a user interface you should use the display name that you
-;;; can get by requesting the G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME attribute
-;;; with g_file_query_info(). This is guaranteed to be in utf8 and can be used
-;;; in a user interface. But always store the real basename or the GFile to use
-;;; to actually access the file, because there is no way to go from a display
-;;; name to the actual name.
-;;;
-;;; Using GFile as an identifier has the same weaknesses as using a path in that
-;;; there may be multiple aliases for the same file. For instance, hard or soft
-;;; links may cause two different GFiles to refer to the same file. Other
-;;; possible causes for aliases are: case insensitive filesystems, short and
-;;; long names on Fat/NTFS, or bind mounts in Linux. If you want to check if two
-;;; GFiles point to the same file you can query for the G_FILE_ATTRIBUTE_ID_FILE
-;;; attribute. Note that GFile does some trivial canonicalization of pathnames
-;;; passed in, so that trivial differences in the path string used at creation
-;;; (duplicated slashes, slash at end of path, "." or ".." path segments, etc)
-;;; does not create different GFiles.
-;;;
-;;; Many GFile operations have both synchronous and asynchronous versions to
-;;; suit your application. Asynchronous versions of synchronous functions simply
-;;; have _async() appended to their function names. The asynchronous I/O
-;;; functions call a GAsyncReadyCallback which is then used to finalize the
-;;; operation, producing a GAsyncResult which is then passed to the function's
-;;; matching _finish() operation.
-;;;
-;;; It is highly recommended to use asynchronous calls when running within a
-;;; shared main loop, such as in the main thread of an application. This avoids
-;;; I/O operations blocking other sources on the main loop from being
-;;; dispatched. Synchronous I/O operations should be performed from worker
-;;; threads. See the introduction to asynchronous programming section for more.
-;;;
-;;; Some GFile operations do not have synchronous analogs, as they may take a
-;;; very long time to finish, and blocking may leave an application unusable.
-;;; Notable cases include: g_file_mount_mountable() to mount a mountable file.
-;;; g_file_unmount_mountable_with_operation() to unmount a mountable file.
-;;; g_file_eject_mountable_with_operation() to eject a mountable file.
-;;;
-;;; Entity Tags
-;;;
-;;; One notable feature of GFiles are entity tags, or "etags" for short. Entity
-;;; tags are somewhat like a more abstract version of the traditional mtime, and
-;;; can be used to quickly determine if the file has been modified from the
-;;; version on the file system. See the HTTP 1.1 specification for HTTP Etag
-;;; headers, which are a very similar concept.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
@@ -424,33 +348,27 @@
 ;;; enum GFilesystemPreviewType
 ;;; ----------------------------------------------------------------------------
 
-(defcenum g-file-system-preview-type
-  (:if-always 0)
-  (:if-local 1)
-  (:never 2))
-
-#+nil
-(define-g-enum "GFileSystemPreviewType" g-file-system-preview-type
+(define-g-enum "GFilesystemPreviewType" g-filesystem-preview-type
   (:export t
-   :type-initializer "g_file_system_preview_type_get_type")
+   :type-initializer "g_filesystem_preview_type_get_type")
   (:if-always 0)
   (:if-local 1)
   (:never 2))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-file-system-preview-type atdoc:*symbol-name-alias*)
-      "CEnum"
-      (gethash 'g-file-system-preview-type atdoc:*external-symbols*)
- "@version{2021-8-12}
+(setf (gethash 'g-filesystem-preview-type atdoc:*symbol-name-alias*)
+      "GEnum"
+      (gethash 'g-filesystem-preview-type atdoc:*external-symbols*)
+ "@version{2021-10-8}
   @begin{short}
     Indicates a hint from the file system whether files should be previewed in
-    a file manager. Returned as the value of the key
-    @code{G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW}.
+    a file manager.
   @end{short}
+  Returned as the value of the \"filesystem::use-preview\" key.
   @begin{pre}
-(define-g-enum \"GFileSystemPreviewType\" g-file-system-preview-type
+(define-g-enum \"GFilesystemPreviewType\" g-filesystem-preview-type
   (:export t
-   :type-initializer \"g_file_system_preview_type_get_type\")
+   :type-initializer \"g_filesystem_preview_type_get_type\")
   (:if-always 0)
   (:if-local 1)
   (:never 2))
@@ -465,17 +383,100 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GFile
-;;;
-;;; typedef struct _GFile GFile;
-;;;
-;;; A handle to an object implementing the GFileIface interface. Generally
-;;; stores a location within the file system. Handles do not necessarily
-;;; represent files or directories that currently exist.
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Implement a conversion of GFile objects to Lisp pathnames
 
 (define-g-interface "GFile" g-file
   (:export t
    :type-initializer "g_file_get_type"))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-file atdoc:*class-name-alias*)
+      "Interface"
+      (documentation 'g-file 'type)
+ "@version{*2021-10-8}
+  @begin{short}
+    The @sym{g-file} interface is a high level abstraction for manipulating
+    files on a virtual file system.
+  @end{short}
+  The @sym{g-file} objects are lightweight, immutable objects that do no I/O
+  upon creation. It is necessary to understand that @sym{g-file} objects do not
+  represent files, merely an identifier for a file. All file content I/O is
+  implemented as streaming operations, see @code{GInputStream} and
+  @code{GOutputStream}.
+
+  To construct a @sym{g-file} object, you can use: the @fun{g-file-new-for-path}
+  function if you have a path. The @fun{g-file-new-for-uri} function if you have
+  a URI. The @fun{g-file-new-for-commandline-arg} function for a command line
+  argument. The @fun{g-file-new-tmp} function to create a temporary file from a
+  template. The @fun{g-file-parse-name} function from a utf8 string gotten from
+  the @fun{g-file-get-parse-name} function.
+
+  One way to think of a @sym{g-file} object is as an abstraction of a pathname.
+  For normal files the system pathname is what is stored internally, but as
+  @sym{g-file} objects are extensible it could also be something else that
+  corresponds to a pathname in a userspace implementation of a filesystem.
+
+  The @sym{g-file} object make up hierarchies of directories and files that
+  correspond to the files on a filesystem. You can move through the file system
+  with the @sym{g-file} object using the @fun{g-file-get-parent} function to get
+  an identifier for the parent directory, the @fun{g-file-get-child} function to
+  get a child within a directory, the @fun{g-file-resolve-relative-path}
+  function to resolve a relative path between two @sym{g-file} objects. There
+  can be multiple hierarchies, so you may not end up at the same root if you
+  repeatedly call the @fun{g-file-get-parent} function on two different files.
+
+  All @sym{g-file} objects have a basename, get with the
+  @fun{g-file-get-basename} function. These names are byte strings that are used
+  to identify the file on the filesystem, relative to its parent directory, and
+  there is no guarantees that they have any particular charset encoding or even
+  make any sense at all. If you want to use filenames in a user interface you
+  should use the display name that you can get by requesting the
+  \"standard::display-name\" attribute with the @fun{g-file-query-info}
+  function. This is guaranteed to be in utf8 and can be used in a user
+  interface. But always store the real basename or the @sym{g-file} object to
+  use to actually access the file, because there is no way to go from a display
+  name to the actual name.
+
+  Using the @sym{g-file} object as an identifier has the same weaknesses as
+  using a path in that there may be multiple aliases for the same file. For
+  instance, hard or soft links may cause two different @sym{g-file} objects to
+  refer to the same file. Other possible causes for aliases are: case
+  insensitive filesystems, short and long names on Fat/NTFS, or bind mounts in
+  Linux. If you want to check if two @sym{f-file} objects point to the same file
+  you can query for the \"id::file\" attribute. Note that the @sym{g-file}
+  object does some trivial canonicalization of pathnames passed in, so that
+  trivial differences in the path string used at creation, duplicated slashes,
+  slash at end of path, \".\" or \"..\" path segments, etc, does not create
+  different @sym{g-file} objects.
+
+  Many @sym{g-file} operations have both synchronous and asynchronous versions
+  to suit your application. Asynchronous versions of synchronous functions
+  simply have @sym{_async} appended to their function names. The asynchronous
+  I/O functions call a @code{GAsyncReadyCallback} which is then used to finalize
+  the operation, producing a @code{GAsyncResult} which is then passed to the
+  matching @code{_finish} operation of the functions.
+
+  It is highly recommended to use asynchronous calls when running within a
+  shared main loop, such as in the main thread of an application. This avoids
+  I/O operations blocking other sources on the main loop from being dispatched.
+  Synchronous I/O operations should be performed from worker threads. See the
+  introduction to asynchronous programming section for more.
+
+  Some @sym{g-file} operations do not have synchronous analogs, as they may take
+  a very long time to finish, and blocking may leave an application unusable.
+  Notable cases include: the @fun{g-file-mount-mountable} function to mount a
+  mountable file. The @fun{g-file-unmount-mountable-with-operation} function
+  to unmount a mountable file. The @fun{g-file-eject-mountable-with-operation}
+  function to eject a mountable file.
+
+  @subheading{Entity Tags}
+  One notable feature of @sym{g-file} objects are entity tags, or \"etags\" for
+  short. Entity tags are somewhat like a more abstract version of the
+  traditional mtime, and can be used to quickly determine if the file has been
+  modified from the version on the file system. See the HTTP 1.1 specification
+  for HTTP Etag headers, which are a very similar concept.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GFileProgressCallback ()
@@ -584,117 +585,106 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_new_for_path ()
-;;;
-;;; GFile *
-;;; g_file_new_for_path (const char *path);
-;;;
-;;; Constructs a GFile for a given path. This operation never fails, but the
-;;; returned object might not support any I/O operation if path is malformed.
-;;;
-;;; path :
-;;;     a string containing a relative or absolute path. The string must be
-;;;     encoded in the glib filename encoding.
-;;;
-;;; Returns :
-;;;     a new GFile for the given path . Free the returned object with
-;;;     g_object_unref().
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_file_new_for_path" g-file-new-for-path) (g-object g-file)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-10-8}
+  @argument[path]{a string containing a relative or absolute path, the string
+    must be encoded in the GLib filename encoding.}
+  @return{A new @class{g-file} object for the given path.}
+  @begin{short}
+    Constructs a @class{g-file} object for a given path.
+  @end{short}
+  This operation never fails, but the returned object might not support any I/O
+  operation if the @arg{path} argument is malformed.
+  @see-class{g-file}"
   (path :string))
 
 (export 'g-file-new-for-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_new_for_uri ()
-;;;
-;;; GFile *
-;;; g_file_new_for_uri (const char *uri);
-;;;
-;;; Constructs a GFile for a given URI. This operation never fails, but the
-;;; returned object might not support any I/O operation if uri is malformed or
-;;; if the uri type is not supported.
-;;;
-;;; uri :
-;;;     a UTF-8 string containing a URI
-;;;
-;;; Returns :
-;;;     a new GFile for the given uri . Free the returned object with
-;;;     g_object_unref().
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_file_new_for_uri" g-file-new-for-uri) (g-object g-file)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-10-8}
+  @argument[uri]{a UTF-8 string containing a URI}
+  @return{A new @class{g-file} object for the given uri.}
+  @begin{short}
+    Constructs a @class{g-file} object for a given URI.
+  @end{short}
+  This operation never fails, but the returned object might not support any I/O
+  operation if the @arg{uri} argument is malformed or if the URI type is not
+  supported.
+  @see-class{g-file}"
   (uri :string))
 
 (export 'g-file-new-for-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_new_for_commandline_arg ()
-;;;
-;;; GFile *
-;;; g_file_new_for_commandline_arg (const char *arg);
-;;;
-;;; Creates a GFile with the given argument from the command line. The value of
-;;; arg can be either a URI, an absolute path or a relative path resolved
-;;; relative to the current working directory. This operation never fails, but
-;;; the returned object might not support any I/O operation if arg points to a
-;;; malformed path.
-;;;
-;;; Note that on Windows, this function expects its argument to be in UTF-8 --
-;;; not the system code page. This means that you should not use this function
-;;; with string from argv as it is passed to main(). g_win32_get_command_line()
-;;; will return a UTF-8 version of the commandline. GApplication also uses UTF-8
-;;; but g_application_command_line_create_file_for_arg() may be more useful for
-;;; you there. It is also always possible to use this function with
-;;; GOptionContext arguments of type G_OPTION_ARG_FILENAME.
-;;;
-;;; arg :
-;;;     a command line string.
-;;;
-;;; Returns :
-;;;     a new GFile. Free the returned object with g_object_unref().
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_file_new_for_commandline_arg" g-file-new-for-commandline-arg)
     (g-object g-file)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-10-8}
+  @argument[arg]{a command line string}
+  @return{A new @class{g-file} object.}
+  @begin{short}
+    Creates a @class{g-file} object with the given argument from the command
+    line.
+  @end{short}
+  The value of the @arg{arg} argument can be either a URI, an absolute path or a
+  relative path resolved relative to the current working directory. This
+  operation never fails, but the returned object might not support any I/O
+  operation if the @arg{arg} argument points to a malformed path.
+
+  Note that on Windows, this function expects its argument to be in UTF-8 --
+  not the system code page. This means that you should not use this function
+  with string from the @code{argv} parameter as it is passed to the main
+  function. The @code{g_win32_get_command_line()} function will return a UTF-8
+  version of the command line. The @class{g-application} class also uses UTF-8
+  but the @fun{g-application-command-line-create-file-for-arg} function may be
+  more useful for you there. It is also always possible to use this function
+  with @type{g-option-context} instances of @code{:filename} type.
+  @see-class{g-file}
+  @see-type{g-option-context}
+  @see-function{g-application-command-line-create-file-for-arg}"
   (arg :string))
 
 (export 'g-file-new-for-commandline-arg)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_new_for_commandline_arg_and_cwd ()
-;;;
-;;; GFile *
-;;; g_file_new_for_commandline_arg_and_cwd
-;;;                                (const gchar *arg,
-;;;                                 const gchar *cwd);
-;;;
-;;; Creates a GFile with the given argument from the command line.
-;;;
-;;; This function is similar to g_file_new_for_commandline_arg() except that it
-;;; allows for passing the current working directory as an argument instead of
-;;; using the current working directory of the process.
-;;;
-;;; This is useful if the commandline argument was given in a context other
-;;; than the invocation of the current process.
-;;;
-;;; See also g_application_command_line_create_file_for_arg().
-;;;
-;;; arg :
-;;;     a command line string.
-;;;
-;;; cwd :
-;;;     the current working directory of the commandline.
-;;;
-;;; Returns :
-;;;     a new GFile.
-;;;
-;;; Since 2.36
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_file_new_for_commandline_arg_and_cwd"
            g-file-new-for-commandline-arg-and-cwd) (g-object g-file)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-10-8}
+  @argument[arg]{a command line string}
+  @argument[cwd]{a string with the current working directory of the command
+    line}
+  @return{A new @class{g-file} object.}
+  @begin{short}
+    Creates a @class{g-file} object with the given argument from the command
+    line.
+  @end{short}
+
+  This function is similar to the @fun{g-file-new-for-commandline-arg}
+  function except that it allows for passing the current working directory as
+  an argument instead of using the current working directory of the process.
+
+  This is useful if the command line argument was given in a context other than
+  the invocation of the current process.
+
+  See also the @fun{g-application-command-line-create-file-for-arg} function.
+  @see-class{g-file}
+  @see-function{g-file-new-for-commandline-arg}
+  @see-function{g-application-command-line-create-file-for-arg}"
   (arg :string)
   (cwd :string))
 
@@ -848,34 +838,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_get_basename ()
-;;;
-;;; char *
-;;; g_file_get_basename (GFile *file);
-;;;
-;;; Gets the base name (the last component of the path) for a given GFile.
-;;;
-;;; If called for the top level of a system (such as the filesystem root or a
-;;; uri like sftp://host/) it will return a single directory separator (and on
-;;; Windows, possibly a drive letter).
-;;;
-;;; The base name is a byte string (not UTF-8). It has no defined encoding or
-;;; rules other than it may not contain zero bytes. If you want to use filenames
-;;; in a user interface you should use the display name that you can get by
-;;; requesting the G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME attribute with
-;;; g_file_query_info().
-;;;
-;;; This call does no blocking I/O.
-;;;
-;;; file :
-;;;     input GFile
-;;;
-;;; Returns :
-;;;     string containing the GFile's base name, or NULL if given GFile is
-;;;     invalid. The returned string should be freed with g_free() when no
-;;;     longer needed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_file_get_basename" g-file-basename) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2021-10-8}
+  @argument[file]{a input @class{g-file} object}
+  @return{A string containing the base name of the @class{g-file} object, or
+    @code{ nil} if the given @class{g-file} is invalid.}
+  @begin{short}
+    Gets the base name, the last component of the path, for a given
+    @class{g-file} object.
+  @end{short}
+
+  If called for the top level of a system, such as the filesystem root or a URI
+  like @file{sftp://host/}, it will return a single directory separator, and on
+  Windows, possibly a drive letter.
+
+  The base name is a byte string, not UTF-8. It has no defined encoding or rules
+  other than it may not contain zero bytes. If you want to use filenames in a
+  user interface you should use the display name that you can get by requesting
+  the \"standard::display-name\" attribute with the @fun{g-file-query-info}
+  function.
+
+  This call does no blocking I/O.
+  @see-class{g-file}
+  @see-function{g-file-query-info}"
   (file g-object))
 
 (export 'g-file-basename)
@@ -886,8 +874,8 @@
 
 (defcfun ("g_file_get_path" g-file-path) (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-8}
-  @argument[file]{input @class{g-file} object}
+ "@version{*2021-10-8}
+  @argument[file]{a input @class{g-file} object}
   @begin{return}
     A string containing the @class{g-file} path, or @code{nil} if no such path
     exists.
@@ -945,32 +933,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_get_parse_name ()
-;;;
-;;; char *
-;;; g_file_get_parse_name (GFile *file);
-;;;
-;;; Gets the parse name of the file . A parse name is a UTF-8 string that
-;;; describes the file such that one can get the GFile back using
-;;; g_file_parse_name().
-;;;
-;;; This is generally used to show the GFile as a nice full-pathname kind of
-;;; string in a user interface, like in a location entry.
-;;;
-;;; For local files with names that can safely be converted to UTF-8 the
-;;; pathname is used, otherwise the IRI is used (a form of URI that allows
-;;; UTF-8 characters unescaped).
-;;;
-;;; This call does no blocking I/O.
-;;;
-;;; file :
-;;;     input GFile
-;;;
-;;; Returns :
-;;;     a string containing the GFile's parse name. The returned string should
-;;;     be freed with g_free() when no longer needed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_file_get_parse_name" g-file-get-parse-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2021-10-8}
+  @argument[file]{a input @class{g-file} object}
+  @return{A string containing the parse name of the @class{g-file} object.}
+  @begin{short}
+    Gets the parse name of the file.
+  @end{short}
+  A parse name is a UTF-8 string that describes the file such that one can get
+  the @class{g-file} object back using the @fun{g-file-parse-name} function.
+
+  This is generally used to show the @class{g-file} object as a nice
+  full-pathname kind of string in a user interface, like in a location entry.
+
+  For local files with names that can safely be converted to UTF-8 the pathname
+  is used, otherwise the IRI is used, a form of URI that allows UTF-8 characters
+  unescaped.
+
+  This call does no blocking I/O.
+  @see-class{g-file}
+  @see-function{g-file-parse-name}"
   (file (g-object g-file)))
 
 (export 'g-file-get-parse-name)
@@ -1576,7 +1561,7 @@
 ;;;     the data to pass to callback function.
 ;;; ----------------------------------------------------------------------------
 
-;;; --------------------------------------------------------------------------------
+;;; ----------------------------------------------------------------------------
 ;;; g_file_create_finish ()
 ;;;
 ;;; GFileOutputStream *
@@ -2314,218 +2299,206 @@
 ;;;     g_object_unref().
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_enumerate_children ()
-;;;GFileEnumerator *
-;;;g_file_enumerate_children (GFile *file,
-;;;                           const char *attributes,
-;;;                           GFileQueryInfoFlags flags,
-;;;                           GCancellable *cancellable,
-;;;                           GError **error);
-;;;Gets the requested information about the files in a directory. The result is a GFileEnumerator object that will give out GFileInfo objects for all the files in the directory.
+;;; ----------------------------------------------------------------------------
+;;; g_file_enumerate_children ()
+;;;
+;;; GFileEnumerator *
+;;; g_file_enumerate_children (GFile *file,
+;;;                            const char *attributes,
+;;;                            GFileQueryInfoFlags flags,
+;;;                            GCancellable *cancellable,
+;;;                            GError **error);
+;;;
+;;; Gets the requested information about the files in a directory. The result is
+;;; a GFileEnumerator object that will give out GFileInfo objects for all the
+;;; files in the directory.
+;;;
+;;; The attributes value is a string that specifies the file attributes that
+;;; should be gathered. It is not an error if it's not possible to read a
+;;; particular requested attribute from a file - it just won't be set.
+;;; attributes should be a comma-separated list of attributes or attribute
+;;;; wildcards. The wildcard "*" means all attributes, and a wildcard like
+;;; "standard::*" means all attributes in the standard namespace. An example
+;;; attribute query be "standard::*,owner::user". The standard attributes are
+;;; available as defines, like G_FILE_ATTRIBUTE_STANDARD_NAME.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be returned.
+;;; If the file is not a directory, the G_IO_ERROR_NOT_DIRECTORY error will be
+;;; returned. Other errors are possible too.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; attributes :
+;;;     an attribute query string
+;;;
+;;; flags :
+;;;     a set of GFileQueryInfoFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     GError for error reporting
+;;;
+;;; Returns :
+;;;     A GFileEnumerator if successful, NULL on error. Free the returned object
+;;;     with g_object_unref().
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_file_enumerate_children_async ()
+;;;
+;;; void
+;;; g_file_enumerate_children_async (GFile *file,
+;;;                                  const char *attributes,
+;;;                                  GFileQueryInfoFlags flags,
+;;;                                  int io_priority,
+;;;                                  GCancellable *cancellable,
+;;;                                  GAsyncReadyCallback callback,
+;;;                                  gpointer user_data);
+;;;
+;;; Asynchronously gets the requested information about the files in a
+;;; directory. The result is a GFileEnumerator object that will give out
+;;; GFileInfo objects for all the files in the directory.
+;;;
+;;; For more details, see g_file_enumerate_children() which is the synchronous
+;;; version of this call.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_enumerate_children_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; attributes :
+;;;     an attribute query string
+;;;
+;;; flags :
+;;;     a set of GFileQueryInfoFlags
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_file_enumerate_children_finish ()
+;;;
+;;; GFileEnumerator *
+;;; g_file_enumerate_children_finish (GFile *file,
+;;;                                   GAsyncResult *res,
+;;;                                   GError **error);
+;;;
+;;; Finishes an async enumerate children operation. See
+;;; g_file_enumerate_children_async().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; res :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError
+;;;
+;;; Returns :
+;;;     a GFileEnumerator or NULL if an error occurred. Free the returned object
+;;;     with g_object_unref().
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_display_name ()
+;;;
+;;; GFile *
+;;; g_file_set_display_name (GFile *file,
+;;;                          const char *display_name,
+;;;                          GCancellable *cancellable,
+;;;                          GError **error);
+;;;
+;;; Renames file to the specified display name.
+;;;
+;;; The display name is converted from UTF-8 to the correct encoding for the
+;;; target filesystem if possible and the file is renamed to this.
+;;;
+;;; If you want to implement a rename operation in the user interface the edit
+;;; name (G_FILE_ATTRIBUTE_STANDARD_EDIT_NAME) should be used as the initial
+;;; value in the rename widget, and then the result after editing should be
+;;; passed to g_file_set_display_name().
+;;;
+;;; On success the resulting converted filename is returned.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; display_name :
+;;;     a string
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     a GFile specifying what file was renamed to, or NULL if there was an
+;;;     error. Free the returned object with g_object_unref().
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_display_name_async ()
+;;;
+;;; void
+;;; g_file_set_display_name_async (GFile *file,
+;;;                                const char *display_name,
+;;;                                int io_priority,
+;;;                                GCancellable *cancellable,
+;;;                                GAsyncReadyCallback callback,
+;;;                                gpointer user_data);
+;;;
+;;; Asynchronously sets the display name for a given GFile.
+;;;
+;;; For more details, see g_file_set_display_name() which is the synchronous
+;;; version of this call.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_set_display_name_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; display_name :
+;;;     a string
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;; ----------------------------------------------------------------------------
 
-;;;The attributes value is a string that specifies the file attributes that should be gathered. It is not an error if it's not possible to read a particular requested attribute from a file - it just won't be set. attributes should be a comma-separated list of attributes or attribute wildcards. The wildcard "*" means all attributes, and a wildcard like "standard::*" means all attributes in the standard namespace. An example attribute query be "standard::*,owner::user". The standard attributes are available as defines, like G_FILE_ATTRIBUTE_STANDARD_NAME.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;If the file does not exist, the G_IO_ERROR_NOT_FOUND error will be returned. If the file is not a directory, the G_IO_ERROR_NOT_DIRECTORY error will be returned. Other errors are possible too.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;attributes
-
-;;;an attribute query string
-
-
-;;;flags
-
-;;;a set of GFileQueryInfoFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;GError for error reporting
-
-
-;;;Returns
-;;;A GFileEnumerator if successful, NULL on error. Free the returned object with g_object_unref().
-
-;;;[transfer full]
-
-;;;g_file_enumerate_children_async ()
-;;;void
-;;;g_file_enumerate_children_async (GFile *file,
-;;;                                 const char *attributes,
-;;;                                 GFileQueryInfoFlags flags,
-;;;                                 int io_priority,
-;;;                                 GCancellable *cancellable,
-;;;                                 GAsyncReadyCallback callback,
-;;;                                 gpointer user_data);
-;;;Asynchronously gets the requested information about the files in a directory. The result is a GFileEnumerator object that will give out GFileInfo objects for all the files in the directory.
-
-;;;For more details, see g_file_enumerate_children() which is the synchronous version of this call.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_enumerate_children_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;attributes
-
-;;;an attribute query string
-
-
-;;;flags
-
-;;;a set of GFileQueryInfoFlags
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied.
-
-;;;[scope async]
-;;;user_data
-
-;;;the data to pass to callback function.
-
-;;;[closure]
-;;;g_file_enumerate_children_finish ()
-;;;GFileEnumerator *
-;;;g_file_enumerate_children_finish (GFile *file,
-;;;                                  GAsyncResult *res,
-;;;                                  GError **error);
-;;;Finishes an async enumerate children operation. See g_file_enumerate_children_async().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;res
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError
-
-
-;;;Returns
-;;;a GFileEnumerator or NULL if an error occurred. Free the returned object with g_object_unref().
-
-;;;[transfer full]
-
-;;;g_file_set_display_name ()
-;;;GFile *
-;;;g_file_set_display_name (GFile *file,
-;;;                         const char *display_name,
-;;;                         GCancellable *cancellable,
-;;;                         GError **error);
-;;;Renames file to the specified display name.
-
-;;;The display name is converted from UTF-8 to the correct encoding for the target filesystem if possible and the file is renamed to this.
-
-;;;If you want to implement a rename operation in the user interface the edit name (G_FILE_ATTRIBUTE_STANDARD_EDIT_NAME) should be used as the initial value in the rename widget, and then the result after editing should be passed to g_file_set_display_name().
-
-;;;On success the resulting converted filename is returned.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;display_name
-
-;;;a string
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;a GFile specifying what file was renamed to, or NULL if there was an error. Free the returned object with g_object_unref().
-
-;;;[transfer full]
-
-;;;g_file_set_display_name_async ()
-;;;void
-;;;g_file_set_display_name_async (GFile *file,
-;;;                               const char *display_name,
-;;;                               int io_priority,
-;;;                               GCancellable *cancellable,
-;;;                               GAsyncReadyCallback callback,
-;;;                               gpointer user_data);
-;;;Asynchronously sets the display name for a given GFile.
-
-;;;For more details, see g_file_set_display_name() which is the synchronous version of this call.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_set_display_name_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;display_name
-
-;;;a string
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied.
-
-;;;[scope async]
-;;;user_data
-
-;;;the data to pass to callback function.
-
-;;;[closure]
 ;;;g_file_set_display_name_finish ()
 ;;;GFile *
 ;;;g_file_set_display_name_finish (GFile *file,
