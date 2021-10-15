@@ -102,7 +102,7 @@
 (setf (gethash 'gtk-application-inhibit-flags atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gtk-application-inhibit-flags atdoc:*external-symbols*)
- "@version{2021-9-3}
+ "@version{*2021-10-11}
   @begin{short}
     Types of user actions that may be blocked by the
     @fun{gtk-application-inhibit} function.
@@ -156,7 +156,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application 'type)
- "@version{2021-9-3}
+ "@version{*2021-10-10}
   @begin{short}
     The @sym{gtk-application} class handles many important aspects of a GTK
     application in a convenient fashion, without enforcing a one-size-fits-all
@@ -232,37 +232,23 @@
     A simple application.
     @begin{pre}
 (defun application-simple (&rest argv)
-  (within-main-loop
-    (let (;; Create an application
-          (app (make-instance 'gtk-application
-                              :application-id \"com.crategus.application-simple\"
-                              :flags :none)))
-      ;; Connect signal \"activate\" to the application
-      (g-signal-connect app \"activate\"
-          (lambda (application)
-            ;; Create an application window
-            (let ((window (make-instance 'gtk-application-window
-                                         :application application
-                                         :title \"Simple Application\"
-                                         :default-width 500
-                                         :default-height 300)))
-              ;; Connect signal \"destroy\" to the application window
-              (g-signal-connect window \"destroy\"
-                                (lambda (widget)
-                                  (declare (ignore widget))
-                                  ;; Quit the application
-                                  (g-application-quit app)))
-              ;; Show the application window
-              (gtk-widget-show-all window))))
-      ;; Connect signal \"shutdown\" to the application
-      (g-signal-connect app \"shutdown\"
-                        (lambda (application)
-                          (declare (ignore application))
-                          ;; Leave the main loop on shutdown
-                          (leave-gtk-main)))
-      ;; Run the application
-      (g-application-run app argv)))
-  (join-gtk-main))
+  (let (;; Create an application
+        (app (make-instance 'gtk-application
+                            :application-id \"com.crategus.application-simple\"
+                            :flags :none)))
+    ;; Connect signal \"activate\" to the application
+    (g-signal-connect app \"activate\"
+        (lambda (application)
+          ;; Create an application window
+          (let ((window (make-instance 'gtk-application-window
+                                       :application application
+                                       :title \"Simple Application\"
+                                       :default-width 500
+                                       :default-height 300)))
+            ;; Show the application window
+            (gtk-widget-show-all window))))
+    ;; Run the application
+    (g-application-run app argv)))
     @end{pre}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -332,7 +318,7 @@
 (setf (gethash 'gtk-application-active-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-active-window 'function)
- "@version{2021-9-3}
+ "@version{*2021-10-13}
   @syntax[]{(gtk-application-active-window object) => window}
   @argument[object]{a @class{gtk-application} instance}
   @argument[window]{a @class{gtk-window} widget}
@@ -362,7 +348,7 @@
 (setf (gethash 'gtk-application-app-menu atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-app-menu 'function)
- "@version{2021-9-3}
+ "@version{*2021-10-10}
   @syntax[]{(gtk-application-app-menu object) => app-menu}
   @syntax[]{(setf (gtk-application-app-menu object) app-menu)}
   @argument[object]{a @class{gtk-application} instance}
@@ -406,7 +392,7 @@
 (setf (gethash 'gtk-application-menubar atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-menubar 'function)
- "@version{2021-9-3}
+ "@version{*2021-10-10}
   @syntax[]{(gtk-application-menubar object) => menubar}
   @syntax[]{(setf (gtk-application-menubar object) menubar)}
   @argument[object]{a @class{gtk-application} instance}
@@ -454,7 +440,7 @@
 (setf (gethash 'gtk-application-register-session atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-register-session 'function)
- "@version{2021-9-3}
+ "@version{*2021-10-13}
   @syntax[]{(gtk-application-register-session object) => setting}
   @syntax[]{(setf (gtk-application-register-session object) setting)}
   @argument[object]{a @class{gtk-application} instance}
@@ -484,7 +470,7 @@
 (setf (gethash 'gtk-application-screensaver-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-screensaver-active 'function)
- "@version{2021-9-3}
+ "@version{*2021-10-13}
   @syntax[]{(gtk-application-screensaver-active object) => active}
   @argument[object]{a @class{gtk-application} instance}
   @argument[active]{a boolean whether the screensaver is active}
@@ -660,7 +646,7 @@
 
 (defcfun ("gtk_application_inhibit" gtk-application-inhibit) :uint
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
+ "@version{*2021-10-11}
   @argument[application]{a @class{gtk-application} instance}
   @argument[window]{a @class{gtk-window} widget, or @code{nil}}
   @argument[flags]{what @symbol{gtk-application-inhibit-flags} types of user
@@ -714,7 +700,7 @@
 
 (defcfun ("gtk_application_uninhibit" gtk-application-uninhibit) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
+ "@version{*2021-10-11}
   @argument[application]{a @class{gtk-application} instance}
   @argument[cookie]{an unsigned integer cookie that was returned by the
     @fun{gtk-application-inhibit} function}
@@ -737,7 +723,7 @@
 
 (defcfun ("gtk_application_is_inhibited" gtk-application-is-inhibited) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
+ "@version{*2021-10-11}
   @argument[application]{a @class{gtk-application} instance}
   @argument[flags]{what @symbol{gtk-application-inhibit-flags} types of actions
     should be queried}
