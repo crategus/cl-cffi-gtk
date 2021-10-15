@@ -1391,25 +1391,25 @@
 ;;; g_signal_connect()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-signal-connect (instance detailed-signal handler &key after)
+(defun g-signal-connect (instance signal handler &key after)
  #+cl-cffi-gtk-documentation
- "@version{*2021-1-24}
+ "@version{*2021-10-8}
   @argument[instance]{the @class{g-object} instance to connect to}
-  @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
+  @argument[signal]{a string of the form \"signal-name::detail\"}
   @argument[handler]{the Lisp callback function to connect}
   @argument[after]{if @em{true} the handler is called after the default handler}
-  @return{A unsigned long with the handler ID.}
+  @return{A unsigned long integer with the handler ID.}
   @begin{short}
     Connects a Lisp callback function to a signal for a particular object.
   @end{short}
   The handler will be called before the default handler of the signal. If the
-  keyword argument @arg{after} is @em{true}, the handler will be called after
+  @arg{after} keyword argument is @em{true}, the handler will be called after
   the default handler of the signal.
   @begin[Lisp implmentation]{dictionary}
-    The C library knows in addition the function
-    @code{g_signal_connect_after()}, which is implemented as the function
-    @fun{g-signal-connect-after} and is equivalent to this function with a
-    value @em{true} for the keyword argument @arg{after}.
+    The C library knows in addition the @code{g_signal_connect_after()}
+    function, which is implemented as the @fun{g-signal-connect-after} function
+    and is equivalent to this function with a @em{true} value  for the
+    @arg{after} keyword argument.
   @end{dictionary}
   @begin[Example]{dictionary}
     Connect a Lisp lambda function to the signal \"destroy\" of a window:
@@ -1450,7 +1450,7 @@
   @see-class{g-object}
   @see-function{g-signal-connect-after}"
   (%g-signal-connect-closure (pointer instance)
-                             detailed-signal
+                             signal
                              (create-closure instance handler)
                              after))
 
