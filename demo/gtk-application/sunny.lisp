@@ -31,7 +31,7 @@
   (let ((window (make-instance 'gtk-application-window
                                :application application
                                :title "Sunny"
-                               :show-menubar nil
+                               :show-menubar t
                                :icon-name "sunny"
                                :default-width 480
                                :default-height 320))

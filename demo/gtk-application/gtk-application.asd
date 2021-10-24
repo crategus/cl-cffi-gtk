@@ -15,8 +15,9 @@
                (:file "application-simple")
                (:file "bloatpad")
                (:file "sunny")
-;               (:file "application-1/application-1")
-;               (:file "application-2/application-2")
+               (:file "application/application-1/application-1")
+               (:file "application/application-2/application-2")
+               (:file "application/application-3/application-3")
               ))
 
-;; 2021-10-13
+;; 2021-10-16

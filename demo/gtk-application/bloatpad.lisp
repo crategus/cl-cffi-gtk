@@ -1,4 +1,4 @@
-;;;; Application Bloatpad - 2021-10-10
+;;;; Application Bloatpad - 2021-10-24
 
 (in-package #:gtk-application)
 
@@ -89,7 +89,7 @@
     </submenu>
     <submenu id='time-menu'>
       <attribute name='label' translatable='yes'>Time</attribute>
-      <attribute name='submenu-action'>app.time-active</attribute>
+      <attribute name='submenu-action'>win.time-active</attribute>
     </submenu>
   </menu>
 </interface>")
@@ -113,30 +113,24 @@
                                      nil                     ; interfaces
                                      nil)                    ; properties
 
-(defun load-file-buffer (buffer filename)
-  (with-open-file (stream filename)
-    (clear-buffer buffer)
-    (do ((line (read-line stream nil)
-               (read-line stream nil)))
-        ((null line))
-      (gtk-text-buffer-insert buffer line)
-      (gtk-text-buffer-insert buffer (format nil "~%")))))
-
 (defun text-buffer-changed-cb (window buffer)
   (let ((application (gtk-window-application window))
         (count (gtk-text-buffer-char-count buffer)))
     (if (> count 0)
-        (if (= 0 (bloatpad-inhibit application))
-            (setf (bloatpad-inhibit application)
-                  (gtk-application-inhibit
+        (when (= 0 (bloatpad-inhibit application))
+          (format t "inhibit application~%")
+          (setf (bloatpad-inhibit application)
+                (gtk-application-inhibit
                                     application
                                     (gtk-application-active-window application)
                                     :logout
                                     "Bloatpad cannot save, you cannot logout")))
         (when (> (bloatpad-inhibit application) 0)
+          (format t "uninhibit application~%")
           (gtk-application-uninhibit application (bloatpad-inhibit application))
           (setf (bloatpad-inhibit application) 0)))
-    (setf (g-action-enabled (g-action-map-lookup-action window "clear")) t)
+    (setf (g-action-enabled (g-action-map-lookup-action window "clear"))
+          (> count 0))
     (if (> count 0)
         (let ((action (g-simple-action-new "spell-check" nil)))
           (g-action-map-add-action window action))
@@ -154,44 +148,40 @@
                                            notification))))))
 
 (defun new-bloatpad-window (application filename)
-  (let (;; Create the application window
-        (window (make-instance 'gtk-application-window
+  (let ((window (make-instance 'gtk-application-window
                                :application application
                                :title "Bloatpad"
                                :default-width 640
                                :default-height 480))
         (grid (make-instance 'gtk-grid))
-        (toolbar (make-instance 'gtk-toolbar)))
-    ;; Connect signal "destroy" to the application window
-    (g-signal-connect window "destroy"
-                      (lambda (widget)
-                        (declare (ignore widget))
-                        (let ((windows (gtk-application-windows application)))
-                          (format t "Signal DESTROY~%")
-                          (format t "  windows : ~a~%" windows))))
+        (toolbar (make-instance 'gtk-toolbar))
+        (scrolled (make-instance 'gtk-scrolled-window
+                                   :hexpand t
+                                   :vexpand t))
+        (view (make-instance 'gtk-text-view
+                             :monospace t)))
+
     ;; Add action "copy" to the application window
     (let ((action (g-simple-action-new "copy" nil)))
       (g-action-map-add-action window action)
       (g-signal-connect action "activate"
-         (lambda (action parameter)
-           (declare (ignore action parameter))
-           (let ((view (gobject::get-g-object-for-pointer
-                         (g-object-data window "bloatpad-text"))))
-             (gtk-text-buffer-copy-clipboard
-                                (gtk-text-view-buffer view)
-                                (gtk-widget-clipboard view "CLIPBOARD"))))))
+          (lambda (action parameter)
+            (declare (ignore action parameter))
+            (gtk-text-buffer-copy-clipboard
+                                          (gtk-text-view-buffer view)
+                                          (gtk-widget-clipboard view
+                                                                "CLIPBOARD")))))
     ;; Add action "paste" to the application window
     (let ((action (g-simple-action-new "paste" nil)))
       (g-action-map-add-action window action)
       (g-signal-connect action "activate"
-         (lambda (action parameter)
-           (declare (ignore action parameter))
-           (let ((view (gobject::get-g-object-for-pointer
-                         (g-object-data window "bloatpad-text"))))
-             (gtk-text-buffer-paste-clipboard
-                                     (gtk-text-view-buffer view)
-                                     (gtk-widget-clipboard view "CLIPBOARD")
-                                     :editable t)))))
+          (lambda (action parameter)
+            (declare (ignore action parameter))
+            (gtk-text-buffer-paste-clipboard (gtk-text-view-buffer view)
+                                             (gtk-widget-clipboard view
+                                                                   "CLIPBOARD")
+                                             :editable t))))
+
     ;; Add action "fullscreen" to the application window
     (let ((action (g-simple-action-new-stateful
                                              "fullscreen"
@@ -237,22 +227,16 @@
                  (g-application-unmark-busy application)))
            (setf (g-action-state action) parameter))))
     ;; Add action "justify" to the application window
-    (let ((action (g-simple-action-new-stateful
-                                           "justify"
-                                           (g-variant-type-new "s")
-                                           (g-variant-new-string "left"))))
+    (let ((action (g-simple-action-new-stateful "justify"
+                                                (g-variant-type-new "s")
+                                                (g-variant-new-string "left"))))
       (g-action-map-add-action window action)
       (g-signal-connect action "activate"
          (lambda (action parameter)
            (g-action-change-state action parameter)))
       (g-signal-connect action "change-state"
          (lambda (action parameter)
-           ;; TODO: Not happy with the call get-g-object-for-pointer
-           ;; The view is saved on the property list of the window. Improve
-           ;; the implementation.
-           (let ((view (gobject::get-g-object-for-pointer
-                         (g-object-data window "bloatpad-text")))
-                 (str (g-variant-string parameter)))
+           (let ((str (g-variant-string parameter)))
              (cond ((equal str "left")
                     (setf (gtk-text-view-justification view) :left))
                    ((equal str "center")
@@ -260,15 +244,15 @@
                    (t
                     (setf (gtk-text-view-justification view) :right)))
              (setf (g-action-state action) parameter)))))
+
     ;; Add action "clear" to the application window
     (let ((action (g-simple-action-new "clear" nil)))
       (g-action-map-add-action window action)
       (g-signal-connect action "activate"
          (lambda (action parameter)
            (declare (ignore action parameter))
-           (let ((view (gobject::get-g-object-for-pointer
-                         (g-object-data window "bloatpad-text"))))
-             (setf (gtk-text-buffer-text (gtk-text-view-buffer view)) "")))))
+             (setf (gtk-text-buffer-text (gtk-text-view-buffer view)) ""))))
+
     ;; Left justify toggle tool button for the toolbar
     (let ((button (make-instance 'gtk-toggle-tool-button
                                  :icon-name "format-justify-left")))
@@ -304,23 +288,20 @@
       (gtk-container-add toolbar button))
     ;; Place the toolbar in the grid
     (gtk-grid-attach grid toolbar 0 0 1 1)
-    (let ((scrolled (make-instance 'gtk-scrolled-window
-                                   :hexpand t
-                                   :vexpand t))
-          (view (make-instance 'gtk-text-view)))
-      (setf (g-object-data window "bloatpad-text") (pointer view))
-      ;; Load file into the buffer
-      (when filename
-        (let ((buffer (gtk-text-view-buffer view)))
-          (format t "    buffer : ~a~%" buffer)
-          (load-file-buffer buffer (sys-path filename))))
-      ;; Connect a signal handler for the text buffer
-      (g-signal-connect (gtk-text-view-buffer view) "changed"
-          (lambda (buffer)
-            (text-buffer-changed-cb window buffer)))
-      (text-buffer-changed-cb window (gtk-text-view-buffer view))
-      (gtk-container-add scrolled view)
-      (gtk-grid-attach grid scrolled 0 1 1 1))
+
+    ;; Load file into the buffer
+    (when filename
+      (let ((buffer (gtk-text-view-buffer view)))
+        (format t "    buffer : ~a~%" buffer)
+        (load-file-into-buffer buffer (sys-path filename))))
+    ;; Connect a signal handler for the text buffer
+    (g-signal-connect (gtk-text-view-buffer view) "changed"
+        (lambda (buffer)
+          (text-buffer-changed-cb window buffer)))
+    (text-buffer-changed-cb window (gtk-text-view-buffer view))
+    (gtk-container-add scrolled view)
+    (gtk-grid-attach grid scrolled 0 1 1 1)
+
     (gtk-container-add window grid)
     (gtk-widget-show-all window)))
 
@@ -469,14 +450,6 @@
        (lambda (action parameter)
          (action-edit-accels application action parameter)))
     (g-action-map-add-action application action))
-  ;; Add action "time-active" to the application
-  (let ((action (g-simple-action-new-stateful "time-active"
-                                              nil
-                                              (g-variant-new-boolean nil))))
-    (g-signal-connect action "activate"
-       (lambda (action parameter)
-         (action-time-active application action parameter)))
-    (g-action-map-add-action application action))
   ;; TODO: No menu item to activate this action available
   ;; Add action "clear-all" to the application
   (let ((action (g-simple-action-new "clear-all" nil)))
@@ -528,7 +501,18 @@
         (g-menu-append-item menu item)))
     (let ((menu (gtk-builder-object builder "time-menu")))
       (setf (bloatpad-time application) menu)
-      (format t "  bloatpad-time : ~a~%" (bloatpad-time application)))))
+      (format t "  bloatpad-time : ~a~%" (bloatpad-time application))))
+  ;; Add action "time-active" to the application
+  (let ((action (g-simple-action-new-stateful "time-active"
+                                              nil
+                                              (g-variant-new-boolean nil))))
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (format t "in action activate for TIME-ACTIVE~%")
+         (action-time-active application action parameter)))
+    (g-action-map-add-action application action))
+  ;; Start the timer for the time menu
+  (action-time-active application "time-active" (g-variant-new-boolean t)))
 
 (defun bloatpad-open (application files n-files hint)
   (declare (ignore hint))
@@ -568,7 +552,7 @@
                  :register-session t))
 
 (defun bloatpad (&rest argv)
-    (let ((argv (if argv argv (uiop:command-line-arguments)))
+    (let ((argv (cons "bloatpad" (if argv argv (uiop:command-line-arguments))))
           ;; Create an instance of the application Bloat Pad
           (bloatpad (bloatpad-new))
           ;; Load resources
