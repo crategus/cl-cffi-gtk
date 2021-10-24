@@ -842,7 +842,7 @@
 
 (defcfun ("g_file_get_basename" g-file-basename) :string
  #+cl-cffi-gtk-documentation
- "@version{2021-10-8}
+ "@version{*2021-10-21}
   @argument[file]{a input @class{g-file} object}
   @return{A string containing the base name of the @class{g-file} object, or
     @code{ nil} if the given @class{g-file} is invalid.}
@@ -850,7 +850,6 @@
     Gets the base name, the last component of the path, for a given
     @class{g-file} object.
   @end{short}
-
   If called for the top level of a system, such as the filesystem root or a URI
   like @file{sftp://host/}, it will return a single directory separator, and on
   Windows, possibly a drive letter.

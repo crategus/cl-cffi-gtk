@@ -627,7 +627,7 @@
 
 (defcfun ("gtk_text_buffer_get_line_count" gtk-text-buffer-line-count) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-8-18}
+ "@version{*2021-10-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @return{An integer with the number of lines in the text buffer.}
   @begin{short}
@@ -646,13 +646,12 @@
 
 (defcfun ("gtk_text_buffer_get_char_count" gtk-text-buffer-char-count) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-8-18}
+ "@version{*2021-10-24}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @return{An integer with the number of characters in the text buffer.}
   @begin{short}
     Gets the number of characters in the text buffer.
   @end{short}
-
   Note that characters and bytes are not the same, you cannot e.g. expect the
   contents of the text buffer in string form to be this many bytes long. The
   character count is cached, so this function is very fast.

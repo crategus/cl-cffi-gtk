@@ -594,7 +594,7 @@
 (defcfun ("gtk_application_get_windows" gtk-application-windows)
     (g-list (g-object gtk-window) :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-3}
+ "@version{*2021-10-21}
   @argument[application]{a @class{gtk-application} instance}
   @return{A list of @class{gtk-window} widgets.}
   @begin{short}

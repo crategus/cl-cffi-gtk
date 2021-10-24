@@ -150,7 +150,7 @@
 (setf (documentation (atdoc:get-slot-from-name "enabled" 'g-action) 't)
  "The @code{enabled} property of type @code{:boolean} (Read) @br{}
   Whether the action is currently enabled. If the action is disabled then calls
-  to the functions @fun{g-action-activate} and @fun{g-action-change-state} have
+  to the @fun{g-action-activate} and @fun{g-action-change-state} functions  have
   no effect. @br{}
   Default value: @em{true}")
 
@@ -158,16 +158,19 @@
 (setf (gethash 'g-action-enabled atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-enabled 'function)
- "@version{2021-8-1}
+ "@version{*2021-10-24}
   @syntax[]{(g-action-enabled object) => enabled}
+  @syntax[]{(setf (g-action-enabled object) enabled)}
   @argument[object]{a @class{g-action} object}
   @argument[enabled]{a boolean whether @arg{action} is enabled}
   @begin{short}
     Accessor of the @slot[g-action]{enabled} slot of the @class{g-action} class.
   @end{short}
 
-  Checks if the action is currently enabled. An action must be enabled in order
-  to be activated or in order to have its state changed from outside callers.
+  The @sym{g-action-enabled} slot access function checks if the action is
+  currently enabled. The @sym{(setf g-action-enabled)} slot access function
+  sets the action as enabled or not. An action must be enabled in order to be
+  activated or in order to have its state changed from outside callers.
   @see-class{g-action}")
 
 ;;; --- g-action-name ----------------------------------------------------------

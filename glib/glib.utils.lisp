@@ -345,14 +345,13 @@
 
 (defcfun ("g_get_application_name" g-application-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2021-9-19}
+ "@version{*2021-10-21}
   @syntax[]{(g-application-name) => name}
   @syntax[]{(setf (g-application-name) name)}
   @argument[name]{a string with the localized name of the application}
   @begin{short}
     Accessor of a human readable name for the application.
   @end{short}
-
   This name should be localized if possible, and is intended for display to the
   user. Contrast with the @fun{g-prgname} function, which gets a non-localized
   name. If the @sym{(setf g-application-name)} function has not been called,

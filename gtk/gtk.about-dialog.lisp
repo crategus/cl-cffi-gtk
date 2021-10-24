@@ -849,7 +849,7 @@ gtk_about_dialog_set_translator_credits (about, _(\"translator-credits\"));
 (let ((about-dialog (null-pointer)))
   (defun gtk-show-about-dialog (parent &rest args)
    #+cl-cffi-gtk-documentation
-   "@version{2021-10-6}
+   "@version{*2021-10-21}
     @argument[parent]{a @class{gtk-window} transient parent, or @code{nil}
       for none}
     @argument[args]{pairs of property name and property value}

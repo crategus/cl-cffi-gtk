@@ -1200,6 +1200,7 @@
   If the notification is no longer relevant, it can be withdrawn with the
   @fun{g-application-withdraw-notification} function.
   @see-class{g-application}
+  @see-class{g-notification}
   @see-function{g-application-withdraw-notification}"
   (application (g-object g-application))
   (id :string)

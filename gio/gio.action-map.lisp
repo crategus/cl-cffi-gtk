@@ -91,7 +91,7 @@
 (defcfun ("g_action_map_lookup_action" g-action-map-lookup-action)
     (g-object g-action)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-8}
+ "@version{*2021-10-24}
   @argument[map]{a @class{g-action-map} object}
   @argument[name]{a string with the name of an action}
   @return{A @class{g-action} object, or @code{nil}.}
@@ -224,13 +224,13 @@
 
 (defcfun ("g_action_map_remove_action" g-action-map-remove-action) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-18}
+ "@version{*2021-10-24}
   @argument[map]{a @class{g-action-map} object}
   @argument[name]{a string with the name of the action}
   @begin{short}
     Removes the named action from the action map.
   @end{short}
-  If no action of this name is in the map then nothing happens.
+  If no action of this name is in the action map then nothing happens.
   @see-class{g-action-map}
   @see-function{g-action-map-add-action}"
   (map (g-object g-action-map))

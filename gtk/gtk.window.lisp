@@ -660,7 +660,7 @@
 (setf (gethash 'gtk-window-application atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-application 'function)
- "@version{2021-9-9}
+ "@version{*2021-10-24}
   @syntax[]{(gtk-window-application object) => application}
   @syntax[]{(setf (gtk-window-application object) application)}
   @argument[object]{a @class{gtk-window} widget}
@@ -672,9 +672,8 @@
 
   The @sym{gtk-window-application} slot access function gets the application
   associated with the window. The @sym{(setf gtk-window-application)} slot
-  access function sets or unsets the application associated with the window.
-
-  The application will be kept alive for at least as long as the window is open.
+  access function sets or unsets the application. The application will be kept
+  alive for at least as long as the window is open.
   @see-class{gtk-window}
   @see-class{gtk-application}")
 

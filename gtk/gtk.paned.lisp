@@ -278,7 +278,7 @@
       @end{pre}
       The \"toggle-handle-focus\" is a keybinding signal which gets emitted to
       accept the current position of the handle and then move focus to the next
-      widget in the focus chain. The default binding is Tab.
+      widget in the focus chain. The default binding is @kbd{Tab}.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-paned} widget that received the signal.}
       @end{table}

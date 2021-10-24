@@ -2529,7 +2529,7 @@
 
 (defcfun ("g_object_get_data" g-object-data) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2021-9-11}
+ "@version{*2021-10-24}
   @syntax[]{(g-object-data object key) => data}
   @syntax[]{(setf (g-object-data object key) data)}
   @argument[object]{a @class{g-object} instance containing the associations}
@@ -2539,10 +2539,9 @@
     Each object carries around a table of associations from strings to pointers.
   @end{short}
   The @sym{g-object-data} function gets a named field from the objects table of
-  associations. The @sym{(setf g-object-data)} function sets an association.
-
-  If the object already had an association with that name, the old association
-  will be destroyed.
+  associations. The @sym{(setf g-object-data)} function sets an association. If
+  the object already had an association with that name, the old association will
+  be destroyed.
   @begin[Examples]{dictionary}
     Set an integer as a pointer for a property on a @class{gtk-button} widget.
     @begin{pre}
