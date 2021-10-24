@@ -23,30 +23,15 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkGrid"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "baseline-row" "border-width" "can-default" "can-focus"
-               "child" "column-homogeneous" "column-spacing" "composite-child"
-               "double-buffered" "events" "expand" "focus-on-click" "halign" "has-default"
-               "has-focus" "has-tooltip" "height-request" "hexpand" "hexpand-set" "is-focus"
-               "margin" "margin-bottom" "margin-end" "margin-left" "margin-right"
-               "margin-start" "margin-top" "name" "no-show-all" "opacity" "orientation"
-               "parent" "receives-default" "resize-mode" "row-homogeneous" "row-spacing"
-               "scale-factor" "sensitive" "style" "tooltip-markup" "tooltip-text" "valign"
-               "vexpand" "vexpand-set" "visible" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkGrid"))
-                          #'string-lessp)))
+  (is (equal '("baseline-row" "column-homogeneous" "column-spacing"
+               "orientation" "row-homogeneous" "row-spacing")
+             (list-class-property-names "GtkGrid")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkGrid"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkGrid")))
   ;; Get the names of the child properties
-  (is (equal '("left-attach" "top-attach" "width" "height")
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkGrid"))))
+  (is (equal '("height" "left-attach" "top-attach" "width")
+             (list-class-child-property-names "GtkGrid")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkGrid" GTK-GRID
                        (:SUPERCLASS GTK-CONTAINER :EXPORT T :INTERFACES
@@ -339,3 +324,4 @@
     (is (eq :left (setf (gtk-grid-row-baseline-position grid 0) :left)))
     (is (eq :left (gtk-grid-row-baseline-position grid 0)))))
 
+;;; 2021-10-18

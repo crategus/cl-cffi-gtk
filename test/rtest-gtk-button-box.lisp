@@ -63,35 +63,16 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkButtonBox"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "baseline-position" "border-width" "can-default"
-               "can-focus" "child" "composite-child" "double-buffered" "events"
-               "expand" "focus-on-click" "halign" "has-default" "has-focus"
-               "has-tooltip" "height-request" "hexpand" "hexpand-set"
-               "homogeneous" "is-focus" "layout-style" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start"
-               "margin-top" "name" "no-show-all" "opacity" "orientation"
-               "parent" "receives-default" "resize-mode" "scale-factor"
-               "sensitive" "spacing" "style" "tooltip-markup" "tooltip-text"
-               "valign" "vexpand" "vexpand-set" "visible" "width-request"
-               "window")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkButtonBox"))
-                   #'string-lessp)))
+  (is (equal '("layout-style")
+             (list-class-property-names "GtkButtonBox")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging" "child-internal-pad-x"
-               "child-internal-pad-y" "child-min-height" "child-min-width")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkButtonBox"))))
+  (is (equal '("child-internal-pad-x" "child-internal-pad-y" "child-min-height"
+               "child-min-width")
+             (list-class-style-property-names "GtkButtonBox")))
   ;; Get the names of the child properties
-  (is (equal '("expand" "fill" "padding" "pack-type" "position" "secondary"
-               "non-homogeneous")
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkButtonBox"))))
+  (is (equal '("expand" "fill" "non-homogeneous" "pack-type" "padding"
+               "position" "secondary")
+             (list-class-child-property-names "GtkButtonBox")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkButtonBox" GTK-BUTTON-BOX
                        (:SUPERCLASS GTK-BOX
@@ -103,7 +84,23 @@
                          "layout-style" "GtkButtonBoxStyle" T T)))
              (get-g-type-definition "GtkButtonBox"))))
 
-;;; Functions
+;;; --- Properties -------------------------------------------------------------
+
+;;;     GtkButtonBoxStyle  layout-style          Read / Write
+
+;;; --- Child Properties -------------------------------------------------------
+
+;;;              gboolean  non-homogeneous       Read / Write
+;;;              gboolean  secondary             Read / Write
+
+;;; --- Style Properties -------------------------------------------------------
+
+;;;                  gint  child-internal-pad-x  Read
+;;;                  gint  child-internal-pad-y  Read
+;;;                  gint  child-min-height      Read
+;;;                  gint  child-min-width       Read
+
+;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_button_box_new
 ;;;     gtk_button_box_get_layout
@@ -113,20 +110,4 @@
 ;;;     gtk_button_box_set_child_secondary
 ;;;     gtk_button_box_set_child_non_homogeneous
 
-;;; Properties
-
-;;;     GtkButtonBoxStyle  layout-style          Read / Write
-
-;;; Child Properties
-
-;;;              gboolean  non-homogeneous       Read / Write
-;;;              gboolean  secondary             Read / Write
-
-;;; Style Properties
-
-;;;                  gint  child-internal-pad-x  Read
-;;;                  gint  child-internal-pad-y  Read
-;;;                  gint  child-min-height      Read
-;;;                  gint  child-min-width       Read
-
-;;; 2021-8-2
+;;; 2021-10-19

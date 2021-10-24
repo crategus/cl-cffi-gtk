@@ -4,6 +4,7 @@
 ;; GtkPrinterOptionWidget is a child of GtkBox
 #-win32
 (eval-when (:compile-toplevel :load-toplevel :execute)
+;  (foreign-funcall "gtk_places_view_get_type" g-size)
   (foreign-funcall "gtk_printer_option_widget_get_type" g-size))
 
 ;;; --- Types and Values -------------------------------------------------------
@@ -28,58 +29,38 @@
                    "GtkFontSelection" "GtkRecentChooserWidget"
                    "GtkAppChooserWidget" "GtkShortcutsSection"
                    "GtkShortcutsGroup" "GtkShortcutsShortcut"
-                   "GtkPrinterOptionWidget" "GtkPlacesView")
+                   "GtkPrinterOptionWidget")
                  (mapcar #'g-type-name (g-type-children "GtkBox")))
-          (equal '("GtkHBox" "GtkVBox" "GtkStackSwitcher" "GtkButtonBox"
+                 '("GtkHBox" "GtkVBox" "GtkStackSwitcher" "GtkButtonBox"
                    "GtkStatusbar" "GtkInfoBar" "GtkColorChooserWidget"
                    "GtkColorSelection" "GtkFileChooserWidget"
                    "GtkFileChooserButton" "GtkFontChooserWidget"
                    "GtkFontSelection" "GtkRecentChooserWidget"
                    "GtkAppChooserWidget" "GtkShortcutsSection"
                    "GtkShortcutsGroup" "GtkShortcutsShortcut"
-                   "GtkPrinterOptionWidget")
-                 (mapcar #'g-type-name (g-type-children "GtkBox")))))
+                   "GtkPrinterOptionWidget" "GtkPlacesView")
+                 (mapcar #'g-type-name (g-type-children "GtkBox"))))
   #+windows
-  (is (or (equal '("GtkHBox" "GtkVBox" "GtkStackSwitcher" "GtkButtonBox"
-                   "GtkStatusbar" "GtkInfoBar" "GtkColorChooserWidget"
-                   "GtkColorSelection" "GtkFileChooserWidget"
-                   "GtkFileChooserButton" "GtkFontChooserWidget"
-                   "GtkFontSelection" "GtkRecentChooserWidget"
-                   "GtkAppChooserWidget" "GtkShortcutsSection"
-                   "GtkShortcutsGroup" "GtkShortcutsShortcut")
-                 (mapcar #'g-type-name (g-type-children "GtkBox")))
-          (equal '()
-                 (mapcar #'g-type-name (g-type-children "GtkBox")))))
+  (is (equal '("GtkHBox" "GtkVBox" "GtkStackSwitcher" "GtkButtonBox"
+               "GtkStatusbar" "GtkInfoBar" "GtkColorChooserWidget"
+               "GtkColorSelection" "GtkFileChooserWidget"
+               "GtkFileChooserButton" "GtkFontChooserWidget"
+               "GtkFontSelection" "GtkRecentChooserWidget"
+               "GtkAppChooserWidget" "GtkShortcutsSection"
+               "GtkShortcutsGroup" "GtkShortcutsShortcut")
+             (mapcar #'g-type-name (g-type-children "GtkBox"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkBox"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "baseline-position" "border-width" "can-default"
-               "can-focus" "child" "composite-child" "double-buffered" "events"
-               "expand" "focus-on-click" "halign" "has-default" "has-focus"
-               "has-tooltip" "height-request" "hexpand" "hexpand-set"
-               "homogeneous" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "name"
-               "no-show-all" "opacity" "orientation" "parent" "receives-default"
-               "resize-mode" "scale-factor" "sensitive" "spacing" "style"
-               "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
-               "visible" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkBox"))
-                          #'string-lessp)))
+  (is (equal '("baseline-position" "homogeneous" "orientation" "spacing")
+             (list-class-property-names "GtkBox")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkBox"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkBox")))
   ;; Get the names of the child properties
-  (is (equal '("expand" "fill" "padding" "pack-type" "position")
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkBox"))))
+  (is (equal '("expand" "fill" "pack-type" "padding" "position")
+             (list-class-child-property-names "GtkBox")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkBox" GTK-BOX
                        (:SUPERCLASS GTK-CONTAINER :EXPORT T :INTERFACES

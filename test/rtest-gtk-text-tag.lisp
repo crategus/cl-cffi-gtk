@@ -43,9 +43,7 @@
                "style" "style-set" "tabs" "tabs-set" "underline"
                "underline-rgba" "underline-rgba-set" "underline-set" "variant"
                "variant-set" "weight" "weight-set" "wrap-mode" "wrap-mode-set")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkTextTag"))
-                   #'string-lessp)))
+             (list-class-property-names "GtkTextTag")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTextTag" GTK-TEXT-TAG
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -357,4 +355,4 @@
 ;;;     gtk_text_attributes_unref
 ;;;     gtk_text_attributes_ref
 
-;;; 2021-8-20
+;;; 2021-10-19

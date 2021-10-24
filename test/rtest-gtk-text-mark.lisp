@@ -24,9 +24,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkTextMark"))))
   ;; Check the class properties
   (is (equal '("left-gravity" "name")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkTextMark"))
-                          #'string-lessp)))
+             (list-class-property-names "GtkTextMark")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTextMark" GTK-TEXT-MARK
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -96,3 +94,4 @@
     (is-false (gtk-text-buffer-add-mark buffer mark iter))
     (is (eq 'gtk-text-buffer (type-of (gtk-text-mark-buffer mark))))))
 
+;;; 2021-10-19

@@ -21,9 +21,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkCssProvider"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkCssProvider"))
-                          #'string-lessp)))
+             (list-class-property-names "GtkCssProvider")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkCssProvider" GTK-CSS-PROVIDER
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES

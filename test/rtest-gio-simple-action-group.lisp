@@ -10,7 +10,8 @@
   (is (eq 'g-simple-action-group
           (registered-object-type-by-name "GSimpleActionGroup")))
   ;; Check the parent
-  (is (eq (gtype "GObject") (g-type-parent "GSimpleActionGroup")))
+  (is (eq (gtype "GObject")
+          (g-type-parent "GSimpleActionGroup")))
   ;; Check the children
 ;  TODO: In a second run we have the child "GApplicationExportedActions
 ;  (is (equal '()
@@ -20,9 +21,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GSimpleActionGroup"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GSimpleActionGroup"))
-                          #'string-lessp)))
+              (list-class-property-names "GSimpleActionGroup")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GSimpleActionGroup" G-SIMPLE-ACTION-GROUP
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES
@@ -77,5 +76,7 @@
                    )
                    ("paste" nil nil nil nil))))
     (g-simple-action-group-add-entries group entries)
-    (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "copy"))))
-    (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "paste"))))))
+    (is (typep (g-simple-action-group-lookup group "copy") 'g-simple-action))
+    (is (typep (g-simple-action-group-lookup group "paste") 'g-simple-action))))
+
+;;; 2021-10-18

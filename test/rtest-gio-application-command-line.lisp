@@ -1,7 +1,7 @@
 (def-suite g-application-command-line :in gio-suite)
 (in-suite g-application-command-line)
 
-(defvar *g-application-command-line-verbose* nil)
+(defvar *verbose-g-application-command-line* nil)
 
 ;;; --- Types and Values -------------------------------------------------------
 
@@ -70,7 +70,7 @@
     (g-signal-connect app "command-line"
         (lambda (application cmdline)
           (g-application-hold application)
-          (when *g-application-command-line-verbose*
+          (when *verbose-g-application-command-line*
             (format t "~%The application is in command-line.~%")
             (format t "~A~%" (g-application-command-line-get-arguments cmdline)))
           (is (equal '("file1" "file2" "file3")
@@ -92,4 +92,4 @@
 ;;;     g_application_command_line_print
 ;;;     g_application_command_line_printerr
 
-;;; 2021-5-7
+;;; 2021-10-18

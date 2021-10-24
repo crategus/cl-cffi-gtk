@@ -109,3 +109,4 @@
 ;;;     gtk_cell_layout_set_cell_data_func
 ;;;     gtk_cell_layout_clear_attributes
 
+;;; 2021-10-19

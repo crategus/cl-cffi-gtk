@@ -117,42 +117,15 @@
              (mapcar #'g-type-name
                      (g-type-interfaces "GtkDialog"))))
   ;; Check the class properties
-  (is (equal '("accept-focus" "app-paintable" "application" "attached-to"
-               "border-width" "can-default" "can-focus" "child"
-               "composite-child" "decorated" "default-height" "default-width"
-               "deletable" "destroy-with-parent" "double-buffered" "events"
-               "expand" "focus-on-click" "focus-on-map" "focus-visible"
-               "gravity" "halign" "has-default" "has-focus" "has-resize-grip"
-               "has-tooltip" "has-toplevel-focus" "height-request" "hexpand"
-               "hexpand-set" "hide-titlebar-when-maximized" "icon" "icon-name"
-               "is-active" "is-focus" "is-maximized" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start"
-               "margin-top" "mnemonics-visible" "modal" "name" "no-show-all"
-               "opacity" "parent" "receives-default" "resizable"
-               "resize-grip-visible" "resize-mode" "role" "scale-factor"
-               "screen" "sensitive" "skip-pager-hint" "skip-taskbar-hint"
-               "startup-id" "style" "title" "tooltip-markup" "tooltip-text"
-               "transient-for" "type" "type-hint" "urgency-hint"
-               "use-header-bar" "valign" "vexpand" "vexpand-set" "visible"
-               "width-request" "window" "window-position")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkDialog"))
-                   #'string-lessp)))
+  (is (equal '("use-header-bar")
+             (list-class-property-names "GtkDialog")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging" "decoration-button-layout"
-               "decoration-resize-handle" "action-area-border" "button-spacing"
-               "content-area-border" "content-area-spacing")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkDialog"))))
+  (is (equal '("action-area-border" "button-spacing" "content-area-border"
+               "content-area-spacing")
+             (list-class-style-property-names "GtkDialog")))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkDialog"))))
+             (list-class-child-property-names "GtkDialog")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkDialog" GTK-DIALOG
                        (:SUPERCLASS GTK-WINDOW :EXPORT T :INTERFACES

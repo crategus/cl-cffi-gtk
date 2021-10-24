@@ -101,43 +101,32 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkScrollable")
              (mapcar #'g-type-name (g-type-interfaces "GtkTreeView"))))
   ;; Check the class properties
-  (is (equal '("activate-on-single-click" "app-paintable" "border-width"
-               "can-default" "can-focus" "child" "composite-child"
-               "double-buffered" "enable-grid-lines" "enable-search"
-               "enable-tree-lines" "events" "expand" "expander-column"
-               "fixed-height-mode" "focus-on-click" "hadjustment" "halign"
-               "has-default" "has-focus" "has-tooltip" "headers-clickable"
-               "headers-visible" "height-request" "hexpand" "hexpand-set"
-               "hover-expand" "hover-selection" "hscroll-policy" "is-focus"
-               "level-indentation" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "model"
-               "name" "no-show-all" "opacity" "parent" "receives-default"
-               "reorderable" "resize-mode" "rubber-banding" "rules-hint"
-               "scale-factor" "search-column" "sensitive" "show-expanders"
-               "style" "tooltip-column" "tooltip-markup" "tooltip-text"
-               "ubuntu-almost-fixed-height-mode" "vadjustment" "valign"
-               "vexpand" "vexpand-set" "visible" "vscroll-policy"
-               "width-request" "window")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkTreeView"))
-                   #'string-lessp)))
+  (is (equal #-linux
+             '("activate-on-single-click" "enable-grid-lines" "enable-search"
+               "enable-tree-lines" "expander-column" "fixed-height-mode"
+               "hadjustment" "headers-clickable" "headers-visible"
+               "hover-expand" "hover-selection" "hscroll-policy"
+               "level-indentation" "model" "reorderable" "rubber-banding"
+               "rules-hint" "search-column" "show-expanders" "tooltip-column"
+               "vadjustment" "vscroll-policy")
+             #+linux
+             '("activate-on-single-click" "enable-grid-lines" "enable-search"
+               "enable-tree-lines" "expander-column" "fixed-height-mode"
+               "hadjustment" "headers-clickable" "headers-visible"
+               "hover-expand" "hover-selection" "hscroll-policy"
+               "level-indentation" "model" "reorderable" "rubber-banding"
+               "rules-hint" "search-column" "show-expanders" "tooltip-column"
+               "ubuntu-almost-fixed-height-mode" "vadjustment" "vscroll-policy")
+             (list-class-property-names "GtkTreeView")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging" "allow-rules"
-               "even-row-color" "expander-size" "grid-line-pattern"
-               "grid-line-width" "horizontal-separator" "indent-expanders"
-               "odd-row-color" "tree-line-pattern" "tree-line-width"
-               "vertical-separator")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkTreeView"))))
+  (is (equal '("allow-rules" "even-row-color" "expander-size"
+               "grid-line-pattern" "grid-line-width" "horizontal-separator"
+               "indent-expanders" "odd-row-color" "tree-line-pattern"
+               "tree-line-width" "vertical-separator")
+             (list-class-style-property-names "GtkTreeView")))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkTreeView"))))
+             (list-class-child-property-names "GtkTreeView")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTreeView" GTK-TREE-VIEW
                        (:SUPERCLASS GTK-CONTAINER :EXPORT T :INTERFACES
@@ -179,6 +168,7 @@
                          "show-expanders" "gboolean" T T)
                         (TOOLTIP-COLUMN GTK-TREE-VIEW-TOOLTIP-COLUMN
                          "tooltip-column" "gint" T T)
+                        #+linux
                         (UBUNTU-ALMOST-FIXED-HEIGHT-MODE
                          GTK-TREE-VIEW-UBUNTU-ALMOST-FIXED-HEIGHT-MODE
                          "ubuntu-almost-fixed-height-mode" "gboolean" NIL T)))
@@ -463,4 +453,4 @@
 ;;;     gtk_tree_view_set_tooltip_cell
 ;;;     gtk_tree_view_get_tooltip_context
 
-;;; 2021-10-2
+;;; 2021-10-20

@@ -23,25 +23,11 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkSpinner"))))
   ;; Check the class properties
-  (is (equal '("active" "app-paintable" "can-default" "can-focus" "composite-child"
-               "double-buffered" "events" "expand" "focus-on-click" "halign" "has-default"
-               "has-focus" "has-tooltip" "height-request" "hexpand" "hexpand-set" "is-focus"
-               "margin" "margin-bottom" "margin-end" "margin-left" "margin-right"
-               "margin-start" "margin-top" "name" "no-show-all" "opacity" "parent"
-               "receives-default" "scale-factor" "sensitive" "style" "tooltip-markup"
-               "tooltip-text" "valign" "vexpand" "vexpand-set" "visible" "width-request"
-               "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkSpinner"))
-                          #'string-lessp)))
+  (is (equal '("active")
+             (list-class-property-names "GtkSpinner")))
   ;; Check the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkSpinner"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkSpinner")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkSpinner" GTK-SPINNER
                        (:SUPERCLASS GTK-WIDGET :EXPORT T :INTERFACES
@@ -76,3 +62,4 @@
     (is-false (gtk-spinner-stop spinner))
     (is-false (gtk-spinner-active spinner))))
 
+;;; 2021-10-19

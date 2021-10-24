@@ -1,7 +1,7 @@
 (def-suite g-application :in gio-suite)
 (in-suite g-application)
 
-(defvar *g-application-verbose* nil)
+(defvar *verbose-g-application* nil)
 
 ;;; --- Types and Values -------------------------------------------------------
 
@@ -191,7 +191,7 @@
                         (lambda (application)
                           (declare (ignore application))
                           (setf in-startup t)
-                          (when *g-application-verbose*
+                          (when *verbose-g-application*
                             (format t "The application is in startup.~%"))))
 
       ;; Signal handler "activate"
@@ -200,7 +200,7 @@
                           (declare (ignore application))
                           (g-application-hold app)
                           (setf in-activate t)
-                          (when *g-application-verbose*
+                          (when *verbose-g-application*
                             (format t "The application is in activate.~%"))
                           ;; Note: when doing a longer-lasting action that
                           ;; returns to the main loop, you should use
@@ -214,7 +214,7 @@
                         (lambda (application files n-files hint)
                           (declare (ignore application files n-files hint))
                           (setf in-open t)
-                          (when *g-application-verbose*
+                          (when *verbose-g-application*
                             (format t "The application is in open.~%"))
                           ;; TODO: The argument "files" is a C pointer to an
                           ;; array of GFiles. The conversion to a list of
@@ -228,7 +228,7 @@
                         (lambda (application)
                           (declare (ignore application))
                           (setf in-shutdown t)
-                          (when *g-application-verbose*
+                          (when *verbose-g-application*
                             (format t "The application is in shutdown.~%"))))
 
       ;; Start the application
@@ -312,4 +312,4 @@
 ;;;     g_application_bind_busy_property
 ;;;     g_application_unbind_busy_property
 
-;;; 2021-10-15
+;;; 2021-10-18

@@ -155,7 +155,7 @@
   (let ((paper-size (gtk-paper-size-new "iso_2a0")))
     (is (string= "iso_2a0" (gtk-paper-size-name paper-size)))
     #-windows ; TODO: There seems a problem with the charset of Windows
-    (is (string= "A0x2" (gtk-paper-size-display-name paper-size)))
+    (is (string= "A0×2" (gtk-paper-size-display-name paper-size)))
     (is (string= "" (gtk-paper-size-ppd-name paper-size)))))
 
 ;;;     gtk-paper-size-width

@@ -8,6 +8,8 @@
 (load "rtest-gtk-application.lisp")
 (load "rtest-gtk-application-subclassing.lisp")
 (load "rtest-gtk-application-window.lisp")
+#+nil ; More work is needed
+(load "rtest-gtk-application-window-subclassing.lisp")
 (load "rtest-gtk-actionable.lisp")
 
 ;;;  Interface builder
@@ -19,22 +21,22 @@
 
 (load "rtest-gtk-window.lisp")
 (load "rtest-gtk-dialog.lisp")
-;    gtk.message-dialog.lisp
-;    gtk.about-dialog.lisp
-;    gtk.assistant.lisp
-;    gtk.invisible.lisp
-;    gtk.offscreen-window.lisp
-;    gtk.window-group.lisp
+(load "rtest-gtk-message-dialog.lisp")
+(load "rtest-gtk-about-dialog.lisp")
+(load "rtest-gtk-assistant.lisp")
+(load "rtest-gtk-invisible.lisp")
+(load "rtest-gtk-offscreen-window.lisp")
+(load "rtest-gtk-window-group.lisp")
 
 ;;;  Layout Containers
 
 (load "rtest-gtk-box.lisp")
 (load "rtest-gtk-grid.lisp")
-;    gtk.revealer.lisp
+(load "rtest-gtk-revealer.lisp")
 (load "rtest-gtk-list-box.lisp")
 (load "rtest-gtk-flow-box.lisp")
-;    gtk.stack.lisp
-;    gtk.stack-switcher.lisp
+(load "rtest-gtk-stack.lisp")
+(load "rtest-gtk-stack-switcher.lisp")
 ;    gtk.stack-sidebar.lisp
 ;    gtk.action-bar.lisp
 ;    gtk.header-bar.lisp
@@ -86,7 +88,7 @@
 
 ;;;  Multiline Text Editor
 
-;(load "rtest-gtk-text-attributes.lisp") ; causes a crash of the testsuite
+;(load "rtest-gtk-text-attributes.lisp") ; Causes a crash of the testsuite!
 (load "rtest-gtk-text-iter.lisp")
 (load "rtest-gtk-text-mark.lisp")
 (load "rtest-gtk-text-buffer.lisp")
@@ -98,15 +100,15 @@
 
 (load "rtest-gtk-tree-model.lisp")
 (load "rtest-gtk-tree-selection.lisp")
-;    gtk.tree-view-column.lisp
+(load "rtest-gtk-tree-view-column.lisp")
 (load "rtest-gtk-tree-view.lisp")
-;    gtk.tree-view-drag-and-drop.lisp
-;    gtk.cell-view.lisp
+(load "rtest-gtk-tree-view-drag-and-drop.lisp")
+(load "rtest-gtk-cell-view.lisp")
 (load "rtest-gtk-icon-view.lisp")
 ;    gtk.tree-sortable.lisp
 ;    gtk.tree-model-sort.lisp
 ;    gtk.tree-model-filter.lisp
-;(load "rtest-gtk-cell-layout.lisp")
+(load "rtest-gtk-cell-layout.lisp")
 ;    gtk.cell-area.lisp
 ;    gtk.cell-area-box.lisp
 ;    gtk.cell-area-context.lisp
@@ -120,7 +122,7 @@
 ;    gtk.cell-renderer-text.lisp
 ;    gtk.cell-renderer-toggle.lisp
 ;    gtk.cell-renderer-spinner.lisp
-;(load "rtest-gtk-list-store.lisp")
+(load "rtest-gtk-list-store.lisp")
 ;    gtk.tree-store.lisp
 
 ;;;  Menus, Combo Box, Toolbar
@@ -279,9 +281,7 @@
 
 ;;;  Theming in GTK+
 
-;#-windows
-;(load "rtest-gtk-style-context.lisp")
-#-windows
+(load "rtest-gtk-style-context.lisp")
 (load "rtest-gtk-css-provider.lisp")
 (load "rtest-gtk-style-provider.lisp")
 (load "rtest-gtk-widget-path.lisp")

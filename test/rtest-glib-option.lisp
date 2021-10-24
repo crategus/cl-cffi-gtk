@@ -1,7 +1,9 @@
 (def-suite g-option :in glib-suite)
 (in-suite g-option)
 
-;;; Types and Values
+(defvar *verbose-g-option* nil)
+
+;;; --- Types and Values -------------------------------------------------------
 
 ;;;     GOptionError
 ;;;     G_OPTION_ERROR
@@ -53,7 +55,6 @@
         (is (string= "" glib::description))
         (is (string= "" glib::arg-description))))))
 
-(defvar arg-boolean (cffi:foreign-alloc :boolean :initial-element nil))
 (defvar arg-string (cffi:foreign-alloc :string :initial-element ""))
 (defvar arg-int (cffi:foreign-alloc :int :initial-element 0))
 
@@ -64,161 +65,9 @@
 (defvar arg-double (cffi:foreign-alloc :double :initial-element 0.0d0))
 (defvar arg-int64 (cffi:foreign-alloc :int64 :initial-element 0))
 
-#+nil
-(test g-option-entry.4
-  (let* ((context (g-option-context-new "parameter"))
-         (entries '(("long-name-1"     ; long-name
-                     #\a               ; short-name
-                     (:in-main)        ; flags
-                     :none             ; arg
-                     nil               ; arg-data
-                     "Description1"    ; description
-                     "")               ; arg-description
-;                    ("long-name-2"
-;                     #\b
-;                     (:in-main)
-;                     :string
-;                     arg-string
-;                     "Description2"
-;                     "ARG2")
-;                    ("long-name-3"
-;                     #\c (:in-main) :int arg-int "Description 3" "ARG 3")
-;                    ("long-name-4"
-;                     #\d
-;                     (:in-main :filename)
-;                     :filename
-;                     arg-filename
-;                     "Description 4"
-;                     "ARG4")
-;                    ("long-name-5"
-;                     #\e
-;                     (:in-main)
-;                     :string-array arg-string-array "Description 5" "ARG 5")
-;                    ("long-name-6"
-;                     #\f
-;                     (:in-main)
-;                     :filename-array arg-filename-array "Description 6" "ARG 6")
-;                    ("long-name-7"
-;                     #\g (:in-main)
-;                     :double arg-double "Description 7" "ARG 7")
-;                    ("long-name-8"
-;                     #\h (:in-main) :int64 arg-int64 "Description 8" "ARG 8")
-                   ))
-         (n-entries (length entries)))
-    (with-foreign-object (entries-ptr '(:struct glib::g-option-entry) (1+ n-entries))
-      (loop
-        for entry in entries
-        for i from 0
-        for entry-ptr = (mem-aptr entries-ptr '(:struct glib::g-option-entry) i)
-        do (setf (foreign-slot-value entry-ptr
-                                     '(:struct glib::g-option-entry) 'glib::long-name)
-                 (first entry)
-                 (foreign-slot-value entry-ptr
-                                     '(:struct glib::g-option-entry) 'glib::short-name)
-                 (char-code (second entry))
-                 (foreign-slot-value entry-ptr
-                                     '(:struct glib::g-option-entry) 'glib::flags)
-                 (third entry)
-                 (foreign-slot-value entry-ptr
-                                     '(:struct glib::g-option-entry) 'glib::arg)
-                 (fourth entry)
-                 (foreign-slot-value entry-ptr
-                                     '(:struct glib::g-option-entry) 'glib::arg-data)
-                 (progn
-                   (cond ((member (fourth entry)
-                                  '(:int :double :string :filename
-                                    :string-array :filename-array :int64))
-                          (format t "~& ~A and ~A~%"
-                                    (fifth entry) (symbol-value (fifth entry)))
-                          (symbol-value (fifth entry)))
-                         (t (null-pointer)))
-                 )
-                 (foreign-slot-value entry-ptr
-                                     '(:struct glib::g-option-entry) 'glib::description)
-                 (sixth entry)
-                 (foreign-slot-value entry-ptr
-                                     '(:struct glib::g-option-entry)
-                                     'glib::arg-description)
-                 (seventh entry)
-           ))
-
-      (let ((entry-ptr (mem-aptr entries-ptr '(:struct glib::g-option-entry) n-entries)))
-        (setf (foreign-slot-value entry-ptr
-                                  '(:struct glib::g-option-entry) 'glib::long-name)
-              (null-pointer))
-        (glib::%g-option-context-add-main-entries context entries-ptr "")
-        (format t "~&~A~%" (g-option-context-help context nil))
-        )
-
-      (setf (g-option-context-help-enabled context) t)
-      (let ((argv '("prgname"
-                    "--long-name-1")))
-
-;                                  "--long-name-2" "a string"
-;                                  "--long-name-3" "999"
-;                                  "--long-name-4" "filename"
-;                                  "--long-name-5" "a" "--long-name-5" "b"
-;                                  "--long-name-6" "file1" "--long-name-6" "file2"
-;                                  "--long-name-7" "99.9"
-;                                  "--long-name-8" "1234567890")))
-
-        (format t " vorher argv : ~a~%" argv)
-        (is-true (g-option-context-parse-strv context argv))
-        (format t "nachher argv : ~a~%" argv)
-
-;        (is-true (g-option-context-parse context '("file1" "file2")))
-;        (is-true (g-option-context-parse context argv))
-;        (is-true (mem-ref arg-boolean :boolean))
-;        (is (equal "a string" (mem-ref arg-string :string)))
-;        (is (= 999 (mem-ref arg-int :int)))
-
-;        (is (equal "filename" (mem-ref arg-filename :string)))
-;        (is (equal '("a" "b") (mem-ref arg-string-array 'g-strv)))
-;        (is (equal '("file1" "file2") (mem-ref arg-filename-array 'g-strv)))
-;        (is (= 99.9d0 (mem-ref arg-double :double)))
-;        (is (= 1234567890 (mem-ref arg-int64 :int64)))
-      ))))
-
-#|
-(test g-option-entry.5
-  (let ((context (g-option-context-new "parameter"))
-        (entries '(("long-name-1" #\a (:in-main) :none arg-boolean "Description 1" "ARG 1")
-                   ("long-name-2" #\b (:in-main) :string arg-string "Description 2" "ARG 2")
-                   ("long-name-3" #\c (:in-main) :int arg-int "Description 3" "ARG 3")
-                   ("long-name-4" #\d (:in-main :filename) :filename arg-filename "Description 4" "ARG 4")
-                   ("long-name-5" #\e (:in-main) :string-array arg-string-array "Description 5" "ARG 5")
-                   ("long-name-6" #\f (:in-main) :filename-array arg-filename-array "Description 6" "ARG 6")
-                   ("long-name-7" #\g (:in-main) :double arg-double "Description 7" "ARG 7")
-                   ("long-name-8" #\h (:in-main) :int64 arg-int64 "Description 8" "ARG 8")
-                  )))
-
-    (g-option-context-add-main-entries context entries "")
-;    (format t "~&~A~%" (g-option-context-get-help context nil))
-
-    (let ((argv (list "prgname" "--long-name-1"
-                                "--long-name-2" "a string"
-                                "--long-name-3" "999"
-                                "--long-name-4" "filename"
-                                "--long-name-5" "a" "--long-name-5" "b"
-                                "--long-name-6" "file1" "--long-name-6" "file2"
-                                "--long-name-7" "99.9"
-                                "--long-name-8" "1234567890")))
-      (is-true (g-option-context-parse context argv))
-      (is-true (mem-ref arg-boolean :boolean))
-      (is (equal "a string" (mem-ref arg-string :string)))
-      (is (= 999 (mem-ref arg-int :int)))
-
-      (is (equal "filename" (mem-ref arg-filename :string)))
-      (is (equal '("a" "b") (mem-ref arg-string-array 'g-strv)))
-      (is (equal '("file1" "file2") (mem-ref arg-filename-array 'g-strv)))
-      (is (= 99.9d0 (mem-ref arg-double :double)))
-      (is (= 1234567890 (mem-ref arg-int64 :int64)))
-    )))
-|#
-
 ;;;     GOptionGroup
 
-;;; Functions
+;;; --- Functions --------------------------------------------------------------
 
 ;;;     GOptionArgFunc
 
@@ -255,11 +104,20 @@
 
 ;;;     g_option_context_set_translate_func
 
+#-windows
 (test g-option-context-set-translate-func
   (let ((context (g-option-context-new)))
     (is-false (g-option-context-set-translate-func context #'translate-func))
-    (format t "~%~a~%" (g-option-context-help context t))
-))
+    (when *verbose-g-option*
+      (format t "~%~a~%" (g-option-context-help context t)))
+    (is (string= "Aufruf:
+  Program [OPTION …]
+
+Hilfeoptionen:
+  -h, --help       Hilfeoptionen anzeigen
+
+"
+                 (g-option-context-help context t)))))
 
 ;;;     g_option_context_set_translation_domain
 ;;;     g_option_context_free
@@ -275,6 +133,7 @@
 
 ;;;     g_option_context_add_main_entries
 
+#-windows
 (test g-option-context-add-main-entries
   (let* ((context (g-option-context-new "Description"))
          (entries '(("long-name-1"     ; long-name
@@ -333,10 +192,27 @@
                      "Description8"
                      "a long integer")
                    )))
-
     (g-option-context-add-main-entries context entries nil)
-    (format t "~&~A~%" (g-option-context-help context t))
-))
+    (when *verbose-g-option*
+      (format t "~&~A~%" (g-option-context-help context t)))
+    (is (string= "Aufruf:
+  Program [OPTION …] Description
+
+Hilfeoptionen:
+  -?, --help                             Hilfeoptionen anzeigen
+
+Anwendungsoptionen:
+  -a, --long-name-1                      Description1
+  -b, --long-name-2=a string             Description2
+  -c, --long-name-3=an integer           Description3
+  -d, --long-name-4=a filename           Description4
+  -e, --long-name-5=a string array       Description5
+  -f, --long-name-6=a filename array     Description6
+  -g, --long-name-7=a double float       Description7
+  -h, --long-name-8=a long integer       Description8
+
+"
+                 (g-option-context-help context t)))))
 
 ;;;     g_option_context_add_group
 
@@ -364,6 +240,7 @@
 
 ;;;     g_option_group_add_entries
 
+#-windows
 (test g-option-group-add-entries
   (let* ((context (g-option-context-new "Description"))
          (group (g-option-group-new "myGroup" "A Group"  "Help Description"))
@@ -423,11 +300,25 @@
                      "Description8"
                      "a long integer")
                    )))
-
     (g-option-group-add-entries group entries)
     (g-option-context-add-group context group)
-    (format t "~&~A~%" (g-option-context-help context t group))
-))
+    (when *verbose-g-option*
+      (format t "~&~A~%" (g-option-context-help context t group)))
+    (is (string= "Aufruf:
+  Program [OPTION …] Description
+
+Anwendungsoptionen:
+  -a, --long-name-1                      Description1
+  -b, --long-name-2=a string             Description2
+  -c, --long-name-3=an integer           Description3
+  -d, --long-name-4=a filename           Description4
+  -e, --long-name-5=a string array       Description5
+  -f, --long-name-6=a filename array     Description6
+  -g, --long-name-7=a double float       Description7
+  -h, --long-name-8=a long integer       Description8
+
+"
+                 (g-option-context-help context t group)))))
 
 ;;;     GOptionParseFunc
 ;;;     g_option_group_set_parse_hooks
@@ -438,15 +329,13 @@
 
 (test g-option-group-set-translate-func
   (let ((group (g-option-group-new nil nil nil)))
-    (is-false (g-option-group-set-translate-func group #'translate-func))
-))
+    (is-false (g-option-group-set-translate-func group #'translate-func))))
 
 ;;;     g_option_group_set_translation_domain
 
 (test g-option-group-set-translation-domain
   (let ((group (g-option-group-new nil nil nil)))
-    (is-false (g-option-group-set-translation-domain group "myApplication"))
-))
+    (is-false (g-option-group-set-translation-domain group "myApplication"))))
 
 ;;; Example from the GOptionContext documentation
 
@@ -456,6 +345,7 @@
 (defvar beep (cffi:foreign-alloc :boolean :initial-element nil))
 (defvar randomize (cffi:foreign-alloc :boolean :initial-element nil))
 
+#-windows
 (test g-option-context-example
   (let* ((entries '(("repeats"
                      #\r
@@ -495,21 +385,44 @@
          (argv '("testtreemodel" "--rand" "-vb" "-r" "1"
                                  "--max-size" "20" "--" "file1" "file2"))
          (context (g-option-context-new "- test tree model performance")))
-
     (g-option-context-add-main-entries context entries nil)
     (g-option-context-add-group context (gtk-option-group t))
 
     (unless (g-option-context-parse-strv context argv)
       (format t "Option parsing failed.~%"))
+    (when *verbose-g-option*
+      (format t "~&Parsed arguments~%")
+      (format t "   repeats : ~a~%" (mem-ref repeats :int))
+      (format t "  max-size : ~a~%" (mem-ref max-size :int))
+      (format t "   verbose : ~a~%" (mem-ref verbose :boolean))
+      (format t "      beep : ~a~%" (mem-ref beep :boolean))
+      (format t " randomize : ~a~%" (mem-ref randomize :boolean))
 
-    (format t "~&Parsed arguments~%")
-    (format t "   repeats : ~a~%" (mem-ref repeats :int))
-    (format t "  max-size : ~a~%" (mem-ref max-size :int))
-    (format t "   verbose : ~a~%" (mem-ref verbose :boolean))
-    (format t "      beep : ~a~%" (mem-ref beep :boolean))
-    (format t " randomize : ~a~%" (mem-ref randomize :boolean))
+      (format t "~&~%~a~%" (g-option-context-help context t)))
 
-    (format t "~&~%~a~%" (g-option-context-help context t))
-))
+    (is (= 1 (mem-ref repeats :int)))
+    (is (= 20 (mem-ref max-size :int)))
+    (is-true (mem-ref verbose :boolean))
+    (is-true (mem-ref beep :boolean))
+    (is-true (mem-ref randomize :boolean))
 
-;;; 2021-8-9
+    (is (string= "Aufruf:
+  Program [OPTION …] - test tree model performance
+
+Hilfeoptionen:
+  -h, --help                  Hilfeoptionen anzeigen
+  --help-all                  Alle Hilfeoptionen anzeigen
+  --help-gtk                  GTK+-Optionen anzeigen
+
+Anwendungsoptionen:
+  -r, --repeats=N             Average over N repetitions
+  -m, --max-size=M            Test up to 2^M items
+  -v, --verbose               Be verbose
+  -b, --beep                  Beep when done
+  --rand                      Randomize the data
+  --display=ANZEIGE           X-Anzeige, die verwendet werden soll
+
+"
+                 (g-option-context-help context t)))))
+
+;;; 2021-10-17

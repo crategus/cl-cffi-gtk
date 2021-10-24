@@ -1,7 +1,7 @@
 (def-suite gtk-text-tag-table :in gtk-suite)
 (in-suite gtk-text-tag-table)
 
-(defparameter *verbose-gtk-text-tag-table* t)
+(defparameter *verbose-gtk-text-tag-table* nil)
 
 ;;; --- Types and Values -------------------------------------------------------
 
@@ -26,9 +26,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkTextTagTable"))))
   ;; Check the class properties
   (is (equal '()
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkTextTagTable"))
-                   #'string-lessp)))
+             (list-class-property-names "GtkTextTagTable")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTextTagTable" GTK-TEXT-TAG-TABLE
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES
@@ -145,4 +143,4 @@
     (setf (gtk-text-tag-font (gtk-text-tag-table-lookup table "font")) "italic")
     (is (equal '("changed" "removed" "added" "added") result))))
 
-;;; 2021-8-20
+;;; 2021-10-19

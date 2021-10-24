@@ -23,32 +23,15 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkScrollable")
              (mapcar #'g-type-name (g-type-interfaces "GtkLayout"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand"
-               "focus-on-click" "hadjustment" "halign" "has-default" "has-focus"
-               "has-tooltip" "height" "height-request" "hexpand" "hexpand-set"
-               "hscroll-policy" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "name"
-               "no-show-all" "opacity" "parent" "receives-default" "resize-mode"
-               "scale-factor" "sensitive" "style" "tooltip-markup"
-               "tooltip-text" "vadjustment" "valign" "vexpand" "vexpand-set"
-               "visible" "vscroll-policy" "width" "width-request" "window")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkLayout"))
-                   #'string-lessp)))
+  (is (equal '("hadjustment" "height" "hscroll-policy" "vadjustment"
+               "vscroll-policy" "width")
+             (list-class-property-names "GtkLayout")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkLayout"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkLayout")))
   ;; Get the names of the child properties
   (is (equal '("x" "y")
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkLayout"))))
+             (list-class-child-property-names "GtkLayout")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkLayout" GTK-LAYOUT
                        (:SUPERCLASS GTK-CONTAINER :EXPORT T :INTERFACES
@@ -151,4 +134,4 @@
 
 ;;;     gtk_layout_get_bin_window
 
-;;; 2021-4-26
+;;; 2021-10-19

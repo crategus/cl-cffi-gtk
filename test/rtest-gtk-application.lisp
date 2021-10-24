@@ -1,7 +1,7 @@
 (def-suite gtk-application :in gtk-suite)
 (in-suite gtk-application)
 
-(defvar *verbose-gtk-application* t)
+(defvar *verbose-gtk-application* nil)
 
 ;;; --- GtkApplicationInhibitFlags ---------------------------------------------
 
@@ -56,13 +56,9 @@
   (is (equal '("GActionGroup" "GActionMap")
              (mapcar #'g-type-name (g-type-interfaces "GtkApplication"))))
   ;; Check the class properties
-  (is (equal '("action-group" "active-window" "app-menu" "application-id"
-               "flags" "inactivity-timeout" "is-busy" "is-registered"
-               "is-remote" "menubar" "register-session" "resource-base-path"
+  (is (equal '("active-window" "app-menu" "menubar" "register-session"
                "screensaver-active")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkApplication"))
-                   #'string-lessp)))
+             (list-class-property-names "GtkApplication")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkApplication" GTK-APPLICATION
                        (:SUPERCLASS G-APPLICATION :EXPORT T :INTERFACES
@@ -326,4 +322,4 @@
     (is (equal '("win::close" "win::save")
                (gtk-application-actions-for-accel application "<Control>q")))))
 
-;;; 2021-9-2
+;;; 2021-10-18

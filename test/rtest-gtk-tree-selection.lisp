@@ -24,9 +24,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkTreeSelection"))))
   ;; Check the class properties
   (is (equal '("mode")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkTreeSelection"))
-                          #'string-lessp)))
+             (list-class-property-names "GtkTreeSelection")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTreeSelection" GTK-TREE-SELECTION
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -91,3 +89,4 @@
 ;;;     gtk_tree_selection_select_range
 ;;;     gtk_tree_selection_unselect_range
 
+;;; 2021-10-19

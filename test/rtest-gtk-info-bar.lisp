@@ -23,34 +23,15 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkInfoBar"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "baseline-position" "border-width" "can-default"
-               "can-focus" "child" "composite-child" "double-buffered" "events"
-               "expand" "focus-on-click" "halign" "has-default" "has-focus"
-               "has-tooltip" "height-request" "hexpand" "hexpand-set"
-               "homogeneous" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top"
-               "message-type" "name" "no-show-all" "opacity" "orientation"
-               "parent" "receives-default" "resize-mode" "revealed"
-               "scale-factor" "sensitive" "show-close-button" "spacing" "style"
-               "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
-               "visible" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkInfoBar"))
-                          #'string-lessp)))
+  (is (equal '("message-type" "revealed" "show-close-button")
+             (list-class-property-names "GtkInfoBar")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging" "action-area-border"
-               "button-spacing" "content-area-border" "content-area-spacing")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkInfoBar"))))
+  (is (equal '("action-area-border" "button-spacing" "content-area-border"
+               "content-area-spacing")
+             (list-class-style-property-names "GtkInfoBar")))
   ;; Get the names of the child properties
-  (is (equal '("expand" "fill" "padding" "pack-type" "position")
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkInfoBar"))))
+  (is (equal '("expand" "fill" "pack-type" "padding" "position")
+             (list-class-child-property-names "GtkInfoBar")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkInfoBar" GTK-INFO-BAR
                        (:SUPERCLASS GTK-BOX :EXPORT T :INTERFACES
@@ -169,3 +150,4 @@
   (let ((info-bar (make-instance 'gtk-info-bar)))
     (is (eq 'gtk-box (type-of (gtk-info-bar-content-area info-bar))))))
 
+;;; 2021-10-19

@@ -63,30 +63,13 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkImage"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
-               "double-buffered" "events" "expand" "file" "focus-on-click"
-               "gicon" "halign" "has-default" "has-focus" "has-tooltip"
-               "height-request" "hexpand" "hexpand-set" "icon-name" "icon-set"
-               "icon-size" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "name"
-               "no-show-all" "opacity" "parent" "pixbuf" "pixbuf-animation"
-               "pixel-size" "receives-default" "resource" "scale-factor"
-               "sensitive" "stock" "storage-type" "style" "surface"
-               "tooltip-markup" "tooltip-text" "use-fallback" "valign" "vexpand"
-               "vexpand-set" "visible" "width-request" "window" "xalign" "xpad"
-               "yalign" "ypad")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkImage"))
-                   #'string-lessp)))
+  (is (equal '("file" "gicon" "icon-name" "icon-set" "icon-size" "pixbuf" 
+               "pixbuf-animation" "pixel-size" "resource" "stock" "storage-type"
+               "surface" "use-fallback")
+             (list-class-property-names "GtkImage")))
   ;; Check the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkImage"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkImage")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkImage" GTK-IMAGE
                        (:SUPERCLASS GTK-MISC :EXPORT T :INTERFACES
@@ -653,4 +636,4 @@
 (test gtk-image-new
   (is (typep (gtk-image-new) 'gtk-image)))
 
-;;; 2021-8-16
+;;; 2021-10-19

@@ -77,9 +77,7 @@ dargestellt werden.")
   ;; Check the class properties
   (is (equal '("copy-target-list" "cursor-position" "has-selection"
                "paste-target-list" "tag-table" "text")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkTextBuffer"))
-                   #'string-lessp)))
+             (list-class-property-names "GtkTextBuffer")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkTextBuffer" GTK-TEXT-BUFFER
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL

@@ -22,10 +22,10 @@
              (mapcar #'g-type-name (g-type-children "GdkDisplay"))))
   #+windows
   (is (or (equal '("GdkWin32Display")
-                 (sort (mapcar #'g-type-name (g-type-children "GdkDisplay")) 
+                 (sort (mapcar #'g-type-name (g-type-children "GdkDisplay"))
                        #'string<))
           (equal '("GdkBroadwayDisplay" "GdkWin32Display")
-                 (sort (mapcar #'g-type-name (g-type-children "GdkDisplay")) 
+                 (sort (mapcar #'g-type-name (g-type-children "GdkDisplay"))
                        #'string<))))
   ;; Check the interfaces
   (is (equal '()
@@ -224,11 +224,9 @@
 ;;;     gdk-display-close
 ;;;     gdk-display-is-closed
 
-;; If we close the default display on Windows, we cannnot reopen it. All tests
-;; which need the default display will fail.
-;; TODO: Check this again on Linux.
+;; TODO: Will this test work?
 
-#-windows
+#+nil
 (test gdk-display-close
   (let* ((display (gdk-display-default))
          (name (gdk-display-name display)))

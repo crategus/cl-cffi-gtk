@@ -29,4 +29,4 @@
 (load "rtest-pango.lisp")
 (load "rtest-cairo.lisp")
 
-;;; 2020-12-6
+;;; 2021-10-20

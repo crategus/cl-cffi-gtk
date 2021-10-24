@@ -23,37 +23,18 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkNotebook"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "enable-popup" "events"
-               "expand" "focus-on-click" "group-name" "halign" "has-default"
-               "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "name"
-               "no-show-all" "opacity" "page" "parent" "receives-default"
-               "resize-mode" "scale-factor" "scrollable" "sensitive"
-               "show-border" "show-tabs" "style" "tab-pos" "tooltip-markup"
-               "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
-               "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkNotebook"))
-                          #'string-lessp)))
+  (is (equal '("enable-popup" "group-name" "page" "scrollable" "show-border"
+               "show-tabs" "tab-pos")
+             (list-class-property-names "GtkNotebook")))   
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging" "arrow-spacing"
-               "has-backward-stepper" "has-forward-stepper"
+  (is (equal '("arrow-spacing" "has-backward-stepper" "has-forward-stepper"
                "has-secondary-backward-stepper" "has-secondary-forward-stepper"
                "has-tab-gap" "initial-gap" "tab-curvature" "tab-overlap")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkNotebook"))))
+             (list-class-style-property-names "GtkNotebook")))
   ;; Get the names of the child properties
-  (is (equal '("tab-label" "menu-label" "position" "tab-expand" "tab-fill"
-               "reorderable" "detachable")
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkNotebook"))))
+  (is (equal '("detachable" "menu-label" "position" "reorderable" "tab-expand" 
+               "tab-fill" "tab-label")
+             (list-class-child-property-names "GtkNotebook")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkNotebook" GTK-NOTEBOOK
                        (:SUPERCLASS GTK-CONTAINER :EXPORT T :INTERFACES
@@ -237,3 +218,4 @@
 ;;;     gtk_notebook_set_action_widget
 ;;;     gtk_notebook_get_action_widget
 
+;;; 2021-10-19

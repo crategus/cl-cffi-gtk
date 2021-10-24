@@ -26,9 +26,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkClipboard"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkClipboard"))
-                          #'string-lessp)))
+             (list-class-property-names "GtkClipboard")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkClipboard" GTK-CLIPBOARD
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -113,29 +111,42 @@
 
 (test gtk-clipboard-set-with-data
   (flet ((get-func (clipboard selection info)
-           (format t "in GTK-CLIPBOARD-GET-FUNC callback~%")
-           (format t "  clipboard : ~a~%" clipboard)
-           (format t "  selection : ~a~%" selection)
-           (format t "       info : ~a~%" info)
-           (setf (gtk-selection-data-text selection) "Text")
-           (format t "       text : ~a~%" (gtk-selection-data-text selection)))
+           (is (string= "Text"
+                        (setf (gtk-selection-data-text selection) "Text")))
+           (when *verbose-gtk-clipboard*
+             (format t "~&in GTK-CLIPBOARD-GET-FUNC callback~%")
+             (format t " clipboard : ~a~%" clipboard)
+             (format t " selection : ~a~%" selection)
+             (format t "      info : ~a~%" info)
+             (format t "    length : ~a~%" (gtk-selection-data-length selection))
+             (format t "      text : ~a~%" (gtk-selection-data-text selection)))
+           (is (typep clipboard 'gtk-clipboard))
+           (is (typep selection 'gtk-selection-data))
+           (is (= 4 (gtk-selection-data-length selection)))
+           (is (string= "Text" (gtk-selection-data-text selection))))
          (received-func (clipboard selection)
-           (format t "in GKT-CLIPBOARD-RECEIVED-FUNC callback~%")
-           (format t "  clipboard : ~a~%" clipboard)
-           (format t "  selection : ~a~%" selection)
-           (format t "       text : ~a~%" (gtk-selection-data-text selection))))
+           (when *verbose-gtk-clipboard*
+             (format t "~&in GKT-CLIPBOARD-RECEIVED-FUNC callback~%")
+             (format t " clipboard : ~a~%" clipboard)
+             (format t " selection : ~a~%" selection)
+             (format t "    length : ~a~%" (gtk-selection-data-length selection))
+             (format t "      text : ~a~%" (gtk-selection-data-text selection)))
+           (is (typep clipboard 'gtk-clipboard))
+           (is (typep selection 'gtk-selection-data))
+           (is (= 4 (gtk-selection-data-length selection)))
+           (is (string= "Text" (gtk-selection-data-text selection)))))
   (let ((targets '(("text/html" 0 0)
                    ("STRING" 0 1)
                    ("number" 0 2)
                    ("image/jpeg" 0 3)
                    ("text/uri-list" 0 4)))
        (clipboard (gtk-clipboard-get "PRIMARY")))
-
+    (is (string= "PRIMARY" (gtk-clipboard-selection clipboard)))
     (is-true (gtk-clipboard-set-with-data clipboard targets #'get-func))
-
-    (is-false (gtk-clipboard-request-contents clipboard "STRING" #'received-func))
-
-)))
+    (when (gtk-clipboard-wait-is-text-available clipboard)
+      (is-false (gtk-clipboard-request-contents clipboard
+                                                "STRING"
+                                                #'received-func))))))
 
 ;;;     gtk_clipboard_set_with_owner
 ;;;     gtk_clipboard_get_owner
@@ -144,9 +155,49 @@
 
 ;;;     gtk_clipboard_clear
 
+(test gtk-clipboard-clear
+  (flet ((get-func (clipboard selection info)
+           (is (string= "Text"
+                        (setf (gtk-selection-data-text selection) "Text")))
+           (when *verbose-gtk-clipboard*
+             (format t "~&in GTK-CLIPBOARD-GET-FUNC callback~%")
+             (format t " clipboard : ~a~%" clipboard)
+             (format t " selection : ~a~%" selection)
+             (format t "      info : ~a~%" info)
+             (format t "    length : ~a~%" (gtk-selection-data-length selection))
+             (format t "      text : ~a~%" (gtk-selection-data-text selection)))
+           (is (typep clipboard 'gtk-clipboard))
+           (is (typep selection 'gtk-selection-data))
+           (is (= 4 (gtk-selection-data-length selection)))
+           (is (string= "Text" (gtk-selection-data-text selection))))
+         (received-func (clipboard selection)
+           (when *verbose-gtk-clipboard*
+             (format t "~&in GKT-CLIPBOARD-RECEIVED-FUNC callback~%")
+             (format t " clipboard : ~a~%" clipboard)
+             (format t " selection : ~a~%" selection)
+             (format t "    length : ~a~%" (gtk-selection-data-length selection))
+             (format t "      text : ~a~%" (gtk-selection-data-text selection)))
+           (is (typep clipboard 'gtk-clipboard))
+           (is (typep selection 'gtk-selection-data))
+           (is (= 4 (gtk-selection-data-length selection)))
+           (is (string= "Text" (gtk-selection-data-text selection)))))
+  (let ((targets '(("text/html" 0 0)
+                   ("STRING" 0 1)
+                   ("number" 0 2)
+                   ("image/jpeg" 0 3)
+                   ("text/uri-list" 0 4)))
+       (clipboard (gtk-clipboard-get "PRIMARY")))
+    (is (string= "PRIMARY" (gtk-clipboard-selection clipboard)))
+    (is-true (gtk-clipboard-set-with-data clipboard targets #'get-func))
+    (is-false (gtk-clipboard-clear clipboard)))))
+
 ;;;     gtk_clipboard_set_text
 ;;;     gtk_clipboard_request_text
 
+;; TODO: After executing this test, the clipboard on Windows no longer work
+;; Check this for Linux too. Can we avoid this?
+
+#+nil
 (test gtk-clipboard-set-text
   (flet ((request-text (clipboard text)
            (is (typep clipboard 'gtk-clipboard))
@@ -158,6 +209,10 @@
 ;;;     gtk_clipboard_set_image
 ;;;     gtk_clipboard_request_image
 
+;; TODO: After executing this test, the clipboard on Windows no longer work
+;; Check this for Linux too. Can we avoid this?
+
+#+nil
 (test gtk-clipboard-set-image
   (flet ((request-image (clipboard  pixbuf)
            (is (typep clipboard 'gtk-clipboard))
@@ -177,6 +232,7 @@
 
 ;;;     gtk_clipboard_request_contents
 
+#+nil
 (test gtk-clipboard-request-contents.1
   (flet ((request-contents (clipboard selection)
            (is (typep clipboard 'gtk-clipboard))
@@ -193,6 +249,7 @@
                                               "STRING"
                                               #'request-contents)))))
 
+#+nil
 (test gtk-clipboard-request-contents.2
   (flet ((request-contents (clipboard selection)
            (is (typep clipboard 'gtk-clipboard))
@@ -214,6 +271,7 @@
                                               #'request-contents)))))
 
 ;;;     gtk_clipboard_request_targets
+
 
 (test gtk-clipboard-request-targets
   (flet ((request-targets (clipboard atoms n-atoms)

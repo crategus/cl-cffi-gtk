@@ -20,7 +20,8 @@
   (is (eq (gtype "GdkPixbuf")
           (gtype (foreign-funcall "gdk_pixbuf_get_type" g-size))))
   ;; Check the parent
-  (is (eq (gtype "GObject") (g-type-parent "GdkPixbuf")))
+  (is (eq (gtype "GObject")
+          (g-type-parent "GdkPixbuf")))
   ;; Check the children
   (is (equal '()
              (mapcar #'g-type-name (g-type-children "GdkPixbuf"))))
@@ -30,9 +31,7 @@
   ;; Check the class properties
   (is (equal '("bits-per-sample" "colorspace" "has-alpha" "height" "n-channels"
                "pixel-bytes" "pixels" "rowstride" "width")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GdkPixbuf"))
-                          #'string-lessp)))
+             (list-class-property-names "GdkPixbuf")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GdkPixbuf" GDK-PIXBUF
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES
@@ -64,8 +63,7 @@
     (is-true (gdk-pixbuf-has-alpha pixbuf))
     (is (= 537 (gdk-pixbuf-height pixbuf)))
     (is (= 4 (gdk-pixbuf-n-channels pixbuf)))
-    ;; TODO: GBytes is not implemented
-    (signals (error) (gdk-pixbuf-pixel-bytes pixbuf))
+    (is (typep (gdk-pixbuf-pixel-bytes pixbuf) 'g-bytes))
     (is (pointerp (gdk-pixbuf-pixels pixbuf)))
     (is (eq 1956 (gdk-pixbuf-rowstride pixbuf)))
     (is (= 489 (gdk-pixbuf-width pixbuf)))))
@@ -81,5 +79,4 @@
 ;;;     gdk_pixbuf_copy_options
 ;;;     gdk_pixbuf_read_pixels
 
-
-;;; 2020-11-21
+;;; 2021-10-17

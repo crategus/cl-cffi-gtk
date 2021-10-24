@@ -26,9 +26,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkIconTheme"))))
   ;; Check the class properties
   (is (equal '()
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkIconTheme"))
-                          #'string-lessp)))
+             (list-class-property-names "GtkIconTheme")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkIconTheme" GTK-ICON-THEME
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -278,4 +276,4 @@
          (icon-info (gtk-icon-theme-lookup-icon theme "battery" 0 :force-symbolic)))
     (is-true (gtk-icon-info-is-symbolic icon-info))))
 
-;;; 2021-10-14
+;;; 2021-10-20

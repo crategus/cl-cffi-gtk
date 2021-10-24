@@ -102,9 +102,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkBuilder"))))
   ;; Check the class properties
   (is (equal '("translation-domain")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkBuilder"))
-                          #'string-lessp)))
+             (list-class-property-names "GtkBuilder")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkBuilder" GTK-BUILDER
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -178,12 +176,6 @@
 
 ;;; --- gtk-builder-add-objects-from-file --------------------------------------
 
-;; FIXME: Causes an erro on Windows
-;; GTK-BUILDER-ADD-OBJECTS-FROM-FILE []:
-;;       Unexpected Error: #<SB-SYS:MEMORY-FAULT-ERROR {100820B393}>
-;; Unhandled memory fault at #xFFFFFFFFFFFFFFFF...
-
-#-windows
 (test gtk-builder-add-objects-from-file
   (let ((builder (gtk-builder-new)))
     (is-true (gtk-builder-add-objects-from-file builder
@@ -194,12 +186,6 @@
 
 ;;; --- gtk-builder-add-objects-from-string ------------------------------------
 
-;; FIXME: Causes an error on Windows
-;; GTK-BUILDER-ADD-OBJECTS-FROM-STRING []:
-;;      Unexpected Error: #<SB-SYS:MEMORY-FAULT-ERROR {1002E7F403}>
-;; Unhandled memory fault at #xFFFFFFFFFFFFFFFF...
-
-#-windows
 (test gtk-builder-add-objects-from-string
   (let ((builder (gtk-builder-new)))
     (is-true (gtk-builder-add-objects-from-string builder *dialog* '("dialog1")))
@@ -237,4 +223,4 @@
 ;;;     gtk_builder_value_from_string
 ;;;     gtk_builder_value_from_string_type
 
-;;; 2021-10-15
+;;; 2021-10-21

@@ -34,7 +34,8 @@
     (is (string= "GParamBoolean" (g-param-spec-type-name pspec)))
     (is (eq (gtype "gboolean") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "gboolean") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "gboolean") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is-true (parse-g-value value)) ; the default value is t
@@ -92,7 +93,8 @@
     (is (string= "GParamChar" (g-param-spec-type-name pspec)))
     (is (eq (gtype "gchar") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "gchar") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "gchar") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= (char-code #\D) (parse-g-value value))) ; the default value is #\D
@@ -169,7 +171,8 @@
     (is (string= "GParamUChar" (g-param-spec-type-name pspec)))
     (is (eq (gtype "guchar") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "guchar") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "guchar") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= (char-code #\D) (parse-g-value value))) ; the default value is #\D
@@ -236,7 +239,8 @@
     (is (string= "GParamInt" (g-param-spec-type-name pspec)))
     (is (eq (gtype "gint") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "gint") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "gint") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= 100 (parse-g-value value))) ; the default value is 100
@@ -303,7 +307,8 @@
     (is (string= "GParamUInt" (g-param-spec-type-name pspec)))
     (is (eq (gtype "guint") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "guint") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "guint") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= 100 (parse-g-value value))) ; the default value is 100
@@ -373,7 +378,8 @@
     (is (string= "GParamLong" (g-param-spec-type-name pspec)))
     (is (eq (gtype "glong") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "glong") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "glong") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= 100 (parse-g-value value))) ; the default value is 100
@@ -443,7 +449,8 @@
     (is (string= "GParamULong" (g-param-spec-type-name pspec)))
     (is (eq (gtype "gulong") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "gulong") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "gulong") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= 100 (parse-g-value value))) ; the default value is 100
@@ -510,7 +517,8 @@
     (is (string= "GParamInt64" (g-param-spec-type-name pspec)))
     (is (eq (gtype "gint64") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "gint64") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "gint64") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= 100 (parse-g-value value))) ; the default value is 100
@@ -577,7 +585,8 @@
     (is (string= "GParamUInt64" (g-param-spec-type-name pspec)))
     (is (eq (gtype "guint64") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "guint64") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "guint64") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= 100 (parse-g-value value))) ; the default value is 100
@@ -644,7 +653,8 @@
     (is (string= "GParamFloat" (g-param-spec-type-name pspec)))
     (is (eq (gtype "gfloat") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "gfloat") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "gfloat") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= 100 (parse-g-value value))) ; the default value is 100
@@ -711,7 +721,8 @@
     (is (string= "GParamDouble" (g-param-spec-type-name pspec)))
     (is (eq (gtype "gdouble") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "gdouble") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "gdouble") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (= 100 (parse-g-value value))) ; the default value is 100
@@ -777,7 +788,8 @@
     (is (string= "GParamEnum" (g-param-spec-type-name pspec)))
     (is (eq (gtype "GtkWindowType") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "GtkWindowType") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "GtkWindowType") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is-true (parse-g-value (g-param-spec-default-value pspec)))
     (is-false (g-param-value-set-default pspec value))
     (is (eq :toplevel (parse-g-value value))) ; the default value is :toplevel
@@ -839,7 +851,8 @@
     (is (string= "GParamFlags" (g-param-spec-type-name pspec)))
     (is (eq (gtype "GtkDialogFlags") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "GtkDialogFlags") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "GtkDialogFlags") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is (equal '(:modal) (parse-g-value (g-param-spec-default-value pspec))))
     (is-false (g-param-value-set-default pspec value))
     (is (equal '(:modal) (parse-g-value value))) ; the default value is :modal
@@ -902,7 +915,8 @@
     (is (string= "GParamString" (g-param-spec-type-name pspec)))
     (is (eq (gtype "gchararray") (g-param-spec-value-type pspec)))
     ;; Check the default value
-    (is (eq (gtype "gchararray") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "gchararray") 
+            (g-value-type (g-param-spec-default-value pspec))))
     (is (string= "string" (parse-g-value (g-param-spec-default-value pspec))))
     (is-false (g-param-value-set-default pspec value))
     (is (string= "string" (parse-g-value value)))
@@ -964,7 +978,8 @@
     (is (string= "GParamParam" (g-param-spec-type-name pspec)))
     (is (eq (gtype "GParamBoolean") (g-param-spec-value-type pspec)))
     ;; Check the default value
-;    (is (eq (gtype "GParamBoolean") (g-value-type (g-param-spec-default-value pspec))))
+    (is (eq (gtype "GParamBoolean")
+            (g-value-type (g-param-spec-default-value pspec))))
 ;    (is-false (parse-g-value (g-param-spec-default-value pspec)))
 ;    (is-false (g-param-value-set-default pspec value))
 ;    (is (string= "string" (parse-g-value value)))
@@ -1126,4 +1141,4 @@
 ;;;     g_value_set_variant
 ;;;     g_value_take_variant
 
-;;; 2020-10-14
+;;; 2020-10-18

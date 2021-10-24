@@ -25,33 +25,16 @@
                "GtkActivatable")
              (mapcar #'g-type-name (g-type-interfaces "GtkButton"))))
   ;; Check the class properties
-  (is (equal '("action-name" "action-target" "always-show-image" "app-paintable"
-               "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand"
-               "focus-on-click" "halign" "has-default" "has-focus" "has-tooltip"
-               "height-request" "hexpand" "hexpand-set" "image" "image-position"
-               "is-focus" "label" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "name"
-               "no-show-all" "opacity" "parent" "receives-default"
-               "related-action" "relief" "resize-mode" "scale-factor"
-               "sensitive" "style" "tooltip-markup" "tooltip-text"
-               "use-action-appearance" "use-stock" "use-underline" "valign"
-               "vexpand" "vexpand-set" "visible" "width-request" "window"
-               "xalign" "yalign")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkButton"))
-                   #'string-lessp)))
+  (is (equal '("action-name" "action-target" "always-show-image" "image"
+               "image-position" "label" "related-action" "relief"  
+               "use-action-appearance" "use-stock" "use-underline" "xalign"
+               "yalign")
+             (list-class-property-names "GtkButton")))
   ;; Get the names of the style properties
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging" "child-displacement-x"
-               "child-displacement-y" "default-border" "default-outside-border"
-               "displace-focus" "image-spacing" "inner-border")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkButton"))))
+  (is (equal '("child-displacement-x" "child-displacement-y" "default-border"
+               "default-outside-border" "displace-focus" "image-spacing" 
+               "inner-border")
+             (list-class-style-property-names "GtkButton")))
   ;; Get the names of the child properties
   (is (equal '()
              (mapcar #'g-param-spec-name
@@ -212,4 +195,4 @@
     (is-false (gtk-widget-realize button))
     (is (typep (gtk-button-event-window button) 'gdk-window))))
 
-;;; 2021-8-20
+;;; 2021-10-19

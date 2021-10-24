@@ -24,9 +24,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkEntryBuffer"))))
   ;; Check the class properties
   (is (equal '("length" "max-length" "text")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkEntryBuffer"))
-                          #'string-lessp)))
+             (list-class-property-names "GtkEntryBuffer")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkEntryBuffer" GTK-ENTRY-BUFFER
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -172,4 +170,4 @@
     (gtk-entry-buffer-emit-inserted-text buffer 6 "text" 7)
 ))
 
-;;; 2021-10-14
+;;; 2021-10-19

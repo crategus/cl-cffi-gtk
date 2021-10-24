@@ -23,29 +23,14 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkFlowBoxChild"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand" "focus-on-click"
-               "halign" "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end" "margin-left"
-               "margin-right" "margin-start" "margin-top" "name" "no-show-all" "opacity"
-               "parent" "receives-default" "resize-mode" "scale-factor" "sensitive" "style"
-               "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
-               "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkFlowBoxChild"))
-                          #'string-lessp)))
+  (is (equal '()
+             (list-class-property-names "GtkFlowBoxChild")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkFlowBoxChild"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkFlowBoxChild")))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkFlowBoxChild"))))
+             (list-class-child-property-names "GtkFlowBoxChild")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkFlowBoxChild" GTK-FLOW-BOX-CHILD
                        (:SUPERCLASS GTK-BIN :EXPORT T :INTERFACES
@@ -74,31 +59,16 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkFlowBox"))))
   ;; Check the class properties
-  (is (equal '("activate-on-single-click" "app-paintable" "border-width" "can-default"
-               "can-focus" "child" "column-spacing" "composite-child" "double-buffered"
-               "events" "expand" "focus-on-click" "halign" "has-default" "has-focus"
-               "has-tooltip" "height-request" "hexpand" "hexpand-set" "homogeneous"
-               "is-focus" "margin" "margin-bottom" "margin-end" "margin-left" "margin-right"
-               "margin-start" "margin-top" "max-children-per-line" "min-children-per-line"
-               "name" "no-show-all" "opacity" "orientation" "parent" "receives-default"
-               "resize-mode" "row-spacing" "scale-factor" "selection-mode" "sensitive"
-               "style" "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
-               "visible" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkFlowBox"))
-                          #'string-lessp)))
+  (is (equal '("activate-on-single-click" "column-spacing" "homogeneous"
+               "max-children-per-line" "min-children-per-line" "orientation"
+               "row-spacing" "selection-mode")
+             (list-class-property-names "GtkFlowBox")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkFlowBox"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkFlowBox")))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkFlowBox"))))
+             (list-class-child-property-names "GtkFlowBox")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkFlowBox" GTK-FLOW-BOX
                        (:SUPERCLASS GTK-CONTAINER :EXPORT T :INTERFACES
@@ -178,3 +148,4 @@
 ;;;     gtk_flow_box_child_is_selected
 ;;;     gtk_flow_box_child_changed
 
+;;; 2021-10-18

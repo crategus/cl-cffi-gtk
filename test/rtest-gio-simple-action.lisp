@@ -1,7 +1,7 @@
 (def-suite g-simple-action :in gio-suite)
 (in-suite g-simple-action)
 
-(defvar *g-simple-action-verbose* nil)
+(defvar *verbose-g-simple-action* nil)
 
 ;;; --- Types and Values -------------------------------------------------------
 
@@ -157,7 +157,7 @@
     ;; Connect available signals
     (g-signal-connect action "activate"
        (lambda (action parameter)
-         (when *g-simple-action-verbose*
+         (when *verbose-g-simple-action*
            (format t "~&GSimpleAction: signal 'activate' occured.~%")
            (format t "~&    action    : ~A~%" action)
            (format t "~&    name      : ~A~%" (g-action-name action))
@@ -165,7 +165,7 @@
     (g-signal-connect action "change-state"
        (lambda (action value)
          (setf (g-simple-action-state action) value)
-         (when *g-simple-action-verbose*
+         (when *verbose-g-simple-action*
            (format t "~&GSimpleAction: signal 'change-state' occured.~%")
            (format t "~&    action : ~A~%" action)
            (format t "~&    name   : ~A~%" (g-action-name action))
@@ -186,7 +186,7 @@
     ;; Connect available signals
     (g-signal-connect action "activate"
        (lambda (action parameter)
-         (when *g-simple-action-verbose*
+         (when *verbose-g-simple-action*
            (format t "~&GSimpleAction: signal 'activate'.~%")
            (format t "~&    action    : ~A~%" action)
            (format t "~&    name      : ~A~%" (g-action-name action))
@@ -194,7 +194,7 @@
     (g-signal-connect action "change-state"
        (lambda (action value)
          (setf (g-simple-action-state action) value)
-         (when *g-simple-action-verbose*
+         (when *verbose-g-simple-action*
            (format t "~&GSimpleAction: signal 'change-state'.~%")
            (format t "~&    action : ~A~%" action)
            (format t "~&    name   : ~A~%" (g-action-name action))
@@ -244,4 +244,4 @@
     ;; The state has not changed.
     (is (= 10 (g-variant-int32 (g-action-state action))))))
 
-;;; 2021-9-8
+;;; 2021-10-18

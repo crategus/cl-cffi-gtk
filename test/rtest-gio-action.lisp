@@ -1,7 +1,7 @@
 (def-suite g-action :in gio-suite)
 (in-suite g-action)
 
-(defvar *g-action-verbose* nil)
+(defvar *verbose-g-action* nil)
 
 ;;; --- Types and Values -------------------------------------------------------
 
@@ -131,7 +131,7 @@
     (g-signal-connect action "activate"
        (lambda (action parameter)
          (setf param (g-variant-int32 parameter))
-         (when *g-action-verbose*
+         (when *verbose-g-action*
            (format t "~%")
            (format t "~&GAction signal : 'activate'~%")
            (format t "~&        action : ~A~%" action)
@@ -140,7 +140,7 @@
     (g-signal-connect action "change-state"
        (lambda (action value)
          (setf (g-simple-action-state action) value)
-         (when *g-action-verbose*
+         (when *verbose-g-action*
            (format t "~%")
            (format t "~&GAction signal : 'change-state'~%")
            (format t "~&        action : ~A~%" action)
@@ -169,4 +169,4 @@
   (is (string= "test(12)"
                (g-action-print-detailed-name "test" (g-variant-new-int32 12)))))
 
-;;; 2021-9-8
+;;; 2021-10-18

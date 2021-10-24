@@ -1,7 +1,7 @@
 (def-suite g-action-group :in gio-suite)
 (in-suite g-action-group)
 
-(defparameter *verbose-g-action-group* t)
+(defparameter *verbose-g-action-group* nil)
 
 (defun change-state (action parameter)
   (when *verbose-g-action-group*
@@ -193,4 +193,4 @@
 ;;;     g_action_group_action_enabled_changed
 ;;;     g_action_group_action_state_changed
 
-;;; 2021-9-8
+;;; 2021-10-18

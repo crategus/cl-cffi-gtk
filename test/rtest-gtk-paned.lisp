@@ -23,30 +23,15 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkPaned"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand" "focus-on-click"
-               "halign" "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end" "margin-left"
-               "margin-right" "margin-start" "margin-top" "max-position" "min-position"
-               "name" "no-show-all" "opacity" "orientation" "parent" "position"
-               "position-set" "receives-default" "resize-mode" "scale-factor" "sensitive"
-               "style" "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
-               "visible" "wide-handle" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkPaned"))
-                          #'string-lessp)))
+  (is (equal '("max-position" "min-position" "orientation" "position" 
+               "position-set" "wide-handle")
+             (list-class-property-names "GtkPaned")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging" "handle-size")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkPaned"))))
+  (is (equal '("handle-size")
+             (list-class-style-property-names "GtkPaned")))
   ;; Get the names of the child properties
   (is (equal '("resize" "shrink")
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkPaned"))))
+             (list-class-child-property-names "GtkPaned")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkPaned" GTK-PANED
                        (:SUPERCLASS GTK-CONTAINER :EXPORT T :INTERFACES
@@ -193,3 +178,4 @@
     ;; no handle because paned is not realized
     (is-false (gtk-paned-handle-window paned))))
 
+;;; 2021-10-19

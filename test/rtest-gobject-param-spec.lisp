@@ -19,16 +19,22 @@
 ;;;     g-type-is-param
 
 (test g-type-is-param
-  (is-true (g-type-is-param (g-type-from-instance (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
-  (is-true (g-type-is-param (g-type-from-instance (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
+  (is-true (g-type-is-param 
+             (g-type-from-instance 
+               (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
+  (is-true (g-type-is-param
+             (g-type-from-instance 
+               (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
 
 ;;;     G_PARAM_SPEC
 
 ;;;     g-is-param-spec
 
 (test g-is-param-spec
-  (is-true (g-is-param-spec (g-param-spec-boolean "Boolean" "Bool" "Doku" t '())))
-  (is-true (g-is-param-spec (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '()))))
+  (is-true (g-is-param-spec 
+             (g-param-spec-boolean "Boolean" "Bool" "Doku" t '())))
+  (is-true (g-is-param-spec 
+             (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '()))))
 
 ;;;     G_PARAM_SPEC_CLASS
 ;;;     G_IS_PARAM_SPEC_CLASS
@@ -38,25 +44,31 @@
 
 (test g-param-spec-type
   (is (eq (gtype "GParamBoolean")
-          (g-param-spec-type (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
+          (g-param-spec-type 
+            (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
   (is (eq (gtype "GParamChar")
-          (g-param-spec-type (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
+          (g-param-spec-type 
+            (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
 
 ;;;     g-param-spec-type-name
 
 (test g-param-spec-type-name
   (is (string= "GParamBoolean"
-               (g-param-spec-type-name (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
+               (g-param-spec-type-name 
+                 (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
   (is (string= "GParamChar"
-               (g-param-spec-type-name (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
+               (g-param-spec-type-name 
+                 (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
 
 ;;;     g-param-spec-value-type
 
 (test g-param-spec-value-type
   (is (eq (gtype "gboolean")
-          (g-param-spec-value-type (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
+          (g-param-spec-value-type 
+            (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
   (is (eq (gtype "gchar")
-          (g-param-spec-value-type (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
+          (g-param-spec-value-type 
+            (g-param-spec-char "Char" "Char" "Doku" 10 50 25 '())))))
 
 ;;;     g_param_spec_ref
 ;;;     g_param_spec_unref
@@ -66,9 +78,15 @@
 ;;;     g-param-spec-default-value
 
 (test g-param-spec-default-value
-  (is-true (parse-g-value (g-param-spec-default-value (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
-  (is-false (parse-g-value (g-param-spec-default-value (g-param-spec-boolean "Boolean" "Bool" "Doku" nil '()))))
-  (is (= 25 (parse-g-value (g-param-spec-default-value (g-param-spec-int "Integer" "int" "Doku" 10 50 25 '()))))))
+  (is-true (parse-g-value 
+             (g-param-spec-default-value 
+               (g-param-spec-boolean "Boolean" "Bool" "Doku" t '()))))
+  (is-false (parse-g-value 
+              (g-param-spec-default-value 
+                (g-param-spec-boolean "Boolean" "Bool" "Doku" nil '()))))
+  (is (= 25 (parse-g-value
+              (g-param-spec-default-value
+                (g-param-spec-int "Integer" "int" "Doku" 10 50 25 '()))))))
 
 ;;;     g-param-value-set-default
 
@@ -111,7 +129,11 @@
 ;;;     g-param-spec-name
 
 (test g-param-spec-name
-  (let ((pspec (g-param-spec-internal "GParamBoolean" "Boolean" "Bool" "Doku" '(:readable :writable))))
+  (let ((pspec (g-param-spec-internal "GParamBoolean" 
+                                      "Boolean" 
+                                      "Bool" 
+                                      "Doku" 
+                                      '(:readable :writable))))
     (is (string= "Boolean" (g-param-spec-name pspec)))))
 
 ;;;     g_param_spec_get_name_quark
@@ -119,13 +141,21 @@
 ;;;     g-param-spec-nick
 
 (test g-param-spec-nick
-  (let ((pspec (g-param-spec-internal "GParamBoolean" "Boolean" "Bool" "Doku" '(:readable :writable))))
+  (let ((pspec (g-param-spec-internal "GParamBoolean" 
+                                      "Boolean" 
+                                      "Bool" 
+                                      "Doku" 
+                                      '(:readable :writable))))
     (is (string= "Bool" (g-param-spec-nick pspec)))))
 
 ;;;     g-param-spec-blurb
 
 (test g-param-spec-blurb
-  (let ((pspec (g-param-spec-internal "GParamBoolean" "Boolean" "Bool" "Doku" '(:readable :writable))))
+  (let ((pspec (g-param-spec-internal "GParamBoolean" 
+                                      "Boolean" 
+                                      "Bool" 
+                                      "Doku" 
+                                      '(:readable :writable))))
     (is (string= "Doku" (g-param-spec-blurb pspec)))))
 
 ;;;     g_param_spec_get_qdata
@@ -137,7 +167,11 @@
 ;;;     g-param-spec-internal
 
 (test g-param-spec-internal
-  (let ((pspec (g-param-spec-internal "GParamBoolean" "Boolean" "Bool" "Doku" '(:readable :writable))))
+  (let ((pspec (g-param-spec-internal "GParamBoolean" 
+                                      "Boolean" 
+                                      "Bool" 
+                                      "Doku" 
+                                      '(:readable :writable))))
     (is-true (g-is-param-spec pspec))
     (is (eq (gtype "GParamBoolean") (g-param-spec-type pspec)))
     (is (string= "GParamBoolean" (g-param-spec-type-name pspec)))
@@ -152,4 +186,4 @@
 ;;;     g_param_spec_pool_list
 ;;;     g_param_spec_pool_list_owned
 
-;;; 2020-10-10
+;;; 2020-10-18

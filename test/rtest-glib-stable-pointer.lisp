@@ -1,4 +1,3 @@
-
 (def-suite glib-stable-pointer :in glib-suite)
 (in-suite glib-stable-pointer)
 
@@ -12,3 +11,4 @@
     (with-stable-pointer (ptr func)
       (is (= 99 (funcall (glib::get-stable-pointer-value ptr))))))))
       
+;;; 2021-10-18

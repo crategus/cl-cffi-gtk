@@ -23,30 +23,14 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkProgressBar"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
-               "double-buffered" "ellipsize" "events" "expand" "focus-on-click"
-               "fraction" "halign" "has-default" "has-focus" "has-tooltip"
-               "height-request" "hexpand" "hexpand-set" "inverted" "is-focus"
-               "margin" "margin-bottom" "margin-end" "margin-left"
-               "margin-right" "margin-start" "margin-top" "name" "no-show-all"
-               "opacity" "orientation" "parent" "pulse-step" "receives-default"
-               "scale-factor" "sensitive" "show-text" "style" "text"
-               "tooltip-markup" "tooltip-text" "valign" "vexpand" "vexpand-set"
-               "visible" "width-request" "window")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkProgressBar"))
-                   #'string-lessp)))
+  (is (equal '("ellipsize" "fraction" "inverted" "orientation" "pulse-step" 
+               "show-text" "text")
+             (list-class-property-names "GtkProgressBar")))
   ;; Check the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging" "min-horizontal-bar-height"
-               "min-horizontal-bar-width" "min-vertical-bar-height"
-               "min-vertical-bar-width" "xspacing" "yspacing")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkProgressBar"))))
+  (is (equal '("min-horizontal-bar-height" "min-horizontal-bar-width"
+               "min-vertical-bar-height" "min-vertical-bar-width" "xspacing"
+               "yspacing")
+             (list-class-style-property-names "GtkProgressBar")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkProgressBar" GTK-PROGRESS-BAR
                        (:SUPERCLASS GTK-WIDGET :EXPORT T :INTERFACES
@@ -114,4 +98,4 @@
 
 ;;;     gtk_progress_bar_pulse
 
-;;; 2021-5-2
+;;; 2021-10-19

@@ -23,31 +23,11 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkActionable" "GtkActivatable")
              (mapcar #'g-type-name (g-type-interfaces "GtkRadioButton"))))
   ;; Check the class properties
-  (is (equal '("action-name" "action-target" "active" "always-show-image" "app-paintable"
-               "border-width" "can-default" "can-focus" "child" "composite-child"
-               "double-buffered" "draw-indicator" "events" "expand" "focus-on-click" "group"
-               "halign" "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "image" "image-position" "inconsistent" "is-focus" "label"
-               "margin" "margin-bottom" "margin-end" "margin-left" "margin-right"
-               "margin-start" "margin-top" "name" "no-show-all" "opacity" "parent"
-               "receives-default" "related-action" "relief" "resize-mode" "scale-factor"
-               "sensitive" "style" "tooltip-markup" "tooltip-text" "use-action-appearance"
-               "use-stock" "use-underline" "valign" "vexpand" "vexpand-set" "visible"
-               "width-request" "window" "xalign" "yalign")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkRadioButton"))
-                          #'string-lessp)))
+  (is (equal '("group")
+             (list-class-property-names "GtkRadioButton")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging"
-               "child-displacement-x" "child-displacement-y" "default-border"
-               "default-outside-border" "displace-focus" "image-spacing" "inner-border"
-               "indicator-size" "indicator-spacing")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkRadioButton"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkRadioButton")))
   ;; Get the names of the child properties
   (is (equal '()
              (mapcar #'g-param-spec-name
@@ -268,3 +248,4 @@
     (is (string= "First Button"
                  (gtk-label-label (gtk-bin-child (second (gtk-radio-button-get-group button))))))))
 
+;;; 2021-10-19

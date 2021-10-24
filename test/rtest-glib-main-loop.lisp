@@ -9,7 +9,7 @@
   (defun timeout-callback (loop)
     (incf counter)
     (when *verbose-glib-main-loop*
-      (format t "timout-callback called ~d times~%" counter))
+      (format t "~&timout-callback called ~d times~%" counter))
     (if (>= counter 10)
         (progn
           ;; Reset the counter
@@ -110,39 +110,24 @@
 ;;;     g_main_quit
 ;;;     g_main_is_running
 
-;;;   G_PRIORITY_HIGH
+;;;     G_PRIORITY_HIGH
+;;;     G_PRIORITY_DEFAULT
+;;;     G_PRIORITY_HIGH_IDLE
+;;;     G_PRIORITY_DEFAULT_IDLE
+;;;     G_PRIORITY_LOW
 
-(test g-priority-high
-  (is (= -100 +g-priority-high+)))
+(test g-priority-constants
+  (is (= -100 +g-priority-high+))
+  (is (=    0 +g-priority-default+))
+  (is (=  100 +g-priority-high-idle+))
+  (is (=  200 +g-priority-default-idle+))
+  (is (=  300 +g-priority-low+)))
 
-;;;   G_PRIORITY_DEFAULT
+;;;     G_SOURCE_CONST
+;;;     G_SOURCE_REMOVE
 
-(test g-priority-default
-  (is (= 0 +g-priority-default+)))
-
-;;;   G_PRIORITY_HIGH_IDLE
-
-(test g-priority-high-idle
-  (is (= 100 +g-priority-high-idle+)))
-
-;;;   G_PRIORITY_DEFAULT_IDLE
-
-(test g-priority-default-idle
-  (is (= 200 +g-priority-default-idle+)))
-
-;;;   G_PRIORITY_LOW
-
-(test g-priority-low
-  (is (= 300 +g-priority-low+)))
-
-;;;   G_SOURCE_CONTINUE
-
-(test g-source-continue
-  (is-true +g-source-continue+))
-
-;;;  G_SOURCE_REMOVE
-
-(test g-source-remove
+(test g-source-constants
+  (is-true +g-source-continue+)
   (is-false +g-source-remove+))
 
 ;;;   g_main_context_new
@@ -156,8 +141,7 @@
     (is-true (pointer-eq context (g-main-context-ref context)))
     (g-main-context-unref context)
     (g-main-context-unref context)
-    (is-true (not (pointer-eq context (g-main-context-default))))
-))
+    (is-true (not (pointer-eq context (g-main-context-default))))))
 
 ;;;     g_main_context_iteration
 
@@ -241,6 +225,8 @@
 ;;;     GSourceCallbackFuncs
 ;;;
 ;;;     g_source_new
+
+;; This functionality is no longer exported
 
 (defcallback prepare :boolean ((source :pointer)
                                (timeout :int))
@@ -334,4 +320,4 @@
 ;;;     g_source_remove_by_funcs_user_data
 ;;;     g_source_remove_by_user_data
 
-;;; 2021-4-9
+;;; 2021-10-18

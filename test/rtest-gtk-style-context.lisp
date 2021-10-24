@@ -168,9 +168,7 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkStyleContext"))))
   ;; Check the class properties
   (is (equal '("direction" "paint-clock" "parent" "screen")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkStyleContext"))
-                   #'string-lessp)))
+             (list-class-property-names "GtkStyleContext")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkStyleContext" GTK-STYLE-CONTEXT
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
@@ -552,4 +550,4 @@
 ;;;     gtk_render_icon
 ;;;     gtk_render_insertion_cursor
 
-;;; 2021-10-14
+;;; 2021-10-20

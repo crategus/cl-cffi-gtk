@@ -85,44 +85,31 @@
   ;; Check the parent
   (is (eq (gtype "GtkBin") (g-type-parent "GtkWindow")))
   ;; Check the children
+  #-windows
   (is (equal '("GtkDialog" "GtkAssistant" "GtkOffscreenWindow" "GtkPlug"
+               "GtkShortcutsWindow" "GtkApplicationWindow")
+             (mapcar #'g-type-name (g-type-children "GtkWindow"))))
+  #+windows
+  (is (equal '("GtkDialog" "GtkAssistant" "GtkOffscreenWindow"
                "GtkShortcutsWindow" "GtkApplicationWindow")
              (mapcar #'g-type-name (g-type-children "GtkWindow"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkWindow"))))
   ;; Check the class properties
-  (is (equal '("accept-focus" "app-paintable" "application" "attached-to"
-               "border-width" "can-default" "can-focus" "child"
-               "composite-child" "decorated" "default-height" "default-width"
-               "deletable" "destroy-with-parent" "double-buffered" "events"
-               "expand" "focus-on-click" "focus-on-map" "focus-visible"
-               "gravity" "halign" "has-default" "has-focus" "has-resize-grip"
-               "has-tooltip" "has-toplevel-focus" "height-request" "hexpand"
-               "hexpand-set" "hide-titlebar-when-maximized" "icon" "icon-name"
-               "is-active" "is-focus" "is-maximized" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start"
-               "margin-top" "mnemonics-visible" "modal" "name" "no-show-all"
-               "opacity" "parent" "receives-default" "resizable"
-               "resize-grip-visible" "resize-mode" "role" "scale-factor"
-               "screen" "sensitive" "skip-pager-hint" "skip-taskbar-hint"
-               "startup-id" "style" "title" "tooltip-markup" "tooltip-text"
-               "transient-for" "type" "type-hint" "urgency-hint" "valign"
-               "vexpand" "vexpand-set" "visible" "width-request" "window"
-               "window-position")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkWindow"))
-                   #'string-lessp)))
-  ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging" "decoration-button-layout"
-               "decoration-resize-handle")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkWindow"))))
+  (is (equal '("accept-focus" "application" "attached-to" "decorated"
+               "default-height" "default-width" "deletable"
+               "destroy-with-parent" "focus-on-map" "focus-visible" "gravity"
+               "has-resize-grip" "has-toplevel-focus"
+               "hide-titlebar-when-maximized" "icon" "icon-name" "is-active"
+               "is-maximized" "mnemonics-visible" "modal" "resizable"
+               "resize-grip-visible" "role" "screen" "skip-pager-hint"
+               "skip-taskbar-hint" "startup-id" "title" "transient-for"
+               "type" "type-hint" "urgency-hint" "window-position")
+             (list-class-property-names "GtkWindow")))
+  ;; Get the names of the style properties
+  (is (equal '("decoration-button-layout" "decoration-resize-handle")
+             (list-class-style-property-names "GtkWindow")))
   ;; Get the names of the child properties
   (is (equal '()
              (mapcar #'g-param-spec-name
@@ -237,23 +224,6 @@
 
 (test gtk-window-style-properties
   (let ((win (make-instance 'gtk-window)))
-    (is (= 0.04 (gtk-widget-style-property win "cursor-aspect-ratio")))
-    (is-false (gtk-widget-style-property win "cursor-color"))
-    (is-true (gtk-widget-style-property win "focus-line-pattern"))
-    (is (= 1 (gtk-widget-style-property win "focus-line-width")))
-    (is (= 1 (gtk-widget-style-property win "focus-padding")))
-    (is-true (gtk-widget-style-property win "interior-focus"))
-    (is-false (gtk-widget-style-property win "link-color"))
-    (is (= 16 (gtk-widget-style-property win "scroll-arrow-hlength")))
-    (is (= 16 (gtk-widget-style-property win "scroll-arrow-vlength")))
-    (is-false (gtk-widget-style-property win "secondary-cursor-color"))
-    (is (= 0 (gtk-widget-style-property win "separator-height")))
-    (is (= 0 (gtk-widget-style-property win "separator-width")))
-    (is (= 24 (gtk-widget-style-property win "text-handle-height")))
-    (is (= 20 (gtk-widget-style-property win "text-handle-width")))
-    (is-false (gtk-widget-style-property win "visited-link-color"))
-    (is-false (gtk-widget-style-property win "wide-separators"))
-    (is-false (gtk-widget-style-property win "window-dragging"))
     (is (string= "menu:close"
                  (gtk-widget-style-property win "decoration-button-layout")))
     (is (= 20 (gtk-widget-style-property win "decoration-resize-handle")))))
@@ -470,4 +440,4 @@
 ;;;     gtk_window_get_titlebar
 ;;;     gtk_window_set_interactive_debugging
 
-;;; 2021-9-12
+;;; 2021-10-18

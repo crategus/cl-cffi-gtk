@@ -18,39 +18,17 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GActionGroup" "GActionMap")
              (mapcar #'g-type-name (g-type-interfaces "GtkApplicationWindow"))))
   ;; Check the class properties
-  (is (equal '("accept-focus" "app-paintable" "application" "attached-to" "border-width"
-               "can-default" "can-focus" "child" "composite-child" "decorated"
-               "default-height" "default-width" "deletable" "destroy-with-parent"
-               "double-buffered" "events" "expand" "focus-on-click" "focus-on-map"
-               "focus-visible" "gravity" "halign" "has-default" "has-focus" "has-resize-grip"
-               "has-tooltip" "has-toplevel-focus" "height-request" "hexpand" "hexpand-set"
-               "hide-titlebar-when-maximized" "icon" "icon-name" "is-active" "is-focus"
-               "is-maximized" "margin" "margin-bottom" "margin-end" "margin-left"
-               "margin-right" "margin-start" "margin-top" "mnemonics-visible" "modal" "name"
-               "no-show-all" "opacity" "parent" "receives-default" "resizable"
-               "resize-grip-visible" "resize-mode" "role" "scale-factor" "screen" "sensitive"
-               "show-menubar" "skip-pager-hint" "skip-taskbar-hint" "startup-id" "style"
-               "title" "tooltip-markup" "tooltip-text" "transient-for" "type" "type-hint"
-               "urgency-hint" "valign" "vexpand" "vexpand-set" "visible" "width-request"
-               "window" "window-position")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkApplicationWindow"))
-                          #'string-lessp)))
+  (is (equal '("show-menubar")
+             (list-class-property-names "GtkApplicationWindow")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging"
-               "decoration-button-layout" "decoration-resize-handle")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkApplicationWindow"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkApplicationWindow")))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkApplicationWindow"))))
+             (list-class-child-property-names "GtkApplicationWindow")))
   ;; Check the class definition
-  (is (equal '(DEFINE-G-OBJECT-CLASS "GtkApplicationWindow" GTK-APPLICATION-WINDOW
+  (is (equal '(DEFINE-G-OBJECT-CLASS "GtkApplicationWindow"
+                                     GTK-APPLICATION-WINDOW
                        (:SUPERCLASS GTK-WINDOW :EXPORT T :INTERFACES
                         ("AtkImplementorIface" "GActionGroup" "GActionMap"
                          "GtkBuildable")
@@ -73,17 +51,17 @@
 
 ;;; --- Functions --------------------------------------------------------------
 
-;;; --- gtk_application_window_new ---------------------------------------------
+;;; --- gtk-application-window-new ---------------------------------------------
 
 (test gtk-application-window-new
   (let ((application (make-instance 'gtk-application)))
-    (is (eq 'gtk-application (type-of application)))
+    (is (typep application 'gtk-application))
     ;; Works only for a registered application
-;    (is (eq 'gtk-application-window (type-of (gtk-application-window-new application))))
+;    (is (typep (gtk-application-window-new application) 'gtk-application-window))
     ;; Create a window with make-instance
-    (is (eq 'gtk-application-window (type-of (make-instance 'gtk-application-window))))))
+    (is (typep (make-instance 'gtk-application-window) 'gtk-application-window))))
 
-;;; --- gtk_application_window_get_id ------------------------------------------
+;;; --- gtk-application-window-id ----------------------------------------------
 
 (test gtk-application-window-id
   (let ((window (make-instance 'gtk-application-window)))
@@ -101,5 +79,7 @@
     ;; Set a GtkShortcutsWindow
     (setf (gtk-application-window-help-overlay window) help-overlay)
     ;; Retrieve the GtkShortcutsWindow
-    (is (eq 'gtk-shortcuts-window (type-of (gtk-application-window-help-overlay window))))))
+    (is (typep (gtk-application-window-help-overlay window) 
+               'gtk-shortcuts-window))))
 
+;;; 2021-10-21

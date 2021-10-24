@@ -18,145 +18,17 @@
   (is (eq (gtype nil)
           (g-type-parent "GObject")))
   ;; Check the children
-  #+windows
-  (is (or (equal '("AtkMisc" "AtkObject" "AtkRelationSet" "AtkUtil"
- "GAppLaunchContext" "GApplication" "GApplicationCommandLine" "GBinding" 
- "GEmblem" "GEmblemedIcon" "GFileIcon" "GInitiallyUnowned" "GMenuItem"
- "GMenuModel" "GNotification" "GPropertyAction" "GSimpleAction"
- "GSimpleActionGroup" "GThemedIcon" "GWin32AppInfoApplication"
- "GWin32AppInfoFileExtension" "GWin32AppInfoHandler" "GWin32AppInfoShellVerb"
- "GWin32AppInfoURLSchema" "GWin32RegistryKey" "GdkCursor" "GdkDevice"
- "GdkDeviceManager" "GdkDeviceTool" "GdkDisplay" "GdkDisplayManager"
- "GdkDragContext" "GdkDrawingContext" "GdkFrameClock" "GdkGLContext" "GdkKeymap"
- "GdkMonitor" "GdkPixbuf" "GdkPixbufAnimation" "GdkPixbufLoader" "GdkScreen"
- "GdkSeat" "GdkVisual" "GdkWin32Selection" "GdkWindow" "GdkWindowImpl"
- "GtkAccelGroup" "GtkAccelMap" "GtkAction" "GtkActionGroup" "GtkBuilder"
- "GtkCellAreaContext" "GtkClipboard" "GtkCssProvider" "GtkEntryBuffer"
- "GtkEntryCompletion" "GtkEventController" "GtkIMContext" "GtkIconFactory"
- "GtkIconTheme" "GtkListStore" "GtkPageSetup" "GtkPrintContext"
- "GtkPrintOperation" "GtkPrintSettings" "GtkRecentManager" "GtkSettings"
- "GtkSizeGroup" "GtkStatusIcon" "GtkStyle" "GtkStyleContext" "GtkTextBuffer"
- "GtkTextChildAnchor" "GtkTextMark" "GtkTextTag" "GtkTextTagTable" "GtkTooltip"
- "GtkTreeModelFilter" "GtkTreeModelSort" "GtkTreeSelection" "GtkTreeStore"
- "GtkUIManager" "GtkWindowGroup" "PangoContext" "PangoCoverage" "PangoFont"
- "PangoFontFace" "PangoFontFamily" "PangoFontMap" "PangoFontset" "PangoLayout"
- "PangoRenderer")
-                 (sort (mapcar #'g-type-name (g-type-children "GObject")) 
-                       #'string<))
-          (equal '("AtkMisc" "AtkObject" "AtkRelationSet" "AtkUtil"
- "GAppLaunchContext" "GApplication" "GApplicationCommandLine" "GBinding"
- "GDummyProxyResolver" "GDummyTlsBackend" "GEmblem" "GEmblemedIcon" "GFileIcon"
- "GFileMonitor" "GHttpProxy" "GInitiallyUnowned" "GLibproxyResolver" "GMenuItem"
- "GMenuModel" "GNetworkMonitorBase" "GNotification" "GNotificationBackend"
- "GPropertyAction" "GProxyResolverGnome" "GResourceFile" "GSettingsBackend"
- "GSimpleAction" "GSimpleActionGroup" "GSocks4aProxy" "GSocks5Proxy" 
- "GThemedIcon" "GTlsBackendGnutls" "GTypeModule" "GVfs" "GVolumeMonitor"
- "GWin32AppInfoApplication" "GWin32AppInfoFileExtension" "GWin32AppInfoHandler"
- "GWin32AppInfoShellVerb" "GWin32AppInfoURLSchema" "GWin32RegistryKey"
- "GdkCursor" "GdkDevice" "GdkDeviceManager" "GdkDeviceTool" "GdkDisplay"
- "GdkDisplayManager" "GdkDragContext" "GdkDrawingContext" "GdkFrameClock"
- "GdkGLContext" "GdkKeymap" "GdkMonitor" "GdkPixbuf" "GdkPixbufAnimation"
- "GdkPixbufLoader" "GdkScreen" "GdkSeat" "GdkVisual" "GdkWin32Selection"
- "GdkWindow" "GdkWindowImpl" "GtkAccelGroup" "GtkAccelMap" "GtkAction"
- "GtkActionGroup" "GtkBuilder" "GtkCellAreaContext" "GtkClipboard"
- "GtkCssGadget" "GtkCssImage" "GtkCssNode" "GtkCssProvider" "GtkCssStyle"
- "GtkEntryBuffer" "GtkEntryCompletion" "GtkEventController" "GtkIMContext"
- "GtkIconFactory" "GtkIconTheme" "GtkListStore" "GtkPageSetup"
- "GtkPrintContext" "GtkPrintOperation" "GtkPrintSettings" "GtkRecentManager"
- "GtkSettings" "GtkSizeGroup" "GtkStatusIcon" "GtkStyle" "GtkStyleCascade"
- "GtkStyleContext" "GtkStyleProperty" "GtkTextBuffer" "GtkTextChildAnchor"
- "GtkTextMark" "GtkTextTag" "GtkTextTagTable" "GtkThemingEngine" "GtkTooltip"
- "GtkTreeModelFilter" "GtkTreeModelSort" "GtkTreeSelection" "GtkTreeStore"
- "GtkUIManager" "GtkWindowGroup" "PangoContext" "PangoCoverage" "PangoFont"
- "PangoFontFace" "PangoFontFamily" "PangoFontMap" "PangoFontset" "PangoLayout"
- "PangoRenderer")
-                 (sort (mapcar #'g-type-name (g-type-children "GObject")) 
-                       #'string<))))
-  #-windows
-  (is (or (equal '("AtkMisc" "AtkObject" "AtkRelationSet" "AtkUtil"
- "GAppLaunchContext" "GApplication" "GApplicationCommandLine" "GBinding"
- "GCancellable" "GCredentials" "GDBusAuth" "GDBusAuthMechanism"
- "GDBusAuthObserver" "GDBusConnection" "GDBusMessage" "GDBusMethodInvocation"
- "GDBusProxy" "GDummyProxyResolver" "GDummyTlsBackend" "GEmblem" "GEmblemedIcon"
- "GFileIcon" "GFileMonitor" "GHttpProxy" "GIOStream" "GInitiallyUnowned"
- "GInputStream" "GLocalFile" "GMemoryMonitorDBus" "GMemoryMonitorPortal"
- "GMenuItem" "GMenuModel" "GMountOperation" "GNetworkMonitorBase"
- "GNotification" "GNotificationBackend" "GOutputStream" "GPropertyAction"
- "GProxyResolverPortal" "GResourceFile" "GSettingsBackend" "GSimpleAction"
- "GSimpleActionGroup" "GSocket" "GSocketAddress" "GSocketAddressEnumerator"
- "GSocketClient" "GSocketControlMessage" "GSocks4aProxy" "GSocks5Proxy" "GTask"
- "GThemedIcon" "GTypeModule" "GVfs" "GVfsIcon" "GVfsUriMapper" "GVolumeMonitor"
- "GdkCursor" "GdkDevice" "GdkDeviceManager" "GdkDeviceTool" "GdkDisplay"
- "GdkDisplayManager" "GdkDragContext" "GdkDrawingContext" "GdkFrameClock"
- "GdkGLContext" "GdkKeymap" "GdkMonitor" "GdkPixbuf" "GdkPixbufAnimation"
- "GdkPixbufLoader" "GdkScreen" "GdkSeat" "GdkVisual" "GdkWindow"
- "GdkWindowImpl" "GtkAccelGroup" "GtkAccelMap" "GtkAction" "GtkActionGroup"
- "GtkBuilder" "GtkCellAreaContext" "GtkClipboard" "GtkCssGadget" "GtkCssImage"
- "GtkCssNode" "GtkCssProvider" "GtkCssStyle" "GtkEntryBuffer"
- "GtkEntryCompletion" "GtkEventController" "GtkIMContext" "GtkIconFactory"
- "GtkIconTheme" "GtkListStore" "GtkPageSetup" "GtkPrintBackend"
- "GtkPrintContext" "GtkPrintJob" "GtkPrintOperation" "GtkPrintSettings"
- "GtkPrinter" "GtkRecentManager" "GtkSettings" "GtkSizeGroup" "GtkStatusIcon"
- "GtkStyle" "GtkStyleCascade" "GtkStyleContext" "GtkStyleProperty"
- "GtkTextBuffer" "GtkTextChildAnchor" "GtkTextMark" "GtkTextTag"
- "GtkTextTagTable" "GtkThemingEngine" "GtkTooltip" "GtkTreeModelFilter"
- "GtkTreeModelSort" "GtkTreeSelection" "GtkTreeStore" "GtkUIManager"
- "GtkWindowGroup" "PangoContext" "PangoCoverage" "PangoFont" "PangoFontFace"
- "PangoFontFamily" "PangoFontMap" "PangoFontset" "PangoLayout" "PangoRenderer"
- "SpiLeasing" "SpiRegister")
-                 (sort (mapcar #'g-type-name (g-type-children "GObject"))
-                       #'string<))
-          (equal '("AtkMisc" "AtkObject" "AtkRelation" "AtkRelationSet"
- "AtkUtil" "CdClient" "CdDevice" "CdProfile" "CdSensor" "GAppInfoMonitor"
- "GAppLaunchContext" "GApplication" "GApplicationCommandLine" "GBinding"
- "GCancellable" "GCredentials" "GDBusAuth" "GDBusAuthMechanism"
- "GDBusAuthObserver" "GDBusConnection" "GDBusInterfaceSkeleton" "GDBusMessage"
- "GDBusMethodInvocation" "GDBusProxy" "GDaemonFile" "GDummyFile"
- "GDummyProxyResolver" "GDummyTlsBackend" "GEmblem" "GEmblemedIcon"
- "GFileEnumerator" "GFileIcon" "GFileInfo" "GFileMonitor" "GHttpProxy"
- "GIOStream" "GInetAddress" "GInetAddressMask" "GInitiallyUnowned"
- "GInputStream" "GLibproxyResolver" "GLocalFile" "GMemoryMonitorDBus"
- "GMemoryMonitorPortal" "GMenuItem" "GMenuModel" "GMountOperation"
- "GMountTracker" "GNetworkAddress" "GNetworkMonitorBase" "GNotification"
- "GNotificationBackend" "GOutputStream" "GPropertyAction" "GProxyDrive"
- "GProxyMount" "GProxyResolverGnome" "GProxyResolverPortal" "GProxyShadowMount"
- "GProxyVolume" "GResolver" "GResourceFile" "GSettings" "GSettingsBackend"
- "GSimpleAction" "GSimpleActionGroup" "GSimpleAsyncResult"
- "GSimpleProxyResolver" "GSocket" "GSocketAddress" "GSocketAddressEnumerator"
- "GSocketClient" "GSocketControlMessage" "GSocks4aProxy" "GSocks5Proxy" "GTask"
- "GThemedIcon" "GTypeModule" "GUnixFDList" "GVfs" "GVfsIcon" "GVfsUriMapper"
- "GVolumeMonitor" "GdkCursor" "GdkDevice" "GdkDeviceManager" "GdkDeviceTool"
- "GdkDisplay" "GdkDisplayManager" "GdkDragContext" "GdkDrawingContext"
- "GdkFrameClock" "GdkGLContext" "GdkKeymap" "GdkMonitor" "GdkPixbuf"
- "GdkPixbufAnimation" "GdkPixbufAnimationIter" "GdkPixbufLoader" "GdkScreen"
- "GdkSeat" "GdkVisual" "GdkWindow" "GdkWindowImpl" "GtkAccelGroup"
- "GtkAccelMap" "GtkAction" "GtkActionGroup" "GtkActionHelper" "GtkActionMuxer"
- "GtkApplicationAccels" "GtkApplicationImpl" "GtkBuilder" "GtkCellAreaContext"
- "GtkClipboard" "GtkCloudprintAccount" "GtkCssGadget" "GtkCssImage"
- "GtkCssNode" "GtkCssProvider" "GtkCssStyle" "GtkEntryBuffer"
- "GtkEntryCompletion" "GtkEventController" "GtkFileSystem" "GtkFileSystemModel"
- "GtkIMContext" "GtkIconFactory" "GtkIconInfo" "GtkIconTheme" "GtkListStore"
- "GtkPageSetup" "GtkPrintBackend" "GtkPrintContext" "GtkPrintJob"
- "GtkPrintOperation" "GtkPrintSettings" "GtkPrinter" "GtkPrinterOption"
- "GtkPrinterOptionSet" "GtkRecentManager" "GtkSettings" "GtkSizeGroup"
- "GtkStatusIcon" "GtkStyle" "GtkStyleCascade" "GtkStyleContext"
- "GtkStyleProperty" "GtkTextBuffer" "GtkTextChildAnchor" "GtkTextLayout"
- "GtkTextMark" "GtkTextTag" "GtkTextTagTable" "GtkThemingEngine" "GtkTooltip"
- "GtkTrashMonitor" "GtkTreeModelFilter" "GtkTreeModelSort" "GtkTreeSelection"
- "GtkTreeStore" "GtkUIManager" "GtkWindowGroup" "LZWDecoder" "PangoContext"
- "PangoCoverage" "PangoFont" "PangoFontFace" "PangoFontFamily" "PangoFontMap"
- "PangoFontset" "PangoLayout" "PangoRenderer" "RsvgHandle" "SpiLeasing"
- "SpiRegister")
-                 (sort (mapcar #'g-type-name (g-type-children "GObject"))
-                       #'string<))))
+  #+nil ; We do not do this check. The List is very long and changes per run.
+  (is (equal '()
+             (sort (mapcar #'g-type-name (g-type-children "GObject"))
+                   #'string<)))
   ;; Check the interfaces
   (is (equal '()
              (mapcar #'g-type-name (g-type-interfaces "GObject"))))
   ;; Check the class properties
   (is (equal '()
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GObject"))
-                   #'string-lessp)))
+             (mapcar #'g-param-spec-name
+                     (g-object-class-list-properties "GObject"))))
   ;; Check the class definition
   #+nil ; does not work for the g-object class
   (is (equal '()

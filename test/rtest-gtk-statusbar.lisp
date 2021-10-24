@@ -23,25 +23,11 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
              (mapcar #'g-type-name (g-type-interfaces "GtkStatusbar"))))
   ;; Check the class properties
-  (is (equal '("app-paintable" "baseline-position" "border-width" "can-default" "can-focus"
-               "child" "composite-child" "double-buffered" "events" "expand" "focus-on-click"
-               "halign" "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "homogeneous" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "name" "no-show-all"
-               "opacity" "orientation" "parent" "receives-default" "resize-mode"
-               "scale-factor" "sensitive" "spacing" "style" "tooltip-markup" "tooltip-text"
-               "valign" "vexpand" "vexpand-set" "visible" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkStatusbar"))
-                          #'string-lessp)))
+  (is (equal '()
+             (list-class-property-names "GtkStatusbar")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging" "shadow-type")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkStatusbar"))))
+  (is (equal '("shadow-type")
+             (list-class-style-property-names "GtkStatusbar")))
   ;; Get the names of the child properties
   (is (equal '("expand" "fill" "padding" "pack-type" "position")
              (mapcar #'g-param-spec-name
@@ -110,3 +96,4 @@
   (let ((statusbar (gtk-statusbar-new)))
     (is (eq 'gtk-box (type-of (gtk-statusbar-message-area statusbar))))))
 
+;;; 2021-10-19

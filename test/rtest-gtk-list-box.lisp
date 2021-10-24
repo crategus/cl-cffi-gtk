@@ -23,32 +23,14 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkListBox"))))
   ;; Check the class properties
-  (is (equal '("activate-on-single-click" "app-paintable" "border-width"
-               "can-default" "can-focus" "child" "composite-child"
-               "double-buffered" "events" "expand" "focus-on-click" "halign"
-               "has-default" "has-focus" "has-tooltip" "height-request"
-               "hexpand" "hexpand-set" "is-focus" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start"
-               "margin-top" "name" "no-show-all" "opacity" "parent"
-               "receives-default" "resize-mode" "scale-factor" "selection-mode"
-               "sensitive" "style" "tooltip-markup" "tooltip-text" "valign"
-               "vexpand" "vexpand-set" "visible" "width-request" "window")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkListBox"))
-                   #'string-lessp)))
-  ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkListBox"))))
+  (is (equal '("activate-on-single-click" "selection-mode")
+             (list-class-property-names "GtkListBox")))
+  ;; Get the names of the style properties
+  (is (equal '()
+             (list-class-style-property-names "GtkListBox")))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkListBox"))))
+             (list-class-child-property-names "GtkListBox")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkListBox" GTK-LIST-BOX
                        (:SUPERCLASS GTK-CONTAINER :EXPORT T :INTERFACES
@@ -83,33 +65,14 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkActionable")
              (mapcar #'g-type-name (g-type-interfaces "GtkListBoxRow"))))
   ;; Check the class properties
-  (is (equal '("action-name" "action-target" "activatable" "app-paintable"
-               "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand"
-               "focus-on-click" "halign" "has-default" "has-focus" "has-tooltip"
-               "height-request" "hexpand" "hexpand-set" "is-focus" "margin"
-               "margin-bottom" "margin-end" "margin-left" "margin-right"
-               "margin-start" "margin-top" "name" "no-show-all" "opacity"
-               "parent" "receives-default" "resize-mode" "scale-factor"
-               "selectable" "sensitive" "style" "tooltip-markup" "tooltip-text"
-               "valign" "vexpand" "vexpand-set" "visible" "width-request"
-               "window")
-             (sort (mapcar #'g-param-spec-name
-                           (g-object-class-list-properties "GtkListBoxRow"))
-                   #'string-lessp)))
+  (is (equal '("action-name" "action-target" "activatable" "selectable")
+             (list-class-property-names "GtkListBoxRow")))
   ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-               "focus-line-width" "focus-padding" "interior-focus" "link-color"
-               "scroll-arrow-hlength" "scroll-arrow-vlength"
-               "secondary-cursor-color" "separator-height" "separator-width"
-               "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkListBoxRow"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkListBoxRow")))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkListBoxRow"))))
+             (list-class-child-property-names "GtkListBoxRow")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkListBoxRow" GTK-LIST-BOX-ROW
                        (:SUPERCLASS GTK-BIN :EXPORT T :INTERFACES
@@ -343,4 +306,4 @@
 ;;;     gtk_list_box_row_set_header
 ;;;     gtk_list_box_row_get_index
 
-;;; 2021-8-20
+;;; 2021-10-18

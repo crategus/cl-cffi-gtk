@@ -23,29 +23,11 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkAccelLabel"))))
   ;; Check the class properties
-  (is (equal '("accel-closure" "accel-widget" "angle" "app-paintable" "attributes"
-               "can-default" "can-focus" "composite-child" "cursor-position"
-               "double-buffered" "ellipsize" "events" "expand" "focus-on-click" "halign"
-               "has-default" "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "is-focus" "justify" "label" "lines" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start" "margin-top"
-               "max-width-chars" "mnemonic-keyval" "mnemonic-widget" "name" "no-show-all"
-               "opacity" "parent" "pattern" "receives-default" "scale-factor" "selectable"
-               "selection-bound" "sensitive" "single-line-mode" "style" "tooltip-markup"
-               "tooltip-text" "track-visited-links" "use-markup" "use-underline" "valign"
-               "vexpand" "vexpand-set" "visible" "width-chars" "width-request" "window"
-               "wrap" "wrap-mode" "xalign" "xpad" "yalign" "ypad")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkAccelLabel"))
-                          #'string-lessp)))
+  (is (equal '("accel-closure" "accel-widget")
+             (list-class-property-names "GtkAccelLabel")))
   ;; Check the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkAccelLabel"))))
+  (is (equal '()
+             (list-class-style-property-names "GtkAccelLabel")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkAccelLabel" GTK-ACCEL-LABEL
                        (:SUPERCLASS GTK-LABEL :EXPORT T :INTERFACES
@@ -94,3 +76,4 @@
 
 ;;;     gtk_accel_label_refetch
 
+;;; 2021-10-17

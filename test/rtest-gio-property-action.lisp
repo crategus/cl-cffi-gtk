@@ -23,11 +23,9 @@
   (is (equal '("GAction")
              (mapcar #'g-type-name (g-type-interfaces "GPropertyAction"))))
   ;; Check the class properties
-  (is (equal '("enabled" "invert-boolean" "name" "object" "parameter-type" "property-name"
-               "state" "state-type")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GPropertyAction"))
-                          #'string-lessp)))
+  (is (equal '("enabled" "invert-boolean" "name" "object" "parameter-type"
+               "property-name" "state" "state-type")
+             (list-class-property-names "GPropertyAction")))
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GPropertyAction" G-PROPERTY-ACTION
                        (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES ("GAction"))
@@ -69,11 +67,13 @@
     ;; state-type is null-pointer, that causes an error
 ))
 
-;;; Functions
+;;; --- Functions --------------------------------------------------------------
 
 ;;;     g_property_action_new
 
 (test g-property-action-new
   (let ((button (make-instance 'gtk-button)))
-    (is (eq 'g-property-action (type-of (g-property-action-new "action" button "visible"))))))
+    (is (typep (g-property-action-new "action" button "visible")
+                'g-property-action))))
 
+;;; 2021-10-18

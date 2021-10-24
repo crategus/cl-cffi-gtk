@@ -42,14 +42,14 @@
   (let ((renderer (make-instance 'gtk-cell-renderer-text)))
     #-windows
     (is (equal '(0 0 4 21)
-                (multiple-value-list (gtk-cell-renderer-size renderer
-                                                             (make-instance 'gtk-button)
-                                                             (gdk-rectangle-new)))))
+                (multiple-value-list
+                  (gtk-cell-renderer-size renderer (make-instance 'gtk-button)
+                                                   (gdk-rectangle-new)))))
     #+windows
     (is (equal '(0 0 4 19)
-                (multiple-value-list (gtk-cell-renderer-size renderer
-                                                             (make-instance 'gtk-button)
-                                                             (gdk-rectangle-new)))))))
+                (multiple-value-list
+                  (gtk-cell-renderer-size renderer (make-instance 'gtk-button)
+                                                   (gdk-rectangle-new)))))))
 
 ;;;     gtk_cell_renderer_render
 ;;;     gtk_cell_renderer_activate
