@@ -104,7 +104,9 @@ GLib Data Types
                                  automatically as elements are added
     Pointer Arrays             - arrays of pointers to any type of data, which
                                  grow automatically as new elements are added
-    Byte Arrays                - arrays of bytes
+
+  glib.bytes.lisp              - arrays of bytes
+
     Balanced Binary Trees      - a sorted collection of key/value pairs
                                  optimized for searching and traversing in order
     N-ary Trees                - trees of data with any number of branches

@@ -39,8 +39,10 @@
                (:file "gobject.enumeration") ; Enumeration and flag types
                (:file "gobject.boxed-lisp")
                (:file "gobject.boxed")       ; Boxed Types
+               ;; TODO: Glib types which need GBoxed, can we improve this
                (:file "../glib/glib.variant-type")   ; GVariant type system
                (:file "../glib/glib.variant")        ; Strongly typed value datatype
+               (:file "../glib/glib.bytes")          ; Array of bytes
                (:file "gobject.param-spec")  ; GParamSpec
                (:file "gobject.param")       ; Parameters and Values
                (:file "gobject.gobject-class")
