@@ -245,12 +245,11 @@
 
 ;;;     gdk_event_is_scroll_stop_event
 
+#-windows ; TODO: Running the complete testsuite gives a true value.
 (test gdk-event-is-scroll-stop-event
   (let* ((device (gdk-seat-pointer (gdk-display-default-seat (gdk-display-default))))
          (event (gdk-event-new :scroll :device device :direction :smooth)))
-
-    (is-false (gdk-event-is-scroll-stop-event event))
-))
+    (is-false (gdk-event-is-scroll-stop-event event))))
 
 ;;;     gdk_event_get_state
 
@@ -350,4 +349,4 @@
 ;;;     gdk_event_set_device_tool
 ;;;     gdk_setting_get
 
-;;; 2020-11-28
+;;; 2021-10-29

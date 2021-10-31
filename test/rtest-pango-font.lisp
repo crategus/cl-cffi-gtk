@@ -209,6 +209,7 @@
 ;;;     pango_font_metrics_get_strikethrough_thickness
 ;;;     pango_font_metrics_get_strikethrough_position
 
+#-windows
 (test pango-font-metrics.1
   (let* ((fontmap (pango-cairo-font-map-default))
          (context (pango-font-map-create-context fontmap))
@@ -226,6 +227,25 @@
     (is (=   816 (pango-font-metrics-strikethrough-thickness metrics)))
     (is (=  4240 (pango-font-metrics-strikethrough-position metrics)))))
 
+#+windows
+(test pango-font-metrics.1
+  (let* ((fontmap (pango-cairo-font-map-default))
+         (context (pango-font-map-create-context fontmap))
+         (desc (pango-font-description-from-string "Sans 12"))
+         (lang (pango-language-from-string "de-de"))
+         (metrics (pango-context-metrics context desc lang)))
+    (is (typep metrics 'pango-font-metrics))
+    (is (= 15360 (pango-font-metrics-ascent metrics)))
+    (is (=  4096 (pango-font-metrics-descent metrics)))
+    (is (= 19456 (pango-font-metrics-height metrics)))
+    (is (=  8553 (pango-font-metrics-approximate-char-width metrics)))
+    (is (= 10240 (pango-font-metrics-approximate-digit-width metrics)))
+    (is (=  1024 (pango-font-metrics-underline-thickness metrics)))
+    (is (= -2048 (pango-font-metrics-underline-position metrics)))
+    (is (=  1024 (pango-font-metrics-strikethrough-thickness metrics)))
+    (is (=  5120 (pango-font-metrics-strikethrough-position metrics)))))
+
+#-windows
 (test pango-font-metrics.2
   (let* ((fontmap (pango-cairo-font-map-default))
          (context (pango-font-map-create-context fontmap))
@@ -242,6 +262,24 @@
     (is (=  -480 (pango-font-metrics-underline-position metrics)))
     (is (=  1224 (pango-font-metrics-strikethrough-thickness metrics)))
     (is (=  6360 (pango-font-metrics-strikethrough-position metrics)))))
+
+#+windows
+(test pango-font-metrics.2
+  (let* ((fontmap (pango-cairo-font-map-default))
+         (context (pango-font-map-create-context fontmap))
+         (desc (pango-font-description-from-string "Sans 18"))
+         (lang (pango-language-from-string "de-de"))
+         (metrics (pango-context-metrics context desc lang)))
+    (is (typep metrics 'pango-font-metrics))
+    (is (= 22528 (pango-font-metrics-ascent metrics)))
+    (is (=  6144 (pango-font-metrics-descent metrics)))
+    (is (= 28672 (pango-font-metrics-height metrics)))
+    (is (= 12829 (pango-font-metrics-approximate-char-width metrics)))
+    (is (= 15360 (pango-font-metrics-approximate-digit-width metrics)))
+    (is (=  2048 (pango-font-metrics-underline-thickness metrics)))
+    (is (= -2048 (pango-font-metrics-underline-position metrics)))
+    (is (=  2048 (pango-font-metrics-strikethrough-thickness metrics)))
+    (is (=  7168 (pango-font-metrics-strikethrough-position metrics)))))
 
 ;;;     pango_font_find_shaper
 ;;;     pango_font_describe
@@ -288,6 +326,7 @@
 
 ;;;     pango_font_family_list_faces
 
+#-windows
 (test pango-font-family-list-faces
   (let* ((font-map (pango-cairo-font-map-default))
          (family (pango-font-map-family font-map "Serif")))
@@ -297,16 +336,35 @@
                (mapcar #'pango-font-face-face-name
                        (pango-font-family-list-faces family))))))
 
+#+windows
+(test pango-font-family-list-faces
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif")))
+    (is (every (lambda (x) (typep x 'pango-font-face))
+               (pango-font-family-list-faces family)))
+    (is (equal '("Normal" "Bold" "Bold Italic" "Italic")
+               (mapcar #'pango-font-face-face-name
+                       (pango-font-family-list-faces family))))))
+
 ;;;     pango_font_family_get_face
 
+#-windows
 (test pango-font-family-face
   (let* ((font-map (pango-cairo-font-map-default))
          (family (pango-font-map-family font-map "Serif")))
     (is (typep (pango-font-family-face family "Regular") 'pango-font-face))
     (is (typep (pango-font-family-face family nil) 'pango-font-face))))
 
+#+windows
+(test pango-font-family-face
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif")))
+    (is (typep (pango-font-family-face family "Normal") 'pango-font-face))
+    (is (typep (pango-font-family-face family nil) 'pango-font-face))))
+
 ;;;     pango_font_face_get_face_name
 
+#-windows
 (test pango-font-family-face-name.1
   (let* ((font-map (pango-cairo-font-map-default))
          (family (pango-font-map-family font-map "Serif"))
@@ -314,6 +372,15 @@
     (is (typep face 'pango-font-face))
     (is (string= "Regular" (pango-font-face-face-name face)))))
 
+#+windows ; On Windows it is "Normal" and not "Regular"
+(test pango-font-family-face-name.1
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif"))
+         (face (pango-font-family-face family "Normal")))
+    (is (typep face 'pango-font-face))
+    (is (string= "Normal" (pango-font-face-face-name face)))))
+
+#-windows
 (test pango-font-family-face-name.2
   (let* ((font-map (pango-cairo-font-map-default))
          (family (pango-font-map-family font-map "Serif"))
@@ -321,12 +388,29 @@
     (is (typep face 'pango-font-face))
     (is (string= "Regular" (pango-font-face-face-name face)))))
 
+#+windows ; On Windows it is "Normal" and not "Regular"
+(test pango-font-family-face-name.2
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif"))
+         (face (pango-font-family-face family nil)))
+    (is (typep face 'pango-font-face))
+    (is (string= "Normal" (pango-font-face-face-name face)))))
+
 ;;;     pango_font_face_list_sizes
 
+#-windows
 (test pango-font-face-list-sizes
   (let* ((font-map (pango-cairo-font-map-default))
          (family (pango-font-map-family font-map "Serif"))
          (face (pango-font-family-face family "Regular")))
+    (is (typep face 'pango-font-face))
+    (is-false (pango-font-face-list-sizes face))))
+
+#+windows ; On Windows it is not "Regular" but "Normal"
+(test pango-font-face-list-sizes
+  (let* ((font-map (pango-cairo-font-map-default))
+         (family (pango-font-map-family font-map "Serif"))
+         (face (pango-font-family-face family "Normal")))
     (is (typep face 'pango-font-face))
     (is-false (pango-font-face-list-sizes face))))
 
@@ -360,4 +444,4 @@
 ;;;     PangoFontsetForeachFunc
 ;;;     pango_fontset_foreach
 
-;;; 2020-1-14
+;;; 2021-10-29

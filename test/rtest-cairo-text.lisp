@@ -15,8 +15,24 @@
 ;;;     cairo_set_font_size
 ;;;     cairo_set_font_matrix
 ;;;     cairo_get_font_matrix
+
 ;;;     cairo_set_font_options
 ;;;     cairo_get_font_options
+
+(test cairo-font-options
+  (let* ((surface (cairo-image-surface-create :rgb24 400 300))
+         (context (cairo-create surface))
+         (options (cairo-font-options-create)))
+
+    (is (cairo-font-options-equal options
+                                  (setf (cairo-font-options context) options)))
+    (is (cairo-font-options-equal options
+                                  (cairo-font-options context)))
+    ;; TODO: The NIL value does not change the font options. Is this correct?
+    (is-false (setf (cairo-font-options context) nil))
+    (is (cairo-font-options-equal options
+                                  (cairo-font-options context)))))
+
 ;;;     cairo_set_font_face
 ;;;     cairo_get_font_face
 ;;;     cairo_set_scaled_font
@@ -89,6 +105,7 @@
 
 ;;;     cairo_font_extents
 
+#-windows
 (test cairo-font-extents
   (let* ((surface (cairo-image-surface-create :rgb24 400 300))
          (context (cairo-create surface))
@@ -104,8 +121,25 @@
     (is (approx-equal 34.0 (cairo-font-extents-max-x-advance extents)))
     (is (approx-equal  0.0 (cairo-font-extents-max-y-advance extents)))))
 
+#+windows
+(test cairo-font-extents
+  (let* ((surface (cairo-image-surface-create :rgb24 400 300))
+         (context (cairo-create surface))
+         (extents nil))
+    ;; Set a font and a font size
+    (cairo-select-font-face context "Sans")
+    (cairo-set-font-size context 18)
+    (setf extents (cairo-font-extents context))
+    ;; Check the slots of cairo-font-extents-t structure
+    (is (approx-equal 17.0 (cairo-font-extents-ascent extents)))
+    (is (approx-equal  4.0 (cairo-font-extents-descent extents)))
+    (is (approx-equal 21.6 (cairo-font-extents-height extents)))
+    (is (approx-equal 48.0 (cairo-font-extents-max-x-advance extents)))
+    (is (approx-equal  0.0 (cairo-font-extents-max-y-advance extents)))))
+
 ;;;     cairo_text_extents
 
+#-windows
 (test cairo-text-extents
   (let* ((surface (cairo-image-surface-create :rgb24 400 300))
          (context (cairo-create surface))
@@ -122,8 +156,26 @@
     (is (approx-equal  80.0 (cairo-text-extents-x-advance extents)))
     (is (approx-equal   0.0 (cairo-text-extents-y-advance extents)))))
 
+#+windows
+(test cairo-text-extents
+  (let* ((surface (cairo-image-surface-create :rgb24 400 300))
+         (context (cairo-create surface))
+         (extents nil))
+    ;; Set a font and a font size
+    (cairo-select-font-face context "Sans")
+    (cairo-set-font-size context 18)
+    (setf extents (cairo-text-extents context "Crategus"))
+    ;; Check the slots of cairo-text-extents-t structure
+    (is (approx-equal   0.0 (cairo-text-extents-x-bearing extents)))
+    (is (approx-equal -13.0 (cairo-text-extents-y-bearing extents)))
+    (is (approx-equal  74.0 (cairo-text-extents-width extents)))
+    (is (approx-equal  17.0 (cairo-text-extents-height extents)))
+    (is (approx-equal  73.0 (cairo-text-extents-x-advance extents)))
+    (is (approx-equal   0.0 (cairo-text-extents-y-advance extents)))))
+
 ;;;     cairo_glyph_extents
 
+#-windows
 (test cairo-glyph-extents
   (let* ((surface (cairo-image-surface-create :rgb24 400 300))
          (context (cairo-create surface))
@@ -138,6 +190,23 @@
     (is (approx-equal  13.0 (cairo-text-extents-width extents)))
     (is (approx-equal  13.0 (cairo-text-extents-height extents)))
     (is (approx-equal  12.0 (cairo-text-extents-x-advance extents)))
+    (is (approx-equal   0.0 (cairo-text-extents-y-advance extents)))))
+
+#+windows
+(test cairo-glyph-extents
+  (let* ((surface (cairo-image-surface-create :rgb24 400 300))
+         (context (cairo-create surface))
+         (extents nil))
+    ;; Set a font and a font size
+    (cairo-select-font-face context "Sans")
+    (cairo-set-font-size context 18)
+    (setf extents (cairo-glyph-extents context '((36 10 20))))
+    ;; Check the slots of cairo-text-extents-t structure
+    (is (approx-equal  -1.0 (cairo-text-extents-x-bearing extents)))
+    (is (approx-equal -13.0 (cairo-text-extents-y-bearing extents)))
+    (is (approx-equal  14.0 (cairo-text-extents-width extents)))
+    (is (approx-equal  13.0 (cairo-text-extents-height extents)))
+    (is (approx-equal  11.0 (cairo-text-extents-x-advance extents)))
     (is (approx-equal   0.0 (cairo-text-extents-y-advance extents)))))
 
 ;;;     cairo_toy_font_face_create

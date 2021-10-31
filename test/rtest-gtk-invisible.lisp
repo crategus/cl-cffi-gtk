@@ -38,13 +38,25 @@
 
 ;;; --- Properties -------------------------------------------------------------
 
-;;;     GdkScreen*  screen    Read / Write
+(test gdk-screen-properties
+  (let ((invisible (make-instance 'gtk-invisible)))
+    (is (typep (gtk-invisible-screen invisible) 'gdk-screen))
+    (is (eq (gdk-screen-default) (gtk-invisible-screen invisible)))))
 
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_invisible_new
-;;;     gtk_invisible_new_for_screen
-;;;     gtk_invisible_set_screen                           Accessor
-;;;     gtk_invisible_get_screen                           Accessor
 
-;;; --- 2021-10-18 -------------------------------------------------------------
+(test gtk-invisible-new
+  (let ((invisible (gtk-invisible-new)))
+    (is (typep invisible 'gtk-invisible))
+    (is (eq (gdk-screen-default) (gtk-invisible-screen invisible)))))
+
+;;;     gtk_invisible_new_for_screen
+
+(test gtk-invisible-new-for-screen
+  (let ((invisible (gtk-invisible-new-for-screen (gdk-screen-default))))
+    (is (typep invisible 'gtk-invisible))
+    (is (eq (gdk-screen-default) (gtk-invisible-screen invisible)))))
+
+;;; --- 2021-10-27 -------------------------------------------------------------

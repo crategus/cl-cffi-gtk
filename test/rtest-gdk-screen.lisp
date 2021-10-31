@@ -48,6 +48,21 @@
     (is (pointerp  (gdk-screen-font-options screen)))
     (is (typep (gdk-screen-resolution screen) 'double-float))))
 
+(test gdk-screen-font-options
+  (let ((screen (gdk-screen-default))
+        (options (cairo-font-options-create)))
+    (is (cairo-font-options-equal options
+                                  (setf (gdk-screen-font-options screen)
+                                        options)))
+    (is (cairo-font-options-equal options
+                                 (gdk-screen-font-options screen)))
+    ;; The NIL values signals an error
+    (signals (error) (setf (gdk-screen-font-options screen) nil))
+    ;; Use the NULL-POINTER as a value
+    (is (null-pointer-p (setf (gdk-screen-font-options screen) (null-pointer))))
+    (is (null-pointer-p (gdk-screen-font-options screen)))
+    (is-false (cairo-font-options-destroy options))))
+
 ;;; --- Signals ----------------------------------------------------------------
 
 ;;;         composited-changed

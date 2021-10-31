@@ -22,7 +22,8 @@
   (is (equal '(DEFINE-G-INTERFACE "PangoCairoFont"
                                   PANGO-CAIRO-FONT
                                   (:EXPORT T
-                                   :TYPE-INITIALIZER "pango_cairo_font_get_type"))
+                                   :TYPE-INITIALIZER
+                                   "pango_cairo_font_get_type"))
              (get-g-type-definition "PangoCairoFont"))))
 
 ;;;     PangoCairoFontMap
@@ -72,9 +73,22 @@
 ;;;     pango_cairo_font_get_scaled_font
 ;;;     pango_cairo_context_set_resolution
 ;;;     pango_cairo_context_get_resolution
+
 ;;;     pango_cairo_context_set_font_options
 ;;;     pango_cairo_context_get_font_options
-;;;
+
+(test pango-cairo-context-font-options
+  (let ((context (gdk-pango-context-get))
+        (options (cairo-font-options-create)))
+    (is (cairo-font-options-equal options
+                                  (setf (pango-cairo-context-font-options context)
+                                        options)))
+    (is (cairo-font-options-equal options
+                                  (pango-cairo-context-font-options context)))
+
+    (is-false (setf (pango-cairo-context-font-options context) nil))
+    (is-false (pango-cairo-context-font-options context))))
+
 ;;;     PangoCairoShapeRendererFunc
 ;;;
 ;;;     pango_cairo_context_set_shape_renderer
@@ -93,4 +107,4 @@
 ;;;     pango_cairo_layout_path
 ;;;     pango_cairo_error_underline_path
 
-;;; 2020-1-8
+;;; 2021-10-28

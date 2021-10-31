@@ -32,6 +32,7 @@
 
 ;;;   g_content_type_get_generic_icon_name
 
+#-windows ; On Windows we have no generic icon name
 (test g-content-type-generic-icon-name
   (is (every #'stringp
              (mapcar #'g-content-type-generic-icon-name
@@ -47,4 +48,4 @@
 (test g-content-types-registered
   (is (every #'stringp (g-content-types-registered))))
 
-;;; 2020-11-28
+;;; 2021-10-29

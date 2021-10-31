@@ -26,6 +26,7 @@
 
 (defvar *first-run-application* t)
 
+#+nil ; Do not set the application name in the testsuite
 (test g-application-name
   (when *first-run-application*
     #+(and sbcl (not windows))
@@ -42,6 +43,7 @@
 
 (defvar *first-run-program* t)
 
+#+nil ; Do not setz the program name in the testsuite
 (test g-prgname
   (when *first-run-program*
     #+(and sbcl (not windows))
@@ -221,4 +223,4 @@
 ;;;     g_qsort_with_data
 ;;;     g_nullify_pointer
 
-;;; 2021-10-14
+;;; 2021-10-29

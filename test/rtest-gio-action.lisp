@@ -62,18 +62,20 @@
   (let ((action (g-simple-action-new "simple" (g-variant-type-new "b"))))
     (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
     (is (string= "b"
-                 (g-variant-type-dup-string (g-action-parameter-type action))))))
+                 (g-variant-type-dup-string
+                     (g-action-parameter-type action))))))
 
 (test g-action-parameter-type.3
   ;; Initialize parameter-type with type boolean as string
   (let ((action (g-simple-action-new "simple" "b")))
     (is (eq 'g-variant-type (type-of (g-action-parameter-type action))))
     (is (string= "b"
-                 (g-variant-type-dup-string (g-action-parameter-type action))))))
+                 (g-variant-type-dup-string
+                     (g-action-parameter-type action))))))
 
 ;;;     g-action-state
 
-(test g-action-state
+(test g-action-state.1
   ;; It is an error to pass nil for the initialisation of state
   (signals (error) (g-simple-action-new-stateful "stateful" nil nil))
   ;; Initialize state with an integer
@@ -86,6 +88,10 @@
     ;; TODO: It is an error to pass a wrong type, but no Lisp error
 ;    (signals (error) (setf (g-action-state action) (g-variant-new-int64 123)))
   ))
+
+(test g-action-state.2
+  (let ((action (g-simple-action-new "simple" nil)))
+    (is (null-pointer-p (g-action-state action)))))
 
 ;;;     g-action-state-type
 

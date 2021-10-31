@@ -148,6 +148,7 @@
 
 ;;;     pango_layout_index_to_pos
 
+#-windows
 (test pango-layout-index-to-pos
   (let* ((widget (make-instance 'gtk-label))
          (context (gtk-widget-pango-context widget))
@@ -171,8 +172,33 @@
       (is (= 13312 (pango-rectangle-width rect)))
       (is (= 17408 (pango-rectangle-height rect))))))
 
+#+windows
+(test pango-layout-index-to-pos
+  (let* ((widget (make-instance 'gtk-label))
+         (context (gtk-widget-pango-context widget))
+         (layout (pango-layout-new context)))
+    (is (string= "some text"
+                 (setf (pango-layout-text layout) "some text")))
+    (is (pointerp (pango-layout-index-to-pos layout 0)))
+    (let ((rect (pango-layout-index-to-pos layout 0)))
+      (is (=     0 (pango-rectangle-x rect)))
+      (is (=     0 (pango-rectangle-y rect)))
+      (is (=  5120 (pango-rectangle-width rect)))
+      (is (= 15360 (pango-rectangle-height rect))))
+    (let ((rect (pango-layout-index-to-pos layout 1)))
+      (is (=  5120 (pango-rectangle-x rect)))
+      (is (=     0 (pango-rectangle-y rect)))
+      (is (=  7168 (pango-rectangle-width rect)))
+      (is (= 15360 (pango-rectangle-height rect))))
+    (let ((rect (pango-layout-index-to-pos layout 2)))
+      (is (= 12288 (pango-rectangle-x rect)))
+      (is (=     0 (pango-rectangle-y rect)))
+      (is (= 10240 (pango-rectangle-width rect)))
+      (is (= 15360 (pango-rectangle-height rect))))))
+
 ;;;     pango_layout_index_to_line_x
 
+#-windows
 (test pango-layout-index-to-line-x
   (let* ((widget (make-instance 'gtk-label))
          (context (gtk-widget-pango-context widget))
@@ -180,11 +206,31 @@
     (is (string= "some text"
                  (setf (pango-layout-text layout) "some text")))
     (is (equal '(0 0)
-               (multiple-value-list (pango-layout-index-to-line-x layout 0 nil))))
+               (multiple-value-list 
+                   (pango-layout-index-to-line-x layout 0 nil))))
     (is (equal '(0 7168)
-               (multiple-value-list (pango-layout-index-to-line-x layout 1 nil))))
+               (multiple-value-list 
+                   (pango-layout-index-to-line-x layout 1 nil))))
     (is (equal '(0 16384)
-               (multiple-value-list (pango-layout-index-to-line-x layout 2 nil))))))
+               (multiple-value-list 
+                   (pango-layout-index-to-line-x layout 2 nil))))))
+
+#+windows
+(test pango-layout-index-to-line-x
+  (let* ((widget (make-instance 'gtk-label))
+         (context (gtk-widget-pango-context widget))
+         (layout (pango-layout-new context)))
+    (is (string= "some text"
+                 (setf (pango-layout-text layout) "some text")))
+    (is (equal '(0 0)
+               (multiple-value-list 
+                   (pango-layout-index-to-line-x layout 0 nil))))
+    (is (equal '(0 5120)
+               (multiple-value-list 
+                   (pango-layout-index-to-line-x layout 1 nil))))
+    (is (equal '(0 12288)
+               (multiple-value-list 
+                   (pango-layout-index-to-line-x layout 2 nil))))))
 
 ;;;     pango_layout_xy_to_index
 

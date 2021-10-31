@@ -24,5 +24,6 @@
 (load "rtest-gdk-selection.lisp")
 (load "rtest-gdk-drag-and-drop.lisp")
 (load "rtest-gdk-color.lisp")
+(load "rtest-gdk-pango.lisp")
 
-;;; 2021-9-28
+;;; 2021-10-28

@@ -133,4 +133,4 @@
 ;;;     gtk_about_dialog_add_credit_section
 ;;;     gtk_show_about_dialog
 
-;;; 2021-10-21
+;;; 2021-10-29

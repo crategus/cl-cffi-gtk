@@ -649,6 +649,26 @@ scale-factor
 
 ))
 
+;;;     gtk_widget_set_font_options
+;;;     gtk_widget_get_font_options
+
+(test gtk-widget-font-options
+  (let ((label (make-instance 'gtk-label))
+        (options (gdk-screen-font-options (gdk-screen-default))))
+
+    (is-false (gtk-widget-font-options label))
+    (is (cairo-font-options-equal options
+                                  (setf (gtk-widget-font-options label)
+                                        options)))
+    (is (cairo-font-options-equal options
+                                  (gtk-widget-font-options label)))
+    ;; Check the NIL value
+    (is-false (setf (gtk-widget-font-options label) nil))
+    (is-false (gtk-widget-font-options label))))
+
+;;;     gtk_widget_set_font_map
+;;;     gtk_widget_get_font_map
+
 ;;;     gtk_widget_create_pango_layout
 ;;;     gtk_widget_render_icon
 ;;;     gtk_widget_render_icon_pixbuf

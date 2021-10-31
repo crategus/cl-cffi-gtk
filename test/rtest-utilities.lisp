@@ -1,7 +1,7 @@
 ;;; Lisp Utilities for the testsuite
 
 ;; See https://www.embeddeduse.com/2019/08/26/qt-compare-two-floats/
-(let ((eps-factor 1.0d-6))
+(let ((eps-factor 1.0d-2))
   (defun approx-equal (x y)
     (or (< (abs (- x y)) eps-factor)
         (< (abs (- x y)) (* eps-factor (max (abs x) (abs y)))))))
@@ -60,4 +60,4 @@
         using (hash-value value)
         do (format t "key: ~a   ~a~%" key value)))
 
-;;; 2021-10-21
+;;; 2021-10-29

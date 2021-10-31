@@ -8,7 +8,6 @@
 (load "rtest-gtk-application.lisp")
 (load "rtest-gtk-application-subclassing.lisp")
 (load "rtest-gtk-application-window.lisp")
-#+nil ; More work is needed
 (load "rtest-gtk-application-window-subclassing.lisp")
 (load "rtest-gtk-actionable.lisp")
 
@@ -79,7 +78,7 @@
 
 ;    gtk.entry.lisp
 (load "rtest-gtk-entry-buffer.lisp")
-;    gtk.entry-completion.lisp
+(load "rtest-gtk-entry-completion.lisp")
 ;    gtk.scale.lisp
 ;    gtk.spin-button.lisp
 ;    gtk.search-entry.lisp
@@ -137,7 +136,7 @@
 ;    gtk.separator-menu-item.lisp
 ;    gtk.tool-shell.lisp
 ;    gtk.toolbar.lisp
-;    gtk.tool-item.lisp
+(load "rtest-gtk-tool-item.lisp")
 (load "rtest-gtk-tool-palette.lisp")
 ;    gtk.tool-item-group.lisp
 ;    gtk.separator-tool-item.lisp
@@ -292,4 +291,4 @@
 ;(load "rtest-gtk-action-group.lisp")
 ;(load "rtest-gtk-action.lisp")
 
-;;; 2021-10-15
+;;; 2021-10-29

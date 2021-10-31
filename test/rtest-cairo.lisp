@@ -21,8 +21,8 @@
 
 ; cairo.font-face.lisp - Base class for font faces
 
-; cairo.scaled-font.lisp - Font face at particular size
-; cairo.font-option.lisp - How a font should be rendered
+(load "rtest-cairo-scaled-font.lisp")
+(load "rtest-cairo-font-options.lisp")
 
 ; FreeType Fonts - Font support for FreeType
 ; Win32 Fonts - Font support for Microsoft Windows

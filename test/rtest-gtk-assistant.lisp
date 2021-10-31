@@ -73,6 +73,10 @@
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_assistant_new
+
+(test gtk-assistant-new
+  (is (typep (gtk-assistant-new) 'gtk-assistant)))
+
 ;;;     gtk_assistant_get_current_page
 ;;;     gtk_assistant_set_current_page
 ;;;     gtk_assistant_get_n_pages
@@ -83,6 +87,40 @@
 ;;;     gtk_assistant_remove_page
 ;;;
 ;;;     GtkAssistantPageFunc
+
+#+nil
+(test gtk-assistant-page-func
+  (is (equal '(PROGN
+ (DEFCALLBACK GTK-ASSISTANT-PAGE-FUNC-CB
+     :INT
+     ((CURRENT-PAGE :INT) (#:DATA810 :POINTER))
+   (LET* ((#:OBJECT807
+           (CONVERT-FROM-FOREIGN
+            (FOREIGN-SLOT-VALUE #:DATA810 '(:STRUCT GOBJECT::OBJECT-FUNC-REF)
+                                :OBJECT)
+            'G-OBJECT))
+          (#:FN-ID808
+           (FOREIGN-SLOT-VALUE #:DATA810 '(:STRUCT GOBJECT::OBJECT-FUNC-REF)
+                               :FN-ID))
+          (#:FN809
+           (GOBJECT::RETRIEVE-HANDLER-FROM-OBJECT #:OBJECT807 #:FN-ID808)))
+     (FUNCALL #:FN809 CURRENT-PAGE)))
+ (DEFCALLBACK GTK-ASSISTANT-PAGE-FUNC-DESTROY-NOTIFY
+     :VOID
+     ((#:DATA810 :POINTER))
+   (LET* ((#:OBJECT807
+           (CONVERT-FROM-FOREIGN
+            (FOREIGN-SLOT-VALUE #:DATA810 '(:STRUCT GOBJECT::OBJECT-FUNC-REF)
+                                :OBJECT)
+            'G-OBJECT))
+          (#:FN-ID808
+           (FOREIGN-SLOT-VALUE #:DATA810 '(:STRUCT GOBJECT::OBJECT-FUNC-REF)
+                               :FN-ID)))
+     (GOBJECT::DELETE-HANDLER-FROM-OBJECT #:OBJECT807 #:FN-ID808))
+   (FOREIGN-FREE #:DATA810)))
+             (macroexpand '(define-cb-methods gtk-assistant-page-func :int
+                               ((current-page :int)))))))
+
 ;;;     gtk_assistant_set_forward_page_func
 ;;;
 ;;;     gtk_assistant_set_page_type
@@ -104,4 +142,4 @@
 ;;;     gtk_assistant_next_page
 ;;;     gtk_assistant_previous_page
 
-;;; 2021-10-18
+;;; 2021-10-26
