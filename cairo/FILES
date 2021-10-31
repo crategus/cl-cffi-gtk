@@ -20,7 +20,7 @@ Fonts
   cairo.font-face.lisp - Base class for font faces                - Cairo 1.16 &
 
 * cairo.scaled-font.lisp - Font face at particular size           - Cairo 1.16 &
-* cairo.font-option.lisp - How a font should be rendered          - Cairo 1.16 &
+  cairo.font-option.lisp - How a font should be rendered          - Cairo 1.16
 
 * cairo.freetype-font.lisp - Font support for FreeType            - Cairo 1.16 &
 * cairo.win32-font.lisp - Font support for Microsoft Windows      - Cairo 1.16 &

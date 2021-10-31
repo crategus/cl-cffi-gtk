@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -38,7 +38,7 @@
 
   This is the API documentation of a Lisp binding to Cairo. At this time only a
   few types and functions are implemented, which are needed to compile the Lisp
-  bindung to GTK+.
+  bindung to GTK.
 
   @begin[Drawing]{section}
     @begin[The Cairo drawing context]{subsection}
@@ -293,8 +293,7 @@
       @about-function{cairo-set-font-size}
       @about-function{cairo-set-font-matrix}
       @about-function{cairo-get-font-matrix}
-      @about-function{cairo-set-font-options}
-      @about-function{cairo-get-font-options}
+      @about-function{cairo-font-options}
       @about-function{cairo-set-font-face}
       @about-function{cairo-get-font-face}
       @about-function{cairo-set-scaled-font}
@@ -417,17 +416,14 @@
       @about-function{cairo-font-options-merge}
       @about-function{cairo-font-options-hash}
       @about-function{cairo-font-options-equal}
-      @about-function{cairo-font-options-set-antialias}
-      @about-function{cairo-font-options-get-antialias}
+      @about-function{cairo-font-options-antialias}
       @about-symbol{cairo-subpixel-order-t}
-      @about-function{cairo-font-options-set-subpixel-order}
-      @about-function{cairo-font-options-get-subpixel-order}
+      @about-function{cairo-font-options-subpixel-order}
       @about-symbol{cairo-hint-style-t}
-      @about-function{cairo-font-options-set-hint-style}
-      @about-function{cairo-font-options-get-hint-style}
+      @about-function{cairo-font-options-hint-style}
       @about-symbol{cairo-hint-metrics-t}
-      @about-function{cairo-font-options-set-hint-metrics}
-      @about-function{cairo-font-options-get-hint-metrics}
+      @about-function{cairo-font-options-hint-metrics}
+      @about-function{cairo-font-options-variations}
     @end{subsection}
     @begin[FreeType Fonts]{subsection}
       Font support for FreeType

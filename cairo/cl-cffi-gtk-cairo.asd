@@ -61,7 +61,7 @@
                (:file "cairo.tag")             ; Hyperlinks, document structure
 
                ;; Fonts
-               (:file "cairo.font-option")     ; How a font should be rendered
+               (:file "cairo.font-options")    ; How a font should be rendered
                (:file "cairo.font-face")       ; Base class for font faces
                (:file "cairo.scaled-font")     ; Font face at particular size
 
@@ -73,8 +73,6 @@
                ;; More Drawing
                (:file "cairo.text")            ; Rendering text and glyphs
                (:file "cairo.path")            ; Creating paths
-
-
               )
   :depends-on (:cffi
                :cl-cffi-gtk-glib
