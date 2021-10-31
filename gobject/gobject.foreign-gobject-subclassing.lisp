@@ -2,7 +2,7 @@
 ;;; gobject.foreign-gobject-subclassing.lisp
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -392,8 +392,8 @@
          (property-info (find property-name
                               (object-type-properties lisp-type-info)
                               :test 'string= :key 'first))
-         (property-get-fn (fourth property-info)))
-    (log-for :subclass "get(~A,'~A')~%" lisp-object property-name)
+         (property-get-fn (third property-info)))
+    (assert (fourth property-info))
     (let ((value (restart-case
                    (funcall property-get-fn lisp-object)
                    (return-from-property-getter (value)
@@ -425,11 +425,11 @@
          (property-info (find property-name
                               (object-type-properties lisp-type-info)
                               :test 'string= :key 'first))
-         (property-set-fn (fifth property-info))
+         (property-set-fn (third property-info))
          (new-value (parse-g-value value)))
-    (log-for :subclass "set(~A,'~A',~A)~%" lisp-object property-name new-value)
+    (assert (fifth property-info))
     (restart-case
-        (funcall property-set-fn new-value lisp-object)
+      (funcall (fdefinition (list 'setf property-set-fn)) new-value lisp-object)
       (return-without-error-from-property-setter () nil))))
 
 (defcallback c-object-property-set :void
@@ -478,6 +478,7 @@
          (setf (pointer object)
                (call-gobject-constructor ,name nil nil)
                (g-object-has-reference object) t)))
+     #+nil
      (progn
        ,@(iter (for (prop-name prop-type prop-accessor prop-reader prop-writer)
                     in properties)
