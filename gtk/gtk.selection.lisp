@@ -371,7 +371,7 @@
       (loop for i from 0 below n-targets
             for target-ptr = (mem-aptr targets-ptr
                                        '(:struct %gtk-target-entry) i)
-            for entry = (pop targets)
+            for entry in targets
             do (with-foreign-slots ((target flags info)
                                     target-ptr
                                     (:struct %gtk-target-entry))
