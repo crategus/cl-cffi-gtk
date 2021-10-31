@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.toggle-tool-button.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -88,22 +88,21 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toggle-tool-button 'type)
- "@version{*2021-2-21}
+ "@version{*2021-10-31}
   @begin{short}
     A @sym{gtk-toggle-tool-button} widget is a @class{gtk-tool-item} widget
     that contains a toggle button.
   @end{short}
-
-  Use the function @fun{gtk-toggle-tool-button-new} to create a new toggle tool
+  Use the @fun{gtk-toggle-tool-button-new} function to create a new toggle tool
   button.
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-toggle-tool-button} class has a single CSS node with name
-    @code{togglebutton}.
+    The @sym{gtk-toggle-tool-button} implementation has a single CSS node with
+    name @code{togglebutton}.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
- lambda (button)    : Run First
+ lambda (button)    :run-first
       @end{pre}
       Emitted whenever the toggle tool button changes state.
       @begin[code]{table}
@@ -130,23 +129,24 @@
 (setf (gethash 'gtk-toggle-tool-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-tool-button-active 'function)
- "@version{*2021-2-21}
-  @syntax[]{(gtk-toggle-tool-button-active object) => is-active}
-  @syntax[]{(setf (gtk-toggle-tool-button-active object) is-active)}
+ "@version{*2021-10-31}
+  @syntax[]{(gtk-toggle-tool-button-active object) => setting}
+  @syntax[]{(setf (gtk-toggle-tool-button-active object) setting)}
   @argument[object]{a @class{gtk-toggle-tool-button} widget}
-  @argument[is-active]{a boolean whether the toggle tool button should be
+  @argument[setting]{a boolean whether the toggle tool button should be
     active}
   @begin{short}
     Accessor of the @slot[gtk-toggle-tool-button]{active} slot of the
     @class{gtk-toggle-tool-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-toggle-tool-button-active} queries a toggle
-  tool button and returns its current state. The slot access function
-  @sym{(setf gtk-toggle-tool-button-active)} sets the status.
+  The @sym{gtk-toggle-tool-button-active} slot access function queries a toggle
+  tool button and returns its current state. The
+  @sym{(setf gtk-toggle-tool-button-active)} slot access function sets the
+  status.
 
   Set to @em{true} if you want the toggle tool button to be 'pressed in',
-  and @em{false} to raise it. This action causes the toggled signal to be
+  and @em{false} to raise it. This action causes the \"toggled\" signal to be
   emitted.
   @see-class{gtk-toggle-tool-button}")
 
@@ -158,13 +158,12 @@
 
 (defun gtk-toggle-tool-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
+ "@version{2021-10-31}
   @return{A newly created @class{gtk-toggle-tool-button} widget.}
   @begin{short}
     Returns a new toggle tool button.
   @end{short}
-  @see-class{gtk-toggle-tool-button}
-  @see-function{gtk-toggle-tool-button-new-from-stock}"
+  @see-class{gtk-toggle-tool-button}"
   (make-instance 'gtk-toggle-tool-button))
 
 (export 'gtk-toggle-tool-button-new)
@@ -175,26 +174,25 @@
 
 (declaim (inline gtk-toggle-tool-button-new-from-stock))
 
-(defun gtk-toggle-tool-button-new-from-stock (stock-id)
+(defun gtk-toggle-tool-button-new-from-stock (stock)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
-  @argument[stock-id]{a @code{:string} with the name of the stock item}
+ "@version{2021-10-31}
+  @argument[stock]{a string with the name of the stock item}
   @return{A new @class{gtk-toggle-tool-button} widget.}
   @begin{short}
     Creates a new toggle tool button containing the image and text from a stock
     item.
   @end{short}
-
-  It is an error if @arg{stock-id} is not a name of a stock item.
+  It is an error if @arg{stock} is not a name of a stock item.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-toggle-tool-button-new-from-stock} has been deprecated
-    since version 3.10 and should not be used in newly-written code. Use the
-    function @fun{gtk-toggle-tool-button-new} instead.
+    The @sym{gtk-toggle-tool-button-new-from-stock} function has been deprecated
+    since version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-toggle-tool-button-new} function instead.
   @end{dictionary}
   @see-class{gtk-toggle-tool-button}
   @see-function{gtk-toggle-tool-button-new}"
   (make-instance 'gtk-toggle-tool-button
-                 :stock-id stock-id))
+                 :stock-id stock))
 
 (export 'gtk-toggle-tool-button-new-from-stock)
 
