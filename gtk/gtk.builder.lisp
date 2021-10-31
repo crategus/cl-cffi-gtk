@@ -789,6 +789,7 @@
           for object-id in ids
           do (setf (mem-aref ids-ptr :pointer i)
                    (foreign-string-alloc object-id)))
+    (setf (mem-aref ids-ptr :pointer (length ids)) (null-pointer))
     (unwind-protect
       (with-g-error (err)
         (%gtk-builder-add-objects-from-file builder filename ids-ptr err))
@@ -838,6 +839,7 @@
           for object-id in ids
           do (setf (mem-aref ids-ptr :pointer i)
                    (foreign-string-alloc object-id)))
+    (setf (mem-aref ids-ptr :pointer (length ids)) (null-pointer))
     (unwind-protect
       (with-g-error (err)
         (%gtk-builder-add-objects-from-string builder string -1 ids-ptr err))
