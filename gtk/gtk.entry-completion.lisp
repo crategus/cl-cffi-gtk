@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.entry-completion.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;;
 ;;;     Completion functionality for GtkEntry
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkEntryCompletion
 ;;;
@@ -655,39 +655,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkEntryCompletionMatchFunc ()
-;;;
-;;; gboolean (*GtkEntryCompletionMatchFunc) (GtkEntryCompletion *completion,
-;;;                                          const gchar *key,
-;;;                                          GtkTreeIter *iter,
-;;;                                          gpointer user_data);
-;;;
-;;; A function which decides whether the row indicated by iter matches a given
-;;; key, and should be displayed as a possible completion for key. Note that key
-;;; is normalized and case-folded (see g_utf8_normalize() and
-;;; g_utf8_casefold()). If this is not appropriate, match functions have access
-;;; to the unmodified key via gtk_entry_get_text
-;;; (GTK_ENTRY (gtk_entry_completion_get_entry ())).
-;;;
-;;; completion :
-;;;     the GtkEntryCompletion
-;;;
-;;; key :
-;;;     the string to match, normalized and case-folded
-;;;
-;;; iter :
-;;;     a GtkTreeIter indicating the row to match
-;;;
-;;; user_data :
-;;;     user data given to gtk_entry_completion_set_match_func()
-;;;
-;;; Returns :
-;;;     TRUE if iter should be displayed as a possible completion for key
 ;;; ----------------------------------------------------------------------------
 
 (define-cb-methods gtk-entry-completion-match-func :boolean
   ((completion (g-object gtk-entry-completion))
    (key :string)
    (iter (g-boxed-foreign gtk-tree-iter))))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-completion-match-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-entry-completion-match-func atdoc:*external-symbols*)
+ "@version{2021-10-26}
+  @begin{short}
+    A callback function which decides whether the row indicated by @arg{iter}
+    matches a given key, and should be displayed as a possible completion for
+    @arg{key}.
+  @end{short}
+  Note that @arg{key} is normalized and case-folded, see the
+  @code{g_utf8_normalize()} and @code{g_utf8_casefold()} functions. If this is
+  not appropriate, match functions have access to the unmodified key via the
+  @code{(gtk-entry-text (gtk-entry-completion-entry completion))} call.
+  @begin{pre}
+ lambda (completion key iter)
+  @end{pre}
+  @begin[code]{table}
+    @entry[completion]{A @class{gtk-entry-completion} object.}
+    @entry[key]{A string to match, normalized and case-folded.}
+    @entry[iter]{A @class{gtk-tree-iter} iterator indicating the row to match.}
+    @entry[Returns]{@em{True} if @arg{iter} should be displayed as a possible
+      completion for @arg{key}.}
+  @end{table}
+  @see-class{gtk-entry-completion}
+  @see-class{gtk-tree-iter}
+  @see-function{gtk-entry-completion-set-match-func}")
+
+(export 'gtk-entry-completion-match-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_set_match_func ()
@@ -698,25 +701,27 @@
   (completion (g-object gtk-entry-completion))
   (func :pointer)
   (data :pointer)
-  (destroy-notify :pointer))
+  (destroy :pointer))
 
 (defun gtk-entry-completion-set-match-func (completion func)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-31}
+ "@version{2021-10-26}
   @argument[completion]{a @class{gtk-entry-completion} object}
-  @argument[func]{the @code{GtkEntryCompletionMatchFunc} to use}
+  @argument[func]{the @symbol{gtk-entry-completion-match-func} callback
+    function to use}
   @begin{short}
     Sets the match function for the entry completion to be @arg{func}.
   @end{short}
   The match function is used to determine if a row should or should not be in
   the completion list.
-  @see-class{gtk-entry-completion}"
+  @see-class{gtk-entry-completion}
+  @see-symbol{gtk-entry-completion-match-func}"
   (if func
       (%gtk-entry-completion-set-match-func
-                          completion
-                          (callback gtk-entry-completion-match-func-cb)
-                          (create-fn-ref completion func)
-                          (callback entry-completion-match-func-destroy-notify))
+          completion
+          (callback gtk-entry-completion-match-func)
+          (create-fn-ref completion func)
+          (callback entry-completion-match-func-destroy-notify))
       (%gtk-entry-completion-set-match-func completion
                                             (null-pointer)
                                             (null-pointer)
