@@ -165,21 +165,21 @@
 (defcfun ("gdk_pango_context_get" gdk-pango-context-get)
     (g-object pango-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-5}
-  @return{A new @class{pango-context} instance for the default display.}
+ "@version{2021-10-28}
+  @return{A new @class{pango-context} instance for the default GDK screen.}
   @begin{short}
     Creates a @class{pango-context} instance for the default GDK screen.
   @end{short}
 
-  When using GTK+, normally you should use the function
-  @fun{gtk-widget-pango-context} instead of this function, to get the
-  appropriate context for the widget you intend to render text onto.
+  When using GTK, normally you should use the @fun{gtk-widget-pango-context}
+  function instead of this function, to get the appropriate Pango context for
+  the widget you intend to render text onto.
 
-  The newly created context will have the default font options, see the
+  The newly created Pango context will have the default font options, see the
   @symbol{cairo-font-options-t} API, for the default screen. If these options
-  change it will not be updated. Using the function
-  @fun{gtk-widget-pango-context} is more convenient if you want to keep a
-  context around and track changes to the screen's font rendering settings.
+  change it will not be updated. Using the @fun{gtk-widget-pango-context}
+  function is more convenient if you want to keep a Pango context around and
+  track changes to the font rendering settings of the screen.
   @see-class{pango-context}
   @see-symbol{cairo-font-options-t}
   @see-function{gtk-widget-pango-context}")
@@ -193,24 +193,23 @@
 (defcfun ("gdk_pango_context_get_for_screen" gdk-pango-context-for-screen)
     (g-object pango-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-5}
-  @argument[screen]{the @class{gdk-screen} object for which the context is to
-    be created}
+ "@version{2021-10-28}
+  @argument[screen]{the @class{gdk-screen} object for which the Pango context
+    is to be created}
   @return{A new @class{pango-context} instance for @arg{screen}.}
   @begin{short}
     Creates a Pango context for the screen.
   @end{short}
 
-  When using GTK+, normally you should use the function
-  @fun{gtk-widget-pango-context} instead of this function, to get the
-  appropriate context for the widget you intend to render text onto.
+  When using GTK, normally you should use the @fun{gtk-widget-pango-context}
+  function instead of this function, to get the appropriate Pango context for
+  the widget you intend to render text onto.
 
-  The newly created context will have the default font options, see the
+  The newly created Pango context will have the default font options, see the
   @symbol{cairo-font-options-t} API, for the screen. If these options change
-  it will not be updated. Using the function @fun{gtk-widget-pango-context} is
-  more convenient if you want to keep a context around and track changes to the
-  screens font rendering
-  settings.
+  it will not be updated. Using the @fun{gtk-widget-pango-context} function is
+  more convenient if you want to keep a Pango context around and track changes
+  to the screens font rendering settings.
   @see-class{pango-context}
   @see-class{gdk-screen}
   @see-symbol{cairo-font-options-t}
@@ -227,23 +226,23 @@
 (defcfun ("gdk_pango_context_get_for_display" gdk-pango-context-for-display)
     (g-object pango-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-5}
-  @argument[display]{the @class{gdk-display} object for which the context is to
-    be created}
+ "@version{2021-10-28}
+  @argument[display]{the @class{gdk-display} object for which the Pango context
+    is to be created}
   @return{A new @class{pango-context} instance for @arg{display}.}
   @begin{short}
     Creates a Pango context for the display.
   @end{short}
 
-  When using GTK+, normally you should use the function
-  @fun{gtk-widget-pango-context} instead of this function, to get the
-  appropriate context for the widget you intend to render text onto.
+  When using GTK, normally you should use the @fun{gtk-widget-pango-context}
+  function instead of this function, to get the appropriate Pango context for
+  the widget you intend to render text onto.
 
-  The newly created context will have the default font options, see the
+  The newly created Pango context will have the default font options, see the
   @symbol{cairo-font-options-t} API, for the display. If these options change
-  it will not be updated. Using the function @fun{gtk-widget-pango-context} is
-  more convenient if you want to keep a context around and track changes to the
-  font rendering settings.
+  it will not be updated. Using the @fun{gtk-widget-pango-context} function is
+  more convenient if you want to keep a Pango context around and track changes
+  to the font rendering settings.
 
   Since 3.22
   @see-class{gdk-display}

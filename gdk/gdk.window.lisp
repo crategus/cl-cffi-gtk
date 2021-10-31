@@ -1427,13 +1427,13 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor" 'gdk-window) 't)
  "The @code{cursor} property of type @class{gdk-cursor} (Read / Write) @br{}
-  The mouse pointer for a @sym{gdk-window}.")
+  The mouse pointer for a GDK window.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-cursor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-cursor 'function)
- "@version{2020-9-7}
+ "@version{*2021-10-31}
   @syntax[]{(gdk-window-cursor object) => cursor}
   @syntax[]{(setf (gdk-window-cursor object) cursor)}
   @argument[object]{a @class{gdk-window} object}
@@ -1443,24 +1443,25 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
     class.
   @end{short}
 
-  The slot access function @sym{gdk-window-cursor} retrieves a
+  The @sym{gdk-window-cursor} slot access function retrieves a
   @class{gdk-cursor} pointer for the cursor currently set on the specified
   window, or @code{nil}. If the return value is @code{nil} then there is no
   custom cursor set on the specified window, and it is using the cursor for its
-  parent window. The slot access function @sym{(setf gdk-window-cursor)} sets
+  parent window. The @sym{(setf gdk-window-cursor)} slot access function sets
   the default mouse pointer for a window.
 
-  Use the functions @fun{gdk-cursor-new-for-display} or
-  @fun{gdk-cursor-new-from-pixbuf} to create the cursor. To make the cursor
-  invisible, use @code{:blank-cursor} of the @symbol{gdk-cursor-type}
-  enumeration. Passing @code{nil} for the @arg{cursor} argument to the
-  function @sym{gdk-window-cursor} means that @arg{object} will use the cursor
-  of its parent window. Most windows should use this default.
+  Use the @fun{gdk-cursor-new-for-display}, @fun{gdk-cursor-new-from-name}, or
+  @fun{gdk-cursor-new-from-pixbuf} functions to create the cursor. To make the
+  cursor invisible, use the @code{:blank-cursor} value of the
+  @symbol{gdk-cursor-type} enumeration. Passing @code{nil} for the @arg{cursor}
+  argument means that the GDK window will use the cursor of its parent window.
+  Most windows should use this default.
   @see-class{gdk-window}
   @see-class{gdk-cursor}
   @see-symbol{gdk-cursor-type}
   @see-function{gdk-window-cursor}
   @see-function{gdk-cursor-new-for-display}
+  @see-function{gdk-cursor-new-from-name}
   @see-function{gdk-cursor-new-from-pixbuf}")
 
 ;;; ----------------------------------------------------------------------------
@@ -3219,7 +3220,7 @@ gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
     @arg{window}, and provides you with a @class{gdk-drawing-context} object.
   @end{short}
 
-  If @arg{window} is a top level @class{gdk-window} object, backed by a native
+  If @arg{window} is a toplevel @class{gdk-window} object, backed by a native
   window implementation, a backing store (offscreen buffer) large enough to
   contain @arg{region} will be created. The backing store will be initialized
   with the background color or background surface for @arg{window}. Then, all

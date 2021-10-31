@@ -572,16 +572,15 @@
 (defcfun ("gdk_cursor_new_from_name" gdk-cursor-new-from-name)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-10}
-  @argument[display]{the @class{gdk-display} object for which the cursor will
-    be created}
+ "@version{*2021-10-31}
+  @argument[display]{a @class{gdk-display} object for which the cursor will be
+    created}
   @argument[name]{a string with the name of the cursor}
   @return{A new @class{gdk-cursor} object, or @code{nil} if there is no cursor
     with the given @arg{name}.}
   @begin{short}
     Creates a new cursor by looking up @arg{name} in the current cursor theme.
   @end{short}
-
   A recommended set of cursor names that will work across different platforms
   can be found in the CSS specification:
   @begin{table}
@@ -621,6 +620,14 @@
     @entry[\"zoom-in\"]{@image[cursor-zoom-in]{}}
     @entry[\"zoom-out\"]{@image[cursor-zoom-out]{}}
   @end{table}
+  @begin[Examples]{dictionary}
+    @begin{pre}
+(gdk-cursor-new-from-name (gdk-display-default) \"wait\")
+=> #<GDK-X11-CURSOR {1001AFE123@}>
+(gdk-cursor-new-from-name (gdk-display-default) \"unknown\")
+=> NIL
+    @end{pre}
+  @end{dictionary}
   @see-class{gdk-cursor}
   @see-class{gdk-display}"
   (display (g-object gdk-display))

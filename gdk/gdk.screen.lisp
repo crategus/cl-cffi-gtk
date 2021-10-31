@@ -106,48 +106,47 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-screen 'type)
- "@version{2020-9-25}
+ "@version{2021-10-28}
   @begin{short}
-    @sym{gdk-screen} objects are the GDK representation of the screen on which
-    windows can be displayed and on which the pointer moves.
+    The @sym{gdk-screen} object is the GDK representation of the screen on
+    which windows can be displayed and on which the pointer moves.
   @end{short}
   X11 originally identified screens with physical screens, but nowadays it is
   more common to have a single @sym{gdk-screen} object which combines several
-  physical monitors. See the function @fun{gdk-screen-n-monitors}.
+  physical monitors. See the @fun{gdk-screen-n-monitors} function.
 
-  @sym{gdk-screen} is used throughout GDK and GTK+ to specify which screen the
-  top level windows are to be displayed on. It is also used to query the screen
-  specification and default settings such as the default visual with the
-  function @fun{gdk-screen-system-visual} or the dimensions of the physical
-  monitors with the function @fun{gdk-screen-monitor-geometry}.
+  The @sym{gdk-screen} object is used throughout GDK and GTK to specify which
+  screen the toplevel windows are to be displayed on. It is also used to query
+  the screen specification and default settings such as the default visual with
+  the @fun{gdk-screen-system-visual} function or the dimensions of the physical
+  monitors with the @fun{gdk-screen-monitor-geometry} function.
   @begin[Signal Details]{dictionary}
     @subheading{The \"composited-changed\" signal}
       @begin{pre}
- lambda (screen)    : Run Last
+ lambda (screen)    :run-last
       @end{pre}
-      The \"composited-changed\" signal is emitted when the composited status
-      of the screen changes.
+      The signal is emitted when the composited status of the screen changes.
       @begin[code]{table}
         @entry[screen]{The @sym{gdk-screen} object on which the signal is
           emitted.}
       @end{table}
     @subheading{The \"monitors-changed\" signal}
       @begin{pre}
- lambda (screen)    : Run Last
+ lambda (screen)    :run-last
       @end{pre}
-      The \"monitors-changed\" signal is emitted when the number, size or
-      position of the monitors attached to the screen change. Only for X11 and
-      OS X for now. A future implementation for Win32 may be a possibility.
+      The signal is emitted when the number, size or position of the monitors
+      attached to the screen change. Only for X11 and OS X for now. A future
+      implementation for Win32 may be a possibility.
       @begin[code]{table}
         @entry[screen]{The @sym{gdk-screen} object on which the signal is
           emitted.}
       @end{table}
     @subheading{The \"size-changed\" signal}
       @begin{pre}
- lambda (screen)    : Run Last
+ lambda (screen)    :run-last
       @end{pre}
-      The \"size-changed\" signal is emitted when the pixel width or height of
-      a the screen changes.
+      The signal is emitted when the pixel width or height of a the screen
+      changes.
       @begin[code]{table}
         @entry[screen]{The @sym{gdk-screen} object on which the signal is
           emitted.}
@@ -175,25 +174,25 @@
 (setf (gethash 'gdk-screen-font-options atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-screen-font-options 'function)
- "@version{2020-9-18}
+ "@version{2021-10-28}
   @syntax[]{(gdk-screen-font-options object) => options}
   @syntax[]{(setf (gdk-screen-font-options object) options)}
   @argument[object]{a @class{gdk-screen} object}
-  @argument[options]{a @symbol{cairo-font-options-t} structure, or @code{nil}
-    to unset any previously set default font options}
+  @argument[options]{a @symbol{cairo-font-options-t} instance, or
+    @code{null-pointer} to unset any previously set default font options}
   @begin{short}
     Accessor of the @slot[gdk-screen]{font-options} slot of the
     @class{gdk-screen} class.
   @end{short}
 
-  The slot access function @sym{gdk-screen-font-options} returns the current
-  font options, or @code{nil} if no default font options have been set. The
-  slot access function @sym{(setf gdk-screen-font-options)} sets the default
-  font options for the screen.
+  The @sym{gdk-screen-font-options} slot access function returns the current
+  font options for the screen, or @code{null-pointer} if no default font options
+  have been set. The @sym{(setf gdk-screen-font-options)} slot access function
+  sets the default font options.
 
-  These options will be set on any Pango context's newly created with the
-  function @fun{gdk-pango-context-for-screen}. Changing the default set
-  of font options does not affect contexts that have already been created.
+  These font options will be set on any Pango context newly created with the
+  @fun{gdk-pango-context-for-screen} function. Changing the default set
+  of font options does not affect Pango contexts that have already been created.
   @see-class{gdk-screen}
   @see-symbol{cairo-font-options-t}
   @see-function{gdk-pango-context-for-screen}")
@@ -287,7 +286,7 @@
   @begin{short}
     Gets a visual to use for creating windows with an alpha channel.
   @end{short}
-  The windowing system on which GTK+ is running may not support this capability,
+  The windowing system on which GTK is running may not support this capability,
   in which case @code{nil} will be returned. Even if a non-@code{nil} value is
   returned, it is possible that the window's alpha channel will not be honored
   when displaying the window on the screen: in particular, for X11 an
