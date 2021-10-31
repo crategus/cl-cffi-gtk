@@ -102,7 +102,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-clipboard 'type)
- "@version{2021-10-6}
+ "@version{2021-10-20}
   @begin{short}
     The @sym{gtk-clipboard} object represents a clipboard of data shared between
     different processes or between different widgets in the same process.
@@ -118,24 +118,9 @@
   the actual data. When you set the contents of the clipboard, you can either
   supply the data directly via functions like @fun{gtk-clipboard-set-text},
   or you can supply a callback function to be called at a later time when the
-  data is needed via the @fun{gtk-clipboard-set-with-data} or
-  @fun{gtk-clipboard-set-with-owner} functions. Providing a callback function
-  also avoids having to make copies of the data when it is not needed.
-
-  The @fun{gtk-clipboard-set-with-data} and @fun{gtk-clipboard-set-with-owner}
-  functions are quite similar. The choice between the two depends mostly on
-  which is more convenient in a particular situation. The former is most useful
-  when you want to have a blob of data with callback functions to convert it
-  into the various data types that you advertise. When the
-  @symbol{gtk-clipboard-clear-func} callback function you provided is called,
-  you simply free the data blob. The latter is more useful when the contents of
-  clipboard reflect the internal state of a GObject. As an example, for the
-  \"PRIMARY\" clipboard, when an entry widget provides the contents of the
-  clipboard the contents are simply the text within the selected region. If the
-  contents change, the entry widget can call the
-  @fun{gtk-clipboard-set-with-owner} function to update the timestamp for
-  clipboard ownership, without having to worry about the
-  @symbol{gtk-clipboard-clear-func} callback function being called.
+  data is needed via the @fun{gtk-clipboard-set-with-data} function. Providing
+  a callback function also avoids having to make copies of the data when it is
+  not needed.
 
   Requesting the data from the clipboard is essentially asynchronous. If the
   contents of the clipboard are provided within the same process, then a
@@ -418,7 +403,7 @@
 (setf (gethash 'gtk-clipboard-get-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-clipboard-get-func atdoc:*external-symbols*)
- "@version{2021-10-6}
+ "@version{2021-10-20}
   @begin{short}
     A callback function that will be called to provide the contents of the
     selection.
@@ -438,35 +423,33 @@
     @entry[selection]{A @class{gtk-selection-data} instance in which the
       requested data should be stored.}
     @entry[info]{The info field corresponding to the requested target from the
-      target entries passed to the @fun{gtk-clipboard-set-with-data} or
-      @fun{gtk-clipboard-set-with-owner} functions.}
+      target entries passed to the @fun{gtk-clipboard-set-with-data} function.}
   @end{table}
   @see-class{gtk-clipboard}
   @see-class{gtk-selection-data}
   @see-function{gtk-selection-data-set}
   @see-function{gtk-selection-data-set-text}
-  @see-function{gtk-clipboard-set-with-data}
-  @see-function{gtk-clipboard-set-with-owner}")
+  @see-function{gtk-clipboard-set-with-data}")
 
 (export 'gtk-clipboard-get-func)
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkClipboardClearFunc ()
+;;; GtkClipboardClearFunc ()                               not exported
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-clipboard-clear-func :void
+;; Implemented for internal use in the GTK-CLIPBOARD-SET-WITH-DATA function.
+
+(defcallback %gtk-clipboard-clear-func :void
     ((clipboard (g-object gtk-clipboard))
      (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
-    (restart-case
-      (funcall fn clipboard)
-      (return-from-gtk-clipboard-clear-func () nil))))
+  (declare (ignore clipboard))
+  (free-stable-pointer data))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-clipboard-clear-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-clipboard-clear-func atdoc:*external-symbols*)
- "@version{2021-10-6}
+ "@version{2021-10-20}
   @begin{short}
     A callback function that will be called when the contents of the clipboard
     are changed or cleared.
@@ -478,8 +461,6 @@
     @entry[clipboard]{A @class{gtk-clipboard} object.}
   @end{table}
   @see-class{gtk-clipboard}")
-
-(export 'gtk-clipboard-clear-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_get ()
@@ -540,7 +521,7 @@
   clipboards, you should prefix the selection name with an underscore, because
   the ICCCM requires that nonstandard atoms are underscore-prefixed, and
   namespace it as well. For example, if your application called \"Foo\" has a
-  special-purpose clipboard, you might call it \"_FOO_SPECIAL_CLIPBOARD\".
+  special purpose clipboard, you might call it \"_FOO_SPECIAL_CLIPBOARD\".
   @see-class{gtk-clipboard}
   @see-class{gdk-display}
   @see-symbol{gdk-atom}
@@ -627,7 +608,7 @@
       (loop for i from 0 below n-targets
             for target-ptr = (mem-aptr targets-ptr
                                        '(:struct %gtk-target-entry) i)
-            for entry = (pop targets)
+            for entry in targets
             do (with-foreign-slots ((target flags info)
                                     target-ptr
                                     (:struct %gtk-target-entry))
@@ -638,7 +619,7 @@
                                     targets-ptr
                                     n-targets
                                     (callback gtk-clipboard-get-func)
-                                    (callback stable-pointer-destroy-notify)
+                                    (callback %gtk-clipboard-clear-func)
                                     (allocate-stable-pointer func)))))
 
 (export 'gtk-clipboard-set-with-data)
@@ -709,18 +690,15 @@
 
 (defcfun ("gtk_clipboard_clear" gtk-clipboard-clear) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-10-6}
+ "@version{2021-10-20}
   @argument[clipboard]{a @class{gtk-clipboard} object}
   @begin{short}
     Clears the contents of the clipboard.
   @end{short}
-  Generally this should only be called between the time you call the
-  @fun{gtk-clipboard-set-with-owner} or @fun{gtk-clipboard-set-with-data}
-  functions, and when the @symbol{gtk-clipboard-clear-func} callback function
-  you supplied is called. Otherwise, the clipboard may be owned by someone else.
+  Generally this should only be called after the time you call the
+  @fun{gtk-clipboard-set-with-data} function. Otherwise, the clipboard may be
+  owned by someone else.
   @see-class{gtk-clipboard}
-  @see-symbol{gtk-clipboard-clear-func}
-  @see-function{gtk-clipboard-set-with-owner}
   @see-function{gtk-clipboard-set-with-data}"
   (clipboard (g-object gtk-clipboard)))
 
