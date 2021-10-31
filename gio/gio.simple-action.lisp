@@ -309,7 +309,7 @@
 
 (defun g-simple-action-new (name vtype)
  #+cl-cffi-gtk-documentation
- "@version{*2021-10-8}
+ "@version{*2021-10-31}
   @argument[name]{a string with the name of the action}
   @argument[vtype]{the @class{g-variant-type} type or a type string for the
     parameter to the activate function}
@@ -322,6 +322,27 @@
   @begin[Note]{dictionary}
     A type string for the @arg{vtype} argument is converted to the
     @class{g-variant-type} type with the @fun{g-variant-type-new} function.
+  @end{dictionary}
+  @begin[Examples]{dictionary}
+    A simple action with no parameter type.
+    @begin{pre}
+(defvar action (g-simple-action-new \"clear\" nil)) => ACTION
+(g-action-name action) => \"clear\"
+(g-action-enabled action) => T
+(g-action-parameter-type action) => NIL
+(g-action-state action) => #.(SB-SYS:INT-SAP #X00000000)
+(g-action-state-type action) => NIL
+    @end{pre}
+    A simple action with a string parameter type.
+    @begin{pre}
+(setf action (g-simple-action-new \"check\" \"s\"))
+=> #<G-SIMPLE-ACTION {10022B4AF3@}>
+(g-action-name action) => \"check\"
+(g-action-enabled action) => T
+(g-action-parameter-type action) => #<G-VARIANT-TYPE {10022B5AB3@}>
+(g-action-state action) => #.(SB-SYS:INT-SAP #X00000000)
+(g-action-state-type action) => NIL
+    @end{pre}
   @end{dictionary}
   @see-class{g-simple-action}
   @see-class{g-variant-type}
@@ -346,7 +367,7 @@
 
 (defun g-simple-action-new-stateful (name vtype state)
  #+cl-cffi-gtk-documentation
- "@version{*2021-10-8}
+ "@version{*2021-10-31}
   @argument[name]{a string with the name of the action}
   @argument[vtype]{the @class{g-variant-type} type or a type string of the
     parameter to the activate function}
@@ -362,9 +383,10 @@
     @class{g-variant-type} type with the @fun{g-variant-type-new} function.
   @end{dictionary}
   @see-class{g-simple-action}
-  @see-function{g-simple-action-new}
   @see-type{g-variant}
-  @see-class{g-variant-type}"
+  @see-class{g-variant-type}
+  @see-function{g-simple-action-new}
+  @see-function{g-variant-type-new}"
   (if (stringp vtype)
       (let ((vtype1 (g-variant-type-new vtype)))
         (unwind-protect

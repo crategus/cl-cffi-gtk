@@ -244,18 +244,38 @@
 (setf (gethash 'g-action-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state 'function)
- "@version{*2021-10-8}
+ "@version{*2021-10-31}
   @syntax[]{(g-action-state object) => state}
+  @syntax[]{(setf (g-action-state object) state)}
   @argument[object]{a @class{g-action} object}
-  @argument[state]{the current @type{g-variant} state of the action}
+  @argument[state]{a @type{g-variant} state of the action}
   @begin{short}
     Accessor of the @slot[g-action]{state} slot of the @class{g-action} class.
   @end{short}
 
   Queries the current state of the action. If the action is not stateful then a
-  @code{NULL} pointer will be returned. If the action is stateful then the type
+  @code{null-pointer} will be returned. If the action is stateful then the type
   of the return value is the type given by the @fun{g-action-state-type}
   function.
+  @begin[Examples]{dictionary}
+    A stateful action with an integer value.
+    @begin{pre}
+(defvar state (g-variant-new-int32 123)) => STATE
+(defvar action (g-simple-action-new-stateful \"stateful\" nil state)) => ACTION
+(g-action-state action) => #.(SB-SYS:INT-SAP #X560FD04EFE10)
+(g-variant-int32 *) => 123
+(setf (g-action-state action) (g-variant-new-int32 999))
+=> #.(SB-SYS:INT-SAP #X560FD04F2C40)
+(g-action-state action) => #.(SB-SYS:INT-SAP #X560FD04F2C40)
+(g-variant-int32 *) =>999
+    @end{pre}
+    A simple action with no state returns a @code{null-pointer}.
+    @begin{pre}
+(setf action (g-simple-action-new \"simple\" nil))
+=>  #<G-SIMPLE-ACTION {1004B2CE73@}>
+(g-action-state *) => #.(SB-SYS:INT-SAP #X00000000)
+    @end{pre}
+  @end{dictionary}
   @see-class{g-action}
   @see-type{g-variant}
   @see-function{g-action-state-type}")
@@ -320,7 +340,7 @@
   The action name is valid if it consists only of alphanumeric characters, plus
   '-' and '.'. The empty string is not a valid action name.
 
-  It is an error to call this function with a non-utf8 action name.
+  It is an error to call this function with a non UTF-8 action name.
   @begin[Example]{dictionary}
     @begin{pre}
 (g-action-name-is-valid \"action\") => T
@@ -371,23 +391,20 @@
 ;;; g_action_change_state ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Is the implementation correct? See g-action-activate.
-
 (defcfun ("g_action_change_state" g-action-change-state) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-1}
+ "@version{*2021-10-31}
   @argument[action]{a @class{g-action} object}
-  @argument[value]{the new @type{g-variant} state}
+  @argument[value]{a new @type{g-variant} state}
   @begin{short}
     Request for the state of the action to be changed to @arg{value}.
   @end{short}
-
-  The the action must be stateful and @arg{value} must be of the correct type.
-  See the function @fun{g-action-state-type}.
+  The action must be stateful and the @arg{value} argument must be of the
+  correct type. See the @fun{g-action-state-type} function.
 
   This call merely requests a change. The action may refuse to change its
   state or may change its state to something other than @arg{value}. See the
-  function @fun{g-action-state-hint}.
+  @fun{g-action-state-hint} function.
   @see-class{g-action}
   @see-type{g-variant}
   @see-function{g-action-state-type}

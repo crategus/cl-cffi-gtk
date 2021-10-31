@@ -150,7 +150,7 @@
  "@version{2021-4-15}
   @argument[icon]{a @class{g-icon} object}
   @begin{return}
-    An UTF8 string or @code{nil} if @arg{icon} cannot be serialized.
+    An UTF-8 string or @code{nil} if @arg{icon} cannot be serialized.
   @end{return}
   @begin{short}
     Generates a textual representation of the icon that can be used for

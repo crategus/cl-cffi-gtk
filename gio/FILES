@@ -35,6 +35,12 @@ Icons
   gio.emblemed-icon.lisp       - Icon with emblems                 - GIO 2.68
   gio.emblem.lisp              - An object for emblems             - GIO 2.68
 
+Settings
+
+  GSettings - High-level API for application settings
+  GSettingsBackend - Interface for settings backend implementations
+  GSettingsSchema - Loading of GSettings schemas
+
 Resources
 
   gio.resource.lisp            - GResource                         - GIO 2.66 &

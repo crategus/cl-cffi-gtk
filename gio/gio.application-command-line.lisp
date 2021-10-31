@@ -320,7 +320,7 @@
   @begin{short}
     Gets the working directory of the command line invocation.
   @end{short}
-  The string may contain non-UTF8 data.
+  The string may contain non UTF-8 data.
 
   It is possible that the remote application did not send a working directory,
   so this may be @code{nil}.
@@ -350,7 +350,7 @@
     as would be returned by the @fun{g-environ} function.
   @end{short}
   Each item in the list of the form @code{NAME} = @code{VALUE}. The strings may
-  contain non-UTF8 data.
+  contain non UTF-8 data.
 
   The remote application usually does not send an environment. Use the
   @code{:send-enviroment} flag to affect that. Even with this flag set it is
@@ -465,7 +465,7 @@
     Gets the value of a particular environment variable of the command line
     invocation, as would be returned by the function @fun{g-getenv}.
   @end{short}
-  The strings may contain non-UTF8 data.
+  The strings may contain non UTF-8 data.
 
   The remote application usually does not send an environment. Use the
   @code{:send-enviroment} flag to affect that. Even with this flag set it is

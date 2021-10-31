@@ -410,7 +410,7 @@
   function if you have a path. The @fun{g-file-new-for-uri} function if you have
   a URI. The @fun{g-file-new-for-commandline-arg} function for a command line
   argument. The @fun{g-file-new-tmp} function to create a temporary file from a
-  template. The @fun{g-file-parse-name} function from a utf8 string gotten from
+  template. The @fun{g-file-parse-name} function from a UTF-8 string gotten from
   the @fun{g-file-get-parse-name} function.
 
   One way to think of a @sym{g-file} object is as an abstraction of a pathname.
@@ -434,7 +434,7 @@
   make any sense at all. If you want to use filenames in a user interface you
   should use the display name that you can get by requesting the
   \"standard::display-name\" attribute with the @fun{g-file-query-info}
-  function. This is guaranteed to be in utf8 and can be used in a user
+  function. This is guaranteed to be in UTF-8 and can be used in a user
   interface. But always store the real basename or the @sym{g-file} object to
   use to actually access the file, because there is no way to go from a display
   name to the actual name.
@@ -850,7 +850,7 @@
     Gets the base name, the last component of the path, for a given
     @class{g-file} object.
   @end{short}
-  If called for the top level of a system, such as the filesystem root or a URI
+  If called for the toplevel of a system, such as the filesystem root or a URI
   like @file{sftp://host/}, it will return a single directory separator, and on
   Windows, possibly a drive letter.
 

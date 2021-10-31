@@ -1695,7 +1695,7 @@
 
 (defcfun ("g_application_mark_busy" g-application-mark-busy) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-9}
+ "@version{*2021-10-31}
   @argument[application]{a @class{g-application} instance}
   @begin{short}
     Increases the busy count of the application.
@@ -1719,7 +1719,7 @@
 
 (defcfun ("g_application_unmark_busy" g-application-unmark-busy) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-9}
+ "@version{*2021-10-31}
   @argument[application]{a @class{g-application} instance}
   @begin{short}
     Decreases the busy count of the application.
