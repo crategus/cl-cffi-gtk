@@ -406,7 +406,7 @@
 ;;; to the location specified by link_attribs . Link attributes have the same
 ;;; keys and values as the Link Tag, excluding the "rect" attribute. The item
 ;;; will be a child of the item with id parent_id . Use CAIRO_PDF_OUTLINE_ROOT
-;;; as the parent id of top level items.
+;;; as the parent id of toplevel items.
 ;;;
 ;;; surface :
 ;;;     a PDF cairo_surface_t

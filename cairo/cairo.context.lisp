@@ -1129,7 +1129,7 @@
 
 (defcfun ("cairo_set_antialias" cairo-set-antialias) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-10}
+ "@version{2021-10-27}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[antialias]{a @symbol{cairo-antialias-t} mode}
   @begin{short}
@@ -1140,10 +1140,10 @@
   when drawing shapes.
 
   Note that this option does not affect text rendering, instead see the
-  function @fun{cairo-font-options-set-antialias}.
+  @fun{cairo-font-options-antialias} function.
   @see-symbol{cairo-t}
   @see-symbol{cairo-antialias-t}
-  @see-function{cairo-font-options-set-antialias}"
+  @see-function{cairo-font-options-antialias}"
   (cr (:pointer (:struct cairo-t)))
   (antialias cairo-antialias-t))
 

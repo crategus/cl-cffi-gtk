@@ -30,7 +30,7 @@
 ;;;
 ;;;     Font face at particular size and options
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     cairo_scaled_font_t
 ;;;     cairo_font_extents_t
@@ -430,20 +430,20 @@
 (defcfun ("cairo_scaled_font_create" cairo-scaled-font-create)
     (:pointer (:struct cairo-scaled-font-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-15}
-  @argument[font-face]{a @symbol{cairo-font-face-t} structure}
-  @argument[font-matrix]{font space to user space transformation
+ "@version{2021-10-28}
+  @argument[face]{a @symbol{cairo-font-face-t} instance}
+  @argument[matrix]{font space to user space transformation
     @symbol{cairo-matrix-t} matrix for the font, in the simplest case of a N
     point font, this matrix is just a scale by N, but it can also be used to
-    shear the font or stretch it unequally along the two axes, see the function
-    @fun{cairo-set-font-matrix}}
+    shear the font or stretch it unequally along the two axes, see the
+    @fun{cairo-set-font-matrix} function}
   @argument[ctm]{user to device transformation @symbol{cairo-matrix-t} matrix
     with which the font will be used}
   @argument[options]{a @symbol{cairo-font-options-t} options to use when getting
     metrics for the font and rendering with it}
   @begin{return}
     A newly created @symbol{cairo-scaled-font-t} instance. Destroy with the
-    function @fun{cairo-scaled-font-destroy}.
+    @fun{cairo-scaled-font-destroy} function.
   @end{return}
   @begin{short}
     Creates a @symbol{cairo-scaled-font-t} instance from a font face and
@@ -454,8 +454,8 @@
   @see-symbol{cairo-matrix-t}
   @see-symbol{cairo-font-options-t}
   @see-function{cairo-set-font-matrix}"
-  (font-face (:pointer (:struct cairo-font-face-t)))
-  (font-matrix (:pointer (:struct cairo-matrix-t)))
+  (face (:pointer (:struct cairo-font-face-t)))
+  (matrix (:pointer (:struct cairo-matrix-t)))
   (ctm (:pointer (:struct cairo-matrix-t)))
   (options (:pointer (:struct cairo-font-options-t))))
 
