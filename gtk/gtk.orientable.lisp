@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.orientable.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -64,10 +64,13 @@
    "orientation" "GtkOrientation" t t))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-orientable atdoc:*class-name-alias*) "Interface"
+(setf (gethash 'gtk-orientable atdoc:*class-name-alias*)
+      "Interface"
       (documentation 'gtk-orientable 'type)
- "@version{2020-9-27}
-  @short{An interface for flippable widgets.}
+ "@version{2021-10-31}
+  @begin{short}
+    An interface for flippable widgets.
+  @end{short}
 
   The @sym{gtk-orientable} interface is implemented by all widgets that can be
   oriented horizontally or vertically. Historically, such widgets have been
@@ -87,7 +90,7 @@
 (setf (documentation (atdoc:get-slot-from-name "orientation"
                                                'gtk-orientable) 't)
  "The @code{orientation} property of type @symbol{gtk-orientation}
-  (Read / Write) @br{}
+    (Read / Write) @br{}
   The orientation of the orientable widget. @br{}
   Default value: @code{:horizontal}")
 
@@ -95,7 +98,7 @@
 (setf (gethash 'gtk-orientable-orientation atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-orientable-orientation 'function)
- "@version{*2021-3-14}
+ "@version{*2021-10-31}
   @syntax[]{(gtk-orientable-orientation object) => orientation}
   @syntax[]{(setf (gtk-orientable-orientation object) orientation)}
   @argument[object]{a @class{gtk-orientable} widget}
@@ -105,9 +108,10 @@
     @class{gtk-orientable} interface.
   @end{short}
 
-  The slot access function @sym{gtk-orientable-orientation} returns the
-  orientation of the orientable widget. The slot access
-  function @sym{(setf gtk-orientable-orientation)} sets the orientation.
+  The @sym{gtk-orientable-orientation} slot access function returns the
+  orientation of the orientable widget. The
+  @sym{(setf gtk-orientable-orientation)} slot access function sets the
+  orientation.
   @see-class{gtk-orientable}
   @see-symbol{gtk-orientation}")
 
