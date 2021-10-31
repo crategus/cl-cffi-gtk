@@ -36,8 +36,6 @@
 
 (in-package :atdoc-gtk)
 
-;; Unexport symbols we do not want to document.
-
 (unexport 'glib:allocate-stable-pointer :glib)
 (unexport 'glib:stable-pointer-destroy-notify-cb :glib)
 (unexport 'glib:stable-pointer-destroy-notify :glib)
@@ -55,9 +53,11 @@
 (unexport 'gobject:*lisp-name-exceptions* :gobject)
 
 (unexport 'gobject:g-boxed-foreign :gobject)
+(unexport 'gobject:g-boxed-foreign-type :gobject)
 (unexport 'gobject:boxed-related-symbols :gobject)
 (unexport 'gobject:copy-boxed-slots-to-foreign :gobject)
 (unexport 'gobject:create-fn-ref :gobject)
+(unexport 'gobject:define-foreign-g-object-class :gobject)
 (unexport 'gobject:define-boxed-opaque-accessor :gobject)
 (unexport 'gobject:define-cb-methods :gobject)
 (unexport 'gobject:define-g-boxed-cstruct :gobject)
@@ -69,6 +69,17 @@
 (unexport 'gobject:define-g-object-class :gobject)
 (unexport 'gobject:define-vtable :gobject)
 (unexport 'gobject:get-g-type-definition :gobject)
+(unexport 'gobject:get-g-enum-definition :gobject)
+(unexport 'gobject:get-g-flags-definition :gobject)
+(unexport 'gobject:get-enum-items :gobject)
+(unexport 'gobject:enum-item-name :gobject)
+(unexport 'gobject:enum-item-nick :gobject)
+(unexport 'gobject:enum-item-value :gobject)
+(unexport 'gobject:get-flags-items :gobject)
+(unexport 'gobject:flags-item-name :gobject)
+(unexport 'gobject:flags-item-nick :gobject)
+(unexport 'gobject:flags-item-value :gobject)
+(unexport 'gobject:gobject-class :gobject)
 (unexport 'gobject:gobject-class-direct-g-type-name :gobject)
 (unexport 'gobject:gobject-class-g-type-initializer :gobject)
 (unexport 'gobject:gobject-class-g-type-name :gobject)
@@ -79,10 +90,13 @@
 (unexport 'gobject:register-object-type :gobject)
 (unexport 'gobject:register-object-type-implementation :gobject)
 (unexport 'gobject:registered-object-type-by-name :gobject)
+(unexport 'gobject:registered-enum-type :gobject)
+(unexport 'gobject:registered-flags-type :gobject)
 (unexport 'gobject:set-g-value :gobject)
 (unexport 'gobject:signal-info :gobject)
 (unexport 'gobject:using* :gobject)
 (unexport 'gobject:with-foreign-boxed-array :gobject)
+(unexport 'gobject::g-initially-unowned :gobject)
 
 (unexport 'gobject:param-spec-type :gobject)
 (unexport 'gobject:param-spec-owner-type :gobject)
@@ -121,10 +135,11 @@
 (unexport 'gtk:ensure-gtk-main :gtk)
 #+ubuntu
 (unexport 'gtk:gtk-window-ubuntu-no-proxy :gtk)
-(unexport 'gtk:with-text-buffer-user-action :gtk)
 
 (unexport 'gtk:let-ui :gtk)
 (unexport 'gtk:g-error :gtk)
+
+;;; ---------------------------------------------------------------------------
 
 (defun generate-html ()
   (let* ((base (asdf:component-pathname (asdf:find-system :cl-cffi-gtk)))
