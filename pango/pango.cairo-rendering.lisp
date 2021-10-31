@@ -508,34 +508,41 @@
 (defun (setf pango-cairo-context-font-options) (options context)
   (foreign-funcall "pango_cairo_context_set_font_options"
                    (g-object pango-context) context
-                   (:pointer (:struct cairo-font-options-t)) options
+                   (:pointer (:struct cairo-font-options-t)) (if options
+                                                                 options
+                                                                 (null-pointer))
                    :void)
   options)
 
 (defcfun ("pango_cairo_context_get_font_options"
-           pango-cairo-context-font-options)
+          %pango-cairo-context-font-options)
     (:pointer (:struct cairo-font-options-t))
+  (context (g-object pango-context)))
+
+(defun pango-cairo-context-font-options (context)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-9}
+ "@version{2021-10-28}
   @argument[context]{a @class{pango-context} object, from a PangoCairo font map}
   @argument[options]{a @symbol{cairo-font-options-t} instance, or @code{nil} to
-  unset any previously set options}
+    unset any previously set font options}
   @begin{short}
-    Accessor of the font options set on the context.
+    Accessor of the font options set on the Pango context.
   @end{short}
 
-  The function @sym{pango-cairo-context-font-options} retrieves any font
+  The @sym{pango-cairo-context-font-options} function retrieves any font
   rendering options. This function does not report options that are derived
-  from the target surface by the function @fun{pango-cairo-update-context}.
+  from the target surface by the @fun{pango-cairo-update-context} function.
 
-  The function @sym{(setf pango-cairo-context-font-options} sets the font
-  options used when rendering text with this context. These options override
-  any options that the function @fun{pango-cairo-update-context} derives from
-  the target surface.
+  The @sym{(setf pango-cairo-context-font-options)} function sets the font
+  options used when rendering text with the Pango context. These font options
+  override any font options that the @fun{pango-cairo-update-context} function
+  derives from the target surface.
   @see-class{pango-context}
   @see-symbol{cairo-font-options-t}
-  @see-functopm{pango-cairo-update-context}"
-  (context (g-object pango-context)))
+  @see-function{pango-cairo-update-context}"
+  (let ((options (%pango-cairo-context-font-options context)))
+    (unless (null-pointer-p options)
+      options)))
 
 (export 'pango-cairo-context-font-options)
 
