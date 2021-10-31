@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.window-group.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -65,10 +65,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-window-group 'type)
- "@version{*2020-5-29}
+ "@version{2021-10-26}
   @begin{short}
-    A @sym{gtk-window-group} restricts the effect of grabs to windows in the
-    same group, thereby making window groups almost behave like separate
+    A @sym{gtk-window-group} object restricts the effect of grabs to windows in
+    the same group, thereby making window groups almost behave like separate
     applications.
   @end{short}
 
@@ -76,12 +76,10 @@
   have not been explicitly assigned to a group are implicitly treated like
   windows of the default window group.
 
-  @sym{gtk-window-group} objects are referenced by each window in the group, so
-  once you have added all windows to a @sym{gtk-window-group}, you can drop the
-  initial reference to the window group with the @fun{g-object-unref} function.
-  If the windows in the window group are subsequently destroyed, then they will
-  be removed from the window group and drop their references on the window
-  group. When all window have been removed, the window group will be freed.")
+  Window groups are referenced by each window in the group. If the windows in
+  the window group are subsequently destroyed, then they will be removed from
+  the window group and drop their references on the window group. When all
+  window have been removed, the window group will be freed.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_new ()
@@ -91,12 +89,12 @@
 
 (defun gtk-window-group-new ()
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-29}
+ "@version{2021-10-26}
   @return{A new @class{gtk-window-group} object.}
   @begin{short}
     Creates a new window group.
   @end{short}
-  Grabs added with the function @fun{gtk-grab-add} only affect windows within
+  Grabs added with the @fun{gtk-grab-add} function only affect windows within
   the same window group.
   @see-class{gtk-window-group}
   @see-function{gtk-grap-add}"
@@ -110,15 +108,15 @@
 
 (defcfun (gtk-window-group-add-window "gtk_window_group_add_window") :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-29}
-  @argument[window-group]{a @class{gtk-window-group} object}
+ "@version{2021-10-26}
+  @argument[group]{a @class{gtk-window-group} object}
   @argument[window]{the @class{gtk-window} widget to add}
   @begin{short}
     Adds a window to a window group.
   @end{short}
   @see-class{gtk-window-group}
   @see-class{gtk-window}"
-  (window-group (g-object gtk-window-group))
+  (group (g-object gtk-window-group))
   (window (g-object gtk-window)))
 
 (export 'gtk-window-group-add-window)
@@ -129,15 +127,15 @@
 
 (defcfun ("gtk_window_group_remove_window" gtk-window-group-remove-window) :void
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-29}
-  @argument[window-group]{a @class{gtk-window-group} object}
+ "@version{2021-10-26}
+  @argument[group]{a @class{gtk-window-group} object}
   @argument[window]{the @class{gtk-window} widget to remove}
   @begin{short}
     Removes a window from a window group.
   @end{short}
   @see-class{gtk-window-group}
   @see-class{gtk-window}"
-  (window-group (g-object gtk-window-group))
+  (group (g-object gtk-window-group))
   (window (g-object gtk-window)))
 
 (export 'gtk-window-group-remove-window)
@@ -149,15 +147,15 @@
 (defcfun ("gtk_window_group_list_windows" gtk-window-group-list-windows)
     (g-list gtk-window)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-29}
-  @argument[window-group]{a @class{gtk-window-group} object}
-  @return{A newly allocated list of windows inside the group.}
+ "@version{2021-10-26}
+  @argument[group]{a @class{gtk-window-group} object}
+  @return{A list of windows inside the window group.}
   @begin{short}
     Returns a list of windows that belong to the window group.
   @end{short}
   @see-class{gtk-window-group}
   @see-class{gtk-window}"
-  (window-group (g-object gtk-window-group)))
+  (group (g-object gtk-window-group)))
 
 (export 'gtk-window-group-list-windows)
 
@@ -168,17 +166,17 @@
 (defcfun ("gtk_window_group_get_current_grab" gtk-window-group-current-grab)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-29}
-  @argument[window-group]{a @class{gtk-window-group} object}
+ "@version{2021-10-26}
+  @argument[group]{a @class{gtk-window-group} object}
   @return{The current @class{gtk-widget} grab widget of the group.}
   @begin{short}
     Gets the current grab widget of the given group.
   @end{short}
-  See the function @fun{gtk-grab-add}.
+  See the @fun{gtk-grab-add} function.
   @see-class{gtk-window-group}
   @see-class{gtk-widget}
   @see-function{gtk-grab-add}"
-  (window-group (g-object gtk-window-group)))
+  (group (g-object gtk-window-group)))
 
 (export 'gtk-window-group-current-grab)
 
@@ -191,8 +189,8 @@
            gtk-window-group-current-device-grab)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-29}
-  @argument[window-group]{a @class{gtk-window-group} object}
+ "@version{2021-10-26}
+  @argument[group]{a @class{gtk-window-group} object}
   @argument[device]{a @class{gdk-device} object}
   @return{The @class{gtk-widget} grab widget, or @code{nil}.}
   @begin{short}
@@ -201,7 +199,7 @@
   @see-class{gtk-window-group}
   @see-class{gdk-device}
   @see-class{gtk-widget}"
-  (window-group (g-object gtk-window-group))
+  (group (g-object gtk-window-group))
   (device (g-object gdk-device)))
 
 (export 'gtk-window-group-current-device-grab)
