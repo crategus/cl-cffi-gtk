@@ -21,10 +21,8 @@ TODO
 /atdoc/index.css
 /atdoc/index.html
 /atdoc/lambda.ico
-/atdoc/make.lisp
-/atdoc/make-single.lisp
-/atdoc/atdoc-single.lisp
-/atdoc/atdoc.lisp
+/atdoc/atdoc-html-single.lisp
+/atdoc/atdoc-html.lisp
 /atdoc/pages/*
 /atdoc/single-page/*
 /cairo/atdoc/.atdoc.xml
