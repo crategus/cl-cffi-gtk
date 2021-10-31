@@ -152,6 +152,9 @@
 ;;; struct GtkTextAttributes
 ;;; ----------------------------------------------------------------------------
 
+;; FIXME: This implementation crashes the testsuite, when copying the
+;; structure. Work is needed. At this time we do not export the structure.
+
 (glib-init::at-init () (foreign-funcall "gtk_text_attributes_get_type" g-size))
 
 (define-g-boxed-cstruct gtk-text-attributes "GtkTextAttributes"
@@ -177,7 +180,9 @@
   (no-fallback :uint :initform 1)
   (bg-rgba (g-boxed-foreign gdk-rgba)) ; private field
   (letter-spacing :int :initform 0)
-  (font-features :pointer :initform (null-pointer)))             ; type is char*
+  (font-features :pointer :initform (null-pointer)) ; type is char*
+  (dummy1 :pointer)
+  (dummy2 :pointer))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-attributes atdoc:*class-name-alias*)
@@ -271,7 +276,7 @@
   @see-slot{gtk-text-attributes-font-features}
   @see-function{gtk-text-iter-attributes}")
 
-(export (boxed-related-symbols 'gtk-text-attributes))
+;(export (boxed-related-symbols 'gtk-text-attributes))
 
 ;; Unexport the private field of the GtkTextAttributes structure
 (unexport 'gtk-text-attributes-refcount)
@@ -614,8 +619,6 @@
   @see-class{gtk-text-attributes}"
   (make-gtk-text-attributes))
 
-(export 'gtk-text-attributes-new)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_copy ()
 ;;; ----------------------------------------------------------------------------
@@ -630,8 +633,6 @@
   @end{short}
   @see-class{gtk-text-attributes}"
   (copy-gtk-text-attributes src))
-
-(export 'gtk-text-attributes-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_copy_values ()
@@ -650,8 +651,6 @@
   @see-class{gtk-text-attributes}"
   (src (g-boxed-foreign gtk-text-attributes))
   (dest (g-boxed-foreign gtk-text-attributes)))
-
-(export 'gtk-text-attributes-copy-values)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_unref ()

@@ -208,9 +208,7 @@
   (:left 0)
   (:right 1)
   (:center 2)
-  (:fill 3)
-  (:dummy2 65535) ; gtk-text-view-default-attributes returns this value
-)
+  (:fill 3))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-justification atdoc:*symbol-name-alias*)

@@ -1278,10 +1278,10 @@
 (export 'gtk-text-iter-bytes-in-line)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_iter_get_attributes () ->gtk-text-iter-attributes
+;;; gtk_text_iter_get_attributes () -> gtk-text-iter-attributes
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Is this implementation correct? Argument attributes can be modified!
+;; FIXME: Is this implementation correct? Argument attributes can be modified!
 
 (defcfun ("gtk_text_iter_get_attributes" gtk-text-iter-attributes) :boolean
  #+cl-cffi-gtk-documentation
@@ -1305,8 +1305,6 @@
   @see-function{gtk-text-view-default-attributes}"
   (iter (g-boxed-foreign gtk-text-iter))
   (attributes (g-boxed-foreign gtk-text-attributes)))
-
-(export 'gtk-text-iter-attributes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_language () -> gtk-text-iter-language
