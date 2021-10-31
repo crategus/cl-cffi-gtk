@@ -693,7 +693,7 @@
   @begin{short}
     The type of an array of bytes.
   @end{short}
-  This type is commonly used to pass around strings that may not be valid UTF8.
+  This type is commonly used to pass around strings that may not be valid UTF-8.
   In that case, the convention is that the nul terminator character should be
   included as the last character in the array.
   @see-class{g-variant-type}")
@@ -805,18 +805,18 @@
 (defcfun ("g_variant_type_new" g-variant-type-new)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{*2021-7-31}
+ "@version{*2021-10-31}
   @argument[string]{a valid @class{g-variant-type} type string}
   @return{A new @class{g-variant-type} instance.}
   @begin{short}
     Creates a new @class{g-variant-type} instance corresponding to the type
     string given by @arg{string}.
   @end{short}
-  It is appropriate to call the function @fun{g-variant-type-free} on the
+  It is appropriate to call the @fun{g-variant-type-free} function on the
   return value.
 
   It is a programmer error to call this function with an invalid type string.
-  Use the function @fun{g-variant-type-string-is-valid} if you are unsure.
+  Use the @fun{g-variant-type-string-is-valid} function if you are unsure.
   @see-class{g-variant-type}
   @see-function{g-variant-type-free}
   @see-function{g-variant-type-string-is-valid}"

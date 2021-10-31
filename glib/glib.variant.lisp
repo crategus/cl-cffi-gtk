@@ -1365,12 +1365,22 @@ add_to_count (GVariant  *orig,
 (defcfun ("g_variant_new_string" g-variant-new-string)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-1}
-  @argument[string]{a normal utf8 nul-terminated string}
-  @return{A floating reference to a new string @type{g-variant} instance.}
-  @short{Creates a string @type{g-variant} with the contents of string.}
-  The string must be valid utf8.
-  @see-type{g-variant}"
+ "@version{*2021-10-31}
+  @argument[string]{a normal UTF-8 string}
+  @return{A floating reference to a new @type{g-variant} string.}
+  @begin{short}
+    Creates a @type{g-variant} string with the contents of @arg{string}.
+  @end{short}
+  The string must be valid UTF-8. Use the @fun{g-variant-string} function to
+  retrieve the string.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+(g-variant-new-string \"This is a string.\") #.(SB-SYS:INT-SAP #X55EF04FDCE00)
+(g-variant-string *) => \"This is a string.\"
+    @end{pre}
+  @end{dictionary}
+  @see-type{g-variant}
+  @see-function{g-variant-string}"
   (value :string))
 
 (export 'g-variant-new-string)
@@ -1833,20 +1843,21 @@ add_to_count (GVariant  *orig,
 
 (defun g-variant-string (value)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-1}
+ "@version{*2021-10-31}
   @argument[value]{a string @type{g-variant} instance}
-  @return{The constant string, utf8 encoded.}
+  @return{The constant string, UTF-8 encoded.}
   @begin{short}
     Returns the string value of a @type{g-variant} instance with a string
     type.
   @end{short}
-  This includes the @class{g-variant-type} types with the type strings \"s\",
-  \"o\", and \"g\". The string will always be utf8 encoded.
-
-  It is an error to call this function with a value of any type other than
-  those three. The return value remains valid as long as @arg{value} exists.
+  This includes the @class{g-variant-type} types with the \"s\", \"o\", and
+  \"g\" type strings. The string will always be UTF-8 encoded. It is an error to
+  call this function with a value of any type other than those three. The return
+  value remains valid as long as @arg{value} exists. See the
+  @fun{g-variant-new-string} function for an example.
   @see-type{g-variant}
-  @see-class{g-variant-type}"
+  @see-class{g-variant-type}
+  @see-function{g-variant-new-string}"
   (%g-variant-string value (null-pointer)))
 
 (export 'g-variant-string)
