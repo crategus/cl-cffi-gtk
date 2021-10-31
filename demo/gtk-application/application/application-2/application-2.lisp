@@ -57,26 +57,24 @@
 (defmethod initialize-instance :after
     ((window example-app-window) &key &allow-other-keys)
   (format t "~&in INITIALIZE-INSTANCE for ExampleAppWindow~%")
-
-;  (unless (app-window-template-p window)
-;    (let ((resource (g-resource-load "application.gresource")))
-;      (format t "~&Register template from resource~%")
-;      (g-resources-register resource)
-;      (gtk-widget-class-set-template-from-resource
-;                                          "ExampleAppWindow"
-;                                          "/com/crategus/application/window.ui")
-;      (g-resources-unregister resource)
-;      (setf (app-window-template-p window) t)))
-
-  (unless (app-window-template-p window)
-    (gtk-widget-class-set-template "ExampleAppWindow" *window-ui*)
-    (setf (app-window-template-p window) t))
-
-  (gtk-widget-init-template window))
+  (let* ((box (make-instance 'gtk-box
+                             :orientation :vertical))
+         (header (make-instance 'gtk-header-bar))
+         (stack (make-instance 'gtk-stack))
+         (switcher (make-instance 'gtk-stack-switcher
+                                  :stack stack)))
+    (gtk-container-add header switcher)
+    (gtk-box-pack-end box header)
+    (gtk-box-pack-end box stack)
+    (gtk-container-add window box)
+    (gtk-widget-show-all window)))
 
 (defun example-app-window-new (app)
   (make-instance 'example-app-window
-                 :application app))
+                 :title "Example Application"
+                 :application app
+                 :default-width 600
+                 :default-height 480))
 
 (defun example-app-window-open (win filename)
   (declare (ignore win filename))

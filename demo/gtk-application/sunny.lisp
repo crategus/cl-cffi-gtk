@@ -31,7 +31,7 @@
   (let ((window (make-instance 'gtk-application-window
                                :application application
                                :title "Sunny"
-                               :show-menubar t
+                               :show-menubar nil
                                :icon-name "sunny"
                                :default-width 480
                                :default-height 320))
@@ -46,8 +46,8 @@
     (declare (ignorable header))
     ;; TODO: Does not work as expected. The application window has no menu, when
     ;; setting the titlebar.
-;    (gtk-widget-show header)
-;    (setf (gtk-window-titlebar window) header)
+    (gtk-widget-show header)
+    (setf (gtk-window-titlebar window) header)
     ;; Load the file into the buffer
     (when filename
       (let ((buffer (gtk-text-view-buffer textview)))

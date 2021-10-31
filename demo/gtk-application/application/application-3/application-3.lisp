@@ -37,49 +37,94 @@
   </template>
 </interface>")
 
+(defun sys-path (filename)
+  (let ((system-path (asdf:system-source-directory :gtk-application)))
+    (princ-to-string (merge-pathnames filename system-path))))
+
+(defun clear-buffer (buffer)
+  (multiple-value-bind (start end)
+      (gtk-text-buffer-bounds buffer)
+    (gtk-text-buffer-delete buffer start end)))
+
+(defun load-file-into-buffer (buffer filename)
+  (with-open-file (stream filename)
+    (clear-buffer buffer)
+    (do ((line (read-line stream nil)
+               (read-line stream nil)))
+        ((null line))
+      (gtk-text-buffer-insert buffer line)
+      (gtk-text-buffer-insert buffer (format nil "~%")))))
+
 ;;; --- example-app-window -----------------------------------------------------
 
 (defclass example-app-window (gtk-application-window)
   ((template-p :initform nil
                :accessor app-window-template-p
-               :allocation :class))
+               :allocation :class)
+   (stack :initform nil
+          :accessor example-app-window-stack))
   (:g-type-name . "ExampleAppWindow")
   (:metaclass gobject-class))
 
-(register-object-type-implementation
-    "ExampleAppWindow" example-app-window "GtkApplicationWindow" nil nil)
+(register-object-type-implementation "ExampleAppWindow"      ; name
+                                     example-app-window      ; class
+                                     "GtkApplicationWindow"  ; parent
+                                     nil                     ; interfaces
+                                     (("stack"               ; prop-name
+                                       "GtkWidget"           ; prop-type
+                                       example-app-window-stack ; prop-accessor
+                                       t                     ; prop-readable
+                                       t)))                  ; prop-writable
 
 (defmethod initialize-instance :after
     ((window example-app-window) &key &allow-other-keys)
   (format t "~&in INITIALIZE-INSTANCE for ExampleAppWindow~%")
+  (let* ((box (make-instance 'gtk-box
+                             :orientation :vertical))
+         (header (make-instance 'gtk-header-bar))
+         (stack (make-instance 'gtk-stack))
+         (switcher (make-instance 'gtk-stack-switcher
+                                  :stack stack)))
 
-;  (unless (app-window-template-p window)
-;    (let ((resource (g-resource-load "application.gresource")))
-;      (format t "~&Register template from resource~%")
-;      (g-resources-register resource)
-;      (gtk-widget-class-set-template-from-resource
-;                                          "ExampleAppWindow"
-;                                          "/com/crategus/application/window.ui")
-;      (g-resources-unregister resource)
-;      (setf (app-window-template-p window) t)))
+    (setf (example-app-window-stack window) stack)
 
-  (unless (app-window-template-p window)
-    (gtk-widget-class-set-template "ExampleAppWindow" *window-ui*)
-;    (gtk-widget-class-bind-template-child "ExampleAppWindow"
-;                                          "ExampleAppWindow"
-;                                          "stack")
-    (setf (app-window-template-p window) t))
-
-  (gtk-widget-init-template window))
+    (gtk-container-add header switcher)
+    (gtk-box-pack-start box header :expand nil :fill nil)
+    (gtk-box-pack-start box stack)
+    (gtk-container-add window box)
+    (gtk-widget-show-all window)))
 
 (defun example-app-window-new (app)
   (make-instance 'example-app-window
-                 :application app))
+                 :title "Example Application"
+                 :application app
+                 :default-width 480
+                 :default-height 600))
 
 (defun example-app-window-open (win filename)
-  (declare (ignore win filename))
-  ;; Nothing to do.
-)
+
+  (format t "~&in EXAMPLE-APP-WINDOW-OPEN~%")
+  (format t "         win : ~a~%" win)
+  (format t "    filename : ~a~%" filename)
+
+  (let ((scrolled (make-instance 'gtk-scrolled-window
+                                 :hexpand t
+                                 :vexpand t))
+        (view (make-instance 'gtk-text-view
+                             :editable nil
+                             :cursor-visible nil)))
+
+     (gtk-container-add scrolled view)
+     (gtk-stack-add-titled (example-app-window-stack win)
+                           scrolled
+                           filename
+                           filename)
+
+     (load-file-into-buffer (gtk-text-view-buffer view) (sys-path filename))
+
+     (gtk-widget-show scrolled)
+     (gtk-widget-show view)
+))
 
 ;;; --- example-app ------------------------------------------------------------
 
@@ -117,4 +162,4 @@
                     (if argv argv (uiop:command-line-arguments)))))
     (g-application-run (example-app-new) argv)))
 
-;;; 2021-10-16
+;;; 2021-10-30

@@ -5,12 +5,12 @@
 (defun create-and-fill-model-properties ()
   (let ((model (make-instance 'gtk-tree-store
                               :column-types '("gchararray" "gchararray"))))
-    ;; Append a top level row and leave it empty
+    ;; Append a toplevel row and leave it empty
     (gtk-tree-store-append model nil)
-    ;; Append a second top level row, and fill it with some data
+    ;; Append a second toplevel row, and fill it with some data
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Joe" "Average")))
-      ;; Append a child to the second top level row, and fill in some data
+      ;; Append a child to the second toplevel row, and fill in some data
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Jane" "Average"))
     model))

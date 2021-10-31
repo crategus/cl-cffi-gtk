@@ -1,4 +1,4 @@
-;;;; Application Bloatpad - 2021-10-24
+;;;; Application Bloatpad - 2021-10-26
 
 (in-package #:gtk-application)
 
@@ -151,6 +151,7 @@
   (let ((window (make-instance 'gtk-application-window
                                :application application
                                :title "Bloatpad"
+                               :show-menubar t
                                :default-width 640
                                :default-height 480))
         (grid (make-instance 'gtk-grid))
@@ -201,6 +202,7 @@
                (gtk-window-fullscreen window)
                (gtk-window-unfullscreen window))
            (setf (g-action-state action) parameter))))
+
     ;; Add action "busy" to the application window
     (let ((action (g-simple-action-new-stateful
                                              "busy"
@@ -226,6 +228,7 @@
                  (setf (gdk-window-cursor window) nil)
                  (g-application-unmark-busy application)))
            (setf (g-action-state action) parameter))))
+
     ;; Add action "justify" to the application window
     (let ((action (g-simple-action-new-stateful "justify"
                                                 (g-variant-type-new "s")
@@ -307,8 +310,7 @@
 
 (defun action-about (action parameter)
   (declare (ignore action parameter))
-  (let (;; Create an about dialog
-        (dialog (make-instance 'gtk-about-dialog
+  (let ((dialog (make-instance 'gtk-about-dialog
                                :program-name "Simple Application"
                                :version "0.9"
                                :copyright "(c) Dieter Kaiser"
@@ -333,13 +335,21 @@
   (format t "       action : ~a~%" action)
   (format t "    parameter : ~a~%" parameter)
   (let ((dialog (make-instance 'gtk-dialog
+                               :title "Edit Accelerators"
+                               :border-width 6
+                               :width-request 240
                                :application application))
         (combo (make-instance 'gtk-combo-box-text))
-        (entry (make-instance 'gtk-entry))
+        (entry (make-instance 'gtk-entry
+                              :margin-bottom 12))
         (actions (gtk-application-list-action-descriptions application)))
+
     (format t "      actions : ~a~%" actions)
-    (dolist (action actions)
+
+    ;; Fill the combo box with the name of the actions
+    (dolist (action (sort actions #'string<))
       (gtk-combo-box-text-append combo action action))
+
     (g-signal-connect combo "changed"
         (lambda (combo)
           (format t "in signal CHANGED~%")
@@ -353,9 +363,14 @@
                 (setf (gtk-entry-text entry)
                       (string-right-trim ","
                                          (format nil "~{~a,~}" accels))))))))
+
+    ;; Select the first item in the combo box
+    (setf (gtk-combo-box-active combo) 0)
+
     ;; Add buttons to the dialog
     (gtk-dialog-add-button dialog "Close" :close)
     (gtk-dialog-add-button dialog "Set" :apply)
+
     (g-signal-connect dialog "response"
         (lambda (dialog id)
           (format t "in signal RESPONSE~%")
@@ -372,8 +387,23 @@
                                                          accels
                                                          :test #'string=))))))))
     ;; Pack and show the widgets
-    (gtk-container-add (gtk-dialog-content-area dialog) combo)
-    (gtk-container-add (gtk-dialog-content-area dialog) entry)
+    (let ((area (gtk-dialog-content-area dialog)))
+      (gtk-container-add area
+                         (make-instance 'gtk-label
+                                        :xalign 0.0
+                                        :margin-top 9
+                                        :margin-bottom 6
+                                        :use-markup t
+                                        :label "<b>Detailed Action Name</b>"))
+      (gtk-container-add area combo)
+      (gtk-container-add area
+                         (make-instance 'gtk-label
+                                        :xalign 0.0
+                                        :margin-top 9
+                                        :margin-bottom 6
+                                        :use-markup t
+                                        :label "<b>Accelerators</b>"))
+      (gtk-container-add area entry))
     (gtk-widget-show-all dialog)))
 
 (defun update-time (application)
@@ -402,16 +432,18 @@
 
 (defun bloatpad-startup (application)
   (format t "Application in STARTUP.~%")
-  ;; Add more accelerators
-  (let ((accels '(("app.new" "<Primary>n")
+  ;; Add the accelerators
+  (let ((accels '(("app.new" ("<Primary>n" "<Primary>t"))
                   ("app.quit" "<Primary>q")
                   ("win.copy" "<Primary>c")
                   ("win.paste" "<Primary>p")
                   ("win.justify::left" "<Primary>l")
                   ("win.justify::center" "<Primary>m")
-                  ("win.justify::right" "<Primary>r"))))
+                  ("win.justify::right" "<Primary>r")
+                  ("win.fullscreen" "F11"))))
     (loop for (name accel) in accels
           do (setf (gtk-application-accels-for-action application name) accel)))
+
   ;; Add action "new" to the application
   (let ((action (g-simple-action-new "new" nil)))
     ;; Connect a handler to the signal "activate"
@@ -421,6 +453,7 @@
          (g-application-activate application)))
     ;; Add the action to the action map of the application
     (g-action-map-add-action application action))
+
   ;; Add action "about" to the application
   (let ((action (g-simple-action-new "about" nil)))
     ;; Connect a handler to the signal "activate"
@@ -429,6 +462,7 @@
          (action-about action parameter)))
     ;; Add the action to the action map of the application
     (g-action-map-add-action application action))
+
   ;; Add action "quit" to the application
   (let ((action (g-simple-action-new "quit" nil)))
     ;; Connect a handler to the signal activate
@@ -436,21 +470,31 @@
        (lambda (action parameter)
          (declare (ignore action parameter))
          ;; Destroy all windows of the application. When the last window is
-         ;; destroyed, the application is shutdown.
-         ;; The C example calls the g_application_quit function. In the Lisp
-         ;; library this will not close the open windows and the windows
-         ;; do not react.
+         ;; destroyed, the application is shutdown. The C example calls the
+         ;; g_application_quit function. In the Lisp library this will not
+         ;; close the open windows and the windows do not react.
          (dolist (window (gtk-application-windows application))
            (gtk-widget-destroy window))))
     ;; Add the action to action map of the application
     (g-action-map-add-action application action))
+
   ;; Add action "edit-accels" to the application
   (let ((action (g-simple-action-new "edit-accels" nil)))
     (g-signal-connect action "activate"
        (lambda (action parameter)
          (action-edit-accels application action parameter)))
     (g-action-map-add-action application action))
-  ;; TODO: No menu item to activate this action available
+
+  ;; Add action "time-active" to the application
+  (let ((action (g-simple-action-new-stateful "time-active"
+                                              nil
+                                              (g-variant-new-boolean nil))))
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (format t "in action activate for TIME-ACTIVE~%")
+         (action-time-active application action parameter)))
+    (g-action-map-add-action application action))
+
   ;; Add action "clear-all" to the application
   (let ((action (g-simple-action-new "clear-all" nil)))
     (g-signal-connect action "activate"
@@ -461,6 +505,7 @@
            (dolist (window windows)
              (g-action-group-activate-action window "clear" nil)))))
     (g-action-map-add-action application action))
+
   ;; Intitialize the application menu and the menubar
   (let ((builder (make-instance 'gtk-builder)))
     ;; Read the menus from a string
@@ -499,18 +544,10 @@
             (item (g-menu-item-new "Symbolic Icon" nil)))
         (g-menu-item-set-icon item icon)
         (g-menu-append-item menu item)))
+    ;; TIME-MENU
     (let ((menu (gtk-builder-object builder "time-menu")))
       (setf (bloatpad-time application) menu)
       (format t "  bloatpad-time : ~a~%" (bloatpad-time application))))
-  ;; Add action "time-active" to the application
-  (let ((action (g-simple-action-new-stateful "time-active"
-                                              nil
-                                              (g-variant-new-boolean nil))))
-    (g-signal-connect action "activate"
-       (lambda (action parameter)
-         (format t "in action activate for TIME-ACTIVE~%")
-         (action-time-active application action parameter)))
-    (g-action-map-add-action application action))
   ;; Start the timer for the time menu
   (action-time-active application "time-active" (g-variant-new-boolean t)))
 
@@ -543,27 +580,26 @@
   (g-signal-connect app "activate" #'bloatpad-activate)
   (g-signal-connect app "shutdown" #'bloatpad-shutdown))
 
-(defun bloatpad-new ()
-  (unless (string= "Bloatpad" (g-application-name))
-      (setf (g-application-name) "Bloatpad"))
-  (make-instance 'bloatpad
-                 :application-id "com.crategus.bloatpad"
-                 :flags :handles-open
-                 :register-session t))
-
 (defun bloatpad (&rest argv)
-    (let ((argv (cons "bloatpad" (if argv argv (uiop:command-line-arguments))))
-          ;; Create an instance of the application Bloat Pad
-          (bloatpad (bloatpad-new))
-          ;; Load resources
-          (resource (g-resource-load (sys-path "bloatpad.gresource"))))
-      (format t "Start BLOATPAD with argv : ~a~%" argv)
-      ;; Register the resources
-      (g-resources-register resource)
-      ;; Set an accelerator to toggle fullscreen
-      (setf (gtk-application-accels-for-action bloatpad "win.fullscreen") "F11")
+  (let ((argv (cons "bloatpad" (if argv argv (uiop:command-line-arguments))))
+        ;; Create an instance of the application Bloat Pad
+        (bloatpad (make-instance 'bloatpad
+                                 :application-id "com.crategus.bloatpad"
+                                 :flags :handles-open
+                                 :register-session t))
+        ;; Load resources
+        (resource (g-resource-load (sys-path "bloatpad.gresource"))))
+
+    (format t "Start BLOATPAD with argv : ~a~%" argv)
+    (format t "~a~%" (sys-path "bloatpad.gresource"))
+
+    (unless (string= "Bloatpad" (g-application-name))
+      (setf (g-application-name) "Bloatpad"))
+
+    ;; Register the resources
+    (g-resources-register resource)
+    (prog1
       ;; Run the application
       (g-application-run bloatpad argv)
-      (format t "Application back from G-APPLICATION-RUN~%")
       ;; Unregister the resources
-      (g-resources-unregister resource)))
+      (g-resources-unregister resource))))
