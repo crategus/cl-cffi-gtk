@@ -134,6 +134,10 @@
 ;;;     gtk_widget_modify_cursor                           not exported
 ;;;     gtk_widget_create_pango_context
 ;;;     gtk_widget_get_pango_context
+;;;     gtk_widget_set_font_options
+;;;     gtk_widget_get_font_options
+;;;     gtk_widget_set_font_map
+;;;     gtk_widget_get_font_map
 ;;;     gtk_widget_create_pango_layout
 ;;;     gtk_widget_render_icon                             not exported
 ;;;     gtk_widget_render_icon_pixbuf                      not exported
@@ -3533,7 +3537,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-window 'function)
- "@version{2021-9-15}
+ "@version{*2021-10-31}
   @syntax[]{(gtk-widget-window object) => window}
   @argument[object]{a @class{gtk-widget} object}
   @argument[window]{a @class{gdk-window} object}
@@ -3587,7 +3591,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_destroy" gtk-widget-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-16}
+ "@version{*2021-10-21}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Destroys a widget.
@@ -5902,32 +5906,38 @@ drag_data_received (GtkWidget        *widget,
 (defun (setf gtk-widget-font-options) (options widget)
   (foreign-funcall "gtk_widget_set_font_options"
                    (g-object gtk-widget) widget
-                   (:pointer (:struct cairo-font-options-t)) options
+                   (:pointer (:struct cairo-font-options-t)) (if options
+                                                                 options
+                                                                 (null-pointer))
                    :void)
   options)
 
-(defcfun ("gtk_widget_get_font_options" gtk-widget-font-options)
+(defcfun ("gtk_widget_get_font_options" %gtk-widget-font-options)
     (:pointer (:struct cairo-font-options-t))
+  (widget (g-object gtk-widget)))
+
+(defun gtk-widget-font-options (widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-22}
+ "@version{2021-10-28}
   @syntax[]{(gtk-widget-font-options widget) => options}
   @syntax[]{(setf (gtk-widget-font-options widget) options)}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[options]{a @symbol{cairo-font-options-t} instance, or
-    @code{null-pointer} to unset any previously set default font options}
+    @code{nil} to unset any previously set default font options}
   @begin{short}
-    The @sym{gtk-widget-font-options} function returns the
-    @symbol{cairo-font-options-t} instance used for Pango rendering.
+    The @sym{gtk-widget-font-options} function returns the font options used
+    for Pango rendering.
   @end{short}
-  When not set, the defaults font options for the @class{gdk-screen} object will
-  be used. The @sym{(setf gtk-widget-font-options} function sets the
-  @symbol{cairo-font-options-t} instance
+  The @sym{(setf gtk-widget-font-options)} function sets the font options. When
+  not set, the default font options for the GDK screen will be used.
 
   Since 3.18
   @see-class{gtk-widget}
   @see-class{gdk-screen}
   @see-symbol{cairo-font-options-t}"
-  (widget (g-object gtk-widget)))
+  (let ((options (%gtk-widget-font-options widget)))
+    (unless (null-pointer-p options)
+      options)))
 
 (export 'gtk-widget-font-options)
 
@@ -6838,7 +6848,7 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_widget_get_clipboard" gtk-widget-clipboard)
     (g-object gtk-clipboard)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-20}
+ "@version{*2021-10-31}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[selection]{an atom as a string which identifies the clipboard to
     use, @code{\"CLIPBOARD\"} gives the default clipboard, another common value
@@ -6866,12 +6876,11 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_get_display" gtk-widget-display) (g-object gdk-display)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-20}
+ "@version{*2021-10-31}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The @class{gdk-display} object for the toplevel for this widget.}
   @begin{short}
-    Get the @class{gdk-display} object for the toplevel window associated with
-    this widget.
+    Get the display for the toplevel window associated with the widget.
   @end{short}
   This function can only be called after the widget has been added to a widget
   hierarchy with a @class{gtk-window} widget at the top.
@@ -8730,11 +8739,9 @@ drag_data_received (GtkWidget        *widget,
 ;;; gtk_widget_class_set_template ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Check the implementation. We pass a string as a GBytes
-
 (defcfun ("gtk_widget_class_set_template" %gtk-widget-class-set-template) :void
   (class (:pointer (:struct g-type-class)))
-  (template :string))
+  (template (g-boxed-foreign g-bytes)))
 
 (defun gtk-widget-class-set-template (gtype template)
  #+cl-cffi-gtk-documentation
@@ -8756,9 +8763,13 @@ drag_data_received (GtkWidget        *widget,
   @see-function{gtk-widget-init-template}
   @see-function{gtk-widget-class-set-template-from-resource}"
   (let ((class (g-type-class-ref gtype)))
-    (unwind-protect
-      (%gtk-widget-class-set-template class template)
-      (g-type-class-unref class))))
+    (multiple-value-bind (data len)
+        (foreign-string-alloc template)
+      (unwind-protect
+        (%gtk-widget-class-set-template class (g-bytes-new data len))
+        (progn
+          (g-type-class-unref class)
+          (foreign-string-free data))))))
 
 (export 'gtk-widget-class-set-template)
 
@@ -8858,6 +8869,20 @@ drag_data_received (GtkWidget        *widget,
 ;;;
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+;(defcfun ("gtk_widget_class_bind_template_child"
+;          %gtk-widget-class-bind-template-child) :void
+;  (class (:pointer (:struct g-type-class)))
+;  (name :string)
+;  (member :string))
+
+;(defun gtk-widget-class-bind-template-child (class name member)
+;  (let ((class (g-type-class-ref class)))
+;    (unwind-protect
+;      (%gtk-widget-class-bind-template-child class name member)
+;      (g-type-class-unref class))))
+
+;(export 'gtk-widget-class-bind-template-child)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_class_bind_template_child_internal()
