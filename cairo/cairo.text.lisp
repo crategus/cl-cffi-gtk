@@ -419,57 +419,51 @@
 (export 'cairo-get-font-matrix)
 
 ;;; ----------------------------------------------------------------------------
-;;; cairo_set_font_options ()
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("cairo_set_font_options" cairo-set-font-options) :void
- #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
-  @argument[cr]{a @symbol{cairo-t} context}
-  @argument[options]{font options of type @symbol{cairo-font-options-t} to use}
-  @begin{short}
-    Sets a set of custom font rendering options for the Cairo context.
-  @end{short}
-  Rendering options are derived by merging these @arg{options} with the options
-  derived from underlying surface. If the value in options has a default value,
-  like @code{:default}, then the value from the surface is used.
-  @see-symbol{cairo-t}
-  @see-symbol{cairo-font-options-t}"
-  (cr (:pointer (:struct cairo-t)))
-  (options (:pointer (:struct cairo-font-options-t))))
-
-(export 'cairo-set-font-options)
-
-;;; ----------------------------------------------------------------------------
 ;;; cairo_get_font_options ()
+;;; cairo_set_font_options () -> cairo-font-options
 ;;; ----------------------------------------------------------------------------
+
+(defun (setf cairo-font-options) (options cr)
+  (foreign-funcall "cairo_set_font_options"
+                   (:pointer (:struct cairo-t)) cr
+                   (:pointer (:struct cairo-font-options-t)) (if options
+                                                                 options
+                                                                 (null-pointer))
+                   :void)
+    options)
 
 (defcfun ("cairo_get_font_options" %cairo-get-font-options) :void
   (cr (:pointer (:struct cairo-t)))
   (options (:pointer (:struct cairo-font-options-t))))
 
-(defun cairo-get-font-options (cr)
+(defun cairo-font-options (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{2021-10-28}
+  @syntax[]{(cairo-font-options cr) => options}
+  @syntax[]{(setf (cairo-font-options cr) options)}
   @argument[cr]{a @symbol{cairo-t} context}
-  @begin{return}
-    A @symbol{cairo-font-options-t} instance with the retrieved options.
-  @end{return}
+  @argument[options]{a @symbol{cairo-font-options-t} instance}
   @begin{short}
-    Retrieves font rendering options set via the function
-    @fun{cairo-set-font-options}.
+    The @sym{cairo-font-options} function retrieves font rendering options.
   @end{short}
-  Note that the returned options do not include any options derived from the
-  underlying surface; they are literally the options passed to the function
-  @fun{cairo-set-font-options}.
+  The @sym{(setf cairo-font-options)} function sets a set of custom font
+  rendering options for the Cairo context.
+
+  Note that the returned font options do not include any font options derived
+  from the underlying surface. They are literally the font options passed to
+  the @sym{(setf cairo-set-font-options)} function.
+
+  Rendering font options are derived by merging these @arg{options} with the
+  options derived from underlying surface. If the value in @arg{options} has a
+  default value, like @code{:default}, then the value from the surface is used.
   @see-symbol{cairo-t}
-  @see-symbol{cairo-font-options-t}
-  @see-function{cairo-set-font-options}"
+  @see-symbol{cairo-font-options-t}"
   (with-foreign-object (options '(:struct cairo-font-options-t))
     (%cairo-get-font-options cr options)
-    options))
+    (unless (null-pointer-p options)
+      options)))
 
-(export 'cairo-get-font-options)
+(export 'cairo-font-options)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_font_face ()
@@ -692,12 +686,12 @@
   like the basic the function @fun{cairo-show-glyphs} as if it had been passed
   @arg{glyphs} and @arg{num-glyphs}.
 
-  The mapping between utf8 and glyphs is provided by an array of clusters.
+  The mapping between UTF-8 and glyphs is provided by an array of clusters.
   Each cluster covers a number of text bytes and glyphs, and neighboring
-  clusters cover neighboring areas of utf8 and glyphs. The clusters should
-  collectively cover utf8 and glyphs in entirety.
+  clusters cover neighboring areas of UTF-8 and glyphs. The clusters should
+  collectively cover UTF-8 and glyphs in entirety.
 
-  The first cluster always covers bytes from the beginning of utf8. If
+  The first cluster always covers bytes from the beginning of UTF-8. If
   @arg{cluster-flags} do not have the @code{:backward} set, the first cluster
   also covers the beginning of glyphs, otherwise it covers the end of the
   glyphs array and following clusters move backward.
