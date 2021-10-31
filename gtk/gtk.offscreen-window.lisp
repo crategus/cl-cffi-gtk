@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.offscreen-window.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -71,7 +71,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-offscreen-window 'type)
- "@version{2020-11-21}
+ "@version{2021-10-26}
   @begin{short}
     The @sym{gtk-offscreen-window} widget is strictly intended to be used for
     obtaining snapshots of widgets that are not part of a normal widget
@@ -83,7 +83,7 @@
 
   The idea is to take a widget and manually set the state of it, add it to a
   @sym{gtk-offscreen-window} widget and then retrieve the snapshot as a
-  @symbol{cairo-surface-t} or @class{gdk-pixbuf} structure.
+  @symbol{cairo-surface-t} or @class{gdk-pixbuf} object.
 
   The @sym{gtk-offscreen-window} widget derives from the @class{gtk-window}
   class only as an implementation detail. Applications should not use any API
@@ -105,7 +105,7 @@
 
 (defun gtk-offscreen-window-new ()
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-29}
+ "@version{2021-10-26}
   @return{A @class{gtk-offscreen-window} widget.}
   @begin{short}
     Creates a toplevel container widget that is used to retrieve snapshots of
@@ -123,7 +123,7 @@
 (defcfun ("gtk_offscreen_window_get_surface" gtk-offscreen-window-surface)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{*2020-5-29}
+ "@version{2021-10-26}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
   @return{A @symbol{cairo-surface-t} instance to the @arg{offscreen} surface,
     or a @code{null}-pointer.}
@@ -147,12 +147,12 @@
 (defcfun ("gtk_offscreen_window_get_pixbuf" gtk-offscreen-window-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-10-26}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
-  @return{A @class{gdk-pixbuf} structure, or @code{nil}.}
+  @return{A @class{gdk-pixbuf} object, or @code{nil}.}
   @begin{short}
     Retrieves a snapshot of the contained widget in the form of a
-    @class{gdk-pixbuf} structure.
+    @class{gdk-pixbuf} object.
   @end{short}
   @see-class{gtk-offscreen-window}
   @see-class{gdk-pixbuf}
