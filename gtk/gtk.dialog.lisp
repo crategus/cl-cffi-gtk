@@ -456,10 +456,10 @@
       "Accessor"
       (documentation 'gtk-dialog-use-header-bar 'function)
  "@version{2021-9-26}
-  @syntax[]{(gtk-dialog-use-header-bar object) => header}
-  @syntax[]{(setf (gtk-dialog-use-header-bar object) header)}
+  @syntax[]{(gtk-dialog-use-header-bar object) => setting}
+  @syntax[]{(setf (gtk-dialog-use-header-bar object) setting)}
   @argument[object]{a @class{gtk-dialog} widget}
-  @argument[header]{a @class{gtk-header-bar} widget}
+  @argument[setting]{@em{true} if the dialog uses a header bar}
   @begin{short}
     Accessor of the @slot[gtk-dialog]{use-header-bar} slot of the
     @class{gtk-dialog} class.

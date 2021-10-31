@@ -111,7 +111,7 @@
 (setf (gethash 'gtk-actionable-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-actionable-action-name 'function)
- "@version{2021-9-3}
+ "@version{*2021-10-31}
   @syntax[]{(gtk-actionable-action-name object) => name}
   @syntax[]{(setf (gtk-actionable-action-name object) name)}
   @argument[object]{a @class{gtk-actionable} widget}
@@ -124,13 +124,11 @@
   The @sym{gtk-actionable-action-name} slot access function gets the action
   name for @arg{object}, or @code{nil} if none is set. The
   @sym{(setf gtk-actionable-action-name)} slot access function specifies the
-  name of the action with which this widget should be associated.
-
-  If the @arg{name} argument is @code{nil} then the widget will be unassociated
-  from any previous action.
-
-  Usually this function is used when the widget is located, or will be
-  located, within the hierarchy of a @class{gtk-application-window} widget.
+  name of the action with which this widget should be associated. If the
+  @arg{name} argument is @code{nil} then the widget will be unassociated from
+  any previous action. Usually this function is used when the widget is located,
+  or will be located, within the hierarchy of a @class{gtk-application-window}
+  widget.
 
   Names are of the form \"win.save\" or \"app.quit\" for actions on the
   containing @class{gtk-application-window} widget or its associated
@@ -251,14 +249,13 @@
 (defcfun ("gtk_actionable_set_detailed_action_name"
            gtk-actionable-set-detailed-action-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-8}
+ "@version{*2021-10-31}
   @argument[actionable]{a @class{gtk-actionable} widget}
   @argument[name]{a string with the detailed action name}
   @begin{short}
     Sets the action name and associated string target value of an actionable
     widget.
   @end{short}
-
   This allows for the effect of both the @fun{gtk-actionable-action-name} and
   @fun{gtk-actionable-action-target} functions in the common case that the
   target is string-valued.

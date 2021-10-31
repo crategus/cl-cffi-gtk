@@ -811,7 +811,7 @@ menu
   @br{}
   A boolean that indicates whether the menu reserves space for toggles and
   icons, regardless of their actual presence. This property should only be
-  changed from its default value for special-purposes such as tabular menus.
+  changed from its default value for special purposes such as tabular menus.
   Regular menus that are connected to a menu bar or context menus should
   reserve toggle space for consistency. @br{}
   Default value: @em{true}")
@@ -836,7 +836,7 @@ menu
   sets whether the menu should reserve space.
 
   This property should only be changed from its default value for
-  special-purposes such as tabular menus. Regular menus that are connected to
+  special purposes such as tabular menus. Regular menus that are connected to
   a menu bar or context menus should reserve toggle space for consistency.
   @see-class{gtk-menu}")
 

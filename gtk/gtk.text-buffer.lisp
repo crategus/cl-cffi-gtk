@@ -576,7 +576,7 @@
 (setf (gethash 'gtk-text-buffer-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-buffer-text 'function)
- "@version{2021-8-18}
+ "@version{*2021-10-31}
   @syntax[]{(gtk-text-buffer-text object) => text}
   @syntax[]{(setf (gtk-text-buffer-text object) text)}
   @argument[object]{a @class{gtk-text-buffer} object}
@@ -586,13 +586,13 @@
     @class{gtk-text-buffer} class.
   @end{short}
 
-  The function @sym{gtk-text-buffer} retrieves the text of the text buffer,
-  without child widgets and images. The function
-  @sym{(setf gtk-text-buffer-text)} deletes current contents of the text buffer,
-  and inserts @arg{text} instead. The text must be valid UTF-8.
+  The @sym{gtk-text-buffer} function retrieves the text of the text buffer,
+  without child widgets and images. The @sym{(setf gtk-text-buffer-text)}
+  function deletes current contents of the text buffer, and inserts @arg{text}
+  instead. The text must be valid UTF-8.
   @begin[Note]{dictionary}
-    Use the function @fun{gtk-text-buffer-get-text} to retrieve a range of text
-    from the text buffer and the function @fun{gtk-text-buffer-get-slice} to
+    Use the @fun{gtk-text-buffer-get-text} function to retrieve a range of text
+    from the text buffer and the @fun{gtk-text-buffer-get-slice} function to
     include widgets and images.
   @end{dictionary}
   @see-class{gtk-text-buffer}
@@ -2208,9 +2208,9 @@
 
 (defun gtk-text-buffer-paste-clipboard (buffer clipboard &key override editable)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-18}
+ "@version{*2021-10-31}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[clipboard]{the @class{gtk-clipboard} object to paste from}
+  @argument[clipboard]{a @class{gtk-clipboard} object to paste from}
   @argument[override]{a @class{gtk-text-iter} location to insert pasted text,
     or @code{nil} to insert at the cursor}
   @argument[editable]{a boolean whether the text buffer is editable by default}
@@ -2236,9 +2236,9 @@
 
 (defcfun ("gtk_text_buffer_copy_clipboard" gtk-text-buffer-copy-clipboard) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-18}
+ "@version{*2021-10-31}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[clipboard]{the @class{gtk-clipboard} object to copy to}
+  @argument[clipboard]{a @class{gtk-clipboard} object to copy to}
   @begin{short}
     Copies the currently selected text to the clipboard.
   @end{short}

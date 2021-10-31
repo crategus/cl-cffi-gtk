@@ -259,7 +259,7 @@ gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
   @br{}
   The size of the icons in a tool palette is normally determined by the
   @slot[gtk-settings]{gtk-toolbar-icon-size} setting. When this property is set,
-  it overrides the setting. This should only be used for special-purpose tool
+  it overrides the setting. This should only be used for special purpose tool
   palettes, normal application tool palettes should respect the user preferences
   for the size of icons. @br{}
   Default value: @code{:small-toolbar}")

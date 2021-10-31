@@ -189,14 +189,14 @@
 (setf (gethash 'gtk-tree-selection-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-tree-selection-func atdoc:*external-symbols*)
- "@version{2021-2-27}
+ "@version{2021-10-26}
   @begin{short}
-    A callback function used by the function
-    @fun{gtk-tree-selection-set-select-function} to filter whether or not a row
-    may be selected.
+    A callback function used by the @fun{gtk-tree-selection-set-select-function}
+    function to filter whether or not a row may be selected.
   @end{short}
-  It is called whenever a row's state might change. A return value of @em{true}
-  indicates to selection that it is okay to change the selection.
+  It is called whenever the selection state of a row might change. A return
+  value of @em{true} indicates to selection that it is okay to change the
+  selection.
   @begin{pre}
  lambda (selection model path selected)
   @end{pre}
@@ -205,7 +205,8 @@
     @entry[mode]{A @class{gtk-tree-model} being viewed.}
     @entry[path]{The @class{gtk-tree-path} instance of the row in question.}
     @entry[selected]{@em{True}, if the path is currently selected.}
-    @entry[Return]{@em{True}, if the selection state of the row can be toggled.}
+    @entry[Returns]{@em{True}, if the selection state of the row can be
+      toggled.}
   @end{table}
   @see-class{gtk-tree-selection}
   @see-function{gtk-tree-selection-set-select-function}")

@@ -2504,7 +2504,7 @@
 
 (defcfun ("gtk_window_fullscreen" gtk-window-fullscreen) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-12}
+ "@version{*2021-10-31}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to place the window in the fullscreen state.
@@ -2561,7 +2561,7 @@
 
 (defcfun ("gtk_window_unfullscreen" gtk-window-unfullscreen) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-12}
+ "@version{*2021-10-31}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to toggle off the fullscreen state for the window.

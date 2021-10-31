@@ -611,7 +611,7 @@
     Prepends a new row to @arg{store}.
   @end{short}
   If @arg{parent} is non-@code{nil}, then it will prepend the new row before
-  the first child of parent, otherwise it will prepend a row to the top level.
+  the first child of parent, otherwise it will prepend a row to the toplevel.
   The returned iterator point to this new row. The row will be empty after this
   function is called. To fill in values, you need to call the functions
   @fun{gtk-tree-store-set} or @fun{gtk-tree-store-set-value}.
@@ -644,7 +644,7 @@
     Appends a new row to the tree store.
   @end{short}
   If @arg{parent} is non-@code{nil}, then it will append the new row after the
-  last child of @arg{parent}, otherwise it will append a row to the top level.
+  last child of @arg{parent}, otherwise it will append a row to the toplevel.
   The row will be empty after this function is called. To fill in values, you
   need to call the functions @fun{gtk-tree-store-set} or
   @fun{gtk-tree-store-set-value}.
