@@ -817,7 +817,7 @@
                            (glyphs-ptr '(:struct cairo-glyph-t) num-glyphs))
       (loop for count from 0 below num-glyphs
             for glyph-ptr = (mem-aptr glyphs-ptr '(:struct cairo-glyph-t) count)
-            for glyph = (pop glyphs)
+            for glyph in glyphs
             do (setf (foreign-slot-value glyph-ptr
                                          '(:struct cairo-glyph-t)
                                          'cairo::index)
