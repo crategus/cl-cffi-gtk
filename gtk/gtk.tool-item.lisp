@@ -119,18 +119,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-item 'type)
- "@version{2020-9-4}
+ "@version{*2021-10-31}
   @begin{short}
-    @sym{gtk-tool-item}'s are widgets that can appear on a toolbar.
+    The @sym{gtk-tool-item} widget is a widget that can appear on a toolbar.
   @end{short}
   To create a toolbar item that contain something else than a button, use the
-  function @fun{gtk-tool-item-new}. Use the function @fun{gtk-container-add} to
+  @fun{gtk-tool-item-new} function. Use the @fun{gtk-container-add} function to
   add a child widget to the tool item. For toolbar items that contain buttons,
   see the @class{gtk-tool-button}, @class{gtk-toggle-tool-button} and
-  @class{gtk-radio-tool-button} classes.
+  @class{gtk-radio-tool-button} widgets.
 
-  See the @class{gtk-toolbar} class for a description of the toolbar widget,
-  and @class{gtk-tool-shell} for a description of the tool shell interface.
+  See the @class{gtk-toolbar} documentation for a description of the toolbar
+  widget, and the @class{gtk-tool-shell} documentation for a description of the
+  tool shell interface.
   @begin[Signal Details]{dictionary}
     @subheading{The \"create-menu-proxy\" signal}
       @begin{pre}
@@ -141,18 +142,18 @@
       response the tool item should either.
       @begin{itemize}
         @begin{item}
-          Call the @fun{gtk-tool-item-set-proxy-menu-item} function with a
-          @code{NULL} pointer and return @em{true} to indicate that the item
-          should not appear in the overflow menu,
+          Call the @fun{gtk-tool-item-proxy-menu-item} function with @code{nil}
+          and return @em{true} to indicate that the tool item should not appear
+          in the overflow menu,
         @end{item}
         @begin{item}
-          call the @fun{gtk-tool-item-set-proxy-menu-item} function with a new
+          call the @fun{gtk-tool-item-proxy-menu-item} function with a new
           menu item and return @em{true}, or
         @end{item}
         @begin{item}
           return @em{false} to indicate that the signal was not handled by the
-          item. This means that the item will not appear in the overflow menu
-          unless a later handler installs a menu item.
+          tool item. This means that the tool item will not appear in the
+          overflow menu unless a later handler installs a menu item.
         @end{item}
       @end{itemize}
       The toolbar may cache the result of this signal. When the tool item
@@ -201,27 +202,29 @@
 (setf (gethash 'gtk-tool-item-is-important atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-is-important 'function)
- "@version{2020-9-4}
-  @syntax[]{gtk-tool-item-is-important object) => is-important}
-  @syntax[]{(setf (gtk-tool-item-is-important object) is-important)}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[is-important]{a boolean whether the tool item should be considered
+ "@version{2021-10-31}
+  @syntax[]{gtk-tool-item-is-important object) => setting}
+  @syntax[]{(setf (gtk-tool-item-is-important object) setting)}
+  @argument[object]{a @class{gtk-tool-item} widget}
+  @argument[setting]{a boolean whether the tool item should be considered
     important}
   @begin{short}
     Accessor of the @slot[gtk-tool-item]{is-important} slot of the
     @class{gtk-tool-item} class.
   @end{short}
 
-  The slot access function @sym{gtk-tool-item-is-important} returns whether the
-  tool item is considered important. The slot access function
-  @sym{(setf gtk-tool-item-is-important)} sets whether the tool item should be
-  considered important.
+  The @sym{gtk-tool-item-is-important} slot access function returns whether the
+  tool item is considered important. The @sym{(setf gtk-tool-item-is-important)}
+  slot access function sets whether the tool item should be considered
+  important.
 
   The @class{gtk-tool-button} class uses this property to determine whether to
   show or hide its label when the toolbar style is @code{:both-horiz}. The
   result is that only tool buttons with the @code{is-important} property set
   have labels, an effect known as \"priority text\".
-  @see-class{gtk-tool-item}")
+  @see-class{gtk-tool-item}
+  @see-class{gtk-tool-button}
+  @see-symbol{gtk-toolbar-style}")
 
 ;;; --- gtk-tool-item-visible-horizontal ---------------------------------------
 
@@ -238,20 +241,20 @@
 (setf (gethash 'gtk-tool-item-visible-horizontal atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-visible-horizontal 'function)
- "@version{2020-9-4}
+ "@version{2021-10-31}
   @syntax[]{gtk-tool-item-visible-horizontal object) => visible}
   @syntax[]{(setf (gtk-tool-item-visible-horizontal object) visible)}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[visible]{a boolean whether @arg{tool-item} is visible when in
+  @argument[object]{a @class{gtk-tool-item} widget}
+  @argument[visible]{a boolean whether @arg{object} is visible when in
     horizontal mode}
   @begin{short}
     Accessor of the @slot[gtk-tool-item]{visible-horizontal} slot of the
     @class{gtk-tool-item} class.
   @end{short}
 
-  The slot access function @sym{gtk-tool-item-visible-horizontal} returns
+  The @sym{gtk-tool-item-visible-horizontal} slot access function returns
   whether the tool item is visible on toolbars that are docked horizontally.
-  The slot access function @sym{(setf gtk-tool-item-visible-horizontal)} sets
+  The @sym{(setf gtk-tool-item-visible-horizontal)} slot access function sets
   whether the tool item is visible when the toolbar is docked horizontally.
   @see-class{gtk-tool-item}")
 
@@ -270,25 +273,25 @@
 (setf (gethash 'gtk-tool-item-visible-vertical atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-visible-vertical 'function)
- "@version{2020-9-4}
+ "@version{2021-10-31}
   @syntax[]{gtk-tool-item-visible-vertical object) => visible}
   @syntax[]{(setf (gtk-tool-item-visible-vertical object) visible)}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[visible]{a boolean whether @arg{tool-item} is visible when the
-    toolbar is in vertical mode}
+  @argument[object]{a @class{gtk-tool-item} widget}
+  @argument[visible]{a boolean whether @arg{object} is visible when the toolbar
+    is in vertical mode}
   @begin{short}
     Accessor of the @slot[gtk-tool-item]{visible-vertical} slot of the
     @class{gtk-tool-item} class.
   @end{short}
 
-  The slot access function @sym{gtk-tool-item-visible-vertical} returns whether
-  the tool item is visible when the toolbar is docked vertically. The slot
-  access function @sym{(setf gtk-tool-item-visible-vertical)} sets whether the
-  tool item is visible when the toolbar is docked vertically.
+  The @sym{gtk-tool-item-visible-vertical} slot access function returns whether
+  the tool item is visible when the toolbar is docked vertically. The
+  @sym{(setf gtk-tool-item-visible-vertical)} slot access function sets whether
+  the tool item is visible when the toolbar is docked vertically.
 
   Some tool items, such as text entries, are too wide to be useful on a
-  vertically docked toolbar. If @arg{visible} is @em{false} the tool item will
-  not appear on toolbars that are docked vertically.
+  vertically docked toolbar. If the @arg{visible} argument is @em{false} the
+  tool item will not appear on toolbars that are docked vertically.
   @see-class{gtk-tool-item}")
 
 ;;; ----------------------------------------------------------------------------
@@ -299,7 +302,7 @@
 
 (defun gtk-tool-item-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
+ "@version{2021-10-31}
   @return{The new @class{gtk-tool-item} widget.}
   @short{Creates a new tool item.}
   @see-class{gtk-tool-item}"
@@ -312,34 +315,34 @@
 ;;; gtk_tool_item_set_homogeneous () -> gtk-tool-item-homogeneous
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-tool-item-homogeneous) (homogeneous tool-item)
+(defun (setf gtk-tool-item-homogeneous) (homogeneous item)
   (foreign-funcall "gtk_tool_item_set_homogeneous"
-                   (g-object gtk-tool-item) tool-item
+                   (g-object gtk-tool-item) item
                    :boolean homogeneous
                    :void)
   homogeneous)
 
 (defcfun ("gtk_tool_item_get_homogeneous" gtk-tool-item-homogeneous) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
+ "@version{2021-10-31}
   @syntax[]{(gtk-tool-item-homogeneous tool-item) => homogeneous}
   @syntax[]{(setf (gtk-tool-item-homogeneous tool-item) homogeneous)}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[homogeneous]{a boolean whether @arg{tool-item} is the same size as
-    other homogeneous items}
+  @argument[item]{a @class{gtk-tool-item} widget}
+  @argument[homogeneous]{a boolean whether @arg{item} is the same size as other
+    homogeneous items}
   @begin{short}
     Accessor of the homogeneous property of the tool item.
   @end{short}
 
-  The function @sym{gtk-tool-item-homogeneous} returns whether @arg{tool-item}
-  is the same size as other homogeneous items. The function
-  @sym{(setf gtk-tool-item-homogeneous)} sets whether @arg{tool-item} is to be
-  allocated the same size as other homogeneous items.
+  The @sym{gtk-tool-item-homogeneous} function returns whether @arg{item} is the
+  same size as other homogeneous items. The
+  @sym{(setf gtk-tool-item-homogeneous)} function sets whether @arg{item} is to
+  be allocated the same size as other homogeneous items.
 
   The effect is that all homogeneous items will have the same width as the
   widest of the items.
   @see-class{gtk-tool-item}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-homogeneous)
 
@@ -348,31 +351,32 @@
 ;;; gtk_tool_item_set_expand () -> gtk-tool-item-expand
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-tool-item-expand) (expand tool-item)
+(defun (setf gtk-tool-item-expand) (expand item)
   (foreign-funcall "gtk_tool_item_set_expand"
-                   (g-object gtk-tool-item) tool-item
+                   (g-object gtk-tool-item) item
                    :boolean expand
                    :void)
   expand)
 
 (defcfun ("gtk_tool_item_get_expand" gtk-tool-item-expand) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
+ "@version{*2021-10-31}
   @syntax[]{(gtk-tool-item-expand tool-item) => expand}
   @syntax[]{(setf (gtk-tool-item-expand tool-item) expand)}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[expand]{a boolean whether @arg{tool-item} is allocated extra space}
+  @argument[item]{a @class{gtk-tool-item} widget}
+  @argument[expand]{a boolean whether @arg{item} is allocated extra space}
   @begin{short}
     Accessor of the expand property of the tool item.
   @end{short}
 
-  The function @sym{gtk-tool-item-expand} returns whether @arg{tool-item} is
-  allocated extra space. The function @sym{(setf gtk-tool-item-expand)} sets
-  whether @arg{tool-item} is allocated extra space when there is more room on
-  the toolbar then needed for the items. The effect is that the item gets
-  bigger when the toolbar gets bigger and smaller when the toolbar gets smaller.
+  The @sym{gtk-tool-item-expand} function returns whether @arg{item} is
+  allocated extra space. The @sym{(setf gtk-tool-item-expand)} function sets
+  whether @arg{item} is allocated extra space when there is more room on
+  the toolbar then needed for the tool items. The effect is that the tool item
+  gets bigger when the toolbar gets bigger and smaller when the toolbar gets
+  smaller.
   @see-class{gtk-tool-item}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-expand)
 
@@ -382,18 +386,17 @@
 
 (defcfun ("gtk_tool_item_set_tooltip_text" gtk-tool-item-set-tooltip-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[text]{a @code{:string} with the text to be used as tooltip for
-    @arg{tool-item}}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
+  @argument[text]{a string with the text to be used as tooltip for @arg{item}}
   @begin{short}
-    Sets the text to be displayed as tooltip on the item.
+    Sets the text to be displayed as tooltip on the tool item.
   @end{short}
-  See the function @fun{gtk-widget-tooltip-text}.
+  See the @fun{gtk-widget-tooltip-text} function.
   @see-class{gtk-tool-item}
   @see-function{gtk-widget-tooltip-text}
   @see-function{gtk-tool-item-set-tooltip-markup}"
-  (tool-item (g-object gtk-tool-item))
+  (item (g-object gtk-tool-item))
   (text :string))
 
 (export 'gtk-tool-item-set-tooltip-text)
@@ -405,18 +408,18 @@
 (defcfun ("gtk_tool_item_set_tooltip_markup" gtk-tool-item-set-tooltip-markup)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[markup]{a @code{:string} with the markup text to be used as tooltip
-    for @arg{tool-item}}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
+  @argument[markup]{a string with the markup text to be used as tooltip for
+    @arg{item}}
   @begin{short}
-    Sets the markup text to be displayed as tooltip on the item.
+    Sets the markup text to be displayed as tooltip on the tool item.
   @end{short}
-  See the function @fun{gtk-widget-tooltip-markup}.
+  See the @fun{gtk-widget-tooltip-markup} function.
   @see-class{gtk-tool-item}
   @see-function{gtk-widget-tooltip-markup}
   @see-function{gtk-tool-item-set-tooltip-text}"
-  (tool-item (g-object gtk-tool-item))
+  (item (g-object gtk-tool-item))
   (markup :string))
 
 (export 'gtk-tool-item-set-tooltip-markup)
@@ -426,37 +429,36 @@
 ;;; gtk_tool_item_set_use_drag_window () -> gtk-tool-item-use-drag-window
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-tool-item-use-drag-window) (use-drag-window tool-item)
+(defun (setf gtk-tool-item-use-drag-window) (setting item)
   (foreign-funcall "gtk_tool_item_set_use_drag_window"
-                   (g-object gtk-tool-item) tool-item
-                   :boolean use-drag-window
+                   (g-object gtk-tool-item) item
+                   :boolean setting
                    :void)
-  use-drag-window)
+  setting)
 
 (defcfun ("gtk_tool_item_get_use_drag_window" gtk-tool-item-use-drag-window)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @syntax[]{(gtk-tool-item-use-drag-window tool-item) => use-drag-window}
-  @syntax[]{(setf (gtk-tool-item-use-drag-window tool-item) use-drag-window)}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[use-drag-window]{a boolean whether @arg{tool-item} has a drag
-    window}
+ "@version{2021-10-31}
+  @syntax[]{(gtk-tool-item-use-drag-window tool-item) => setting}
+  @syntax[]{(setf (gtk-tool-item-use-drag-window tool-item) setting)}
+  @argument[item]{a @class{gtk-tool-item} widget}
+  @argument[setting]{a boolean whether @arg{item} has a drag window}
   @begin{short}
     Accessor of the use drag window property of the tool item.
   @end{short}
 
-  The function @sym{gtk-tool-item-use-drag-window} returns whether
-  @arg{tool-item} has a drag window. The function
-  @sym{gtk-tool-item-use-drag-window)} sets whether @arg{tool-item} has a drag
-  window.
+  The @sym{gtk-tool-item-use-drag-window} function returns whether @arg{item}
+  has a drag window. The @sym{(setf gtk-tool-item-use-drag-window)} function
+  sets whether @arg{item} has a drag window.
 
-  When @em{true} the toolitem can be used as a drag source through
-  the function @fun{gtk-drag-source-set}. When @arg{tool-item} has a drag
-  window it will intercept all events, even those that would otherwise be sent
-  to a child of @arg{tool-item}.
-  @see-class{gtk-tool-item}"
-  (tool-item (g-object gtk-tool-item)))
+  When @em{true} the tool item can be used as a drag source through
+  the @fun{gtk-drag-source-set} function. When @arg{item} has a drag window it
+  will intercept all events, even those that would otherwise be sent to a child
+  of @arg{item}.
+  @see-class{gtk-tool-item}
+  @see-function{gtk-drag-source-set}"
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-use-drag-window)
 
@@ -467,20 +469,20 @@
 (defcfun ("gtk_tool_item_get_ellipsize_mode" gtk-tool-item-ellipsize-mode)
     pango-ellipsize-mode
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{return}
-    A @symbol{pango-ellipsize-mode} indicating how text in @arg{tool-item}
+    A @symbol{pango-ellipsize-mode} value indicating how text in @arg{item}
     should be ellipsized.
   @end{return}
   @begin{short}
     Returns the ellipsize mode used for the tool item.
   @end{short}
-  Custom subclasses of @class{gtk-tool-item} should call this function to find
-  out how text should be ellipsized.
+  Custom subclasses of the @class{gtk-tool-item} class should call this function
+  to find out how text should be ellipsized.
   @see-class{gtk-tool-item}
   @see-symbol{pango-ellipsize-mode}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-ellipsize-mode)
 
@@ -490,19 +492,19 @@
 
 (defcfun ("gtk_tool_item_get_icon_size" gtk-tool-item-icon-size) gtk-icon-size
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{return}
-    A @symbol{gtk-icon-size} indicating the icon size used for @arg{tool-item}.
+    A @symbol{gtk-icon-size} value indicating the icon size used for @arg{item}.
   @end{return}
   @begin{short}
     Returns the icon size used for the tool item.
   @end{short}
-  Custom subclasses of @class{gtk-tool-item} should call this function to find
-  out what size icons they should use.
+  Custom subclasses of the @class{gtk-tool-item} class should call this function
+  to find out what size icons they should use.
   @see-class{gtk-tool-item}
   @see-symbol{gtk-icon-size}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-icon-size)
 
@@ -513,20 +515,20 @@
 (defcfun ("gtk_tool_item_get_orientation" gtk-tool-item-orientation)
     gtk-orientation
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{return}
-    A @symbol{gtk-orientation} indicating the orientation used for
-    @arg{tool-item}.
+    A @symbol{gtk-orientation} value indicating the orientation used for
+    @arg{item}.
   @end{return}
   @begin{short}
     Returns the orientation used for the tool item.
   @end{short}
-  Custom subclasses of @class{gtk-tool-item} should call this function to find
-  out what size icons they should use.
+  Custom subclasses of the @class{gtk-tool-item} class should call this function
+  to find out what size icons they should use.
   @see-class{gtk-tool-item}
   @see-symbol{gtk-orientation}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-orientation)
 
@@ -537,18 +539,18 @@
 (defcfun ("gtk_tool_item_get_toolbar_style" gtk-tool-item-toolbar-style)
     gtk-toolbar-style
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{return}
-    A @symbol{gtk-toolbar-style} indicating the toolbar style used for
-    the tool item.
+    A @symbol{gtk-toolbar-style} value indicating the toolbar style used for
+    @arg{item}.
   @end{return}
   @begin{short}
     Returns the toolbar style used for the tool item.
   @end{short}
-  Custom subclasses of @class{gtk-tool-item} should call this function in the
-  handler of the \"toolbar-reconfigured\" signal to find out in what style the
-  toolbar is displayed and change themselves accordingly.
+  Custom subclasses of the @class{gtk-tool-item} class should call this function
+  in the handler of the \"toolbar-reconfigured\" signal to find out in what
+  style the toolbar is displayed and change themselves accordingly.
 
   Possibilities are:
   @begin{itemize}
@@ -563,7 +565,7 @@
   @end{itemize}
   @see-class{gtk-tool-item}
   @see-symbol{gtk-toolbar-style}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-toolbar-style)
 
@@ -574,22 +576,22 @@
 (defcfun ("gtk_tool_item_get_relief_style" gtk-tool-item-relief-style)
     gtk-relief-style
  #+cl-cffi-gtk-documentation
- "@version{2020-5-10}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{return}
     A value of the @symbol{gtk-relief-style} enumeration indicating the relief
-    style used for @arg{tool-item}.
+    style used for @arg{item}.
   @end{return}
   @begin{short}
     Returns the relief style of the tool item.
   @end{short}
 
-  Custom subclasses of @class{gtk-tool-item} should call this function in the
-  handler of the \"toolbar-reconfigured\" signal to find out the relief style
-  of buttons. See the function @fun{gtk-button-relief-style}.
+  Custom subclasses of the @class{gtk-tool-item} class should call this function
+  in the handler of the \"toolbar-reconfigured\" signal to find out the relief
+  style of buttons. See the @fun{gtk-button-relief-style} function.
   @see-class{gtk-tool-item}
   @see-function{gtk-button-relief-style}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-relief-style)
 
@@ -600,19 +602,18 @@
 (defcfun ("gtk_tool_item_get_text_alignment" gtk-tool-item-text-alignment)
     :float
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{return}
-    A @code{:float} indicating the horizontal text alignment used for
-    @arg{tool-item}.
+    A float indicating the horizontal text alignment used for @arg{item}.
   @end{return}
   @begin{short}
     Returns the text alignment used for the tool item.
   @end{short}
-  Custom subclasses of @class{gtk-tool-item} should call this function to find
-  out how text should be aligned.
+  Custom subclasses of the @class{gtk-tool-item} class should call this function
+  to find out how text should be aligned.
   @see-class{gtk-tool-item}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-text-alignment)
 
@@ -623,20 +624,20 @@
 (defcfun ("gtk_tool_item_get_text_orientation" gtk-tool-item-text-orientation)
     gtk-orientation
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{return}
     A value of the @symbol{gtk-orientation} enumeration indicating the text
-    orientation used for @arg{tool-item}.
+    orientation used for @arg{item}.
   @end{return}
   @begin{short}
     Returns the text orientation used for the tool item.
   @end{short}
-  Custom subclasses of @class{gtk-tool-item} should call this function to find
-  out how text should be orientated.
+  Custom subclasses of the @class{gtk-tool-item} class should call this function
+  to find out how text should be orientated.
   @see-class{gtk-tool-item}
   @see-symbol{gtk-orientation}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-text-orientation)
 
@@ -647,20 +648,21 @@
 (defcfun ("gtk_tool_item_retrieve_proxy_menu_item"
           gtk-tool-item-retrieve-proxy-menu-item) g-object
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{return}
-    The @class{gtk-menu-item} that is going to appear in the overflow menu for
-    @arg{tool-item}.
+    The @class{gtk-menu-item} widget that is going to appear in the overflow
+    menu for @arg{item}.
   @end{return}
   @begin{short}
-    Returns the @class{gtk-menu-item} widget that was last set by the function
-    @fun{gtk-tool-item-proxy-menu-item}, i.e. the @class{gtk-menu-item} that is
-    going to appear in the overflow menu.
+    Returns the @class{gtk-menu-item} widget that was last set by the
+    @fun{gtk-tool-item-proxy-menu-item} function, i.e. the @class{gtk-menu-item}
+    widget that is going to appear in the overflow menu.
   @end{short}
   @see-class{gtk-tool-item}
+  @see-class{gtk-menu-item}
   @see-function{gtk-tool-item-proxy-menu-item}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-retrieve-proxy-menu-item)
 
@@ -669,40 +671,39 @@
 ;;; gtk_tool_item_set_proxy_menu_item () -> gtk-tool-item-proxy-menu-item
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-tool-item-proxy-menu-item) (menu-item tool-item menu-item-id)
+(defun (setf gtk-tool-item-proxy-menu-item) (menuitem item id)
   (foreign-funcall "gtk_tool_item_set_proxy_menu_item"
-                   (g-object gtk-tool-item) tool-item
-                   :string menu-item-id
-                   (g-object gtk-widget) menu-item
+                   (g-object gtk-tool-item) item
+                   :string id
+                   (g-object gtk-widget) menuitem
                    :void)
-  menu-item)
+  menuitem)
 
 (defcfun ("gtk_tool_item_get_proxy_menu_item" gtk-tool-item-proxy-menu-item)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @syntax[]{(gtk-tool-item-proxy-menu-item tool-item menu-item-id) => menu-item}
-  @syntax[]{(setf (gtk-tool-item-proxy-menu-item tool-item menu-item-id) menu-item)}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
-  @argument[menu-item-id]{a string used to identify the menu item}
-  @argument[menu-item]{a @class{gtk-menu-item} to be used in the overflow menu}
+ "@version{2021-10-31}
+  @syntax[]{(gtk-tool-item-proxy-menu-item item id) => menuitem}
+  @syntax[]{(setf (gtk-tool-item-proxy-menu-item item id) menuitem)}
+  @argument[item]{a @class{gtk-tool-item} widget}
+  @argument[id]{a string used to identify the menu item}
+  @argument[menuitem]{a @class{gtk-menu-item} to be used in the overflow menu}
   @begin{short}
     Accessor of the proxy menu item of the tool item.
   @end{short}
 
-  The function @sym{gtk-tool-item-proxy-menu-item} gets the menu item used
-  in the toolbar overflow menu. The function
-  @sym{(setf gtk-tool-item-proxy-menu-item)} sets the menu item used in the
-  toolbar overflow menu.
+  The @sym{gtk-tool-item-proxy-menu-item} function gets the menu item used in
+  the toolbar overflow menu. The @sym{(setf gtk-tool-item-proxy-menu-item)}
+  function sets the menu item used in the toolbar overflow menu.
 
-  Custom subclasses of @class{gtk-tool-item} should use this function to update
-  their menu item when the @class{gtk-tool-item} changes. That the argument
-  @arg{menu-item-id} must match ensures that a @class{gtk-tool-item} will not
-  inadvertently change a menu item that they did not create.
+  Custom subclasses of the @class{gtk-tool-item} class should use this function
+  to update their menu item when the @class{gtk-tool-item} changes. That the
+  @arg{id} argument must match ensures that a @class{gtk-tool-item} widget will
+  not inadvertently change a menu item that they did not create.
   @see-class{gtk-tool-item}
   @see-class{gtk-menu-item}"
-  (tool-item (g-object gtk-tool-item))
-  (menu-item-id :string))
+  (item (g-object gtk-tool-item))
+  (id :string))
 
 (export 'gtk-tool-item-proxy-menu-item)
 
@@ -712,8 +713,8 @@
 
 (defcfun ("gtk_tool_item_rebuild_menu" gtk-tool-item-rebuild-menu) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{short}
     Calling this function signals to the toolbar that the overflow menu item
     for the tool item has changed.
@@ -724,7 +725,7 @@
   The function must be called when the tool item changes what it will do in
   response to the \"create-menu-proxy\" signal.
   @see-class{gtk-tool-item}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-rebuild-menu)
 
@@ -735,17 +736,18 @@
 (defcfun ("gtk_tool_item_toolbar_reconfigured"
            gtk-tool-item-toolbar-reconfigured) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @begin{short}
     Emits the signal \"toolbar-reconfigured\" on the tool item.
   @end{short}
-  @class{gtk-toolbar} and other @class{gtk-tool-shell} implementations use this
-  function to notify children, when some aspect of their configuration changes.
+  The @class{gtk-toolbar} widget and other @class{gtk-tool-shell}
+  implementations use this function to notify children, when some aspect of
+  their configuration changes.
   @see-class{gtk-tool-item}
   @see-class{gtk-toolbar}
   @see-class{gtk-tool-shell}"
-  (tool-item (g-object gtk-widget)))
+  (item (g-object gtk-widget)))
 
 (export 'gtk-tool-item-toolbar-reconfigured)
 
@@ -756,17 +758,17 @@
 (defcfun ("gtk_tool_item_get_text_size_group" gtk-tool-item-text-size-group)
     (g-object gtk-size-group)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-4}
-  @argument[tool-item]{a @class{gtk-tool-item} widget}
+ "@version{2021-10-31}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @return{A @class{gtk-size-group} widget.}
   @begin{short}
     Returns the size group used for labels in the tool item.
   @end{short}
-  Custom subclasses of @class{gtk-tool-item} should call this function and use
-  the size group for labels.
+  Custom subclasses of the @class{gtk-tool-item} class should call this function
+  and use the size group for labels.
   @see-class{gtk-tool-item}
   @see-class{gtk-size-group}"
-  (tool-item (g-object gtk-tool-item)))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-text-size-group)
 
