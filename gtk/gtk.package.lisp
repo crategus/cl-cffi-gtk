@@ -343,6 +343,7 @@
 
       @about-symbol{gtk-assistant-page-type}
       @about-class{gtk-assistant}
+      @about-generic{gtk-assistant-use-header-bar}
       @about-function{gtk-assistant-child-complete}
       @about-function{gtk-assistant-child-has-padding}
       @about-function{gtk-assistant-child-header-image}
@@ -357,6 +358,7 @@
       @about-function{gtk-assistant-append-page}
       @about-function{gtk-assistant-insert-page}
       @about-function{gtk-assistant-remove-page}
+      @about-symbol{gtk-assistant-page-func}
       @about-function{gtk-assistant-set-forward-page-func}
       @about-function{gtk-assistant-page-type}
       @about-function{gtk-assistant-page-title}
@@ -1169,6 +1171,7 @@
       @about-function{gtk-entry-completion-new}
       @about-function{gtk-entry-completion-new-with-area}
       @about-function{gtk-entry-completion-entry}
+      @about-symbol{gtk-entry-completion-match-func}
       @about-function{gtk-entry-completion-set-match-func}
       @about-function{gtk-entry-completion-compute-prefix}
       @about-function{gtk-entry-completion-complete}
@@ -1252,7 +1255,7 @@
   @end{section}
   @begin[Multiline Text Editor]{section}
     @subheading{Conceptual Overview}
-    GTK has an powerful framework for multiline text editing. The primary
+    GTK has a powerful framework for multiline text editing. The primary
     objects involved in the process are the @class{gtk-text-buffer} object,
     which represents the text being edited, and the @class{gtk-text-view}
     widget, a widget which can display a @class{gtk-text-buffer} object. Each
@@ -1765,6 +1768,7 @@
       @about-function{gtk-text-view-window}
       @about-function{gtk-text-view-window-type}
       @about-function{gtk-text-view-border-window-size}
+      @about-function{gtk-text-view-move-display-line}
       @about-function{gtk-text-view-forward-display-line}
       @about-function{gtk-text-view-backward-display-line}
       @about-function{gtk-text-view-forward-display-line-end}
@@ -2991,7 +2995,8 @@ setup_tree (void)
       @about-function{gtk-toolbar-unset-style}
     @end{subsection}
     @begin[GtkToolItem]{subsection}
-      The base class of widgets that can be added to @class{gtk-tool-shell}.
+      The base class of widgets that can be added to @class{gtk-tool-shell}
+      widget.
 
       @about-class{gtk-tool-item}
       @about-generic{gtk-tool-item-is-important}
