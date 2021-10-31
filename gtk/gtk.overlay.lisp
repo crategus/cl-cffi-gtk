@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.overlay.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
 ;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -84,10 +84,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-overlay 'type)
- "@version{2020-5-9}
+ "@version{*2021-10-21}
   @begin{short}
-    @sym{gtk-overlay} is a container which contains a single main child, on top
-    of which it can place overlay widgets.
+    The @sym{gtk-overlay} widget is a container which contains a single main
+    child, on top of which it can place overlay widgets.
   @end{short}
   The position of each overlay widget is determined by its
   @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties. E.g. a
@@ -106,10 +106,10 @@
     the @code{\"type\"} attribute of a @code{<child>} element.
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-overlay} has a single CSS node with the name @code{overlay}.
-    Overlay children whose alignments cause them to be positioned at an edge get
-    the style classes @code{.left}, @code{.right}, @code{.top}, and/or
-    @code{.bottom} according to their position.
+    The @sym{gtk-overlay} implementation has a single CSS node with the name
+    @code{overlay}. Overlay children whose alignments cause them to be
+    positioned at an edge get the style classes @code{.left}, @code{.right},
+    @code{.top}, and/or @code{.bottom} according to their position.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
@@ -131,25 +131,23 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"get-child-position\" signal}
       @begin{pre}
- lambda (overlay widget allocation)    : Run Last
+ lambda (overlay widget allocation)    :run-last
       @end{pre}
-      The \"get-child-position\" signal is emitted to determine the position
-      and size of any overlay child widgets. A handler for this signal should
-      fill allocation with the desired position and size for widget, relative
-      to the 'main' child of overlay.
-      The default handler for this signal uses the widget's
-      @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties to
-      determine the position and gives the widget its natural size (except that
-      an alignment of @code{:fill} will cause the overlay to be
-      full-width/height). If the main child is a @class{gtk-scrolled-window},
-      the overlays are placed relative to its contents.
+      The signal is emitted to determine the position and size of any overlay
+      child widgets. A handler for this signal should fill allocation with the
+      desired position and size for widget, relative to the 'main' child of the
+      overlay. The default handler for this signal uses the
+      @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties of the
+      widget to determine the position and gives the widget its natural size,
+      except that an alignment of @code{:fill} will cause the overlay to be
+      full-width/height. If the main child is a @class{gtk-scrolled-window}
+      widget, the overlays are placed relative to its contents.
       @begin[code]{table}
-        @entry[overlay]{The @class{gtk-overlay} container which emitted the
-          signal.}
+        @entry[overlay]{The @sym{gtk-overlay} widget which emitted the signal.}
         @entry[widget]{The @class{gtk-widget} child widget to position.}
         @entry[allocation]{Return location of type @class{gdk-rectangle} for
           the allocation.}
-        @entry[Return]{@em{True} if the allocation has been filled.}
+        @entry[Returns]{@em{True} if the allocation has been filled.}
       @end{table}
   @end{dictionary}
   @see-class{gtk-buildable}
@@ -169,23 +167,22 @@
 (setf (gethash 'gtk-overlay-child-index atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-overlay-child-index 'function)
- "@version{2020-5-9}
+ "@version{2021-10-21}
   @syntax[]{(gtk-overlay-child-index object) => index)}
   @syntax[]{(setf (gtk-overlay-child-index object) index)}
-  @argument[container]{a @class{gtk-overlay} container}
+  @argument[container]{a @class{gtk-overlay} widget}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[index]{an integer with the index of the child widget in the parent}
   @begin{short}
-    Accessor of the @code{index} child property of the
-    @class{gtk-overlay} class.
+    Accessor of the @code{index} child property of the @class{gtk-overlay}
+    class.
   @end{short}
 
   The index of the child widget in the parent, -1 for the main child.
 
   Since 3.18
   @see-class{gtk-overlay}
-  @see-function{gtk-overlay-add-overlay}
-  @see-function{gtk-overlay-reorder-overlay}")
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-overlay-child-pass-through -----------------------------------------
 
@@ -197,12 +194,12 @@
 (setf (gethash 'gtk-overlay-child-pass-through atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-overlay-child-pass-through 'function)
- "@version{2020-5-9}
-  @syntax[]{(gtk-overlay-child-index container child) => pass-through)}
-  @syntax[]{(setf (gtk-overlay-child-index container child) pass-through)}
-  @argument[container]{a @class{gtk-overlay} container}
+ "@version{2021-10-21}
+  @syntax[]{(gtk-overlay-child-index container child) => setting)}
+  @syntax[]{(setf (gtk-overlay-child-index container child) setting)}
+  @argument[container]{a @class{gtk-overlay} widget}
   @argument[child]{a @class{gtk-widget} child widget}
-  @argument[pass-through]{a boolean whether to pass through input}
+  @argument[setting]{a boolean whether to pass through input}
   @begin{short}
     Accessor of the @code{pass-through} child property of the
     @class{gtk-overlay} class.
@@ -211,7 +208,8 @@
   Pass through input, does not affect main child.
 
   Since 3.18
-  @see-class{gtk-overlay}")
+  @see-class{gtk-overlay}
+  @see-class{gtk-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_overlay_new ()
@@ -221,11 +219,11 @@
 
 (defun gtk-overlay-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-9}
-  @return{A new @class{gtk-overlay} container.}
-  @short{Creates a new overlay container.}
-
-  Since 3.2
+ "@version{2021-10-21}
+  @return{A new @class{gtk-overlay} widget.}
+  @begin{short}
+    Creates a new overlay container.
+  @end{short}
   @see-class{gtk-overlay}"
   (make-instance 'gtk-overlay))
 
@@ -237,20 +235,23 @@
 
 (defcfun ("gtk_overlay_add_overlay" gtk-overlay-add-overlay) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-9}
-  @argument[overlay]{a @class{gtk-overlay} container}
+ "@version{2021-10-21}
+  @argument[overlay]{a @class{gtk-overlay} widget}
   @argument[widget]{a @class{gtk-widget} child widget to be added to the
     container}
-  @short{Adds a child widget to the overlay container.}
-
+  @begin{short}
+    Adds a child widget to the overlay container.
+  @end{short}
   The child widget will be stacked on top of the main widget added with the
-  function @fun{gtk-container-add}.
+  @fun{gtk-container-add} function.
 
   The position at which the child widget is placed is determined from its
   @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties.
-
-  Since 3.2
-  @see-class{gtk-overlay}"
+  @see-class{gtk-overlay}
+  @see-class{gtk-widget}
+  @see-function{gtk-container-add}
+  @see-function{gtk-widget-halign}
+  @see-function{gtk-widget-valign}"
   (overlay (g-object gtk-overlay))
   (widget (g-object gtk-widget)))
 
@@ -262,8 +263,8 @@
 
 (defcfun ("gtk_overlay_reorder_overlay" gtk-overlay-reorder-overlay) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-9}
-  @argument[overlay]{a @class{gtk-overlay} container}
+ "@version{2021-10-21}
+  @argument[overlay]{a @class{gtk-overlay} widget}
   @argument[child]{the overlaid @class{gtk-widget} child widget to move}
   @argument[position]{the new index for the child widget in the list of overlay
     children of the overlay container, starting from 0, if negative, indicates
@@ -279,7 +280,8 @@
   bottom. It also affects the default focus chain order.
 
   Since 3.18
-  @see-class{gtk-overlay}"
+  @see-class{gtk-overlay}
+  @see-class{gtk-widget}"
   (overlay (g-object gtk-overlay))
   (child (g-object gtk-widget))
   (position :int))
