@@ -131,7 +131,7 @@
 (setf (gethash 'gtk-assistant-page-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-assistant-page-type atdoc:*external-symbols*)
- "@version{2021-10-6}
+ "@version{2021-10-26}
   @begin{short}
     An enumeration for determining the page role inside the
     @class{gtk-assistant} widget. It is used to handle buttons sensitivity and
@@ -186,11 +186,13 @@
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable")
    :type-initializer "gtk_assistant_get_type")
-  nil)
+  ((use-header-bar
+    gtk-assistant-use-header-bar
+    "use-header-bar" "gint" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-assistant 'type)
- "@version{2021-10-6}
+ "@version{2021-10-26}
   @begin{short}
     A @sym{gtk-assistant} widget is used to represent a generally complex
     operation splitted in several steps, guiding the user through its pages and
@@ -215,6 +217,10 @@
     To add pages to an assistant in a @class{gtk-builder} object, simply add it
     as a @code{<child>} to the @sym{gtk-assistant} widget and set its child
     properties as necessary.
+  @end{dictionary}
+  @begin[CSS nodes]{dictionary}
+    The @sym{gtk-assistant} implementation has a single CSS node with the name
+    @code{assistant}.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
@@ -348,7 +354,45 @@
           signal.}
       @entry[page]{The @class{gtk-widget} widget for the current page.}
       @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-slot{gtk-assistant-use-header-bar}")
+
+;;; ----------------------------------------------------------------------------
+;;; Property and Accessor Details
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-assistant-use-header-bar -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-header-bar"
+                                               'gtk-assistant) 't)
+ "The @code{use-header-bar} property of type @code{:int}
+  (Read / Write / Construct) @br{}
+  @em{True} if the assistant uses a header bar for action buttons instead of the
+  action area. For technical reasons, this property is declared as an integer
+  property, use the value 1 for @em{true} or -1 for @em{false}. @br{}
+  Allowed values: [-1, 1] @br{}
+  Default value: -1")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-assistant-use-header-bar atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-assistant-use-header-bar 'function)
+ "@version{2021-10-27}
+  @syntax[]{(gtk-assistant-use-header-bar object) => setting}
+  @syntax[]{(setf (gtk-assistant-use-header-bar object) setting)}
+  @argument[object]{a @class{gtk-assistant} widget}
+  @argument[setting]{@em{true} if the assistant uses a header bar}
+  @begin{short}
+    Accessor of the @slot[gtk-assistant]{use-header-bar} slot of the
+    @class{gtk-assistant} class.
+  @end{short}
+
+  @em{True} if the assistant uses a header bar for action buttons instead of the
+  action area. For technical reasons, this property is declared as an integer
+  property, use the value 1 for @em{true} or -1 for @em{false}.
+  @see-class{gtk-assistant}
+  @see-class{gtk-header-bar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors of the Child Properties
@@ -364,21 +408,22 @@
 (setf (gethash 'gtk-assistant-child-complete atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-complete 'function)
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @syntax[]{(gtk-assistant-child-complete container child) => complete}
   @syntax[]{(setf (gtk-assistant-child-complete container child) complete)}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} page of the assistant}
   @argument[complete]{a boolean whether the page is complete}
   @begin{short}
-    Accessor of the @code{complete} child property of the
-    @class{gtk-assistant} class.
+    Accessor of the @code{complete} child property of the @class{gtk-assistant}
+    class.
   @end{short}
 
   Setting the @code{complete} child property to @em{true} marks a page as
   complete, i.e. all the required fields are filled out. GTK uses this
   information to control the sensitivity of the navigation buttons.
-  @see-class{gtk-assistant}")
+  @see-class{gtk-assistant}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-assistant-child-has-padding ----------------------------------------
 
@@ -391,13 +436,13 @@
 (setf (gethash 'gtk-assistant-child-has-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-has-padding 'function)
- "@version{2020-5-28}
-  @syntax[]{(gtk-assistant-child-complete container child) => has-padding}
-  @syntax[]{(setf (gtk-assistant-child-complete container child) has-padding)}
+ "@version{2021-10-26}
+  @syntax[]{(gtk-assistant-child-complete container child) => setting}
+  @syntax[]{(setf (gtk-assistant-child-complete container child) setting)}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} page of the assistant}
-  @argument[has-padding]{a boolean whether the assistant adds padding around
-    the page}
+  @argument[setting]{a boolean whether the assistant adds padding around the
+    page}
   @begin{short}
     Accessor of the @code{has-padding} child property of the
     @class{gtk-assistant} class.
@@ -406,7 +451,8 @@
   Whether the assistant adds padding around the page.
 
   Since 3.18
-  @see-class{gtk-assistant}")
+  @see-class{gtk-assistant}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-assistant-child-header-image ---------------------------------------
 
@@ -418,7 +464,7 @@
 (setf (gethash 'gtk-assistant-child-header-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-header-image 'function)
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @syntax[]{(gtk-assistant-child-header-image container child) => image}
   @syntax[]{(setf (gtk-assistant-child-header-image container child) image)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -435,7 +481,9 @@
     and should not be used in newly written code. Since GTK 3.2, a header is no
     longer shown. Add your header decoration to the page content instead.
   @end{dictionary}
-  @see-class{gtk-assistant}")
+  @see-class{gtk-assistant}
+  @see-class{gtk-widget}
+  @see-class{gdk-pixbuf}")
 
 ;;; --- gtk-assistant-child-page-type ------------------------------------------
 
@@ -447,7 +495,7 @@
 (setf (gethash 'gtk-assistant-child-page-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-page-type 'function)
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @syntax[]{(gtk-assistant-child-page-type container child) => page-type}
   @syntax[]{(setf (gtk-assistant-child-page-type container child) page-type)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -459,7 +507,8 @@
   @end{short}
 
   The page type determines the page behavior in the assistant.
-  @see-class{gtk-assistant}")
+  @see-class{gtk-assistant}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-assistant-child-sidebar-image --------------------------------------
 
@@ -471,7 +520,7 @@
 (setf (gethash 'gtk-assistant-child-sidebar-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-sidebar-image 'function)
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @syntax[]{(gtk-assistant-child-sidebar-image container child) => image}
   @syntax[]{(setf (gtk-assistant-child-sidebar-image container child) image)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -488,7 +537,9 @@
     3.2 and should not be used in newly written code. Since GTK 3.2, the
     sidebar image is no longer shown.
   @end{dictionary}
-  @see-class{gtk-assistant}")
+  @see-class{gtk-assistant}
+  @see-class{gtk-widget}
+  @see-class{gdk-pixbuf}")
 
 ;;; --- gtk-assistant-child-title ----------------------------------------------
 
@@ -500,7 +551,7 @@
 (setf (gethash 'gtk-assistant-child-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-title 'function)
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @syntax[]{(gtk-assistant-child-title container child) => title}
   @syntax[]{(setf (gtk-assistant-child-title container child) title)}
   @argument[container]{a @class{gtk-assistant} widget}
@@ -512,7 +563,8 @@
   @end{short}
 
   The title of the page.
-  @see-class{gtk-assistant}")
+  @see-class{gtk-assistant}
+  @see-class{gtk-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_new ()
@@ -520,7 +572,7 @@
 
 (defun gtk-assistant-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @return{A @class{gtk-assistant} widget.}
   @begin{short}
     Creates a new assistant.
@@ -544,7 +596,7 @@
 
 (defcfun ("gtk_assistant_get_current_page" gtk-assistant-current-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page-num]{an integer with the index of the page to switch to,
     starting from 0, if negative, the last page will be used. If greater than
@@ -552,16 +604,15 @@
   @begin{short}
     Accessor of the current page of the assistant.
   @end{short}
-
-  The function @sym{gtk-assistant-current-page} returns the page number of the
-  current page in the assistant. The function
-  @sym{(setf gtk-assistant-current-page)}  switches the page in the assistant
-  to @arg{page-num}.
+  The @sym{gtk-assistant-current-page} function returns the page number of the
+  current page in the assistant. The @sym{(setf gtk-assistant-current-page)}
+  function switches the page in the assistant to @arg{page-num}.
 
   Note that this will only be necessary in custom buttons, as the assistant
-  flow can be set with the function @fun{gtk-assistant-set-forward-page-func}.
+  flow can be set with the @fun{gtk-assistant-set-forward-page-func} callback
+  function.
   @see-class{gtk-assistant}
-  @see-function{gtk-assistant-set-current-page}"
+  @see-symbol{gtk-assistant-set-forward-page-func}"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-current-page)
@@ -572,7 +623,7 @@
 
 (defcfun ("gtk_assistant_get_n_pages" gtk-assistant-n-pages) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @return{An integer with the number of pages in @arg{assistant}.}
   @begin{short}
@@ -590,13 +641,14 @@
 (defcfun ("gtk_assistant_get_nth_page" gtk-assistant-nth-page)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page-num]{an integer with the index of a page in @arg{assistant},
     or -1 to get the last page}
   @return{The child widget, or @code{nil} if @arg{page-num} is out of bounds.}
   @begin{short}
-    Returns the child widget contained in page number @arg{page-num}.
+    Returns the child widget contained in the assistant with the given page
+    number.
   @end{short}
   @see-class{gtk-assistant}"
   (assistant (g-object gtk-assistant))
@@ -610,14 +662,15 @@
 
 (defcfun ("gtk_assistant_prepend_page" gtk-assistant-prepend-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
-  @argument[page]{a @class{gtk-widget} object}
+  @argument[page]{a @class{gtk-widget} page of the assistant}
   @return{An integer with the index starting at 0 of the inserted page.}
   @begin{short}
     Prepends a page to the assistant.
   @end{short}
   @see-class{gtk-assistant}
+  @see-class{gtk-widget}
   @see-function{gtk-assistant-append-page}
   @see-function{gtk-assistant-insert-page}
   @see-function{gtk-assistant-remove-page}"
@@ -632,14 +685,15 @@
 
 (defcfun ("gtk_assistant_append_page" gtk-assistant-append-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
-  @argument[page]{a @class{gtk-widget} object}
+  @argument[page]{a @class{gtk-widget} page of the assistant}
   @return{An integer with the index starting at 0 of the inserted page.}
   @begin{short}
     Appends a page to the assistant.
   @end{short}
   @see-class{gtk-assistant}
+  @see-class{gtk-widget}
   @see-function{gtk-assistant-prepend-page}
   @see-function{gtk-assistant-insert-page}
   @see-function{gtk-assistant-remove-page}"
@@ -654,9 +708,9 @@
 
 (defcfun ("gtk_assistant_insert_page" gtk-assistant-insert-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
-  @argument[page]{a @class{gtk-widget} object}
+  @argument[page]{a @class{gtk-widget} page of the assistant}
   @argument[position]{an integer with the index starting at 0 at which to
     insert @arg{page}, or -1 to append @arg{page} to the assistant}
   @return{The index starting from 0 of the inserted page.}
@@ -664,6 +718,7 @@
     Inserts a page in the assistant at a given position.
   @end{short}
   @see-class{gtk-assistant}
+  @see-class{gtk-widget}
   @see-function{gtk-assistant-append-page}
   @see-function{gtk-assistant-prepend-page}
   @see-function{gtk-assistant-remove-page}"
@@ -679,12 +734,12 @@
 
 (defcfun ("gtk_assistant_remove_page" gtk-assistant-remove-page) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page-num]{an integer with the index of a page in the assistant,
     or -1 to remove the last page}
   @begin{short}
-    Removes the @arg{page-num}'s page from the assistant.
+    Removes the page with the given page number from the assistant.
   @end{short}
   @see-class{gtk-assistant}
   @see-function{gtk-assistant-append-page}
@@ -697,26 +752,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkAssistantPageFunc ()
-;;;
-;;; gint (*GtkAssistantPageFunc) (gint current_page, gpointer data);
-;;;
-;;; A function used by gtk_assistant_set_forward_page_func() to know which is
-;;; the next page given a current one. It's called both for computing the next
-;;; page when the user presses the "forward" button and for handling the
-;;; behavior of the "last" button.
-;;;
-;;; current_page :
-;;;     The page number used to calculate the next page.
-;;;
-;;; data :
-;;;     user data
-;;;
-;;; Returns :
-;;;     The next page number.
 ;;; ----------------------------------------------------------------------------
 
-(define-cb-methods gtk-assistant-page-func :int
-  ((current-page :int)))
+(define-cb-methods gtk-assistant-page-func :int ((current-page :int)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-assistant-page-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-assistant-page-func atdoc:*external-symbols*)
+ "@version{2021-10-26}
+  @begin{short}
+    A function used by the @fun{gtk-assistant-set-forward-page-func} function
+    to know which is the next page given a current one.
+  @end{short}
+  It is called both for computing the next page when the user presses the
+  \"forward\" button and for handling the behavior of the \"last\" button.
+  @begin{pre}
+ lambda (current)
+  @end{pre}
+  @begin[code]{table}
+    @entry[current]{An integer with the page number used to calculate the next
+      page.}
+    @entry[Returns]{An integer with the next page number.}
+  @end{table}
+  @see-class{gtk-assistant}
+  @see-function{gtk-assistant-set-forward-page-func}")
+
+(export 'gtk-assistant-page-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_forward_page_func ()
@@ -725,29 +787,29 @@
 (defcfun ("gtk_assistant_set_forward_page_func"
           %gtk-assistant-set-forward-page-func) :void
   (assistant (g-object gtk-assistant))
-  (page-func :pointer)
+  (func :pointer)
   (data :pointer)
   (destroy :pointer))
 
 (defun gtk-assistant-set-forward-page-func (assistant func)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
-  @argument[func]{a page forwarding function, or @code{nil} to use the default
-    one}
+  @argument[func]{a @symbol{gtk-assistant-page-func} page forwarding callback
+    function, or @code{nil} to use the default one}
   @begin{short}
     Sets the page forwarding function to be @arg{func}.
   @end{short}
-
   This function will be used to determine what will be the next page when the
-  user presses the forward button. Setting @arg{func} to @code{nil} will make
-  the assistant to use the default forward function, which just goes to the
-  next visible page.
-  @see-class{gtk-assistant}"
+  user presses the \"forward\" button. Setting @arg{func} to @code{nil} will
+  make the assistant to use the default forward function, which just goes to
+  the next visible page.
+  @see-class{gtk-assistant}
+  @see-symbol{gtk-assistant-page-func}"
   (if func
       (%gtk-assistant-set-forward-page-func
           assistant
-          (callback gtk-assistant-page-func-cb)
+          (callback gtk-assistant-page-func)
           (create-fn-ref assistant func)
           (callback gtk-assistant-page-func-destroy-notify))
       (%gtk-assistant-set-forward-page-func assistant
@@ -767,7 +829,7 @@
 
 (defun gtk-assistant-page-type (assistant page)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @syntax[]{gtk-assistant-page-type assistant page) => page-type}
   @syntax[]{(setf (gtk-assistant-page-type assistant page) page-type)}
   @argument[assistant]{a @class{gtk-assistant} widget}
@@ -779,8 +841,9 @@
   @end{short}
 
   The page type determines the page behavior in the assistant. This function is
-  implemented as the function @fun{gtk-assistant-child-pack-type}.
+  implemented as the @fun{gtk-assistant-child-pack-type} function.
   @see-class{gtk-assistant}
+  @see-class{gtk-widget}
   @see-symbol{gtk-assistant-page-type}
   @see-function{gtk-assistant-child-page-type}"
   (gtk-assistant-child-page-type assistant page))
@@ -797,7 +860,7 @@
 
 (defun gtk-assistant-page-title (assistant page)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} page of @arg{assistant}}
   @argument[title]{a string with the new title for @arg{page}}
@@ -805,14 +868,12 @@
     Accessor of the title for the page in the assistant.
   @end{short}
 
-  The function @sym{gtk-assistant-page-title} gets the title for the page in the
-  assistant. The function @sym{(setf gtk-assistant-page-title)} sets a title for
-  the page.
-
-  The title is displayed in the header area of the assistant when the page is
-  the current page.
+  The @sym{gtk-assistant-page-title} function gets the title for the page in the
+  assistant. The @sym{(setf gtk-assistant-page-title)} function sets a title for
+  the page. The title is displayed in the header area of the assistant when the
+  page is the current page.
   @see-class{gtk-assistant}
-  @see-function{gtk-assistant-page-title}"
+  @see-class{gtk-widget}"
   (gtk-assistant-child-title assistant page))
 
 (export 'gtk-assistant-page-title)
@@ -937,7 +998,7 @@
 
 (defun gtk-assistant-page-complete (assistant page)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @syntax[]{(gtk-assistant-page-complete assistant page) => complete}
   @syntax[]{(setf (gtk-assistant-page-complete assistant page) complete)}
   @argument[assistant]{a @class{gtk-assistant} widget}
@@ -947,13 +1008,12 @@
     Accessor of the completeness status of the page in the assistant.
   @end{short}
 
-  The function @sym{gtk-assistant-page-complete} gets whether the page is
-  complete. The function @sym{(setf gtk-assistant-page-complete)} sets whether
-  the page contents are complete.
-
-  This will make the assistant update the buttons state to be able to continue
-  the task.
-  @see-class{gtk-assistant}"
+  The @sym{gtk-assistant-page-complete} function gets whether the page is
+  complete. The @sym{(setf gtk-assistant-page-complete)} function sets whether
+  the page contents are complete. This will make the assistant update the
+  buttons state to be able to continue the task.
+  @see-class{gtk-assistant}
+  @see-class{gtk-widget}"
   (gtk-assistant-child-complete assistant page))
 
 (export 'gtk-assistant-page-complete)
@@ -967,7 +1027,7 @@
   (setf (gtk-assistant-child-has-padding assistant page) has-padding))
 
 (defun gtk-assistant-page-has-padding (assistant page)
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @syntax[]{(gtk-assistant-page-has-padding assistant page) => has-padding}
   @syntax[]{(setf (gtk-assistant-page-has-padding assistant page) has-padding)}
   @argument[assistant]{a @class{gtk-assistant} widget}
@@ -977,12 +1037,13 @@
     Accessor of the has padding status of the page in the assistant.
   @end{short}
 
-  The function @sym{gtk-assistant-page-has-padding} gets whether the page has
-  padding. The function @sym{(setf gtk-assistant-page-has-padding)} sets whether
+  The @sym{gtk-assistant-page-has-padding} function gets whether the page has
+  padding. The @sym{(setf gtk-assistant-page-has-padding)} function sets whether
   the assistant is adding padding around the page.
 
   Since 3.18
-  @see-class{gtk-assistant}"
+  @see-class{gtk-assistant}
+  @see-class{gtk-widget}"
   (gtk-assistant-child-has-padding assistant page))
 
 (export 'gtk-assistant-page-has-padding)
@@ -994,13 +1055,14 @@
 (defcfun ("gtk_assistant_add_action_widget" gtk-assistant-add-action-widget)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} object}
   @begin{short}
     Adds a child widget to the action area of the assistant.
   @end{short}
   @see-class{gtk-assistant}
+  @see-class{gtk-widget}
   @see-function{gtk-assistant-remove-action-widget}"
   (assistant (g-object gtk-assistant))
   (child (g-object gtk-widget)))
@@ -1015,13 +1077,14 @@
            gtk-assistant-remove-action-widget)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} object}
   @begin{short}
     Removes a child widget from the action area of the assistant.
   @end{short}
   @see-class{gtk-assistant}
+  @see-class{gtk-widget}
   @see-function{gtk-assistant-add-action-widget}"
   (assistant (g-object gtk-assistant))
   (child (g-object gtk-widget)))
@@ -1035,16 +1098,15 @@
 (defcfun ("gtk_assistant_update_buttons_state"
           gtk-assistant-update-buttons-state) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Forces the assistant to recompute the buttons state.
   @end{short}
-
   GTK automatically takes care of this in most situations, e.g. when the user
   goes to a different page, or when the visibility or completeness of a page
-  changes. One situation where it can be necessary to call this function is when
-  changing a value on the current page affects the future page flow of the
+  changes. One situation where it can be necessary to call this function is
+  when changing a value on the current page affects the future page flow of the
   assistant.
   @see-class{gtk-assistant}"
   (assistant (g-object gtk-assistant)))
@@ -1057,13 +1119,12 @@
 
 (defcfun ("gtk_assistant_commit" gtk-assistant-commit) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Erases the visited page history so the back button is not shown on the
     current page, and removes the cancel button from subsequent pages.
   @end{short}
-
   Use this when the information provided up to the current page is hereafter
   deemed permanent and cannot be modified or undone. For example, showing a
   progress page to track a long-running, unreversible operation after the user
@@ -1079,14 +1140,14 @@
 
 (defcfun ("gtk_assistant_next_page" gtk-assistant-next-page) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Navigate to the next page.
   @end{short}
   It is a programming error to call this function when there is no next page.
 
-  This function is for use when creating pages with the value @code{:custom} of
+  This function is for use when creating pages with the @code{:custom} value of
   the @symbol{gtk-assistant-page-type} enumeration.
   @see-class{gtk-assistant}
   @see-symbol{gtk-assistant-page-type}
@@ -1101,7 +1162,7 @@
 
 (defcfun ("gtk_assistant_previous_page" gtk-assistant-previous-page) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-5-28}
+ "@version{2021-10-26}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Navigate to the previous visited page.
@@ -1109,7 +1170,7 @@
   It is a programming error to call this function when no previous page is
   available.
 
-  This function is for use when creating pages with the value @code{:custom} of
+  This function is for use when creating pages with the @code{:custom} value of
   the @symbol{gtk-assistant-page-type} enumeration.
   @see-class{gtk-assistant}
   @see-symbol{gtk-assistant-page-type}
