@@ -131,15 +131,15 @@
 (setf (gethash 'gtk-assistant-page-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-assistant-page-type atdoc:*external-symbols*)
- "@version{2021-10-26}
+ "@version{2021-11-1}
   @begin{short}
     An enumeration for determining the page role inside the
     @class{gtk-assistant} widget. It is used to handle buttons sensitivity and
     visibility.
   @end{short}
 
-  Note that an assistant needs to end its page flow with a page of
-  @code{:confirm}, @code{:summary} or @code{:progress} types to be correct. The
+  Note that an assistant needs to end its page flow with a page of type
+  @code{:confirm}, @code{:summary} or @code{:progress} to be correct. The
   Cancel button will only be shown if the page is not \"committed\". See the
   @fun{gtk-assistant-commit} function for details.
   @begin{pre}
@@ -192,7 +192,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-assistant 'type)
- "@version{2021-10-26}
+ "@version{*2021-11-1}
   @begin{short}
     A @sym{gtk-assistant} widget is used to represent a generally complex
     operation splitted in several steps, guiding the user through its pages and
@@ -211,12 +211,10 @@
   @symbol{gtk-assistant-page-type} enumeration and handle buttons yourself.
   @begin[GtkAssistant as GtkBuildable]{dictionary}
     The @sym{gtk-assistant} implementation of the @class{gtk-buildable}
-    interface exposes the \"action-area\" as internal children with the
-    name @code{\"action-area\"}.
-
-    To add pages to an assistant in a @class{gtk-builder} object, simply add it
-    as a @code{<child>} to the @sym{gtk-assistant} widget and set its child
-    properties as necessary.
+    interface exposes the action area as internal children with the
+    name @code{\"action_area\"}. To add pages to an assistant in a
+    @class{gtk-builder} object, simply add it as a @code{<child>} to the
+    @sym{gtk-assistant} widget and set its child properties as necessary.
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
     The @sym{gtk-assistant} implementation has a single CSS node with the name
@@ -227,10 +225,9 @@
       @begin[complete]{entry}
         The @code{complete} child property of type @code{:boolean}
         (Read / Write) @br{}
-        Setting the @code{complete} child property to @em{true} marks a page
-        as complete, i.e. all the required fields are filled out. GTK uses
-        this information to control the sensitivity of the navigation buttons.
-        @br{}
+        Setting to @em{true} marks a page as complete, i.e. all the required
+        fields are filled out. GTK uses this information to control the
+        sensitivity of the navigation buttons. @br{}
         Default value: @em{false} @br{}
       @end{entry}
       @begin[has-padding]{entry}
@@ -299,15 +296,13 @@
       @begin{pre}
  lambda (assistant)    :run-last
       @end{pre}
-      The signal is emitted when the apply button is clicked. The default
+      The signal is emitted when the Apply button is clicked. The default
       behavior of the assistant is to switch to the page after the current page,
       unless the current page is the last one. A handler for the \"apply\"
       signal should carry out the actions for which the wizard has collected
       data. If the action takes a long time to complete, you might consider
-      putting a page of type @code{:progress} of the
-      @symbol{gtk-assistant-page-type} enumeration after the confirmation page
-      and handle this operation within the \"prepare\" signal of the progress
-      page.
+      putting a @code{:progress} page after the @code{:confirm} page and handle
+      this operation within the \"prepare\" signal of the progress page.
       @begin[code]{table}
         @entry[assistant]{The @sym{gtk-assistant} widget which received the
           signal.}
@@ -316,7 +311,7 @@
       @begin{pre}
  lambda (assistant)    :run-last
       @end{pre}
-      The signal is emitted when then the cancel button is clicked.
+      The signal is emitted when the Cancel button is clicked.
       @begin[code]{table}
         @entry[assistant]{The @sym{gtk-assistant} widget which received the
           signal.}
@@ -325,10 +320,9 @@
       @begin{pre}
  lambda (assistant)    :run-last
       @end{pre}
-      The signal is emitted either when the close button of a summary page is
-      clicked, or when the apply button in the last page in the flow of
-      @code{:confirm} type of the @symbol{gtk-assistant-page-type}
-      enumeration is clicked.
+      The signal is emitted either when the Close button of a summary page is
+      clicked, or when the Apply button in the last page in the flow is clicked,
+      which is the @code{:confirm} page.
       @begin[code]{table}
         @entry[assistant]{The @sym{gtk-assistant} widget which received the
           signal.}
@@ -348,7 +342,7 @@
       @end{pre}
       The signal is emitted when a new page is set as the assistants current
       page, before making the new page visible. A handler for this signal can
-      do any preparations which are necessary before showing page.
+      do any preparations which are necessary before showing the page.
       @begin[code]{table}
         @entry[assistant]{The @sym{gtk-assistant} widget which received the
           signal.}
@@ -495,20 +489,21 @@
 (setf (gethash 'gtk-assistant-child-page-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-page-type 'function)
- "@version{2021-10-26}
-  @syntax[]{(gtk-assistant-child-page-type container child) => page-type}
-  @syntax[]{(setf (gtk-assistant-child-page-type container child) page-type)}
+ "@version{2021-11-1}
+  @syntax[]{(gtk-assistant-child-page-type container child) => ptype}
+  @syntax[]{(setf (gtk-assistant-child-page-type container child) ptype)}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} page of the assistant}
-  @argument[page-type]{a value of the @symbol{gtk-assistant-type} enumeration}
+  @argument[ptype]{a value of the @symbol{gtk-assistant-page-type} enumeration}
   @begin{short}
-    Accessor of the @code{page-type} child property of the
-    @class{gtk-assistant} class.
+    Accessor of the @code{page-type} child property of the @class{gtk-assistant}
+    class.
   @end{short}
 
   The page type determines the page behavior in the assistant.
   @see-class{gtk-assistant}
-  @see-class{gtk-widget}")
+  @see-class{gtk-widget}
+  @see-symbol{gtk-assistant-page-type}")
 
 ;;; --- gtk-assistant-child-sidebar-image --------------------------------------
 
@@ -587,32 +582,33 @@
 ;;; gtk_assistant_set_current_page () -> gtk-assistant-current-page
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-assistant-current-page) (page-num assistant)
+(defun (setf gtk-assistant-current-page) (index assistant)
   (foreign-funcall "gtk_assistant_set_current_page"
                    (g-object gtk-assistant) assistant
-                   :int page-num
+                   :int index
                    :void)
-  page-num)
+  index)
 
 (defcfun ("gtk_assistant_get_current_page" gtk-assistant-current-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{*2021-11-1}
+  @syntax[]{(gtk-assistant-current-page assistant) => index}
+  @syntax[]{(setf (gtk-assistant-current-page assistant) index)}
   @argument[assistant]{a @class{gtk-assistant} widget}
-  @argument[page-num]{an integer with the index of the page to switch to,
-    starting from 0, if negative, the last page will be used. If greater than
-    the number of pages in the assistant, nothing will be done}
+  @argument[index]{an integer with the index of the page to switch to, starting
+    from 0, if negative, the last page will be used, if greater than the number
+    of pages in the assistant, nothing will be done}
   @begin{short}
     Accessor of the current page of the assistant.
   @end{short}
   The @sym{gtk-assistant-current-page} function returns the page number of the
   current page in the assistant. The @sym{(setf gtk-assistant-current-page)}
-  function switches the page in the assistant to @arg{page-num}.
+  function switches the page in the assistant to @arg{index}.
 
   Note that this will only be necessary in custom buttons, as the assistant
-  flow can be set with the @fun{gtk-assistant-set-forward-page-func} callback
-  function.
+  flow can be set with the @fun{gtk-assistant-set-forward-page-func} function.
   @see-class{gtk-assistant}
-  @see-symbol{gtk-assistant-set-forward-page-func}"
+  @see-function{gtk-assistant-set-forward-page-func}"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-current-page)
@@ -623,7 +619,7 @@
 
 (defcfun ("gtk_assistant_get_n_pages" gtk-assistant-n-pages) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{*2021-11-1}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @return{An integer with the number of pages in @arg{assistant}.}
   @begin{short}
@@ -641,18 +637,18 @@
 (defcfun ("gtk_assistant_get_nth_page" gtk-assistant-nth-page)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{*2021-11-1}
   @argument[assistant]{a @class{gtk-assistant} widget}
-  @argument[page-num]{an integer with the index of a page in @arg{assistant},
+  @argument[index]{an integer with the index of a page in @arg{assistant},
     or -1 to get the last page}
-  @return{The child widget, or @code{nil} if @arg{page-num} is out of bounds.}
+  @return{The child widget, or @code{nil} if @arg{index} is out of bounds.}
   @begin{short}
     Returns the child widget contained in the assistant with the given page
-    number.
+    index.
   @end{short}
   @see-class{gtk-assistant}"
   (assistant (g-object gtk-assistant))
-  (page-num :int))
+  (index :int))
 
 (export 'gtk-assistant-nth-page)
 
@@ -685,7 +681,7 @@
 
 (defcfun ("gtk_assistant_append_page" gtk-assistant-append-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{*2021-11-1}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} page of the assistant}
   @return{An integer with the index starting at 0 of the inserted page.}
@@ -734,19 +730,19 @@
 
 (defcfun ("gtk_assistant_remove_page" gtk-assistant-remove-page) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{2021-11-1}
   @argument[assistant]{a @class{gtk-assistant} widget}
-  @argument[page-num]{an integer with the index of a page in the assistant,
-    or -1 to remove the last page}
+  @argument[index]{an integer with the index of a page in the assistant, or -1
+    to remove the last page}
   @begin{short}
-    Removes the page with the given page number from the assistant.
+    Removes the page with the given page index from the assistant.
   @end{short}
   @see-class{gtk-assistant}
   @see-function{gtk-assistant-append-page}
   @see-function{gtk-assistant-prepend-page}
   @see-function{gtk-assistant-insert-page}"
   (assistant (g-object gtk-assistant))
-  (page-num :int))
+  (index :int))
 
 (export 'gtk-assistant-remove-page)
 
@@ -762,11 +758,11 @@
       (gethash 'gtk-assistant-page-func atdoc:*external-symbols*)
  "@version{2021-10-26}
   @begin{short}
-    A function used by the @fun{gtk-assistant-set-forward-page-func} function
-    to know which is the next page given a current one.
+    A callback function used by the @fun{gtk-assistant-set-forward-page-func}
+    function to know which is the next page given a current one.
   @end{short}
   It is called both for computing the next page when the user presses the
-  \"forward\" button and for handling the behavior of the \"last\" button.
+  Forward button and for handling the behavior of the Last button.
   @begin{pre}
  lambda (current)
   @end{pre}
@@ -801,9 +797,9 @@
     Sets the page forwarding function to be @arg{func}.
   @end{short}
   This function will be used to determine what will be the next page when the
-  user presses the \"forward\" button. Setting @arg{func} to @code{nil} will
-  make the assistant to use the default forward function, which just goes to
-  the next visible page.
+  user presses the Forward button. Setting @arg{func} to @code{nil} will make
+  the assistant to use the default forward function, which just goes to the next
+  visible page.
   @see-class{gtk-assistant}
   @see-symbol{gtk-assistant-page-func}"
   (if func
@@ -824,18 +820,17 @@
 ;;; gtk_assistant_get_page_type () -> gtk-assistant-page-type
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-assistant-page-type) (page-type assistant page)
-  (setf (gtk-assistant-child-page-type assistant page) page-type))
+(defun (setf gtk-assistant-page-type) (ptype assistant page)
+  (setf (gtk-assistant-child-page-type assistant page) ptype))
 
 (defun gtk-assistant-page-type (assistant page)
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
-  @syntax[]{gtk-assistant-page-type assistant page) => page-type}
-  @syntax[]{(setf (gtk-assistant-page-type assistant page) page-type)}
+ "@version{*2021-11-1}
+  @syntax[]{(gtk-assistant-page-type assistant page) => ptype}
+  @syntax[]{(setf (gtk-assistant-page-type assistant page) ptype)}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} page of @arg{assistant}}
-  @argument[page-type]{the type for @arg{page} of type
-    @symbol{gtk-assistant-page-type}}
+  @argument[ptype]{a value of the @symbol{gtk-assistant-page-type} enumeration}
   @begin{short}
     Access of the page type of a page in the assistant.
   @end{short}
@@ -860,7 +855,7 @@
 
 (defun gtk-assistant-page-title (assistant page)
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{*2021-11-1}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} page of @arg{assistant}}
   @argument[title]{a string with the new title for @arg{page}}
@@ -869,9 +864,9 @@
   @end{short}
 
   The @sym{gtk-assistant-page-title} function gets the title for the page in the
-  assistant. The @sym{(setf gtk-assistant-page-title)} function sets a title for
-  the page. The title is displayed in the header area of the assistant when the
-  page is the current page.
+  assistant. The @sym{(setf gtk-assistant-page-title)} function sets a title.
+  The title is displayed in the header area of the assistant when the page is
+  the current page.
   @see-class{gtk-assistant}
   @see-class{gtk-widget}"
   (gtk-assistant-child-title assistant page))
@@ -998,7 +993,7 @@
 
 (defun gtk-assistant-page-complete (assistant page)
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{*2021-11-1}
   @syntax[]{(gtk-assistant-page-complete assistant page) => complete}
   @syntax[]{(setf (gtk-assistant-page-complete assistant page) complete)}
   @argument[assistant]{a @class{gtk-assistant} widget}
@@ -1023,16 +1018,16 @@
 ;;; gtk_assistant_get_page_has_padding () -> gtk-assistant-page-has-padding
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-assistant-page-has-padding) (has-padding assistant page)
-  (setf (gtk-assistant-child-has-padding assistant page) has-padding))
+(defun (setf gtk-assistant-page-has-padding) (setting assistant page)
+  (setf (gtk-assistant-child-has-padding assistant page) setting))
 
 (defun gtk-assistant-page-has-padding (assistant page)
- "@version{2021-10-26}
-  @syntax[]{(gtk-assistant-page-has-padding assistant page) => has-padding}
-  @syntax[]{(setf (gtk-assistant-page-has-padding assistant page) has-padding)}
+ "@version{2021-11-1}
+  @syntax[]{(gtk-assistant-page-has-padding assistant page) => setting}
+  @syntax[]{(setf (gtk-assistant-page-has-padding assistant page) setting)}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} page of @arg{assistant}}
-  @argument[has-padding]{a boolean whether the page has padding}
+  @argument[setting]{a boolean whether the page has padding}
   @begin{short}
     Accessor of the has padding status of the page in the assistant.
   @end{short}
@@ -1119,16 +1114,16 @@
 
 (defcfun ("gtk_assistant_commit" gtk-assistant-commit) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{*2021-11-1}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
-    Erases the visited page history so the back button is not shown on the
-    current page, and removes the cancel button from subsequent pages.
+    Erases the visited page history so the Back button is not shown on the
+    current page, and removes the Cancel button from subsequent pages.
   @end{short}
   Use this when the information provided up to the current page is hereafter
   deemed permanent and cannot be modified or undone. For example, showing a
-  progress page to track a long-running, unreversible operation after the user
-  has clicked apply on a confirmation page.
+  progress page to track a long running, unreversible operation after the user
+  has clicked the Apply button on a confirmation page.
   @see-class{gtk-assistant}"
   (assistant (g-object gtk-assistant)))
 
