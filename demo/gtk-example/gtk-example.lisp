@@ -8,6 +8,7 @@
            #:example-alignment-interactive
            #:example-arrow-button
            #:example-aspect-frame                      ; Layout Widgets
+           #:example-assistant
            #:example-box-packing                       ; Packing Widgets
            #:example-box-simple                        ; Packing Widgets
            #:example-button-box                        ; Layout Widgets

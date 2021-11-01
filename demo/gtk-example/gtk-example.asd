@@ -11,6 +11,7 @@
                (:file "alignment-interactive")
                (:file "arrow-button")
                (:file "aspect-frame")                  ; Layout Widgets
+               (:file "assistant")
                (:file "box-packing")                   ; Packing Widgets
                (:file "box-simple")                    ; Packing Widgets
                (:file "button-box")                    ; Layout Widgets
