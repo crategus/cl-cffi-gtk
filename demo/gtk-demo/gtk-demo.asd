@@ -11,7 +11,6 @@
   :components ((:file "package")
                (:file "app-chooser-button")
                (:file "app-chooser-dialog")
-               (:file "assistant")
                (:file "color-chooser-widget")
                (:file "color-chooser-palette")
                (:file "cursor")
@@ -31,4 +30,4 @@
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2021-7-25
+;;; 2021-11-1

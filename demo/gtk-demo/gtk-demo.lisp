@@ -134,8 +134,8 @@
        "../gtk-example/dialog.lisp"
        "EXAMPLE-DIALOG")
       ("Assistant"
-       "assistant.lisp"
-       "DEMO-ASSISTANT"))
+       "../gtk-example/assistant.lisp"
+       "EXAMPLE-ASSISTANT"))
 
      "Display Widgets"
      (("Labels"
@@ -635,11 +635,6 @@
         (notebook (make-instance 'gtk-notebook
                                  :scrollable t))
         (view (create-view-and-model)))
-    (g-signal-connect window "destroy"
-                      (lambda (widget)
-                        (declare (ignore widget))
-                        (leave-gtk-main)
-                        (g-application-quit application)))
     ;; Set an icon for the application
     (let ((pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-rgb.gif"))))
       (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))
@@ -693,6 +688,12 @@
   <menu id=\"appmenu\">
     <section>
       <item>
+        <attribute name=\"label\" translatable=\"yes\">Inspector</attribute>
+        <attribute name=\"action\">app.inspector</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
         <attribute name=\"label\" translatable=\"yes\">About</attribute>
         <attribute name=\"action\">app.about</attribute>
       </item>
@@ -713,6 +714,15 @@
     (gtk-builder-add-from-string builder *appmenu*)
     (setf (gtk-application-app-menu application)
           (gtk-builder-object builder "appmenu")))
+  ;; Add action "inspector" to the application
+  (let ((action (g-simple-action-new "inspector" nil)))
+    ;; Connect a handler to the signal "activate"
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (declare (ignore action parameter))
+         (gtk-window-interactive-debugging t)))
+    ;; Add the action to the action map of the application
+    (g-action-map-add-action application action))
   ;; Add action "about" to the application
   (let ((action (g-simple-action-new "about" nil)))
     ;; Connect a handler to the signal "activate"
@@ -730,26 +740,20 @@
          (declare (ignore action parameter))
          ;; Destroy all windows of the application
          (dolist (window (gtk-application-windows application))
-           (gtk-widget-destroy window))
-         ;; Quit the main loop
-         (leave-gtk-main)
-         ;; Quit the application
-         (g-application-quit application)))
+           (gtk-widget-destroy window))))
     ;; Add the action to action map of the application
     (g-action-map-add-action application action)))
 
 (defun gtk-demo (&rest argv)
-  (within-main-loop
-    (unless (string= "GTK Lisp Demo" (g-application-name))
-      (setf (g-application-name) "GTK Lisp Demo"))
-    (let ((gtk-demo (make-instance 'gtk-application
-                                   :application-id "com.crategus.gtk-demo"
-                                   :register-session t)))
-      ;; Connect signal handlers to the application
-      (g-signal-connect gtk-demo "activate" #'gtk-demo-activate)
-      (g-signal-connect gtk-demo "startup" #'gtk-demo-startup)
-      ;; Start the application
-      (g-application-run gtk-demo argv)))
-  (join-gtk-main))
+  (unless (string= "GTK Lisp Demo" (g-application-name))
+    (setf (g-application-name) "GTK Lisp Demo"))
+  (let ((gtk-demo (make-instance 'gtk-application
+                                 :application-id "com.crategus.gtk-demo"
+                                 :register-session t)))
+    ;; Connect signal handlers to the application
+    (g-signal-connect gtk-demo "activate" #'gtk-demo-activate)
+    (g-signal-connect gtk-demo "startup" #'gtk-demo-startup)
+    ;; Start the application
+    (g-application-run gtk-demo argv)))
 
 ;;; --- End of file gtk-demo.lisp ----------------------------------------------
