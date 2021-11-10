@@ -626,7 +626,7 @@
       @fun{gtk-print-operation-preview-render-page} to find pages which are
       selected for print and render them. The preview must be finished by
       calling the function @fun{gtk-print-operation-preview-end-preview},
-      typically in response to the user clicking a close button.
+      typically in response to the user clicking a Close button.
       @begin[code]{table}
         @entry[operation]{The @sym{gtk-print-operation} object on which the
           signal was emitted.}

@@ -71,19 +71,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-offscreen-window 'type)
- "@version{2021-10-26}
+ "@version{2021-11-2}
   @begin{short}
     The @sym{gtk-offscreen-window} widget is strictly intended to be used for
     obtaining snapshots of widgets that are not part of a normal widget
     hierarchy.
   @end{short}
-  Since the @sym{gtk-offscreen-window} widget is a toplevel widget you cannot
-  obtain snapshots of a full window with it since you cannot pack a toplevel
-  widget in another toplevel.
+  Since the offscreen window is a toplevel widget you cannot obtain snapshots
+  of a full window with it since you cannot pack a toplevel widget in another
+  toplevel.
 
   The idea is to take a widget and manually set the state of it, add it to a
-  @sym{gtk-offscreen-window} widget and then retrieve the snapshot as a
-  @symbol{cairo-surface-t} or @class{gdk-pixbuf} object.
+  offscreen window and then retrieve the snapshot as a @symbol{cairo-surface-t}
+  instance or @class{gdk-pixbuf} object.
 
   The @sym{gtk-offscreen-window} widget derives from the @class{gtk-window}
   class only as an implementation detail. Applications should not use any API

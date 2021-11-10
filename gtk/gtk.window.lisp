@@ -552,7 +552,7 @@
         @entry[window]{The @sym{gtk-window} widget on which the signal is
           emitted.}
         @entry[toggle]{A boolean which toggles the debugger.}
-        @entry[Return]{A boolean which is @em{true} if the key binding was
+        @entry[Returns]{A boolean which is @em{true} if the key binding was
           handled.}
       @end{table}
     @subheading{The \"keys-changed\" signal}
@@ -824,7 +824,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "deletable" 'gtk-window) 't)
  "The @code{deletable} property of type @code{:boolean} (Read / Write) @br{}
-  Whether the window frame should have a close button. @br{}
+  Whether the window frame should have a Close button. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -842,12 +842,12 @@
   @end{short}
 
   The @sym{gtk-window-deletable} slot access function returns whether the window
-  has been set to have a close button.
+  has been set to have a Close button.
 
-  By default, windows have a close button in the window frame. Some window
+  By default, windows have a Close button in the window frame. Some window
   managers allow GTK to disable this button. If you set the
   @slot[gtk-window]{deletable} property to @em{false} using this function, GTK
-  will do its best to convince the window manager not to show a close button.
+  will do its best to convince the window manager not to show a Close button.
 
   Depending on the system, this function may not have any effect when called on
   a window that is already visible, so you should call it before calling
@@ -1681,9 +1681,9 @@
     class.
   @end{short}
 
-  The @sym{gtk-window-type-hint} slot access function returns the type hint for
-  the window. The @sym{(setf gtk-window-type-hint)} slot access function returns
-  the window type. By setting the type hint for the window, you allow the window
+  The @sym{gtk-window-type-hint} slot access function gets the type hint for the
+  window. The @sym{(setf gtk-window-type-hint)} slot access function sets the
+  type hint. By setting the type hint for the window, you allow the window
   manager to decorate and handle the window in a way which is suitable to the
   function of the window in your application.
 
@@ -1825,7 +1825,7 @@
   @begin{short}
     Associate an accelerator group with the window, such that calling the
     @fun{gtk-accel-group-activate} function on the window will activate
-    accelerators in the group.
+    accelerators in the accelerator group.
   @end{short}
   @see-class{gtk-window}
   @see-function{gtk-accel-group-activate}"
@@ -1948,7 +1948,7 @@
   to hiding, rather than using the default size.
 
   Windows cannot actually be 0 x 0 in size, they must be at least 1 x 1, but
-  passing 0 for width and height is OK, resulting in a 1 x 1 default size.
+  passing 0 for width and height is fine, resulting in a 1 x 1 default size.
   @begin[Example]{dictionary}
    @begin{pre}
 (let ((window (make-instance 'gtk-window)))
@@ -2162,12 +2162,12 @@
   @return{@em{True} if a widget in the focus chain handled the event.}
   @begin{short}
     Propagate a key press or release event to the focus widget and up the focus
-    container chain until a widget handles event.
+    container chain until a widget handles the event.
   @end{short}
   This is normally called by the default \"key-press-event\" and
-  \"key-release-event\" handlers for toplevel windows, however in some cases it
-  may be useful to call this directly when overriding the standard key handling
-  for a toplevel window.
+  \"key-release-event\" signal handlers for toplevel windows, however in some
+  cases it may be useful to call this directly when overriding the standard key
+  handling for a toplevel window.
   @see-class{gtk-window}
   @see-class{gdk-event-key}"
   (window (g-object gtk-window))
@@ -2333,9 +2333,9 @@
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Requests that the window is closed, similar to what happens when a window
-    manager close button is clicked.
+    manager Close button is clicked.
   @end{short}
-  This function can be used with close buttons in custom titlebars.
+  This function can be used with Close buttons in custom titlebars.
   @see-class{gtk-window}"
   (window (g-object gtk-window)))
 
@@ -2429,7 +2429,7 @@
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
     Asks to unstick the window, which means that it will appear on only one of
-    the user's desktops.
+    the desktops of the user.
   @end{short}
   Note that you should not assume the window is definitely unstuck afterward,
   because other entities, e.g. the user or window manager, could stick it

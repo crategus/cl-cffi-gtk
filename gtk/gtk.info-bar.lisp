@@ -334,7 +334,7 @@
                                                'gtk-info-bar) 't)
  "The @code{show-close-button} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
-  Whether to include a standard close button. @br{}
+  Whether to include a standard Close button. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -345,15 +345,15 @@
   @syntax[]{(gtk-info-bar-show-close-button object) => setting}
   @syntax[]{(setf (gtk-info-bar-show-close-button object) setting)}
   @argument[object]{a @class{gtk-info-bar} widget}
-  @argument[setting]{@em{true} to include a close button}
+  @argument[setting]{@em{true} to include a Close button}
   @begin{short}
     Accessor of the @slot[gtk-info-bar]{show-close-button} slot of the
     @class{gtk-info-bar} class.
   @end{short}
 
   The slot access function @sym{gtk-info-bar-show-close-button} returns whether
-  the widget will display a standard close button. If @em{true}, a standard
-  close button is shown. When clicked it emits the response @code{:close}.
+  the widget will display a standard Close button. If @em{true}, a standard
+  Close button is shown. When clicked it emits the response @code{:close}.
   @see-class{gtk-info-bar}")
 
 ;;; ----------------------------------------------------------------------------

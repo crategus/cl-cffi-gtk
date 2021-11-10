@@ -1133,10 +1133,10 @@
   colon separates the buttons that should appear on the left from those on the
   right. Recognized button names are minimize, maximize, close, icon (the
   window icon) and menu (a menu button for the fallback app menu). For example,
-  \"menu:minimize,maximize,close\" specifies a menu on the left, and minimize,
-   maximize and close buttons on the right. Note that buttons will only be shown
+  \"menu:minimize,maximize,close\" specifies a menu on the left, and Minimize,
+   Maximize and Close buttons on the right. Note that buttons will only be shown
   when they are meaningful. E.g. a menu button only appears when the desktop
-  shell does not show the application menu, and a close button only appears on
+  shell does not show the application menu, and a Close button only appears on
   a window that can be closed. Also note that the setting can be overridden
   with the @slot[gtk-header-bar]{decoration-layout} property of the header bar.
   @br{}
@@ -1166,11 +1166,11 @@
   and menu (a menu button for the fallback app menu).
 
   For example, \"menu:minimize,maximize,close\" specifies a menu on the left,
-  and minimize, maximize and close buttons on the right.
+  and Minimize, Maximize and Close buttons on the right.
 
   Note that buttons will only be shown when they are meaningful. E.g. a menu
   button only appears when the desktop shell does not show the app menu, and a
-  close button only appears on a window that can be closed.
+  Close button only appears on a window that can be closed.
 
   Also note that the setting can be overridden with the
   @slot[gtk-header-bar]{decoration-layout} property of the header bar.

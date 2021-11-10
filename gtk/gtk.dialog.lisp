@@ -163,7 +163,7 @@
 (setf (gethash 'gtk-response-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-response-type atdoc:*external-symbols*)
- "@version{2021-9-23}
+ "@version{2021-11-2}
   @begin{short}
     Predefined values for use as response IDs in the @fun{gtk-dialog-add-button}
     function.
@@ -190,15 +190,15 @@
     @entry[:none]{Returned if an action widget has no response ID, or if the
       dialog gets programmatically hidden or destroyed.}
     @entry[:reject]{Generic response ID, not used by GTK dialog.}
-    @entry[:accept]{Generic response ID, not used by GTK dialogs.}
+    @entry[:accept]{Generic response ID, not used by GTK dialog.}
     @entry[:delete-event]{Returned if the dialog is deleted.}
     @entry[:ok]{Returned by OK buttons in GTK dialog.}
-    @entry[:cancel]{Returned by Cancel buttons in GTK dialogs.}
-    @entry[:close]{Returned by Close buttons in GTK dialogs.}
-    @entry[:yes]{Returned by Yes buttons in GTK dialogs.}
-    @entry[:no]{Returned by No buttons in GTK dialogs.}
-    @entry[:apply]{Returned by Apply buttons in GTK dialogs.}
-    @entry[:help]{Returned by Help buttons in GTK dialogs.}
+    @entry[:cancel]{Returned by Cancel buttons in GTK dialog.}
+    @entry[:close]{Returned by Close buttons in GTK dialog.}
+    @entry[:yes]{Returned by Yes buttons in GTK dialog.}
+    @entry[:no]{Returned by No buttons in GTK dialog.}
+    @entry[:apply]{Returned by Apply buttons in GTK dialog.}
+    @entry[:help]{Returned by Help buttons in GTK dialog.}
   @end{table}
   @see-class{gtk-dialog}
   @see-function{gtk-dialog-add-button}")
@@ -219,7 +219,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-dialog 'type)
- "@version{2021-9-26}
+ "@version{2021-11-2}
   @begin{short}
     Dialogs are a convenient way to prompt the user for a small amount of input,
     e.g. to display a message, ask a question, or anything else that does not
@@ -333,21 +333,21 @@
   @end{dictionary}
   @begin[GtkDialog as GtkBuildable]{dictionary}
     The @sym{gtk-dialog} implementation of the @class{gtk-buildable} interface
-    exposes the @code{vbox} and @code{action-area} as internal children with
-    the names \"vbox\" and \"action_area\".
+    exposes the content area and action area as internal children with the names
+    @code{vbox} and @code{action_area}.
 
     The @sym{gtk-dialog} implementation supports a custom
     @code{<action-widgets>} element, which can contain multiple
     @code{<action-widget>} elements. The @code{\"response\"} attribute specifies
     a numeric response, and the content of the element is the ID of the widget,
-    which should be a child of the @code{action-area} of the dialog. To mark a
+    which should be a child of the action area of the dialog. To mark a
     response as default, set the @code{\"default\"} attribute of the
     @code{<action-widget>} element to true.
 
     The @sym{gtk-dialog} implementation supports adding action widgets by
     specifying @code{\"action\"} as the @code{\"type\"} attribute of a
     @code{<child>} element. The widget will be added either to the action area
-    or the headerbar of the dialog, depending on the @code{\"use-header-bar\"}
+    or the headerbar of the dialog, depending on the @code{use-header-bar}
     property. The response ID has to be associated with the action widget using
     the @code{<action-widgets>} element.
 
@@ -652,7 +652,7 @@
 
 (defcfun ("gtk_dialog_add_button" gtk-dialog-add-button) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-10-9}
+ "@version{2021-11-2}
   @argument[dialog]{a @class{gtk-dialog} widget}
   @argument[text]{a string with the text of the button}
   @argument[response]{response ID for the button, which is a positive integer
@@ -665,6 +665,7 @@
   @end{short}
   The button is appended to the end of the action area of the dialog.
   @see-class{gtk-dialog}
+  @see-class{gtk-button}
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-add-buttons}
   @see-function{gtk-dialog-add-action-widget}"
@@ -710,7 +711,7 @@
 
 (defcfun ("gtk_dialog_add_action_widget" gtk-dialog-add-action-widget) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-26}
+ "@version{2021-11-2}
   @argument[dialog]{a @class{gtk-dialog} widget}
   @argument[child]{an activatable @class{gtk-widget} widget}
   @argument[response]{response ID for @arg{child}, which is a positive
@@ -724,6 +725,7 @@
   you want to add a non-activatable widget, simply pack it into the action area
   of the dialog.
   @see-class{gtk-dialog}
+  @see-class{gtk-widget}
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-add-button}
   @see-function{gtk-dialog-add-buttons}"
@@ -789,13 +791,13 @@
 (defcfun ("gtk_dialog_get_response_for_widget" gtk-dialog-response-for-widget)
     :int
  #+cl-cffi-gtk-documentation
- "@version{2021-9-26}
+ "@version{2021-11-2}
   @argument[dialog]{a @class{gtk-dialog} widget}
   @argument[widget]{a @class{gtk-widget} widget in the action area of
     @arg{dialog}}
   @return{The response ID of @arg{widget}, which is a positive integer or a
     value of the @symbol{gtk-response-type} enumeration, the value is
-    @code{:none} if @arg{widget} does not have a response ID set}
+    @code{:none} if @arg{widget} does not have a response ID set.}
   @begin{short}
     Gets the response ID of the widget in the action area of the dialog.
   @end{short}
@@ -815,7 +817,7 @@
 (defcfun ("gtk_dialog_get_widget_for_response" gtk-dialog-widget-for-response)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-26}
+ "@version{2021-11-2}
   @argument[dialog]{a @class{gtk-dialog} widget}
   @argument[response]{the response ID, which is a positive integer or a value
     of the @symbol{gtk-response-type} enumeration}
@@ -826,6 +828,7 @@
     dialog.
   @end{short}
   @see-class{gtk-dialog}
+  @see-class{gtk-widget}
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-response-for-widget}"
   (dialog (g-object gtk-dialog))

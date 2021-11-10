@@ -65,7 +65,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-window-group 'type)
- "@version{2021-10-26}
+ "@version{2021-11-2}
   @begin{short}
     A @sym{gtk-window-group} object restricts the effect of grabs to windows in
     the same group, thereby making window groups almost behave like separate
@@ -73,13 +73,13 @@
   @end{short}
 
   A window can be a member in at most one window group at a time. Windows that
-  have not been explicitly assigned to a group are implicitly treated like
-  windows of the default window group.
+  have not been explicitly assigned to a window group are implicitly treated
+  like windows of the default window group.
 
-  Window groups are referenced by each window in the group. If the windows in
-  the window group are subsequently destroyed, then they will be removed from
-  the window group and drop their references on the window group. When all
-  window have been removed, the window group will be freed.")
+  Window groups are referenced by each window in the window group. If the
+  windows in the window group are subsequently destroyed, then they will be
+  removed from the window group and drop their references on the window group.
+  When all window have been removed, the window group will be freed.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_new ()
@@ -89,7 +89,7 @@
 
 (defun gtk-window-group-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{2021-11-2}
   @return{A new @class{gtk-window-group} object.}
   @begin{short}
     Creates a new window group.
@@ -97,7 +97,7 @@
   Grabs added with the @fun{gtk-grab-add} function only affect windows within
   the same window group.
   @see-class{gtk-window-group}
-  @see-function{gtk-grap-add}"
+  @see-function{gtk-grab-add}"
   (make-instance 'gtk-window-group))
 
 (export 'gtk-window-group-new)
@@ -166,11 +166,11 @@
 (defcfun ("gtk_window_group_get_current_grab" gtk-window-group-current-grab)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{2021-11-2}
   @argument[group]{a @class{gtk-window-group} object}
-  @return{The current @class{gtk-widget} grab widget of the group.}
+  @return{The current @class{gtk-widget} grab widget of the window group.}
   @begin{short}
-    Gets the current grab widget of the given group.
+    Gets the current grab widget of the given window group.
   @end{short}
   See the @fun{gtk-grab-add} function.
   @see-class{gtk-window-group}

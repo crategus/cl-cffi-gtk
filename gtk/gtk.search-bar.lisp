@@ -211,7 +211,7 @@ main (gint argc,
                                                'gtk-search-bar) 't)
  "The @code{show-close-button} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
-  Whether to show the close button in the toolbar. @br{}
+  Whether to show the Close button in the toolbar. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -222,7 +222,7 @@ main (gint argc,
   @syntax[]{(gtk-search-bar-show-close-button object) => visible}
   @syntax[]{(setf (gtk-search-bar-show-close-button object) visible)}
   @argument[object]{a @class{gtk-search-bar} widget}
-  @argument[visible]{a boolean whether the close button will be shown or not}
+  @argument[visible]{a boolean whether the Close button will be shown or not}
   @begin{short}
     Accessor of the @slot[gtk-search-bar]{show-close-button} slot of the
     @class{gtk-search-bar} class.
@@ -230,10 +230,10 @@ main (gint argc,
 
   The function @sym{gtk-search-bar-show-close-button} returns whether the close
   button is shown. The function @sym{(setf gtk-search-bar-show-close-button}
-  shows or hides the close button.
+  shows or hides the Close button.
 
   Applications that already have a \"search\" toggle button should not show a
-  close button in their search bar, as it duplicates the role of the toggle
+  Close button in their search bar, as it duplicates the role of the toggle
   button.
   @see-class{gtk-search-bar}")
 

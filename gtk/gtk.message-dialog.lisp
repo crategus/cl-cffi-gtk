@@ -304,7 +304,7 @@
     Accessor of the @slot[gtk-message-dialog]{buttons} slot of the
     @class{gtk-message-dialog} class.
   @end{short}
-  @begin[Warning]{dictionary}
+  @begin[Note]{dictionary}
     This property is not accessible from the Lisp binding.
   @end{dictionary}
   @see-class{gtk-message-dialog}")

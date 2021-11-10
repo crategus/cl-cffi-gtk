@@ -136,7 +136,7 @@
   be turned off with the @fun{gtk-header-bar-has-subtitle} function.
 
   The @sym{gtk-header-bar} widget can add typical window frame controls, such as
-  minimize, maximize and close buttons, or the window icon.
+  Minimize, Maximize and Close buttons, or the window icon.
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
       @begin[pack-type]{entry}
@@ -244,7 +244,7 @@
 
   There can be valid reasons for overriding the setting, such as a header bar
   design that does not allow for buttons to take room on the right, or only
-  offers room for a single close button. Split header bars are another example
+  offers room for a single Close button. Split header bars are another example
   for overriding the setting.
 
   The format of the string is button names, separated by commas. A colon
@@ -253,7 +253,7 @@
   icon and menu for a menu button for the fallback app menu.
 
   For example, \"menu:minimize,maximize,close\" specifies a menu on the left,
-  and minimize, maximize and close buttons on the right.
+  and minimize, maximize and Close buttons on the right.
   @see-class{gtk-header-bar}
   @see-function{gtk-settings-gtk-decoration-layout}")
 
@@ -326,7 +326,7 @@
   @br{}
   Whether to show window decorations. Which buttons are actually shown and
   where is determined by the @code{decoration-layout} property, and by the
-  state of the window, e.g. a close button will not be shown if the window
+  state of the window, e.g. a Close button will not be shown if the window
   can not be closed. @br{}
   Default value: @em{false}")
 

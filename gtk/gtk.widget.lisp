@@ -5027,7 +5027,7 @@ drag_data_received (GtkWidget        *widget,
   @end{short}
   The function calls the @fun{gtk-widget-hide} function on its argument, then
   returns @em{true}. If connected to the \"delete-event\" signal, the result is
-  that clicking the close button for a window will hide but not destroy the
+  that clicking the Close button for a window will hide but not destroy the
   window. By default, GTK destroys windows when the \"delete-event\" signal is
   received.
   @see-class{gtk-widget}
