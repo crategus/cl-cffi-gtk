@@ -2791,7 +2791,7 @@ int main( int argc, char *argv[] )
    </para>
    <para>
     The tab label does not have to be a &gtk-label; widget. For example, you could use a &gtk-box; widget
-    that contains a label and a close button. This allows you to embed other useful widgets such as buttons
+    that contains a label and a Close button. This allows you to embed other useful widgets such as buttons
     and images into the tab label.
    </para>
    <para>
@@ -9651,7 +9651,7 @@ JustifyLeft
      not the menu.
     </para>
     <para>
-     If our UI definition had a menubar and toolbar at the top level named "MainMenu" and "MainToolBar"
+     If our UI definition had a menubar and toolbar at the toplevel named "MainMenu" and "MainToolBar"
      respectively, we could get them from the UI manager using
     </para>
     <programlisting>
