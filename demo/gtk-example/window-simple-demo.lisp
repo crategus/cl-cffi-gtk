@@ -6,10 +6,13 @@
 
 (in-package :gtk-example)
 
-(defun example-window-simple ()
+(defun example-window-simple-demo (&optional application)
   (within-main-loop
     (let (;; Create a toplevel window.
           (window (gtk-window-new :toplevel)))
+      ;; Add the window to the list of windows of the application
+      (when application
+        (setf (gtk-window-application window) application))
       ;; Signal handler for the window to handle the signal "destroy".
       (g-signal-connect window "destroy"
                         (lambda (widget)

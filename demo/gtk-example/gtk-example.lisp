@@ -4,6 +4,7 @@
   (:export #:create-page-setup-dialog
            #:create-print-dialog
            #:do-print-operation
+           #:list-content-types
            #:example-alignment
            #:example-alignment-interactive
            #:example-arrow-button
@@ -20,11 +21,18 @@
            #:example-color-button
            #:example-color-button-label                ; Selecting Colors, ...
            #:example-color-chooser-dialog              ; Selecting Colors, ...
+           #:example-color-chooser-palette
+           #:example-color-chooser-widget
            #:example-combo-box
            #:example-combo-box-text
+           #:example-css-accordion
+           #:example-css-basics
+           #:example-css-blendmodes
+           #:example-css-pixbufs
+           #:example-cursor
            #:example-custom-drawing
            #:example-custom-window
-           #:example-dialog                            ; Dialog Windows
+           #:example-dialogs                           ; Dialog Windows
            #:example-dialog-new
            #:example-dialog-new-with-buttons
            #:example-dialog-ui
@@ -47,6 +55,7 @@
            #:create-file-chooser-widget
            #:example-getting-started                   ; Getting started
            #:example-grab
+           #:example-grid-interactive
            #:example-grid-packing
            #:example-grid-simple                       ; Packing Widgets
            #:example-grid-spacing                      ; Packing Widgets
@@ -126,6 +135,7 @@
            #:example-widget-pointer
            #:example-window-application                ; Deprecated
            #:example-window-simple                     ; Getting started
+           #:example-window-simple-demo
            ))
 
 (in-package :gtk-example)

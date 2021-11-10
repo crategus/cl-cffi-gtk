@@ -1,6 +1,6 @@
-;;;; Color Chooser Palette
+;;;; Color Chooser Palette - 2021-11-5
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
 (defparameter *color-chooser-palette-ui*
 "<interface>
@@ -202,10 +202,11 @@
       ("DarkSlateGray"         #x2F4F4F    "rgb( 47,  79,  79)")
       ("Black"                 #x000000    "rgb(  0,   0,   0)")))))
 
-(defun example-color-chooser-palette ()
+(defun example-color-chooser-palette (&optional application)
   (within-main-loop
     (let* ((colors-per-line 9)
            (window (make-instance 'gtk-window
+                                  :application application
                                   :title "Example Color Chooser Palette"
                                   :border-width 12
                                   :default-width 400))
@@ -239,5 +240,3 @@
       (gtk-box-pack-start hbox action-grid)
       (gtk-container-add window hbox)
       (gtk-widget-show-all window))))
-
-;;; 2021-1-25

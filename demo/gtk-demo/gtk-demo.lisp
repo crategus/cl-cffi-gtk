@@ -91,51 +91,67 @@
 
 ;;; ----------------------------------------------------------------------------
 
+(defparameter id-title 0)
+(defparameter id-file 1)
+(defparameter id-func 2)
+(defparameter id-app 3)
+(defparameter id-ui 4)
+(defparameter id-css 5)
+
 (defparameter *tree-model*
    '(("gchararray"        ; Title
       "gchararray"        ; Filename
       "gchararray"        ; Function name
+      "gboolean"          ; Application as argument
       "gchararray"        ; UI Definition
       "gchararray")       ; CSS Definition
 
      "Theming in GTK"
      (("CSS Basics"
-        "css-basics.lisp"
-        "DO-CSS-BASICS"
+        "../gtk-example/css-basics.lisp"
+        "EXAMPLE-CSS-BASICS"
+        t
         ""
-        "css-basics.css")
+        "../gtk-example/css-basics.css")
       ("CSS Accordion"
-       "css-accordion.lisp"
-       "DEMO-CSS-ACCORDION"
+       "../gtk-example/css-accordion.lisp"
+       "EXAMPLE-CSS-ACCORDION"
+       t
        ""
-       "css-accordion.css")
+       "../gtk-example/css-accordion.css")
       ("CSS Blend Modes"
-       "css-blendmodes.lisp"
-       "DO-CSS-BLENDMODES"
-       "css-blendmodes.ui"
-       "css-blendmodes.css")
+       "../gtk-example/css-blendmodes.lisp"
+       "EXAMPLE-CSS-BLENDMODES"
+       t
+       "../gtk-example/css-blendmodes.ui"
+       "../gtk-example/css-blendmodes.css")
       ("CSS Pixbufs"
-       "css-pixbufs.lisp"
-       "DEMO-CSS-PIXBUFS"
+       "../gtk-example/css-pixbufs.lisp"
+       "EXAMPLE-CSS-PIXBUFS"
+       t
        ""
-       "css-pixbufs.css")
+       "../gtk-example/css-pixbufs.css")
       ("Custom Drawing"
        "../gtk-example/custom-drawing.lisp"
-       "EXAMPLE-CUSTOM-DRAWING"))
+       "EXAMPLE-CUSTOM-DRAWING"
+       t))
 
      "Windows"
      (("Simple Window"
-       "../gtk-example/window-simple.lisp"
-       "EXAMPLE-WINDOW-SIMPLE")
+       "../gtk-example/window-simple-demo.lisp"
+       "EXAMPLE-WINDOW-SIMPLE-DEMO"
+       "true")
       ("Simple Message"
        "simple-message.lisp"
        "EXAMPLE-SIMPLE-MESSAGE")
       ("Dialog Windows"
        "../gtk-example/dialog.lisp"
-       "EXAMPLE-DIALOG")
+       "EXAMPLE-DIALOGS"
+       "true")
       ("Assistant"
        "../gtk-example/assistant.lisp"
-       "EXAMPLE-ASSISTANT"))
+       "EXAMPLE-ASSISTANT"
+       "true"))
 
      "Display Widgets"
      (("Labels"
@@ -253,6 +269,7 @@
       ("Popover"
        "popover.lisp"
        "DO-POPOVER"
+       nil
        "popover.ui"))
 
      "Selectors (Color/File/Font)"
@@ -263,14 +280,16 @@
        "../gtk-example/color-button-label.lisp"
        "EXAMPLE-COLOR-BUTTON-LABEL")
       ("Color Chooser Widget"
-       "color-chooser-widget.lisp"
-       "EXAMPLE-COLOR-CHOOSER-WIDGET")
+       "../gtk-example/color-chooser-widget.lisp"
+       "EXAMPLE-COLOR-CHOOSER-WIDGET"
+       t)
       ("Color Chooser Dialog"
        "../gtk-example/color-chooser-dialog.lisp"
        "EXAMPLE-COLOR-CHOOSER-DIALOG")
       ("Color Chooser Palette"
-       "color-chooser-palette.lisp"
-       "EXAMPLE-COLOR-CHOOSER-PALETTE")
+       "../gtk-example/color-chooser-palette.lisp"
+       "EXAMPLE-COLOR-CHOOSER-PALETTE"
+      t)
       ("File Chooser Button"
        "../gtk-example/file-chooser-button.lisp"
        "EXAMPLE-FILE-CHOOSER-BUTTON")
@@ -303,6 +322,10 @@
       ("Grid packing"
        "../gtk-example/grid-packing.lisp"
        "EXAMPLE-GRID-PACKING")
+      ("Grid Interactive"
+       "../gtk-example/grid-interactive.lisp"
+       "EXAMPLE-GRID-INTERACTIVE"
+       t)
       ("Button Boxes"
        "../gtk-example/button-box.lisp"
        "EXAMPLE-BUTTON-BOX")
@@ -315,6 +338,7 @@
       ("Revealer Icon"
        "../gtk-example/revealer-icon.lisp"
        "EXAMPLE-REVEALER-ICON"
+       nil
        "../gtk-example/revealer-icon.ui")
       ("Fixed Container"
        "../gtk-example/fixed.lisp"
@@ -322,6 +346,10 @@
       ("Frame Widget"
        "../gtk-example/frame.lisp"
        "EXAMPLE-FRAME")
+      ("Frame Properties"
+       "../gtk-example/frame-properties.lisp"
+       "EXAMPLE-FRAME-PROPERTIES"
+       t)
       ("Aspect Frame"
        "../gtk-example/aspect-frame.lisp"
        "EXAMPLE-ASPECT-FRAME")
@@ -400,8 +428,9 @@
        "../gtk-example/calendar.lisp"
        "EXAMPLE-CALENDAR")
       ("Cursor"
-       "cursor.lisp"
-       "DEMO-CURSOR")
+       "../gtk-example/cursor.lisp"
+       "EXAMPLE-CURSOR"
+       t)
       ("Event Box"
        "../gtk-example/event-box.lisp"
        "EXAMPLE-EVENT-BOX")
@@ -517,7 +546,8 @@
          "EXAMPLE-NOTEBOOK")
         ("Frame Widget"
          "../gtk-example/frame.lisp"
-         "EXAMPLE-FRAME")
+         "EXAMPLE-FRAME"
+         t)
         ("Aspect Frame"
          "../gtk-example/aspect-frame.lisp"
          "EXAMPLE-ASPECT-FRAME")
@@ -560,7 +590,7 @@
     (setf data (rest data)))
   (let ((parent iter))
     (dolist (entry (mklist data))
-      (cond ((or (atom entry) (every #'atom entry))
+      (cond ((or (atom entry) (every #'atom entry)) ; entry is never an atom?
              (setf parent
                    (apply #'gtk-tree-store-set model
                                                (gtk-tree-store-append model
@@ -574,7 +604,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun create-view-and-model ()
+(defun create-view-and-model (&optional application)
   (let* ((model (create-and-fill-tree-store *tree-model*))
          (view (make-instance 'gtk-tree-view
                               :model model))
@@ -590,21 +620,23 @@
          (declare (ignore column))
          (let* ((model (gtk-tree-view-model tree-view))
                 (iter (gtk-tree-model-iter model path))
-                (func-name (gtk-tree-model-value model iter 2))
+                (func-name (gtk-tree-model-value model iter id-func))
                 (func (or (find-symbol func-name :gtk-demo)
                           (find-symbol func-name :cairo-demo)
                           (find-symbol func-name :cairo-clock))))
            (if func
-               (funcall func)
+               (if (gtk-tree-model-value model iter id-app)
+                   (funcall func application)
+                   (funcall func))
                (format t "~%No function.~%")))))
     (setf (gtk-tree-selection-mode selection) :browse)
     ;; The selection has changed.
     (g-signal-connect selection "changed"
        (lambda (tree-selection)
          (let* ((iter (gtk-tree-selection-selected tree-selection))
-                (filename (gtk-tree-model-value model iter 1))
-                (ui-file (gtk-tree-model-value model iter 3))
-                (css-file (gtk-tree-model-value model iter 4)))
+                (filename (gtk-tree-model-value model iter id-file))
+                (ui-file (gtk-tree-model-value model iter id-ui))
+                (css-file (gtk-tree-model-value model iter id-css)))
            (if (> (length filename) 0)
                (load-file filename))
            (if (> (length ui-file) 0)
@@ -634,7 +666,7 @@
         ;; A notebook
         (notebook (make-instance 'gtk-notebook
                                  :scrollable t))
-        (view (create-view-and-model)))
+        (view (create-view-and-model application)))
     ;; Set an icon for the application
     (let ((pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-rgb.gif"))))
       (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))

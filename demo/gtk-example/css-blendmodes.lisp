@@ -1,8 +1,8 @@
-;;;; Theming/CSS Blend Modes
+;;;; Theming/CSS Blend Modes - 2021-11-5
 ;;;;
 ;;;; You can blend multiple backgrounds using the CSS blend modes available.
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
 (defparameter +blend-modes+ '(("Color"         "color")
                               ("Color (burn)"  "color-burn")
@@ -22,17 +22,18 @@
                               ("Soft Light"    "soft-light")))
 
 (defun update-css-for-blend-mode (provider blend-mode)
-  (let ((str (read-file (rel-path "css-blendmodes.css"))))
+  (let ((str (read-file (sys-path "css-blendmodes.css"))))
     (setq str (format nil str blend-mode blend-mode blend-mode))
     (print str)
     (gtk-css-provider-load-from-data provider str)))
 
-(defun do-css-blendmodes ()
+(defun example-css-blendmodes (&optional application)
   (within-main-loop
-    (let* ((builder (gtk-builder-new-from-file (rel-path "css-blendmodes.ui")))
+    (let* ((builder (gtk-builder-new-from-file (sys-path "css-blendmodes.ui")))
            (provider (make-instance 'gtk-css-provider))
            (listbox (make-instance 'gtk-list-box))
            (window (gtk-builder-object builder "window")))
+      (setf (gtk-window-application window) application)
       ;; Signal handler for the window to handle the signal "destroy".
       (g-signal-connect window "destroy"
                         (lambda (widget)

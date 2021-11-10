@@ -1,11 +1,12 @@
-;;;; Example Simple Frame (2021-5-28)
+;;;; Example Frame - 2021-11-5
 
 (in-package :gtk-example)
 
-(defun example-frame ()
+(defun example-frame (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
+                                 :application application
                                  :title "Example Frame"
                                  :default-width 250
                                  :default-height 200

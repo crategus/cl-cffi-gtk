@@ -1,15 +1,16 @@
-;;;; A demo for GtkGrid
+;;;; A demo for GtkGrid - 2021-11-5
 ;;;;
 ;;;; This demo allows to change interactively the appearance of a GtkGrid.
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
-(defun demo-grid ()
+(defun example-grid-interactive (&optional application)
   (within-main-loop
     (let* (;; Create a toplevel window.
            (window (make-instance 'gtk-window
                                   :type :toplevel
-                                  :title "Demo GtkGrid"
+                                  :application application
+                                  :title "Example Grid Interactive"
                                   :border-width 12))
            ;; A horizontal Box for the content of the window.
            (content (make-instance 'gtk-grid
@@ -116,4 +117,3 @@
       (gtk-container-add window content)
       ;; Show the window.
       (gtk-widget-show-all window))))
-

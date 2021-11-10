@@ -9,16 +9,6 @@
                :gio-example
                :cl-cffi-gtk :split-sequence)
   :components ((:file "package")
-               (:file "app-chooser-button")
-               (:file "app-chooser-dialog")
-               (:file "color-chooser-widget")
-               (:file "color-chooser-palette")
-               (:file "cursor")
-               (:file "css-accordion")
-               (:file "css-basics")
-               (:file "css-blendmodes")
-               (:file "css-pixbufs")
-               (:file "grid")
                (:file "pixbuf-scale")
                (:file "pixbufs")
                (:file "popover")
@@ -30,4 +20,4 @@
                (:file "../cairo-demo/cairo-clock")
                (:file "gtk-demo")))
 
-;;; 2021-11-1
+;;; 2021-11-5

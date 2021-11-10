@@ -1,10 +1,11 @@
-;;;; Color Chooser Widget
+;;;; Color Chooser Widget - 2021-11-5
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
-(defun example-color-chooser-widget ()
+(defun example-color-chooser-widget (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
+                                 :application application
                                  :title "Example Color Chooser Widget"
                                  :border-width 12
                                  :default-width 400))
@@ -19,5 +20,3 @@
               (format t "Selected color is ~a~%" (gdk-rgba-to-string color))))
         (gtk-container-add window color-chooser)
         (gtk-widget-show-all window))))
-
-;;; 2021-2-4

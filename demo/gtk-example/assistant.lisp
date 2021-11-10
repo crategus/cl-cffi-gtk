@@ -21,10 +21,11 @@
                             :spacing 12
                             :border-width 12))
         (label (make-instance 'gtk-label
+                              :valign :center
                               :use-markup t
                               :label "<b>Fill out the entry to continue:</b>"))
-        ;; TODO: The entry widget expands horizontally. Why?
         (entry (make-instance 'gtk-entry
+                              :valign :center
                               :activate-defaults t)))
     ;; Mark the page complete if we have text in the entry
     (g-signal-connect entry "changed"
@@ -84,22 +85,23 @@
   ;; Show the widget
   (gtk-widget-show pbar))
 
-(defun example-assistant ()
+(defun example-assistant (&optional application)
   (within-main-loop
     (let* ((assistant (make-instance 'gtk-assistant
-                                     ;; TODO: Always shows a header bar!?
-                                     :use-header-bar -1
-                                     :default-height 300))
+                                     ;; TODO: Ubuntu always shows a header bar!?
+                                     :use-header-bar 1
+                                     :application application
+                                     :default-height 240))
            (pbar (make-instance 'gtk-progress-bar
                                 :halign :center
                                 :valign :center))
            (provider (gtk-css-provider-new))
            (context (gtk-widget-style-context pbar))
-           (css-data "progressbar > trough,
-                      progressbar > trough > progress {
-                          min-height : 24px; }"))
+           (css "progressbar > trough,
+                 progressbar > trough > progress {
+                     min-height : 24px; }"))
       ;; Change the appearance of the progress bar
-      (gtk-css-provider-load-from-data provider css-data)
+      (gtk-css-provider-load-from-data provider css)
       (gtk-style-context-add-provider context
                                       provider
                                       +gtk-style-provider-priority-application+)
@@ -117,18 +119,12 @@
       (g-signal-connect assistant "prepare"
         (lambda (assistant page)
           (declare (ignore page))
-          (let ((page (gtk-assistant-current-page assistant))
-                (n-pages (gtk-assistant-n-pages assistant)))
-            (setf (gtk-window-title assistant)
-                  (format nil "Sample assistant (~A of ~A)"
-                              (+ page 1)
-                              n-pages))
-            ;; The fourth page (counting from zero) is the progress page. The
-            ;; user clicked Apply to get here so we tell the assistant to
-            ;; commit, which means the changes up to this point are permanent
-            ;; and cannot be cancelled or revisited.
-            (when (= 3 page)
-              (gtk-assistant-commit assistant)))))
+          ;; The fourth page (counting from zero) is the progress page. The
+          ;; user clicked Apply to get here so we tell the assistant to
+          ;; commit, which means the changes up to this point are permanent
+          ;; and cannot be cancelled or revisited.
+          (when (= 3 (gtk-assistant-current-page assistant))
+            (gtk-assistant-commit assistant))))
       (g-signal-connect assistant "apply"
          (lambda (assistant)
            ;; Start a timer to simulate changes taking a few seconds to apply.

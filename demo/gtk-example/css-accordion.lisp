@@ -1,24 +1,15 @@
-;;;; CSS Accordion
+;;;; CSS Accordion - 2021-11-5
 ;;;;
 ;;;; A simple accordion demo written using CSS transitions and multiple
 ;;;; backgrounds.
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
-(defun apply-css (widget provider)
-  (gtk-style-context-add-provider (gtk-widget-style-context widget)
-                                  provider
-                                  +gtk-style-provider-priority-user+)
-  (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
-    (gtk-container-forall widget
-                          (lambda (widget)
-                            (apply-css widget provider)))))
-
-(defun demo-css-accordion ()
+(defun example-css-accordion (&optional application)
   (within-main-loop
-    (let (;; Create a toplevel window.
-          (window (make-instance 'gtk-window
+    (let ((window (make-instance 'gtk-window
                                  :type :toplevel
+                                 :application application
                                  :title "Demo CSS Accordion"
                                  :default-height 300
                                  :default-width 600))
@@ -27,7 +18,7 @@
                                     :halign :center
                                     :valign :center))
           (provider (make-instance 'gtk-css-provider)))
-      ;; Signal handler for the window to handle the signal "destroy".
+      ;; Signal handler for the window to handle the "destroy" signal
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -48,9 +39,8 @@
       ;; Add container to window
       (gtk-container-add window container)
       ;; Load CSS from file into the provider
-      (gtk-css-provider-load-from-path provider (rel-path "css-accordion.css"))
+      (gtk-css-provider-load-from-path provider (sys-path "css-accordion.css"))
       ;; Apply CSS to the widgets
-      (apply-css window provider)
-      ;; Show the window.
+      (apply-css-to-widget provider window)
+      ;; Show the window
       (gtk-widget-show-all window))))
-

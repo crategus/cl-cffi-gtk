@@ -4,11 +4,11 @@
 
 (in-package :gtk-example)
 
-(defun example-frame-properties ()
+(defun example-frame-properties (&optional application)
   (within-main-loop
-    (let* (;; Create a toplevel window.
-           (window (make-instance 'gtk-window
+    (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
+                                  :application application
                                   :title "Demo GtkFrame"
                                   :border-width 12))
            ;; A horizontal Box for the content of the window.

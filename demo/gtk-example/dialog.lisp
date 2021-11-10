@@ -1,4 +1,4 @@
-;;;; Example Dialog Windows (2021-6-1)
+;;;; Example Dialog Windows - 2021-11-2
 
 (in-package :gtk-example)
 
@@ -21,10 +21,10 @@
           <http://www.gnu.org/licenses/> and ~
           <http://opensource.franz.com/preamble.html>."))
 
-(defun create-dialog ()
+(defun create-dialog (&optional (header-bar-p -1))
   (let ((dialog (make-instance 'gtk-dialog
-                               :title "Dialog Window"
-                               :has-separator t)))
+                               :use-header-bar header-bar-p
+                               :title "Dialog Window")))
     ;; Add a border width to the vbox of the content area
     (setf (gtk-container-border-width (gtk-dialog-content-area dialog)) 12)
     ;; Add a label widget with text to the content area
@@ -36,21 +36,15 @@
                                 :label
                                 (format nil
                                         "The content area is the place to ~
-                                         put in the widgets.~%~% ~
-                                         The action area contains ~
-                                         the buttons."))))
+                                         put in the widgets."))))
       (gtk-box-pack-start vbox label)
       (gtk-box-pack-start (gtk-dialog-content-area dialog) vbox)
       ;; Show the content area of the dialog
       (gtk-widget-show-all (gtk-dialog-content-area dialog)))
     ;; Add buttons with a stock id to the action area
     (gtk-dialog-add-button dialog "gtk-yes" :yes)
-    (gtk-dialog-add-button dialog "gtk-no" :no)
     (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
     (gtk-dialog-set-default-response dialog :cancel)
-    ;; Change the order of the buttons
-    (gtk-dialog-set-alternative-button-order dialog
-                                             (list :yes :cancel :no))
     ;; Run the dialog and print the message on the console
     (format t "Response was: ~S~%" (gtk-dialog-run dialog))
     ;; Destroy the dialog
@@ -59,7 +53,7 @@
 (defun create-message-dialog ()
   (let ((dialog (make-instance 'gtk-message-dialog
                                :message-type :info
-                               :buttons :ok
+                               :buttons :close
                                :text "Info Message Dialog"
                                :secondary-text
                                (format nil
@@ -70,8 +64,9 @@
     ;; Destroy the message dialog
     (gtk-widget-destroy dialog)))
 
-(defun create-about-dialog ()
+(defun create-about-dialog (&optional (header-bar-p 1))
   (let ((dialog (make-instance 'gtk-about-dialog
+                               :use-header-bar header-bar-p
                                :program-name "Example Dialog"
                                :version "0.00"
                                :copyright "(c) Dieter Kaiser"
@@ -91,12 +86,13 @@
     ;; Destroy the about dialog
     (gtk-widget-destroy dialog)))
 
-(defun example-dialog ()
+(defun example-dialogs (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
+                                 :application application
                                  :type :toplevel
-                                 :title "Example Dialog"
-                                 :default-width 250
+                                 :title "Example Dialogs"
+                                 :default-width 270
                                  :border-width 12))
           (vbox (make-instance 'gtk-box
                                :orientation :vertical
@@ -106,40 +102,49 @@
                           (declare (ignore widget))
                           (leave-gtk-main)))
       (gtk-container-add window vbox)
+      ;; Show a dialog
       (let ((button (make-instance 'gtk-button
-                                   :label "Open a Dialog Window")))
+                                   :label "Show Dialog")))
         (gtk-box-pack-start vbox button)
         (g-signal-connect button "clicked"
            (lambda (widget)
              (declare (ignore widget))
              ;; Create and show the dialog
-             (create-dialog))))
+             (create-dialog -1))))
+      ;; Show a dialog with a header bar
       (let ((button (make-instance 'gtk-button
-                                   :label "Open a Message Dialog")))
+                                   :label "Show Dialog with Header Bar")))
+        (gtk-box-pack-start vbox button)
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             ;; Create and show the dialog
+             (create-dialog 1))))
+      ;; Show message dialog
+      (let ((button (make-instance 'gtk-button
+                                   :label "Show Message Dialog")))
         (gtk-box-pack-start vbox button)
         (g-signal-connect button "clicked"
            (lambda (widget)
              (declare (ignore widget))
              ;; Create and show the message dialog
              (create-message-dialog))))
+      ;; Show about dialog
       (let ((button (make-instance 'gtk-button
-                                   :label "Open an About Dialog")))
+                                   :label "Show About Dialog")))
         (gtk-box-pack-start vbox button)
         (g-signal-connect button "clicked"
            (lambda (widget)
              (declare (ignore widget))
              ;; Create and show the about dialog
-             (create-about-dialog))))
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-separator
-                                         :orientation :horizontal))
-      ;; Create a quit button
+             (create-about-dialog -1))))
+      ;; Show about dialog with header bar
       (let ((button (make-instance 'gtk-button
-                                   :label "Quit")))
+                                   :label "Show About Dialog with Header Bar")))
+        (gtk-box-pack-start vbox button)
         (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start vbox button))
+           (lambda (widget)
+             (declare (ignore widget))
+             ;; Create and show the about dialog
+             (create-about-dialog 1))))
       (gtk-widget-show-all window))))
-

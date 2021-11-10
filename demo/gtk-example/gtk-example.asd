@@ -7,6 +7,11 @@
   :depends-on (:cl-cffi-gtk :split-sequence)
   :components ((:file "gtk-example")
                (:file "utils")
+               (:file "css-basics")
+               (:file "css-accordion")
+               (:file "css-blendmodes")
+               (:file "css-pixbufs")
+               (:file "cursor")
                (:file "alignment")
                (:file "alignment-interactive")
                (:file "arrow-button")
@@ -23,6 +28,8 @@
                (:file "color-button")
                (:file "color-button-label")            ; Selecting Colors, ...
                (:file "color-chooser-dialog")          ; Selecting Colors, ...
+               (:file "color-chooser-palette")
+               (:file "color-chooser-widget")
                (:file "combo-box")
                (:file "combo-box-text")
                (:file "custom-drawing")
@@ -47,6 +54,7 @@
                (:file "frame-properties")              ; Layout Widgets
                (:file "getting-started")               ; Getting started
                (:file "grab")
+               (:file "grid-interactive")
                (:file "grid-packing")                  ; Packing Widgets
                (:file "grid-simple")                   ; Packing Widgets
                (:file "grid-spacing")                  ; Packing Widgets
@@ -63,6 +71,7 @@
                (:file "layout")                        ; Layout Widgets
                (:file "level-bar")
                (:file "link-button")                   ; Button Widgets
+               (:file "list-content-types")
 ;               (:file "list-box")
 ;               (:file "list-store")
                (:file "menu")
@@ -120,6 +129,7 @@
                (:file "widget-pointer")
                (:file "window-application")            ; Deprecated
                (:file "window-simple")                 ; Getting started
+               (:file "window-simple-demo")
               ))
 
 ;;; 2021-7-25

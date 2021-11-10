@@ -1,8 +1,8 @@
-;;;; Demo Cursor
+;;;; Example Cursor - 2021-11-5
 ;;;;
 ;;;; Demonstrates a useful set of available cursors.
 
-(in-package :gtk-demo)
+(in-package :gtk-example)
 
 (defun cursor-add-button (section name)
   (let* ((display (gtk-widget-display section))
@@ -39,10 +39,11 @@
     (gtk-box-pack-start box section :expand nil)
     section))
 
-(defun demo-cursor ()
+(defun example-cursor (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
+                                 :application application
                                  :title "Demo Cursor"
                                  :default-height 480
                                  :default-width 360

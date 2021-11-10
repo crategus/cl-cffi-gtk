@@ -1,18 +1,23 @@
-;;;; List of content types
+;;;; List of content types - 2021-11-5
+
+(in-package :gtk-example)
 
 (defun create-and-fill-model-for-content-types ()
-  (let ((types (sort (g-content-types-get-registered) #'string-lessp))
+  (let ((types (sort (g-content-types-registered) #'string-lessp))
         (model (make-instance 'gtk-list-store
                               :column-types
                               '("GIcon"
                                 "gchararray" "gchararray" "gchararray"))))
     (dolist (type types)
-      (gtk-list-store-set model
-                          (gtk-list-store-append model)
-                          (g-content-type-icon type)
-                          type
-                          (g-content-type-generic-icon-name type)
-                          (g-content-type-description type)))
+      (let ((icon (g-content-type-icon type))
+            (name (g-content-type-generic-icon-name type))
+            (desc (g-content-type-description type)))
+        (gtk-list-store-set model
+                            (gtk-list-store-append model)
+                            icon
+                            type
+                            (if name name "")
+                            (if desc desc ""))))
     model))
 
 (defun create-view-and-model-for-content-types ()
@@ -60,5 +65,3 @@
       (gtk-scrolled-window-add-with-viewport scrolled view)
       (gtk-container-add window scrolled)
       (gtk-widget-show-all window))))
-
-;;; 2020-11-28

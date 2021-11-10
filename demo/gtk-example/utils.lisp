@@ -72,6 +72,7 @@ sem venenatis, vitae ultricies arcu laoreet."))
     (gtk-container-forall widget
                           (lambda (widget)
                             (apply-css-to-widget provider widget)))))
+
 ;; Get the pixbuf from an image
 
 (defun get-pixbuf-from-image (image &optional (size 48))

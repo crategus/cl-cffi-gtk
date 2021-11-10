@@ -407,10 +407,11 @@
           (draw-notebook widget cr x y (- panewidth 32) 192))
     (cairo-destroy cr)))
 
-(defun example-custom-drawing ()
+(defun example-custom-drawing (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
+                                 :application application
                                  :title "Example Custom Drawing"
                                  :width-request 380
                                  :height-request 320))
