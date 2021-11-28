@@ -38,7 +38,7 @@
     (gtk-text-buffer-delete buffer start end)))
 
 (defun load-file (filename)
-  (with-open-file (stream (rel-path filename))
+  (with-open-file (stream filename)
     ;; Read the info-header of the file
     (clear-buffer info-buffer)
     (do ((line (read-line stream nil)
@@ -57,7 +57,7 @@
       (gtk-text-buffer-insert source-buffer (format nil "~%")))))
 
 (defun load-file-buffer (buffer filename)
-  (with-open-file (stream (rel-path filename))
+  (with-open-file (stream filename)
     (clear-buffer buffer)
     (do ((line (read-line stream nil)
                (read-line stream nil)))
@@ -92,14 +92,16 @@
 ;;; ----------------------------------------------------------------------------
 
 (defparameter id-title 0)
-(defparameter id-file 1)
-(defparameter id-func 2)
-(defparameter id-app 3)
-(defparameter id-ui 4)
-(defparameter id-css 5)
+(defparameter id-package 1)
+(defparameter id-file 2)
+(defparameter id-func 3)
+(defparameter id-app 4)
+(defparameter id-ui 5)
+(defparameter id-css 6)
 
 (defparameter *tree-model*
    '(("gchararray"        ; Title
+      "gchararray"        ; Package
       "gchararray"        ; Filename
       "gchararray"        ; Function name
       "gboolean"          ; Application as argument
@@ -107,341 +109,458 @@
       "gchararray")       ; CSS Definition
 
      "Theming in GTK"
-     (("CSS Basics"
-        "../gtk-example/css-basics.lisp"
-        "EXAMPLE-CSS-BASICS"
-        t
-        ""
-        "../gtk-example/css-basics.css")
-      ("CSS Accordion"
-       "../gtk-example/css-accordion.lisp"
+     (("CSS Accordion"
+       "gtk-example"
+       "css-accordion.lisp"
        "EXAMPLE-CSS-ACCORDION"
        t
        ""
-       "../gtk-example/css-accordion.css")
+       "css-accordion.css")
+      ("CSS Basics"
+       "gtk-example"
+       "css-basics.lisp"
+       "EXAMPLE-CSS-BASICS"
+       t
+       ""
+       "css-basics.css")
       ("CSS Blend Modes"
-       "../gtk-example/css-blendmodes.lisp"
+       "gtk-example"
+       "css-blendmodes.lisp"
        "EXAMPLE-CSS-BLENDMODES"
        t
-       "../gtk-example/css-blendmodes.ui"
-       "../gtk-example/css-blendmodes.css")
+       "css-blendmodes.ui"
+       "css-blendmodes.css")
+      ("CSS Multiple Backgrounds"
+       "gtk-example"
+       "css-multiplebgs.lisp"
+       "EXAMPLE-CSS-MULTIPLEBGS"
+       t
+       ""
+       "css-multiplebgs.css")
       ("CSS Pixbufs"
-       "../gtk-example/css-pixbufs.lisp"
+       "gtk-example"
+       "css-pixbufs.lisp"
        "EXAMPLE-CSS-PIXBUFS"
        t
        ""
-       "../gtk-example/css-pixbufs.css")
+       "css-pixbufs.css")
+      ("CSS Shadows"
+       "gtk-example"
+       "css-shadows.lisp"
+       "EXAMPLE-CSS-SHADOWS"
+       t
+       ""
+       "css-shadows.css")
       ("Custom Drawing"
-       "../gtk-example/custom-drawing.lisp"
+       "gtk-example"
+       "custom-drawing.lisp"
        "EXAMPLE-CUSTOM-DRAWING"
        t))
 
      "Windows"
      (("Simple Window"
-       "../gtk-example/window-simple-demo.lisp"
+       "gtk-example"
+       "window-simple-demo.lisp"
        "EXAMPLE-WINDOW-SIMPLE-DEMO"
-       "true")
+       t)
       ("Simple Message"
-       "simple-message.lisp"
-       "EXAMPLE-SIMPLE-MESSAGE")
+       "gtk-example"
+       "message-dialog-simple.lisp"
+       "EXAMPLE-MESSAGE-DIALOG-SIMPLE"
+       t)
       ("Dialog Windows"
-       "../gtk-example/dialog.lisp"
+       "gtk-example"
+       "dialog.lisp"
        "EXAMPLE-DIALOGS"
-       "true")
+       t)
       ("Assistant"
-       "../gtk-example/assistant.lisp"
+       "gtk-example"
+       "assistant.lisp"
        "EXAMPLE-ASSISTANT"
-       "true"))
+       t))
+
+     "Layout Containers"
+     (("Simple Box"
+       "gtk-example"
+       "box-simple.lisp"
+       "EXAMPLE-BOX-SIMPLE")
+      ("Box packing"
+       "gtk-example"
+       "box-packing.lisp"
+       "EXAMPLE-BOX-PACKING")
+      ("Grid packing"
+       "gtk-example"
+       "grid-packing.lisp"
+       "EXAMPLE-GRID-PACKING")
+      ("Grid Interactive"
+       "gtk-example"
+       "grid-interactive.lisp"
+       "EXAMPLE-GRID-INTERACTIVE"
+       t)
+      ("Button Boxes"
+       "gtk-example"
+       "button-box.lisp"
+       "EXAMPLE-BUTTON-BOX")
+      ("Paned Window"
+       "gtk-example"
+       "paned-window.lisp"
+       "EXAMPLE-PANED-WINDOW")
+      ("Revealer"
+       "gtk-example"
+       "revealer.lisp"
+       "EXAMPLE-REVEALER")
+      ("Revealer Icon"
+       "gtk-example"
+       "revealer-icon.lisp"
+       "EXAMPLE-REVEALER-ICON"
+        nil
+        "revealer-icon.ui")
+      ("Fixed Container"
+       "gtk-example"
+       "fixed.lisp"
+       "EXAMPLE-FIXED")
+      ("Frame Widget"
+       "gtk-example"
+       "frame.lisp"
+       "EXAMPLE-FRAME")
+      ("Frame Properties"
+       "gtk-example"
+       "frame-properties.lisp"
+       "EXAMPLE-FRAME-PROPERTIES"
+       t)
+      ("Aspect Frame"
+       "gtk-example"
+       "aspect-frame.lisp"
+       "EXAMPLE-ASPECT-FRAME")
+      ("Notebook"
+       "gtk-example"
+       "notebook.lisp"
+       "EXAMPLE-NOTEBOOK"))
 
      "Display Widgets"
      (("Labels"
-       "../gtk-example/label.lisp"
+       "gtk-example"
+       "label.lisp"
        "EXAMPLE-LABEL")
       ("More Labels"
-       "../gtk-example/label-more.lisp"
+       "gtk-example"
+       "label-more.lisp"
        "EXAMPLE-LABEL-MORE")
       ("Images"
-       "../gtk-example/image.lisp"
+       "gtk-example"
+       "image.lisp"
        "EXAMPLE-IMAGE")
       ("Info Bar"
-       "../gtk-example/info-bar.lisp"
+       "gtk-example"
+       "info-bar.lisp"
        "EXAMPLE-INFO-BAR")
       ("Progress Bar"
-       "../gtk-example/progress-bar.lisp"
+       "gtk-example"
+       "progress-bar.lisp"
        "EXAMPLE-PROGRESS-BAR")
       ("Level Bar"
-       "../gtk-example/level-bar.lisp"
+       "gtk-example"
+       "level-bar.lisp"
        "EXAMPLE-LEVEL-BAR")
       ("Statusbar"
-       "../gtk-example/statusbar.lisp"
+       "gtk-example"
+       "statusbar.lisp"
        "EXAMPLE-STATUSBAR"))
 
-     "Button Widgets"
+     "Button and Toggle Widgets"
      (("Simple Button"
-       "../gtk-example/button-image.lisp"
+       "gtk-example"
+       "button-image.lisp"
        "EXAMPLE-BUTTON-IMAGE")
       ("More Buttons"
-       "../gtk-example/button-more.lisp"
+       "gtk-example"
+       "button-more.lisp"
        "EXAMPLE-BUTTON-MORE")
       ("Toggle Buttons"
-       "../gtk-example/toggle-buttons.lisp"
+       "gtk-example"
+       "toggle-buttons.lisp"
        "EXAMPLE-TOGGLE-BUTTONS")
       ("Link Button"
-       "../gtk-example/link-button.lisp"
+       "gtk-example"
+       "link-button.lisp"
        "EXAMPLE-LINK-BUTTON")
       ("Switch"
-       "../gtk-example/switch.lisp"
+       "gtk-example"
+       "switch.lisp"
        "EXAMPLE-SWITCH")
       ("Scale Button"
-       "../gtk-example/scale-button.lisp"
+       "gtk-example"
+       "scale-button.lisp"
        "EXAMPLE-SCALE-BUTTON"))
 
      "Numeric/Text Data Entry"
      (("Text Entry"
-       "../gtk-example/text-entry.lisp"
+       "gtk-example"
+       "text-entry.lisp"
        "EXAMPLE-TEXT-ENTRY")
       ("Text Entry Buffer"
-       "../gtk-example/text-entry-buffer.lisp"
+       "gtk-example"
+       "text-entry-buffer.lisp"
        "EXAMPLE-TEXT-ENTRY-BUFFER")
       ("Text Entry Completion"
-       "../gtk-example/text-entry-completion.lisp"
+       "gtk-example"
+       "text-entry-completion.lisp"
        "EXAMPLE-TEXT-ENTRY-COMPLETION")
       ("Scale Widget"
-       "../gtk-example/scale-widget.lisp"
+       "gtk-example"
+       "scale-widget.lisp"
        "EXAMPLE-SCALE-WIDGET")
       ("Spin Button"
-       "../gtk-example/spin-button.lisp"
+       "gtk-example"
+       "spin-button.lisp"
        "EXAMPLE-SPIN-BUTTON"))
 
      "Multiline Text Editor"
      (("Simple Text View"
-       "../gtk-example/text-view-simple.lisp"
+       "gtk-example"
+       "text-view-simple.lisp"
        "EXAMPLE-TEXT-VIEW-SIMPLE")
       ("Text View Attributes"
-       "../gtk-example/text-view-attributes.lisp"
+       "gtk-example"
+       "text-view-attributes.lisp"
        "EXAMPLE-TEXT-VIEW-ATTRIBUTES")
       ("Text View Tags"
-       "../gtk-example/text-view-tags.lisp"
+       "gtk-example"
+       "text-view-tags.lisp"
        "EXAMPLE-TEXT-VIEW-TAGS")
       ("Text View Search"
-       "../gtk-example/text-view-find-next.lisp"
+       "gtk-example"
+       "text-view-find-next.lisp"
        "EXAMPLE-TEXT-VIEW-FIND-NEXT")
       ("Text View Insert"
-       "../gtk-example/text-view-insert.lisp"
+       "gtk-example"
+       "text-view-insert.lisp"
        "EXAMPLE-TEXT-VIEW-INSERT")
       ("Text View Insert Image"
-       "../gtk-example/text-view-insert-image.lisp"
+       "gtk-example"
+       "text-view-insert-image.lisp"
        "EXAMPLE-TEXT-VIEW-INSERT-IMAGE")
       ("Text View Insert Widget"
-       "../gtk-example/text-view-insert-widget.lisp"
+       "gtk-example"
+       "text-view-insert-widget.lisp"
        "EXAMPLE-TEXT-VIEW-INSERT-WIDGET")
       ("Text View Tooltip"
-       "../gtk-example/text-view-tooltip.lisp"
+       "gtk-example"
+       "text-view-tooltip.lisp"
        "EXAMPLE-TEXT-VIEW-TOOLTIP"))
 
      "Tree, List and Icon Grid Widgets"
      (("Simple Tree View"
-       "../gtk-example/tree-view-simple.lisp"
+       "gtk-example"
+       "tree-view-simple.lisp"
        "EXAMPLE-TREE-VIEW-SIMPLE")
       ("Tree View Path"
-       "../gtk-example/tree-view-path.lisp"
+       "gtk-example"
+       "tree-view-path.lisp"
        "EXAMPLE-TREE-VIEW-PATH")
       ("Tree View Content Type"
-       "../gtk-example/tree-view-content-type.lisp"
+       "gtk-example"
+       "tree-view-content-type.lisp"
        "EXAMPLE-TREE-VIEW-CONTENT-TYPE")
       ("Icon View"
-       "../gtk-example/icon-view.lisp"
+       "gtk-example"
+       "icon-view.lisp"
        "EXAMPLE-ICON-VIEW"))
 
      "Menus, Combo Box, Toolbar"
      (("Combo Box"
-       "../gtk-example/combo-box.lisp"
+       "gtk-example"
+       "combo-box.lisp"
        "EXAMPLE-COMBO-BOX")
       ("Combo Box Text"
-       "../gtk-example/combo-box-text.lisp"
+       "gtk-example"
+       "combo-box-text.lisp"
        "EXAMPLE-COMBO-BOX-TEXT")
       ("Menu"
-       "../gtk-example/menu.lisp"
-       "EXAMPLE-MENU")
+       "gtk-example"
+       "menu.lisp"
+       "EXAMPLE-MENU"
+       t)
+      ("Menu Popup"
+       "gtk-example"
+       "menu-popup.lisp"
+       "EXAMPLE-MENU-POPUP"
+       t)
       ("Tool Palette"
-       "../gtk-example/tool-palette.lisp"
+       "gtk-example"
+       "tool-palette.lisp"
        "EXAMPLE-TOOL-PALETTE")
       ("Popover"
+       "gtk-example"
        "popover.lisp"
-       "DO-POPOVER"
-       nil
+       "EXAMPLE-POPOVER"
+       t
        "popover.ui"))
 
      "Selectors (Color/File/Font)"
      (("Color Button"
-       "../gtk-example/color-button.lisp"
+       "gtk-example"
+       "color-button.lisp"
        "EXAMPLE-COLOR-BUTTON")
       ("Color Button Label"
-       "../gtk-example/color-button-label.lisp"
+       "gtk-example"
+       "color-button-label.lisp"
        "EXAMPLE-COLOR-BUTTON-LABEL")
       ("Color Chooser Widget"
-       "../gtk-example/color-chooser-widget.lisp"
+       "gtk-example"
+       "color-chooser-widget.lisp"
        "EXAMPLE-COLOR-CHOOSER-WIDGET"
        t)
       ("Color Chooser Dialog"
-       "../gtk-example/color-chooser-dialog.lisp"
+       "gtk-example"
+       "color-chooser-dialog.lisp"
        "EXAMPLE-COLOR-CHOOSER-DIALOG")
       ("Color Chooser Palette"
-       "../gtk-example/color-chooser-palette.lisp"
+       "gtk-example"
+       "color-chooser-palette.lisp"
        "EXAMPLE-COLOR-CHOOSER-PALETTE"
       t)
       ("File Chooser Button"
-       "../gtk-example/file-chooser-button.lisp"
+       "gtk-example"
+       "file-chooser-button.lisp"
        "EXAMPLE-FILE-CHOOSER-BUTTON")
       ("File Chooser Dialog"
-       "../gtk-example/file-chooser-dialog.lisp"
+       "gtk-example"
+       "file-chooser-dialog.lisp"
        "CREATE-FILE-CHOOSER-DIALOG")
       ("File Chooser Preview"
-       "../gtk-example/file-chooser-preview.lisp"
+       "gtk-example"
+       "file-chooser-preview.lisp"
        "CREATE-FILE-CHOOSER-PREVIEW")
       ("File Chooser Widget"
-       "../gtk-example/file-chooser-widget.lisp"
+       "gtk-example"
+       "file-chooser-widget.lisp"
        "CREATE-FILE-CHOOSER-WIDGET")
       ("File Chooser Custom Filter"
-       "../gtk-example/file-chooser-custom-filter.lisp"
+       "gtk-example"
+       "file-chooser-custom-filter.lisp"
        "CREATE-FILE-CHOOSER-CUSTOM-FILTER")
       ("Font Button"
-       "../gtk-example/font-button.lisp"
+       "gtk-example"
+       "font-button.lisp"
        "EXAMPLE-FONT-BUTTON")
       ("Font Button Label"
-       "../gtk-example/font-button-label.lisp"
-       "EXAMPLE-FONT-BUTTON-LABEL"))
-
-     "Layout Containers"
-     (("Simple Box"
-       "../gtk-example/box-simple.lisp"
-       "EXAMPLE-BOX-SIMPLE")
-      ("Box packing"
-       "../gtk-example/box-packing.lisp"
-       "EXAMPLE-BOX-PACKING")
-      ("Grid packing"
-       "../gtk-example/grid-packing.lisp"
-       "EXAMPLE-GRID-PACKING")
-      ("Grid Interactive"
-       "../gtk-example/grid-interactive.lisp"
-       "EXAMPLE-GRID-INTERACTIVE"
-       t)
-      ("Button Boxes"
-       "../gtk-example/button-box.lisp"
-       "EXAMPLE-BUTTON-BOX")
-      ("Paned Window"
-       "../gtk-example/paned-window.lisp"
-       "EXAMPLE-PANED-WINDOW")
-      ("Revealer"
-       "../gtk-example/revealer.lisp"
-       "EXAMPLE-REVEALER")
-      ("Revealer Icon"
-       "../gtk-example/revealer-icon.lisp"
-       "EXAMPLE-REVEALER-ICON"
-       nil
-       "../gtk-example/revealer-icon.ui")
-      ("Fixed Container"
-       "../gtk-example/fixed.lisp"
-       "EXAMPLE-FIXED")
-      ("Frame Widget"
-       "../gtk-example/frame.lisp"
-       "EXAMPLE-FRAME")
-      ("Frame Properties"
-       "../gtk-example/frame-properties.lisp"
-       "EXAMPLE-FRAME-PROPERTIES"
-       t)
-      ("Aspect Frame"
-       "../gtk-example/aspect-frame.lisp"
-       "EXAMPLE-ASPECT-FRAME")
-      ("Notebook"
-       "../gtk-example/notebook.lisp"
-       "EXAMPLE-NOTEBOOK"))
+       "gtk-example"
+       "font-button-label.lisp"
+       "EXAMPLE-FONT-BUTTON-LABEL"
+       t))
 
      ;; Scrolling
      "Scrolling"
      (("Scrolled Window"
-       "../gtk-example/scrolled-window.lisp"
+       "gtk-example"
+       "scrolled-window.lisp"
        "EXAMPLE-SCROLLED-WINDOW"))
 
      ;; Printing
      "Printing"
      (("Page Setup Dialog"
-       "../gtk-example/page-setup-dialog.lisp"
+       "gtk-example"
+       "page-setup-dialog.lisp"
        "CREATE-PAGE-SETUP-DIALOG")
       ("Print Dialog"
-       "../gtk-example/print-dialog.lisp"
+       "gtk-example"
+       "print-dialog.lisp"
        "CREATE-PRINT-DIALOG")
       ("Print Operation"
-       "../gtk-example/print-operation.lisp"
+       "gtk-example"
+       "print-operation.lisp"
        "DO-PRINT-OPERATION"))
 
      ;; Drag and Drop, Clipboard
      "Drag and Drop, Clipboard"
      (("Drag and Drop Simple"
-       "../gtk-example/drag-and-drop-simple.lisp"
+       "gtk-example"
+       "drag-and-drop-simple.lisp"
        "EXAMPLE-DRAG-AND-DROP-SIMPLE")
       ("Drag and Drop with Action"
-       "../gtk-example/drag-and-drop-action.lisp"
+       "gtk-example"
+       "drag-and-drop-action.lisp"
        "EXAMPLE-DRAG-AND-DROP-ACTION")
       ("Clipboard"
-       "../gtk-example/clipboard.lisp"
-       "EXAMPLE-CLIPBOARD"))
+       "gtk-example"
+       "clipboard.lisp"
+       "EXAMPLE-CLIPBOARD"
+       t))
 
      ;; Cairo demos
      "Cairo"
      (("Cairo Stroke"
-       "../cairo-demo/cairo-demo.lisp"
+       "cairo-demo"
+       "cairo-demo.lisp"
        "DEMO-CAIRO-STROKE")
       ("Cairo Fill"
-       "../cairo-demo/cairo-demo.lisp"
+       "cairo-demo"
+       "cairo-demo.lisp"
        "DEMO-CAIRO-FILL")
       ("Cairo Text"
-       "../cairo-demo/cairo-demo.lisp"
+       "cairo-demo"
+       "cairo-demo.lisp"
        "DEMO-CAIRO-TEXT")
       ("Cairo Paint"
-       "../cairo-demo/cairo-demo.lisp"
+       "cairo-demo"
+       "cairo-demo.lisp"
        "DEMO-CAIRO-PAINT")
       ("Cairo Mask"
-       "../cairo-demo/cairo-demo.lisp"
+       "cairo-demo"
+       "cairo-demo.lisp"
        "DEMO-CAIRO-MASK")
       ("Cairo Source RGBA"
-       "../cairo-demo/cairo-demo.lisp"
+       "cairo-demo"
+       "cairo-demo.lisp"
        "DEMO-CAIRO-SET-SOURCE-RGBA")
       ("Cairo Source Gradient"
-       "../cairo-demo/cairo-demo.lisp"
+       "cairo-demo"
+       "cairo-demo.lisp"
        "DEMO-CAIRO-SET-SOURCE-GRADIENT")
       ("Cairo Path"
-       "../cairo-demo/cairo-demo.lisp"
+       "cairo-demo"
+       "cairo-demo.lisp"
        "DEMO-CAIRO-PATH")
       ("Cairo Dash"
-       "../cairo-demo/cairo-demo.lisp"
+       "cairo-demo"
+       "cairo-demo.lisp"
        "DEMO-CAIRO-DASH")
       ("Cairo Clock"
-       "../cairo-demo/cairo-clock.lisp"
+       "cairo-demo"
+       "cairo-clock.lisp"
        "DEMO-CAIRO-CLOCK"))
 
      "Miscellaneous"
      (("Drawing in response to input"
-       "../gtk-example/drawing-area-input.lisp"
+       "gtk-example"
+       "drawing-area-input.lisp"
        "EXAMPLE-DRAWING-AREA-INPUT")
       ("Calendar"
-       "../gtk-example/calendar.lisp"
+       "gtk-example"
+       "calendar.lisp"
        "EXAMPLE-CALENDAR")
       ("Cursor"
-       "../gtk-example/cursor.lisp"
+       "gtk-example"
+       "cursor.lisp"
        "EXAMPLE-CURSOR"
        t)
       ("Event Box"
-       "../gtk-example/event-box.lisp"
+       "gtk-example"
+       "event-box.lisp"
        "EXAMPLE-EVENT-BOX")
-      ("Demo Pixbufs"
+      ("Example Pixbufs"
+       "gtk-example"
        "pixbufs.lisp"
-       "DEMO-PIXBUFS")
+       "EXAMPLE-PIXBUFS"
+       t)
       ("Emblemed Icons"
-       "../gio-example/emblemed-icon.lisp"
+       "gio-example"
+       "emblemed-icon.lisp"
        "EXAMPLE-EMBLEMED-ICON")
       ("Align Widget"
-       "../gtk-example/widget-align.lisp"
+       "gtk-example"
+       "widget-align.lisp"
        "EXAMPLE-WIDGET-ALIGN"))
 
      ;; Examples from the tutorial
@@ -449,133 +568,172 @@
       ;; Chapter: Getting started
       ("Chapter: Getting started"
        (("Simple Window"
-         "../gtk-example/window-simple.lisp"
+         "gtk-example"
+         "window-simple.lisp"
          "EXAMPLE-WINDOW-SIMPLE")
         ("Getting started"
-         "../gtk-example/getting-started.lisp"
+         "gtk-example"
+         "getting-started.lisp"
          "EXAMPLE-GETTING-STARTED")
         ("Hello World"
-         "../gtk-example/hello-world.lisp"
+         "gtk-example"
+         "hello-world.lisp"
          "EXAMPLE-HELLO-WORLD")
         ("Hello World Upgraded"
-         "../gtk-example/hello-world-upgraded.lisp"
+         "gtk-example"
+         "hello-world-upgraded.lisp"
          "EXAMPLE-HELLO-WORLD-UPGRADED")
         ("Hello World Upgraded (more Lisp like)"
-         "../gtk-example/hello-world-upgraded-2.lisp"
+         "gtk-example"
+         "hello-world-upgraded-2.lisp"
          "EXAMPLE-HELLO-WORLD-UPGRADED-2")
         ("Drawing in response to input"
-         "../gtk-example/drawing-area-input.lisp"
+         "gtk-example"
+         "drawing-area-input.lisp"
          "EXAMPLE-DRAWING-AREA-INPUT")))
 
       ;; Chapter: Packing Widgets
       ("Chapter: Packing Widgets"
        (("Simple Box"
-         "../gtk-example/box-simple.lisp"
-         "EXAMPLE-BOX-SIMPLE")
+         "gtk-example"
+         "box-simple.lisp"
+         "EXAMPLE-BOX-SIMPLE"
+         t)
         ("Box Packing"
-         "../gtk-example/box-packing.lisp"
+         "gtk-example"
+         "box-packing.lisp"
          "EXAMPLE-BOX-PACKING")
         ("Simple Grid"
-         "../gtk-example/grid-simple.lisp"
+         "gtk-example"
+         "grid-simple.lisp"
          "EXAMPLE-GRID-SIMPLE")
         ("Simple Grid more Spacing"
-         "../gtk-example/grid-spacing.lisp"
+         "gtk-example"
+         "grid-spacing.lisp"
          "EXAMPLE-GRID-SPACING")
         ("Packing using GtkGrid"
-         "../gtk-example/grid-packing.lisp"
+         "gtk-example"
+         "grid-packing.lisp"
          "EXAMPLE-GRID-PACKING")))
 
       ;; Chapter: Button Widgets
       ("Chapter: Button Widgets"
        (("Simple Button"
-         "../gtk-example/button-image.lisp"
+         "gtk-example"
+         "button-image.lisp"
          "EXAMPLE-BUTTON-IMAGE")
         ("More Buttons"
-         "../gtk-example/button-more.lisp"
+         "gtk-example"
+         "button-more.lisp"
          "EXAMPLE-BUTTON-MORE")
         ("Radio Button"
-         "../gtk-example/radio-button.lisp"
+         "gtk-example"
+         "radio-button.lisp"
          "EXAMPLE-RADIO-BUTTON")
         ("Toggle Buttons"
-         "../gtk-example/toggle-buttons.lisp"
+         "gtk-example"
+         "toggle-buttons.lisp"
          "EXAMPLE-TOGGLE-BUTTONS")
         ("Link Button"
-         "../gtk-example/link-button.lisp"
+         "gtk-example"
+         "link-button.lisp"
          "EXAMPLE-LINK-BUTTON")
         ("Switch"
-         "../gtk-example/switch.lisp"
+         "gtk-example"
+         "switch.lisp"
          "EXAMPLE-SWITCH")
         ("Scale Button"
-         "../gtk-example/scale-button.lisp"
+         "gtk-example"
+         "scale-button.lisp"
          "EXAMPLE-SCALE-BUTTON")))
 
       ;; Chapter: Display Widgets
       ("Chapter: Display Widgets"
        (("Labels"
-         "../gtk-example/label.lisp"
+         "gtk-example"
+         "label.lisp"
          "EXAMPLE-LABEL")
         ("More Labels"
-         "../gtk-example/label-more.lisp"
+         "gtk-example"
+         "label-more.lisp"
          "EXAMPLE-LABEL-MORE")
         ("Images"
-         "../gtk-example/image.lisp"
+         "gtk-example"
+         "image.lisp"
          "EXAMPLE-IMAGE")
         ("Info Bar"
-         "../gtk-example/info-bar.lisp"
+         "gtk-example"
+         "info-bar.lisp"
          "EXAMPLE-INFO-BAR")
         ("Progress Bar"
-         "../gtk-example/progress-bar.lisp"
+         "gtk-example"
+         "progress-bar.lisp"
          "EXAMPLE-PROGRESS-BAR")
         ("Statusbar"
-         "../gtk-example/statusbar.lisp"
+         "gtk-example"
+         "statusbar.lisp"
          "EXAMPLE-STATUSBAR")))
 
       ;; Chapter: Layout Widgets
       ("Chapter: Layout Widgets"
        (("Button Boxes"
-         "../gtk-example/button-box.lisp"
+         "gtk-example"
+         "button-box.lisp"
          "EXAMPLE-BUTTON-BOX")
         ("Paned Window"
-         "../gtk-example/paned-window.lisp"
+         "gtk-example"
+         "paned-window.lisp"
          "EXAMPLE-PANED-WINDOW")
         ("Layout Widget"
-         "../gtk-example/layout.lisp"
+         "gtk-example"
+         "layout.lisp"
          "EXAMPLE-LAYOUT")
         ("Notebook"
-         "../gtk-example/notebook.lisp"
+         "gtk-example"
+         "notebook.lisp"
          "EXAMPLE-NOTEBOOK")
         ("Frame Widget"
-         "../gtk-example/frame.lisp"
+         "gtk-example"
+         "frame.lisp"
          "EXAMPLE-FRAME"
          t)
         ("Aspect Frame"
-         "../gtk-example/aspect-frame.lisp"
+         "gtk-example"
+         "aspect-frame.lisp"
          "EXAMPLE-ASPECT-FRAME")
         ("Fixed Container"
-         "../gtk-example/fixed.lisp"
+         "gtk-example"
+         "fixed.lisp"
          "EXAMPLE-FIXED")))
 
      "Deprecated"
      (("Table Packing"
-       "../gtk-example/table-packing.lisp"
+         "gtk-example"
+       "table-packing.lisp"
        "EXAMPLE-TABLE-PACKING")
       ("Table Packing more spacing"
-       "../gtk-example/table-packing-2.lisp"
+       "gtk-example"
+       "table-packing-2.lisp"
        "EXAMPLE-TABLE-PACKING-2")
       ("Application Window"
-       "../gtk-example/window-application.lisp"
+       "gtk-example"
+       "window-application.lisp"
        "EXAMPLE-WINDOW-APPLICATION")
       ("Numerable Icons"
-       "../gtk-example/numerable-icon.lisp"
+       "gtk-example"
+       "numerable-icon.lisp"
        "EXAMPLE-NUMERABLE-ICON")
       ("Arrow Button"
-       "../gtk-example/arrow-button.lisp"
+       "gtk-example"
+       "arrow-button.lisp"
        "EXAMPLE-ARROW-BUTTON")
       ("Alignment"
-       "../gtk-example/alignment.lisp"
+       "gtk-example"
+       "alignment.lisp"
        "EXAMPLE-ALIGNMENT")
       ("Alignment Interactive"
-       "../gtk-example/alignment-interactive.lisp"
+       "gtk-example"
+       "alignment-interactive.lisp"
        "EXAMPLE-ALIGNMENT-INTERACTIVE"))
 ))
 
@@ -634,9 +792,17 @@
     (g-signal-connect selection "changed"
        (lambda (tree-selection)
          (let* ((iter (gtk-tree-selection-selected tree-selection))
+                (package (gtk-tree-model-value model iter id-package))
                 (filename (gtk-tree-model-value model iter id-file))
                 (ui-file (gtk-tree-model-value model iter id-ui))
                 (css-file (gtk-tree-model-value model iter id-css)))
+           ;; TODO: Improve this peace of code. Use pathname functions.
+           (when package
+             (when filename (setf filename (sys-path filename package)))
+             (when (> (length ui-file) 0)
+               (setf ui-file (sys-path ui-file package)))
+             (when (> (length css-file) 0)
+               (setf css-file (sys-path css-file package))))
            (if (> (length filename) 0)
                (load-file filename))
            (if (> (length ui-file) 0)
@@ -667,6 +833,13 @@
         (notebook (make-instance 'gtk-notebook
                                  :scrollable t))
         (view (create-view-and-model application)))
+
+    (g-signal-connect window "destroy"
+        (lambda (widget)
+          (declare (ignore widget))
+          (let ((action (g-action-map-lookup-action application "quit")))
+            (g-action-activate action))))
+
     ;; Set an icon for the application
     (let ((pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-rgb.gif"))))
       (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))
@@ -744,7 +917,8 @@
   ;; Load the application menu
   (let ((builder (make-instance 'gtk-builder)))
     (gtk-builder-add-from-string builder *appmenu*)
-    (setf (gtk-application-app-menu application)
+    ;; TODO: Improve the implemenation of the menubar.
+    (setf (gtk-application-menubar application)
           (gtk-builder-object builder "appmenu")))
   ;; Add action "inspector" to the application
   (let ((action (g-simple-action-new "inspector" nil)))

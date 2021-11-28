@@ -1,4 +1,4 @@
-;;;; Theming/CSS Blend Modes - 2021-11-5
+;;;; Theming/CSS Blend Modes - 2021-11-27
 ;;;;
 ;;;; You can blend multiple backgrounds using the CSS blend modes available.
 
@@ -21,12 +21,6 @@
                               ("Screen"        "screen")
                               ("Soft Light"    "soft-light")))
 
-(defun update-css-for-blend-mode (provider blend-mode)
-  (let ((str (read-file (sys-path "css-blendmodes.css"))))
-    (setq str (format nil str blend-mode blend-mode blend-mode))
-    (print str)
-    (gtk-css-provider-load-from-data provider str)))
-
 (defun example-css-blendmodes (&optional application)
   (within-main-loop
     (let* ((builder (gtk-builder-new-from-file (sys-path "css-blendmodes.ui")))
@@ -40,31 +34,35 @@
                           (declare (ignore widget))
                           (leave-gtk-main)))
       ;; Setup the CSS provider for window
-      (gtk-style-context-add-provider-for-screen (gdk-screen-default)
-                                                 provider
-                                                 +gtk-style-provider-priority-application+)
+      (gtk-style-context-add-provider-for-screen
+                                      (gdk-screen-default)
+                                      provider
+                                      +gtk-style-provider-priority-application+)
       ;; Signal handler for listbox
       (g-signal-connect listbox "row-activated"
-                        (lambda (listbox row)
-                          (declare (ignore listbox))
-                          (let ((blend-mode (second (elt +blend-modes+
-                                                         (gtk-list-box-row-index row)))))
-                            (update-css-for-blend-mode provider blend-mode))))
+          (lambda (listbox row)
+            (declare (ignore listbox))
+            (let* ((mode (second (elt +blend-modes+
+                                      (gtk-list-box-row-index row))))
+                   (str (format nil
+                                (read-file (sys-path "css-blendmodes.css"))
+                        mode mode mode)))
+              (gtk-css-provider-load-from-data provider str))))
       ;; Fill the list box
-      (let ((normal-row nil))
-        (dolist (blend-modes +blend-modes+)
+      (let ((normal nil))
+        (dolist (mode +blend-modes+)
           (let ((row (make-instance 'gtk-list-box-row)))
              (gtk-container-add row
                                 (make-instance 'gtk-label
-                                               :label (first blend-modes)
+                                               :label (first mode)
                                                :xalign 0.0d0))
              (gtk-container-add listbox row)
-             (when (string= "normal" (second blend-modes))
-               (setq normal-row row))))
+             (when (string= "normal" (second mode))
+               (setq normal row))))
         ;; Select the "normal" row
-        (gtk-list-box-select-row listbox normal-row)
-        (g-signal-emit normal-row "activate")
-        (gtk-widget-grab-focus normal-row))
+        (gtk-list-box-select-row listbox normal)
+        (g-signal-emit normal "activate")
+        (gtk-widget-grab-focus normal))
       ;; Add listbox to scrolled window
       (gtk-container-add (gtk-builder-object builder "scrolledwindow") listbox)
       ;; Show the window

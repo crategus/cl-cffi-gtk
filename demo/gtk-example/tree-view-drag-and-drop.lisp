@@ -5,7 +5,7 @@
 (let ((col-uri 0)
       (target-string 0) (target-url 1))
 
-  (defun create-and-fill-model-simple ()
+  (defun create-and-fill-model-drag-and-drop ()
     (let ((model (gtk-list-store-new "gchararray")))
       ;; Append a row and fill in some data
       (gtk-list-store-set model (gtk-list-store-append model)
@@ -25,7 +25,7 @@
       model))
 
   (defun create-view-and-model-drag-and-drop ()
-    (let* ((model (create-and-fill-model-simple))
+    (let* ((model (create-and-fill-model-drag-and-drop))
            (view (gtk-tree-view-new-with-model model))
            (targets (list (list "STRING" 0 target-string)
                           (list "text/plain" 0 target-string)

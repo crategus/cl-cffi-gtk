@@ -7,10 +7,12 @@
   :depends-on (:cl-cffi-gtk :split-sequence)
   :components ((:file "gtk-example")
                (:file "utils")
-               (:file "css-basics")
                (:file "css-accordion")
+               (:file "css-basics")
                (:file "css-blendmodes")
+               (:file "css-multiplebgs")
                (:file "css-pixbufs")
+               (:file "css-shadows")
                (:file "cursor")
                (:file "alignment")
                (:file "alignment-interactive")
@@ -72,19 +74,23 @@
                (:file "level-bar")
                (:file "link-button")                   ; Button Widgets
                (:file "list-content-types")
-;               (:file "list-box")
+               (:file "list-box")
 ;               (:file "list-store")
                (:file "menu")
                (:file "menu-by-hand")                  ; Menus and Toolbars
                (:file "menu-builder")
                (:file "menu-popup")                    ; Menus and Toolbars
                (:file "message-dialog-new")
+               (:file "message-dialog-simple")
                (:file "notebook")                      ; Layout Widgets
                (:file "numerable-icon")
                (:file "page-setup-dialog")
                (:file "paned-window")                  ; Layout Widgets
+               (:file "pixbufs")
+               (:file "pixbuf-scale")
                (:file "pointer-device")
                (:file "progress-bar")                  ; Display Widgets
+               (:file "popover")
                (:file "print-dialog")
                (:file "print-operation")
                (:file "query-settings")

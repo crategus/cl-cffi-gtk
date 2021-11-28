@@ -50,7 +50,6 @@ image.yellow {
     min-height: 200px;
 }
 
-
 image.blend0 {
   background-image: url('ducky.png'),
                     linear-gradient(to right, red 0%, green 50%, blue 100%);
@@ -76,4 +75,3 @@ image.blend2 {
   min-width: 200px;
   min-height: 200px;
 }
-

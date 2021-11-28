@@ -1,4 +1,4 @@
-;;;; Example Simple Box (2021-5-15)
+;;;; Example Simple Box - 2021-11-19
 ;;;;
 ;;;; The example shows three buttons with colored labels. The red button
 ;;;; shows the start position in the box, the green button the end position,
@@ -20,20 +20,12 @@
  button:last-child > label {
    background-color : green; }")
 
-(defun apply-css-to-widget (provider widget)
-  (gtk-style-context-add-provider (gtk-widget-style-context widget)
-                                  provider
-                                  +gtk-style-provider-priority-application+)
-  (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
-    (gtk-container-forall widget
-                          (lambda (widget)
-                            (apply-css-to-widget provider widget)))))
-
-(defun example-box-simple ()
+(defun example-box-simple (&optional application)
   (within-main-loop
     (let (;; Create a toplevel window
           (window (make-instance 'gtk-window
                                  :type :toplevel
+                                 :application application
                                  :title "Example Simple Box"
                                  :border-width 12))
           ;; Create a box

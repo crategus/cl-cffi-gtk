@@ -1,7 +1,6 @@
-;;;; CSS Accordion - 2021-11-5
+;;;; CSS Accordion - 2021-11-23
 ;;;;
-;;;; A simple accordion demo written using CSS transitions and multiple
-;;;; backgrounds.
+;;;; A accordion demo written using CSS transitions and multiple backgrounds.
 
 (in-package #:gtk-example)
 
@@ -10,7 +9,7 @@
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :application application
-                                 :title "Demo CSS Accordion"
+                                 :title "Example CSS Accordion"
                                  :default-height 300
                                  :default-width 600))
           (container (make-instance 'gtk-box
@@ -18,12 +17,11 @@
                                     :halign :center
                                     :valign :center))
           (provider (make-instance 'gtk-css-provider)))
-      ;; Signal handler for the window to handle the "destroy" signal
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      ;; Add buttons to the container
+      ;; Add the buttons to the container
       (gtk-container-add container
                          (gtk-button-new-with-label "This"))
       (gtk-container-add container
@@ -36,7 +34,7 @@
                          (gtk-button-new-with-label "Accordion"))
       (gtk-container-add container
                          (gtk-button-new-with-label "."))
-      ;; Add container to window
+      ;; Add the container to the window
       (gtk-container-add window container)
       ;; Load CSS from file into the provider
       (gtk-css-provider-load-from-path provider (sys-path "css-accordion.css"))

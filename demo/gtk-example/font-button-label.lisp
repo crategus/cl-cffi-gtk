@@ -1,18 +1,19 @@
-;;;; Example Font Button Label (2021-6-5)
+;;;; Example Font Button Label - 2021-11-19
 
 (in-package :gtk-example)
 
-(defun font-filter (family face)
+(defun font-button-filter (family face)
   (declare (ignore face))
   (member (pango-font-family-name family)
           '("Purisa" "Sans" "Serif" "Times New Roman")
           :test #'equal))
 
-(defun example-font-button-label ()
+(defun example-font-button-label (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :title "Example Font Chooser Button"
                                  :type :toplevel
+                                 :application application
                                  :border-width 18
                                  :default-width 300
                                  :default-height 100))
@@ -60,7 +61,7 @@
                                              provider
                                              +gtk-style-provider-priority-user+))))
       ;; Set a filter function to select fonts for the font chooser
-      (gtk-font-chooser-set-filter-func button #'font-filter)
+      (gtk-font-chooser-set-filter-func button #'font-button-filter)
       ;; Pack the widgets
       (gtk-box-pack-start box button)
       (gtk-box-pack-start box label)

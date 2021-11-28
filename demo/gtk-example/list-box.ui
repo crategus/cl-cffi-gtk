@@ -19,7 +19,7 @@
       </object>
     </child>
   </object>
-  <template class="GtkMessageRow" parent="GtkListBoxRow">
+  <object class="GtkMessageRow" id="messagerow">
     <child>
       <object class="GtkGrid" id="grid1">
         <property name="visible">1</property>
@@ -157,7 +157,7 @@
             <property name="visible">1</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkButton" id="expand_button">
+              <object class="GtkButton" id="expand-button">
                 <property name="label" translatable="yes">Expand</property>
                 <property name="visible">1</property>
                 <property name="can_focus">1</property>
@@ -192,7 +192,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="favorite-buttton">
+                  <object class="GtkButton" id="favorite-button">
                     <property name="label" translatable="yes">Favorite</property>
                     <property name="visible">1</property>
                     <property name="can_focus">1</property>
@@ -328,5 +328,5 @@ FAVORITES</property>
         </child>
       </object>
     </child>
-  </template>
+  </object>
 </interface>

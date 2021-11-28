@@ -1,4 +1,4 @@
-;;;; Example Clipboard - 2021-9-26
+;;;; Example Clipboard - 2021-11-19
 
 (in-package :gtk-example)
 
@@ -38,9 +38,10 @@
       (let ((item (gtk-menu-item-new-with-mnemonic "_Clear")))
         (gtk-menu-shell-append menu item)
         (g-signal-connect item "activate"
-                          (lambda (widget)
-                            (format t "CLEAR activated~%")
-                            (gtk-image-set-from-icon-name image "broken-image" :dialog)))
+            (lambda (widget)
+              (declare (ignore widget))
+              (format t "CLEAR activated~%")
+              (gtk-image-set-from-icon-name image "broken-image" :dialog)))
         (when (= 1 num)
           (setf (gtk-widget-sensitive item) nil)))
 
@@ -49,10 +50,11 @@
     )
 ))
 
-(defun example-clipboard ()
+(defun example-clipboard (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
-                                 :title "Example Clipboard"))
+                                 :title "Example Clipboard"
+                                 :application application))
           (vbox (make-instance 'gtk-box
                                :border-width 6
                                :orientation :vertical))
@@ -200,7 +202,7 @@
 
         (g-signal-connect ebox "drag-data-received"
             (lambda (widget context x y data info time)
-              (declare (ignore widget context x y data info time))
+              (declare (ignore widget x y info))
               (format t "in DRAG-DATA-RECEIVED~%")
               ;; Workaround: Copy data from global selection
               (setf data (gtk-selection-data-copy selection))

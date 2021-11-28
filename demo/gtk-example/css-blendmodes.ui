@@ -4,7 +4,7 @@
   <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
-    <property name="title">Demo CSS Blend Modes</property>
+    <property name="title">Example CSS Blend Modes</property>
     <property name="default_width">600</property>
     <property name="default_height">400</property>
     <child>
@@ -126,7 +126,7 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Blended picture</property>
+                    <property name="label" translatable="yes">Blended Picture</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -217,7 +217,7 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Blended picture</property>
+                    <property name="label" translatable="yes">Blended Picture</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -358,11 +358,8 @@
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Blended picture</property>
+                    <property name="label" translatable="yes">Blended Picture</property>
                     <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                    </attributes>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>

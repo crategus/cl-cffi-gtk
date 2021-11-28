@@ -1,14 +1,15 @@
-;;;; A demo for GtkFrame
+;;;; A demo for GtkFrame - 2021-11-10
 ;;;;
 ;;;; This demo allows to change interactively the appearance of the frame.
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
-(defun demo-pixbuf-scale ()
+(defun example-pixbuf-scale (&optional application)
   (within-main-loop
     (let* (;; Create a toplevel window.
            (window (make-instance 'gtk-window
                                   :type :toplevel
+                                  :application application
                                   :title "Demo GtkFrame"
                                   :border-width 12))
            ;; A horizontal Box for the content of the window.
@@ -65,4 +66,3 @@
       (gtk-container-add window content)
       ;; Show the window.
       (gtk-widget-show-all window))))
-

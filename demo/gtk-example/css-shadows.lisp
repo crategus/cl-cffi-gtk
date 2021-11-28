@@ -1,21 +1,40 @@
-;;;; Theming/CSS Basics - 2021-11-23
+;;;; Theming/Shadows - 2021-11-27
 ;;;;
-;;;; Gtk themes are written using CSS. Every widget is build of multiple items
-;;;; that you can style very similarly to a regular website.
+;;;; This demo shows how to use CSS shadows.
 
 (in-package :gtk-example)
 
-(defun example-css-basics (&optional application)
+(defun create-toolbar ()
+  (let ((toolbar (make-instance 'gtk-toolbar)))
+    (gtk-toolbar-insert toolbar
+                        (make-instance 'gtk-tool-button
+                                       :icon-name "go-next")
+                        -1)
+    (gtk-toolbar-insert toolbar
+                        (make-instance 'gtk-tool-button
+                                       :icon-name "go-previous")
+                        -1)
+    (gtk-toolbar-insert toolbar
+                        (make-instance 'gtk-tool-button
+                                       :label "Hello World")
+                        -1)
+    toolbar))
+
+(defun example-css-shadows (&optional application)
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :application application
-                                  :title "Example CSS Basics"
+                                  :title "Example CSS Shadows"
                                   :default-height 420
                                   :default-width 600))
+           (paned (make-instance 'gtk-paned
+                                 :orientation :vertical))
+           (toolbar (create-toolbar))
            (scrolled (make-instance 'gtk-scrolled-window))
            (text (make-instance 'gtk-text-buffer))
            (view (make-instance 'gtk-text-view
+                                :monospace t
                                 :buffer text))
            (provider (make-instance 'gtk-css-provider)))
       (g-signal-connect window "destroy"
@@ -49,10 +68,12 @@
                                              :name "error"
                                              :underline :error))
       (setf (gtk-text-buffer-text text)
-            (read-file (sys-path "css-basics.css")))
+            (read-file (sys-path "css-shadows.css")))
       ;; Add the widgets to the window
+      (gtk-container-add paned toolbar)
       (gtk-container-add scrolled view)
-      (gtk-container-add window scrolled)
+      (gtk-container-add paned scrolled)
+      (gtk-container-add window paned)
       ;; Apply the provider to the window
       (apply-css-to-widget provider window)
       ;; Show the window

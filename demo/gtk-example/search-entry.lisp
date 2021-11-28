@@ -1,4 +1,4 @@
-;;;; Example Search Entry (2021-7-25)
+;;;; Example Search Entry - 2021-11-19
 ;;;;
 ;;;; GtkEntry allows to display icons and progress information. This demo shows
 ;;;; how to use these features in a search entry.
@@ -370,10 +370,11 @@ do_search_entry (GtkWidget *do_widget)
     (gtk-widget-show-all menu)
     menu))
 
-(defun example-search-entry ()
+(defun example-search-entry (&optional application)
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
+                                  :application application
                                   :title "Example Search Entry"
                                   :border-width 12
                                   :default-width 400))
@@ -433,7 +434,7 @@ do_search_entry (GtkWidget *do_widget)
            (when (eq position :primary)
              (gtk-menu-popup menu
                              :button (gdk-event-button-button event)
-                             :activate-time (gdk-event-button-time event)))))
+                             :time (gdk-event-button-time event)))))
 
       (g-signal-connect entry "activate"
          (lambda (entry button)

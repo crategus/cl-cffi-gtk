@@ -4,7 +4,7 @@
 
 (let ((col-firstname 0) (col-lastname 1) (col-yearborn 2))
 
-  (defun age-cell-data (column renderer model iter)
+  (defun age-cell-data-sortable (column renderer model iter)
     (declare (ignore column))
     (let ((year (sixth (multiple-value-list (get-decoded-time))))
           (text nil)
@@ -75,7 +75,9 @@
                                                                renderer
                                                                "text"
                                                                col-yearborn)))
-        (gtk-tree-view-column-set-cell-data-func column renderer #'age-cell-data)
+        (gtk-tree-view-column-set-cell-data-func column
+                                                 renderer
+                                                 #'age-cell-data-sortable)
 
         (setf (gtk-tree-view-column-sort-column-id column) col-yearborn)
         (setf (gtk-tree-view-column-sort-indicator column) t)

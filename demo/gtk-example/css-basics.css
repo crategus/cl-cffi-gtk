@@ -1,7 +1,6 @@
 /* You can edit the text in this window to change the
- * appearance of this Window.
- * Be careful, if you screw it up, nothing might be visible
- * anymore. :)
+ * appearance of this Window. Be careful, if you screw
+ * it up, nothing might be visible anymore.
  */
 
 /* Set a very futuristic style by default */
@@ -17,4 +16,3 @@ selection {
   background-color: darkGreen;
   color: black;
 }
-

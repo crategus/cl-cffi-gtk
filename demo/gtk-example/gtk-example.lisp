@@ -28,7 +28,9 @@
            #:example-css-accordion
            #:example-css-basics
            #:example-css-blendmodes
+           #:example-css-multiplebgs
            #:example-css-pixbufs
+           #:example-css-shadows
            #:example-cursor
            #:example-custom-drawing
            #:example-custom-window
@@ -82,16 +84,20 @@
            #:example-message-dialog-new-with-markup
            #:example-message-dialog-set-image
            #:example-message-dialog-set-markup
+           #:example-message-dialog-simple
            #:example-message-dialog-ui
            #:example-notebook                          ; Layout Widgets
            #:example-numerable-icon
            #:example-paned-window                      ; Layout Widgets
+           #:example-pixbufs
+           #:exmaple-pixbuf-scale
            #:example-pointer-device
            #:example-print-dialog
            #:example-print-operation
            #:example-print-run-page-setup-dialog
            #:example-print-run-page-setup-dialog-async
            #:example-progress-bar                      ; Display Widgets
+           #:example-popover
            #:example-query-settings
            #:example-radio-button                      ; Button Widgets
            #:example-revealer
@@ -136,6 +142,7 @@
            #:example-window-application                ; Deprecated
            #:example-window-simple                     ; Getting started
            #:example-window-simple-demo
+           #:sys-path
            ))
 
 (in-package :gtk-example)

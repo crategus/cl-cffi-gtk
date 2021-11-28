@@ -1,11 +1,12 @@
-;;;; Simple Message
+;;;; Simple Message Dialog - 2021-11-12
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
-(defun example-simple-message ()
+(defun example-message-dialog-simple (&optional application)
   (let ((response))
     (within-main-loop
       (let ((dialog (make-instance 'gtk-message-dialog
+                                   :application application
                                    :message-type :info
                                    :buttons :ok
                                    :text "Info Message Dialog"
@@ -24,5 +25,4 @@
                             (setf response response-id)
                             (gtk-widget-destroy dialog)))
         (gtk-widget-show dialog)))
-;    (join-gtk-main)
     (format t "Back from message dialog with response-id ~A~%" response)))

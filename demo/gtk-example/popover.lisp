@@ -1,10 +1,10 @@
-;;;; Popovers
+;;;; Popovers - 2021-11-12
 ;;;;
 ;;;; A bubble-like window containing contextual information or options.
 ;;;; GtkPopovers can be attached to any widget, and will be displayed
 ;;;; within the same window, but on top of all its content.
 
-(in-package #:gtk-demo)
+(in-package #:gtk-example)
 
 (defun create-popover (parent child pos)
   (let ((popover (make-instance 'gtk-popover
@@ -16,18 +16,19 @@
     popover))
 
 (defun create-complex-popover (parent pos)
-  (let* ((builder (gtk-builder-new-from-file (rel-path "popover.ui")))
+  (let* ((builder (gtk-builder-new-from-file (sys-path "popover.ui")))
          (window (gtk-builder-object builder "window"))
          (content (gtk-bin-child window)))
     (gtk-container-remove (gtk-widget-parent content) content)
     (gtk-widget-destroy window)
     (create-popover parent content pos)))
 
-(defun do-popover ()
+(defun example-popover (&optional application)
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
-                                  :title "Demo Popover"))
+                                  :application application
+                                  :title "Example Popover"))
            (box (make-instance 'gtk-box
                                :orientation :vertical
                                :spacing 24
@@ -87,4 +88,3 @@
         (gtk-container-add box calendar))
       ;; Show the window.
       (gtk-widget-show-all window))))
-

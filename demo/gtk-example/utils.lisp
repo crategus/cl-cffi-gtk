@@ -51,8 +51,8 @@ sem venenatis, vitae ultricies arcu laoreet."))
 
 ;; Get the absolute filename of a file for a ASDF loadable package
 
-(defun sys-path (filename)
-  (let ((system-path (asdf:system-source-directory :gtk-example)))
+(defun sys-path (filename &optional (package :gtk-example))
+  (let ((system-path (asdf:system-source-directory package)))
     (princ-to-string (merge-pathnames filename system-path))))
 
 (defun read-file (filename)
