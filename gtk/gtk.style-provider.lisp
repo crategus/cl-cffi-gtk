@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.style-provider.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -66,15 +66,16 @@
    :type-initializer "gtk_style_provider_get_type"))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-style-provider atdoc:*class-name-alias*) "Interface"
+(setf (gethash 'gtk-style-provider atdoc:*class-name-alias*)
+      "Interface"
       (documentation 'gtk-style-provider 'type)
- "@version{2020-10-16}
+ "@version{2021-11-27}
   @begin{short}
-    @sym{gtk-style-provider} is an interface used to provide style information
-    to a @class{gtk-style-context}.
+    The @sym{gtk-style-provider} interface is an interface used to provide style
+    information to a @class{gtk-style-context} object.
   @end{short}
-  See the functions @fun{gtk-style-context-add-provider} and
-  @fun{gtk-style-context-add-provider-for-screen}.
+  See the @fun{gtk-style-context-add-provider} and
+  @fun{gtk-style-context-add-provider-for-screen} functions.
   @see-class{gtk-style-context}
   @see-class{gtk-css-provider}
   @see-function{gtk-style-context-add-provider}
@@ -91,7 +92,7 @@
                atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+gtk-style-provider-priority-fallback+ 'variable)
- "@version{2020-10-16}
+ "@version{2021-11-27}
   @variable-value{1}
   @begin{short}
     The priority used for default style information that is used in the absence
@@ -111,7 +112,7 @@
 (setf (gethash '+gtk-style-provider-priority-theme+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+gtk-style-provider-priority-theme+ 'variable)
- "@version{2020-10-16}
+ "@version{2021-11-27}
   @variable-value{200}
   @begin{short}
     The priority used for style information provided by themes.
@@ -131,13 +132,14 @@
                atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+gtk-style-provider-priority-settings+ 'variable)
- "@version{2020-10-16}
+ "@version{2021-11-27}
   @variable-value{400}
   @begin{short}
-    The priority used for style information provided via @class{gtk-settings}.
+    The priority used for style information provided via a @class{gtk-settings}
+    object.
   @end{short}
-  This priority is higher than @var{+gtk-style-provider-priority-theme+} to let
-  settings override themes.
+  This priority is higher than the @var{+gtk-style-provider-priority-theme+}
+  value to let settings override themes.
   @see-class{gtk-style-provider}
   @see-class{gtk-settings}
   @see-variable{+gtk-style-provider-priority-theme+}")
@@ -155,7 +157,7 @@
                atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+gtk-style-provider-priority-application+ 'variable)
- "@version{*2021-2-14}
+ "@version{*2021-11-27}
   @variable-value{600}
   @begin{short}
     A priority that can be used when adding a @class{gtk-style-provider} object
@@ -175,10 +177,11 @@
 (setf (gethash '+gtk-style-provider-priority-user+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+gtk-style-provider-priority-user+ 'variable)
- "@version{2021-5-2}
+ "@version{*2021-11-27}
   @variable-value{800}
   @begin{short}
-    The priority used for the style information from @file{~/.gtk-3.0.css}.
+    The priority used for the style information from the @file{~/.gtk-3.0.css}
+    file.
   @end{short}
   You should not use priorities higher than this, to give the user the last
   word.
@@ -260,11 +263,12 @@
 
 (defun gtk-style-provider-style-property (provider path state pspec)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-16}
+ "@version{2021-11-27}
   @argument[provider]{a @class{gtk-style-provider} object}
-  @argument[path]{a @symbol{gtk-widget-path} structure to query}
-  @argument[state]{the @symbol{gtk-state-flags} to query the style property for}
-  @argument[pspec]{the @symbol{g-param-spec} structure to query}
+  @argument[path]{a @symbol{gtk-widget-path} instance to query}
+  @argument[state]{a @symbol{gtk-state-flags} value to query the style property
+    for}
+  @argument[pspec]{a @symbol{g-param-spec} instance to query}
   @return{Returns the value of the style property.}
   @begin{short}
     Looks up the value of a widget style property as defined by the provider
