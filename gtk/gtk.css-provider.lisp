@@ -98,7 +98,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-css-provider 'type)
- "@version{*2021-5-15}
+ "@version{*2021-11-18}
   @begin{short}
     The @sym{gtk-css-provider} object is an object implementing the
     @class{gtk-style-provider} interface.
@@ -106,10 +106,10 @@
   It is able to parse CSS-like input in order to style widgets.
 
   An application can make GTK parse a specific CSS style sheet by calling
-  the functions @fun{gtk-css-provider-load-from-file} or
-  @fun{gtk-css-provider-load-from-resource} and adding the provider with
-  the functions @fun{gtk-style-context-add-provider} or
-  @fun{gtk-style-context-add-provider-for-screen}.
+  the @fun{gtk-css-provider-load-from-file} or
+  @fun{gtk-css-provider-load-from-resource} functions and adding the provider
+  with the @fun{gtk-style-context-add-provider} or
+  @fun{gtk-style-context-add-provider-for-screen} functions.
 
   In addition, certain files will be read when GTK is initialized. First, the
   file @file{$XDG_CONFIG_HOME/gtk-3.0/gtk.css} is loaded if it exists. Then,
@@ -132,8 +132,9 @@
       @begin{pre}
  lambda (provider section error)    :run-last
       @end{pre}
-      Signals that a parsing error occured. The path, line and position
-      describe the actual location of the error as accurately as possible.
+      Signals that a parsing error occured. The path, line and position of the
+      @symbol{gtk-css-section} instance describe the actual location of the
+      error as accurately as possible.
 
       Parsing errors are never fatal, so the parsing will resume after the
       error. Errors may however cause parts of the given data or even all of it
@@ -161,16 +162,16 @@
 (defcfun ("gtk_css_provider_get_default" gtk-css-provider-default)
     (g-object gtk-css-provider)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @return{The @class{gtk-css-provider} object used for fallback styling.}
   @begin{short}
     Returns the provider containing the style settings used as a fallback for
     all widgets.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-css-provider-default} has been deprecated since
-    version 3.24 and should not be used in newly-written code. Use the
-    function @fun{gtk-css-provider-new} instead.
+    The @sym{gtk-css-provider-default} function has been deprecated since
+    version 3.24 and should not be used in newly written code. Use the
+    @fun{gtk-css-provider-new} function instead.
   @end{dictionary}
   @see-class{gtk-css-provider}
   @see-function{gtk-css-provider-new}")
@@ -188,7 +189,7 @@
 
 (defun gtk-css-provider-named (name variant)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @argument[name]{a string with the theme name}
   @argument[variant]{a string with a variant to load}
   @return{The @class{gtk-css-provider} object with the theme loaded.}
@@ -215,7 +216,7 @@
 
 (defun gtk-css-provider-load-from-data (provider data)
  #+cl-cffi-gtk-documentation
- "@version{*2021-2-4}
+ "@version{*2021-11-18}
   @argument[provider]{a @class{gtk-css-provider} object}
   @argument[data]{a string with the CSS data}
   @begin{return}
@@ -246,7 +247,7 @@
 
 (defun gtk-css-provider-load-from-file (provider file)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @argument[provider]{a @class{gtk-css-provider} object}
   @argument[file]{a @class{g-file} object pointing to a file to load}
   @return{@em{True}. The return value is deprecated and @em{false} will only
@@ -276,7 +277,7 @@
 
 (defun gtk-css-provider-load-from-path (provider path)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{*2021-11-18}
   @argument[provider]{a @class{gtk-css-provider} object}
   @argument[path]{a string with the path of a filename to load, in the GLib
    filename encoding}
@@ -303,7 +304,7 @@
 (defcfun ("gtk_css_provider_load_from_resource"
            gtk-css-provider-load-from-resource) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @argument[provider]{a @class{gtk-css-provider} object}
   @argument[path]{a string with the resource path}
   @begin{short}
@@ -327,7 +328,7 @@
 
 (defun gtk-css-provider-new ()
  #+cl-cffi-gtk-documentation
- "@version{*2021-3-28}
+ "@version{*2021-11-18}
   @return{A new @class{gtk-css-provider} object.}
   @short{Returns a newly created CSS provider object.}
   @see-class{gtk-css-provider}"
@@ -341,16 +342,16 @@
 
 (defcfun ("gtk_css_provider_to_string" gtk-css-provider-to-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @argument[provider]{a @class{gtk-css-provider} object to write to a string}
   @return{A string representing the provider.}
   @begin{short}
     Convertes the provider into a string representation in CSS format.
   @end{short}
-
-  Using the function @fun{gtk-css-provider-load-from-data} with the return
-  value from this function on a new provider created with the function
-  @fun{gtk-css-provider-new} will basically create a duplicate of this provider.
+  Using the @fun{gtk-css-provider-load-from-data} function with the return
+  value from this function on a new provider created with the
+  @fun{gtk-css-provider-new} function will basically create a duplicate of this
+  provider.
   @see-class{gtk-css-provider}
   @see-function{gtk-css-provider-new}
   @see-function{gtk-css-provider-load-from-data}"
@@ -415,10 +416,10 @@
 (setf (gethash 'gtk-css-section-type atdoc:*symbol-name-alias*)
       "Enum"
       (gethash 'gtk-css-section-type atdoc:*external-symbols*)
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @begin{short}
     The different types of sections indicate parts of a CSS document as parsed
-    by GTK's CSS parser.
+    by the CSS parser of GTK.
   @end{short}
   They are oriented towards the CSS grammar, but may contain extensions.
 
@@ -440,15 +441,15 @@
   @end{pre}
   @begin[code]{table}
     @entry[:document]{The section describes a complete document. This section
-      time is the only one where the function @fun{gtk-css-section-parent}
-      might return @code{nil}.}
+      is the only one where the @fun{gtk-css-section-parent} function might
+      return @code{nil}.}
     @entry[:import]{The section defines an import rule.}
     @entry[:color-definition]{The section defines a color. This is a GTK
       extension to CSS.}
     @entry[:binding-set]{The section defines a binding set. This is a GTK
       extension to CSS.}
     @entry[:ruleset]{The section defines a CSS ruleset.}
-    @entry{:selector]{The section defines a CSS selector.}
+    @entry[:selector]{The section defines a CSS selector.}
     @entry[:declaration]{The section defines the declaration of a CSS variable.}
     @entry[:value]{The section defines the value of a CSS declaration.}
     @entry[:keyframes]{The section defines keyframes. See CSS animations for
@@ -469,12 +470,12 @@
 (setf (gethash 'gtk-css-section atdoc:*class-name-alias*)
       "CStruct"
       (documentation 'gtk-css-section 'type)
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @begin{short}
     Defines a part of a CSS document.
   @end{short}
-  Because sections are nested into one another, you can use the function
-  @fun{gtk-css-section-parent} to get the containing region.
+  Because sections are nested into one another, you can use the
+  @fun{gtk-css-section-parent} function to get the containing region.
   @begin{pre}
 (define-g-boxed-opaque gtk-css-section \"GtkCssSection\"
   :alloc (error \"GtkCssSection cannot be created from the Lisp side.\"))
@@ -490,14 +491,14 @@
 
 (defcfun ("gtk_css_section_get_end_line" gtk-css-section-end-line) :uint
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{*2021-11-18}
   @argument[section]{a @class{gtk-css-section} instance}
   @return{An unsigned integer with the line number.}
   @begin{short}
     Returns the line in the CSS document where this section end.
   @end{short}
   The line number is zero-indexed, so the first line of the document will
-  return 0. This value may change in future invocations of this function if
+  return 0. This value may change in future invocations of this function if the
   section is not yet parsed completely. This will for example happen in the
   \"parsing-error\" signal. The end position and line may be identical to the
   start position and line for sections which failed to parse anything
@@ -514,13 +515,13 @@
 
 (defcfun ("gtk_css_section_get_end_position" gtk-css-section-end-position) :uint
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{*2021-11-18}
   @argument[section]{a @class{gtk-css-section} instance}
   @return{An unsigned integer with the offset in bytes from the start of the
     line.}
   @begin{short}
     Returns the offset in bytes from the start of the current line returned via
-    the function @fun{gtk-css-section-end-line}.
+    the @fun{gtk-css-section-end-line} function.
   @end{short}
   This value may change in future invocations of this function if the section
   is not yet parsed completely. This will for example happen in the
@@ -540,15 +541,15 @@
 
 (defcfun ("gtk_css_provider_get_file" gtk-css-section-file) (g-object g-file)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @argument[section]{a @class{gtk-css-section} instance}
   @return{The @class{g-file} object that section was parsed from or @code{nil}
     if section was parsed from other data.}
   @begin{short}
-    Gets the file that section was parsed from.
+    Gets the file that the section was parsed from.
   @end{short}
   If no such file exists, for example because the CSS was loaded via the
-  function @fun{gtk-css-provider-load-from-data}, then @code{nil} is returned.
+  @fun{gtk-css-provider-load-from-data} function, then @code{nil} is returned.
   @see-class{gtk-css-section}
   @see-class{gtk-css-provider}
   @see-class{g-file}
@@ -564,17 +565,17 @@
 (defcfun ("gtk_css_section_get_parent" gtk-css-section-parent)
     (g-boxed-foreign gtk-css-section)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @argument[section]{a @class{gtk-css-section} instance}
   @return{The @symbol{gtk-css-section} parent section, or @code{nil} if none.}
   @begin{short}
     Gets the parent section for the given section.
   @end{short}
   The parent section is the section that contains this section. A special case
-  are sections of type @code{:document}. Their parent will either be @code{nil}
-  if they are the original CSS document that was loaded by the function
-  @fun{gtk-css-provider-load-from-file} or a section of type @code{:section}
-  if it was loaded with an import rule from a different file.
+  are sections of @code{:document} type. Their parent will either be @code{nil}
+  if they are the original CSS document that was loaded by the
+  @fun{gtk-css-provider-load-from-file} function or a section of @code{:section}
+  type if it was loaded with an import rule from a different file.
   @see-class{gtk-css-section}
   @see-symbol{gtk-css-section-type}
   @see-function{gtk-css-provider-load-from-file}"
@@ -589,7 +590,7 @@
 (defcfun ("gtk_css_section_get_section_type" gtk-css-section-section-type)
     gtk-css-section-type
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{2021-11-18}
   @argument[section]{a @class{gtk-css-section} instance}
   @return{A @symbol{gtk-css-section-type} value for the section.}
   @begin{short}
@@ -607,7 +608,7 @@
 
 (defcfun ("gtk_css_section_get_start_line" gtk-css-section-start-line) :uint
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{*2021-11-18}
   @argument[section]{a @class{gtk-css-section} instance}
   @return{An unsigned integer with the line number.}
   @begin{short}
@@ -627,13 +628,13 @@
 (defcfun ("gtk_css_section_get_start_position"
            gtk-css-section-start-position) :uint
  #+cl-cffi-gtk-documentation
- "@version{2021-3-28}
+ "@version{*2021-11-18}
   @argument[section]{a @class{gtk-css-section} instance}
   @return{An unsigned integer with the offset in bytes from the start of the
     line.}
   @begin{short}
     Returns the offset in bytes from the start of the current line returned
-    via the function @fun{gtk-css-section-start-line}.
+    via the @fun{gtk-css-section-start-line} function.
   @end{short}
   @see-class{gtk-css-section}
   @see-function{gtk-css-section-start-line}"
