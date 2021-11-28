@@ -27,6 +27,11 @@
 
 (load "rtest-gio-resource.lisp")
 
+;;; Data Models
+
+(load "rtest-gio-list-model.lisp")
+(load "rtest-gio-list-store.lisp")
+
 ;;; Application support
 
 (load "rtest-gio-application.lisp")
