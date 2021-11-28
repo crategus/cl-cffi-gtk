@@ -97,7 +97,7 @@
 (setf (gethash 'gtk-region-flags atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gtk-region-flags atdoc:*external-symbols*)
- "@version{2021-6-22}
+ "@version{2021-11-27}
   @begin{short}
     Describes a region within a widget.
   @end{short}
@@ -133,17 +133,18 @@
 (setf (gethash 'gtk-widget-path atdoc:*class-name-alias*)
       "GBoxed"
       (documentation 'gtk-widget-path 'type)
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @begin{short}
     The @sym{gtk-widget-path} structure is a boxed type that represents a widget
     hierarchy from the topmost widget, typically a toplevel, to any child.
   @end{short}
-  This widget path abstraction is used in the @class{gtk-style-context} class
-  on behalf of the real widget in order to query style information.
+  This widget path abstraction is used in the @class{gtk-style-context}
+  implementation on behalf of the real widget in order to query style
+  information.
 
   If you are using GTK widgets, you probably will not need to use this API
-  directly, as there is the function @fun{gtk-widget-path}, and the style
-  context returned by the function @fun{gtk-widget-style-context} will be
+  directly, as there is the @fun{gtk-widget-path} function, and the style
+  context returned by the @fun{gtk-widget-style-context} function will be
   automatically updated on widget hierarchy changes.
   @begin[Example]{dictionary}
     Defining a button within a window:
@@ -184,9 +185,9 @@
 
 (defcfun ("gtk_widget_path_append_type" gtk-widget-path-append-type) :int
  #+cl-cffi-gtk-documentation
- "@version{*2021-7-25}
+ "@version{*2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
-  @argument[gtype]{the @class{g-type} of the widget to append}
+  @argument[gtype]{a @class{g-type} type of the widget to append}
   @return{An integer with the position where the element was inserted.}
   @begin{short}
     Appends a widget type to the widget hierarchy represented by @arg{path}.
@@ -205,24 +206,24 @@
 (defcfun ("gtk_widget_path_append_with_siblings"
            gtk-widget-path-append-with-siblings) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[siblings]{a @class{gtk-widget-path} instance describing a list of
     siblings, this path may not contain any siblings itself and it must not be
     modified afterwards}
-  @argument[index]{an unsigned integer with the index into siblings for where
-    the added element is positioned}
+  @argument[index]{an unsigned integer with the index into @arg{siblings} for
+    where the added element is positioned}
   @return{An integer with the position where the element was inserted.}
   @begin{short}
     Appends a widget type with all its siblings to the widget hierarchy
     represented by @arg{path}.
   @end{short}
-  Using this function instead of the function @fun{gtk-widget-path-append-type}
+  Using this function instead of the @fun{gtk-widget-path-append-type} function
   will allow the CSS theming to use sibling matches in selectors and apply
   @code{:nth-child()} pseudo classes. In turn, it requires a lot more care in
-  widget implementations as widgets need to make sure to call the function
-  @fun{gtk-widget-reset-style} on all involved widgets when the siblings path
-  changes.
+  widget implementations as widgets need to make sure to call the
+  @fun{gtk-widget-reset-style} function on all involved widgets when the
+  siblings path changes.
   @see-class{gtk-widget-path}
   @see-function{gtk-widget-reset-style}
   @see-function{gtk-widget-append-type}"
@@ -239,9 +240,9 @@
 (defcfun ("gtk_widget_path_append_for_widget" gtk-widget-path-append-for-widget)
     :int
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
-  @argument[widget]{the @class{gtk-widget} object to append to the widget path}
+  @argument[widget]{a @class{gtk-widget} object to append to the widget path}
   @return{An integer with the position where the data was inserted.}
   @begin{short}
     Appends the data from @arg{widget} to the widget hierarchy represented by
@@ -264,7 +265,7 @@
 (defcfun ("gtk_widget_path_copy" gtk-widget-path-copy)
     (g-boxed-foreign gtk-widget-path)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @return{Returns a copy of @arg{path}.}
   @short{Returns a copy of a widget path.}
@@ -323,9 +324,9 @@
 
 (defcfun ("gtk_widget_path_get_object_type" gtk-widget-path-object-type) g-type
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
-  @return{The @class{g-type} of the object.}
+  @return{The @class{g-type} type of the object.}
   @begin{short}
     Returns the topmost object type.
   @end{short}
@@ -342,13 +343,13 @@
 
 (defcfun ("gtk_widget_path_has_parent" gtk-widget-path-has-parent) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
-  @argument[gtype]{the @class{g-type} of the widget to check in parents}
-  @return{@em{True} if any parent is of type @arg{gtype}.}
+  @argument[gtype]{a @class{g-type} type of the widget to check in parents}
+  @return{@em{True} if any parent is of @arg{gtype} type.}
   @begin{short}
     Returns @em{true} if any of the parents of the widget represented in
-    @arg{path} is of type @arg{gtype}, or any subtype of it.
+    @arg{path} is of @arg{gtype} type, or any subtype of it.
   @end{short}
   @see-class{gtk-widget-path}
   @see-class{g-type}"
@@ -363,11 +364,11 @@
 
 (defcfun ("gtk_widget_path_is_type" gtk-widget-path-is-type) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
-  @argument[gtype]{the @class{g-type} of the widget to match}
-  @return{@em{True} if the widget represented by @arg{path} is of type
-    @arg{gtype}}
+  @argument[gtype]{a @class{g-type} type of the widget to match}
+  @return{@em{True} if the widget represented by @arg{path} is of @arg{gtype}
+    type.}
   @begin{short}
     Returns @em{true} if the widget type represented by this path is
     @arg{gtype}, or a subtype of it.
@@ -385,7 +386,7 @@
 
 (defcfun ("gtk_widget_path_iter_add_class" gtk-widget-path-iter-add-class) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to modify, -1 for the path head}
   @argument[name]{a string with a class name}
@@ -393,7 +394,7 @@
     Adds the class name to the widget at position @arg{pos} in the hierarchy
     defined in @arg{path}.
   @end{short}
-  See the function @fun{gtk-style-context-add-class}.
+  See the @fun{gtk-style-context-add-class} function.
   @see-class{gtk-widget-path}
   @see-function{gtk-style-context-add-class}"
   (path (g-boxed-foreign gtk-widget-path))
@@ -409,22 +410,22 @@
 (defcfun ("gtk_widget_path_iter_add_region" gtk-widget-path-iter-add-region)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to modify, -1 for the path head}
   @argument[name]{a string with the region name}
-  @argument[flags]{the @symbol{gtk-region-flags} flags affecting the region}
+  @argument[flags]{a @symbol{gtk-region-flags} value affecting the region}
   @begin{short}
     Adds the region name to the widget at position @arg{pos} in the hierarchy
-    defined in path.
+    defined in @arg{path}.
   @end{short}
-  See the function @fun{gtk-style-context-add-region}.
+  See the @fun{gtk-style-context-add-region} function.
   @begin[Note]{dictionary}
     Region names must only contain lowercase letters and '-', starting always
     with a lowercase letter.
   @end{dictionary}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-path-iter-add-region} has been deprecated since
+    The @sym{gtk-widget-path-iter-add-region} function has been deprecated since
     version 3.14 and should not be used in newly written code. The use of
     regions is deprecated.
   @end{dictionary}
@@ -445,7 +446,7 @@
 (defcfun ("gtk_widget_path_iter_clear_classes"
            gtk-widget-path-iter-clear-classes) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to modify, -1 for the path head}
   @begin{short}
@@ -465,7 +466,7 @@
 (defcfun ("gtk_widget_path_iter_clear_regions"
            gtk-widget-path-iter-clear-regions) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to modify, -1 for the path head}
   @begin{short}
@@ -473,7 +474,7 @@
     defined in @arg{path}.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-path-iter-clear-regions} has been deprecated
+    The @sym{gtk-widget-path-iter-clear-regions} function has been deprecated
     since version 3.14 and should not be used in newly written code. The use of
     regions is deprecated.
   @end{dictionary}
@@ -497,7 +498,7 @@
 
 (defcfun ("gtk_widget_path_iter_get_name" gtk-widget-path-iter-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @syntax[]{(gtk-widget-path-iter-name path pos) => name}
   @syntax[]{(setf (gtk-widget-path-iter-name path pos) name)}
   @argument[path]{a @class{gtk-widget-path} instance}
@@ -507,9 +508,9 @@
     Accessor of the widget name.
   @end{short}
 
-  The function @sym{gtk-widget-path-iter-name} returns the name corresponding
+  The @sym{gtk-widget-path-iter-name} function returns the name corresponding
   to the widget found at the position @arg{pos} in the widget hierarchy defined
-  by @arg{path}. The function @sym{(setf gtk-widget-path-iter-name)} sets the
+  by @arg{path}. The @sym{(setf gtk-widget-path-iter-name)} function sets the
   widget name.
   @see-class{gtk-widget-path}"
   (path (g-boxed-foreign gtk-widget-path))
@@ -534,7 +535,7 @@
 (defcfun ("gtk_widget_path_iter_get_object_name"
            gtk-widget-path-iter-object-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @syntax[]{(gtk-widget-path-iter-object-name path pos) => name}
   @syntax[]{(setf (gtk-widget-path-iter-object-name path pos) name)}
   @argument[path]{a @class{gtk-widget-path} instance}
@@ -544,9 +545,9 @@
     Accessor of the object name.
   @end{short}
 
-  The function @sym{gtk-widget-path-iter-object-name} returns the object name
+  The @sym{gtk-widget-path-iter-object-name} function returns the object name
   that is at position @arg{pos} in the widget hierarchy defined in @arg{path}.
-  The function @sym{(setf gtk-widget-path-iter-object-name)} sets the object
+  The @sym{(setf gtk-widget-path-iter-object-name)} function sets the object
   name. When set, the object name overrides the object type when matching CSS.
 
   Since 3.20
@@ -572,20 +573,20 @@
 (defcfun ("gtk_widget_path_iter_get_object_type"
            gtk-widget-path-iter-object-type) g-type
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @syntax[]{(gtk-widget-path-iter-object-type path pos) => gtype}
   @syntax[]{(setf (gtk-widget-path-iter-object-type path pos) gtype)}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position, -1 for the path head}
-  @argument[gtype]{the object @class{g-type} to set}
+  @argument[gtype]{a @class{g-type} type}
   @begin{short}
     Accessor of the object type.
   @end{short}
 
-  The function @sym{gtk-widget-path-iter-object-type} returns the @class{g-type}
-  of the object that is at position @arg{pos} in the widget hierarchy defined in
-  @arg{path}. The function @sym{(setf gtk-widget-path-iter-object-type)} sets
-  the object type.
+  The @sym{gtk-widget-path-iter-object-type} function returns the @class{g-type}
+  type of the object that is at position @arg{pos} in the widget hierarchy
+  defined in @arg{path}. The @sym{(setf gtk-widget-path-iter-object-type)}
+  function sets the object type.
   @begin[Example]{dictionary}
     @begin{pre}
 (setq widget (make-instance 'gtk-button))
@@ -608,7 +609,7 @@
 (defcfun ("gtk_widget_path_iter_get_siblings" gtk-widget-path-iter-siblings)
     (g-boxed-foreign gtk-widget-path)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to get the siblings for, -1 for
     the path head}
@@ -632,7 +633,7 @@
 (defcfun ("gtk_widget_path_iter_get_sibling_index"
            gtk-widget-path-iter-sibling-index) :uint
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to get the sibling index for,
     -1 for the path head}
@@ -640,7 +641,7 @@
     element at @arg{pos}.}
   @begin{short}
     Returns the index into the list of siblings for the element at @arg{pos} as
-    returned by the function @fun{gtk-widget-path-iter-siblings}.
+    returned by the @fun{gtk-widget-path-iter-siblings} function.
   @end{short}
   If that function would return @code{nil} because the element at @arg{pos} has
   no siblings, this function will return 0.
@@ -666,20 +667,20 @@
 (defcfun ("gtk_widget_path_iter_get_state" gtk-widget-path-iter-state)
     gtk-state-flags
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @syntax[]{(gtk-widget-path-iter-state path pos) => state}
   @syntax[]{(setf (gtk-widget-path-iter-state path pos) state)}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position , -1 for the path head}
-  @argument[state]{the @symbol{gtk-state-flags} flags to set or unset}
+  @argument[state]{a @symbol{gtk-state-flags} value to set or unset}
   @begin{short}
     Accessor of the state flags.
   @end{short}
 
-  The function @sym{gtk-widget-path-iter-state} returns the state flags
+  The @sym{gtk-widget-path-iter-state} function returns the state flags
   corresponding to the widget found at the position @arg{pos} in the widget
-  hierarchy defined by @arg{path}. The function
-  @sym{(setf gtk-widget-path-iter-state)} sets the state flags.
+  hierarchy defined by @arg{path}. The @sym{(setf gtk-widget-path-iter-state)}
+  function sets the state flags.
 
   If you want to update just a single state flag, you need to do this manually,
   as this function updates all state flags.
@@ -711,7 +712,7 @@
 (defcfun ("gtk_widget_path_iter_has_class" gtk-widget-path-iter-has-class)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to query, -1 for the path head}
   @argument[name]{a string with a class name}
@@ -734,7 +735,7 @@
 (defcfun ("gtk_widget_path_iter_has_name" gtk-widget-path-iter-has-name)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to query, -1 for the path head}
   @argument[name]{a string with a widget name}
@@ -849,7 +850,7 @@
 
 (defun gtk-widget-path-iter-has-region (path pos name)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to query, -1 for the path head}
   @argument[name]{a string with a region name}
@@ -859,7 +860,7 @@
     @arg{pos} in the widget hierarchy defined by @arg{path}.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-path-iter-has-region} has been deprecated since
+    The @sym{gtk-widget-path-iter-has-region} function has been deprecated since
     version 3.14 and should not be used in newly written code. The use of
     regions is deprecated.
   @end{dictionary}
@@ -878,7 +879,7 @@
 (defcfun ("gtk_widget_path_iter_list_classes" gtk-widget-path-iter-list-classes)
     g-strv
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to query, -1 for the path head}
   @return{Returns a list of strings with the class names.}
@@ -899,7 +900,7 @@
 (defcfun ("gtk_widget_path_iter_list_regions" gtk-widget-path-iter-list-regions)
     g-strv
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to query, -1 for the path head}
   @return{Returns a list of strings with the region names.}
@@ -908,7 +909,7 @@
     @arg{pos} in the hierarchy defined in @arg{path}.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-path-iter-list-regions} has been deprecated
+    The @sym{gtk-widget-path-iter-list-regions} function has been deprecated
     since version 3.14 and should not be used in newly written code. The use of
     regions is deprecated.
   @end{dictionary}
@@ -925,7 +926,7 @@
 (defcfun ("gtk_widget_path_iter_remove_class" gtk-widget-path-iter-remove-class)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to modify, -1 for the path head}
   @argument[name]{a string with a class name}
@@ -947,7 +948,7 @@
 (defcfun ("gtk_widget_path_iter_remove_region"
            gtk-widget-path-iter-remove-region) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @argument[pos]{an integer with the position to modify, -1 for the path head}
   @argument[name]{a string with a region name}
@@ -956,7 +957,7 @@
     hierarchy defined in @arg{path}.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-widget-path-iter-remove-region} has been deprecated
+    The @sym{gtk-widget-path-iter-remove-region} function has been deprecated
     since version 3.14 and should not be used in newly written code. The use of
     regions is deprecated.
   @end{dictionary}
@@ -972,7 +973,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_path_length" gtk-widget-path-length) :int
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @return{An integer with the number of elements in the path.}
   @begin{short}
@@ -991,7 +992,7 @@
 (defcfun ("gtk_widget_path_new" gtk-widget-path-new)
     (g-boxed-foreign gtk-widget-path)
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @return{A newly created, empty, @class{gtk-widget-path} instance.}
   @short{Returns an empty widget path.}
   @see-class{gtk-widget-path}")
@@ -1004,9 +1005,9 @@
 
 (defcfun ("gtk_widget_path_prepend_type" gtk-widget-path-prepend-type) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
-  @argument[gtype]{widget @class{g-type} to prepend}
+  @argument[gtype]{a @class{g-type} type to prepend}
   @begin{short}
     Prepends a widget type to the widget hierachy represented by @arg{path}.
   @end{short}
@@ -1023,7 +1024,7 @@
 
 (defcfun ("gtk_widget_path_to_string" gtk-widget-path-to-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2021-7-25}
+ "@version{2021-11-27}
   @argument[path]{a @class{gtk-widget-path} instance}
   @return{A new string describing @arg{path}.}
   @begin{short}
