@@ -42,6 +42,9 @@
    (:file "gio.emblem")              ; An object for emblems
    ;; Resources
    (:file "gio.resource")            ; Resource framework
+   ;; Data models
+   (:file "gio.list-model")          ; Interface for dynamic list of objects
+   (:file "gio.list-store")          ; Implementation of GListModel
    ;; Application support
    (:file "gio.action")              ; An action interface
    (:file "gio.action-group")        ; A group of actions

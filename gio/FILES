@@ -45,6 +45,11 @@ Resources
 
   gio.resource.lisp            - GResource                         - GIO 2.66 &
 
+Data Models
+
+  GListModel — An interface describing a dynamic list of objects
+  GListStore — A simple implementation of GListModel
+
 Application support
 
   gio.application.lisp         - GApplication                      - GIO 2.68 &

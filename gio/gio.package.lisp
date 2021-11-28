@@ -334,22 +334,7 @@
     @about-symbol{g-resource-lookup-flags}
     @about-symbol{g-static-resource}
     @about-symbol{g-resource-error}
-    @about-class{g-resource};;; GFileIcon
-;;;
-;;;     Icons pointing to an image file
-;;;
-;;; Types and Values
-;;;
-;;;     GFileIcon
-;;;
-;;; Functions
-;;;
-;;;     g_file_icon_new
-;;;     g_file_icon_get_file
-;;;
-;;; Properties
-;;;
-;;;     GFile*   file
+    @about-class{g-resource}
     @about-function{g-resource-load}
     @about-function{g-resource-new-from-data}
     @about-function{g-resource-ref}
@@ -367,6 +352,30 @@
     @about-function{g-resources-open-stream}
     @about-function{g-resources-enumerate-children}
     @about-function{g-resources-info}
+  @end{section}
+  @begin[Data models]{section}
+    @begin[GListModel]{subsection}
+      @about-class{g-list-model}
+      @about-function{g-list-model-item-type}
+      @about-function{g-list-model-n-items}
+      @about-function{g-list-model-item}
+      @about-function{g-list-model-object}
+      @about-function{g-list-model-items-changed}
+    @end{subsection}
+    @begin[GListStore]{subsection}
+      @about-class{g-list-store}
+      @about-generic{g-list-store-item-type}
+      @about-function{g-list-store-new}
+      @about-function{g-list-store-insert}
+      @about-function{g-list-store-insert-sorted}
+      @about-function{g-list-store-append}
+      @about-function{g-list-store-remove}
+      @about-function{g-list-store-remove-all}
+      @about-function{g-list-store-splice}
+      @about-function{g-list-store-sort}
+      @about-function{g-list-store-find}
+      @about-function{g-list-store-find-with-equal-func}
+    @end{subsection}
   @end{section}
   @begin[Application support]{section}
     @begin[GApplication]{subsection}
