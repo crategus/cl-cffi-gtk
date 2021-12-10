@@ -91,6 +91,15 @@
 ;;;     g_slist_free                                       not exported
 ;;;     g_slist_next                                       not exported
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; File Utilities
+;;;
+;;;     Various file-related functions
+;;;
+;;; Implemented is:
+;;;
+;;;     g_chdir
+;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
 
@@ -109,7 +118,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-size 'type)
- "@version{2021-4-9}
+ "@version{2021-12-10}
   @begin{short}
     An unsigned integer type of the result of the sizeof operator,
     corresponding to the @code{size_t} type defined in C99.
@@ -130,7 +139,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-ssize 'type)
- "@version{2021-4-9}
+ "@version{2021-12-10}
   @begin{short}
     A signed variant of the @type{g-size} type, corresponding to the
     @code{ssize_t} type defined on most platforms.
@@ -149,7 +158,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-offset 'type)
- "@version{2021-4-9}
+ "@version{2021-12-10}
   @begin{short}
     A signed integer type that is used for file offsets, corresponding to the
     C99 @code{off64_t} type.
@@ -166,14 +175,14 @@
 
 (defcfun ("g_malloc" g-malloc) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2021-9-28}
+ "@version{2021-12-10}
   @argument[n-bytes]{a @type{g-size} type with the number of bytes to allocate}
   @return{A foreign pointer to the allocated memory.}
   @begin{short}
     Allocates @arg{n-bytes} bytes of memory.
   @end{short}
   If @arg{n-bytes} is 0 the @sym{g-malloc} function returns a foreign
-  @code{null}-pointer.
+  @code{null-pointer}.
   @see-type{g-size}
   @see-function{g-free}"
   (n-bytes g-size))
@@ -185,12 +194,12 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_free" g-free) :void
- "@version{2021-9-28}
+ "@version{2021-12-10}
   @argument[mem]{a foreign pointer to the memory to free}
   @begin{short}
     Frees the memory pointed to by the @arg{mem} foreign pointer.
   @end{short}
-  If the @arg{mem} argument is a @code{null}-pointer the @sym{g-free} function
+  If the @arg{mem} argument is a @code{null-pointer} the @sym{g-free} function
   simply returns.
   @see{g-malloc}"
   (mem :pointer))
@@ -228,10 +237,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-string 'type)
- "@version{2021-4-8}
+ "@version{2021-12-10}
   @begin{short}
-    A type that is almost like the foreign CFFI type @code{:string} but uses
-    the GLib functions @fun{g-malloc} and @fun{g-free} to allocate and free
+    A type that is almost like the foreign CFFI @code{:string} type but uses
+    the GLib @fun{g-malloc} and @fun{g-free} functions to allocate and free
     memory.
   @end{short}
 
@@ -246,7 +255,9 @@
   A method for free-translated-object is specialized for this type. So, for
   example, foreign strings allocated by this type and passed to a foreign
   function will be freed after the function returns.
-  @see-type{g-strv}")
+  @see-type{g-strv}
+  @see-function{g-malloc}
+  @see-function{g-free}")
 
 (export 'g-string)
 
@@ -294,7 +305,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-strv 'type)
- "@version{2021-4-9}
+ "@version{2021-12-10}
   @begin{short}
     This type represents and performs automatic conversion between a list of
     Lisp strings and an array of C strings of the @type{g-string} type.
@@ -377,7 +388,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-list 'type)
- "@version{2021-4-8}
+ "@version{2021-12-10}
   @begin{short}
     The @sym{g-list} type represents a C doubly-linked list with elements of
     the @code{GList} structure.
@@ -520,7 +531,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-slist 'type)
- "@version{2021-4-8}
+ "@version{2021-12-10}
   @begin{short}
     The @sym{g-slist} type represents a C singly-linked list with elements of
     @code{GSList} structure.
@@ -569,5 +580,23 @@
   (if (null-pointer-p lst)
       (null-pointer)
       (foreign-slot-value lst '(:struct %g-slist) 'next)))
+
+;;; ----------------------------------------------------------------------------
+;;; g_chdir
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_chdir" g-chdir) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[path]{a string with a pathname in the GLIB file name encoding}
+  @return{0 on success, -1 if an error occured.}
+  @begin{short}
+    A wrapper for the POSIX @code{chdir()} function.
+  @end{short}
+  The function changes the current directory of the process to @arg{path}.
+  @see-function{g-current-dir}"
+  (path :string))
+
+(export 'g-chdir)
 
 ;;; --- End of file glib.misc.lisp ---------------------------------------------
