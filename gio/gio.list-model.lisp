@@ -140,142 +140,95 @@
   @see-class{g-list-store}")
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GListModelInterface
-;;;
-;;; struct GListModelInterface {
-;;;   GTypeInterface g_iface;
-;;;
-;;;   GType     (* get_item_type)   (GListModel *list);
-;;;   guint     (* get_n_items)     (GListModel *list);
-;;;   gpointer  (* get_item)        (GListModel *list,
-;;;                                  guint       position);
-;;; };
-;;;
-;;; The virtual function table for GListModel.
-;;;
-;;; Members
-;;;
-;;; get_item_type ()
-;;;     the virtual function pointer for g_list_model_get_item_type()
-;;;
-;;; get_n_items ()
-;;;     the virtual function pointer for g_list_model_get_n_items()
-;;;
-;;; get_item ()
-;;;     the virtual function pointer for g_list_model_get_item()
-;;;
-;;; Since: 2.44
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_list_model_get_item_type ()
-;;;
-;;; GType
-;;; g_list_model_get_item_type (GListModel *list);
-;;;
-;;; Gets the type of the items in list . All items returned from
-;;; g_list_model_get_type() are of that type or a subtype, or are an
-;;; implementation of that interface.
-;;;
-;;; The item type of a GListModel can not change during the life of the model.
-;;;
-;;; list:
-;;;     a GListModel
-;;;
-;;; Returns:
-;;;     the GType of the items contained in list .
-;;;
-;;; Since: 2.44
+;;; g_list_model_get_item_type () -> g-list-model-item-type
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_list_model_get_item_type" g-list-model-item-type) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[list]{a @class{g-list-model} object}
+  @return{The @class{g-type} type of the items contained in @arg{list}.}
+  @begin{short}
+    Gets the type of the items in the list.
+  @end{short}
+  All items returned from the @sym{g-list-model-type} function are of that type
+  or a subtype, or are an implementation of that interface.
+
+  The item type of a @class{g-list-model} object can not change during the life
+  of the model.
+  @see-class{g-list-model}
+  @see-class{g-type}"
   (list (g-object g-list-model)))
 
 (export 'g-list-model-item-type)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_list_model_get_n_items ()
-;;;
-;;; guint
-;;; g_list_model_get_n_items (GListModel *list);
-;;;
-;;; Gets the number of items in list .
-;;;
-;;; Depending on the model implementation, calling this function may be less
-;;; efficient than iterating the list with increasing values for position until
-;;; g_list_model_get_item() returns NULL.
-;;;
-;;; list:
-;;;     a GListModel
-;;;
-;;; Returns:
-;;;     the number of items in list .
-;;;
-;;; Since: 2.44
+;;; g_list_model_get_n_items () -> g-list-model-n-items
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_list_model_get_n_items" g-list-model-n-items) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[list]{a @class{g-list-model} object}
+  @return{An integer with the number of items in @arg{list}.}
+  @begin{short}
+    Gets the number of items in the list.
+  @end{short}
+  Depending on the model implementation, calling this function may be less
+  efficient than iterating the list with increasing values for position until
+  the @fun{g-list-model-item} functions returns @code{null-pointer}.
+  @see-class{g-list-model}
+  @see-function{g-list-model-item}"
   (list (g-object g-list-model)))
 
 (export 'g-list-model-n-items)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_list_model_get_item ()
-;;;
-;;; gpointer
-;;; g_list_model_get_item (GListModel *list,
-;;;                        guint position);
-;;;
-;;; Get the item at position . If position is greater than the number of items
-;;; in list , NULL is returned.
-;;;
-;;; NULL is never returned for an index that is smaller than the length of the
-;;; list. See g_list_model_get_n_items().
-;;;
-;;; list:
-;;;     a GListModel
-;;;
-;;; position:
-;;;     the position of the item to fetch
-;;;
-;;; Returns:
-;;;     the item at position .
-;;;
-;;; Since: 2.44
+;;; g_list_model_get_item () -> g-list-model-item
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_list_model_get_item" g-list-model-item) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[list]{a @class{g-list-model} object}
+  @argument[position]{an unsigned integer with the position of the item to
+    fetch}
+  @return{An pointer with the item at @arg{position}.}
+  @begin{short}
+    Get the item at @arg{position}.
+  @end{short}
+  If the @arg{position} argument is greater than the number of items in the
+  list, @code{null-pointer} is returned.
+
+  The @code{null-pointer} value is never returned for an index that is smaller
+  than the length of the list. See the @fun{g-list-model-n-items} function.
+  @see-class{g-list-model}
+  @see-function{g-list-model-n-items}"
   (list (g-object g-list-model))
   (position :uint))
 
 (export 'g-list-model-item)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_list_model_get_object ()
-;;;
-;;; GObject *
-;;; g_list_model_get_object (GListModel *list,
-;;;                          guint position);
-;;;
-;;; Get the item at position . If position is greater than the number of items
-;;; in list , NULL is returned.
-;;;
-;;; NULL is never returned for an index that is smaller than the length of the
-;;; list. See g_list_model_get_n_items().
-;;;
-;;; list:
-;;;     a GListModel
-;;;
-;;; position:
-;;;     the position of the item to fetch
-;;;
-;;; Returns:
-;;;     the object at position .
-;;;
-;;; Since: 2.44
+;;; g_list_model_get_object () -> g-list-model-object
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_list_model_get_object" g-list-model-object) g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[list]{a @class{g-list-model} object}
+  @argument[position]{an unsigned integer with the position of the item to
+    fetch}
+  @return{The @class{g-object} instance at @arg{position}.}
+  @begin{short}
+    Get the item at @arg{position}.
+  @end{short}
+  If the @arg{position} argument is greater than the number of items in the
+  list, @code{nil} is returned. The @code{nil} value is never returned for an
+  index that is smaller than the length of the list. See the
+  @fun{g-list-model-n-items} function.
+  @see-class{g-list-model}
+  @see-function{g-list-model-n-items}"
   (list (g-object g-list-model))
   (position :uint))
 
@@ -283,49 +236,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_model_items_changed ()
-;;;
-;;; void
-;;; g_list_model_items_changed (GListModel *list,
-;;;                             guint position,
-;;;                             guint removed,
-;;;                             guint added);
-;;;
-;;; Emits the “items-changed” signal on list .
-;;;
-;;; This function should only be called by classes implementing GListModel. It
-;;; has to be called after the internal representation of list has been updated,
-;;; because handlers connected to this signal might query the new state of the
-;;; list.
-;;;
-;;; Implementations must only make changes to the model (as visible to its
-;;; consumer) in places that will not cause problems for that consumer. For
-;;; models that are driven directly by a write API (such as GListStore), changes
-;;; can be reported in response to uses of that API. For models that represent
-;;; remote data, changes should only be made from a fresh mainloop dispatch. It
-;;; is particularly not permitted to make changes in response to a call to the
-;;; GListModel consumer API.
-;;;
-;;; Stated another way: in general, it is assumed that code making a series of
-;;; accesses to the model via the API, without returning to the mainloop, and
-;;; without calling other code, will continue to view the same contents of the
-;;; model.
-;;;
-;;; list:
-;;;     a GListModel
-;;;
-;;; position:
-;;;     the position at which list changed
-;;;
-;;; removed:
-;;;     the number of items removed
-;;;
-;;; added:
-;;;     the number of items added
-;;;
-;;; Since: 2.44
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_list_model_items_changed" g-list-model-items-changed) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[list]{a @class{g-list-model} object}
+  @argument[position]{an unsigned integer with the position at which @arg{list}
+    changed}
+  @argument[removed]{an unsigned integer with the number of items removed}
+  @argument[added]{an unsigned integer with the number of items added}
+  @begin{short}
+    Emits the \"items-changed\" signal on @arg{list}.
+  @end{short}
+
+  This function should only be called by classes implementing the
+  @class{g-list-model} interface. It has to be called after the internal
+  representation of list has been updated, because handlers connected to this
+  signal might query the new state of the list.
+
+  Implementations must only make changes to the model, as visible to its
+  consumer, in places that will not cause problems for that consumer. For models
+  that are driven directly by a write API, such as the @class{g-list-store}
+  object, changes can be reported in response to uses of that API. For models
+  that represent remote data, changes should only be made from a fresh mainloop
+  dispatch. It is particularly not permitted to make changes in response to a
+  call to the @class{g-list-model} consumer API.
+
+  Stated another way: in general, it is assumed that code making a series of
+  accesses to the model via the API, without returning to the main loop, and
+  without calling other code, will continue to view the same contents of the
+  model.
+  @see-class{g-list-model}"
   (list (g-object g-list-model))
   (position :uint)
   (removed :uint)
