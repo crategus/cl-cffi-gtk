@@ -126,49 +126,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GBytes
-;;;
-;;; typedef struct _GBytes GBytes;
-;;;
-;;; A simple refcounted data type representing an immutable sequence of zero or
-;;; more bytes from an unspecified origin.
-;;;
-;;; The purpose of a GBytes is to keep the memory region that it holds alive for
-;;; as long as anyone holds a reference to the bytes. When the last reference
-;;; count is dropped, the memory is released. Multiple unrelated callers can use
-;;; byte data in the GBytes without coordinating their activities, resting
-;;; assured that the byte data will not change or move while they hold a
-;;; reference.
-;;;
-;;; A GBytes can come from many different origins that may have different
-;;; procedures for freeing the memory region. Examples are memory from
-;;; g_malloc(), from memory slices, from a GMappedFile or memory from other
-;;; allocators.
-;;;
-;;; GBytes work well as keys in GHashTable. Use g_bytes_equal() and
-;;; g_bytes_hash() as parameters to g_hash_table_new() or
-;;; g_hash_table_new_full(). GBytes can also be used as keys in a GTree by
-;;; passing the g_bytes_compare() function to g_tree_new().
-;;;
-;;; The data pointed to by this bytes must not be modified. For a mutable array
-;;; of bytes see GByteArray. Use g_bytes_unref_to_array() to create a mutable
-;;; array for a GBytes sequence. To create an immutable GBytes from a mutable
-;;; GByteArray, use the g_byte_array_free_to_bytes() function.
 ;;; ----------------------------------------------------------------------------
 
 (gobject::define-g-boxed-opaque g-bytes "GBytes"
   :alloc (g-bytes-new (null-pointer) 0))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'pango-language atdoc:*class-name-alias*)
+(setf (gethash 'g-bytes atdoc:*class-name-alias*)
       "GBoxed"
-      (documentation 'pango-language 'type)
- "@version{2021-10-17}
+      (documentation 'g-bytes 'type)
+ "@version{2021-12-10}
   @begin{short}
-
+    A simple refcounted data type representing an immutable sequence of zero or
+    more bytes from an unspecified origin.
   @end{short}
-")
 
-(export (gobject::boxed-related-symbols 'g-bytes))
+  The purpose of a @sym{g-bytes} instance is to keep the memory region that
+  it holds alive for as long as anyone holds a reference to the bytes. When the
+  last reference count is dropped, the memory is released. Multiple unrelated
+  callers can use byte data in the @sym{g-bytes} instance  without
+  coordinating their activities, resting assured that the byte data will not
+  change or move while they hold a reference.
+
+  A @sym{g-bytes} instance can come from many different origins that may have
+  different procedures for freeing the memory region. Examples are memory from
+  the @fun{g-malloc} function.
+  @begin[Example]{dictionary}
+    Usage of a @sym{g-bytes} instance for a Lisp string as byte data.
+    @begin{pre}
+(multiple-value-bind (data len)
+    (foreign-string-alloc \"A test string.\")
+  (defvar bytes (g-bytes-new data len)))
+=> BYTES
+(g-bytes-size bytes)
+=> 15
+(g-bytes-data bytes)
+=> #.(SB-SYS:INT-SAP #X55EBB2C1DB70)
+=> 15
+(foreign-string-to-lisp (g-bytes-data bytes))
+=> \"A test string.\"
+=> 14
+    @end{pre}
+  @end{dictionary}")
+
+(export 'g-bytes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_byte_array_new ()
@@ -500,26 +501,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_bytes_new ()
-;;;
-;;; GBytes *
-;;; g_bytes_new (gconstpointer data,
-;;;              gsize size);
-;;;
-;;; Creates a new GBytes from data .
-;;;
-;;; data is copied. If size is 0, data may be NULL.
-;;;
-;;; data :
-;;;     the data to be used for the bytes.
-;;;
-;;; size :
-;;;     the size of data
-;;;
-;;; Returns :
-;;;     a new GBytes.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_bytes_new" g-bytes-new) (gobject:g-boxed-foreign g-bytes)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[data]{a pointer to the data to be used for the bytes}
+  @argument[size]{an integer with the size of @arg{data}}
+  @return{A new @class{g-bytes} instance.}
+  @short{Creates a new @class{g-bytes} instance from @arg{data}.}
+  @see-class{g-bytes}"
   (data :pointer)
   (size g-size))
 
@@ -647,27 +638,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_bytes_get_data ()
-;;;
-;;; gconstpointer
-;;; g_bytes_get_data (GBytes *bytes,
-;;;                   gsize *size);
-;;;
-;;; Get the byte data in the GBytes. This data should not be modified.
-;;;
-;;; This function will always return the same pointer for a given GBytes.
-;;;
-;;; NULL may be returned if size is 0. This is not guaranteed, as the GBytes may
-;;; represent an empty string with data non-NULL and size as 0. NULL will not be
-;;; returned if size is non-zero.
-;;;
-;;; bytes :
-;;;     a GBytes
-;;;
-;;; size :
-;;;     location to return size of byte data.
-;;;
-;;; Returns :
-;;;     a pointer to the byte data, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_bytes_get_data" %g-bytes-data) :pointer
@@ -675,6 +645,24 @@
   (size (:pointer g-size)))
 
 (defun g-bytes-data (bytes)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[bytes]{a @class{g-bytes} instance}
+  @begin{return}
+    @arg{data} -- a pointer to the byte data, or @code{null-pointer} @br{}
+    @arg{size} -- an integer with the size of the byte data
+  @end{return}
+  @begin{short}
+    Get the byte data in the @class{g-bytes} instance.
+  @end{short}
+  This function will always return the same pointer for a given @class{g-bytes}
+  instance.
+
+  A @code{null-pointer} may be returned if the @arg{size} value is 0. This is
+  not guaranteed, as the @class{g-bytes} instance may represent an empty string
+  with @arg{data} not a @code{null-pointer} and the @arg{size} value as 0. A
+  @code{null-pointer} will not be returned if the @arg{size} value is non-zero.
+  @see-class{g-bytes}"
   (with-foreign-object (size 'g-size)
     (let ((ptr (%g-bytes-data bytes size)))
       (values ptr
@@ -684,22 +672,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_bytes_get_size ()
-;;;
-;;; gsize
-;;; g_bytes_get_size (GBytes *bytes);
-;;;
-;;; Get the size of the byte data in the GBytes.
-;;;
-;;; This function will always return the same value for a given GBytes.
-;;;
-;;; bytes :
-;;;     a GBytes
-;;;
-;;; Returns :
-;;;     the size
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_bytes_get_size" g-bytes-size) g-size
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[bytes]{a @class{gtk-bytes} instance}
+  @return{An integer with the size of the byte data.}
+  @begin{short}
+    Get the size of the byte data in the @class{g-bytes} instance.
+  @end{short}
+  This function will always return the same value for a given @class{g-bytes}
+  instance.
+  @see-class{g-bytes}"
   (bytes (gobject:g-boxed-foreign g-bytes)))
 
 (export 'g-bytes-size)
