@@ -99,19 +99,19 @@
 (setf (gethash 'g-action atdoc:*class-name-alias*)
       "Interface"
       (documentation 'g-action 'type)
- "@version{2021-8-1}
+ "@version{2021-12-10}
   @begin{short}
     The @sym{g-action} interface represents a single named action.
   @end{short}
 
-  The main interface to an action is that it can be activated with the function
-  @fun{g-action-activate}. This results in the \"activate\" signal being
-  emitted. An activation has a @type{g-variant} parameter, which may be
+  The main interface to an action is that it can be activated with the
+  @fun{g-action-activate} function. This results in the \"activate\" signal
+  being emitted. An activation has a @type{g-variant} parameter, which may be
   @code{nil}. The correct type for the parameter is determined by a static
   parameter type, which is given at construction time.
 
   An action may optionally have a state, in which case the state may be set
-  with the function @fun{g-action-change-state}. This call takes a
+  with the @fun{g-action-change-state} function. This call takes a
   @type{g-variant} parameter. The correct type for the state is determined by
   a static state type, which is given at construction time.
 
@@ -124,12 +124,12 @@
   In all cases, the implementing class is responsible for storing the name of
   the action, the parameter type, the enabled state, the optional state type
   and the state and emitting the appropriate signals when these change. The
-  implementor responsible for filtering calls to the functions
-  @fun{g-action-activate} and @fun{g-action-change-state} for type safety and
-  for the state being enabled.
+  implementor responsible for filtering calls to the @fun{g-action-activate}
+  and @fun{g-action-change-state} functions for type safety and for the state
+  being enabled.
 
-  Probably the only useful thing to do with a @sym{g-action} is to put it inside
-  of a @class{g-simple-action-group} object.
+  Probably the only useful thing to do with a @sym{g-action} object is to put
+  it inside of a @class{g-simple-action-group} object.
   @see-slot{g-action-enabled}
   @see-slot{g-action-name}
   @see-slot{g-action-parameter-type}
@@ -158,11 +158,11 @@
 (setf (gethash 'g-action-enabled atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-enabled 'function)
- "@version{*2021-10-24}
+ "@version{*2021-12-10}
   @syntax[]{(g-action-enabled object) => enabled}
   @syntax[]{(setf (g-action-enabled object) enabled)}
   @argument[object]{a @class{g-action} object}
-  @argument[enabled]{a boolean whether @arg{action} is enabled}
+  @argument[enabled]{a boolean whether the action is enabled}
   @begin{short}
     Accessor of the @slot[g-action]{enabled} slot of the @class{g-action} class.
   @end{short}
@@ -186,7 +186,7 @@
 (setf (gethash 'g-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-name 'function)
- "@version{*2021-10-8}
+ "@version{*2021-12-10}
   @syntax[]{(g-action-name object) => name}
   @argument[action]{a @class{g-action} object}
   @argument[name]{a string with the name of the action}
@@ -208,7 +208,7 @@
 (setf (gethash 'g-action-parameter-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-parameter-type 'function)
- "@version{2021-9-8}
+ "@version{2021-12-10}
   @syntax[]{(g-action-parameter-type object) => vtype}
   @argument[object]{a @class{g-action} object}
   @argument[vtype]{the @class{g-variant-type} parameter type}
@@ -218,14 +218,12 @@
   @end{short}
 
   Queries the type of the parameter that must be given when activating the
-  action.
+  action. When activating the action using the @fun{g-action-activate} function,
+  the @type{g-variant} parameter given to that function must be of the type
+  returned by this function.
 
-  When activating the action using the @fun{g-action-activate} function, the
-  @type{g-variant} parameter given to that function must be of the type returned
-  by this function.
-
-  In the case that this function returns a @code{nil}, you must not give any
-  @type{g-variant} parameter, but a @code{null-pointer} instead.
+  In the case that this function returns a @code{nil} value, you must not give
+  any @type{g-variant} parameter, but a @code{null-pointer} instead.
   @see-class{g-action}
   @see-class{g-variant-type}
   @see-type{g-variant}
@@ -244,7 +242,7 @@
 (setf (gethash 'g-action-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state 'function)
- "@version{*2021-10-31}
+ "@version{*2021-12-10}
   @syntax[]{(g-action-state object) => state}
   @syntax[]{(setf (g-action-state object) state)}
   @argument[object]{a @class{g-action} object}
@@ -269,7 +267,7 @@
 (g-action-state action) => #.(SB-SYS:INT-SAP #X560FD04F2C40)
 (g-variant-int32 *) =>999
     @end{pre}
-    A simple action with no state returns a @code{null-pointer}.
+    A simple action with no state returns a @code{null-pointer} value.
     @begin{pre}
 (setf action (g-simple-action-new \"simple\" nil))
 =>  #<G-SIMPLE-ACTION {1004B2CE73@}>
@@ -285,14 +283,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "state-type" 'g-action) 't)
  "The @code{state-type} property of type @class{g-variant-type} (Read) @br{}
-  The @class{g-variant-type} parameter type of the state that the action has,
-  or @code{nil} if the action is stateless. @br{}")
+  The parameter type of the state that the action has, or @code{nil} if the
+  action is stateless. @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-state-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-action-state-type 'function)
- "@version{2021-9-9}
+ "@version{2021-12-10}
   @syntax[]{(g-action-state-type object) => vtype}
   @argument[object]{a @class{g-action} object}
   @argument[vtype]{the @class{g-variant-type} state type, if the action is
@@ -302,21 +300,19 @@
     @class{g-action} class.
   @end{short}
 
-  Queries the type of the state of the action.
-
-  If the action is stateful, e.g. created with the
-  @fun{g-simple-action-new-stateful} function, then this function returns the
-  @class{g-variant-type} parameter type of the state. This is the type of the
-  initial value given as the state. All calls to the @fun{g-action-change-state}
-  function must give a @type{g-variant} parameter of this type and the
-  @fun{g-action-state} function will return a @type{g-variant} parameter of the
-  same type.
+  Queries the type of the state of the action. If the action is stateful, e.g.
+  created with the @fun{g-simple-action-new-stateful} function, then this
+  function returns the @class{g-variant-type} parameter type of the state. This
+  is the type of the initial value given as the state. All calls to the
+  @fun{g-action-change-state} function must give a @type{g-variant} parameter of
+  this type and the @fun{g-action-state} function will return a @type{g-variant}
+  parameter of the same type.
 
   If the action is not stateful, e.g. created with the
   @fun{g-simple-action-new} function, then this function will return @code{nil}.
   In that case, the @fun{g-action-state} function will return a
-  @code{null-pointer} and you must not call the @fun{g-action-change-state}
-  function.
+  @code{null-pointer} value and you must not call the
+  @fun{g-action-change-state} function.
   @see-class{g-action}
   @see-class{g-variant-type}
   @see-type{g-variant}
@@ -331,9 +327,9 @@
 
 (defcfun ("g_action_name_is_valid" g-action-name-is-valid) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-8-1}
+ "@version{2021-12-10}
   @argument[name]{a string with an action name}
-  @return{@em{True} if @arg{name} is a valid action name.}
+  @return{@em{True} if the @arg{name} argument is a valid action name.}
   @begin{short}
     Checks if the action name is valid.
   @end{short}
@@ -362,15 +358,15 @@
 (defcfun ("g_action_get_state_hint" g-action-state-hint)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2021-9-9}
+ "@version{2021-12-10}
   @argument[action]{a @class{g-action} object}
   @return{The @type{g-variant} state range hint.}
   @begin{short}
     Requests a hint about the valid range of values for the state of the action.
   @end{short}
 
-  If a @code{null-pointer} is returned it either means that the action is not
-  stateful or that there is no hint about the valid range of values for the
+  If a @code{null-pointer} value is returned it either means that the action is
+  not stateful or that there is no hint about the valid range of values for the
   state of the action.
 
   If a @type{g-variant} parameter array is returned then each item in the array
@@ -393,7 +389,7 @@
 
 (defcfun ("g_action_change_state" g-action-change-state) :void
  #+cl-cffi-gtk-documentation
- "@version{*2021-10-31}
+ "@version{*2021-12-10}
   @argument[action]{a @class{g-action} object}
   @argument[value]{a new @type{g-variant} state}
   @begin{short}
@@ -422,20 +418,23 @@
   (action :pointer)
   (parameter :pointer))
 
-(defun g-action-activate (action parameter)
+(defun g-action-activate (action &optional (parameter nil))
  #+cl-cffi-gtk-documentation
- "@version{2021-8-1}
+ "@version{2021-12-10}
   @argument[action]{a @class{g-action} object}
-  @argument[parameter]{the @class{g-variant} parameter to the activation}
-  @short{Activates the action.}
-
-  The argument @arg{parameter} must be the correct type of the parameter for the
-  action, i.e. the parameter type given at construction time. If the parameter
-  type was a @code{NULL} pointer then @arg{parameter} must also be a
-  @code{NULL} pointer.
+  @argument[parameter]{an optional @class{g-variant} parameter to the
+    activation}
+  @begin{short}
+    Activates the action.
+  @end{short}
+  The optional @arg{parameter} argument must be the correct type of the
+  parameter for the action, i.e. the parameter type given at construction time.
+  If the parameter type was a @code{null-pointer} value then the @arg{parameter}
+  argument must be @code{nil}, this is the default value.
   @see-class{g-action}
   @see-type{g-variant}"
-  (%g-action-activate (pointer action) parameter))
+  (let ((parameter (if parameter parameter (null-pointer))))
+    (%g-action-activate (pointer action) parameter)))
 
 (export 'g-action-activate)
 
@@ -451,12 +450,12 @@
 
 (defun g-action-parse-detailed-name (detailed)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-1}
+ "@version{2021-12-10}
   @argument[detailed]{a string with a detailed action name}
   @begin{return}
-     @code{name} - a string with the action name @br{}
-     @code{value} - a @type{g-variant} target value, or a @code{NULL} pointer
-     for no target
+     @arg{name} -- a string with the action name @br{}
+     @arg{value} -- a @type{g-variant} target value, or a @code{null-pointer}
+     value for no target
   @end{return}
   @begin{short}
     Parses a detailed action name into its separate name and target components.
@@ -475,7 +474,7 @@
   The third format is used to represent an action with any type of target value,
   including strings. The target value follows the action name, surrounded in
   parens. For example: \"app.action(42)\". The target value is parsed using
-  the function @fun{g-variant-parse}. If a tuple-typed value is desired, it must
+  the @fun{g-variant-parse} function. If a tuple-typed value is desired, it must
   be specified in the same way, resulting in two sets of parens, for example:
   \"app.action((1,2,3))\". A string target can be specified this way as well:
   \"app.action('target')\". For strings, this third format must be used if *
@@ -527,7 +526,7 @@
 
 (defun g-action-print-detailed-name (name &optional (value nil))
  #+cl-cffi-gtk-documentation
- "@version{2021-8-1}
+ "@version{2021-12-10}
   @argument[name]{a string with a valid action name}
   @argument[value]{an optional @type{g-variant} target value}
   @begin{short}
@@ -535,7 +534,7 @@
   @end{short}
 
   It is an error to call this function with an invalid action name. This
-  function is the opposite of the function @fun{g-action-parse-detailed-name}.
+  function is the opposite of the @fun{g-action-parse-detailed-name} function.
   It will produce a string that can be parsed back to the action name and
   target value by that function. See that function for the types of strings
   that will be printed by this function.
