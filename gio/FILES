@@ -47,8 +47,8 @@ Resources
 
 Data Models
 
-  GListModel — An interface describing a dynamic list of objects
-  GListStore — A simple implementation of GListModel
+  gio.list-model.lisp          - GListModel                        - GIO 2.68
+  gio.list-store.lisp          - GListStore                        - GIO 2.68 &
 
 Application support
 
