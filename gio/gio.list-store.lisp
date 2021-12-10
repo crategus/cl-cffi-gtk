@@ -78,7 +78,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-list-store 'type)
- "@version{2021-11-15}
+ "@version{2021-12-10}
   @begin{short}
     The @sym{g-list-store} object is an implementation of the
     @class{g-list-model} interface that stores all items in memory.
@@ -102,69 +102,80 @@
   the @class{g-object} class.")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-action-enabled atdoc:*function-name-alias*)
+(setf (gethash 'g-list-store-item-type atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'g-action-enabled 'function)
- "@version{2021-11-15}
- ")
+      (documentation 'g-list-store-item-type 'function)
+ "@version{2021-12-10}
+  @syntax[]{(g-list-store-item-type object) => pointer}
+  @argument[object]{a @class{g-list-store} object}
+  @argument[pointer]{a pointer to a @class{g-type} type}
+  @begin{short}
+    Accessor of the @slot[item-type]{g-list-store} slot of the
+    @class{g-list-store} class.
+  @end{short}
+
+  The type of items contained in the list store. Items must be subclasses of
+  the @class{g-object} class.
+  @begin[Note]{dictionary}
+    This function returns a pointer to the @class{g-type} type. Use the
+    @fun{g-list-model-item-type} function to get the @class{g-type} type.
+  @end{dictionary}
+  @see-class{g-list-store}
+  @see-class{g-type}
+  @see-function{g-list-model-item-type}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_store_new ()
-;;;
-;;; GListStore *
-;;; g_list_store_new (GType item_type);
-;;;
-;;; Creates a new GListStore with items of type item_type . item_type must be a
-;;; subclass of GObject.
-;;;
-;;; item_type:
-;;;     the GType of items in the list
-;;;
-;;; Returns:
-;;;     a new GListStore
-;;;
-;;; Since: 2.44
 ;;; ----------------------------------------------------------------------------
 
-(defun g-list-store-new (itype)
-  (make-instance 'g-list-store
-                 :item-type itype))
+;; Use the C implementation and not MAKE-INSTANCE because we have to pass
+;; a pointer of a GType for the ITEM-TYPE property.
+
+(defcfun ("g_list_store_new" g-list-store-new) (g-object g-list-store)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[itype]{a @class{g-type} type for the items in the list}
+  @return{A new @class{g-list-store} object.}
+  @begin{short}
+    Creates a new list store with items of @arg{itype} type
+  @end{short}
+  The @arg{itype} type must be a subclass of the @class{g-object} class.
+  @see-class{g-list-store}
+  @see-class{g-type}
+  @see-class{g-object}"
+  (itype g-type))
 
 (export 'g-list-store-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_store_insert ()
-;;;
-;;; void
-;;; g_list_store_insert (GListStore *store,
-;;;                      guint position,
-;;;                      gpointer item);
-;;;
-;;; Inserts item into store at position . item must be of type “item-type” or
-;;; derived from it. position must be smaller than the length of the list, or
-;;; equal to it to append.
-;;;
-;;; This function takes a ref on item .
-;;;
-;;; Use g_list_store_splice() to insert multiple items at the same time
-;;; efficiently.
-;;;
-;;; store:
-;;;     a GListStore
-;;;
-;;; position:
-;;;     the position at which to insert the new item
-;;;
-;;; item:
-;;;     the new item.
-;;;
-;;; Since: 2.44
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_list_store_insert" g-list-store-insert) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[store]{a @class{g-list-store} object}
+  @argument[position]{an unsigned integer with the position at which to insert
+    the new item}
+  @argument[item]{a @class{g-object} object with the new item}
+  @begin{short}
+    Inserts the item into the list store at @arg{position}.
+  @end{short}
+  The item must be of type @slot[g-list-store]{item-type} type or derived from
+  it. The @arg{position} argument must be smaller than the length of the list
+  store, or equal to it to append.
+
+  This function takes a ref on @arg{item}.
+
+  Use the @fun{g-list-store-splice} function to insert multiple items at the
+  same time efficiently.
+  @see-class{g-list-store}
+  @see-class{g-object}
+  @see-function{g-list-model-item-type}
+  @see-function{g-list-store-splice}"
   (store (g-object g-list-store))
   (position :uint)
-  (item :pointer))
+  (item g-object))
 
 (export 'g-list-store-insert)
 
@@ -205,62 +216,68 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_store_append ()
-;;;
-;;; void
-;;; g_list_store_append (GListStore *store,
-;;;                      gpointer item);
-;;;
-;;; Appends item to store . item must be of type “item-type”.
-;;;
-;;; This function takes a ref on item .
-;;;
-;;; Use g_list_store_splice() to append multiple items at the same time
-;;; efficiently.
-;;;
-;;; store:
-;;;     a GListStore
-;;;
-;;; item:
-;;;     the new item.
-;;;
-;;; Since: 2.44
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_list_store_append" g-list-store-append) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[list]{a @class{g-list-store} object}
+  @argument[item]{a @class{g-object} object with the new item}
+  @begin{short}
+    Appends the item to the list store.
+  @end{short}
+  The item must be of type @slot[g-list-store]{item-type} type.
+
+  This function takes a ref on @arg{item}.
+
+  Use the @fun{g-list-store-splice} function to append multiple items at the
+  same time efficiently.
+  @see-class{gtk-list-store}
+  @see-class{g-object}
+  @see-function{g-list-store-splice}"
+  (store (g-object g-list-store))
+  (item g-object))
+
+(export 'g-list-store-append)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_store_remove ()
-;;;
-;;; void
-;;; g_list_store_remove (GListStore *store,
-;;;                      guint position);
-;;;
-;;; Removes the item from store that is at position . position must be smaller
-;;; than the current length of the list.
-;;;
-;;; Use g_list_store_splice() to remove multiple items at the same time
-;;; efficiently.
-;;;
-;;; store:
-;;;     a GListStore
-;;;
-;;; position:
-;;;     the position of the item that is to be removed
-;;;
-;;; Since: 2.44
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_list_store_remove" g-list-store-remove) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[list]{a @class{g-list-store} object}
+  @argument[position]{an unsigned integer with the position of the item that
+    is to be removed}
+  @begin{short}
+    Removes the item from the list store that is at @arg{position}.
+  @end{short}
+  The @arg{position} argument must be smaller than the current length of the
+  list store.
+
+  Use the @fun{g-list-store-splice} function to remove multiple items at the
+  same time efficiently.
+  @see-class{g-list-store}
+  @see-function{g-list-store-splice}"
+  (list (g-object g-list-store))
+  (position :uint))
+
+(export 'g-list-store-remove)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_store_remove_all ()
-;;;
-;;; void
-;;; g_list_store_remove_all (GListStore *store);
-;;;
-;;; Removes all items from store .
-;;;
-;;; store:
-;;;     a GListStore
-;;;
-;;; Since: 2.44
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_list_store_remove_all" g-list-store-remove-all) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[list]{a @class{g-list-store} object}
+  @short{Removes all items from the list store.}
+  @see-class{g-list-store}"
+  (list (g-object g-list-store)))
+
+(export 'g-list-store-remove-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_store_splice ()
@@ -328,34 +345,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_store_find ()
-;;;
-;;; gboolean
-;;; g_list_store_find (GListStore *store,
-;;;                    gpointer item,
-;;;                    guint *position);
-;;;
-;;; Looks up the given item in the list store by looping over the items until
-;;; the first occurrence of item . If item was not found, then position will not
-;;; be set, and this method will return FALSE.
-;;;
-;;; If you need to compare the two items with a custom comparison function, use
-;;; g_list_store_find_with_equal_func() with a custom GEqualFunc instead.
-;;;
-;;; store:
-;;;     a GListStore
-;;;
-;;; item:
-;;;     an item.
-;;;
-;;; position:
-;;;     the first position of item , if it was found.
-;;;
-;;; Returns:
-;;;     Whether store contains item . If it was found, position will be set to
-;;;     the position where item occurred for the first time.
-;;;
-;;; Since: 2.64
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_list_store_find" %g-list-store-find) :boolean
+  (list (g-object g-list-store))
+  (item g-object)
+  (position (:pointer :uint)))
+
+(defun g-list-store-find (list item)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-10}
+  @argument[list]{a @class{g-list-store} object}
+  @argument[item]{a @class{g-object} item}
+  @return{An unsigned integer with the first position of the item, if it was
+    found, otherwise @code{nil}.}
+  @begin{short}
+    Looks up the given item in the list store by looping over the items until
+    the first occurrence of @arg{item}.
+  @end{short}
+  If the @arg{item} argument was not found, then this method will return
+  @code{nil}.
+
+  If you need to compare the two items with a custom comparison function, use
+  the @fun{g-list-store-find-with-equal-func} function with a custom
+  @code{GEqualFunc} instead.
+  @see-class{g-list-store}"
+  (with-foreign-object (position :uint)
+    (when (%g-list-store-find list item position)
+      (mem-ref position :uint))))
+
+(export 'g-list-store-find)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_store_find_with_equal_func ()
