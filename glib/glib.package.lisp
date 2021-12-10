@@ -99,6 +99,11 @@
 
       @about-type{g-slist}
     @end{subsection}
+    @begin[File Utilities]{subsection}
+      Various file related functions. Implemented is:
+
+      @about-function{g-chdir}
+    @end{subsection}
   @end{section}
   @begin[Character Set Conversion]{section}
     Convert strings between different character sets.
@@ -251,6 +256,43 @@
     @about-function{g-source-remove}
     @about-function{g-source-remove-by-funcs-user-data}
     @about-function{g-source-remove-by-user-data}
+  @end{section}
+  @begin[GBytes]{section}
+    A simple refcounted data type representing an immutable sequence of zero or
+    more bytes from an unspecified origin.
+
+    @about-type{g-byte-ayrray}
+    @about-function{g-byte-array-new}
+    @about-function{g-byte-array-steal}
+    @about-function{g-byte-array-new-take}
+    @about-function{g-byte-array-sized-new}
+    @about-function{g-byte-array-ref}
+    @about-function{g-byte-array-unref}
+    @about-function{g-byte-array-append}
+    @about-function{g-byte-array-prepend}
+    @about-function{g-byte-array-remove-index}
+    @about-function{g-byte-array-remove-index-fast}
+    @about-function{g-byte-array-remove-range}
+    @about-function{g-byte-array-sort}
+    @about-function{g-byte-array-sort-with-data}
+    @about-function{g-byte-array-set-size}
+    @about-function{g-byte-array-free}
+    @about-function{g-byte-array-free-to-bytes}
+    @about-class{g-bytes}
+    @about-function{g-bytes-new}
+    @about-function{g-bytes-new-take}
+    @about-function{g-bytes-new-static}
+    @about-function{g-bytes-new-with-free-func}
+    @about-function{g-bytes-new-from-bytes}
+    @about-function{g-bytes-data}
+    @about-function{g-bytes-size}
+    @about-function{g-bytes-hash}
+    @about-function{g-bytes-equal}
+    @about-function{g-bytes-compare}
+    @about-function{g-bytes-ref}
+    @about-function{g-bytes-unref}
+    @about-function{g-bytes-unref-to-data}
+    @about-function{g-bytes-unref-to-array}
   @end{section}
   @begin[Quarks]{section}
     A 2-way association between a string and a unique integer identifier.
