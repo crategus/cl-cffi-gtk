@@ -66,9 +66,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-color atdoc:*class-name-alias*)
-      "Boxed CStruct"
+      "GBoxed"
       (documentation 'gdk-color 'type)
- "@version{2020-12-30}
+ "@version{2021-12-11}
   @begin{short}
     The @sym{gdk-color} structure is used to describe a color, similar to the
     XColor structure used in the X11 drawing API.
@@ -92,7 +92,7 @@
   @end{table}
   @begin[Warning]{dictionary}
     The @sym{gdk-color} color has been deprecated since version 3.14 and
-    should not be used in newly-written code. Use the @class{gdk-rgba} color.
+    should not be used in newly written code. Use the @class{gdk-rgba} color.
   @end{dictionary}
   @see-slot{gdk-color-pixel}
   @see-slot{gdk-color-red}
@@ -135,7 +135,7 @@
 (setf (gethash 'gdk-color-pixel atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-color-pixel 'function)
- "@version{2020-12-30}
+ "@version{2021-12-11}
   @syntax[]{(gdk-color-pixel instance) => pixel}
   @syntax[]{(setf (gdk-color-pixel instance) pixel)}
   @begin{short}
@@ -145,8 +145,8 @@
   For allocated colors, the pixel value used to draw this color on the screen.
   Not used anymore.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-pixel} has been deprecated since version 3.14
-    and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-pixel} function has been deprecated since version 3.14
+    and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}
@@ -158,7 +158,7 @@
 (setf (gethash 'gdk-color-red atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-color-red 'function)
- "@version{2020-12-30}
+ "@version{2021-12-11}
   @syntax[]{(gdk-color-red instance) => red}
   @syntax[]{(setf (gdk-color-red instance) red)}
   @begin{short}
@@ -168,8 +168,8 @@
   The red component of the color. This is a value between 0 and 65535, with
   65535 indicating full intensity.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-red} has been deprecated since version 3.14
-    and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-red} function has been deprecated since version 3.14
+    and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}
@@ -183,7 +183,7 @@
 (setf (gethash 'gdk-color-green atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-color-green 'function)
- "@version{2020-12-30}
+ "@version{2021-12-11}
   @syntax[]{(gdk-color-green instance) => green}
   @syntax[]{(setf (gdk-color-green instance) green)}
   @begin{short}
@@ -193,8 +193,8 @@
   The green component of the color. This is a value between 0 and 65535, with
   65535 indicating full intensity.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-green} has been deprecated since version 3.14
-    and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-green} function has been deprecated since version 3.14
+    and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}
@@ -208,7 +208,7 @@
 (setf (gethash 'gdk-color-blue atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-color-blue 'function)
- "@version{2020-12-30}
+ "@version{2021-12-11}
   @syntax[]{(gdk-color-blue instance) => blue}
   @syntax[]{(setf (gdk-color-blue instance) blue)}
   @begin{short}
@@ -218,8 +218,8 @@
   The blue component of the color. This is a value between 0 and 65535, with
   65535 indicating full intensity.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-blue} has been deprecated since version 3.14
-    and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-blue} function has been deprecated since version 3.14
+    and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}
@@ -235,19 +235,19 @@
 
 (defun gdk-color-new (&key (pixel 0) (red 0) (green 0) (blue 0))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-30}
-  @argument[pixel]{for allocated colors, the pixel value used to draw this
-      color on the screen, not used anymore}
-  @argument[red]{the red component of the color, this is a value between
-      0 and 65535, with 65535 indicating full intensity}
-  @argument[green]{the green component of the color}
-  @argument[blue]{the blue component of the color}
+ "@version{2021-12-11}
+  @argument[pixel]{an unsigned integer with the pixel value used to draw this
+    color on the screen, not used anymore}
+  @argument[red]{an unsigned integer with the red component of the color, this
+    is a value between 0 and 65535, with 65535 indicating full intensity}
+  @argument[green]{an unsigned integer with the green component of the color}
+  @argument[blue]{an unsigned integer with the blue component of the color}
   @begin{short}
     Creates a new @class{gdk-color} color.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-new} has been deprecated since version 3.14
-    and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-new} function has been deprecated since version 3.14
+    and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}"
@@ -263,15 +263,15 @@
 
 (defun gdk-color-copy (color)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-30}
+ "@version{2021-12-11}
   @argument[color]{a @class{gdk-color} color}
   @return{A copy of @arg{color}.}
   @begin{short}
     Makes a copy of a color.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-copy} has been deprecated since version 3.14
-    and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-copy} function has been deprecated since version 3.14
+    and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}
@@ -288,7 +288,7 @@
 ;;; Frees a color structure created with gdk_color_copy().
 ;;;
 ;;; gdk_color_free has been deprecated since version 3.14 and should not be
-;;; used in newly-written code. Use GdkRGBA
+;;; used in newly written code. Use GdkRGBA
 ;;;
 ;;; color :
 ;;;     a GdkColor
@@ -304,11 +304,11 @@
   (spec :string)
   (color (g-boxed-foreign gdk-color)))
 
-(defun gdk-color-parse (color-spec)
+(defun gdk-color-parse (spec)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-30}
-  @argument[color-spec]{a string specifying the color}
-  @return{The @class{gdk-color} color or @em{false} if the parsing did not
+ "@version{2021-12-11}
+  @argument[spec]{a string specifying the color}
+  @return{The @class{gdk-color} color or @code{nil} if the parsing did not
     succeed.}
   @begin{short}
     Parses a textual specification of a color and fill in the red, green, and
@@ -322,15 +322,15 @@
   of the color, respectively. White in the four forms is @code{#fff},
   @code{#ffffff}, @code{#fffffffff} and @code{#ffffffffffff}.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-parse} has been deprecated since version 3.14
-    and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-parse} function has been deprecated since version 3.14
+    and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}
   @see-class{gdk-rgba}
   @see-function{gdk-color-to-string}"
   (let ((color (gdk-color-new)))
-    (when (%gdk-color-parse color-spec color)
+    (when (%gdk-color-parse spec color)
       color)))
 
 (export 'gdk-color-parse)
@@ -341,22 +341,22 @@
 
 (defcfun ("gdk_color_equal" gdk-color-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-12-30}
-  @argument[color-1]{a @class{gdk-color} color}
-  @argument[color-2]{another @class{gdk-color} color}
+ "@version{2021-12-11}
+  @argument[color1]{a @class{gdk-color} color}
+  @argument[color2]{another @class{gdk-color} color}
   @return{@em{True} if the two colors compare equal.}
   @begin{short}
     Compares two colors.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-equal} has been deprecated since version 3.14
-    and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-equal} function has been deprecated since version 3.14
+    and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}
   @see-class{gdk-rgba}"
-  (color-1 (g-boxed-foreign gdk-color))
-  (color-2 (g-boxed-foreign gdk-color)))
+  (color1 (g-boxed-foreign gdk-color))
+  (color2 (g-boxed-foreign gdk-color)))
 
 (export 'gdk-color-equal)
 
@@ -366,7 +366,7 @@
 
 (defcfun ("gdk_color_hash" gdk-color-hash) :uint
  #+cl-cffi-gtk-documentation
- "@version{2020-12-30}
+ "@version{2021-12-11}
   @argument[color]{a @class{gdk-color} color}
   @return{The hash function applied to @arg{color}.}
   @begin{short}
@@ -374,8 +374,8 @@
     @class{gdk-color} colors.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-hash} has been deprecated since version 3.14
-    and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-hash} function has been deprecated since version 3.14
+    and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}
@@ -391,7 +391,7 @@
 (defcfun ("gdk_color_to_string" gdk-color-to-string)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-30}
+ "@version{2021-12-11}
   @argument[color]{a @class{gdk-color} color}
   @return{A text string representing @arg{color}.}
   @begin{short}
@@ -400,10 +400,10 @@
     representing the red, green and blue components respectively.
   @end{short}
 
-  The returned string can be parsed by the function @fun{gdk-color-parse}.
+  The returned string can be parsed by the @fun{gdk-color-parse} function.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-color-to-string} has been deprecated since version
-    3.14 and should not be used in newly-written code. Use the @class{gdk-rgba}
+    The @sym{gdk-color-to-string} function has been deprecated since version
+    3.14 and should not be used in newly written code. Use the @class{gdk-rgba}
     color.
   @end{dictionary}
   @see-class{gdk-color}
