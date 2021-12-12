@@ -3,10 +3,23 @@
  * it up, nothing might be visible anymore.
  */
 
-#canvas-default {
-    transition-property: background-color, background-image;
-    transition-duration: 0.5s;
-    background-color: #4870bc;
+/* Make the paned handle more visible */
+paned separator {
+  background-color: alpha(white, 0.80);
+  background-image: linear-gradient(transparent, 
+                                    transparent 1px, 
+                                    #999 1px, #999 4px, 
+                                    transparent 4px);
+  background-size: 40px auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+paned separator:hover {
+  background-image: linear-gradient(transparent, 
+                                    transparent 1px, 
+                                    #555 1px, #555 4px, 
+                                    transparent 4px);
 }
 
 #bricks-button {
@@ -14,6 +27,12 @@
     background-image: -gtk-scaled(url('brick.png'),url('brick2.png'));
     background-repeat: no-repeat;
     background-position: center;
+}
+
+#canvas-default {
+    transition-property: background-color, background-image;
+    transition-duration: 0.5s;
+    background-color: #4870bc;
 }
 
 /* The gradients below are adapted versions of Lea Verou's CSS3 patterns,
@@ -32,7 +51,7 @@
 @define-color brick_hi_backdrop #888;
 @define-color brick_lo_backdrop #999;
 
-#canvas {
+#canvas-bricks {
     background-color: #999;
     background-image:
       linear-gradient(205deg, @brick_lo, @brick_lo 23px, transparent 23px),
@@ -43,7 +62,7 @@
     background-position: 0px 6px, 4px 31px, 29px 35px, 34px 2px;
 }
 
-#canvas:backdrop {
+#canvas-bricks:backdrop {
     background-color: #444;
     background-image:
       linear-gradient(205deg,

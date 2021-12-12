@@ -3,8 +3,8 @@
  * it up, nothing might be visible anymore.
  */
 
-/* Set a very futuristic style by default */
-* {
+/* Set a futuristic style by default */
+textview * {
   color: yellow;
   background: black;
   font-family: Monospace;

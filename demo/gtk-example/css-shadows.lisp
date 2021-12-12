@@ -1,4 +1,4 @@
-;;;; Theming/Shadows - 2021-11-27
+;;;; Theming/Shadows - 2021-11-30
 ;;;;
 ;;;; This demo shows how to use CSS shadows.
 
@@ -29,12 +29,14 @@
                                   :default-height 420
                                   :default-width 600))
            (paned (make-instance 'gtk-paned
-                                 :orientation :vertical))
+                                 :orientation :vertical
+                                 :wide-handle t))
            (toolbar (create-toolbar))
            (scrolled (make-instance 'gtk-scrolled-window))
            (text (make-instance 'gtk-text-buffer))
            (view (make-instance 'gtk-text-view
                                 :monospace t
+                                :top-margin 12
                                 :buffer text))
            (provider (make-instance 'gtk-css-provider)))
       (g-signal-connect window "destroy"

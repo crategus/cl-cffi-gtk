@@ -3,8 +3,27 @@
  * it up, nothing might be visible anymore.
  */
 
-/* Get a nice background for the window */
-.background {
+/* Make the paned handle more visible */
+paned separator {
+  background-color: alpha(lightgrey, 0.80);
+  background-image: linear-gradient(transparent, 
+                                    transparent 1px, 
+                                    #999 1px, #999 4px, 
+                                    transparent 4px);
+  background-size: 40px auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+paned separator:hover {
+  background-image: linear-gradient(transparent, 
+                                    transparent 1px, 
+                                    #555 1px, #555 4px, 
+                                    transparent 4px);
+}
+
+/* Get a nice background for the toolbar */
+toolbar {
   background-image: linear-gradient(to left,
                                     transparent,
                                     rgba(255,255,255,.07) 50%,
@@ -21,7 +40,7 @@
                                     transparent,
                                     transparent 50%,
                                     rgba(255,255,255,.19) 50%);
-  background-color: #4870bc;
+  background-color: orange;
   background-size: 29px, 59px, 73px, 109px;
 }
 

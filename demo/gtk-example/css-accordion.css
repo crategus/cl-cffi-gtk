@@ -1,10 +1,11 @@
-@import url("css-reset.css");
+button {
+    background: unset;
+}
 
-* {
+button {
     transition-property: color, background-color, border-color,
                          background-image, padding, border-width;
     transition-duration: 1s;
-
     font: 20px Cantarell;
 }
 

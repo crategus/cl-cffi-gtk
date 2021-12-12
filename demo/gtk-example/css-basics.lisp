@@ -54,6 +54,6 @@
       (gtk-container-add scrolled view)
       (gtk-container-add window scrolled)
       ;; Apply the provider to the window
-      (apply-css-to-widget provider window)
+      (apply-css-to-widget provider view)
       ;; Show the window
       (gtk-widget-show-all window))))
