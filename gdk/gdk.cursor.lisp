@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -152,17 +152,18 @@
   (:cursor-is-pixmap -1))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-cursor-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-cursor-type atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gdk-cursor-type atdoc:*external-symbols*)
- "@version{2020-8-15}
+ "@version{2021-12-11}
   @begin{short}
     The standard cursors available.
   @end{short}
 
   Note that these IDs are directly taken from the X cursor font, and many of
   these cursors are either not useful, or are not available on other platforms.
-  The recommended way to create cursors is to use the function
-  @fun{gdk-cursor-new-from-name}.
+  The recommended way to create cursors is to use the
+  @fun{gdk-cursor-new-from-name} function.
   @begin{pre}
 (define-g-enum \"GdkCursorType\" gdk-cursor-type
   (:export t
@@ -328,8 +329,8 @@
     @entry[:xterm]{@image[cursor-xterm]{}}
     @entry[:last-cursor]{Last cursor type.}
     @entry[:blank-cursor]{Blank cursor.}
-    @entry[:cursor-is-pixmap]{Type of cursors constructed with the function
-      @fun{gdk-cursor-new-from-pixbuf}.}
+    @entry[:cursor-is-pixmap]{Type of cursors constructed with the
+      @fun{gdk-cursor-new-from-pixbuf} function.}
   @end{table}
   @see-class{gdk-cursor}
   @see-function{gdk-cursor-cursor-type}
@@ -363,23 +364,18 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-cursor 'type)
- "@version{2020-11-10}
+ "@version{2021-12-11}
   @begin{short}
-    These functions are used to create and destroy cursors.
+    The @sym{gdk-cursor} object represents a cursor.
   @end{short}
   There is a number of standard cursors, but it is also possible to construct
   new cursors from pixbufs. There may be limitations as to what kinds of cursors
-  can be constructed on a given display, see the functions
-  @fun{gdk-display-supports-cursor-alpha},
-  @fun{gdk-display-supports-cursor-color},
-  @fun{gdk-display-default-cursor-size} and
-  @fun{gdk-display-maximal-cursor-size}.
+  can be constructed on a given display.
 
-  Cursors by themselves are not very interesting, they must be bound to a
-  window for users to see them. This is done with the function
-  @fun{gdk-window-cursor} or by setting the cursor member of the
-  @symbol{gdk-window-attr} structure passed to the function
-  @fun{gdk-window-new}.
+  Cursors by themselves are not very interesting, they must be bound to a window
+  for users to see them. This is done with the @fun{gdk-window-cursor} function
+  or by setting the cursor member of the @symbol{gdk-window-attr} instance
+  passed to the @fun{gdk-window-new} function.
   @see-slot{gdk-cursor-cursor-type}
   @see-slot{gdk-cursor-display}
   @see-class{gdk-display}
@@ -408,17 +404,17 @@
 (setf (gethash 'gdk-cursor-cursor-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-cursor-cursor-type 'function)
- "@version{2020-11-10}
+ "@version{2021-12-11}
+  @syntax[]{(gdk-cursor-cursor-type object) => type}
   @argument[object]{a @class{gdk-cursor} object}
-  @syntax[]{(gdk-cursor-cursor-type object) => cursor-type}
+  @argument[type]{a value of the @symbol{gdk-cursor-type} enumeration}
   @begin{short}
     Accessor of the @slot[gdk-cursor]{cursor-type} slot of the
     @class{gdk-cursor} class.
   @end{short}
 
-  The slot access function @sym{gdk-cursor-cursor-type} returns the cursor type
-  for the cursor. This is a value from the @symbol{gdk-cursor-type}
-  enumeration.
+  The @sym{gdk-cursor-cursor-type} slot access function returns the cursor type
+  for the cursor. This is a value from the @symbol{gdk-cursor-type} enumeration.
   @see-class{gdk-cursor}
   @see-symbol{gdk-cursor-type}")
 
@@ -428,21 +424,22 @@
 (setf (documentation (atdoc:get-slot-from-name "display" 'gdk-cursor) 't)
  "The @code{display} property of type @class{gdk-display}
   (Read / Write / Construct) @br{}
-  Display of this cursor.")
+  Display of the cursor.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-cursor-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-cursor-display 'function)
- "@version{2020-11-10}
-  @argument[object]{a @class{gdk-cursor} object}
+ "@version{2021-12-11}
   @syntax[]{(gdk-cursor-display object) => display}
+  @argument[object]{a @class{gdk-cursor} object}
+  @argument[display]{a @class{gdk-display} object}
   @begin{short}
     Accessor of the @slot[gdk-cursor]{display} slot of the @class{gdk-cursor}
     class.
   @end{short}
 
-  The slot access function @sym{gdk-cursor-display} returns the display on
+  The @sym{gdk-cursor-display} slot access function returns the display on
   which the cursor is defined.
   @see-class{gdk-cursor}
   @see-class{gdk-display}")
@@ -453,26 +450,26 @@
 
 (defcfun ("gdk_cursor_new" gdk-cursor-new) (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-16}
-  @argument[cursor-type]{a value of the @symbol{gdk-cursor-type} enumeration
+ "@version{2021-12-11}
+  @argument[type]{a value of the @symbol{gdk-cursor-type} enumeration
     with the cursor to create}
   @return{A new @class{gdk-cursor} object.}
   @begin{short}
     Creates a new cursor from the set of builtin cursors for the default
-    display. See the function @fun{gdk-cursor-new-for-display}.
+    display. See the @fun{gdk-cursor-new-for-display} function.
   @end{short}
 
-  To make the cursor invisible, use the value @code{:blank-cursor} of the
+  To make the cursor invisible, use the @code{:blank-cursor} value of the
   @symbol{gdk-cursor-type} enumeration.
   @begin[Warning]{dictionary}
     The @sym{gdk-cursor-new} function has been deprecated since version 3.16
-    and should not be used in newly-written code. Use the function
-    @fun{gdk-cursor-new-for-display} instead.
+    and should not be used in newly written code. Use the
+    @fun{gdk-cursor-new-for-display} function instead.
   @end{dictionary}
   @see-class{gdk-cursor}
   @see-symbol{gdk-cursor-type}
   @see-function{gdk-cursor-new-for-display}"
-  (cursor-type gdk-cursor-type))
+  (type gdk-cursor-type))
 
 (export 'gdk-cursor-new)
 
@@ -483,10 +480,10 @@
 (defcfun ("gdk_cursor_new_from_pixbuf" gdk-cursor-new-from-pixbuf)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-11}
-  @argument[display]{the @class{gdk-display} object for which the cursor will
+ "@version{2021-12-11}
+  @argument[display]{a @class{gdk-display} object for which the cursor will
     be created}
-  @argument[pixbuf]{the @class{gdk-pixbuf} object containing the cursor image}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object containing the cursor image}
   @argument[x]{an integer with the horizontal offset of the 'hotspot' of the
     cursor}
   @argument[y]{an integer with the vertical offset of the 'hotspot' of the
@@ -497,15 +494,16 @@
   @end{short}
 
   Not all GDK backends support RGBA cursors. If they are not supported, a
-  monochrome approximation will be displayed. The functions
+  monochrome approximation will be displayed. The
   @fun{gdk-display-supports-cursor-alpha} and
-  @fun{gdk-display-supports-cursor-color} can be used to determine whether RGBA
-  cursors are supported. The functions @fun{gdk-display-default-cursor-size}
-  and @fun{gdk-display-maximal-cursor-size} give information about cursor sizes.
+  @fun{gdk-display-supports-cursor-color} functions can be used to determine
+  whether RGBA cursors are supported. The @fun{gdk-display-default-cursor-size}
+  and @fun{gdk-display-maximal-cursor-size} functions give information about
+  cursor sizes.
 
-  If @arg{x} or @arg{y} are -1, the pixbuf must have options named \"x_hot\"
-  and \"y_hot\", resp., containing integer values between 0 and the width resp.
-  height of the pixbuf.
+  If the @arg{x} or @arg{y} arguments are -1, the pixbuf must have options named
+  \"x_hot\" and \"y_hot\", resp., containing integer values between 0 and the
+  width resp. height of the pixbuf.
 
   On the X backend, support for RGBA cursors requires a sufficently new version
   of the X Render extension.
@@ -529,10 +527,10 @@
 (defcfun ("gdk_cursor_new_from_surface" gdk-cursor-new-from-surface)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-10}
-  @argument[display]{the @class{gdk-display} object for which the cursor will
+ "@version{2021-12-11}
+  @argument[display]{a @class{gdk-display} object for which the cursor will
     be created}
-  @argument[surface]{the @symbol{cairo-surface-t} instance containing the
+  @argument[surface]{a @symbol{cairo-surface-t} instance containing the
     cursor pixel data}
   @argument[x]{a double float with the horizontal offset of the 'hotspot' of
     the cursor}
@@ -544,11 +542,12 @@
   @end{short}
 
   Not all GDK backends support RGBA cursors. If they are not supported, a
-  monochrome approximation will be displayed. The functions
+  monochrome approximation will be displayed. The
   @fun{gdk-display-supports-cursor-alpha} and
-  @fun{gdk-display-supports-cursor-color} can be used to determine whether RGBA
-  cursors are supported. The functions @fun{gdk-display-default-cursor-size} and
-  @fun{gdk-display-maximal-cursor-size} give information about cursor sizes.
+  @fun{gdk-display-supports-cursor-color} functions can be used to determine
+  whether RGBA cursors are supported. The @fun{gdk-display-default-cursor-size}
+  and @fun{gdk-display-maximal-cursor-size} functions give information about
+  cursor sizes.
 
   On the X backend, support for RGBA cursors requires a sufficently new version
   of the X Render extension.
@@ -572,7 +571,7 @@
 (defcfun ("gdk_cursor_new_from_name" gdk-cursor-new-from-name)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{*2021-10-31}
+ "@version{*2021-12-11}
   @argument[display]{a @class{gdk-display} object for which the cursor will be
     created}
   @argument[name]{a string with the name of the cursor}
@@ -642,11 +641,11 @@
 (defcfun ("gdk_cursor_new_for_display" gdk-cursor-new-for-display)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-16}
-  @argument[display]{the @class{gdk-display} object for which the cursor will
+ "@version{2021-12-11}
+  @argument[display]{a @class{gdk-display} object for which the cursor will
     be created}
-  @argument[cursor-type]{cursor to create from a value of the
-    @symbol{gdk-cursor-type} enumeration}
+  @argument[type]{a value of the @symbol{gdk-cursor-type} enumeration to create
+  the cursor from }
   @return{A new @class{gdk-cursor} object.}
   @begin{short}
     Creates a new cursor from the set of builtin cursors.
@@ -655,7 +654,7 @@
   @see-class{gdk-display}
   @see-symbol{gdk-cursor-type}"
   (display (g-object gdk-display))
-  (cursor-type gdk-cursor-type))
+  (type gdk-cursor-type))
 
 (export 'gdk-cursor-new-for-display)
 
@@ -665,7 +664,7 @@
 
 (defcfun ("gdk_cursor_get_image" gdk-cursor-image) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-10}
+ "@version{2021-12-11}
   @argument[cursor]{a @class{gdk-cursor} object}
   @return{A @class{gdk-pixbuf} object representing @arg{cursor}, or @code{nil}.}
   @begin{short}
@@ -694,12 +693,13 @@
 
 (defun gdk-cursor-surface (cursor)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-16}
+ "@version{2021-12-11}
   @argument[cursor]{a @class{gdk-cursor} object}
   @begin{return}
-    surface -- a @symbol{cairo-surface-t} instance representing a cursor @br{}
-    x-hot   -- a double float with the hotspot x position @br{}
-    y-hot   -- a double float with the hotspot y position
+    @arg{surface} -- a @symbol{cairo-surface-t} instance representing a cursor
+    @br{}
+    @arg{x-hot} -- a double float with the hotspot x position @br{}
+    @arg{y-hot} -- a double float with the hotspot y position
   @end{return}
   @begin{short}
     Returns a Cairo image surface with the image used to display the cursor.
@@ -731,8 +731,9 @@
   @return{Same @arg{cursor} that was passed in.}
   @short{Adds a reference to @arg{cursor}.}
   @begin[Warning]{dictionary}
-    @sym{gdk-cursor-ref} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use the @fun{g-object-ref} function instead.
+    The @sym{gdk-cursor-ref} function has been deprecated since version 3.0 and
+    should not be used in newly written code. Use the @fun{g-object-ref}
+    function instead.
   @end{dictionary}
   @see-class{gdk-cursor}"
   (g-object-ref cursor))
@@ -753,9 +754,9 @@
     references remain.
   @end{short}
   @begin[Warning]{dictionary}
-    @sym{gdk-cursor-unref} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use the @fun{g-object-unref} function
-    instead.
+    The @sym{gdk-cursor-unref} function has been deprecated since version 3.0
+    and should not be used in newly written code. Use the @fun{g-object-unref}
+    function instead.
   @end{dictionary}
   @see-class{gdk-cursor}"
   (g-object-unref cursor))
