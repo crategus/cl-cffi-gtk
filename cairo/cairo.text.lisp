@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -67,7 +67,7 @@
 ;;;
 ;;; Description
 ;;;
-;;;     The functions with text in their name form cairo's toy text API. The toy
+;;;     The functions with text in their name form Cairo's toy text API. The toy
 ;;;     API takes UTF-8 encoded text and is limited in its functionality to
 ;;;     rendering simple left-to-right text with no advanced features. That
 ;;;     means for example that most complex scripts like Hebrew, Arabic, and
@@ -78,7 +78,7 @@
 ;;;     text API, for testing and demonstration purposes. Any serious
 ;;;     application should avoid them.
 ;;;
-;;;     The functions with glyphs in their name form cairo's low-level text API.
+;;;     The functions with glyphs in their name form Cairo's low-level text API.
 ;;;     The low-level API relies on the user to convert text to a set of glyph
 ;;;     indexes and positions. This is a very hard problem and is best handled
 ;;;     by external libraries, like the pangocairo that is part of the Pango
@@ -101,7 +101,7 @@
 (setf (gethash 'cairo-glyph-t atdoc:*symbol-name-alias*)
       "CStruct"
       (gethash 'cairo-glyph-t atdoc:*external-symbols*)
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @begin{short}
     The @sym{cairo-glyph-t} structure holds information about a single glyph
     when drawing or measuring text.
@@ -149,7 +149,7 @@
 (setf (gethash 'cairo-font-slant-t atdoc:*symbol-name-alias*)
       "CEnum"
       (gethash 'cairo-font-slant-t atdoc:*external-symbols*)
- "@version{2020-12-15}
+ "@version{2021-12-12}
   @short{Specifies variants of a font face based on their slant.}
   @begin{pre}
 (defcenum cairo-font-slant-t
@@ -179,7 +179,7 @@
 (setf (gethash 'cairo-font-weight-t atdoc:*symbol-name-alias*)
       "CEnum"
       (gethash 'cairo-font-weight-t atdoc:*external-symbols*)
- "@version{2020-12-15}
+ "@version{2021-12-12}
   @short{Specifies variants of a font face based on their weight.}
   @begin{pre}
 (defcenum cairo-font-slant-t
@@ -207,7 +207,7 @@
 (setf (gethash 'cairo-text-cluster-t atdoc:*symbol-name-alias*)
       "CStruct"
       (gethash 'cairo-text-cluster-t atdoc:*external-symbols*)
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @begin{short}
     The @sym{cairo-text-cluster-t} structure holds information about a single
     text cluster.
@@ -221,7 +221,7 @@
   rendering applications typically ignore those clusters when PDF text is
   being selected.
 
-  See the function @fun{cairo-show-text-glyphs} for how clusters are used in
+  See the @fun{cairo-show-text-glyphs} function for how clusters are used in
   advanced text operations.
   @begin{pre}
 (defcstruct cairo-text-cluster-t
@@ -248,7 +248,7 @@
 (setf (gethash 'cairo-text-cluster-flags-t atdoc:*symbol-name-alias*)
       "CEnum"
       (gethash 'cairo-text-cluster-flags-t atdoc:*external-symbols*)
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @short{Specifies properties of a text cluster mapping.}
   @begin{pre}
 (defcenum cairo-text-cluster-flags-t
@@ -274,7 +274,7 @@
 
 (defun cairo-select-font-face (cr family &key (slant :normal) (weight :normal))
  #+cl-cffi-gtk-documentation
- "@version{*2021-1-25}
+ "@version{*2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[family]{a string with the font family name, encoded in UTF-8}
   @argument[slant]{the slant of type @symbol{cairo-font-slant-t} for the font,
@@ -300,10 +300,10 @@
   For \"real\" font selection, see the font-backend-specific
   @code{font-face-create} functions for the font backend you are using. For
   example, if you are using the freetype-based @code{cairo-ft} font backend,
-  see the functions @code{cairo-ft-font-face-create-for-ft-face} or
-  @code{cairo-ft-font-face-create-for-pattern}. The resulting font face could
-  then be used with the functions @fun{cairo-scaled-font-create} and
-  @fun{cairo-set-scaled-font}.
+  see the @code{cairo-ft-font-face-create-for-ft-face} or
+  @code{cairo-ft-font-face-create-for-pattern} functions. The resulting font
+  face could then be used with the @fun{cairo-scaled-font-create} and
+  @fun{cairo-set-scaled-font} functions.
 
   Similarly, when using the \"real\" font support, you can call directly into
   the underlying font system, such as fontconfig or freetype, for operations
@@ -313,17 +313,16 @@
   font handling and text layout library, for example Pango, in conjunction
   with Cairo.
 
-  If text is drawn without a call to the function @sym{cairo-select-font-face},
-  nor the function @fun{cairo-set-font-face} nor the function
-  @fun{cairo-set-scaled-font}, the default family is platform-specific, but is
-  essentially \"sans-serif\". Default slant is @code{:normal}, and default
-  weight is @code{:normal}.
+  If text is drawn without a call to the @sym{cairo-select-font-face} function,
+  nor the @fun{cairo-set-font-face} function nor the
+  @fun{cairo-set-scaled-font} function, the default family is platform-specific,
+  but is essentially \"sans-serif\". Default slant is @code{:normal}, and
+  default weight is @code{:normal}.
 
-  This function is equivalent to a call to the function
-  @fun{cairo-toy-font-face-create} followed by the function
-  @fun{cairo-set-font-face}.
+  This function is equivalent to a call to the @fun{cairo-toy-font-face-create}
+  function followed by the @fun{cairo-set-font-face} function.
   @begin[Note]{dictionary}
-    The function @sym{cairo-select-font-face} is part of what the Cairo
+    The @sym{cairo-select-font-face} function is part of what the Cairo
     designers call the \"toy\" text API. It is convenient for short demos
     and simple programs, but it is not expected to be adequate for serious
     text-using applications.
@@ -347,21 +346,21 @@
 
 (defun cairo-set-font-size (cr size)
  #+cl-cffi-gtk-documentation
- "@version{*2021-1-26}
+ "@version{*2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[size]{a number coerced to a double float with the new font size,
     in user space units}
   @begin{short}
     Sets the current font matrix to a scale by a factor of @arg{size},
-    replacing any font matrix previously set with the functions
-    @sym{cairo-set-font-size} or @fun{cairo-set-font-matrix}.
+    replacing any font matrix previously set with the @sym{cairo-set-font-size}
+    or @fun{cairo-set-font-matrix} functions.
   @end{short}
   This results in a font size of @arg{size} user space units. More precisely,
-  this matrix will result in the font's em-square being a @arg{size} by
+  this matrix will result in the em-square of the font being a @arg{size} by
   @arg{size} square in user space.
 
-  If text is drawn without a call to the function @sym{cairo-set-font-size},
-  nor the functions @fun{cairo-set-font-matrix} or @fun{cairo-set-scaled-font},
+  If text is drawn without a call to the @sym{cairo-set-font-size} function,
+  nor the @fun{cairo-set-font-matrix} or @fun{cairo-set-scaled-font} functions,
   the default font size is 10.0.
   @see-symbol{cairo-t}
   @see-function{cairo-set-font-matrix}
@@ -376,7 +375,7 @@
 
 (defcfun ("cairo_set_font_matrix" cairo-set-font-matrix) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[matrix]{a @symbol{cairo-matrix-t} instance describing a transform
     to be applied to the current font}
@@ -385,7 +384,7 @@
   @end{short}
   The font matrix gives a transformation from the design space of the font (in
   this space, the em-square is 1 unit by 1 unit) to user space. Normally, a
-  simple scale is used, see the function @fun{cairo-set-font-size}, but a more
+  simple scale is used, see the @fun{cairo-set-font-size} function, but a more
   complex font matrix can be used to shear the font or stretch it unequally
   along the two axes.
   @see-symbol{cairo-t}
@@ -402,14 +401,14 @@
 
 (defcfun ("cairo_get_font_matrix" cairo-get-font-matrix) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[matrix]{a @symbol{cairo-matrix-t} instance for the value of the
     matrix}
   @begin{short}
     Stores the current font matrix into @arg{matrix}.
   @end{short}
-  See the function @fun{cairo-set-font-matrix}.
+  See the @fun{cairo-set-font-matrix} function.
   @see-symbol{cairo-t}
   @see-symbol{cairo-matrix-t}
   @see-function{cairo-set-font-matrix}"
@@ -438,7 +437,7 @@
 
 (defun cairo-font-options (cr)
  #+cl-cffi-gtk-documentation
- "@version{2021-10-28}
+ "@version{2021-12-12}
   @syntax[]{(cairo-font-options cr) => options}
   @syntax[]{(setf (cairo-font-options cr) options)}
   @argument[cr]{a @symbol{cairo-t} context}
@@ -471,20 +470,20 @@
 
 (defcfun ("cairo_set_font_face" cairo-set-font-face) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-15}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[font-face]{a @symbol{cairo-font-face-t} instance, or @code{nil} to
+  @argument[face]{a @symbol{cairo-font-face-t} instance, or @code{nil} to
     restore to the default font}
   @begin{short}
     Replaces the current @symbol{cairo-font-face-t} instance in the
-    Cairo context with @arg{font-face}.
+    Cairo context with @arg{face}.
   @end{short}
   The replaced font face in the Cairo context will be destroyed if there are
   no other references to it.
   @see-symbol{cairo-t}
   @see-symbol{cairo-font-face-t}"
   (cr (:pointer (:struct cairo-t)))
-  (font-face (:pointer (:struct cairo-font-face-t))))
+  (face (:pointer (:struct cairo-font-face-t))))
 
 (export 'cairo-set-font-face)
 
@@ -495,16 +494,16 @@
 (defcfun ("cairo_get_font_face" cairo-get-font-face)
     (:pointer (:struct cairo-font-face-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
-  @argument[cr]{a @symbol{cairo-t} instance}
+ "@version{2021-12-12}
+  @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
     The current font face. This object is owned by Cairo. To keep a reference
-    to it, you must call the function @fun{cairo-font-face-reference}. This
+    to it, you must call the @fun{cairo-font-face-reference} function. This
     function never returns NULL. If memory cannot be allocated, a special
     \"nil\" @symbol{cairo-font-face-t} instance will be returned on which the
-    function @fun{cairo-font-face-status} returns @code{:no-memory}. Using this
+    @fun{cairo-font-face-status} function returns @code{:no-memory}. Using this
     nil instance will cause its error state to propagate to other objects it is
-    passed to, for example, calling the function @fun{cairo-set-font-face} with
+    passed to, for example, calling the @fun{cairo-set-font-face} function with
     a nil font will trigger an error that will shutdown the Cairo context.
   @end{return}
   @begin{short}
@@ -525,21 +524,21 @@
 
 (defcfun ("cairo_set_scaled_font" cairo-set-scaled-font) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-15}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[scaled-font]{a @symbol{cairo-scaled-font-t} instance}
+  @argument[font]{a @symbol{cairo-scaled-font-t} instance}
   @begin{short}
     Replaces the current font face, font matrix, and font options in the
     Cairo context with those of the @symbol{cairo-scaled-font-t} instance.
   @end{short}
   Except for some translation, the current CTM of the Cairo context should
   be the same as that of the @symbol{cairo-scaled-font-t} instance, which can
-  be accessed using the function @fun{cairo-scaled-font-get-ctm}.
+  be accessed using the @fun{cairo-scaled-font-get-ctm} function.
   @see-symbol{cairo-t}
   @see-symbol{cairo-scaled-font-t}
   @see-function{cairo-scaled-font-get-ctm}"
   (cr (:pointer (:struct cairo-t)))
-  (scaled-font (:pointer (:struct cairo-scaled-font-t))))
+  (font (:pointer (:struct cairo-scaled-font-t))))
 
 (export 'cairo-set-scaled-font)
 
@@ -550,18 +549,18 @@
 (defcfun ("cairo_get_scaled_font" cairo-get-scaled-font)
     (:pointer (:struct cairo-scaled-font-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
     The current scaled font. This object is owned by Cairo. To keep a reference
-    to it, you must call the function @fun{cairo-scaled-font-reference}. This
+    to it, you must call the @fun{cairo-scaled-font-reference} function. This
     function never returns NULL. If memory cannot be allocated, a special
     \"nil\" @symbol{cairo-scaled-font-t} instance will be returned on which
-    the function @fun{cairo-scaled-font-status} returns @code{:no-memory}.
+    the @fun{cairo-scaled-font-status} function returns @code{:no-memory}.
     Using this nil instance will cause its error state to propagate to other
-    objects it is passed to, for example, calling the function
-    @fun{cairo-set-scaled-font} with a nil font will trigger an error that will
-    shutdown the Cairo context.
+    objects it is passed to, for example, calling the
+    @fun{cairo-set-scaled-font} function with a nil font will trigger an error
+    that will shutdown the Cairo context.
   @end{return}
   @begin{short}
     Gets the current scaled font for the Cairo context.
@@ -585,7 +584,7 @@
 
 (defun cairo-show-text (cr utf8)
  #+cl-cffi-gtk-documentation
- "@version{*2021-1-26}
+ "@version{*2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[utf8]{a string of text encoded in UTF-8, or @code{nil}}
   @begin{short}
@@ -603,12 +602,12 @@
   glyph would be placed in this same progression. That is, the current point
   will be at the origin of the final glyph offset by its advance values. This
   allows for easy display of a single logical string with multiple calls to
-  the function @sym{cairo-show-text}.
+  the @sym{cairo-show-text} function.
   @begin[Note]{dictionary}
-    The function @sym{cairo-show-text} is part of what the Cairo designers call
+    The @sym{cairo-show-text} function is part of what the Cairo designers call
     the \"toy\" text API. It is convenient for short demos and simple programs,
     but it is not expected to be adequate for serious text-using applications.
-    See the function @fun{cairo-show-glyphs} for the \"real\" text display API
+    See the @fun{cairo-show-glyphs} function for the \"real\" text display API
     in Cairo.
   @end{dictionary}
   @see-symbol{cairo-t}
@@ -628,7 +627,7 @@
 
 (defun cairo-show-glyphs (cr glyphs)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-29}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[glyphs]{a list of glyphs to show}
   @begin{short}
@@ -664,26 +663,24 @@
 
 (defcfun ("cairo_show_text_glyphs" cairo-show-text-glyphs) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[utf8]{a string of text encoded in UTF-8}
-  @argument[utf8-len]{an integer with the length of @arg{utf8} in bytes,
-    or -1 if it is NUL-terminated}
+  @argument[len]{an integer with the length of @arg{utf8} in bytes, or -1 if it
+    is NUL-terminated}
   @argument[glyphs]{array of @symbol{cairo-glyph-t} to show}
   @argument[num-glyphs]{an integer with the number of glyphs to show}
   @argument[clusters]{array of @symbol{cairo-text-cluster-t} cluster mapping
     information}
   @argument[num-clusters]{an integer with the number of clusters in the mapping}
-  @argument[cluster-flags]{@symbol{cairo-text-cluster-flags-t} cluster mapping
-    flags}
+  @argument[flags]{@symbol{cairo-text-cluster-flags-t} cluster mapping flags}
   @begin{short}
-    This operation has rendering effects similar to the function
-    @fun{cairo-show-glyphs} but, if the target surface supports it, uses the
-    provided text and cluster mapping to embed the text for the glyphs shown in
-    the output.
+    This operation has rendering effects similar to the @fun{cairo-show-glyphs}
+    function but, if the target surface supports it, uses the provided text and
+    cluster mapping to embed the text for the glyphs shown in the output.
   @end{short}
   If the target does not support the extended attributes, this function acts
-  like the basic the function @fun{cairo-show-glyphs} as if it had been passed
+  like the basic the @fun{cairo-show-glyphs} function as if it had been passed
   @arg{glyphs} and @arg{num-glyphs}.
 
   The mapping between UTF-8 and glyphs is provided by an array of clusters.
@@ -692,9 +689,9 @@
   collectively cover UTF-8 and glyphs in entirety.
 
   The first cluster always covers bytes from the beginning of UTF-8. If
-  @arg{cluster-flags} do not have the @code{:backward} set, the first cluster
-  also covers the beginning of glyphs, otherwise it covers the end of the
-  glyphs array and following clusters move backward.
+  @arg{flags} do not have the @code{:backward} set, the first cluster also
+  covers the beginning of glyphs, otherwise it covers the end of the glyphs
+  array and following clusters move backward.
 
   See the @symbol{cairo-text-cluster-t} structure for constraints on valid
   clusters.
@@ -705,12 +702,12 @@
   @see-function{cairo-show-glyphs}"
   (cr (:pointer (:struct cairo-t)))
   (utf8 :string)
-  (utf8-len :int)
+  (len :int)
   (glyphs (:pointer (:struct cairo-glyph-t)))
   (num-glyphs :int)
   (clusters (:pointer (:struct cairo-text-cluster-t)))
   (num-clusters :int)
-  (cluster-flags cairo-text-cluster-flags-t))
+  (flags cairo-text-cluster-flags-t))
 
 (export 'cairo-show-text-glyphs)
 
@@ -724,7 +721,7 @@
 
 (defun cairo-font-extents (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-15}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @return{The @symbol{cairo-font-extents-t} instance.}
   @begin{short}
@@ -749,7 +746,7 @@
 
 (defun cairo-text-extents (cr utf8)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-29}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[utf8]{a string of text encoded in UTF-8}
   @begin{return}
@@ -759,10 +756,10 @@
     Gets the extents for a string of text.
   @end{short}
   The extents describe a user-space rectangle that encloses the \"inked\"
-  portion of the text, as it would be drawn by the function
-  @fun{cairo-show-text}. Additionally, the @code{x-advance} and @code{y-advance}
+  portion of the text, as it would be drawn by the @fun{cairo-show-text}
+  function. Additionally, the @code{x-advance} and @code{y-advance}
   values indicate the amount by which the current point would be advanced by
-  the function @fun{cairo-show-text}.
+  the @fun{cairo-show-text} function.
 
   Note that whitespace characters do not directly contribute to the size of
   the rectangle (@code{width} and @code{height}). They do contribute indirectly
@@ -790,7 +787,7 @@
 
 (defun cairo-glyph-extents (cr glyphs)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-29}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[glyphs]{a list of glyphs of the form @code{'((index1 x1 y1)
     (index2 x2 y2) ...)}}
@@ -801,10 +798,10 @@
     Gets the extents for a list of glyphs.
   @end{short}
   The extents describe a user-space rectangle that encloses the \"inked\"
-  portion of the glyphs, as they would be drawn by the function
-  @fun{cairo-show-glyphs}. Additionally, the @code{x-advance} and
-  @code{y-advance} values indicate the amount by which the current point would
-  be advanced by the function @fun{cairo-show-glyphs}.
+  portion of the glyphs, as they would be drawn by the @fun{cairo-show-glyphs}
+  function. Additionally, the @code{x-advance} and @code{y-advance} values
+  indicate the amount by which the current point would be advanced by the
+  @fun{cairo-show-glyphs} function.
 
   Note that whitespace glyphs do not contribute to the size of the rectangle
   (@code{width} and @code{height}).
@@ -842,13 +839,13 @@
 (defcfun ("cairo_toy_font_face_create" cairo-toy-font-face-create)
     (:pointer (:struct cairo-font-face-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @argument[familiy]{a string with the font family name, encoded in UTF-8}
-  @argument[slant]{the @symbol{cairo-font-slant-t} slant for the font}
-  @argument[weight]{the @symbol{cairo-font-weight-t}weight for the font}
+  @argument[slant]{a @symbol{cairo-font-slant-t} slant for the font}
+  @argument[weight]{a @symbol{cairo-font-weight-t}weight for the font}
   @begin{return}
-    A newly created @symbol{cairo-font-face-t} instance. Free with the function
-    @fun{cairo-font-face-destroy} when you are done using it.
+    A newly created @symbol{cairo-font-face-t} instance. Free with the
+    @fun{cairo-font-face-destroy} function when you are done using it.
   @end{return}
   @begin{short}
     Creates a font face from a triplet of family, slant, and weight.
@@ -856,10 +853,10 @@
   These font faces are used in implementation of the the Cairo \"toy\" font API.
 
   If @arg{family} is the zero-length string \"\", the platform-specific default
-  family is assumed. The default family then can be queried using the function
-  @fun{cairo-toy-font-face-get-family}.
+  family is assumed. The default family then can be queried using the
+  @fun{cairo-toy-font-face-get-family} function.
 
-  The function @fun{cairo-select-font-face} uses this to create font faces. See
+  The @fun{cairo-select-font-face} function uses this to create font faces. See
   that function for limitations and other details of toy font faces.
   @see-symbol{cairo-font-face-t}
   @see-symbol{cairo-font-slant-t}
@@ -880,8 +877,8 @@
 (defcfun ("cairo_toy_font_face_get_family" cairo-toy-font-face-get-family)
     :string
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
-  @argument[font-face]{a @symbol{cairo-font-face-t} toy font face}
+ "@version{2021-12-12}
+  @argument[face]{a @symbol{cairo-font-face-t} toy font face}
   @begin{return}
     The family name. This string is owned by the font face and remains valid
     as long as the font face is alive (referenced).
@@ -890,7 +887,7 @@
     Gets the familly name of a toy font.
   @end{short}
   @see-symbol{cairo-font-face-t}"
-  (font-face (:pointer (:struct cairo-font-face-t))))
+  (face (:pointer (:struct cairo-font-face-t))))
 
 (export 'cairo-toy-font-face-get-family)
 
@@ -901,13 +898,13 @@
 (defcfun ("cairo_toy_font_face_get_slant" cairo-toy-font-face-get-slant)
     cairo-font-slant-t
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
-  @argument[font-face]{a @symbol{cairo-font-face-t} toy font face}
+ "@version{2021-12-12}
+  @argument[face]{a @symbol{cairo-font-face-t} toy font face}
   @return{The @symbol{cairo-font-slant-t} slant value.}
   @short{Gets the slant a toy font.}
   @see-symbol{cairo-font-face-t}
   @see-symbol{cairo-font-slant-t}"
-  (font-face (:pointer (:struct cairo-font-face-t))))
+  (face (:pointer (:struct cairo-font-face-t))))
 
 (export 'cairo-toy-font-face-get-slant)
 
@@ -918,13 +915,13 @@
 (defcfun ("cairo_toy_font_face_get_weight" cairo-toy-font-face-get-weight)
     cairo-font-weight-t
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
-  @argument[font-face]{a @symbol{cairo-font-face-t} toy font face}
+ "@version{2021-12-12}
+  @argument[face]{a @symbol{cairo-font-face-t} toy font face}
   @return{The @symbol{cairo-font-weight-t} weight value.}
   @short{Gets the weight a toy font.}
   @see-symbol{cairo-font-face-t}
   @see-symbol{cairo-font-weight-t}"
-  (font-face (:pointer (:struct cairo-font-face-t))))
+  (face (:pointer (:struct cairo-font-face-t))))
 
 (export 'cairo-toy-font-face-get-weight)
 
@@ -935,26 +932,26 @@
 (defcfun ("cairo_glyph_allocate" cairo-glyph-allocate)
     (:pointer (:struct cairo-glyph-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
-  @argument[num-glyphs]{an integer with the number of glyphs to allocate}
+ "@version{2021-12-12}
+  @argument[num]{an integer with the number of glyphs to allocate}
   @begin{return}
     The newly allocated array of @symbol{cairo-glyph-t} glyphs that should be
-    freed using the function @fun{cairo-glyph-free}.
+    freed using the @fun{cairo-glyph-free} function.
   @end{return}
   @begin{short}
-    Allocates an array of @symbol{cairo-glyph-t}'s.
+    Allocates an array of @symbol{cairo-glyph-t} instances.
   @end{short}
   This function is only useful in implementations of
   @code{cairo-user-scaled-font-text-to-glyphs-func-t} where the user needs to
   allocate an array of glyphs that cairo will free. For all other uses, user
   can use their own allocation method for glyphs.
 
-  This function returns NULL if @arg{num-glyphs} is not positive, or if out of
+  This function returns NULL if @arg{num} is not positive, or if out of
   memory. That means, the NULL return value signals out-of-memory only if
-  @arg{num-glyphs} was positive.
+  @arg{num} was positive.
   @see-symbol{cairo-glyph-t}
   @see-function{cairo-glyph-free}"
-  (num-glyphs :int))
+  (num :int))
 
 (export 'cairo-glyph-allocate)
 
@@ -964,16 +961,16 @@
 
 (defcfun ("cairo_glyph_free" cairo-glyph-free) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @argument[glyphs]{array of @symbol{cairo-glyph-t} glyphs to free, or NULL}
   @begin{short}
-    Frees an array of @symbol{cairo-glyph-t}'s allocated using the function
-    @fun{cairo-glyph-allocate}.
+    Frees an array of @symbol{cairo-glyph-t} instances allocated using the
+    @fun{cairo-glyph-allocate} function.
   @end{short}
-  This function is only useful to free glyph array returned by the function
-  @fun{cairo-scaled-font-text-to-glyphs} where cairo returns an array of glyphs
-  that the user will free. For all other uses, user can use their own allocation
-  method for glyphs.
+  This function is only useful to free glyph array returned by the
+  @fun{cairo-scaled-font-text-to-glyphs} function where cairo returns an array
+  of glyphs that the user will free. For all other uses, user can use their own
+  allocation method for glyphs.
   @see-symbol{cairo-glyph-t}
   @see-function{cairo-glyph-allocate}
   @see-function{cairo-scaled-font-text-to-glyphs}"
@@ -988,28 +985,27 @@
 (defcfun ("cairo_text_cluster_allocate" cairo-text-cluster-allocate)
     (:pointer (:struct cairo-text-cluster-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
-  @argument[num-clusters]{an integer with the number of text clusters to
-    allocate}
+ "@version{2021-12-12}
+  @argument[num]{an integer with the number of text clusters to allocate}
   @begin{return}
     The newly allocated array of @symbol{cairo-text-cluster-t} text clusters
-    that should be freed using the function @fun{cairo-text-cluster-free}.
+    that should be freed using the @fun{cairo-text-cluster-free} function.
   @end{return}
   @begin{short}
-    Allocates an array of @symbol{cairo-text-cluster-t}'s.
+    Allocates an array of @symbol{cairo-text-cluster-t} instances.
   @end{short}
   This function is only useful in implementations of
   @code{cairo-user-scaled-font-text-to-glyphs-func-t} where the user needs to
   allocate an array of text clusters that Cairo will free. For all other uses,
   user can use their own allocation method for text clusters.
 
-  This function returns NULL if @arg{num-clusters} is not positive, or if out
+  This function returns NULL if @arg{num} is not positive, or if out
   of memory. That means, the NULL return value signals out-of-memory only if
-  @arg{num-clusters} was positive.
+  @arg{num} was positive.
 
   @see-symbol{cairo-text-cluster-t}
   @see-function{cairo-text-cluster-free}"
-  (num-clusters :int))
+  (num :int))
 
 (export 'cairo-text-cluster-allocate)
 
@@ -1019,15 +1015,15 @@
 
 (defcfun ("cairo_text_cluster_free" cairo-text-cluster-free) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-28}
+ "@version{2021-12-12}
   @argument[clusters]{array of @symbol{cairo-text-cluster-t} text clusters to
     free, or NULL}
   @begin{short}
-    Frees an array of @symbol{cairo-text-cluster-t}'s allocated using the
-    function @fun{cairo-text-cluster-allocate}.
+    Frees an array of @symbol{cairo-text-cluster-t} instances allocated using
+    the @fun{cairo-text-cluster-allocate} function.
   @end{short}
   This function is only useful to free text cluster array returned by the
-  function @fun{cairo-scaled-font-text-to-glyphs} where Cairo returns an array
+  @fun{cairo-scaled-font-text-to-glyphs} function where Cairo returns an array
   of text clusters that the user will free. For all other uses, user can use
   their own allocation method for text clusters.
   @see-symbol{cairo-text-cluster-t}

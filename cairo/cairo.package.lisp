@@ -45,13 +45,13 @@
       A @symbol{cairo-t} context is the main object used when drawing with
       Cairo. To draw with Cairo, you create a @symbol{cairo-t} context, set the
       target surface, and drawing options for the @symbol{cairo-t} context,
-      create shapes with functions like @fun{cairo-move-to} and
-      @fun{cairo-line-to}, and then draw shapes with the functions
-      @fun{cairo-stroke} or @fun{cairo-fill}.
+      create shapes with functions like the @fun{cairo-move-to} and
+      @fun{cairo-line-to} functions, and then draw shapes with the
+      @fun{cairo-stroke} or @fun{cairo-fill} functions.
 
-      @symbol{cairo-t} contexts can be pushed to a stack via the function
-      @fun{cairo-save}. They may then safely be changed, without losing the
-      current state. Use the function @fun{cairo-restore} to restore to the
+      The @symbol{cairo-t} context can be pushed to a stack via the
+      @fun{cairo-save} function. They may then safely be changed, without losing
+      the current state. Use the @fun{cairo-restore} function to restore to the
       saved state.
 
       @about-symbol{cairo-antialias-t}
@@ -163,8 +163,8 @@
       brush too.
 
       A Cairo pattern is created by using one of the many constructors, of the
-      form @sym{cairo-pattern-create-type} or implicitly through the functions
-      @sym{cairo-set-source-type}.
+      form @sym{cairo-pattern-create-type} or implicitly through the
+      @sym{cairo-set-source-type} functions.
 
       @about-symbol{cairo-pattern-t}
       @about-symbol{cairo-extend-t}
@@ -347,9 +347,9 @@
 
       Font faces are created using font-backend-specific constructors, typically
       of the form @code{cairo-backend-font-face-create}, or implicitly using the
-      toy text API by way of the function @fun{cairo-select-font-face}. The
-      resulting face can be accessed using the function
-      @fun{cairo-get-font-face}.
+      toy text API by way of the @fun{cairo-select-font-face} function. The
+      resulting face can be accessed using the @fun{cairo-get-font-face}
+      function.
 
       @about-symbol{cairo-font-face-t}
       @about-symbol{cairo-font-type-t}
@@ -475,9 +475,9 @@
 
       Most surface types allow accessing the surface without using Cairo
       functions. If you do this, keep in mind that it is mandatory that you call
-      the function @fun{cairo-surface-flush} before reading from or writing to
-      the surface and that you must use the function
-      @fun{cairo-surface-mark-dirty} after modifying it.
+      the @fun{cairo-surface-flush} function before reading from or writing to
+      the surface and that you must use the @fun{cairo-surface-mark-dirty}
+      function after modifying it.
 
       @b{Example 1.} Directly modifying an image surface
       @begin{pre}
@@ -502,7 +502,7 @@
  @}
       @end{pre}
       Note that for other surface types it might be necessary to acquire the
-      surface's device first. See the function @fun{cairo-device-acquire} for a
+      surface's device first. See the @fun{cairo-device-acquire} function for a
       discussion of devices.
 
       @about-symbol{CAIRO_HAS_MIME_SURFACE}
@@ -591,9 +591,10 @@
       It is a toy API. It only offers very simple support for reading and
       writing PNG files, which is sufficient for testing and demonstration
       purposes. Applications which need more control over the generated PNG
-      file should access the pixel data directly, using the function
-      @fun{cairo-image-surface-data} or a backend-specific access function,
-      and process it with another library, e.g. GdkPixbuf or @code{libpng}.
+      file should access the pixel data directly, using the
+      @fun{cairo-image-surface-data} function or a backend-specific access
+      function, and process it with another library, e.g. GdkPixbuf or
+      @code{libpng}.
 
       @about-symbol{CAIRO_HAS_PNG_FUNCTIONS}
       @about-function{cairo-image-surface-create-from-png}
@@ -668,8 +669,8 @@
     @begin[Version Information]{subsection}
       Cairo provides the ability to examine the version at either compile-time
       or run-time and in both a human readable form as well as an encoded form
-      suitable for direct comparison. Cairo also provides the function
-      @fun{cairo-version-encode} to perform the encoding.
+      suitable for direct comparison. Cairo also provides the
+      @fun{cairo-version-encode} function to perform the encoding.
 
       @about-variable{+cairo-version+}
       @about-variable{+cairo-version-major+}

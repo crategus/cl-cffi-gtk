@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -80,12 +80,12 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-path-data-type-t atdoc:*symbol-name-alias*)
-       "Enum"
+       "CEnum"
       (gethash 'cairo-path-data-type-t atdoc:*external-symbols*)
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @begin{short}
     The @sym{cairo-path-data-type-t} enumeration is used to describe the type of
-    one portion of a path when represented as a @symbol{cairo-path-t} structure.
+    one portion of a path when represented as a @symbol{cairo-path-t} instance.
   @end{short}
   See the @symbol{cairo-path-data-t} structure for details.
   @begin{pre}
@@ -126,10 +126,10 @@
 (setf (gethash 'cairo-path-data-t atdoc:*symbol-name-alias*)
        "CStruct"
       (gethash 'cairo-path-data-t atdoc:*external-symbols*)
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @begin{short}
     The @sym{cairo-path-data-t} structure is used to represent the path data
-    inside a @symbol{cairo-path-t}.
+    inside a @symbol{cairo-path-t} instance.
   @end{short}
 
   The data structure is designed to try to balance the demands of efficiency
@@ -219,13 +219,13 @@ cairo_path_destroy (path);
 (setf (gethash 'cairo-path-t atdoc:*symbol-name-alias*)
        "CStruct"
       (gethash 'cairo-path-t atdoc:*external-symbols*)
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @begin{short}
     A data structure for holding a path.
   @end{short}
-  This data structure serves as the return value for the functions
-  @fun{cairo-copy-path} and @fun{cairo-copy-path-flat} as well the input value
-  for the function @fun{cairo-append-path}.
+  This data structure serves as the return value for the @fun{cairo-copy-path}
+  and @fun{cairo-copy-path-flat} functions as well the input value for the
+  @fun{cairo-append-path} function.
 
   See the @symbol{cairo-path-data-t} structure for hints on how to iterate over
   the actual data within the path.
@@ -259,11 +259,11 @@ cairo_path_destroy (path);
 
 (defcfun ("cairo_copy_path" cairo-copy-path) (:pointer (:struct cairo-path-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
     The copy of the @symbol{cairo-path-t} current path. The caller owns the
-    returned object and should call the function @fun{cairo-path-destroy} when
+    returned object and should call the @fun{cairo-path-destroy} function when
     finished with it.
   @end{return}
   @begin{short}
@@ -282,8 +282,8 @@ cairo_path_destroy (path);
     @end{item}
     @begin{item}
       If @arg{cr} is already in an error state. In this case path->status will
-      contain the same status that would be returned by the function
-      @fun{cairo-status}.
+      contain the same status that would be returned by the @fun{cairo-status}
+      function.
     @end{item}
   @end{itemize}
   @see-symbol{cairo-t}
@@ -302,11 +302,11 @@ cairo_path_destroy (path);
 (defcfun ("cairo_copy_path_flat" cairo-copy-path-flat)
     (:pointer (:struct cairo-path-t))
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
     The copy of the @symbol{cairo-path-t} current path. The caller owns the
-    returned object and should call the function @fun{cairo-path-destroy} when
+    returned object and should call the @fun{cairo-path-destroy} function when
     finished with it.
   @end{return}
   @begin{short}
@@ -316,7 +316,7 @@ cairo_path_destroy (path);
   See the @symbol{cairo-path-data-t} structure for hints on how to iterate over
   the returned data structure.
 
-  This function is like the function @fun{cairo-copy-path} except that any
+  This function is like the @fun{cairo-copy-path} function except that any
   curves in the path will be approximated with piecewise-linear approximations,
   (accurate to within the current tolerance value). That is, the result is
   guaranteed to not have any elements of type @code{:curve-to} which will
@@ -331,8 +331,8 @@ cairo_path_destroy (path);
     @end{item}
     @begin{item}
       If @arg{cr} is already in an error state. In this case path->status will
-      contain the same status that would be returned by the function
-      @fun{cairo-status}.
+      contain the same status that would be returned by the @fun{cairo-status}
+      function.
     @end{item}
   @end{itemize}
   @see-symbol{cairo-t}
@@ -351,16 +351,16 @@ cairo_path_destroy (path);
 
 (defcfun ("cairo_path_destroy" cairo-path-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[path]{a @symbol{cairo-path-t} structure previously returned by
-    either the function @fun{cairo-copy-path} or @fun{cairo-copy-path-flat}}
+    either the @fun{cairo-copy-path} or @fun{cairo-copy-path-flat} functions}
   @begin{short}
     Immediately releases all memory associated with @arg{path}.
   @end{short}
-  After a call to the function @sym{cairo-path-destroy} the path pointer is no
+  After a call to the @sym{cairo-path-destroy} function the path pointer is no
   longer valid and should not be used further.
   @begin[Note]{dictionary}
-    The function @sym{cairo-path-destroy} should only be called with a pointer
+    The @sym{cairo-path-destroy} function should only be called with a pointer
     to a @symbol{cairo-path-t} structure returned by a Cairo function. Any path
     that is created manually (i.e. outside of Cairo) should be destroyed
     manually as well.
@@ -378,17 +378,17 @@ cairo_path_destroy (path);
 
 (defcfun ("cairo_append_path" cairo-append-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[path]{a @symbol{cairo-path-t} structure to be appended}
   @begin{short}
     Append @arg{path} onto the current path.
   @end{short}
-  The path may be either the return value from one of the functions
-  @fun{cairo-copy-path} or @fun{cairo-copy-path-flat} or it may be constructed
-  manually. See the @symbol{cairo-path-t} structure for details on how the path
-  data structure should be initialized, and note that the status of the path
-  must be initialized to @code{:success}.
+  The path may be either the return value from one of the @fun{cairo-copy-path}
+  or @fun{cairo-copy-path-flat} functions or it may be constructed manually. See
+  the @symbol{cairo-path-t} structure for details on how the path data structure
+  should be initialized, and note that the status of the path must be
+  initialized to @code{:success}.
   @see-symbol{cairo-t}
   @see-symbol{cairo-path-t}
   @see-function{cairo-copy-path}
@@ -404,13 +404,13 @@ cairo_path_destroy (path);
 
 (defcfun ("cairo_has_current_point" cairo-has-current-point) cairo-bool-t
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @return{Whether a current point is defined.}
   @begin{short}
     Returns whether a current point is defined on the current path.
   @end{short}
-  See the function @fun{cairo-get-current-point} for details on the current
+  See the @fun{cairo-get-current-point} function for details on the current
   point.
   @see-symbol{cairo-t}
   @see-function{cairo-get-current-point}"
@@ -429,11 +429,11 @@ cairo_path_destroy (path);
 
 (defun cairo-get-current-point (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    @code{x} -- a double float x coordinate of the current point @br{}
-    @code{y} -- a double float y coordinate of the current point
+    @arg{x} -- a double float x coordinate of the current point @br{}
+    @arg{y} -- a double float y coordinate of the current point
   @end{return}
   @begin{short}
     Gets the current point of the current path, which is conceptually the final
@@ -442,8 +442,8 @@ cairo_path_destroy (path);
 
   The current point is returned in the user-space coordinate system. If there
   is no defined current point or if @arg{cr} is in an error status, x and y will
-  both be set to 0.0. It is possible to check this in advance with the function
-  @fun{cairo-has-current-point}.
+  both be set to 0.0. It is possible to check this in advance with the
+  @fun{cairo-has-current-point} function.
 
   Most path construction functions alter the current point. See the following
   functions for details on how they affect the current point:
@@ -479,7 +479,7 @@ cairo-fill               cairo-stroke
 
 (defcfun ("cairo_new_path" cairo-new-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     Clears the current path.
@@ -496,7 +496,7 @@ cairo-fill               cairo-stroke
 
 (defcfun ("cairo_new_sub_path" cairo-new-sub-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     Begin a new sub-path.
@@ -505,12 +505,12 @@ cairo-fill               cairo-stroke
   current point.
 
   In many cases, this call is not needed since new sub-paths are frequently
-  started with the function @fun{cairo-move-to}.
+  started with the @fun{cairo-move-to} function.
 
-  A call to the function @sym{cairo-new-sub-path} is particularly useful when
+  A call to the @sym{cairo-new-sub-path} function is particularly useful when
   beginning a new sub-path with one of the @code{cairo-arc} calls. This makes
   things easier as it is no longer necessary to manually compute the arc's
-  initial coordinates for a call to the function @fun{cairo-move-to}.
+  initial coordinates for a call to the @fun{cairo-move-to} function.
   @see-symbol{cairo-t}
   @see-function{cairo-move-to}"
   (cr (:pointer (:struct cairo-t))))
@@ -523,32 +523,32 @@ cairo-fill               cairo-stroke
 
 (defcfun ("cairo_close_path" cairo-close-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{short}
     Adds a line segment to the path from the current point to the beginning of
-    the current sub-path, the most recent point passed to the function
-    @fun{cairo-move-to}, and closes this sub-path.
+    the current sub-path, the most recent point passed to the
+    @fun{cairo-move-to} function, and closes this sub-path.
   @end{short}
   After this call the current point will be at the joined endpoint of the
   sub-path.
 
-  The behavior of the funcion @sym{cairo-close-path} is distinct from simply
-  calling the function @fun{cairo-line-to} with the equivalent coordinate in
+  The behavior of the @sym{cairo-close-path} function is distinct from simply
+  calling the @fun{cairo-line-to} function with the equivalent coordinate in
   the case of stroking. When a closed sub-path is stroked, there are no caps on
   the ends of the sub-path. Instead, there is a line join connecting the final
   and initial segments of the sub-path.
 
-  If there is no current point before the call to the function
-  @sym{cairo-close-path}, this function will have no effect.
+  If there is no current point before the call to the @sym{cairo-close-path}
+  function, this function will have no effect.
   @begin[Note]{dictionary}
-    As of Cairo version 1.2.4 any call to the function @sym{cairo-close-path}
+    As of Cairo version 1.2.4 any call to the @sym{cairo-close-path} function
     will place an explicit @code{:move-to} element into the path immediately
-    after the @code{:close-path} element, which can be seen in the function
-    @fun{cairo-copy-path} for example. This can simplify path processing in some
-    cases as it may not be necessary to save the \"last @code{:move-to} point\"
-    during processing as the @code{:move-to} immediately after the
-    @code{:close-path} will provide that point.
+    after the @code{:close-path} element, which can be seen in the
+    @fun{cairo-copy-path} function for example. This can simplify path
+    processing in some cases as it may not be necessary to save the \"last
+    @code{:move-to} point\" during processing as the @code{:move-to} immediately
+    after the @code{:close-path} will provide that point.
   @end{dictionary}
   @see-symbol{cairo-t}
   @see-function{cairo-move-to}
@@ -564,33 +564,33 @@ cairo-fill               cairo-stroke
 
 (defcfun ("cairo_arc" %cairo-arc) :void
   (cr (:pointer (:struct cairo-t)))
-  (xc :double)
-  (yc :double)
+  (x :double)
+  (y :double)
   (radius :double)
   (angle1 :double)
   (angle2 :double))
 
-(defun cairo-arc (cr xc yc radius angle1 angle2)
+(defun cairo-arc (cr x y radius angle1 angle2)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[xc]{a double float x position of the center of the arc}
-  @argument[yc]{a double float y position of the center of the arc}
+  @argument[x]{a double float x position of the center of the arc}
+  @argument[y]{a double float y position of the center of the arc}
   @argument[radius]{a double float with the radius of the arc}
   @argument[angle1]{a double float with the start angle, in radians}
   @argument[angle2]{a dobule float with the end angle, in radians}
   @begin{short}
     Adds a circular arc of the given @arg{radius} to the current path.
   @end{short}
-  The arc is centered at @code{(@arg{xc}, @arg{yc})}, begins at @arg{angle1}
+  The arc is centered at @code{(@arg{x}, @arg{y})}, begins at @arg{angle1}
   and proceeds in the direction of increasing angles to end at @arg{angle2}. If
   @arg{angle2} is less than @arg{angle1} it will be progressively increased by
   2*PI until it is greater than @arg{angle1}.
 
   If there is a current point, an initial line segment will be added to the
   path to connect the current point to the beginning of the arc. If this
-  initial line is undesired, it can be avoided by calling the function
-  @fun{cairo-new-sub-path} before calling the function @sym{cairo-arc}.
+  initial line is undesired, it can be avoided by calling the
+  @fun{cairo-new-sub-path} function before calling the @sym{cairo-arc} function.
 
   Angles are measured in radians. An angle of 0 is in the direction of the
   positive x axis (in user space). An angle of PI/2 radians (90 degrees) is in
@@ -599,7 +599,7 @@ cairo-fill               cairo-stroke
   default transformation matrix, angles increase in a clockwise direction.
 
   This function gives the arc in the direction of increasing angles. See the
-  function @fun{cairo-arc-negative} to get the arc in the direction of
+  @fun{cairo-arc-negative} function to get the arc in the direction of
   decreasing angles.
   @begin[Example]{dictionary}
     The arc is circular in user space. To achieve an elliptical arc, you can
@@ -618,8 +618,8 @@ cairo-fill               cairo-stroke
   @see-function{cairo-new-sub-path}
   @see-function{cairo-arc-negative}"
   (%cairo-arc cr
-              (coerce xc 'double-float)
-              (coerce yc 'double-float)
+              (coerce x 'double-float)
+              (coerce y 'double-float)
               (coerce radius 'double-float)
               (coerce angle1 'double-float)
               (coerce angle2 'double-float)))
@@ -632,36 +632,36 @@ cairo-fill               cairo-stroke
 
 (defcfun ("cairo_arc_negative" %cairo-arc-negative) :void
   (cr (:pointer (:struct cairo-t)))
-  (xc :double)
-  (yc :double)
+  (x :double)
+  (y :double)
   (radius :double)
   (angle1 :double)
   (angle2 :double))
 
-(defun cairo-arc-negative (cr xc yc radius angle1 angle2)
+(defun cairo-arc-negative (cr x y radius angle1 angle2)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
-  @argument[xc]{a double float x position of the center of the arc}
-  @argument[yc]{a double float y position of the center of the arc}
+  @argument[x]{a double float x position of the center of the arc}
+  @argument[y]{a double float y position of the center of the arc}
   @argument[radius]{a double float with the radius of the arc}
   @argument[angle1]{a double float with the start angle, in radians}
   @argument[angle2]{a double float with the end angle, in radians}
   @begin{short}
     Adds a circular arc of the given @arg{radius} to the current path.
   @end{short}
-  The arc is centered at (@arg{xc}, @arg{yc}), begins at @arg{angle1} and
+  The arc is centered at (@arg{x}, @arg{y}), begins at @arg{angle1} and
   proceeds in the direction of decreasing angles to end at @arg{angle2}. If
   @arg{angle2} is greater than @arg{angle1} it will be progressively decreased
   by @code{2*PI} until it is less than @arg{angle1}.
 
-  See the function @fun{cairo-arc} for more details. This function differs only
+  See the @fun{cairo-arc} function for more details. This function differs only
   in the direction of the arc between the two angles.
   @see-symbol{cairo-t}
   @see-function{cairo-arc}"
   (%cairo-arc-negative cr
-                       (coerce xc 'double-float)
-                       (coerce yc 'double-float)
+                       (coerce x 'double-float)
+                       (coerce y 'double-float)
                        (coerce radius 'double-float)
                        (coerce angle1 'double-float)
                        (coerce angle2 'double-float)))
@@ -683,7 +683,7 @@ cairo-fill               cairo-stroke
 
 (defun cairo-curve-to (cr x1 y1 x2 y2 x3 y3)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x1]{a double float x coordinate of the first control point}
   @argument[y1]{a double float y coordinate of the first control point}
@@ -698,8 +698,8 @@ cairo-fill               cairo-stroke
   @end{short}
   After this call the current point will be (@arg{x3}, @arg{y3}).
 
-  If there is no current point before the call to the function
-  @sym{cairo-curve-to} this function will behave as if preceded by a call to:
+  If there is no current point before the call to the @sym{cairo-curve-to}
+  function this function will behave as if preceded by a call to:
   @begin{pre}
 (cairo-move-to cr x1 y1)
   @end{pre}
@@ -726,7 +726,7 @@ cairo-fill               cairo-stroke
 
 (defun cairo-line-to (cr x y)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x]{a double float x coordinate of the end of the new line}
   @argument[y]{a double float y coordinate of the end of the new line}
@@ -736,8 +736,8 @@ cairo-fill               cairo-stroke
   @end{short}
   After this call the current point will be (@arg{x}, @arg{y}).
 
-  If there is no current point before the call to @sym{cairo-line-to} this
-  function will behave as:
+  If there is no current point before the call to the @sym{cairo-line-to}
+  function this function will behave as:
   @begin{pre}
 (cairo-move-to cr x y)
   @end{pre}
@@ -758,7 +758,7 @@ cairo-fill               cairo-stroke
 
 (defun cairo-move-to (cr x y)
  #+cl-cffi-gtk-documentation
- "@version{*2021-1-26}
+ "@version{*2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x]{a double float x coordinate of the new position}
   @argument[y]{a double float y coordinate of the new position}
@@ -785,7 +785,7 @@ cairo-fill               cairo-stroke
 
 (defun cairo-rectangle (cr x y width height)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-13}
+ "@version{*2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x]{a double float x coordinate of the top left corner of the
     rectangle}
@@ -824,21 +824,21 @@ cairo-fill               cairo-stroke
 
 (defcfun ("cairo_glyph_path" cairo-glyph-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[glyphs]{array of @symbol{cairo-glyphs-t} glyphs to show}
-  @argument[num-glyphs]{an integer with the number of glyphs to show}
+  @argument[num]{an integer with the number of glyphs to show}
   @begin{short}
     Adds closed paths for the glyphs to the current path.
   @end{short}
   The generated path if filled, achieves an effect similar to that of the
-  function @fun{cairo-show-glyphs}.
+  @fun{cairo-show-glyphs} function.
   @see-symbol{cairo-t}
   @see-symbol{cairo-glyph-t}
   @see-function{cairo-show-glyphs}"
   (cr (:pointer (:struct cairo-t)))
   (glyphs (:pointer (:pointer (:struct cairo-glyph-t))))
-  (num-glyphs :int))
+  (num :int))
 
 (export 'cairo-glyph-path)
 
@@ -848,29 +848,29 @@ cairo-fill               cairo-stroke
 
 (defcfun ("cairo_text_path" cairo-text-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[utf8]{a string of text encoded in UTF-8, or @code{nil}}
   @begin{short}
     Adds closed paths for text to the current path.
   @end{short}
   The generated path if filled, achieves an effect similar to that of the
-  function @fun{cairo-show-text}.
+  @fun{cairo-show-text} function.
 
-  Text conversion and positioning is done similar to the function
-  @fun{cairo-show-text}.
+  Text conversion and positioning is done similar to the @fun{cairo-show-text}
+  function.
 
-  Like the function @fun{cairo-show-text}, after this call the current point is
+  Like the @fun{cairo-show-text} function, after this call the current point is
   moved to the origin of where the next glyph would be placed in this same
   progression. That is, the current point will be at the origin of the final
   glyph offset by its advance values. This allows for chaining multiple calls
-  to to the function @sym{cairo-text-path} without having to set current point
+  to to the @sym{cairo-text-path} function without having to set current point
   in between.
   @begin[Note]{dictionary}
-    The function @sym{cairo-text-path} call is part of what the Cairo designers
+    The @sym{cairo-text-path} function call is part of what the Cairo designers
     call the \"toy\" text API. It is convenient for short demos and simple
     programs, but it is not expected to be adequate for serious text-using
-    applications. See the function @fun{cairo-glyph-path} for the \"real\" text
+    applications. See the @fun{cairo-glyph-path} function for the \"real\" text
     path API in Cairo.
   @end{dictionary}
   @see-symbol{cario-t}
@@ -896,7 +896,7 @@ cairo-fill               cairo-stroke
 
 (defun cairo-rel-curve-to (cr dx1 dy1 dx2 dy2 dx3 dy3)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[dx1]{a double float x offset to the first control point}
   @argument[dy1]{a double float y offset to the first control point}
@@ -905,7 +905,7 @@ cairo-fill               cairo-stroke
   @argument[dx3]{a double float x offset to the end of the curve}
   @argument[dy3]{a double float y offset to the end of the curve}
   @begin{short}
-    Relative-coordinate version of the function @fun{cairo-curve-to}.
+    Relative-coordinate version of the @fun{cairo-curve-to} function.
   @end{short}
   All offsets are relative to the current point. Adds a cubic Bézier spline to
   the path from the current point to a point offset from the current point by
@@ -948,12 +948,12 @@ cairo-fill               cairo-stroke
 
 (defun cairo-rel-line-to (cr dx dy)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[dx]{a double float x offset to the end of the new line}
   @argument[dy]{a double float y offset to the end of the new line}
   @begin{short}
-    Relative-coordinate version of the function @fun{cairo-line-to}.
+    Relative-coordinate version of the @fun{cairo-line-to} function.
   @end{short}
   Adds a line to the path from the current point to a point that is offset from
   the current point by (@arg{dx}, @arg{dy}) in user space. After this call the
@@ -986,7 +986,7 @@ cairo-fill               cairo-stroke
 
 (defun cairo-rel-move-to (cr dx dy)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-11}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[dx]{a double float x offset}
   @argument[dy]{a double float y offset}
@@ -1024,13 +1024,13 @@ cairo-fill               cairo-stroke
 
 (defun cairo-path-extents (cr)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{2021-12-12}
   @argument[cr]{a @symbol{cairo-t} context}
   @begin{return}
-    @code{x1} -- a double float for the left of the resulting extents @br{}
-    @code{y1} -- a double float for the top of the resulting extents @br{}
-    @code{x2} -- a double float for the right of the resulting extents @br{}
-    @code{y2} -- a double float for the bottom of the resulting extents
+    @arg{x1} -- a double float for the left of the resulting extents @br{}
+    @arg{y1} -- a double float for the top of the resulting extents @br{}
+    @arg{x2} -- a double float for the right of the resulting extents @br{}
+    @arg{y2} -- a double float for the bottom of the resulting extents
   @end{return}
   @begin{short}
     Computes a bounding box in user-space coordinates covering the points on
@@ -1040,20 +1040,20 @@ cairo-fill               cairo-stroke
   Stroke parameters, fill rule, surface dimensions and clipping are not taken
   into account.
 
-  Contrast with the functions @fun{cairo-fill-extents} and
-  @fun{cairo-stroke-extents} which return the extents of only the area that
-  would be \"inked\" by the corresponding drawing operations.
+  Contrast with the @fun{cairo-fill-extents} and @fun{cairo-stroke-extents}
+  functions which return the extents of only the area that would be \"inked\" by
+  the corresponding drawing operations.
 
-  The result of the function @sym{cairo-path-extents} is defined as equivalent
-  to the limit of the function @fun{cairo-stroke-extents} with @code{:round} as
+  The result of the @sym{cairo-path-extents} function is defined as equivalent
+  to the limit of the @fun{cairo-stroke-extents} function with @code{:round} as
   the line width approaches 0.0, but never reaching the empty-rectangle
-  returned by the function @fun{cairo-stroke-extents} for a line width of 0.0.
+  returned by the @fun{cairo-stroke-extents} function for a line width of 0.0.
 
   Specifically, this means that zero-area sub-paths such as @fun{cairo-move-to};
   @fun{cairo-line-to} segments, even degenerate cases where the coordinates to
   both calls are identical, will be considered as contributing to the extents.
   However, a lone @fun{cairo-move-to} will not contribute to the results of
-  the function @sym{cairo-path-extents}.
+  the @sym{cairo-path-extents} function.
   @see-symbol{cairo-t}
   @see-function{cairo-fill-extents}
   @see-function{cairo-stroke-extents}
