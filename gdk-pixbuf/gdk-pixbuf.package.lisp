@@ -7,7 +7,7 @@
 ;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,7 +36,7 @@
 (setf (documentation (find-package :gdk-pixbuf) t)
  "GDK-Pixbuf is a library for image loading and manipulation. The GDK-Pixbuf
   documentation contains both the programmer's guide and the API reference.
-  This is the API documentation of a Lisp binding to GDK-Pixbuf.
+  This is the API documentation of a Lisp binding to the GDK-Pixbuf library.
   @begin[Library version numbers]{section}
     These macros and variables let you check the version of GDK-Pixbuf you are
     linking against.
@@ -46,7 +46,7 @@
     @about-symbol{+gdk-pixbuf-minor-version+}
     @about-symbol{+gdk-pixbuf-micro-version+}
   @end{section}
-  @begin[The GdkPixbuf Structure]{section}
+  @begin[The GdkPixbuf object]{section}
     Information that describes an image.
 
     @about-symbol{GdkPixbufError}
@@ -101,7 +101,7 @@
   @begin[File Saving]{section}
     Saving a pixbuf to a file.
 
-    These functions allow to save a @class{gdk-pixbuf} structure in a number of
+    These functions allow to save a @class{gdk-pixbuf} object in a number of
     file formats. The formatted data can be written to a file or to a memory
     buffer. The @class{gdk-pixbuf} library can also call a user-defined callback
     on the data, which allows to e.g. write the image to a socket or store it in
@@ -123,30 +123,28 @@
     Creating a pixbuf from image data that is already in memory.
 
     The most basic way to create a pixbuf is to wrap an existing pixel buffer
-    with a @class{gdk-pixbuf} structure. You can use the function
-    @fun{gdk-pixbuf-new-from-data} to do this. You need to specify the destroy
-    notification function that will be called when the data buffer needs to be
-    freed; this will happen when a @class{gdk-pixbuf} is finalized by the
-    reference counting functions If you have a chunk of static data compiled
-    into your application, you can pass in @code{nil} as the destroy
+    with a @class{gdk-pixbuf} object. You can use the
+    @fun{gdk-pixbuf-new-from-data} function to do this. You need to specify the
+    destroy notification function that will be called when the data buffer needs
+    to be freed. This will happen when a @class{gdk-pixbuf} object is finalized
+    by the reference counting functions If you have a chunk of static data
+    compiled into your application, you can pass in @code{nil} as the destroy
     notification function so that the data will not be freed.
 
-    The function @fun{gdk-pixbuf-new} can be used as a convenience to create a
+    The @fun{gdk-pixbuf-new} function can be used as a convenience to create a
     pixbuf with an empty buffer. This is equivalent to allocating a data buffer
-    using @code{malloc()} and then wrapping it with the function
-    @fun{gdk-pixbuf-new-from-data}. The function @fun{gdk-pixbuf-new} will
-    compute an optimal rowstride so that rendering can be performed with an
+    using @code{malloc()} and then wrapping it with the
+    @fun{gdk-pixbuf-new-from-data} function. The @fun{gdk-pixbuf-new} function
+    will compute an optimal rowstride so that rendering can be performed with an
     efficient algorithm.
 
-    As a special case, you can use the function
-    @fun{gdk-pixbuf-new-from-xpm-data} to create a pixbuf from inline XPM image
-    data.
+    As a special case, you can use the @fun{gdk-pixbuf-new-from-xpm-data}
+    function to create a pixbuf from inline XPM image data.
 
-    You can also copy an existing pixbuf with the function
-    @fun{gdk-pixbuf-copy}. This is not the same as just doing a
-    @fun{g-object-ref} on the old pixbuf; the copy function will actually
-    duplicate the pixel data in memory and create a new @class{gdk-pixbuf}
-    structure for it.
+    You can also copy an existing pixbuf with the @fun{gdk-pixbuf-copy}
+    function. This is not the same as just doing a @fun{g-object-ref} call on
+    the old pixbuf. The copy function will actually duplicate the pixel data in
+    memory and create a new @class{gdk-pixbuf} instance for it.
 
     @about-function{gdk-pixbuf-new}
     @about-function{gdk-pixbuf-new-from-byte}
@@ -159,18 +157,18 @@
   @begin[Scaling]{section}
     Scaling pixbufs and scaling and compositing pixbufs.
 
-    The @class{gdk-pixbuf} structure contains functions to scale pixbufs, to
-    scale pixbufs and composite against an existing image, and to scale pixbufs
-    and composite against a solid color or checkerboard. Compositing a
-    checkerboard is a common way to show an image with an alpha channel in
-    image-viewing and editing software.
+    The @class{gdk-pixbuf} library contains functions to scale pixbufs, to scale
+    pixbufs and composite against an existing image, and to scale pixbufs and
+    composite against a solid color or checkerboard. Compositing a checkerboard
+    is a common way to show an image with an alpha channel in image-viewing and
+    editing software.
 
-    Since the full-featured functions @fun{gdk-pixbuf-scale},
-    @fun{gdk-pixbuf-composite}, and @fun{gdk-pixbuf-composite-color} are rather
-    complex to use and have many arguments, two simple convenience functions
-    are provided, @fun{gdk-pixbuf-scale-simple} and
-    @fun{gdk-pixbuf-composite-color-simple} which create a new pixbuf of a
-    given size, scale an original image to fit, and then return the new pixbuf.
+    Since the full-featured @fun{gdk-pixbuf-scale}, @fun{gdk-pixbuf-composite},
+    and @fun{gdk-pixbuf-composite-color} functions are rather complex to use and
+    have many arguments, two simple convenience functions are provided, the
+    @fun{gdk-pixbuf-scale-simple} and @fun{gdk-pixbuf-composite-color-simple}
+    functions which create a new pixbuf of a given size, scale an original image
+    to fit, and then return the new pixbuf.
 
     If the destination pixbuf was created from a readonly source, these
     operations will force a copy into a mutable buffer.
@@ -183,12 +181,12 @@
     setting the @code{GDK_DISABLE_MEDIALIB} environment variable.
 
     The following example demonstrates handling an expose event by rendering the
-    appropriate area of a source image (which is scaled to fit the widget) onto
-    the widget's window. The source image is rendered against a checkerboard,
-    which provides a visual representation of the alpha channel if the image
-    has one. If the image does not have an alpha channel, calling the function
-    @fun{gdk-pixbuf-composite-color} has exactly the same effect as calling the
-    function @fun{gdk-pixbuf-scale}.
+    appropriate area of a source image, which is scaled to fit the widget, onto
+    the window of the widget. The source image is rendered against a
+    checkerboard, which provides a visual representation of the alpha channel if
+    the image has one. If the image does not have an alpha channel, calling the
+    @fun{gdk-pixbuf-composite-color} function has exactly the same effect as
+    calling the @fun{gdk-pixbuf-scale} function.
 
     @b{Example:} Handling an expose event.
     @begin{pre}

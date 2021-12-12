@@ -16,7 +16,7 @@ Content from the GDK-Pixbuf 2.36 Reference Manual
 
   Inline data - Functions for inlined pixbuf handling.
 
-  gdk-pixbuf.scaling.lisp - Scaling pixbufs                            - 2.36 &
+  gdk-pixbuf.scaling.lisp - Scaling pixbufs                            - 2.36
 
   Rendering - Rendering a pixbuf to a GDK drawable.
   Getting parts of a GDK drawable's image data into a pixbuf.
@@ -31,4 +31,4 @@ Content from the GDK-Pixbuf 2.36 Reference Manual
   Getting parts of an X drawable's image data into a pixbuf.
   XlibRGB - Rendering RGB buffers to X drawables.
 
-;;; 2020-11-22
+;;; 2021-12-12

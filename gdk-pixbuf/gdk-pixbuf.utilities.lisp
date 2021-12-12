@@ -6,7 +6,7 @@
 ;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -54,11 +54,11 @@
 
 (defcfun ("gdk_pixbuf_add_alpha" gdk-pixbuf-add-alpha) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
-  @argument[substitute-color]{a boolean whether to set a color to zero opacity,
-    if this is @em{false}, then the (@arg{red}, @arg{green}, @arg{blue})
-    arguments will be ignored}
+ "@version{2021-12-12}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @argument[substitute]{a boolean whether to set a color to zero opacity, if
+    this is @em{false}, then the (@arg{red}, @arg{green}, @arg{blue}) arguments
+    will be ignored}
   @argument[red]{an unsigned char with the red value to substitute}
   @argument[green]{an unsigned char with the green value to substitute}
   @argument[blue]{an unsigned char with the blue value to substitute}
@@ -70,12 +70,13 @@
   are copied from the original; otherwise, the alpha channel is initialized to
   255 (full opacity).
 
-  If @arg{substitute-color} is @em{true}, then the color specified by
+  If the @arg{substitute} argument is @em{true}, then the color specified by
   (@arg{red}, @arg{green}, @arg{blue}) will be assigned zero opacity. That is,
   if you pass (255, 255, 255) for the substitute color, all white pixels will
-  become fully transparent."
+  become fully transparent.
+  @see-class{gdk-pixbuf}"
   (pixbuf (g-object gdk-pixbuf))
-  (substitute-color :boolean)
+  (substitute :boolean)
   (red :uchar)
   (green :uchar)
   (blue :uchar))
@@ -86,36 +87,36 @@
 ;;; gdk_pixbuf_copy_area ()
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Change the implementation to return the dest pixbuf!?
+
 (defcfun ("gdk_pixbuf_copy_area" gdk-pixbuf-copy-area) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[src-pixbuf]{a @class{gdk-pixbuf} structure}
-  @argument[src-x]{an integer with the source x coordinate within
-    @arg{src-pixbuf}}
-  @argument[src-y]{an integer with the source y coordinate within
-    @arg{src-pixbuf}}
+ "@version{*2021-12-12}
+  @argument[src]{a @class{gdk-pixbuf} object}
+  @argument[xsrc]{an integer with the source x coordinate within @arg{src}}
+  @argument[ysrc]{an integer with the source y coordinate within @arg{src}}
   @argument[width]{an integer with the width of the area to copy}
   @argument[height]{an integer with the height of the area to copy}
-  @argument[dest-pixbuf]{a @class{gdk-pixbuf} destination structure}
-  @argument[dest-x]{an integer with the x coordinate within @arg{dest-pixbuf}}
-  @argument[dest-y]{an integer with the y coordinate within @arg{dest-pixbuf}}
+  @argument[dest]{a @class{gdk-pixbuf} destination object}
+  @argument[xdest]{an integer with the x coordinate within @arg{dest}}
+  @argument[ydest]{an integer with the y coordinate within @arg{dest}}
   @begin{short}
-    Copies a rectangular area from @arg{src-pixbuf} to @arg{dest-pixbuf}.
+    Copies a rectangular area from @arg{src} to @arg{dest}.
   @end{short}
   Conversion of pixbuf formats is done automatically.
 
-  If the source rectangle overlaps the destination rectangle on the same
-  pixbuf, it will be overwritten during the copy operation. Therefore, you can
-  not use this function to scroll a pixbuf.
+  If the source rectangle overlaps the destination rectangle on the same pixbuf,
+  it will be overwritten during the copy operation. Therefore, you can not use
+  this function to scroll a pixbuf.
   @see-class{gdk-pixbuf}"
-  (src-pixbuf (g-object gdk-pixbuf))
-  (scc-x :int)
-  (src-y :int)
+  (src (g-object gdk-pixbuf))
+  (xsrc :int)
+  (ysrc :int)
   (width :int)
   (height :int)
-  (dest-pixbuf (g-object gdk-pixbuf))
-  (dest-x :int)
-  (dest-y :int))
+  (dest (g-object gdk-pixbuf))
+  (xdest :int)
+  (ydest :int))
 
 (export 'gdk-pixbuf-copy-area)
 
@@ -176,7 +177,7 @@
 
 (defcfun ("gdk_pixbuf_fill" gdk-pixbuf-fill) :void
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-12}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @argument[pixel]{an unsigned integer with the RGBA pixel to clear to,
     @code{#xffffffff} is opaque white, @code{#x00000000} transparent black}

@@ -7,7 +7,7 @@
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,7 +75,7 @@
 
 (defcfun ("gdk_pixbuf_new" gdk-pixbuf-new) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-12-12}
   @argument[colorspace]{a @symbol{gdk-color-space} value for the image}
   @argument[has-alpha]{a boolean whether the image should have transparency
     information}
@@ -83,11 +83,11 @@
   @argument[width]{an integer with the width of image in pixels, must be > 0}
   @argument[height]{an integer with the height of image in pixels, must be > 0}
   @begin{return}
-    A newly-created @class{gdk-pixbuf} structure with a reference count of 1,
-    or @code{nil} if not enough memory could be allocated for the image buffer.
+    A newly-created @class{gdk-pixbuf} object with a reference count of 1, or
+    @code{nil} if not enough memory could be allocated for the image buffer.
   @end{return}
   @begin{short}
-    Creates a new @class{gdk-pixbuf} structure and allocates a buffer for it.
+    Creates a new @class{gdk-pixbuf} object and allocates a buffer for it.
   @end{short}
   The buffer has an optimal rowstride. Note that the buffer is not cleared. You
   will have to fill it completely yourself.
@@ -218,7 +218,7 @@
 ;;; Warning :
 ;;;
 ;;;     gdk_pixbuf_new_from_inline has been deprecated since version 2.32 and
-;;;     should not be used in newly-written code.
+;;;     should not be used in newly written code.
 ;;;
 ;;;     Use GResource instead.
 ;;;
@@ -273,23 +273,23 @@
 (defcfun ("gdk_pixbuf_new_subpixbuf" gdk-pixbuf-new-subpixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
-  @argument[src-pixbuf]{a @class{gdk-pixbuf} object}
-  @argument[src-x]{an integer with the x coord in @arg{src-pixbuf}}
-  @argument[src-y]{an integer with the y coord in @arg{src-pixbuf}}
-  @argument[width]{an integer with the width of region in @arg{src-pixbuf}}
-  @argument[height]{an integer with the height of region in @arg{src-pixbuf}}
-  @return{A new @class{gdk-pixbuf} structure.}
+ "@version{2021-12-12}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @argument[x]{an integer with the x coord in @arg{pixbuf}}
+  @argument[y]{an integer with the y coord in @arg{pixbuf}}
+  @argument[width]{an integer with the width of region in @arg{pixbuf}}
+  @argument[height]{an integer with the height of region in @arg{pixbuf}}
+  @return{A new @class{gdk-pixbuf} object.}
   @begin{short}
-    Creates a new pixbuf which represents a sub-region of @arg{src-pixbuf}.
+    Creates a new pixbuf which represents a sub-region of @arg{pixbuf}.
   @end{short}
   The new pixbuf shares its pixels with the original pixbuf, so writing to one
-  affects both. The new pixbuf holds a reference to @arg{src-pixbuf}, so
-  @arg{src-pixbuf} will not be finalized until the new pixbuf is finalized.
+  affects both. The new pixbuf holds a reference to @arg{pixbuf}, so
+  @arg{pixbuf} will not be finalized until the new pixbuf is finalized.
   @see-class{gdk-pixbuf}"
-  (src-pixbuf (g-object gdk-pixbuf))
-  (src-x :int)
-  (src-y :int)
+  (pixbuf (g-object gdk-pixbuf))
+  (x :int)
+  (y :int)
   (width :int)
   (height :int))
 
@@ -301,15 +301,15 @@
 
 (defcfun ("gdk_pixbuf_copy" gdk-pixbuf-copy) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
-  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
+ "@version{2021-12-12}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @begin{return}
     A newly created pixbuf with a reference count of 1, or @code{nil} if not
     enough memory could be allocated.
   @end{return}
   @begin{short}
-    Creates a new @class{gdk-pixbuf} structure with a copy of the information
-    in the specified @arg{pixbuf}.
+    Creates a new @class{gdk-pixbuf} object with a copy of the information in
+    the specified @arg{pixbuf}.
   @end{short}
   @see-class{gdk-pixbuf}"
   (pixbuf (g-object gdk-pixbuf)))

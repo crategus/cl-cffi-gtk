@@ -7,7 +7,7 @@
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -111,8 +111,8 @@
 
 (defun gdk-pixbuf-save (pixbuf filename type)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
-  @argument[pixbuf]{a @class{gdk-pixbuf} structure}
+ "@version{2021-12-12}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @argument[filename]{a string with the name of file to save}
   @argument[type]{a string with the name of file format}
   @return{A boolean whether an error was set.}

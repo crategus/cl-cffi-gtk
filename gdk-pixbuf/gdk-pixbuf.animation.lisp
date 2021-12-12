@@ -7,7 +7,7 @@
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -108,7 +108,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-pixbuf-animation 'type)
- "@version{2020-11-22}
+ "@version{2021-12-12}
   @begin{short}
     The @sym{gdk-pixbuf} library provides a simple mechanism to load and
     represent animations.
@@ -117,8 +117,8 @@
   The animation may not be represented as a series of frames internally. For
   example, it may be stored as a sprite and instructions for moving the sprite
   around a background. To display an animation you do not need to understand
-  its representation, however; you just ask @class{gdk-pixbuf} what should be
-  displayed at a given point in time.
+  its representation, however. You just ask the @class{gdk-pixbuf} object what
+  should be displayed at a given point in time.
   @see-slot{gdk-pixbuf-animation-loop}
   @see-class{gdk-pixbuf}")
 
@@ -136,7 +136,7 @@
 (setf (gethash 'gdk-pixbuf-animation-loop atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-animation-loop 'function)
- "@version{2020-11-22}
+ "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-animation-loop object) => loop}
   @syntax[]{(setf (gdk-pixbuf-animation-loop object) loop)}
   @argument[object]{a @class{gdk-pixbuf-animation} structure}
@@ -160,19 +160,19 @@
 
 (defun gdk-pixbuf-animation-new-from-file (filename)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
-  @argument[filename]{a string with the name of file to load, in the GLib file
-    name encoding}
+ "@version{2021-12-12}
+  @argument[filename]{a string with the name of the file to load, in the GLib
+    file name encoding}
   @begin{return}
     A newly created animation with a reference count of 1, or @code{nil} if any
     of several error conditions ocurred: the file could not be opened, there
-    was no loader for the file's format, there was not enough memory to
+    was no loader for the format of the file, there was not enough memory to
     allocate the image buffer, or the image file contained invalid data.
   @end{return}
   @begin{short}
     Creates a new animation by loading it from a file.
   @end{short}
-  The file format is detected automatically. If the file's format does not
+  The file format is detected automatically. If the format of the file does not
   support multi-frame images, then an animation with a single frame will be
   created. Possible errors are in the @code{GDK_PIXBUF_ERROR} and
   @code{G_FILE_ERROR} domains.
@@ -311,7 +311,7 @@
 ;;; Warning
 ;;;
 ;;; gdk_pixbuf_animation_ref has been deprecated since version 2.0 and should
-;;; not be used in newly-written code. Use g_object_ref().
+;;; not be used in newly written code. Use g_object_ref().
 ;;;
 ;;; Adds a reference to an animation.
 ;;;
@@ -330,7 +330,7 @@
 ;;; Warning
 ;;;
 ;;; gdk_pixbuf_animation_unref has been deprecated since version 2.0 and should
-;;; not be used in newly-written code. Use g_object_unref().
+;;; not be used in newly written code. Use g_object_unref().
 ;;;
 ;;; Removes a reference from an animation.
 ;;;
@@ -440,7 +440,7 @@
 (defcfun ("gdk_pixbuf_animation_get_static_image"
            gdk-pixbuf-animation-static-image) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-22}
+ "@version{2021-12-12}
   @argument[animation]{a @class{gdk-pixbuf-animation} structure}
   @return{Unanimated @class{gdk-pixbuf} image representing the animation.}
   @begin{short}

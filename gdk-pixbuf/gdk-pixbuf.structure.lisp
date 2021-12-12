@@ -7,7 +7,7 @@
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -142,9 +142,10 @@
   :rgb)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-colorspace atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-colorspace atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gdk-colorspace atdoc:*external-symbols*)
- "@version{2020-11-20}
+ "@version{2021-12-12}
   @begin{short}
     This enumeration defines the color spaces that are supported by the
     GDK-Pixbuf library.
@@ -174,13 +175,14 @@
   (:full 1))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-pixbuf-alpha-mode atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-pixbuf-alpha-mode atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gdk-pixbuf-alpha-mode atdoc:*external-symbols*)
- "@version{2020-11-20}
+ "@version{2021-12-12}
   @begin{short}
-    These values can be passed to the function
-    @code{gdk_pixbuf_render_to_drawable_alpha()} to control how the alpha
-    channel of an image should be handled.
+    These values can be passed to the
+    @code{gdk_pixbuf_render_to_drawable_alpha()} function to control how the
+    alpha channel of an image should be handled.
   @end{short}
   This function can create a bilevel clipping mask (black and white) and use it
   while painting the image. In the future, when the X Window System gets an
@@ -226,7 +228,6 @@
    (n-channels
     gdk-pixbuf-n-channels
     "n-channels" "gint" t nil)
-   ;; TODO: GBytes is not implemented
    (pixel-bytes
     gdk-pixbuf-pixel-bytes
     "pixel-bytes" "GBytes" t t)
@@ -242,9 +243,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-pixbuf 'type)
- "@version{2020-11-21}
+ "@version{2021-12-12}
   @begin{short}
-    The @sym{gdk-pixbuf} structure contains information that describes an image
+    The @sym{gdk-pixbuf} object contains information that describes an image
     in memory.
   @end{short}
   It contains information about the image's pixel data, its color space, bits
@@ -254,11 +255,12 @@
     Image data in a pixbuf is stored in memory in uncompressed, packed format.
     Rows in the image are stored top to bottom, and in each row pixels are
     stored from left to right. There may be padding at the end of a row. The
-    \"rowstride\" value of a pixbuf, as returned by the function
-    @fun{gdk-pixbuf-rowstride}, indicates the number of bytes between rows.
+    \"rowstride\" value of a pixbuf, as returned by the
+    @fun{gdk-pixbuf-rowstride} function, indicates the number of bytes between
+    rows.
   @end{dictionary}
   @begin[Examples]{dictionary}
-    The following code illustrates a simple function @code{put-pixel} for RGB
+    The following code illustrates a simple @code{put-pixel} function for RGB
     pixbufs with 8 bits per channel with an alpha channel. It is not included
     in the @sym{gdk-pixbuf} library for performance reasons. Rather than making
     several function calls for each pixel, your own code can take shortcuts.
@@ -284,7 +286,7 @@
     in the pixbuf may not be as wide as the full rowstride, but rather just as
     wide as the pixel data needs to be. That is, it is unsafe to do
     @code{memcpy (dest, pixels, rowstride * height)} to copy a whole pixbuf. Use
-    the function @fun{gdk-pixbuf-copy} instead, or compute the width in bytes of
+    the @fun{gdk-pixbuf-copy} function instead, or compute the width in bytes of
     the last row as @code{width * ((n_channels * bits_per_sample + 7) / 8)}.
   @end{dictionary}
   @see-slot{gdk-pixbuf-bits-per-sample}
@@ -317,7 +319,7 @@
 (setf (gethash 'gdk-pixbuf-bits-per-sample atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-bits-per-sample 'function)
- "@version{2020-11-20}
+ "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-bits-per-sample object) => bits-per-sample}
   @argument[object]{a @class{gdk-pixbuf} object}
   @argument[bits-per-sample]{an integer with the number of bits per sample}
@@ -343,7 +345,7 @@
 (setf (gethash 'gdk-pixbuf-colorspace atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-colorspace 'function)
- "@version{2020-11-20}
+ "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-colorspace object) => colorspace}
   @argument[object]{a @class{gdk-pixbuf} object}
   @argument[colorspace]{a @symbol{gdk-colorspace} value}
@@ -369,7 +371,7 @@
 (setf (gethash 'gdk-pixbuf-has-alpha atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-has-alpha 'function)
- "@version{2020-11-20}
+ "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-has-alpha object) => has-alpha}
   @argument[object]{a @class{gdk-pixbuf} object}
   @argument[has-alpha]{a boolean whether the pixbuf has an alpha channel}
@@ -395,7 +397,7 @@
 (setf (gethash 'gdk-pixbuf-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-height 'function)
- "@version{2020-11-20}
+ "@version{*2021-12-12}
   @syntax[]{(gdk-pixbuf-height object) => height}
   @argument[object]{a @class{gdk-pixbuf} object}
   @argument[height]{an integer with the number of rows of the pixbuf}
@@ -422,7 +424,7 @@
 (setf (gethash 'gdk-pixbuf-n-channels atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-n-channels 'function)
- "@version{2020-11-21}
+ "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-n-channels object) => n-channels}
   @argument[object]{a @class{gdk-pixbuf} object}
   @argument[n-channels]{an integer with the number of channels}
@@ -446,7 +448,7 @@
 (setf (gethash 'gdk-pixbuf-pixel-bytes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-pixel-bytes 'function)
- "@version{2020-11-24}
+ "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-pixel-bytes object) => pixel-bytes}
   @argument[object]{a @class{gdk-pixbuf} object}
   @argument[pixel-bytes]{pixel data of type @code{GByts}}
@@ -456,10 +458,6 @@
   @end{short}
 
   Querries the readonly pixel data.
-  @begin[Note]{dictionary}
-    At this time the GBytes structure is not implemented. This function
-    signals an error.
-  @end{dictionary}
   @see-class{gdk-pixbuf}")
 
 ;;; --- gdk-pixbuf-pixels ------------------------------------------------------
@@ -474,7 +472,7 @@
 (setf (gethash 'gdk-pixbuf-pixels atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-pixels 'function)
- "@version{2020-11-24}
+ "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-pixels object) => pixels}
   @argument[object]{a @class{gdk-pixbuf} object}
   @argument[pixels]{a pointer to the pixel data of @arg{pixbuf}}
@@ -504,7 +502,7 @@
 (setf (gethash 'gdk-pixbuf-rowstride atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-rowstride 'function)
- "@version{2020-11-21}
+ "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-rowstride object) => rowstride}
   @argument[object]{a @class{gdk-pixbuf} object}
   @argument[rowstride]{an integer with the distance between row starts}
@@ -531,7 +529,7 @@
 (setf (gethash 'gdk-pixbuf-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-pixbuf-width 'function)
- "@version{2020-11-21}
+ "@version{*2021-12-12}
   @syntax[]{(gdk-pixbuf-width object) => width}
   @argument[object]{a @class{gdk-pixbuf} object}
   @argument[width]{an integer with the width of the pixbuf}
@@ -550,7 +548,7 @@
 (defcfun ("gdk_pixbuf_get_pixels_with_length" gdk-pixbuf-pixels-with-length)
     (:pointer :uchar)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-12-12}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @argument[length]{an unsigned integer with the length of the binary data}
   @return{A pointer to the pixbuf's pixel data.}
@@ -575,7 +573,7 @@
 
 (defcfun ("gdk_pixbuf_get_byte_length" gdk-pixbuf-byte-length) g-size
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2012-12-12}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @return{An integer with the length of the pixel data.}
   @short{Returns the length of the pixel data, in bytes.}
@@ -599,7 +597,7 @@
 
 (defcfun ("gdk_pixbuf_get_option" gdk-pixbuf-option) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-option pixbuf key) => value}
   @syntax[]{(setf (gdk-pixbuf-option pixbuf key) value)}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
@@ -609,9 +607,9 @@
     Accessor of an option that may have been attached to the pixbuf.
   @end{short}
 
-  The function @sym{gdk-pixbuf-option} looks up @arg{key} in the list of
+  The @sym{gdk-pixbuf-option} function looks up @arg{key} in the list of
   options that may have been attached to the pixbuf when it was loaded, or that
-  may have been attached. The function @sym{(setf gdk-pixbuf-option)} attaches
+  may have been attached. The @sym{(setf gdk-pixbuf-option)} function attaches
   a key/value pair as an option to a pixbuf. If @arg{key} already exists in the
   list of options attached to pixbuf, the new value is ignored.
 
@@ -636,7 +634,7 @@
 
 (defcfun ("gdk_pixbuf_remove_option" gdk-pixbuf-remove-option) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-12-12}
   @argument[pixbuf]{a @class{gdk-pixbuf} oject}
   @argument[key]{a string representing the key to remove}
   @return{@em{True} if an option was removed, @em{false} if not.}
@@ -679,9 +677,9 @@
 
 (defcfun ("gdk_pixbuf_copy_options" gdk-pixbuf-copy-options) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
-  @argument[src-pixbuf]{a @class{gdk-pixbuf} to copy options from}
-  @argument[dest-pixbuf]{a @class{gdk-pixbuf} to copy options to}
+ "@version{2021-12-12}
+  @argument[src]{a @class{gdk-pixbuf} to copy options from}
+  @argument[dest]{a @class{gdk-pixbuf} to copy options to}
   @return{@em{True} on sucess.}
   @begin{short}
     Copy the key/value pair options attached to a pixbuf to another.
@@ -693,8 +691,8 @@
   Since 2.36
   @see-class{gdk-pixbuf}
   @see-function{gdk-pixbuf-option}"
-  (src-pixbuf (g-object gdk-pixbuf))
-  (dest-pixbuf (g-object gdk-pixbuf)))
+  (src (g-object gdk-pixbuf))
+  (dest (g-object gdk-pixbuf)))
 
 (export 'gdk-pixbuf-copy-options)
 
@@ -704,14 +702,14 @@
 
 (defcfun ("gdk_pixbuf_read_pixels" gdk-pixbuf-read-pixels) (:pointer :uint8)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-12-12}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @return{A pointer to the pixel data.}
   @begin{short}
     Returns a read-only pointer to the raw pixel data.
   @end{short}
   Must not be modified. This function allows skipping the implicit copy that
-  must be made if the function @fun{gdk-pixbuf-pixels} is called on a read-only
+  must be made if the @fun{gdk-pixbuf-pixels} function is called on a read-only
   pixbuf.
 
   Since 2.32
