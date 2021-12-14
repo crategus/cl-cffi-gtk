@@ -76,10 +76,6 @@
 
 ;; Callback function to free a pointer
 
-(defcallback stable-pointer-destroy-notify-cb :void ((data :pointer))
-  (free-stable-pointer data))
-
-;; a second implementation with a slightly shorter name for the function
 (defcallback stable-pointer-destroy-notify :void ((data :pointer))
   (free-stable-pointer data))
 
