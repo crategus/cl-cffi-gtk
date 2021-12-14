@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -82,9 +82,10 @@
   (:direct-color 5))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-visual-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-visual-type atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gdk-visual-type atdoc:*external-symbols*)
- "@version{2020-9-25}
+ "@version{2021-12-14}
   @begin{short}
     A set of values that describe the manner in which the pixel values for a
     visual are converted into RGB values for display.
@@ -111,7 +112,7 @@
       pixel values into RGB values. The color map can be changed by an
       application.}
     @entry[:true-color]{Each pixel value directly contains red, green, and blue
-      components. Use the function @fun{gdk-visual-red-pixel-details}, etc, to
+      components. Use the @fun{gdk-visual-red-pixel-details} function, etc, to
       obtain information about how the components are assembled into a pixel
       value.}
     @entry[:direct-color]{Each pixel value contains red, green, and blue
@@ -135,9 +136,10 @@
   (:msb-first 1))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-byte-order atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-byte-order atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gdk-byte-order atdoc:*external-symbols*)
- "@version{2020-9-25}
+ "@version{2021-12-14}
   @begin{short}
     A set of values describing the possible byte-orders for storing pixel
     values in memory.
@@ -172,9 +174,10 @@
   nil)
 
 (setf (documentation 'gdk-visual 'type)
- "@version{2020-9-25}
+ "@version{2021-12-14}
   @begin{short}
-    A @sym{gdk-visual} describes a particular video hardware display format.
+    A @sym{gdk-visual} object describes a particular video hardware display
+    format.
   @end{short}
   It includes information about the number of bits used for each color, the way
   the bits are translated into an RGB value for display, and the way the bits
@@ -184,8 +187,8 @@
   \"red\" element of an RGB pixel may be in the top 8 bits of the pixel, or
   may be in the lower 4 bits.
 
-  There are several standard visuals. The visual returned by the function
-  @fun{gdk-screen-system-visual} is the system's default visual.
+  There are several standard visuals. The visual returned by the
+  @fun{gdk-screen-system-visual} function is the default visual of the system.
 
   A number of functions are provided for determining the \"best\" available
   visual. For the purposes of making this determination, higher bit depths are
@@ -214,23 +217,23 @@
 
 (defun gdk-query-depths ()
  #+cl-cffi-gtk-documentation
- "@version{2020-11-10}
+ "@version{2021-12-14}
   @return{A list of integers of the available depths.}
   @begin{short}
     This function returns the available bit depths for the default screen.
   @end{short}
-  It is equivalent to listing the visuals with the function
-  @fun{gdk-list-visuals} and then looking at the depth field in each visual,
-  removing duplicates.
+  It is equivalent to listing the visuals with the @fun{gdk-list-visuals}
+  function and then looking at the depth field in each visual, removing
+  duplicates.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-query-depths} has been deprecated since version 3.22
-    and should not be used in newly-written code. Visual selection should be
-    done using the functions @fun{gdk-screen-system-visual} and
-    @fun{gdk-screen-rgba-visual}.
+    The @sym{gdk-query-depths} function has been deprecated since version 3.22
+    and should not be used in newly written code. Visual selection should be
+    done using the @fun{gdk-screen-system-visual} and
+    @fun{gdk-screen-rgba-visual} functions.
   @end{dictionary}
   @begin[Example]{dictionary}
     @begin{pre}
- (gdk-query-depths)
+(gdk-query-depths)
 => (32 24)
     @end{pre}
   @end{dictionary}
@@ -257,20 +260,20 @@
 
 (defun gdk-query-visual-types ()
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2021-12-14}
   @return{A list of the available visual types of type
     @symbol{gdk-visual-type}.}
   @begin{short}
     This function returns the available visual types for the default screen.
   @end{short}
-  It is equivalent to listing the visuals with the function
-  @fun{gdk-list-visuals} and then looking at the type field in each visual,
-  removing duplicates.
+  It is equivalent to listing the visuals with the @fun{gdk-list-visuals}
+  function and then looking at the type field in each visual, removing
+  duplicates.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-query-visual-types} has been deprecated since version
-    3.22 and should not be used in newly-written code. Visual selection should
-    be done using the functions @fun{gdk-screen-system-visual} and
-    @fun{gdk-screen-rgba-visual}.
+    The @sym{gdk-query-visual-types} function has been deprecated since version
+    3.22 and should not be used in newly written code. Visual selection should
+    be done using the @fun{gdk-screen-system-visual} and
+    @fun{gdk-screen-rgba-visual} functions.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-symbol{gdk-visual-type}
@@ -293,19 +296,19 @@
 (defcfun ("gdk_list_visuals" gdk-list-visuals)
     (g-list (g-object gdk-visual) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-25}
+ "@version{2021-12-14}
   @return{A list of @class{gdk-visual} objects.}
   @begin{short}
     Lists the available visuals for the default screen.
   @end{short}
-  A visual describes a hardware image data format. See the function
-  @fun{gdk-screen-list-visuals}.
+  A visual describes a hardware image data format. See the
+  @fun{gdk-screen-list-visuals} function.
 
   For example, a visual might support 24-bit color, or 8-bit color, and might
   expect pixels to be in a certain format.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-list-visuals} has been deprecated since version 3.22
-    and should not be used in newly-written code. Use the call
+    The @sym{gdk-list-visuals} function has been deprecated since version 3.22
+    and should not be used in newly written code. Use the call
     @code{(gdk-screen-list-visuals (gdk-screen-default))}.
   @end{dictionary}
   @see-class{gdk-visual}
@@ -319,7 +322,7 @@
 
 (defcfun ("gdk_visual_get_bits_per_rgb" gdk-visual-bits-per-rgb) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-10-11}
+ "@version{2021-12-14}
   @argument[visual]{a @class{gdk-visual} object}
   @return{An integer with the number of significant bits per color value for
     visual.}
@@ -327,10 +330,10 @@
     Returns the number of significant bits per red, green and blue value.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-bits-per-rgb} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Use the function
-    @fun{gdk-visual-red-pixel-details} and its variants to learn about the
-    pixel layout of TrueColor and DirectColor visuals.
+    The @sym{gdk-visual-bits-per-rgb} function has been deprecated since
+    version 3.22 and should not be used in newly written code. Use the
+    @fun{gdk-visual-red-pixel-details} function and its variants to learn about
+    the pixel layout of TrueColor and DirectColor visuals.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-red-pixel-details}
@@ -353,19 +356,19 @@
 
 (defun gdk-visual-blue-pixel-details (visual)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-11}
+ "@version{2021-12-14}
   @argument[visual]{a @class{gdk-visual} object}
   @begin{return}
-    @code{mask} -- an unsigned integer, or @code{nil} @br{}
-    @code{shift} -- an integer, or @code{nil} @br{}
-    @code{precision} -- an integer, or @code{nil}
+    @arg{mask} -- an unsigned integer, or @code{nil} @br{}
+    @arg{shift} -- an integer, or @code{nil} @br{}
+    @arg{precision} -- an integer, or @code{nil}
   @end{return}
   @begin{short}
     Obtains values that are needed to calculate blue pixel values in TrueColor
     and DirectColor.
   @end{short}
-  @arg{mask} is the significant bits within the pixel. @arg{shift} is the
-  number of bits left we must shift a primary for it to be in position
+  The @arg{mask} argument is the significant bits within the pixel. @arg{shift}
+  is the number of bits left we must shift a primary for it to be in position
   according to @arg{mask}. Finally, @arg{precision} refers to how much
   precision the pixel value contains for a particular primary.
   @see-class{gdk-visual}
@@ -385,7 +388,7 @@
 
 (defcfun ("gdk_visual_get_byte_order" gdk-visual-byte-order) gdk-byte-order
  #+cl-cffi-gtk-documentation
- "@version{2020-11-10}
+ "@version{2021-12-14}
   @argument[visual]{a @class{gdk-visual} object}
   @return{A @symbol{gdk-byte-order} value stating the byte order of
     @arg{visual}.}
@@ -393,8 +396,8 @@
     Returns the byte order of the visual.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-byte-order} has been deprecated since version
-    3.22 and should not be used in newly-written code. This information is not
+    The @sym{gdk-visual-byte-order} function has been deprecated since version
+    3.22 and should not be used in newly written code. This information is not
     useful.
   @end{dictionary}
   @see-class{gdk-visual}
@@ -409,7 +412,7 @@
 
 (defcfun ("gdk_visual_get_colormap_size" gdk-visual-colormap-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-10-11}
+ "@version{2021-12-14}
   @argument[visual]{a @class{gdk-visual} object}
   @return{An integer with the size of a colormap that is suitable for
     @arg{visual}.}
@@ -417,8 +420,8 @@
     Returns the size of a colormap for the visual.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-colormap-size} has been deprecated since
-    version 3.22 and should not be used in newly-written code. This information
+    The @sym{gdk-visual-colormap-size} function has been deprecated since
+    version 3.22 and should not be used in newly written code. This information
     is not useful, since GDK does not provide APIs to operate on colormaps.
   @end{dictionary}
   @see-class{gdk-visual}"
@@ -432,12 +435,10 @@
 
 (defcfun ("gdk_visual_get_depth" gdk-visual-depth) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-10-11}
+ "@version{2021-12-14}
   @argument[visual]{a @class{gdk-visual} object}
   @return{An integer with the bit depth of @arg{visual}.}
-  @begin{short}
-    Returns the bit depth of the visual.
-  @end{short}
+  @short{Returns the bit depth of the visual.}
   @see-class{gdk-visual}"
   (visual (g-object gdk-visual)))
 
@@ -455,19 +456,19 @@
   (precision (:pointer :int)))
 
 (defun gdk-visual-green-pixel-details (visual)
- "@version{2020-10-11}
+ "@version{2021-12-14}
   @argument[visual]{a @class{gdk-visual} object}
   @begin{return}
-    @code{mask} -- an unsigned integer, or @code{nil} @br{}
-    @code{shift} -- an integer, or @code{nil} @br{}
-    @code{precision} -- an integer, or @code{nil}
+    @arg{mask} -- an unsigned integer, or @code{nil} @br{}
+    @arg{shift} -- an integer, or @code{nil} @br{}
+    @arg{precision} -- an integer, or @code{nil}
   @end{return}
   @begin{short}
     Obtains values that are needed to calculate green pixel values in TrueColor
     and DirectColor.
   @end{short}
-  @arg{mask} is the significant bits within the pixel. @arg{shift} is the
-  number of bits left we must shift a primary for it to be in position
+  The @arg{mask} argument is the significant bits within the pixel. @arg{shift}
+  is the number of bits left we must shift a primary for it to be in position
   according to @arg{mask}. Finally, @arg{precision} refers to how much
   precision the pixel value contains for a particular primary.
   @see-class{gdk-visual}
@@ -493,19 +494,19 @@
   (precision (:pointer :int)))
 
 (defun gdk-visual-red-pixel-details (visual)
- "@version{2020-11-10}
+ "@version{2021-12-14}
   @argument[visual]{a @class{gdk-visual} object}
   @begin{return}
-    @code{mask} -- an unsigned integer, or @code{nil} @br{}
-    @code{shift} -- an integer, or @code{nil} @br{}
-    @code{precision} -- an integer, or @code{nil}
+    @arg{mask} -- an unsigned integer, or @code{nil} @br{}
+    @arg{shift} -- an integer, or @code{nil} @br{}
+    @arg{precision} -- an integer, or @code{nil}
   @end{return}
   @begin{short}
     Obtains values that are needed to calculate red pixel values in TrueColor
     and DirectColor.
   @end{short}
-  @arg{mask} is the significant bits within the pixel. @arg{shift} is the
-  number of bits left we must shift a primary for it to be in position
+  The @arg{mask} argument is the significant bits within the pixel. @arg{shift}
+  is the number of bits left we must shift a primary for it to be in position
   according to @arg{mask}. Finally, @arg{precision} refers to how much
   precision the pixel value contains for a particular primary.
   @see-class{gdk-visual}
@@ -525,7 +526,7 @@
 
 (defcfun ("gdk_visual_get_visual_type" gdk-visual-visual-type) gdk-visual-type
  #+cl-cffi-gtk-documentation
- "@version{2020-11-10}
+ "@version{2021-12-14}
   @argument[visual]{a @class{gdk-visual} object}
   @return{A @symbol{gdk-visual-type} value stating the type of @arg{visual}.}
   @begin{short}
@@ -543,7 +544,7 @@
 
 (defcfun ("gdk_visual_get_best_depth" gdk-visual-best-depth) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-11-10}
+ "@version{2021-12-14}
   @return{An integer with the best available depth.}
   @begin{short}
     Get the best available depth for the default GDK screen.
@@ -551,10 +552,10 @@
   \"Best\" means \"largest\", i.e. 32 preferred over 24 preferred over 8 bits
   per pixel.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-best-depth} has been deprecated since version
-    3.22 and should not be used in newly-written code. Visual selection should
-    be done using the functions @fun{gdk-screen-system-visual} and
-    @fun{gdk-screen-rgba-visual}.
+    The @sym{gdk-visual-best-depth} function has been deprecated since version
+    3.22 and should not be used in newly written code. Visual selection should
+    be done using the @fun{gdk-screen-system-visual} and
+    @fun{gdk-screen-rgba-visual} functions.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-best-type}
@@ -569,16 +570,16 @@
 
 (defcfun ("gdk_visual_get_best_type" gdk-visual-best-type) gdk-visual-type
  #+cl-cffi-gtk-documentation
- "@version{2020-9-26}
+ "@version{2021-12-14}
   @return{Best visual type of type @symbol{gdk-visual-type}.}
   @begin{short}
     Return the best available visual type for the default GDK screen.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-best-type} has been deprecated since version
-    3.22 and should not be used in newly-written code. Visual selection should
-    be done using the functions @fun{gdk-screen-system-visual} and
-    @fun{gdk-screen-rgba-visual}.
+    The @sym{gdk-visual-best-type} function has been deprecated since version
+    3.22 and should not be used in newly written code. Visual selection should
+    be done using the @fun{gdk-screen-system-visual} and
+    @fun{gdk-screen-rgba-visual} functions.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-best-depth}
@@ -593,15 +594,15 @@
 
 (defcfun ("gdk_visual_get_system" gdk-visual-system) (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-26}
+ "@version{2021-12-14}
   @return{The system @class{gdk-visual} object.}
   @begin{short}
-    Get the system's default visual for the default GDK screen.
+    Get the default visual of the system for the default GDK screen.
   @end{short}
   This is the visual for the root window of the display.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-system} has been deprecated since version 3.22
-    and should not be used in newly-written code. Use the call
+    The @sym{gdk-visual-system} function has been deprecated since version 3.22
+    and should not be used in newly written code. Use the call
     @code{(gdk-screen-system-visual (gdk-screen-default))}.
   @end{dictionary}
   @see-class{gdk-visual}
@@ -617,16 +618,16 @@
 
 (defcfun ("gdk_visual_get_best" gdk-visual-best) (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-26}
+ "@version{2021-12-14}
   @return{The best @class{gdk-visual} object.}
   @begin{short}
     Get the visual with the most available colors for the default GDK screen.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-best} has been deprecated since version 3.22
-    and should not be used in newly-written code. Visual selection should be
-    done using the functions @fun{gdk-screen-system-visual} and
-    @fun{gdk-screen-rgba-visual}.
+    The @sym{gdk-visual-best} has been deprecated since version 3.22
+    and should not be used in newly written code. Visual selection should be
+    done using the @fun{gdk-screen-system-visual} and
+    @fun{gdk-screen-rgba-visual} functions.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-system}
@@ -645,7 +646,7 @@
 (defcfun ("gdk_visual_get_best_with_depth" gdk-visual-best-with-depth)
     (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-10}
+ "@version{2021-12-14}
   @argument[depth]{an integer with the bit depth}
   @return{The best @class{gdk-visual} object for the given @arg{depth}.}
   @begin{short}
@@ -655,10 +656,10 @@
   or fixed-colormap visuals. @code{Nil} may be returned if no visual supports
   @arg{depth}.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-best-with-depth} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Visual selection
-    should be done using the functions @fun{gdk-screen-system-visual} and
-    @fun{gdk-screen-rgba-visual}.
+    The @sym{gdk-visual-best-with-depth} function has been deprecated since
+    version 3.22 and should not be used in newly written code. Visual selection
+    should be done using the @fun{gdk-screen-system-visual} and
+    @fun{gdk-screen-rgba-visual} functions.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-system}
@@ -678,7 +679,7 @@
 (defcfun ("gdk_visual_get_best_with_type" gdk-visual-best-with-type)
     (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-26}
+ "@version{2021-12-14}
   @argument[visual-type]{a value of the @symbol{gdk-visual-type} enumeration}
   @return{The best @class{gdk-visual} object of the given @arg{visual-type}.}
   @begin{short}
@@ -687,10 +688,10 @@
   Visuals with higher color depths are considered better. @code{Nil} may be
   returned if no visual has type @arg{visual-type}.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-best-with-type} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Visual selection
-    should be done using the functions @fun{gdk-screen-system-visual} and
-    @fun{gdk-screen-rgba-visual}.
+    The @sym{gdk-visual-best-with-type} function has been deprecated since
+    version 3.22 and should not be used in newly written code. Visual selection
+    should be done using the @fun{gdk-screen-system-visual} and
+    @fun{gdk-screen-rgba-visual} functions.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-system}
@@ -710,20 +711,20 @@
 (defcfun ("gdk_visual_get_best_with_both" gdk-visual-best-with-both)
     (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-10}
+ "@version{2021-12-14}
   @argument[depth]{an integer with the bit depth}
   @argument[visual-type]{a value of the @symbol{gdk-visual-type} enumeration}
   @return{The best @class{gdk-visual} object with both @arg{depth} and
     @arg{visual-type}, or @code{nil} if none.}
   @begin{short}
-    Combines the functions @fun{gdk-visual-best-with-depth} and
-    @fun{gdk-visual-best-with-type}.
+    Combines the @fun{gdk-visual-best-with-depth} and
+    @fun{gdk-visual-best-with-type} functions.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-visual-best-with-both} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Visual selection
-    should be done using the functions @fun{gdk-screen-system-visual} and
-    @fun{gdk-screen-rgba-visual}.
+    The @sym{gdk-visual-best-with-both} function has been deprecated since
+    version 3.22 and should not be used in newly written code. Visual selection
+    should be done using the @fun{gdk-screen-system-visual} and
+    @fun{gdk-screen-rgba-visual} functions.
   @end{dictionary}
   @see-class{gdk-visual}
   @see-function{gdk-visual-system}
@@ -742,12 +743,10 @@
 
 (defcfun ("gdk_visual_get_screen" gdk-visual-screen) (g-object gdk-screen)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-26}
+ "@version{2021-12-14}
   @argument[visual]{a @class{gdk-visual} object}
   @return{The @class{gdk-screen} object to which @arg{visual} belongs.}
-  @begin{short}
-    Gets the screen to which the visual belongs.
-  @end{short}
+  @short{Gets the screen to which the visual belongs.}
   @see-class{gdk-visual}
   @see-class{gdk-screen}"
   (visual (g-object gdk-visual)))

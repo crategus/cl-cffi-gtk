@@ -198,6 +198,10 @@
     @about-symbol{gdk-time-coord}
     @about-symbol{gdk-grab-status}
     @about-class{gdk-device-tool}
+    @about-generic{gdk-device-tool-axes}
+    @about-generic{gdk-device-tool-hardware-id}
+    @about-generic{gdk-device-tool-serial}
+    @about-generic{gdk-device-tool-tool-type}
     @about-class{gdk-device}
     @about-generic{gdk-device-associated-device}
     @about-generic{gdk-device-axes}
@@ -270,7 +274,7 @@
     Pixbufs are client-side images. For details on how to create and manipulate
     pixbufs, see the @class{gdk-pixbuf} API documentation. The functions
     described here allow to obtain pixbufs from @class{gdk-window} objects and
-    cairo surfaces.
+    Cairo surfaces.
 
     @about-function{gdk-pixbuf-from-window}
     @about-function{gdk-pixbuf-from-surface}
@@ -572,10 +576,10 @@
   @begin[Events]{section}
     Functions for handling events from the window system.
 
-    In GTK applications the events are handled automatically in the function
-    @fun{gtk-main-do-event} and passed on to the appropriate widgets, so these
-    functions are rarely needed. Though some of the fields in the Event
-    Structures are useful.
+    In GTK applications the events are handled automatically in the
+    @fun{gtk-main-do-event} function and passed on to the appropriate widgets,
+    so these functions are rarely needed. Though some of the fields in the event
+    structures are useful.
 
     @about-variable{+gdk-current-time+}
     @about-variable{+gdk-priority-events+}
@@ -587,6 +591,7 @@
     @about-variable{+gdk-button-secondary+}
     @about-symbol{gdk-event-type}
     @about-symbol{gdk-event-mask}
+    @about-symbol{gdk-touchpad-gesture-phase}
     @about-class{gdk-event-sequence}
     @about-function{gdk-events-pending}
     @about-function{gdk-event-peek}
@@ -631,8 +636,7 @@
 
     @subheading{Note}
     A common mistake is to forget to set the event mask of a widget so that
-    the required events are received. See the function
-    @fun{gtk-widget-events}.
+    the required events are received. See the @fun{gtk-widget-events} function.
 
     @about-symbol{gdk-scroll-direction}
     @about-symbol{gdk-visibility-state}
@@ -1074,7 +1078,7 @@
     in the main thread.
 
     You can schedule work in the main thread safely from other threads by using
-    the functions @fun{gdk-threads-add-idle} and @fun{ gdk-threads-add-timeout}.
+    the @fun{gdk-threads-add-idle} and @fun{ gdk-threads-add-timeout} functions.
     @begin{pre}
 static void
 worker_thread (void)
@@ -1096,13 +1100,13 @@ got_value (gpointer user_data)
   return G_SOURCE_REMOVE;
 @}
     @end{pre}
-    You should use the functions @fun{gdk-threads-add-idle} and
-    @fun{gdk-threads-add-timeout} instead of @fun{g-idle-add} and
-    @fun{g-timeout-add} since libraries not under your control might be using
-    the deprecated GDK locking mechanism. If you are sure that none of the code
-    in your application and libraries use the deprecated
+    You should use the @fun{gdk-threads-add-idle} and
+    @fun{gdk-threads-add-timeout} functions instead of the @fun{g-idle-add} and
+    @fun{g-timeout-add} functions since libraries not under your control might
+    be using the deprecated GDK locking mechanism. If you are sure that none of
+    the code in your application and libraries use the deprecated
     @code{gdk_threads_enter()} or @code{gdk_threads_leave()} methods, then you
-    can safely use the functions @fun{g-idle-add} and @fun{g-timeout-add}.
+    can safely use the @fun{g-idle-add} and @fun{g-timeout-add} functions.
 
     For more information on this \"worker thread\" pattern, you should also
     look at @code{GTask}, which gives you high-level tools to perform expensive
@@ -1122,23 +1126,23 @@ got_value (gpointer user_data)
   @begin[Pango Interaction]{section}
     Pango is the text layout system used by GDK and GTK. The functions and
     types in this section are used to obtain clip regions for
-    @class{pango-layout}'s, and to get @class{pango-context}'s that can be
-    used with GDK.
+    @class{pango-layout} objects, and to get @class{pango-context} objects that
+    can be used with GDK.
 
     Creating a @class{pango-layout} object is the first step in rendering text,
     and requires getting a handle to a @class{pango-context}. For GTK programs,
-    you will usually want to use the functions @fun{gtk-widget-pango-context},
-    or @fun{gtk-widget-create-pango-layout}, rather than using the lowlevel
-    function @fun{gdk-pango-context-for-screen}. Once you have a
+    you will usually want to use the @fun{gtk-widget-pango-context},
+    or @fun{gtk-widget-create-pango-layout} functions, rather than using the
+    lowlevel @fun{gdk-pango-context-for-screen} function. Once you have a
     @class{pango-layout} object, you can set the text and attributes of it with
-    Pango functions like @fun{pango-layout-text} and get its size with the
-    function @fun{pango-layout-size}. Note that Pango uses a fixed point system
-    internally, so converting between Pango units and pixels using the constant
-    @var{+pango-scale+} or the function @fun{pango-pixels}.
+    Pango functions like the @fun{pango-layout-text} function and get its size
+    with the @fun{pango-layout-size} function. Note that Pango uses a fixed
+    point system internally, so converting between Pango units and pixels using
+    the @var{+pango-scale+} constant or the @fun{pango-pixels} function.
 
-    Rendering a Pango layout is done most simply with the function
-    @fun{pango-cairo-show-layout}. You can also draw pieces of the layout with
-    the function @fun{pango-cairo-show-layout-line}.
+    Rendering a Pango layout is done most simply with the
+    @fun{pango-cairo-show-layout} function. You can also draw pieces of the
+    layout with the @fun{pango-cairo-show-layout-line} function.
 
     @b{Example:} Draw transformed text with Pango and Cairo
 
@@ -1229,7 +1233,7 @@ got_value (gpointer user_data)
 
     GDK does not wrap the Cairo API, instead it allows to create Cairo contexts
     which can be used to draw on @class{gdk-window} objects. Additional
-    functions allow use @class{gdk-rectangle} objects with Cairo and to use
+    functions allow use @class{gdk-rectangle} instances with Cairo and to use
     @class{gdk-color}, @class{gdk-rgba}, @class{gdk-pixbuf} and
     @class{gdk-window} objects as sources for drawing operations.
 

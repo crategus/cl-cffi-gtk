@@ -142,8 +142,8 @@
 (setf (gethash 'gdk-scroll-direction atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-scroll-direction atdoc:*external-symbols*)
- "@version{2021-4-25}
-  @short{Specifies the direction for an event of type @class{gdk-event-scroll}.}
+ "@version{2021-12-13}
+  @short{Specifies the direction for a @class{gdk-event-scroll} event.}
   @begin{pre}
 (define-g-enum \"GdkScrollDirection\" gdk-scroll-direction
   (:export t
@@ -160,8 +160,8 @@
     @entry[:left]{The window is scrolled to the left.}
     @entry[:right]{The window is scrolled to the right.}
     @entry[:smooth]{The scrolling is determined by the delta values in the
-      @class{gdk-event-scroll} event. See the function
-      @fun{gdk-event-scroll-deltas}.}
+      @class{gdk-event-scroll} event. See the @fun{gdk-event-scroll-deltas}
+      function.}
   @end{table}
   @see-class{gdk-event-scroll}
   @see-function{gdk-event-scroll-deltas}")
@@ -181,7 +181,7 @@
 (setf (gethash 'gdk-visibility-state atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-visibility-state atdoc:*external-symbols*)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @begin{short}
     Specifies the visiblity status of a window for a
     @class{gdk-event-visibility} event.
@@ -222,7 +222,7 @@
 (setf (gethash 'gdk-crossing-mode atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-crossing-mode atdoc:*external-symbols*)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @short{Specifies the crossing mode for a @class{gdk-event-crossing} event.}
   @begin{pre}
 (define-g-enum \"GdkCrosssingMode\" gdk-crossing-mode
@@ -274,7 +274,7 @@
 (setf (gethash 'gdk-notify-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-notify-type atdoc:*external-symbols*)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @short{Specifies the kind of crossing for a @class{gdk-event-crossing} event.}
   See the X11 protocol specification of @code{LeaveNotify} for full details of
   crossing event generation.
@@ -319,7 +319,7 @@
 (setf (gethash 'gdk-property-state atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-property-state atdoc:*external-symbols*)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @begin{short}
     Specifies the type of a property change for a @class{gdk-event-property}
     event.
@@ -375,7 +375,7 @@
 (setf (gethash 'gdk-window-state atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gdk-window-state atdoc:*external-symbols*)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @short{Specifies the state of a toplevel window.}
   @begin{pre}
 (define-g-flags \"GdkWindowState\" gdk-window-state
@@ -437,7 +437,7 @@
 (setf (gethash 'gdk-setting-action atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-setting-action atdoc:*external-symbols*)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @begin{short}
     Specifies the kind of modification applied to a setting in a
     @class{gdk-event-setting} event.
@@ -472,7 +472,7 @@
 (setf (gethash 'gdk-owner-change atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-owner-change atdoc:*external-symbols*)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @short{Specifies why a selection ownership was changed.}
   @begin{pre}
 (define-g-enum \"GdkOwnerChange\" gdk-owner-change
@@ -560,8 +560,8 @@
 (setf (gethash 'gdk-event-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gdk-event-type atdoc:*external-symbols*)
- "@version{*2021-6-8}
-  @short{Specifies the type of a @struct{gdk-event} instance.}
+ "@version{*2021-12-13}
+  @short{Specifies the type of a @class{gdk-event} instance.}
 
   Do not confuse these events with the signals that GTK widgets emit.
   Although many of these events result in corresponding signals being emitted,
@@ -639,7 +639,7 @@
     @entry[:3button-press]{A mouse button has been clicked 3 times in a short
       period of time. Note that each click also generates a @code{:button-press}
       event.}
-    @entry[:triple-button-press]{Alias for @code{:3button-press}.}
+    @entry[:triple-button-press]{Alias for the @code{:3button-press} event.}
     @entry[:button-release]{A mouse button has been released.}
     @entry[:key-press]{A key has been pressed.}
     @entry[:key-release]{A key has been released.}
@@ -647,8 +647,8 @@
     @entry[:leave-notify]{The pointer has left the window.}
     @entry[:focus-change]{The keyboard focus has entered or left the window.}
     @entry[:configure]{The size, position or stacking order of the window has
-      changed. Note that GTK discards these events for windows with the type
-      @code{:child} of the @symbol{gdk-window-type} enumeration.}
+      changed. Note that GTK discards these events for windows with the
+      @code{:child} value of the @symbol{gdk-window-type} enumeration.}
     @entry[:map]{The window has been mapped.}
     @entry[:unmap]{The window has been unmapped.}
     @entry[:property-notify]{A property on the window has been changed or
@@ -731,7 +731,7 @@
 (setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gdk-modifier-type atdoc:*external-symbols*)
- "@version{2021-5-13}
+ "@version{2021-12-13}
   @begin{short}
     A set of bit-flags to indicate the state of modifier keys and mouse buttons
     in various event types.
@@ -847,7 +847,7 @@
 (setf (gethash 'gdk-event-mask atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gdk-event-mask atdoc:*external-symbols*)
- "@version{*2021-6-8}
+ "@version{*2021-12-13}
   @begin{short}
     A set of bit-flags to indicate which events a window is to receive.
   @end{short}
@@ -861,17 +861,17 @@
   the @code{:pointer-motion-hint-mask} mask, fewer @code{:motion-notify} events
   will be sent, some of which are marked as a hint. To receive more motion
   events after a motion hint event, the application needs to asks for more, by
-  calling the function @fun{gdk-event-request-motions}.
+  calling the @fun{gdk-event-request-motions} function.
 
   Motion events are already compressed by default, independent of this
-  mechanism. This compression can be disabled with the function
-  @fun{gdk-window-event-compression}.
+  mechanism. This compression can be disabled with the
+  @fun{gdk-window-event-compression} function.
 
   If the @code{:touch-mask} mask is enabled, the window will receive touch
   events from touch-enabled devices. Those will come as sequences of
   @class{gdk-event-touch} events with the @code{:touch-update} type, enclosed
   by two events with @code{:touch-begin} and @code{:touch-end} types, or
-  @code{:touch-cancel} type. The function @fun{gdk-event-event-sequence}
+  @code{:touch-cancel} type. The @fun{gdk-event-event-sequence} function
   returns the event sequence for these events, so different sequences may be
   distinguished.
   @begin{pre}
@@ -945,6 +945,59 @@
   @see-function{gdk-event-event-sequence}")
 
 ;;; ----------------------------------------------------------------------------
+;;; GdkTouchpadGesturePhase
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GdkTouchpadGesturePhase" gdk-touchpad-gesture-phase
+  (:export t
+   :type-initializer "gdk_touchpad_gesture_phase_get_type")
+  (:begin 0)
+  (:update 1)
+  (:end 2)
+  (:cancel 3))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-touchpad-gesture-phase atdoc:*symbol-name-alias*)
+      "GEnum"
+      (gethash 'gdk-touchpad-gesture-phase atdoc:*external-symbols*)
+ "@version{2021-12-13}
+  @begin{short}
+    The @sym{gdk-touchpad-gesture-phase} enumeration specifies the current
+    state of a touchpad gesture.
+  @end{short}
+  All gestures are guaranteed to begin with an event with @code{:begin}
+  phase, followed by 0 or several events with @code{:update} phase.
+
+  A finished gesture may have 2 possible outcomes, an event with @code{:end}
+  phase will be emitted when the gesture is considered successful, this should
+  be used as the hint to perform any permanent changes.
+
+  Cancelled gestures may be so for a variety of reasons, due to hardware or the
+  compositor, or due to the gesture recognition layers hinting the gesture did
+  not finish resolutely, e.g. a 3rd finger being added during a pinch gesture.
+  In these cases, the last event will report the @code{:cancel} phase, this
+  should be used as a hint to undo any visible/permanent changes that were done
+  throughout the progress of the gesture.
+  @begin{pre}
+(define-g-enum \"GdkTouchpadGesturePhase\" gdk-touchpad-gesture-phase
+  (:export t
+   :type-initializer \"gdk_touchpad_gesture_phase_get_type\")
+  (:begin 0)
+  (:update 1)
+  (:end 2)
+  (:cancel 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:begin]{The gesture has begun.}
+    @entry[:update]{The gesture has been updated.}
+    @entry[:end]{The gesture was finished, changes should be permanently
+      applied.}
+    @entry[:cancel]{The gesture was cancelled, all changes should be undone.}
+  @end{table}
+  @see-class{gdk-event-touchpad-swipe}
+  @see-class{gdk-event-touchpad-pinch}")
+
+;;; ----------------------------------------------------------------------------
 ;;; GdkEventSequence
 ;;; ----------------------------------------------------------------------------
 
@@ -955,9 +1008,9 @@
 (setf (gethash 'gdk-event-sequence atdoc:*class-name-alias*)
       "GBoxed"
       (documentation 'gdk-event-sequence 'type)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @begin{short}
-    See the function @fun{gdk-event-event-sequence}.
+    See the @fun{gdk-event-event-sequence} function.
   @end{short}
   @see-function{gdk-event-event-sequence}")
 
@@ -1042,7 +1095,8 @@
             ;; GdkEventExpose
             ((:expose) gdk-event-expose
              (area gdk-rectangle :inline t :initform (gdk-rectangle-new))
-             (region (:pointer (:struct cairo-region-t)) :initform (null-pointer))
+             (region (:pointer (:struct cairo-region-t))
+                     :initform (null-pointer))
              (count :int :initform 0))
             ;; GdkEventVisibility
             ((:visibility-notify) gdk-event-visibility
@@ -1170,8 +1224,10 @@
   ))
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event 'type)
+ "@version{2021-12-13}
   @begin{short}
     The @sym{gdk-event} structure contains a union of all of the event
     structures, and allows access to the data fields in a number of ways.
@@ -1420,13 +1476,13 @@
 (setf (gethash 'gdk-event-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-type 'function)
- "@version{*2021-4-25}
+ "@version{*2021-12-13}
   @syntax[]{(gdk-event-type instance) => type}
   @syntax[]{(setf (gdk-event-type instance) type)}
-  @argument[instance]{a @struct{gdk-event} instance}
+  @argument[instance]{a @class{gdk-event} instance}
   @argument[type]{a value of the @symbol{gdk-event-type} enumeration}
   @begin{short}
-    Accessor of the @code{type} slot of the @struct{gdk-event} structure.
+    Accessor of the @code{type} slot of the @class{gdk-event} structure.
   @end{short}
 
   The type of the event as a value of the @symbol{gdk-event-type} enumeration.
@@ -1452,11 +1508,11 @@
 (setf (gethash 'gdk-event-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-window 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-window instance) => window}
   @syntax[]{(setf (gdk-event-window instance) window)}
-  @argument[instance]{a @struct{gdk-event} instance}
-  @argument[window]{the @class{gdk-window} object which received the event}
+  @argument[instance]{a @class{gdk-event} instance}
+  @argument[window]{a @class{gdk-window} object which received the event}
   @begin{short}
     Accessor of the @code{window} slot of the @class{gdk-event} structure.
   @end{short}
@@ -1471,10 +1527,10 @@
 (setf (gethash 'gdk-event-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-send-event 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-send-event instance) => send-event}
   @syntax[]{(setf (gdk-event-send-event instance) send-event)}
-  @argument[instance]{a @struct{gdk-event} instance}
+  @argument[instance]{a @class{gdk-event} instance}
   @argument[send-event]{a boolean whether the event was sent explicitly}
   @begin{short}
     Accessor of the @code{send-event} slot of the @class{gdk-event} structure.
@@ -1488,10 +1544,12 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-key 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-key atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-key 'type)
+ "@version{2021-12-13}
   @short{Describes a key press or key release event.}
-  Possible event types are @code{:key-press} or @code{:key-release}.
+  Possible event types are the @code{:key-press} or @code{:key-release} values.
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
   (type gdk-event-type)
@@ -1527,8 +1585,8 @@
     @entry[string]{A string containing an approximation of the text that would
       result from this keypress. The only correct way to handle text input is
       using input methods, see the @class{gtk-im-context} API, so this field is
-      deprecated and should never be used. The function
-      @fun{gdk-unicode-to-keyval} provides a non-deprecated way of getting an
+      deprecated and should never be used. The @fun{gdk-unicode-to-keyval}
+      function provides a non-deprecated way of getting an
       approximate translation for a key. The @code{string} field is encoded
       in the encoding of the current locale. Note this for backwards
       compatibility: strings in GTK and GDK are typically in UTF-8 and
@@ -1565,7 +1623,7 @@
 (setf (gethash 'gdk-event-key-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-time 'function)
- "@version{2021-4-3}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-key-time instance) => time}
   @syntax[]{(setf (gdk-event-key-time instance) time)}
   @argument[instance]{a @class{gdk-event-key} instance}
@@ -1584,7 +1642,7 @@
 (setf (gethash 'gdk-event-key-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-state 'function)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-key-state instance) => state}
   @syntax[]{(setf (gdk-event-key-state instance) state)}
   @argument[instance]{a @class{gdk-event-key} instance}
@@ -1605,7 +1663,7 @@
 (setf (gethash 'gdk-event-key-keyval atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-keyval 'function)
- "@version{2021-4-3}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-key-keyval instance) => keyval}
   @syntax[]{(setf (gdk-event-key-keyval instance) keyval)}
   @argument[instance]{a @class{gdk-event-key} instance}
@@ -1624,7 +1682,7 @@
 (setf (gethash 'gdk-event-key-length atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-length 'function)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-key-length instance) => length}
   @syntax[]{(setf (gdk-event-key-length instance) length)}
   @argument[instance]{a @class{gdk-event-key} instance}
@@ -1643,7 +1701,7 @@
 (setf (gethash 'gdk-event-key-string atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-string 'function)
- "@version{2021-4-3}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-key-string instance) => string}
   @syntax[]{(setf (gdk-event-key-string instance) string)}
   @argument[instance]{a @class{gdk-event-key} instance}
@@ -1682,7 +1740,7 @@
 (setf (gethash 'gdk-event-key-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-group 'function)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-key-group instance) => group}
   @syntax[]{(setf (gdk-event-key-group instance) group)}
   @argument[instance]{a @class{gdk-event-key} instance}
@@ -1700,7 +1758,7 @@
 (setf (gethash 'gdk-event-key-is-modifier atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-is-modifier 'function)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-key-is-modifier instance) => is-modifier}
   @syntax[]{(setf (gdk-event-key-is-modifier instance) is-modifier)}
   @argument[instance]{a @class{gdk-event-key} instance}
@@ -1720,12 +1778,14 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-button 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-button atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-button 'type)
+ "@version{2021-12-13}
   @short{Used for button press and button release events.}
-  The type field will be one of the values @code{:button-press},
+  The type field will be one of the @code{:button-press},
   @code{:double-button-press}, @code{triple-button-press}, or
-  @code{:button-release}.
+  @code{:button-release} values.
 
   Double and triple-clicks result in a sequence of events being received. For
   double-clicks the order of events will be:
@@ -1832,7 +1892,7 @@
 (setf (gethash 'gdk-event-button-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-button-time instance) => time}
   @syntax[]{(setf (gdk-event-button-time instance) time)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -1852,7 +1912,7 @@
 (setf (gethash 'gdk-event-button-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-x 'function)
- "@version{*2021-6-8}
+ "@version{*2021-12-13}
   @syntax[]{(gdk-event-button-x instance) => x}
   @syntax[]{(setf (gdk-event-button-x instance) x)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -1871,7 +1931,7 @@
 (setf (gethash 'gdk-event-button-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-y 'function)
- "@version{*2021-6-8}
+ "@version{*2021-12-13}
   @syntax[]{(gdk-event-button-y instance) => y}
   @syntax[]{(setf (gdk-event-button-y instance) y)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -1890,7 +1950,7 @@
 (setf (gethash 'gdk-event-button-axes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-axes 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-button-axes instance) => axes}
   @syntax[]{(setf (gdk-event-button-axes instance) axes)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -1909,11 +1969,11 @@
 (setf (gethash 'gdk-event-button-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-state 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-button-state instance) => state}
   @syntax[]{(setf (gdk-event-button-state instance) state)}
   @argument[instance]{a @class{gdk-event-button} instance}
-  @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
+  @argument[state]{a @symbol{gdk-modifier-type} bit-mask representing the
     state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
     @kbd{Alt} keys, and the pointer buttons}
   @begin{short}
@@ -1930,7 +1990,7 @@
 (setf (gethash 'gdk-event-button-button atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-button 'function)
- "@version{*2021-5-13}
+ "@version{*2021-12-13}
   @syntax[]{(gdk-event-button-button instance) => button}
   @syntax[]{(setf (gdk-event-button-button instance) button)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -1954,17 +2014,17 @@
 (setf (gethash 'gdk-event-button-device atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-device 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-button-device instance) => device}
   @syntax[]{(setf (gdk-event-button-device instance) device)}
   @argument[instance]{a @class{gdk-event-button} instance}
-  @argument[device]{the @class{gdk-device} master device that the event
+  @argument[device]{a @class{gdk-device} master device that the event
     originated from}
   @begin{short}
     Accessor of the @code{device} slot of the @class{gdk-event-button}
     structure.
   @end{short}
-  Use the function @fun{gdk-event-source-device} to get the slave device.
+  Use the @fun{gdk-event-source-device} function to get the slave device.
   @see-class{gdk-event-button}
   @see-class{gdk-device}
   @see-function{gdk-event-source-device}")
@@ -1977,7 +2037,7 @@
 (setf (gethash 'gdk-event-button-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-x-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-button-x-root instance) => x-root}
   @syntax[]{(setf (gdk-event-button-x-root instance) x-root)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -1997,7 +2057,7 @@
 (setf (gethash 'gdk-event-button-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-y-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-button-y-root instance) => y-root}
   @syntax[]{(setf (gdk-event-button-y-root instance) y-root)}
   @argument[instance]{a @class{gdk-event-button} instance}
@@ -2016,16 +2076,18 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-touch 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-touch atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-touch 'type)
+ "@version{2021-12-13}
   @begin{short}
     Used for touch events.
   @end{short}
-  The type field will be one of the values @code{:touch-begin},
-  @code{:touch-update}, @code{:touch-end} or @code{:touch-cancel}.
+  The type field will be one of the @code{:touch-begin}, @code{:touch-update},
+  @code{:touch-end} or @code{:touch-cancel} values.
 
   Touch events are grouped into sequences by means of the sequence field,
-  which can also be obtained with the function @fun{gdk-event-event-sequence}.
+  which can also be obtained with the @fun{gdk-event-event-sequence} function.
   Each sequence begins with a @code{:touch-begin} event, followed by any number
   of @code{:touch-update} events, and ends with a @code{:touch-end} event or
   @code{:touch-cancel} event. With multitouch devices, there may be several
@@ -2105,7 +2167,7 @@
 (setf (gethash 'gdk-event-touch-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touch-time instance) => time}
   @syntax[]{(setf (gdk-event-touch-time instance) time)}
   @argument[instance]{a @class{gdk-event-touch} instance}
@@ -2124,7 +2186,7 @@
 (setf (gethash 'gdk-event-touch-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-x 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touch-x instance) => x}
   @syntax[]{(setf (gdk-event-touch-x instance) x)}
   @argument[instance]{a @class{gdk-event-touch} instance}
@@ -2143,7 +2205,7 @@
 (setf (gethash 'gdk-event-touch-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-y 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touch-y instance) => y}
   @syntax[]{(setf (gdk-event-touch-y instance) y)}
   @argument[instance]{a @class{gdk-event-touch} instance}
@@ -2162,7 +2224,7 @@
 (setf (gethash 'gdk-event-touch-axes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-axes 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touch-axes instance) => axes}
   @syntax[]{(setf (gdk-event-touch-axes instance) axes)}
   @argument[instance]{a @class{gdk-event-touch} instance}
@@ -2181,13 +2243,13 @@
 (setf (gethash 'gdk-event-touch-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-state 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touch-state instance) => state}
   @syntax[]{(setf (gdk-event-touch-state instance) state)}
   @argument[instance]{a @class{gdk-event-touch} instance}
-  @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
-    @kbd{Alt} keys, and the pointer buttons}
+  @argument[state]{a @symbol{gdk-modifier-type} bit-mask representing the state
+    of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and @kbd{Alt}
+    keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-touch} structure.
   @end{short}
@@ -2202,7 +2264,7 @@
 (setf (gethash 'gdk-event-touch-sequence atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-sequence 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touch-sequence instance) => sequence}
   @syntax[]{(setf (gdk-event-touch-sequence instance) sequence)}
   @argument[instance]{a @class{gdk-event-touch} instance}
@@ -2223,12 +2285,12 @@
 (setf (gethash 'gdk-event-touch-emulating-pointer atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-emulating-pointer 'function)
- "@version{2021-4-25}
-  @syntax[]{(gdk-event-touch-emulating-pointer instance) => emulating-pointer}
-  @syntax[]{(setf (gdk-event-touch-emulating-pointer instance) emulating-pointer)}
+ "@version{2021-12-13}
+  @syntax[]{(gdk-event-touch-emulating-pointer instance) => emulating}
+  @syntax[]{(setf (gdk-event-touch-emulating-pointer instance) emulating)}
   @argument[instance]{a @class{gdk-event-touch} instance}
-  @argument[emulating-pointer]{a boolean whether the event should be used for
-    emulating pointer event}
+  @argument[emulating]{a boolean whether the event should be used for emulating
+    pointer event}
   @begin{short}
     Accessor of the @code{emulating-pointer} slot of the @class{gdk-event-touch}
     structure.
@@ -2243,16 +2305,16 @@
 (setf (gethash 'gdk-event-touch-device atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-device 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touch-device instance) => device}
   @syntax[]{(setf (gdk-event-touch-device instance) device)}
   @argument[instance]{a @class{gdk-event-touch} instance}
-  @argument[device]{the @class{gdk-device} master device that the event
+  @argument[device]{a @class{gdk-device} master device that the event
     originated from}
   @begin{short}
     Accessor of the @code{device} slot of the @class{gdk-event-touch} structure.
   @end{short}
-  Use the function @fun{gdk-event-source-device} to get the slave device.
+  Use the @fun{gdk-event-source-device} function to get the slave device.
   @see-class{gdk-event-touch}
   @see-class{gdk-device}
   @see-function{gdk-event-source-device}")
@@ -2265,7 +2327,7 @@
 (setf (gethash 'gdk-event-touch-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-x-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touch-x-root instance) => x-root}
   @syntax[]{(setf (gdk-event-touch-x-root instance) x-root)}
   @argument[instance]{a @class{gdk-event-touch} instance}
@@ -2284,7 +2346,7 @@
 (setf (gethash 'gdk-event-touch-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-y-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touch-y-root instance) => y-root}
   @syntax[]{(setf (gdk-event-touch-y-root instance) y-root)}
   @argument[instance]{a @class{gdk-event-touch} instance}
@@ -2304,8 +2366,10 @@
 ;; FIXME: The Gtk documentation additionally has the field is_stop of type guint
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-scroll 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-scroll atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-scroll 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated from button presses for the buttons 4 to 7.
   @end{short}
@@ -2314,7 +2378,7 @@
 
   Some GDK backends can also generate 'smooth' scroll events, which can be
   recognized by the @code{:smooth} direction. For these, the scroll deltas can
-  be obtained with the function @fun{gdk-event-scroll-deltas}.
+  be obtained with the @fun{gdk-event-scroll-deltas} function.
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
   (type gdk-event-type)
@@ -2349,8 +2413,8 @@
       state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
       @kbd{Alt} keys, and the pointer buttons.}
     @entry[direction]{The @symbol{gdk-scroll-direction} direction to scroll to,
-      one of @code{:up}, @code{:down}, @code{:left}, @code{:right} or
-      @code{:smooth}.}
+      one of the @code{:up}, @code{:down}, @code{:left}, @code{:right} or
+      @code{:smooth} values.}
     @entry[device]{The @class{gdk-device} object where the event originated.}
     @entry[x-root]{The double float x coordinate of the pointer relative to the
       root of the screen.}
@@ -2384,7 +2448,7 @@
 (setf (gethash 'gdk-event-scroll-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-time instance) => time}
   @syntax[]{(setf (gdk-event-scroll-time instance) time)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
@@ -2403,7 +2467,7 @@
 (setf (gethash 'gdk-event-scroll-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-x 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-x instance) => x}
   @syntax[]{(setf (gdk-event-scroll-x instance) x)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
@@ -2422,7 +2486,7 @@
 (setf (gethash 'gdk-event-scroll-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-y 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-y instance) => y}
   @syntax[]{(setf (gdk-event-scroll-y instance) y)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
@@ -2441,11 +2505,11 @@
 (setf (gethash 'gdk-event-scroll-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-state 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-state instance) => state}
   @syntax[]{(setf (gdk-event-scroll-state instance) state)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
-  @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
+  @argument[state]{a @symbol{gdk-modifier-type} bit-mask representing the
     state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
     @kbd{Alt} keys, and the pointer buttons}
   @begin{short}
@@ -2462,7 +2526,7 @@
 (setf (gethash 'gdk-event-scroll-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-direction 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-direction instance) => direction}
   @syntax[]{(setf (gdk-event-scroll-direction instance) direction)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
@@ -2471,12 +2535,12 @@
     Accessor of the @code{direction} slot of the @class{gdk-event-scroll}
     structure.
   @end{short}
-  The function @sym{gdk-scroll-direction} extracts the scroll direction from a
+  The @sym{gdk-scroll-direction} function extracts the scroll direction from a
   scroll event.
 
   If you wish to handle both discrete and smooth scrolling, you should check
-  the return value of this function, or of the function
-  @fun{gdk-event-scroll-deltas}. For instance:
+  the return value of this function, or of the @fun{gdk-event-scroll-deltas}
+  function. For instance:
   @begin{pre}
 GdkScrollDirection direction;
 double vscroll_factor = 0.0;
@@ -2518,16 +2582,16 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-scroll-device atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-device 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-device instance) => device}
   @syntax[]{(setf (gdk-event-scroll-device instance) device)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
-  @argument[device]{the @class{gdk-device} master device that the event
+  @argument[device]{a @class{gdk-device} master device that the event
     originated from}
   @begin{short}
     Accessor of the @code{device} of the @class{gdk-event-scroll} structure.
   @end{short}
-  Use the function @fun{gdk-event-source-device} to get the slave device.
+  Use the @fun{gdk-event-source-device} function to get the slave device.
   @see-class{gdk-event-scroll}
   @see-class{gdk-device}")
 
@@ -2539,7 +2603,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-scroll-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-x-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-x-root instance) => x-root}
   @syntax[]{(setf (gdk-event-scroll-x-root instance) x-root)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
@@ -2559,7 +2623,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-scroll-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-y-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-y-root instance) => y-root}
   @syntax[]{(setf (gdk-event-scroll-y-root instance) y-root)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
@@ -2579,7 +2643,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-scroll-delta-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-delta-x 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-delta-x instance) => delta-x}
   @syntax[]{(setf (gdk-event-scroll-delta-x instance) delta-x)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
@@ -2597,7 +2661,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-scroll-delta-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-delta-y 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-scroll-delta-y instance) => delta-y}
   @syntax[]{(setf (gdk-event-scroll-delta-y instance) delta-y)}
   @argument[instance]{a @class{gdk-event-scroll} instance}
@@ -2615,8 +2679,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-motion 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-motion atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-motion 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated when the pointer moves.
   @end{short}
@@ -2686,7 +2752,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-motion-time instance) => time}
   @syntax[]{(setf (gdk-event-motion-time instance) time)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2705,7 +2771,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-x 'function)
- "@version{*2021-5-13}
+ "@version{*2021-12-13}
   @syntax[]{(gdk-event-motion-x instance) => x}
   @syntax[]{(setf (gdk-event-motion-x instance) x)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2724,7 +2790,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-y 'function)
- "@version{*2021-5-13}
+ "@version{*2021-12-13}
   @syntax[]{(gdk-event-motion-y instance) => y}
   @syntax[]{(setf (gdk-event-motion-y instance) y)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2743,7 +2809,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-axes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-axes 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-motion-axes instance) => axes}
   @syntax[]{(setf (gdk-event-motion-axes instance) axes)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2762,13 +2828,13 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-state 'function)
- "@version{*2021-5-13}
+ "@version{*2021-12-13}
   @syntax[]{(gdk-event-motion-state instance) => state}
   @syntax[]{(setf (gdk-event-motion-state instance) state)}
   @argument[instance]{a @class{gdk-event-motion} instance}
-  @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. @kbd{Control}, @kbd{Shift} and @kbd{Alt}
-    keys, and the pointer buttons}
+  @argument[state]{a @symbol{gdk-modifier-type} bit-mask representing the state
+    of the modifier keys, e.g. @kbd{Control}, @kbd{Shift} and @kbd{Alt} keys,
+    and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-motion} structure.
   @end{short}
@@ -2783,7 +2849,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-is-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-is-hint 'function)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-motion-is-hint instance) => is-hint}
   @syntax[]{(setf (gdk-event-motion-is-hint instance) is-hint)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2804,7 +2870,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-device atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-device 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-motion-device instance) => device}
   @syntax[]{(setf (gdk-event-motion-device instance) device)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2814,7 +2880,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     Accessor of the @code{device} slot of the @class{gdk-event-motion}
     structure.
   @end{short}
-  Use the function @fun{gdk-event-source-device} to get the slave device.
+  Use the @fun{gdk-event-source-device} function to get the slave device.
   @see-class{gdk-event-motion}
   @see-class{gdk-device}
   @see-function{gdk-event-source-device}")
@@ -2827,7 +2893,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-x-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-motion-x-root instance) => x-root}
   @syntax[]{(setf (gdk-event-motion-x-root instance) x-root)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2847,7 +2913,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-motion-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-y-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-motion-y-root instance) => y-root}
   @syntax[]{(setf (gdk-event-motion-y-root instance) y-root)}
   @argument[instance]{a @class{gdk-event-motion} instance}
@@ -2866,8 +2932,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-expose 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-expose atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-expose 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated when all or part of a window becomes visible and needs to be
     redrawn.
@@ -2921,7 +2989,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-expose-area atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-expose-area 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-expose-area instance) => area}
   @syntax[]{(setf (gdk-event-expose-area instance) area)}
   @argument[instance]{a @class{gdk-event-expose} instance}
@@ -2941,7 +3009,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-expose-region atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-expose-region 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-expose-region instance) => region}
   @syntax[]{(setf (gdk-event-expose-region instance) region)}
   @argument[instance]{a @class{gdk-event-expose} instance}
@@ -2961,7 +3029,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-expose-count atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-expose-count 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-expose-count instance) => count}
   @syntax[]{(setf (gdk-event-expose-count instance) count)}
   @argument[instance]{a @class{gdk-event-expose} instance}
@@ -2984,12 +3052,14 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-visibility 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-visibility atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-visibility 'type)
+ "@version{2021-12-13}
   @short{Generated when the window visibility status has changed.}
   @begin[Warning]{dictionary}
     The @class{gdk-event-visibility} structure has been deprecated since version
-    3.12 and should not be used in newly-written code. Modern composited
+    3.12 and should not be used in newly written code. Modern composited
     windowing systems with pervasive transparency make it impossible to track
     the visibility of a window reliably, so this event can not be guaranteed to
     provide useful information.
@@ -3010,7 +3080,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[state]{The new @symbol{gdk-visibility-state} state, possible values
-      are @code{:fully-obscured}, @code{:partial} or @code{:unobscured}.}
+      are the @code{:fully-obscured}, @code{:partial} or @code{:unobscured}
+      values.}
   @end{table}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
@@ -3028,7 +3099,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-visibility-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-visibility-state 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-visibility-state instance) => visibility}
   @syntax[]{(setf (gdk-event-visibility-state instance) visibility)}
   @argument[instance]{a @class{gdk-event-visibility} instance}
@@ -3047,8 +3118,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-crossing 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-crossing atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-crossing 'type)
+ "@version{2021-12-13}
   @short{Generated when the pointer enters or leaves a window.}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
@@ -3118,7 +3191,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-subwindow atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-subwindow 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-subwindow instance) => subwindow}
   @syntax[]{(setf (gdk-event-crossing-subwindow instance) subwindow)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
@@ -3138,7 +3211,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-time instance) => time}
   @syntax[]{(setf (gdk-event-crossing-time instance) time)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
@@ -3158,7 +3231,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-x 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-x instance) => x}
   @syntax[]{(setf (gdk-event-crossing-x instance) x)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
@@ -3177,7 +3250,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-y 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-y instance) => y}
   @syntax[]{(setf (gdk-event-crossing-y instance) y)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
@@ -3196,7 +3269,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-x-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-x-root instance) => x-root}
   @syntax[]{(setf (gdk-event-crossing-x-root instance) x-root)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
@@ -3215,7 +3288,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-y-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-y-root instance) => y-root}
   @syntax[]{(setf (gdk-event-crossing-y-root instance) y-root)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
@@ -3235,7 +3308,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-mode 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-mode instance) => mode}
   @syntax[]{(setf (gdk-event-crossing-mode instance) mode)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
@@ -3254,7 +3327,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-detail atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-detail 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-detail instance) => detail}
   @syntax[]{(setf (gdk-event-crossing-detail instance) detail)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
@@ -3274,7 +3347,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-focus atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-focus 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-focus instance) => focus}
   @syntax[]{(setf (gdk-event-crossing-focus instance) focus)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
@@ -3293,13 +3366,13 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-crossing-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-state 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-crossing-state instance) => state}
   @syntax[]{(setf (gdk-event-crossing-state instance) state)}
   @argument[instance]{a @class{gdk-event-crossing} instance}
-  @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
-    @kbd{Alt} keys, and the pointer buttons}
+  @argument[state]{a @symbol{gdk-modifier-type} bit-mask representing the state
+    of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and @kbd{Alt}
+    keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-crossing}
     structure.
@@ -3314,8 +3387,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-focus 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-focus atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-focus 'type)
+ "@version{2021-12-13}
   @short{Describes a change of keyboard focus.}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
@@ -3350,11 +3425,11 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-focus-in atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-focus-in 'function)
- "@version{2021-4-25}
-  @syntax[]{(gdk-event-focus-in instance) => in}
-  @syntax[]{(setf (gdk-event-focus-in instance) in)}
+ "@version{2021-12-13}
+  @syntax[]{(gdk-event-focus-in instance) => focus}
+  @syntax[]{(setf (gdk-event-focus-in instance) focus)}
   @argument[instance]{a @class{gdk-event-focus} instance}
-  @argument[in]{@em{true} if the window has gained the keyboard focus,
+  @argument[focus]{@em{true} if the window has gained the keyboard focus,
     @em{false} if it has lost the focus}
   @begin{short}
     Accessor of the @code{in} slot of the @class{gdk-event-focus} structure.
@@ -3368,8 +3443,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-configure 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-configure atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-configure 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated when a window size or position has changed.
   @end{short}
@@ -3416,7 +3493,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-configure-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-configure-x 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-configure-x instance) => x}
   @syntax[]{(setf (gdk-event-configure-x instance) x)}
   @argument[instance]{a @class{gdk-event-configure} instance}
@@ -3435,7 +3512,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-configure-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-configure-y 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-configure-y instance) => y}
   @syntax[]{(setf (gdk-event-configure-y instance) y)}
   @argument[instance]{a @class{gdk-event-configure} instance}
@@ -3454,7 +3531,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-configure-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-configure-width 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-configure-width instance) => width}
   @syntax[]{(setf (gdk-event-configure-width instance) width)}
   @argument[instance]{a @class{gdk-event-configure} instance}
@@ -3472,7 +3549,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-configure-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-configure-height 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-configure-height instance) => height}
   @syntax[]{(setf (gdk-event-configure-height instance) height)}
   @argument[instance]{a @class{gdk-event-configure} instance}
@@ -3489,8 +3566,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-property 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-property atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-property 'type)
+ "@version{2021-12-13}
   @begin{short}
     Describes a property change on a window.
   @end{short}
@@ -3534,7 +3613,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-property-atom atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-property-atom 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-property-atom instance) => atom}
   @syntax[]{(setf (gdk-event-property-atom instance) atom)}
   @argument[instance]{a @class{gdk-event-property} instance}
@@ -3554,7 +3633,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-property-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-property-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-property-time instance) => time}
   @syntax[]{(setf (gdk-event-property-time instance) time)}
   @argument[instance]{a @class{gdk-event-property} instance}
@@ -3574,7 +3653,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-property-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-property-state 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-property-state instance) => state}
   @syntax[]{(setf (gdk-event-property-state instance) state)}
   @argument[instance]{a @class{gdk-event-property} instance}
@@ -3593,8 +3672,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-selection 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-selection atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-selection 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated when a selection is requested or ownership of a selection is
     taken over by another client application.
@@ -3650,7 +3731,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-selection-selection atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-selection-selection 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-selection-selection instance) => selection}
   @syntax[]{(setf (gdk-event-selection-selection instance) selection)}
   @argument[instance]{a @class{gdk-event-selection} instance}
@@ -3670,7 +3751,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-selection-target atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-selection-target 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-selection-target instance) => target}
   @syntax[]{(setf (gdk-event-selection-target instance) target)}
   @argument[instance]{a @class{gdk-event-selection} instance}
@@ -3691,7 +3772,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-selection-property atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-selection-property 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-selection-property instance) => property}
   @syntax[]{(setf (gdk-event-selection-property instance) property)}
   @argument[instance]{a @class{gdk-event-selection} instance}
@@ -3712,7 +3793,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-selection-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-selection-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-selection-time instance) => time}
   @syntax[]{(setf (gdk-event-selection-time instance) time)}
   @argument[instance]{a @class{gdk-event-selection} instance}
@@ -3732,7 +3813,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-selection-requestor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-selection-requestor 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-selection-requestor instance) => requestor}
   @syntax[]{(setf (gdk-event-selection-requestor instance) requestor)}
   @argument[instance]{a @class{gdk-event-selection} instance}
@@ -3752,8 +3833,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-dnd 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-dnd atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-dnd 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated during DND operations.
   @end{short}
@@ -3810,7 +3893,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-dnd-context atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-dnd-context 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-dnd-context instance) => context}
   @syntax[]{(setf (gdk-event-dnd-context instance) context)}
   @argument[instance]{a @class{gdk-event-dnd} instance}
@@ -3831,7 +3914,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-dnd-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-dnd-time 'function)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-dnd-time instance) => time}
   @syntax[]{(setf (gdk-event-dnd-time instance) time)}
   @argument[instance]{a @class{gdk-event-dnd} instance}
@@ -3851,7 +3934,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-dnd-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-dnd-x-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-dnd-x-root instance) => x-root}
   @syntax[]{(setf (gdk-event-dnd-x-root instance) x-root)}
   @argument[instance]{a @class{gdk-event-dnd} instance}
@@ -3870,7 +3953,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-dnd-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-dnd-y-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-dnd-y-root instance) => y-root}
   @syntax[]{(setf (gdk-event-dnd-y-root instance) y-root)}
   @argument[instance]{a @class{gdk-event-dnd} instance}
@@ -3888,8 +3971,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-proximity 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-proximity atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-proximity 'type)
+ "@version{2021-12-13}
   @begin{short}
     Proximity events are generated when using the wrapper for the XInput
     extension for GDK.
@@ -3940,7 +4025,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-proximity-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-proximity-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-proximity-time instance) => time}
   @syntax[]{(setf (gdk-event-proximity-time instance) time)}
   @argument[instance]{a @class{gdk-event-proximity} instance}
@@ -3960,7 +4045,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-proximity-device atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-proximity-device 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-proximity-device instance) => device}
   @syntax[]{(setf (gdk-event-proximity-device instance) device)}
   @argument[instance]{a @class{gdk-event-proximity} instance}
@@ -3970,7 +4055,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     Accessor of the @code{device} slot of the @class{gdk-event-proximity}
     structure.
   @end{short}
-  @see-class{gdk-event-proximity}")
+  @see-class{gdk-event-proximity}
+  @see-class{gdk-device}")
 
 (export 'gdk-event-proximity-device)
 
@@ -3979,8 +4065,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-window-state 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-window-state atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-window-state 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated when the state of a toplevel window changes.
   @end{short}
@@ -4022,12 +4110,12 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-window-state-changed-mask atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-window-state-changed-mask 'function)
- "@version{2021-4-25}
-  @syntax[]{(gdk-event-window-state-changed-mask instance) => changed-mask}
-  @syntax[]{(setf (gdk-event-window-state-changed-mask instance) changed-mask)}
+ "@version{2021-12-13}
+  @syntax[]{(gdk-event-window-state-changed-mask instance) => mask}
+  @syntax[]{(setf (gdk-event-window-state-changed-mask instance) mask)}
   @argument[instance]{a @class{gdk-event-window-state} instance}
-  @argument[changed-mask]{a @symbol{gdk-window-state} mask specifying what
-    flags have changed}
+  @argument[mask]{a @symbol{gdk-window-state} mask specifying what flags have
+    changed}
   @begin{short}
     Accessor of the  @code{changed-mask} slot of the
     @class{gdk-event-window-state} structure.
@@ -4044,11 +4132,11 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-window-state-new-window-state 'function)
- "@version{2024-4-24}
-  @syntax[]{(gdk-event-window-state-new-window-state instance) => window-state}
-  @syntax[]{(setf (gdk-event-window-state-new-window-state instance) window-state)}
+ "@version{2021-12-13}
+  @syntax[]{(gdk-event-window-state-new-window-state instance) => state}
+  @syntax[]{(setf (gdk-event-window-state-new-window-state instance) state)}
   @argument[instance]{a @class{gdk-event-window-state} instance}
-  @argument[window-state]{a new @symbol{gdk-window-state} mask}
+  @argument[state]{a new @symbol{gdk-window-state} mask}
   @begin{short}
     Accessor of the @code{new-window-state} slot of the
     @class{gdk-event-window-state} structure.
@@ -4063,8 +4151,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-setting 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-setting atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-setting 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated when a setting is modified.
   @end{short}
@@ -4105,7 +4195,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-setting-action atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-setting-action 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-setting-action instance) => action}
   @syntax[]{(setf (gdk-event-setting-action instance) action)}
   @argument[instance]{a @class{gdk-event-setting} instance}
@@ -4125,7 +4215,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-setting-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-setting-name 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-setting-name instance) => name}
   @syntax[]{(setf (gdk-event-setting-name instance) name)}
   @argument[instance]{a @class{gdk-event-setting} instance}
@@ -4143,8 +4233,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-owner-change 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-owner-change atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-owner-change 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated when the owner of a selection changes.
   @end{short}
@@ -4198,11 +4290,11 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-owner-change-owner atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-owner-change-owner 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-owner-change-owner instance) => owner}
   @syntax[]{(setf (gdk-event-owner-change-owner instance) owner)}
   @argument[instance]{a @class{gdk-event-owner-change} instance}
-  @argument[owner]{the @class{gdk-window} owner of the selection}
+  @argument[owner]{a @class{gdk-window} owner of the selection}
   @begin{short}
     Accessor of the @code{owner} slot of the @class{gdk-event-owner-change}
     structure.
@@ -4218,11 +4310,11 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-owner-change-reason atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-owner-change-reason 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-owner-change-reason instance) => reason}
   @syntax[]{(setf (gdk-event-owner-change-reason instance) reason)}
   @argument[instance]{a @class{gdk-event-owner-change} instance}
-  @argument[reason]{the reason for the ownership change as a
+  @argument[reason]{a reason for the ownership change as a
     @symbol{gdk-owner-change} value}
   @begin{short}
     Accessor of the @code{reason} slot of the @class{gdk-event-owner-change}
@@ -4239,7 +4331,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-owner-change-selection atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-owner-change-selection 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-owner-change-selection instance) => selection}
   @syntax[]{(setf (gdk-event-owner-change-selection instance) selection)}
   @argument[instance]{a @class{gdk-event-owner-change} instance}
@@ -4259,7 +4351,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-owner-change-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-owner-change-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-owner-change-time instance) => time}
   @syntax[]{(setf (gdk-event-owner-change-time instance) time)}
   @argument[instance]{a @class{gdk-event-owner-change} instance}
@@ -4280,7 +4372,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-owner-change-selection-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-owner-change-selection-time instance) => time}
   @syntax[]{(setf (gdk-event-owner-change-selection-time instance) time)}
   @argument[instance]{a @class{gdk-event-owner-change} instance}
@@ -4299,8 +4391,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gdk-event-grab-broken 'type)
- "@version{2021-6-8}
+(setf (gethash 'gdk-event-grab-broken atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-grab-broken 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated when a pointer or keyboard grab is broken.
   @end{short}
@@ -4350,7 +4444,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-grab-broken-keyboard atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-grab-broken-keyboard 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-grab-broken-keyboard instance) => keyboard}
   @syntax[]{(setf (gdk-event-grab-broken-keyboard instance) keyboard)}
   @argument[instance]{a @class{gdk-event-grab-broken} instance}
@@ -4370,7 +4464,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-grab-broken-implicit atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-grab-broken-implicit 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-grab-broken-implicit instance) => implicit}
   @syntax[]{(setf (gdk-event-grab-broken-implicit instance) implicit)}
   @argument[instance]{a @class{gdk-event-grab-broken} instance}
@@ -4389,7 +4483,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-grab-broken-grab-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-grab-broken-grab-window 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-grab-broken-grab-window instance) => grab-window}
   @syntax[]{(setf (gdk-event-grab-broken-grab-window instance) grab-window)}
   @argument[instance]{a @class{gdk-event-grab-broken} instance}
@@ -4411,7 +4505,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+(and gdk-3-18 cl-cffi-gtk-documentation)
 (setf (documentation 'gdk-event-touchpad-swipe 'type)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @begin{short}
     Generated during touchpad swipe gestures.
   @end{short}
@@ -4436,8 +4530,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
   ... ))
   @end{pre}
   @begin[code]{table}
-    @entry[type]{The @symbol{gdk-event-type} type of the event, the value
-      @code{:touchpad-swipe}.}
+    @entry[type]{The @symbol{gdk-event-type} type of the event, the
+      @code{:touchpad-swipe} value.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[phase]{An integer with the current phase of the gesture.}
@@ -4484,7 +4578,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-phase atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-phase 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-phase instance) => phase}
   @syntax[]{(setf (gdk-event-touchpad-swipe-phase instance) phase)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
@@ -4503,7 +4597,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-n-fingers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-n-fingers 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-n-fingers instance) => n-fingers}
   @syntax[]{(setf (gdk-event-touchpad-swipe-n-fingers instance) n-fingers)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
@@ -4523,7 +4617,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-time instance) => time}
   @syntax[]{(setf (gdk-event-touchpad-swipe-time instance) time)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
@@ -4543,7 +4637,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-x 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-x instance) => x}
   @syntax[]{(setf (gdk-event-touchpad-swipe-x instance) x)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
@@ -4562,7 +4656,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-y 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-y instance) => y}
   @syntax[]{(setf (gdk-event-touchpad-swipe-y instance) y)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
@@ -4581,7 +4675,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-dx atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-dx 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-dx instance) => dx}
   @syntax[]{(setf (gdk-event-touchpad-swipe-dx instance) dx)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
@@ -4601,7 +4695,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-dy atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-dy 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-dy instance) => dy}
   @syntax[]{(setf (gdk-event-touchpad-swipe-dy instance) dy)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
@@ -4621,7 +4715,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-x-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-x-root instance) => x-root}
   @syntax[]{(setf (gdk-event-touchpad-swipe-x-root instance) x-root)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
@@ -4641,7 +4735,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-y-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-y-root instance) => y-root}
   @syntax[]{(setf (gdk-event-touchpad-swipe-y-root instance) y-root)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
@@ -4661,18 +4755,19 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-swipe-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-swipe-state 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-swipe-state instance) => state}
   @syntax[]{(setf (gdk-event-touchpad-swipe-state instance) state)}
   @argument[instance]{a @class{gdk-event-touchpad-swipe} instance}
-  @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
-    @kbd{Alt} keys, and the pointer buttons}
+  @argument[state]{a @symbol{gdk-modifier-type} bit-mask representing the state
+    of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and @kbd{Alt}
+    keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-touchpad-swipe}
     structure.
   @end{short}
-  @see-class{gdk-event-touchpad-swipe}")
+  @see-class{gdk-event-touchpad-swipe}
+  @see-symbol{gdk-modifier-type}")
 
 (export 'gdk-event-touchpad-swipe-state)
 
@@ -4682,7 +4777,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 
 #+(and gdk-3-18 cl-cffi-gtk-documentation)
 (setf (documentation 'gdk-event-touchpad-pinch 'type)
- "@version{2021-6-8}
+ "@version{2021-12-13}
   @begin{short}
     Generated during touchpad swipe gestures.
   @end{short}
@@ -4710,8 +4805,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
   ... ))
   @end{pre}
   @begin[code]{table}
-    @entry[type]{The @symbol{gdk-event-type} of the event, the value
-      @code{:touchpad-pinch}.}
+    @entry[type]{The @symbol{gdk-event-type} of the event, the
+      @code{:touchpad-pinch} value.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[phase]{The current phase of the gesture.}
@@ -4727,7 +4822,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
     @entry[angle-delta]{A double float with the angle change in radians,
       negative angles denote counter-clockwise movements.}
     @entry[scale]{A double float with the current scale, relative to that at
-      the time of the corresponding @code{:touchpad-gesture-phase-begin} event.}
+      the time of the corresponding @code{:begin} value of the
+      @symbol{gdk-touchpad-gesture-phase} enumeration.}
     @entry[x-root]{The double float x coordinate of the pointer, relative to
       the root of the screen.}
     @entry[y-root]{The double float y coordinate of the pointer, relative to
@@ -4763,7 +4859,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-phase atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-phase 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-phase instance) => phase}
   @syntax[]{(setf (gdk-event-touchpad-pinch-phase instance) phase)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4782,7 +4878,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-n-fingers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-n-fingers 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-n-fingers instance) => n-fingers}
   @syntax[]{(setf (gdk-event-touchpad-pinch-n-fingers instance) n-fingers)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4802,7 +4898,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-time instance) => time}
   @syntax[]{(setf (gdk-event-touchpad-pinch-time instance) time)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4822,7 +4918,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-x 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-x instance) => x}
   @syntax[]{(setf (gdk-event-touchpad-pinch-x instance) x)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4841,7 +4937,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-y 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-y instance) => y}
   @syntax[]{(setf (gdk-event-touchpad-pinch-y instance) y)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4860,7 +4956,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-dx atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-dx 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-dx instance) => dx}
   @syntax[]{(setf (gdk-event-touchpad-pinch-dx instance) dx)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4880,7 +4976,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-dy atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-dy 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-dy instance) => dy}
   @syntax[]{(setf (gdk-event-touchpad-pinch-dy instance) dy)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4901,7 +4997,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-angle-delta 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-angle-delta instance) => angle-delta}
   @syntax[]{(setf (gdk-event-touchpad-pinch-angle-delta instance) angle-delta)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4921,12 +5017,13 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-scale atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-scale 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-scale instance) => scale}
   @syntax[]{(setf (gdk-event-touchpad-pinch-scale instance) scale)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
   @argument[scale]{a double float with the current scale, relative to that at
-    the time of the corresponding @code{GDK_TOUCHPAD_GESTURE_PHASE_BEGIN} event}
+    the time of the corresponding @code{:begin} value of the
+    @symbol{gdk-touchpad-gesture-phase} enumeration}
   @begin{short}
     Accessor of the @code{scale} slot of the @class{gdk-event-touchpad-pinch}
     structure.
@@ -4941,7 +5038,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-x-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-x-root instance) => x-root}
   @syntax[]{(setf (gdk-event-touchpad-pinch-x-root instance) x-root)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4961,7 +5058,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-y-root 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-y-root instance) => y-root}
   @syntax[]{(setf (gdk-event-touchpad-pinch-y-root instance) y-root)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
@@ -4981,18 +5078,19 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-touchpad-pinch-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-state 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-touchpad-pinch-state instance) => state}
   @syntax[]{(setf (gdk-event-touchpad-pinch-state instance) state)}
   @argument[instance]{a @class{gdk-event-touchpad-pinch} instance}
-  @argument[state]{the @symbol{gdk-modifier-type} bit-mask representing the
-    state of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and
-    @kbd{Alt} keys, and the pointer buttons}
+  @argument[state]{a @symbol{gdk-modifier-type} bit-mask representing the state
+    of the modifier keys, e.g. the @kbd{Control}, @kbd{Shift} and @kbd{Alt}
+    keys, and the pointer buttons}
   @begin{short}
     Accessor of the @code{state} slot of the @class{gdk-event-touchpad-pinch}
     structure.
   @end{short}
-  @see-class{gdk-event-touchpad-pinch}")
+  @see-class{gdk-event-touchpad-pinch}
+  @see-symbol{gdk-modifier-type}")
 
 (export 'gdk-event-touchpad-pinch-state)
 
@@ -5001,8 +5099,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+(and gdk-3-22 cl-cffi-gtk-documentation)
-(setf (documentation 'gdk-event-pad-button 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-pad-button atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-pad-button 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated during @code{:tablet-pad} button presses and releases.
   @end{short}
@@ -5022,8 +5122,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
   ... ))
   @end{pre}
   @begin[code]{table}
-    @entry[type]{The @symbol{gdk-event-type} of the event, one of the values
-      @code{:pad-button-press}, @code{:pad-button-release}.}
+    @entry[type]{The @symbol{gdk-event-type} of the event, one of the
+      @code{:pad-button-press}, @code{:pad-button-release} values.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[time]{The time of the event in milliseconds.}
@@ -5053,7 +5153,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-button-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-button-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-button-time instance) => time}
   @syntax[]{(setf (gdk-event-pad-button-time instance) time)}
   @argument[instance]{a @class{gdk-event-pad-button} instance}
@@ -5073,7 +5173,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-button-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-button-group 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-button-group instance) => group}
   @syntax[]{(setf (gdk-event-pad-button-group instance) group)}
   @argument[instance]{a @class{gdk-event-pad-button} instance}
@@ -5094,7 +5194,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-button-button atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-button-button 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-button-button instance) => button}
   @syntax[]{(setf (gdk-event-pad-button-button instance) button)}
   @argument[instance]{a @class{gdk-event-pad-button} instance}
@@ -5113,7 +5213,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-button-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-button-mode 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-button-mode instance) => mode}
   @syntax[]{(setf (gdk-event-pad-button-mode instance) mode)}
   @argument[instance]{a @class{gdk-event-pad-button} instance}
@@ -5133,8 +5233,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+(and gdk-3-22 cl-cffi-gtk-documentation)
-(setf (documentation 'gdk-event-pad-axis 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-pad-axis atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-pad-axis 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated during @code{:tablet-pad} interaction with tactile sensors.
   @end{short}
@@ -5155,8 +5257,8 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
   ... ))
   @end{pre}
   @begin[code]{table}
-    @entry[type]{The @symbol{gdk-event-type} of the event, one of the values
-      @code{:pad-ring}, @code{:pad-strip}.}
+    @entry[type]{The @symbol{gdk-event-type} of the event, one of the
+      @code{:pad-ring}, @code{:pad-strip} values.}
     @entry[window]{The @class{gdk-window} object which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[time]{The time of the event in milliseconds.}
@@ -5189,7 +5291,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-axis-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-axis-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-axis-time instance) => time}
   @syntax[]{(setf (gdk-event-pad-axis-time instance) time)}
   @argument[instance]{a @class{gdk-event-pad-axis} instance}
@@ -5209,7 +5311,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-axis-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-axis-group 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-axis-group instance) => group}
   @syntax[]{(setf (gdk-event-pad-axis-group instance) group)}
   @argument[instance]{a @class{gdk-event-pad-axis} instance}
@@ -5230,7 +5332,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-axis-index atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-axis-index 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-axis-index instance) => index}
   @syntax[]{(setf (gdk-event-pad-axis-index instance) index)}
   @argument[instance]{a @class{gdk-event-pad-axis} instance}
@@ -5250,7 +5352,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-axis-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-axis-mode 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-axis-mode instance) => mode}
   @syntax[]{(setf (gdk-event-pad-axis-mode instance) mode)}
   @argument[instance]{a @class{gdk-event-pad-axis} instance}
@@ -5270,7 +5372,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-axis-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-axis-value 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-axis-value instance) => value}
   @syntax[]{(setf (gdk-event-pad-axis-value instance) value)}
   @argument[instance]{a @class{gdk-event-pad-axis} instance}
@@ -5288,8 +5390,10 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 ;;; ----------------------------------------------------------------------------
 
 #+(and gdk-3-22 cl-cffi-gtk-documentation)
-(setf (documentation 'gdk-event-pad-group-mode 'type)
- "@version{2021-4-25}
+(setf (gethash 'gdk-event-pad-group-mode atdoc:*class-name-alias*)
+      "GBoxed"
+      (documentation 'gdk-event-pad-group-mode 'type)
+ "@version{2021-12-13}
   @begin{short}
     Generated during @code{:tablet-pad} mode switches in a group.
   @end{short}
@@ -5337,7 +5441,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-group-mode-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-group-mode-time 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-group-mode-time instance) => time}
   @syntax[]{(setf (gdk-event-pad-group-mode-time instance) time)}
   @argument[instance]{a @class{gdk-event-pad-group-mode} instance}
@@ -5357,7 +5461,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-group-mode-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-group-mode-group 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-group-mode-group instance) => group}
   @syntax[]{(setf (gdk-event-pad-group-mode-group instance) group)}
   @argument[instance]{a @class{gdk-event-pad-group-mode} instance}
@@ -5378,7 +5482,7 @@ else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
 (setf (gethash 'gdk-event-pad-group-mode-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-pad-group-mode-mode 'function)
- "@version{2021-4-25}
+ "@version{2021-12-13}
   @syntax[]{(gdk-event-pad-group-mode-mode instance) => mode}
   @syntax[]{(setf (gdk-event-pad-group-mode-mode instance) mode)}
   @argument[instance]{a @class{gdk-event-pad-group-mode} instance}

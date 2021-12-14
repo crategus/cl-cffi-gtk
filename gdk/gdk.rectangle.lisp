@@ -73,18 +73,18 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rectangle atdoc:*class-name-alias*)
-      "Boxed CStruct"
+      "GBoxed"
       (documentation 'gdk-rectangle 'type)
- "@version{2021-3-7}
+ "@version{2021-12-13}
   @begin{short}
     Defines the position and size of a rectangle.
   @end{short}
-  It is identical to @symbol{cairo-rectangle-int-t}.
+  It is comparable to the @symbol{cairo-rectangle-int-t} structure.
 
   The @sym{gdk-rectangle} structure is holding the position and size of a
   rectangle. The intersection of two rectangles can be computed with the
-  function @fun{gdk-rectangle-intersect}. To find the union of two rectangles
-  use the function @fun{gdk-rectangle-union}.
+  @fun{gdk-rectangle-intersect} function. To find the union of two rectangles
+  use the @fun{gdk-rectangle-union} function.
 
   The @symbol{cairo-region-t} structure is usually used for managing clipping
   of graphical operations.
@@ -109,7 +109,7 @@
 (setf (gethash 'gdk-rectangle-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rectangle-x 'function)
- "@version{*2021-3-14}
+ "@version{*2021-12-13}
   @syntax[]{(gdk-rectangle-x instance) => x}
   @syntax[]{(setf (gdk-rectangle-x instance) x)}
   @argument[instance]{a @class{gdk-rectangle} instance}
@@ -127,7 +127,7 @@
 (setf (gethash 'gdk-rectangle-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rectangle-y 'function)
- "@version{*2021-3-14}
+ "@version{*2021-12-13}
   @syntax[]{(gdk-rectangle-y instance) => y}
   @syntax[]{(setf (gdk-rectangle-y instance) y)}
   @argument[instance]{a @class{gdk-rectangle} instance}
@@ -145,7 +145,7 @@
 (setf (gethash 'gdk-rectangle-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rectangle-width 'function)
- "@version{2021-3-7}
+ "@version{2021-12-13}
   @syntax[]{(gdk-rectangle-width instance) => width}
   @syntax[]{(setf (gdk-rectangle-width instance) width)}
   @argument[instance]{a @class{gdk-rectangle} instance}
@@ -162,7 +162,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rectangle-height atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-rectangle-height 'function)
- "@version{2021-3-7}
+ "@version{2021-12-13}
   @syntax[]{(gdk-rectangle-height instance) => height}
   @syntax[]{(setf (gdk-rectangle-height instance) height)}
   @argument[instance]{a @class{gdk-rectangle} instance}
@@ -180,7 +180,7 @@
 
 (defun gdk-rectangle-new (&key (x 0) (y 0) (width 0) (height 0))
  #+cl-cffi-gtk-documentation
- "@version{2021-3-7}
+ "@version{*2021-12-13}
   @argument[x]{an integer with the value for the @code{x} slot}
   @argument[y]{an integer with the value for the @code{y} slot}
   @argument[width]{an integer with the value for the @code{width} slot}
@@ -201,7 +201,7 @@
 
 (defun gdk-rectangle-copy (instance)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-7}
+ "@version{2021-12-13}
   @argument[instance]{a @class{gdk-rectangle} instance}
   @begin{short}
     Copy constructor of a @class{gdk-rectangle} structure.
@@ -223,7 +223,7 @@
 
 (defun gdk-rectangle-intersect (rect1 rect2)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-7}
+ "@version{2021-12-13}
   @argument[rect1]{a @class{gdk-rectangle} instance}
   @argument[rect2]{a @class{gdk-rectangle} instance}
   @return{A @class{gdk-rectangle} instance with the intersection of @arg{rect1}
@@ -251,7 +251,7 @@
 
 (defun gdk-rectangle-union (rect1 rect2)
  #+cl-cffi-gtk-documentation
- "@version{2021-3-7}
+ "@version{2021-12-13}
   @argument[rect1]{a @class{gdk-rectangle} instance}
   @argument[rect2]{a @class{gdk-rectangle} instance}
   @return{A @class{gdk-rectangle} instance with the union of @arg{rect1} and
@@ -276,7 +276,7 @@
 #+gdk-3-20
 (defcfun ("gdk_rectangle_equal" gdk-rectangle-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-3-7}
+ "@version{2021-12-13}
   @argument[rect1]{a @class{gdk-rectangle} instance}
   @argument[rect2]{a @class{gdk-rectangle} instance}
   @return{@em{True} if the rectangles are equal.}

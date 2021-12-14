@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -95,7 +95,7 @@
 ;;;
 ;;; This section describes functions dealing with events from the window system.
 ;;;
-;;; In GTK+ applications the events are handled automatically in
+;;; In GTK applications the events are handled automatically in
 ;;; gtk_main_do_event() and passed on to the appropriate widgets, so these
 ;;; functions are rarely needed. Though some of the fields in the Event
 ;;; Structures are useful.
@@ -109,7 +109,7 @@
 
 (defconstant +gdk-current-time+ 0
  #+cl-cffi-gtk-documentation
- "@version{2020-8-25}
+ "@version{2021-12-13}
   @begin{short}
     Represents the current time, and can be used anywhere a time is expected.
   @end{short}")
@@ -134,7 +134,7 @@
 
 (defconstant +gdk-priority-redraw+ (+ +g-priority-high-idle+ 20)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-25}
+ "@version{2021-13-12}
   @begin{short}
     This is the priority that the idle handler processing window updates is
     given in the GLib Main Loop.
@@ -151,7 +151,7 @@
 
 (defconstant +gdk-event-propagate+ nil
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-13}
   @variable-value{@em{false}}
   @begin{short}
     Use this value as the return value for continuing the propagation of an
@@ -170,7 +170,7 @@
 
 (defconstant +gdk-event-stop+ t
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-13}
   @variable-value{@em{true}}
   @begin{short}
     Use this value as the return value for stopping the propagation of an event
@@ -231,13 +231,13 @@
 
 (defcfun ("gdk_events_pending" gdk-events-pending) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-8-25}
+ "@version{2021-12-13}
   @return{@em{True} if any events are pending.}
   @begin{short}
     Checks if any events are ready to be processed for any display.
   @end{short}
   @begin[Example]{dictionary}
-    The function @code{clear-event-loop} looks for pending events.
+    The @code{clear-event-loop} function looks for pending events.
     @begin{pre}
 (defun clear-event-loop ()
   (loop while (gdk-events-pending)
@@ -255,9 +255,9 @@
 
 (defcfun ("gdk_event_peek" gdk-event-peek) (g-boxed-foreign gdk-event :return)
  #+cl-cffi-gtk-documentation
- "@version{2020-8-25}
+ "@version{2021-12-13}
   @begin{return}
-    A copy of the first @class{gdk-event} structure on some event queue, or
+    A copy of the first @class{gdk-event} instance on some event queue, or
     @code{nil} if no events are in any queues.
   @end{return}
   @begin{short}
@@ -279,7 +279,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
   @begin{return}
-    The next @class{gdk-event} structure to be processed, or @code{nil} if no
+    The next @class{gdk-event} instance to be processed, or @code{nil} if no
     events are pending.
   @end{return}
   @begin{short}
@@ -299,7 +299,7 @@
 (defcfun ("gdk_event_put" gdk-event-put) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @begin{short}
     Appends a copy of the given event onto the front of the event queue for
     the display, or the default event queue if the event has no window.
@@ -323,7 +323,7 @@
  "@version{2020-11-28}
   @argument[event-type]{a value of the @symbol{gdk-event-type} enumeration}
   @argument[args]{pairs of property name and property value}
-  @return{A new  @class{gdk-event} structure.}
+  @return{A new  @class{gdk-event} instance.}
   @begin{short}
     Creates a new event of the given type.
   @end{short}
@@ -412,8 +412,8 @@
 (defun gdk-event-copy (event)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
-  @return{A copy of the @class{gdk-event} structure.}
+  @argument[event]{a @class{gdk-event} instance}
+  @return{A copy of the @class{gdk-event} instance.}
   @begin{short}
     Copies an event.
   @end{short}
@@ -448,7 +448,7 @@
 (defun gdk-event-axis (event axis-use)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @argument[axis-use]{a @symbol{gdk-axis-use} value with the axis use to look
     for}
   @return{@code{value} -- a @code{:double} with the value found}
@@ -473,7 +473,7 @@
 (defun gdk-event-button (event)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{Mouse button number, or @code{nil} if the event does not deliver a
     button number.}
   @short{Extract the button number from an event.}
@@ -497,7 +497,7 @@
 (defun gdk-event-click-count (event)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{Click count, or @code{nil} if the event does not deliver a click
     count.}
   @begin{short}
@@ -526,7 +526,7 @@
 (defun gdk-event-coords (event)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @begin{return}
     @code{x-win} -- a @code{:double} with the event window x coordinate @br{}
     @code{y-win} -- a @code{:double} with the event window y coordinate
@@ -553,7 +553,7 @@
 
 (defun gdk-event-keycode (event)
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{An unsigned integer with the keycode.}
   @begin{short}
     Extracts the hardware keycode from an event.
@@ -577,7 +577,7 @@
 
 (defun gdk-event-keyval (event)
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{An unsigned integer with the keyval.}
   @begin{short}
     Extracts the keyval from an event.
@@ -603,7 +603,7 @@
 (defun gdk-event-root-coords (event)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @begin{return}
     @code{x-root} -- a @code{:double} with the root window x coordinate @br{}
     @code{y-root} -- a @code{:double} with the root window y coordinate
@@ -631,7 +631,7 @@
 
 (defun gdk-event-get-scroll-direction (event)
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{The scroll direction of type @symbol{gdk-scroll-direction}.}
   @begin{short}
     Extracts the scroll direction from an event.
@@ -656,7 +656,7 @@
 (defun gdk-event-scroll-deltas (event)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-24}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @begin{return}
     @code{delta-x} -- a @code{:double} with x delta @br{}
     @code{delta-y} -- a @code{:double} with y delta
@@ -714,7 +714,7 @@
 (defun gdk-event-state (event)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure or @code{nil}}
+  @argument[event]{a @class{gdk-event} instance or @code{nil}}
   @begin{return}
     @code{state} -- the state as a @symbol{gdk-modifier-type} value
   @end{return}
@@ -738,7 +738,7 @@
 (defcfun ("gdk_event_get_time" gdk-event-time) :uint32
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{An unsigned integer with the time stamp field from the event.}
   @begin{short}
     Returns the current time of the event.
@@ -803,7 +803,7 @@
     (g-boxed-foreign gdk-event-sequence)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{The event sequence of type @class{gdk-event-sequence} that the event
     belongs to.}
   @begin{short}
@@ -825,7 +825,7 @@
 (defcfun ("gdk_event_request_motions" gdk-event-request-motions) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @begin{short}
     Request more motion notifies if the event is a motion notify hint event.
   @end{short}
@@ -862,8 +862,8 @@
 
 (defun gdk-events-angle (event-1 event-2)
  "@version{2020-8-25}
-  @argument[event-1]{a @class{gdk-event} stucture}
-  @argument[event-2]{a @class{gdk-event} stucture}
+  @argument[event-1]{a @class{gdk-event} instance}
+  @argument[event-2]{a @class{gdk-event} instance}
   @return{A @code{:double} with the relative angle between both events.}
   @begin{short}
     If both events contain X/Y information, this function will return the
@@ -890,8 +890,8 @@
 
 (defun gdk-events-center (event-1 event-2)
  "@version{2020-8-25}
-  @argument[event-1]{a @class{gdk-event} structure}
-  @argument[event-2]{a @class{gdk-event} structure}
+  @argument[event-1]{a @class{gdk-event} instance}
+  @argument[event-2]{a @class{gdk-event} instance}
   @begin{return}
     @code{x} -- a @code{:double} with the x coordinate of the center @br{}
     @code{y} -- a @code{:double} with the y coordinate of the center
@@ -919,8 +919,8 @@
 
 (defun gdk-events-distance (event-1 event-2)
  "@version{2020-8-25}
-  @argument[event-1]{a @class{gdk-event} structure}
-  @argument[event-2]{a @class{gdk-event} structure}
+  @argument[event-1]{a @class{gdk-event} instance}
+  @argument[event-2]{a @class{gdk-event} instance}
   @return{A @code{:double} with the distance.}
   @begin{short}
     If both events have X/Y information, the distance between both coordinates,
@@ -941,7 +941,7 @@
 (defcfun ("gdk_event_triggers_context_menu" gdk-event-triggers-context-menu)
     :boolean
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{@em{True} if the event should trigger a contect menu.}
   @begin{short}
     This function returns whether a @class{gdk-event-button} should trigger a
@@ -970,7 +970,7 @@
 #+gdk-3-20
 (defcfun ("gdk_event_get_seat" gdk-event-seat) (g-object gdk-seat)
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{The @class{gdk-seat} object of this event.}
   @begin{short}
     Returns the seat this event was generated for.
@@ -991,7 +991,7 @@
 #+gdk-3-22
 (defcfun ("gdk_event_get_scancode" gdk-event-scancode) :int
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{A @code{:int} with the associated keyboard scancode or 0.}
   @begin{short}
     Gets the keyboard low-level scancode of a key event.
@@ -1015,7 +1015,7 @@
 #+gdk-3-22
 (defcfun ("gdk_event_get_pointer_emulated" gdk-event-pointer-emulated) :boolean
  "@version{2020-8-25}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{@em{True} if this event is emulated.}
   @begin{short}
     Returns whether this event is an 'emulated' pointer event (typically from a
@@ -1068,15 +1068,15 @@
     Sets the function to call to handle all events from GDK.
   @end{short}
 
-  Note that GTK+ uses this to install its own event handler, so it is usually
-  not useful for GTK+ applications. Although an application can call this
+  Note that GTK uses this to install its own event handler, so it is usually
+  not useful for GTK applications. Although an application can call this
   function then call the function @fun{gtk-main-do-event} to pass events to
-  GTK+.
+  GTK.
   @see-class{gdk-event}
   @see-function{gtk-main-do-event}"
   (%gdk-event-handler-set (callback gdk-event-func-callback)
                           (allocate-stable-pointer func)
-                          (callback stable-pointer-destroy-notify-cb)))
+                          (callback stable-pointer-destroy-notify)))
 
 (export 'gdk-event-handler-set)
 
@@ -1103,7 +1103,7 @@
   enabled. The function @sym{(setf gdk-show-events)} sets whether a trace of
   received events is output.
 
-  Note that GTK+ must be compiled with debugging (that is, configured using the
+  Note that GTK must be compiled with debugging (that is, configured using the
   @code{--enable-debug} option) to use this option.
   @see-class{gdk-event}")
 
@@ -1126,7 +1126,7 @@
  "@version{2020-8-25}
   @syntax[]{(gdk-event-screen event) => screen}
   @syntax[]{(setf (gdk-event-screen event) screen)}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{short}
     Accessor of the screen of an event.
@@ -1135,7 +1135,7 @@
   The function @sym{gdk-event-screen} returns the screen for the event. The
   function @sym{(setf gdk-event-screen)} sets the screen of the event.
 
-  The event must have been allocated by GTK+, for instance, by the function
+  The event must have been allocated by GTK, for instance, by the function
   @fun{gdk-event-copy}.
 
   The screen is typically the screen for @code{event->any.window}, but for
@@ -1165,7 +1165,7 @@
  "@version{2020-8-25}
   @syntax[]{(gdk-event-device event) => device}
   @syntax[]{(setf (gdk-event-device event) device)}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @argument[device]{a @class{gdk-device} object}
   @begin{short}
     Accessor of the \"device\" field of an event.
@@ -1175,7 +1175,7 @@
   will return it, else it will return @code{nil}. The function
   @sym{(setf gdk-event-device)} sets the device for an event.
 
-  The event must have been allocated by GTK+, for instance, by the function
+  The event must have been allocated by GTK, for instance, by the function
   @fun{gdk-event-copy}.
   @see-class{gdk-event}
   @see-class{gdk-device}"
@@ -1248,7 +1248,7 @@
  "@version{2020-8-25}
   @syntax[]{(gdk-event-device-tool event) => tool}
   @syntax[]{(setf (gdk-event-device-tool event) tool)}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @argument[tool]{a @class{gdk-device-tool} object}
   @begin{short}
     Accessor of the device tool representing the tool that caused the event.

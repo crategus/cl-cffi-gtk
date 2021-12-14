@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -159,12 +159,12 @@
 (defcfun ("gdk_get_display_arg_name" gdk-get-display-arg-name)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-6}
+ "@version{2021-12-13}
   @return{A string with the display name, if specified explicitely, otherwise
     @code{nil}.}
   @begin{short}
     Gets the display name specified in the command line arguments passed to
-    the functions @code{gdk_init} or @code{gdk_parse_args}, if any.
+    the @code{gdk_init} or @code{gdk_parse_args} functions, if any.
   @end{short}")
 
 (export 'gdk-get-display-arg-name)
@@ -175,17 +175,17 @@
 
 (defcfun ("gdk_notify_startup_complete" gdk-notify-startup-complete) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-6}
+ "@version{2021-12-13}
   @begin{short}
     Indicates to the GUI environment that the application has finished loading.
   @end{short}
   If the application open windows, this function is normally called after
-  opening the application's initial set of windows.
+  opening the initial set of windows of the application.
 
   GTK will call this function automatically after opening the first
-  @class{gtk-window} object unless the function
-  @fun{gtk-window-set-auto-startup-notification} is called to disable that
-  feature.
+  @class{gtk-window} object unless the
+  @fun{gtk-window-set-auto-startup-notification} function is called to disable
+  that feature.
   @see-class{gtk-window}
   @see-function{gdk-notify-startup-complete-with-id}
   @see-function{gtk-window-set-auto-startup-notification}")
@@ -199,21 +199,21 @@
 (defcfun ("gdk_notify_startup_complete_with_id"
            gdk-notify-startup-complete-with-id) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-6}
-  @argument[startup-id]{a string with the startup notification identifier}
+ "@version{2021-12-13}
+  @argument[startup]{a string with the startup notification identifier}
   @begin{short}
     Indicates to the GUI environment that the application has finished loading,
     using a given startup notification identifier.
   @end{short}
 
   GTK will call this function automatically for @class{gtk-window} object with
-  custom startup notification identifier unless the function
-  @fun{gtk-window-set-auto-startup-notification} is called to disable that
-  feature.
+  custom startup notification identifier unless the
+  @fun{gtk-window-set-auto-startup-notification} function is called to disable
+  that feature.
   @see-class{gtk-window}
   @see-function{gdk-notify-startup-complete}
   @see-function{gtk-window-set-auto-startup-notification}"
-  (startup-id :string))
+  (startup :string))
 
 (export 'gdk-notify-startup-complete-with-id)
 
@@ -223,7 +223,7 @@
 
 (defcfun ("gdk_set_allowed_backends" gdk-set-allowed-backends) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-6}
+ "@version{2021-12-13}
   @argument[backends]{a string with a comma-separated list of backends}
   @begin{short}
     Sets a list of backends that GDK should try to use.
@@ -245,9 +245,9 @@
   The possible backend names are x11, win32, quartz, broadway, wayland. You
   can also include a * in the list to try all remaining backends.
 
-  This call must happen prior to the functions @fun{gdk-display-open},
-  @code{gtk_init()}, @code{gtk_init_with_args()} or @code{gtk_init_check()} in
-  order to take effect.
+  This call must happen prior to the @fun{gdk-display-open}, @code{gtk_init()},
+  @code{gtk_init_with_args()} or @code{gtk_init_check()} functions in order to
+  take effect.
   @see-function{gdk-display-open}"
   (backends :string))
 
@@ -267,7 +267,7 @@
 (defcfun ("gdk_get_program_class" gdk-program-class)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-6}
+ "@version{2021-12-13}
   @syntax[]{(gdk-program-class) => program-class}
   @syntax[]{(setf (gdk-program-class) program-class)}
   @argument[program-class]{a string with the program class}
@@ -275,13 +275,13 @@
     Accessor of the program class.
   @end{short}
 
-  The function @sym{gdk-program-class} gets the program class. The function
-  @sym{(setf gdk-program-class)} sets the program class.
+  The @sym{gdk-program-class} function gets the program class. The
+  @sym{(setf gdk-program-class)} function sets the program class.
 
-  Unless the program class has explicitly been set with the function
-  @sym{(setf gdk-program-class)} or with the @code{--class} command line option,
-  the default value is the program name determined with the function
-  @fun{g-prgname} and with the first character converted to uppercase.
+  Unless the program class has explicitly been set with the
+  @sym{(setf gdk-program-class)} function or with the @code{--class} command
+  line option, the default value is the program name determined with the
+  @fun{g-prgname} function and with the first character converted to uppercase.
 
   The X11 backend uses the program class to set the class name part of the
   @code{WM_CLASS} property on toplevel windows. See the Inter-Client
@@ -305,8 +305,8 @@
     environment variable or the @code{--display} command line option.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-get-display} has been deprecated since version 3.8
-    and should not be used in newly-written code. Call
+    The @sym{gdk-get-display} function has been deprecated since version 3.8
+    and should not be used in newly written code. Call
     @code{(gdk-display-name (gdk-display-default))} instead.
   @end{dictionary}
   @see-function{gdk-display-name}
@@ -327,8 +327,8 @@
   @end{short}
   This is rarely needed by applications.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-flush} is deprecated and should not be used in
-    newly-written code.
+    The @sym{gdk-flush} function is deprecated and should not be used in
+    newly written code.
   @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
@@ -346,8 +346,8 @@
     Returns the width of the default screen in pixels.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-screen-width} has been deprecated since version 3.22
-    and should not be used in newly-written code. Use per-monitor information.
+    The @sym{gdk-screen-width} function has been deprecated since version 3.22
+    and should not be used in newly written code. Use per monitor information.
   @end{dictionary}
   @see-function{gdk-screen-height}
   @see-function{gdk-screen-width-mm}
@@ -371,8 +371,8 @@
     Returns the height of the default screen in pixels.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-screen-height} has been deprecated since version 3.22
-    and should not be used in newly-written code. Use per-monitor information.
+    The @sym{gdk-screen-height} function has been deprecated since version 3.22
+    and should not be used in newly written code. Use per monitor information.
   @end{dictionary}
   @see-function{gdk-screen-width}
   @see-function{gdk-screen-width-mm}
@@ -397,8 +397,8 @@
   @end{short}
   Note that on many X servers this value will not be correct.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-screen-width-mm} has been deprecated since version
-    3.22 and should not be used in newly-written code. Use per-monitor
+    The @sym{gdk-screen-width-mm} function has been deprecated since version
+    3.22 and should not be used in newly written code. Use per monitor
     information.
   @end{dictionary}
   @see-function{gdk-screen-width}
@@ -424,8 +424,8 @@
   @end{short}
   Note that on many X servers this value will not be correct.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-screen-height-mm} has been deprecated since version
-    3.22 and should not be used in newly-written code. Use per-monitor
+    The @sym{gdk-screen-height-mm} function has been deprecated since version
+    3.22 and should not be used in newly written code. Use per monitor
     information.
   @end{dictionary}
   @see-function{gdk-screen-height}
@@ -494,9 +494,9 @@
   @class{gdk-event-grab-broken} events that are emitted when the grab ends
   unvoluntarily.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-pointer-grab} has been deprecated since version 3.0
-    and should not be used in newly-written code. Use the function
-    @fun{gdk-seat-grab} instead.
+    The @sym{gdk-pointer-grab} function has been deprecated since version 3.0
+    and should not be used in newly written code. Use the @fun{gdk-seat-grab}
+    function instead.
   @end{dictionary}
   @see-symbol{gdk-grab-status}
   @see-class{gdk-event-grab-broken}
@@ -575,8 +575,8 @@
   function @fun{gdk-display-set-double-click-distance}. Applications should not
   set this, it is a global user-configured setting.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-set-double-click-time} is deprecated and should not
-    be used in newly-written code.
+    The @sym{gdk-set-double-click-time} function is deprecated and should not
+    be used in newly written code.
   @end{dictionary}
   @see-function{gdk-display-set-double-click-time}
   @see-function{gdk-display-set-double-click-distance}"
@@ -613,9 +613,9 @@
   @class{gdk-event-grab-broken} events that are emitted when the grab ends
   unvoluntarily.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-keyboard-grab} has been deprecated since version 3.0
-    and should not be used in newly-written code. Use the function
-    @fun{gdk-seat-grab} instead.
+    The @sym{gdk-keyboard-grab} function has been deprecated since version 3.0
+    and should not be used in newly written code. Use the @fun{gdk-seat-grab}
+    function instead.
   @end{dictionary}
   @see-function{gdk-seat-grab}"
   (window (g-object gdk-window))
@@ -658,8 +658,8 @@
  "@version{2019-3-25}
   @short{Emits a short beep on the default display.}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-beep} is deprecated and should not be used in
-    newly-written code.
+    The @sym{gdk-beep} function is deprecated and should not be used in newly
+    written code.
   @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
@@ -702,8 +702,8 @@
     @end{pre}
   @end{dictionary}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-error-trap-push} is deprecated and should not be used
-    in newly-written code.
+    The @sym{gdk-error-trap-push} function is deprecated and should not be used
+    in newly written code.
   @end{dictionary}
   @see-class{gdk-display}
   @see-class{gdk-display-manager}")
@@ -731,8 +731,8 @@
   had to call the function @fun{gdk-flush} if your last call to Xlib was not a
   blocking round trip.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-error-trap-pop} is deprecated and should not be used
-    in newly-written code.
+    The @sym{gdk-error-trap-pop} function is deprecated and should not be used
+    in newly written code.
   @end{dictionary}
   @see-function{gdk-error-trap-push}
   @see-function{gdk-error-trap-pop-ignored}
@@ -756,8 +756,8 @@
 
   Since 3.0
   @begin[Warning]{dictionary}
-    The function @sym{gdk-error-trap-pop-ignored} is deprecated and should not
-    be used in newly-written code.
+    The @sym{gdk-error-trap-pop-ignored} function is deprecated and should not
+    be used in newly written code.
   @end{dictionary}
   @see-function{gdk-error-trap-push}")
 

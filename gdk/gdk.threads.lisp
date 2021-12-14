@@ -62,11 +62,11 @@
 ;;; performance reasons. So e.g. you must coordinate accesses to the same
 ;;; GHashTable from multiple threads.
 ;;;
-;;; GTK+, however, is not thread safe. You should only use GTK+ and GDK from
+;;; GTK, however, is not thread safe. You should only use GTK and GDK from
 ;;; the thread gtk_init() and gtk_main() were called on. This is usually
 ;;; referred to as the “main thread”.
 ;;;
-;;; Signals on GTK+ and GDK types, as well as non-signal callbacks, are emitted
+;;; Signals on GTK and GDK types, as well as non-signal callbacks, are emitted
 ;;; in the main thread.
 ;;;
 ;;; You can schedule work in the main thread safely from other threads by using
@@ -112,9 +112,9 @@
 
 (defmacro with-gdk-threads-lock (&body body)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
-  A Lisp macro to execute @arg{body} between the functions
-  @fun{gdk-threads-enter} and @fun{gdk-threads-leave}."
+ "@version{2021-12-13}
+  A Lisp macro to execute @arg{body} between the @fun{gdk-threads-enter} and
+  @fun{gdk-threads-leave} functions."
   `(progn
      (gdk-threads-enter)
      (unwind-protect
@@ -141,10 +141,10 @@
 ;;; #define GDK_THREADS_ENTER() gdk_threads_enter()
 ;;;
 ;;; GDK_THREADS_ENTER has been deprecated since version 3.6 and should not be
-;;; used in newly-written code. Use g_main_context_invoke(), g_idle_add() and
-;;; related functions if you need to schedule GTK+ calls from other threads.
+;;; used in newly written code. Use g_main_context_invoke(), g_idle_add() and
+;;; related functions if you need to schedule GTK calls from other threads.
 ;;;
-;;; This macro marks the beginning of a critical section in which GDK and GTK+
+;;; This macro marks the beginning of a critical section in which GDK and GTK
 ;;; functions can be called safely and without causing race conditions. Only one
 ;;; thread at a time can be in such a critial section. The macro expands to a
 ;;; no-op if G_THREADS_ENABLED has not been defined. Typically
@@ -157,7 +157,7 @@
 ;;; #define GDK_THREADS_LEAVE() gdk_threads_leave()
 ;;;
 ;;; GDK_THREADS_LEAVE has been deprecated since version 3.6 and should not be
-;;; used in newly-written code. Deprecated in 3.6.
+;;; used in newly written code. Deprecated in 3.6.
 ;;;
 ;;; This macro marks the end of a critical section begun with GDK_THREADS_ENTER.
 ;;; ----------------------------------------------------------------------------
@@ -174,11 +174,11 @@
     with the functions @fun{gdk-threads-enter} and @fun{gdk-threads-leave}.
   @end{short}
 
-  This call must be made before any use of the main loop from GTK+; to be
+  This call must be made before any use of the main loop from GTK; to be
   safe, call it before the function @code{gtk_init()}.
   @begin[Warning]{dictionary}
-    The function @sym{gdk-threads-init} has been deprecated since version 3.6
-    and should not be used in newly-written code. All GDK and GTK+ calls should
+    The @sym{gdk-threads-init} function has been deprecated since version 3.6
+    and should not be used in newly written code. All GDK and GTK calls should
     be made from the main thread.
   @end{dictionary}
   @see-function{gdk-threads-enter}
@@ -193,12 +193,12 @@
  "@version{2013-6-17}
   @begin{short}
     This function marks the beginning of a critical section in which GDK and
-    GTK+ functions can be called safely and without causing race conditions.
+    GTK functions can be called safely and without causing race conditions.
     Only one thread at a time can be in such a critial section.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-threads-enter} has been deprecated since version 3.6
-    and should not be used in newly-written code. All GDK and GTK+ calls should
+    The @sym{gdk-threads-enter} function has been deprecated since version 3.6
+    and should not be used in newly written code. All GDK and GTK calls should
     be made from the main thread.
   @end{dictionary}")
 
@@ -213,8 +213,8 @@
     Leaves a critical region begun with the function @fun{gdk-threads-enter}.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gdk-threads-leave} has been deprecated since version 3.6
-    and should not be used in newly-written code. All GDK and GTK+ calls should
+    The @sym{gdk-threads-leave} function has been deprecated since version 3.6
+    and should not be used in newly written code. All GDK and GTK calls should
     be made from the main thread.
   @end{dictionary}
   @see-function{gdk-threads-enter}")
@@ -227,7 +227,7 @@
 ;;; Warning
 ;;;
 ;;; gdk_threads_set_lock_functions has been deprecated since version 3.6 and
-;;; should not be used in newly-written code. All GDK and GTK+ calls should be
+;;; should not be used in newly written code. All GDK and GTK calls should be
 ;;; made from the main thread
 ;;;
 ;;; Allows the application to replace the standard method that GDK uses to
@@ -242,11 +242,11 @@
 ;;; processing.
 ;;;
 ;;; As an example, consider an application that has its own recursive lock that
-;;; when held, holds the GTK+ lock as well. When GTK+ unlocks the GTK+ lock when
+;;; when held, holds the GTK lock as well. When GTK unlocks the GTK lock when
 ;;; entering a recursive main loop, the application must temporarily release its
 ;;; lock as well.
 ;;;
-;;; Most threaded GTK+ apps won't need to use this method.
+;;; Most threaded GTK apps won't need to use this method.
 ;;;
 ;;; This method must be called before gdk_threads_init(), and cannot be called
 ;;; multiple times.
@@ -266,7 +266,7 @@
 
 (defun gdk-threads-add-idle (func &key (priority +g-priority-default-idle+))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-9}
+ "@version{2021-12-13}
   @argument[func]{a @symbol{g-source-func} callback function to call}
   @argument[priority]{an integer with the priority of the idle source,
     typically this will be in the range between @var{+g-priority-default-idle+}
@@ -280,14 +280,14 @@
   of event sources and will not be called again. The default for @arg{priority}
   is @var{+g-priority-default-idle+}.
 
-  This variant of the function @fun{g-idle-add} calls the function with
-  the GDK lock held. It can be thought of a MT-safe version for GTK+ widgets.
+  This variant of the @fun{g-idle-add} function calls the function with
+  the GDK lock held. It can be thought of a MT-safe version for GTK widgets.
   @see-symbol{g-source-func}
   @see-function{g-idle-add}"
   (%gdk-threads-add-idle-full priority
                               (callback g-source-func)
                               (allocate-stable-pointer func)
-                              (callback stable-pointer-destroy-notify-cb)))
+                              (callback stable-pointer-destroy-notify)))
 
 (export 'gdk-threads-add-idle)
 
@@ -317,7 +317,7 @@
   of event sources and will not be called again.
 
   This variant of the function @sym{g-idle-add-full} calls the function with
-  the GDK lock held. It can be thought of a MT-safe version for GTK+ widgets
+  the GDK lock held. It can be thought of a MT-safe version for GTK widgets
   for the following use case, where you have to worry about
   @code{idle_callback()} running in thread A and accessing self after it has
   been finalized in thread B:
@@ -358,7 +358,7 @@ some_widget_finalize (GObject *object)
   (%gdk-threads-add-idle-full priority
                               (callback g-source-func)
                               (allocate-stable-pointer func)
-                              (callback stable-pointer-destroy-notify-cb)))
+                              (callback stable-pointer-destroy-notify)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout ()
@@ -367,7 +367,7 @@ some_widget_finalize (GObject *object)
 (defun gdk-threads-add-timeout (interval func
                                 &key (priority +g-priority-default+))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-9}
+ "@version{2021-12-13}
   @argument[interval]{an unsigned integer with the time between calls to the
     function, in milliseconds (1/1000ths of a second)}
   @argument[func]{a @symbol{g-source-func} callback function to call}
@@ -389,15 +389,15 @@ some_widget_finalize (GObject *object)
   recalculated based on the current time and the given interval It does not
   try to 'catch up' time lost in delays.
 
-  This variant of the function @fun{g-timeout-add} can be thought of a MT-safe
-  version for GTK+ widgets.
+  This variant of the @fun{g-timeout-add} function can be thought of a MT-safe
+  version for GTK widgets.
   @see-symbol{g-source-func}
   @see-function{g-timeout-add}"
   (%gdk-threads-add-timeout-full priority
                                  interval
                                  (callback g-source-func)
                                  (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                 (callback stable-pointer-destroy-notify)))
 
 (export 'gdk-threads-add-timeout)
 
@@ -438,7 +438,7 @@ some_widget_finalize (GObject *object)
   try to 'catch up' time lost in delays.
 
   This variant of the function @code{g_timeout_add_full()} can be thought of
-  a MT-safe version for GTK+ widgets for the following use case:
+  a MT-safe version for GTK widgets for the following use case:
   @begin{pre}
 static gboolean timeout_callback (gpointer data)
 {
@@ -472,7 +472,7 @@ static void some_widget_finalize (GObject *object)
                                  interval
                                  (callback g-source-func)
                                  (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                 (callback stable-pointer-destroy-notify)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout_seconds ()
@@ -481,7 +481,7 @@ static void some_widget_finalize (GObject *object)
 (defun gdk-threads-add-timeout-seconds (interval func
                                         &key (priority +g-priority-default+))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-9}
+ "@version{2021-12-13}
   @argument[interval]{an unsigned integer with the time between calls to the
     function, in seconds}
   @argument[func]{a @symbol{g-source-func} callback function to call}
@@ -490,20 +490,20 @@ static void some_widget_finalize (GObject *object)
     and @var{+g-priority-high-idle+}}
   @return{An unsigned integer ID, greater than 0, of the event source.}
   @begin{short}
-    A variant of the function @fun{gdk-threads-add-timeout} with second
+    A variant of the @fun{gdk-threads-add-timeout} function with second
     granularity.
   @end{short}
-  The default priority is @var{+g-priority-default+}. See the function
-  @fun{g-timeout-add-seconds} for a discussion of why it is a good idea to use
-  this function if you do not need finer granularity.
+  The default priority is @var{+g-priority-default+}. See the
+  @fun{g-timeout-add-seconds} function for a discussion of why it is a good
+  idea to use this function if you do not need finer granularity.
   @see-symbol{g-source-func}
   @see-function{g-timeout-add-seconds}"
   (%gdk-threads-add-timeout-seconds-full
-                                 priority
-                                 interval
-                                 (callback g-source-func)
-                                 (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                      priority
+                                      interval
+                                      (callback g-source-func)
+                                      (allocate-stable-pointer func)
+                                      (callback stable-pointer-destroy-notify)))
 
 (export 'gdk-threads-add-timeout-seconds)
 
@@ -523,7 +523,7 @@ static void some_widget_finalize (GObject *object)
 
 (defun gdk-threads-add-timeout-seconds-full (priority interval func)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-3}
+ "@version{2021-12-13}
   @argument[priority]{an integer with the priority of the timeout source,
     typically this will be in the range between @var{+g-priority-default-idle+}
     and @var{+g-priority-high-idle+}}
@@ -532,18 +532,18 @@ static void some_widget_finalize (GObject *object)
   @argument[func]{a @symbol{g-source-func} callback function to call}
   @return{An unsigned integer ID, greater than 0, of the event source.}
   @begin{short}
-    A variant of the function @fun{gdk-threads-add-timeout-full} with
+    A variant of the @fun{gdk-threads-add-timeout-full} function with
     second-granularity.
   @end{short}
-  See the function @fun{g-timeout-add-seconds} for a discussion of why it
+  See the @fun{g-timeout-add-seconds} function for a discussion of why it
   is a good idea to use this function if you do not need finer granularity.
   @see-symbol{g-source-func}
   @see-function{gdk-threads-add-timeout-full}"
   (%gdk-threads-add-timeout-seconds-full
-                                 priority
-                                 interval
-                                 (callback g-source-func)
-                                 (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                      priority
+                                      interval
+                                      (callback g-source-func)
+                                      (allocate-stable-pointer func)
+                                      (callback stable-pointer-destroy-notify)))
 
 ;;; --- End of file gdk.threads.lisp -------------------------------------------
