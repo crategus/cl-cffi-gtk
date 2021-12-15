@@ -1,4 +1,4 @@
-;;;; Example Dialog Windows - 2021-11-2
+;;;; Example Dialog Windows - 2021-12-3
 
 (in-package :gtk-example)
 
@@ -21,9 +21,9 @@
           <http://www.gnu.org/licenses/> and ~
           <http://opensource.franz.com/preamble.html>."))
 
-(defun create-dialog (&optional (header-bar-p -1))
+(defun create-dialog (&optional (headerbar-p -1))
   (let ((dialog (make-instance 'gtk-dialog
-                               :use-header-bar header-bar-p
+                               :use-header-bar headerbar-p
                                :title "Dialog Window")))
     ;; Add a border width to the vbox of the content area
     (setf (gtk-container-border-width (gtk-dialog-content-area dialog)) 12)
@@ -46,28 +46,28 @@
     (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
     (gtk-dialog-set-default-response dialog :cancel)
     ;; Run the dialog and print the message on the console
-    (format t "Response was: ~S~%" (gtk-dialog-run dialog))
+    (format t "Response is: ~s~%" (gtk-dialog-run dialog))
     ;; Destroy the dialog
     (gtk-widget-destroy dialog)))
 
-(defun create-message-dialog ()
+(defun create-message-dialog (&optional (mtype :info))
   (let ((dialog (make-instance 'gtk-message-dialog
-                               :message-type :info
-                               :buttons :close
-                               :text "Info Message Dialog"
+                               :message-type mtype
+                               :buttons :cancel
+                               :text "Message Dialog"
                                :secondary-text
                                (format nil
-                                       "This is a message dialog of type ~
-                                        :info with a secondary text."))))
+                                       "This is a message dialog of type ~a."
+                                       mtype))))
     ;; Run the message dialog
     (gtk-dialog-run dialog)
     ;; Destroy the message dialog
     (gtk-widget-destroy dialog)))
 
-(defun create-about-dialog (&optional (header-bar-p 1))
+(defun create-about-dialog (&optional (headerbar-p 1))
   (let ((dialog (make-instance 'gtk-about-dialog
-                               :use-header-bar header-bar-p
-                               :program-name "Example Dialog"
+                               :use-header-bar headerbar-p
+                               :program-name "GTK Demo"
                                :version "0.00"
                                :copyright "(c) Dieter Kaiser"
                                :website
@@ -96,13 +96,16 @@
                                  :border-width 12))
           (vbox (make-instance 'gtk-box
                                :orientation :vertical
-                               :spacing 6)))
+                               :spacing 6))
+          (check (make-instance 'gtk-check-button
+                                :margin-bottom 18
+                                :label "Show Dialog with Header Bar"))
+          (radio (gtk-radio-button-new-with-label nil "Info")))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-container-add window vbox)
-      ;; Show a dialog
+      ;; Show dialog
       (let ((button (make-instance 'gtk-button
                                    :label "Show Dialog")))
         (gtk-box-pack-start vbox button)
@@ -110,25 +113,9 @@
            (lambda (widget)
              (declare (ignore widget))
              ;; Create and show the dialog
-             (create-dialog -1))))
-      ;; Show a dialog with a header bar
-      (let ((button (make-instance 'gtk-button
-                                   :label "Show Dialog with Header Bar")))
-        (gtk-box-pack-start vbox button)
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             ;; Create and show the dialog
-             (create-dialog 1))))
-      ;; Show message dialog
-      (let ((button (make-instance 'gtk-button
-                                   :label "Show Message Dialog")))
-        (gtk-box-pack-start vbox button)
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             ;; Create and show the message dialog
-             (create-message-dialog))))
+             (create-dialog (if (gtk-toggle-button-active check)
+                                1
+                                -1)))))
       ;; Show about dialog
       (let ((button (make-instance 'gtk-button
                                    :label "Show About Dialog")))
@@ -137,14 +124,51 @@
            (lambda (widget)
              (declare (ignore widget))
              ;; Create and show the about dialog
-             (create-about-dialog -1))))
-      ;; Show about dialog with header bar
-      (let ((button (make-instance 'gtk-button
-                                   :label "Show About Dialog with Header Bar")))
+             (create-about-dialog (if (gtk-toggle-button-active check)
+                                      1
+                                      -1)))))
+      ;; Add the check button to the vertical box
+      (gtk-box-pack-start vbox check)
+      ;; Show message dialog
+      (let ((mtype :info)
+            (button (make-instance 'gtk-button
+                                   :label "Show Message Dialog")))
         (gtk-box-pack-start vbox button)
         (g-signal-connect button "clicked"
            (lambda (widget)
              (declare (ignore widget))
-             ;; Create and show the about dialog
-             (create-about-dialog 1))))
+             ;; Select the active radio button
+             (dolist (radio (gtk-radio-button-get-group radio))
+               (when (gtk-toggle-button-active radio)
+                 (setf mtype
+                       (cdr (assoc (gtk-button-label radio)
+                                   '(("Info" . :info)
+                                     ("Warning" . :warning)
+                                     ("Question" . :question)
+                                     ("Error" . :error))
+                                   :test #'string=)))))
+             ;; Create and show the message dialog
+             (create-message-dialog mtype))))
+      ;; Add the radio buttons to select the message type
+      (let ((hbox (make-instance 'gtk-box
+                                 :orientation :horizontal)))
+        (gtk-box-pack-start hbox radio)
+        (setf radio
+              (gtk-radio-button-new-with-label
+                                          (gtk-radio-button-get-group radio)
+                                          "Warning"))
+        (gtk-box-pack-start hbox radio)
+        (setf radio
+              (gtk-radio-button-new-with-label
+                                          (gtk-radio-button-get-group radio)
+                                          "Question"))
+        (gtk-box-pack-start hbox radio)
+        (setf radio
+              (gtk-radio-button-new-with-label
+                                          (gtk-radio-button-get-group radio)
+                                          "Error"))
+        (gtk-box-pack-start hbox radio)
+        (gtk-container-add vbox hbox))
+      ;; Pack and show the widgets
+      (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
