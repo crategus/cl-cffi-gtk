@@ -2,6 +2,11 @@
 ;;;;
 ;;;; GtkRevealer is a container that animates showing and hiding
 ;;;; of its sole child with nice transitions.
+;;;;
+;;;; TODO: This example uses the gtk-widget-mapped function, but the
+;;;; documentation says: This function should only ever be called in a derived
+;;;; "map" or "unmap" implementation of the widget.
+;;;; What is a better implementation?
 
 (in-package :gtk-example)
 
