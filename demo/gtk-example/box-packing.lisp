@@ -1,4 +1,4 @@
-;;;; Example Box Packing (2021-5-14)
+;;;; Example Box Packing - 2021-12-4
 
 (in-package :gtk-example)
 
@@ -38,10 +38,11 @@
                         :padding padding)
     box))
 
-(defun example-box-packing (&optional (spacing 6) (padding 0))
+(defun example-box-packing (&optional (application nil) (spacing 6) (padding 0))
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :title "Example Box Packing"
+                                 :application application
                                  :type :toplevel
                                  :border-width 12))
           (vbox (make-instance 'gtk-box

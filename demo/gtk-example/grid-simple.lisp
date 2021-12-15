@@ -1,12 +1,13 @@
-;;;; Example Simple Grid (2021-5-15)
+;;;; Example Simple Grid - 2021-12-5
 
 (in-package :gtk-example)
 
-(defun example-grid-simple ()
+(defun example-grid-simple (&optional (application nil))
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Example Simple Grid"
+                                 :application application
                                  :border-width 12
                                  :default-width 320))
           (grid (make-instance 'gtk-grid
@@ -20,15 +21,12 @@
                                   :label "Button 2"))
           (button3 (make-instance 'gtk-button
                                   :label "Button 3")))
-
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-
       (gtk-grid-attach grid button1 0 0 1 1)
       (gtk-grid-attach grid button2 1 0 1 1)
       (gtk-grid-attach grid button3 0 1 2 1)
-
       (gtk-container-add window grid)
       (gtk-widget-show-all window))))
