@@ -3,6 +3,8 @@
 ;;;; GtkListBox allows lists with complicated layouts, using
 ;;;; regular widgets supporting sorting and filtering.
 
+;; TODO: The implementation is not perfect. Improve the implementation.
+
 (in-package :gtk-example)
 
 (defclass gtk-message (g-object)
@@ -54,18 +56,7 @@
     (when entries
       (setf (gtk-message-n-reshares msg) (parse-integer (pop entries))))
 
-    (format t "~a~%" (gtk-message-id msg))
-    (format t "~a~%" (gtk-message-name msg))
-    (format t "~a~%" (gtk-message-nick msg))
-    (format t "~a~%" (gtk-message-message msg))
-    (format t "~a~%" (gtk-message-time msg))
-    (format t "~a~%" (gtk-message-reply msg))
-    (format t "~a~%" (gtk-message-resent msg))
-    (format t "~a~%" (gtk-message-n-favorites msg))
-    (format t "~a~%" (gtk-message-n-reshares msg))
-
-    msg
-))
+    msg))
 
 (defclass gtk-message-row (gtk-list-box-row)
   ((message :initarg :message
@@ -104,11 +95,6 @@
 (defun gtk-message-row-update (row)
   (let ((message (gtk-message-row-message row)))
 
-    (format t "~&in GTK-MESSAGE-ROW-UPDATE ~a~%" message)
-    (format t "  details-revealer : ~a~%" (gtk-message-row-details-revealer row))
-    (format t "      avatar-image : ~a~%" (gtk-message-row-avatar-image row))
-    (format t " extra-buttons-box : ~a~%" (gtk-message-row-extra-buttons-box row))
-
     (gtk-image-set-from-file (gtk-message-row-avatar-image row)
                              (sys-path "apple-red.png"))
 
@@ -125,19 +111,31 @@
       (setf (gtk-label-label (gtk-message-row-short-time-label row))
             (format nil "~a.~a.~a" date month (+ year 70)))
       (setf (gtk-label-label (gtk-message-row-detailed-time-label row))
-            (format nil "~a:~a:~a - ~a.~a,~a"
-                        hour minute second date month year)))
+            (format nil "~a:~a:~a - ~a.~a.~a"
+                        hour minute second date month (+ year 70))))
 
     (let ((n-favorites-label (gtk-message-row-n-favorites-label row))
           (n-favorites (gtk-message-n-favorites message)))
-      (setf (gtk-widget-visible n-favorites-label) (not (= 0 n-favorites)))
-      (gtk-label-set-markup n-favorites-label (format nil "~a" n-favorites)))
+      (setf (gtk-widget-visible n-favorites-label)
+            (not (= 0 n-favorites)))
+      (gtk-label-set-markup n-favorites-label
+                            (format nil "<b>~a</b>~%Favorites" n-favorites)))
 
     (let ((n-reshares-label (gtk-message-row-n-reshares-label row))
           (n-reshares (gtk-message-n-reshares message)))
-      (gtk-label-set-markup n-reshares-label (format nil "~a" n-reshares)))
+      (setf (gtk-widget-visible n-reshares-label)
+            (not (= 0 n-reshares)))
+      (gtk-label-set-markup n-reshares-label
+                            (format nil "<b>~a</b>~%Reshares" n-reshares)))
 
-))
+    (let ((resent-box (gtk-message-row-resent-box row))
+          (resent-by-button (gtk-message-row-resent-by-button row))
+          (resent-by (gtk-message-resent message)))
+      (setf (gtk-widget-visible resent-box)
+            (not (= 0 (length resent-by))))
+      (when (not (= 0 (length resent-by)))
+        (setf (gtk-button-label resent-by-button) resent-by))
+    )))
 
 (defun gtk-message-row-new (message)
   (let* ((builder (gtk-builder-new-from-file (sys-path "list-box.ui")))
@@ -161,34 +159,39 @@
           (gtk-builder-object builder "short_time_label"))
     (setf (gtk-message-row-detailed-time-label row)
           (gtk-builder-object builder "detailed_time_label"))
+
+    (setf (gtk-message-row-resent-box row)
+          (gtk-builder-object builder "resent_box"))
+    (setf (gtk-message-row-resent-by-button row)
+          (gtk-builder-object builder "resent_by_button"))
+
     (setf (gtk-message-row-n-favorites-label row)
           (gtk-builder-object builder "n_favorites_label"))
     (setf (gtk-message-row-n-reshares-label row)
           (gtk-builder-object builder "n_reshares_label"))
     (setf (gtk-message-row-expand-button row)
-          (gtk-builder-object builder "expand-button"))
+          (gtk-builder-object builder "expand_button"))
 
     (gtk-message-row-update row)
 
-    (g-signal-connect (gtk-builder-object builder "expand-button") "clicked"
+    (g-signal-connect (gtk-builder-object builder "expand_button") "clicked"
         (lambda (button)
           (format t "in EXPAND_CLICKED: ~a~%" button)
           (gtk-message-row-expand row)))
 
-    (g-signal-connect (gtk-builder-object builder "reshare-button") "clicked"
+    (g-signal-connect (gtk-builder-object builder "reshare_button") "clicked"
         (lambda (button)
           (let ((message (gtk-message-row-message row)))
             (incf (gtk-message-n-reshares message))
             (gtk-message-row-update row))))
 
-    (g-signal-connect (gtk-builder-object builder "favorite-button") "clicked"
+    (g-signal-connect (gtk-builder-object builder "favorite_button") "clicked"
         (lambda (button)
           (let ((message (gtk-message-row-message row)))
             (incf (gtk-message-n-favorites message))
             (gtk-message-row-update row))))
 
-    row
-))
+    row))
 
 (defun example-list-box (&optional application)
   (within-main-loop
@@ -209,10 +212,8 @@
                                    :hscrollbar-policy :never
                                    :vscrollbar-policy :automatic))
           (listbox (make-instance 'gtk-list-box
-                                  :activate-on-single-click nil))
-         )
+                                  :activate-on-single-click nil)))
 
-      ;; Signal handler for the window to handle the signal "destroy".
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -223,10 +224,15 @@
       (gtk-box-pack-start vbox scrolled)
       (gtk-container-add scrolled listbox)
 
-;      (g-signal-connect listbox "row-activated"
-;                        (lambda (listbox row)
-;                          (declare (ignore listbox))
-;                          (gtk-message-row-expand row)))
+      (gtk-list-box-set-sort-func listbox
+          (lambda (row1 row2)
+            (- (gtk-message-time (gtk-message-row-message row2))
+               (gtk-message-time (gtk-message-row-message row1)))))
+
+      (g-signal-connect listbox "row-activated"
+                        (lambda (listbox row)
+                          (declare (ignore listbox))
+                          (gtk-message-row-expand row)))
 
       (with-open-file (stream (sys-path "list-box-message.txt"))
         (do ((msg nil) (row nil)
@@ -235,14 +241,8 @@
             ((null line))
           (setf msg (gtk-message-new line))
           (setf row (gtk-message-row-new msg))
-
-          (format t "~a~%" (gtk-label-label (gtk-message-row-source-name row)))
-          (format t "~a~%" (gtk-label-label (gtk-message-row-source-nick row)))
-          (format t "~a~%" (gtk-label-label (gtk-message-row-content-label row)))
-
           (gtk-widget-show-all row)
-          (gtk-container-add listbox row)
-          ))
+          (gtk-container-add listbox row)))
 
       ;; Show the window.
       (gtk-widget-show-all window))))
