@@ -1,15 +1,15 @@
-;;;; Example Revealer Icon (2021-4-29)
+;;;; Example Revealer Icon - 2021-12-4
 ;;;;
 ;;;; GtkRevealer is a container that animates showing and hiding
 ;;;; of its sole child with nice transitions.
 
 (in-package :gtk-example)
 
-(let ((count 0) (timeout 0))
-
-(defun example-revealer-icon ()
+(defun example-revealer-icon (&optional (application nil))
   (within-main-loop
-    (let* ((builder (gtk-builder-new-from-file (sys-path "revealer-icon.ui")))
+    (let* ((count 0)
+           (timeout 0)
+           (builder (gtk-builder-new-from-file (sys-path "revealer-icon.ui")))
            (window (gtk-builder-object builder "window")))
       (g-signal-connect window "destroy"
                                (lambda (widget)
@@ -18,7 +18,7 @@
                                    (g-source-remove timeout)
                                    (setf timeout 0))
                                  (leave-gtk-main)))
-      (setf count 0)
+      (setf (gtk-window-application window) application)
       (setf timeout
             (g-timeout-add 690
                 (lambda ()
@@ -37,4 +37,4 @@
                           (setf timeout 0)
                           nil)
                         t)))))
-      (gtk-widget-show-all window)))))
+      (gtk-widget-show-all window))))
