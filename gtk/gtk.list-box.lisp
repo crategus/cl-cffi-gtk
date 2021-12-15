@@ -147,12 +147,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-list-box-row 'type)
- "@version{2021-4-30}
+ "@version{*2021-11-30}
   @begin{short}
     The @sym{gkt-list-box-row} widget is a child widget for the
     @class{gtk-list-box} widget.
   @end{short}
-
   The @sym{gtk-list-box-row} widget can be marked as activatable or selectable.
   If a row is activatable, the \"row-activated\" signal will be emitted for it
   when the user tries to activate it. If it is selectable, the row will be
@@ -160,15 +159,15 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
- lambda (listboxrow)    :action
+ lambda (row)    :action
       @end{pre}
       This is a keybinding signal, which will cause this row to be activated.
       If you want to be notified when the user activates a row (by key or not),
-      use the \"row-activated\" signal on the row’s parent @class{gtk-list-box}
-      widget.
+      use the \"row-activated\" signal on the parent @class{gtk-list-box}
+      widget of the row.
       @begin[code]{table}
-        @entry[listboxrow]{The @sym{gtk-list-box-row} widget on which the
-        signal is emitted.}
+        @entry[row]{The @sym{gtk-list-box-row} widget on which the signal is
+          emitted.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-list-box-row-activatable}
@@ -185,15 +184,15 @@
 (setf (documentation (atdoc:get-slot-from-name "activatable"
                                                'gtk-list-box-row) 't)
  "The @code{activatable} property of type @code{:boolean} (Read / Write) @br{}
-  The property determines whether the \"row-activated\" signal will be emitted
-  for this row. @br{}
+  Determines whether the \"row-activated\" signal will be emitted for this row.
+  @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-list-box-row-activatable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-list-box-row-activatable 'function)
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @syntax[]{(gtk-list-box-row-activatable object) => activatable}
   @syntax[]{(setf (gtk-list-box-row-activatable object) activatable)}
   @argument[object]{a @class{gtk-list-box-row} widget}
@@ -203,9 +202,10 @@
     @class{gtk-list-box-row} class.
   @end{short}
 
-  The slot access function @sym{gtk-list-box-row-activatable} gets the value of
-  the @slot[gtk-list-box-row]{activatable} property for this row. The slot
-  access function @sym{(setf gtk-list-box-row-activatable)} sets the property.
+  The @sym{gtk-list-box-row-activatable} slot access function gets the value of
+  the @slot[gtk-list-box-row]{activatable} property for this row. The
+  @sym{(setf gtk-list-box-row-activatable)} slot access function sets the
+  property.
   @see-class{gtk-list-box-row}")
 
 ;;; --- gtk-list-box-row-selectable --------------------------------------------
@@ -214,14 +214,14 @@
 (setf (documentation (atdoc:get-slot-from-name "selectable"
                                                'gtk-list-box-row) 't)
  "The @code{selectable} property of type @code{:boolean} (Read / Write) @br{}
-  The property determines whether this row can be selected. @br{}
+  Determines whether this row can be selected. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-list-box-row-selectable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-list-box-row-selectable 'function)
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @syntax[]{(gtk-list-box-row-selectable object) => selectable}
   @syntax[]{(setf (gtk-list-box-row-selectable object) selectable)}
   @argument[object]{a @class{gtk-list-box-row} widget}
@@ -231,9 +231,10 @@
     @class{gtk-list-box} class.
   @end{short}
 
-  The slot access function @sym{gtk-list-box-row-selectable} gets the value of
-  the @slot[gtk-list-box-row]{selectable} property for this row. The slot access
-  function @sym{(setf gtk-list-box-row-selectable)} sets the property.
+  The @sym{gtk-list-box-row-selectable} slot access function gets the value of
+  the @slot[gtk-list-box-row]{selectable} property for this row. The
+  @sym{(setf gtk-list-box-row-selectable)} slot access function sets the
+  property.
   @see-class{gtk-list-box-row}")
 
 ;;; ----------------------------------------------------------------------------
@@ -255,7 +256,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-list-box 'type)
- "@version{2021-4-30}
+ "@version{*2021-12-15}
   @begin{short}
     The @sym{gtk-list-box} widget is a vertical container that contains
     @class{gtk-list-box-row} children.
@@ -271,10 +272,10 @@
   complicated layout than what is allowed by a @class{gtk-cell-renderer}
   object, or when the contents is interactive, i.e. has a button in it.
 
-  Although a @sym{gtk-list-box} widget must have only @classl{gtk-list-box-row}
-  children you can add any kind of widget to it via the function
-  @fun{gtk-container-add}, and a @class{gtk-list-box-row} widget will
-  automatically be inserted between the list and the widget.
+  Although a @sym{gtk-list-box} widget must have only @class{gtk-list-box-row}
+  children you can add any kind of widget to it via the
+  @fun{gtk-container-add} function, and a @class{gtk-list-box-row} widget will
+  automatically be inserted between the list box and the widget.
 
   The @class{gtk-list-box-row} widget can be marked as activatable or
   selectable. If a row is activatable, the \"row-activated\" signal will be
@@ -285,10 +286,10 @@
  list
   ╰── row[.activatable]
     @end{pre}
-    The @sym{gtk-list-box} widget uses a single CSS node named @code{list}.
-    Each @class{gtk-list-box-row} widget uses a single CSS node named
-    @code{row}. The row nodes get the @code{.activatable} style class added
-    when appropriate.
+    The @sym{gtk-list-box} implementation uses a single CSS node named
+    @code{list}. Each @class{gtk-list-box-row} widget uses a single CSS node
+    named @code{row}. The row nodes get the @code{.activatable} style class
+    added when appropriate.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-cursor-row\" signal}
@@ -306,7 +307,7 @@
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} widget on which the signal is
           emitted.}
-        @entry[step]{A @symbol{gtk-movement-step} value.}
+        @entry[step]{A value of the @symbol{gtk-movement-step} enumeration.}
         @entry[count]{An integer.}
       @end{table}
     @subheading{The \"row-activated\" signal}
@@ -324,9 +325,9 @@
  lambda (listbox row)    :run-last
       @end{pre}
       The signal is emitted when a new row is selected, or when the selection
-      is cleared. When the box is using the selection mode @code{:multiple},
-      this signal will not give you the full picture of selection changes, and
-      you should use the \"selected-rows-changed\" signal instead.
+      is cleared. When the list box is using the @code{:multiple} selection
+      mode, this signal will not give you the full picture of selection changes,
+      and you should use the \"selected-rows-changed\" signal instead.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} widget on which the signal is
           emitted.}
@@ -337,7 +338,7 @@
  lambda (listbox)    :action
       @end{pre}
       The signal is a keybinding signal which gets emitted to select all
-      children of the box, if the selection mode permits it. The default
+      children of the list box, if the selection mode permits it. The default
       bindings for this signal is the @kbd{Ctrl-a} key.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} widget on which the signal is
@@ -365,7 +366,7 @@
  lambda (listbox)    :action
       @end{pre}
         The signal is a keybinding signal which gets emitted to unselect all
-        children of the box, if the selection mode permits it. The default
+        children of the list box, if the selection mode permits it. The default
         bindings for this signal is the @kbd{Ctrl-Shift-a} key.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} widget on which the signal is
@@ -375,8 +376,7 @@
   @see-slot{gtk-list-box-activate-on-single-click}
   @see-slot{gtk-list-box-selection-mode}
   @see-class{gtk-list-box-row}
-  @see-class{gtk-tree-view}
-  @see-class{gtk-cell-renderer}")
+  @see-class{gtk-tree-view}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -397,23 +397,23 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-list-box-activate-on-single-click 'function)
- "@version{2021-4-30}
-  @syntax[]{(gtk-list-box-acivate-on-click object) => single}
-  @syntax[]{(setf (gtk-list-box-activate-on-click object) single)}
+ "@version{2021-12-15}
+  @syntax[]{(gtk-list-box-activate-on-single-click object) => setting}
+  @syntax[]{(setf (gtk-list-box-activate-on-single-click object) setting)}
   @argument[object]{a @class{gtk-list-box} widget}
-  @argument[single]{a boolean whether to activate the row on a single click}
+  @argument[setting]{a boolean whether to activate the row on a single click}
   @begin{short}
     Accessor of the @slot[gtk-list-box]{activate-on-single-click} slot of the
     @class{gtk-list-box} class.
   @end{short}
 
-  The slot access function @sym{gtk-list-box-activate-on-single-click} returns
-  whether rows activate on single clicks. The slot access function
-  @sym{(setf gtk-list-box-activate-on-single-click)} sets whether rows activate
-  on single clicks.
+  The @sym{gtk-list-box-activate-on-single-click} slot access function returns
+  whether rows activate on single clicks. The
+  @sym{(setf gtk-list-box-activate-on-single-click)} slot access function sets
+  whether rows activate on single clicks.
 
-  If @arg{single} is @em{true}, rows will be activated when you click on them,
-  otherwise you need to double-click.
+  If the @arg{setting} argument is @em{true}, rows will be activated when you
+  click on them, otherwise you need to double-click.
   @see-class{gtk-list-box}")
 
 ;;; --- gtk-list-box-selection-mode --------------------------------------------
@@ -430,7 +430,7 @@
 (setf (gethash 'gtk-list-box-selection-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-list-box-selection-mode 'function)
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @syntax[]{(gtk-list-box-selection-mode object) => mode}
   @syntax[]{(setf (gtk-list-box-selection-mode object) mode)}
   @argument[object]{a @class{gtk-list-box} widget}
@@ -440,10 +440,10 @@
     @class{gtk-list-box} class.
   @end{short}
 
-  The slot access function @sym{gtk-list-box-selection-mode} gets the selection
-  mode of the listbox. The slot access function
-  @sym{(setf gtk-list-box-selection-mode)} sets the selection mode. See the
-  @symbol{gtk-selection-mode} enumeration for details.
+  The @sym{gtk-list-box-selection-mode} slot access function gets the selection
+  mode of the list box. The @sym{(setf gtk-list-box-selection-mode)} slot access
+  function sets the selection mode. See the @symbol{gtk-selection-mode}
+  enumeration for details.
   @see-class{gtk-list-box}
   @see-symbol{gtk-selection-mode}")
 
@@ -455,10 +455,10 @@
 
 (defun gtk-list-box-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @return{A new @class{gtk-list-box} widget.}
   @begin{short}
-    Creates a new list box container.
+    Creates a new list box.
   @end{short}
   @see-class{gtk-list-box}"
   (make-instance 'gtk-list-box))
@@ -471,15 +471,15 @@
 
 (defcfun ("gtk_list_box_prepend" gtk-list-box-prepend) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
-  @argument[child]{a @class{gtk-widget} child widet to add}
+  @argument[child]{a @class{gtk-widget} child widget to add}
   @begin{short}
-    Prepend a child widget to the list.
+    Prepend a child widget to the list box.
   @end{short}
   If a sort function is set, the child widget will actually be inserted at the
-  calculated position and this function has the same effect as the function
-  @fun{gtk-container-add}.
+  calculated position and this function has the same effect as the
+  @fun{gtk-container-add} function.
   @see-class{gtk-list-box}
   @see-class{gtk-widget}
   @see-function{gtk-list-box-insert}
@@ -495,7 +495,7 @@
 
 (defcfun ("gtk_list_box_insert" gtk-list-box-insert) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @argument[child]{a @class{gtk-widget} child widget to add}
   @argument[position]{an integer with the position to insert the child widget
@@ -504,8 +504,8 @@
     Insert the child widget into the list box at the given position.
   @end{short}
   If a sort function is set, the child widget will actually be inserted at the
-  calculated position and this function has the same effect as the function
-  @fun{gtk-container-add}.
+  calculated position and this function has the same effect as the
+  @fun{gtk-container-add} function.
 
   If the position is -1, or larger than the total number of items in the list
   box, then the child widget will be appended to the end.
@@ -525,7 +525,7 @@
 
 (defcfun ("gtk_list_box_select_row" gtk-list-box-select-row) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{*2021-11-30}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @argument[row]{a @class{gtk-list-box-row} widget}
   @begin{short}
@@ -544,7 +544,7 @@
 
 (defcfun ("gtk_list_box_unselect_row" gtk-list-box-unselect-row) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @argument[row]{a @class{gtk-list-box-row} widget}
   @begin{short}
@@ -563,7 +563,7 @@
 
 (defcfun ("gtk_list_box_select_all" gtk-list-box-select-all) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @begin{short}
     Select all children of the list box, if the selection mode allows it.
@@ -578,7 +578,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_list_box_unselect_all" gtk-list-box-unselect-all) :void
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @begin{short}
     Unselect all children of the list box, if the selection mode allows it.
@@ -594,15 +594,14 @@
 
 (defcfun ("gtk_list_box_get_selected_row" gtk-list-box-selected-row)
     (g-object gtk-list-box-row)
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @return{The selected @class{gtk-list-box-row} widget.}
   @begin{short}
     Gets the selected row.
   @end{short}
-
   Note that the list box may allow multiple selection, in which case you should
-  use the function @fun{gtk-list-box-selected-foreach} to find all selected
+  use the @fun{gtk-list-box-selected-foreach} function to find all selected
   rows.
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}
@@ -628,12 +627,12 @@
 (setf (gethash 'gtk-list-box-foreach-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-list-box-foreach-func atdoc:*external-symbols*)
- "@version{2021-4-30}
+ "@version{2021-12-15}
   @begin{short}
-    A callback function used by the function
-    @fun{gtk-list-box-selected-foreach}.
+    A callback function used by the @fun{gtk-list-box-selected-foreach}
+    function.
   @end{short}
-  It will be called on every selected child of the list box.
+  It will be called on every selected child widget of the list box.
   @begin{pre}
  lambda (listbox row)
   @end{pre}
@@ -642,6 +641,7 @@
     @entry[row]{A @class{gtk-list-box-row} widget.}
   @end{table}
   @see-class{gtk-list-box}
+  @see-class{gtk-list-box-row}
   @see-function{gtk-list-box-selected-foreach}")
 
 (export 'gtk-list-box-foreach-func)
@@ -657,14 +657,12 @@
 
 (defun gtk-list-box-selected-foreach (listbox func)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
-  @argument[func]{a @symbol{gtk-list-box-foreach-func} function which is passed
-    as a callback function}
+  @argument[func]{a @symbol{gtk-list-box-foreach-func} callback function}
   @begin{short}
     Calls a function for each selected child.
   @end{short}
-
   Note that the selection cannot be modified from within this function.
   @see-class{gtk-list-box}
   @see-symbol{gtk-list-box-foreach-func}"
@@ -680,17 +678,17 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_list_box_get_selected_rows" gtk-list-box-selected-rows)
-    (g-list (g-object gtk-widget))
+    (g-list (g-object gtk-list-box-row))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-12-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
-  @return{A list containing the @class{gtk-widget} object for each selected
-    row.}
+  @return{A list containing the @class{gtk-list-box-row} widget for each
+    selected row.}
   @begin{short}
     Creates a list of all selected rows in the list box.
   @end{short}
   @see-class{gtk-list-box}
-  @see-class{gtk-widget}"
+  @see-class{gtk-list-box-row}"
   (listbox (g-object gtk-list-box)))
 
 (export 'gtk-list-box-selected-rows)
@@ -710,7 +708,7 @@
 (defcfun ("gtk_list_box_get_adjustment" gtk-list-box-adjustment)
     (g-object gtk-adjustment)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @syntax[]{(gtk-list-box-adjustment listbox) => adjustment}
   @syntax[]{(setf (gtk-list-box-adjustment listbox) adjustment)}
   @argument[listbox]{a @class{gtk-list-box} widget}
@@ -719,12 +717,12 @@
     Accessor of the adjustment the list box uses for vertical scrolling.
   @end{short}
 
-  The function @sym{gtk-list-box-adjustment} gets the adjustment (if any) that
-  the list box uses to for vertical scrolling. The function
-  @sym{(setf gtk-list-box-adjustment)} sets the adjustment.
+  The @sym{gtk-list-box-adjustment} function gets the adjustment (if any) that
+  the list box uses for vertical scrolling. The
+  @sym{(setf gtk-list-box-adjustment)} function sets the adjustment.
 
-  For instance, this is used to get the page size for PageUp/Down key handling.
-  In the normal case when the list box is packed inside a
+  For instance, this is used to get the page size for @kbd{PageUp/Down} key
+  handling. In the normal case when the list box is packed inside a
   @class{gtk-scrolled-window} widget the adjustment from that will be picked up
   automatically, so there is no need to manually do that.
   @see-class{gtk-list-box}
@@ -740,12 +738,12 @@
 
 (defcfun ("gtk_list_box_set_placeholder" gtk-list-box-set-placeholder) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-12-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @argument[placeholder]{a @class{gtk-widget} object}
   @begin{short}
-    Sets the placeholder widget that is shown in the list when it does not
-    display any visible children.
+    Sets the placeholder that is shown in the list box when it does not display
+    any visible children.
   @end{short}
   @see-class{gtk-list-box}
   @see-class{gtk-widget}"
@@ -761,15 +759,15 @@
 (defcfun ("gtk_list_box_get_row_at_index" gtk-list-box-row-at-index)
     (g-object gtk-list-box-row)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @argument[index]{an integer with the index of the row}
   @return{The @class{gtk-list-box-row} widget at @arg{index}.}
   @begin{short}
     Gets the n-th child in the list box (not counting headers).
   @end{short}
-  If @arg{index} is negative or larger than the number of items in the list box,
-  @code{nil} is returned.
+  If the @arg{index} argument is negative or larger than the number of items in
+  the list box, @code{nil} is returned.
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}"
   (listbox (g-object gtk-list-box))
@@ -784,10 +782,10 @@
 (defcfun ("gtk_list_box_get_row_at_y" gtk-list-box-row-at-y)
     (g-object gtk-list-box-row)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-12-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @argument[y]{an integer with the position of the row}
-  @return{The @class{gtk-list-box-row} widget at position @arg{y}.}
+  @return{The @class{gtk-list-box-row} widget for the given @arg{y} coordinate.}
   @begin{short}
     Gets the row at the y position in the list box.
   @end{short}
@@ -804,7 +802,7 @@
 
 (defcfun ("gtk_list_box_invalidate_filter" gtk-list-box-invalidate-filter) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @begin{short}
     Update the filtering for all rows.
@@ -826,13 +824,13 @@
 (defcfun ("gtk_list_box_invalidate_headers" gtk-list-box-invalidate-headers)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @begin{short}
     Update the separators for all rows.
   @end{short}
-  Call this when the result of the header function on the box is changed due to
-  an external factor.
+  Call this when the result of the header function on the list box is changed
+  due to an external factor.
   @see-class{gtk-list-box}
   @see-function{gtk-list-box-set-header-func}"
   (listbox (g-object gtk-list-box)))
@@ -845,7 +843,7 @@
 
 (defcfun ("gtk_list_box_invalidate_sort" gtk-list-box-invalidate-sort) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @begin{short}
     Update the sorting for all rows.
@@ -872,7 +870,7 @@
 (setf (gethash 'gtk-list-box-filter-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-list-box-filter-func atdoc:*external-symbols*)
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @begin{short}
     Will be called whenever the row changes or is added and lets you control
     if the row should be visible or not.
@@ -902,10 +900,10 @@
 
 (defun gtk-list-box-set-filter-func (listbox func)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
-  @argument[func]{a @symbol{gtk-list-box-filter-func} callback that lets you
-    filter which rows to show}
+  @argument[func]{a @symbol{gtk-list-box-filter-func} callback function that
+    lets you filter which rows to show}
   @begin{short}
     By setting a filter function on the list box one can decide dynamically
     which of the rows to show.
@@ -913,13 +911,13 @@
   For instance, to implement a search function on a list that filters the
   original list to only show the matching rows.
 
-  The function @arg{func} will be called for each row after the call, and it
-  will continue to be called each time a row changes (via the function
-  @fun{gtk-list-box-row-changed}) or when the function
-  @fun{gtk-list-box-invalidate-filter} is called.
+  The @arg{func} function will be called for each row after the call, and it
+  will continue to be called each time a row changes via the
+  @fun{gtk-list-box-row-changed} function, or when the
+  @fun{gtk-list-box-invalidate-filter} function is called.
 
   Note that using a filter function is incompatible with using a model,
-  see the function @fun{gtk-list-box-bind-model}.
+  see the @fun{gtk-list-box-bind-model} function.
   @see-class{gtk-list-box}
   @see-function{gtk-list-box-row-changed}
   @see-function{gtk-list-box-invalidate-filter}
@@ -927,7 +925,7 @@
   (%gtk-list-box-set-filter-func listbox
                                  (callback gtk-list-box-filter-func)
                                  (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                 (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-list-box-set-filter-func)
 
@@ -946,14 +944,13 @@
 (setf (gethash 'gtk-list-box-update-header-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-list-box-update-header-func atdoc:*external-symbols*)
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @begin{short}
     Whenever @arg{row} changes or which row is before @arg{row} changes this is
     called, which lets you update the header on @arg{row}.
   @end{short}
-  You may remove or set a new one via the function
-  @fun{gtk-list-box-row-set-header-func} or just change the state of the current
-  header widget.
+  You may remove or set a new one via the @fun{gtk-list-box-row-set-header-func}
+  function or just change the state of the current header widget.
   @begin{pre}
  lambda (row before)
   @end{pre}
@@ -979,35 +976,35 @@
 
 (defun gtk-list-box-set-header-func (listbox func)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
-  @argument[func]{a @symbol{gtk-list-box-update-header-func} callback that lets
-  you add row headers}
+  @argument[func]{a @symbol{gtk-list-box-update-header-func} callback function
+    that lets you add row headers}
   @begin{short}
     By setting a header function on the list box one can dynamically add headers
     in front of rows, depending on the contents of the row and its position in
-    the list.
+    the list box.
   @end{short}
   For instance, one could use it to add headers in front of the first item of a
   new kind, in a list sorted by the kind.
 
-  The @arg{func} callback can look at the current header widget using the
-  function @fun{gtk-list-box-row-header} and either update the state of the
-  widget as needed, or set a new one using the function
-  @sym{(setf gtk-list-box-row-header)}. If no header is needed, set the header
-  to @code{nil}.
+  The @arg{func} callback function can look at the current header widget using
+  the @fun{gtk-list-box-row-header} function and either update the state of the
+  widget as needed, or set a new one using the
+  @sym{(setf gtk-list-box-row-header)} function. If no header is needed, set
+  the header to @code{nil}.
 
-  Note that you may get many calls of the @arg{func} callback to this for a
-  particular row when e.g. changing things that do not affect the header. In
-  this case it is important for performance to not blindly replace an existing
-  header with an identical one.
+  Note that you may get many calls of the @arg{func} callback function to this
+  for a particular row when e.g. changing things that do not affect the header.
+  In this case it is important for performance to not blindly replace an
+  existing header with an identical one.
 
-  The @arg{func} callback will be called for each row after the call, and it
-  will continue to be called each time a row changes (via the function
-  @fun{gtk-list-box-row-changed}) and when the row before changes (either by
-  the function @fun{gtk-list-box-row-changed} on the previous row, or when the
-  previous row becomes a different row). It is also called for all rows when
-  the function @fun{gtk-list-box-invalidate-headers} is called.
+  The @arg{func} callback function will be called for each row after the call,
+  and it will continue to be called each time a row changes via the
+  @fun{gtk-list-box-row-changed} function, and when the row before changes
+  either by the @fun{gtk-list-box-row-changed} function on the previous row, or
+  when the previous row becomes a different row. It is also called for all rows
+  when the @fun{gtk-list-box-invalidate-headers} function is called.
   @see-class{gtk-list-box}
   @see-symbol{gtk-list-box-update-header-func}
   @see-function{gtk-list-box-row-header}
@@ -1016,7 +1013,7 @@
   (%gtk-list-box-set-header-func listbox
                                  (callback gtk-list-box-update-header-func)
                                  (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                 (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-list-box-set-header-func)
 
@@ -1035,7 +1032,7 @@
 (setf (gethash 'gtk-list-box-sort-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-list-box-sort-func atdoc:*external-symbols*)
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @begin{short}
     The type of the callback function that compares two rows to determine which
     should be first.
@@ -1060,28 +1057,28 @@
 
 (defcfun ("gtk_list_box_set_sort_func" %gtk-list-box-set-sort-func) :void
   (listbox (g-object gtk-list-box))
-  (sort-func :pointer)
+  (func :pointer)
   (user-data :pointer)
   (destroy :pointer))
 
 (defun gtk-list-box-set-sort-func (listbox func)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{*2021-12-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
-  @argument[func]{a @symbol{gtk-list-box-sort-func} callback for the sort
-   function}
+  @argument[func]{a @symbol{gtk-list-box-sort-func} callback function for the
+    sort function}
   @begin{short}
     By setting a sort function on the list box one can dynamically reorder the
     rows of the list, based on the contents of the rows.
   @end{short}
 
-  The @arg{func} callback will be called for each row after the call, and will
-  continue to be called each time a row changes (via the function
-  @fun{gtk-list-box-row-changed}) and when the function
-  @fun{gtk-list-box-invalidate-sort} is called.
+  The @arg{func} callback function will be called for each row after the call,
+  and will continue to be called each time a row changes via the
+  @fun{gtk-list-box-row-changed} function, and when the
+  @fun{gtk-list-box-invalidate-sort} function is called.
 
   Note that using a sort function is incompatible with using a model. See the
-  function @fun{gtk-list-box-bind-model}.
+  @fun{gtk-list-box-bind-model} function.
   @see-class{gtk-list-box}
   @see-symbol{gtk-list-box-sort-func}
   @see-function{gtk-list-box-row-changed}
@@ -1090,7 +1087,7 @@
   (%gtk-list-box-set-sort-func listbox
                                (callback gtk-list-box-sort-func)
                                (allocate-stable-pointer func)
-                               (callback stable-pointer-destroy-notify-cb)))
+                               (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-list-box-set-sort-func)
 
@@ -1101,17 +1098,15 @@
 (defcfun ("gtk_list_box_drag_highlight_row" gtk-list-box-drag-highlight-row)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @argument[row]{a @class{gtk-list-box-row} widget}
   @begin{short}
-    This is a helper function for implementing DnD onto a list box.
+    This is a helper function for implementing drag and drop onto a list box.
   @end{short}
-  The passed in row will be highlighted via the function
-  @fun{gtk-drag-highlight}, and any previously highlighted row will be
-  unhighlighted.
-
-  The row will also be unhighlighted when the widget gets a drag leave event.
+  The passed in row will be highlighted via the @fun{gtk-drag-highlight}
+  function, and any previously highlighted row will be unhighlighted. The row
+  will also be unhighlighted when the widget gets a drag leave event.
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}
   @see-function{gtk-drag-highlight}"
@@ -1127,11 +1122,12 @@
 (defcfun ("gtk_list_box_drag_unhighlight_row" gtk-list-box-drag-unhighlight-row)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[listbox]{a @class{gtk-list-box} widget}
   @begin{short}
-    If a row has previously been highlighted via the function
-    @fun{gtk-list-box-drag-highlight-row} it will have the highlight removed.
+    If a row has previously been highlighted via the
+    @fun{gtk-list-box-drag-highlight-row} function it will have the highlight
+    removed.
   @end{short}
   @see-class{gtk-list-box}
   @see-function{gtk-list-box-drag-highlight-row}"
@@ -1141,74 +1137,96 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkListBoxCreateWidgetFunc ()
-;;;
-;;; GtkWidget * (*GtkListBoxCreateWidgetFunc) (gpointer item,
-;;;                                            gpointer user_data);
-;;;
-;;; Called for list boxes that are bound to a GListModel with
-;;; gtk_list_box_bind_model() for each item that gets added to the model.
-;;;
-;;; Versions of GTK prior to 3.18 called gtk_widget_show_all() on the rows
-;;; created by the GtkListBoxCreateWidgetFunc, but this forced all widgets
-;;; inside the row to be shown, and is no longer the case. Applications should
-;;; be updated to show the desired row widgets.
-;;;
-;;; item :
-;;;     the item from the model for which to create a widget for.
-;;;
-;;; user_data :
-;;;     user data.
-;;;
-;;; Returns :
-;;;     a GtkWidget that represents item .
-;;;
-;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Check this. Perhaps it is better to pass a GObject for item.
+
+(defcallback gtk-list-box-create-widget-func (g-object gtk-widget)
+    ((item :pointer)
+     (data :pointer))
+  (let ((ptr (get-stable-pointer-value data)))
+    (funcall ptr item)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-list-box-create-widget-func atdoc:*symbol-name-alias*)
+      "Callback"
+      (gethash 'gtk-list-box-create-widget-func atdoc:*external-symbols*)
+ "@version{2021-11-16}
+  @begin{short}
+    Called for list boxes that are bound to a @class{g-list-model} object with
+    the @fun{gtk-list-box-bind-model} function for each item that gets added to
+    the model.
+  @end{short}
+
+  Versions of GTK prior to 3.18 called the @fun{gtk-widget-show-all} function on
+  the rows created by the @sym{gtk-list-box-create-widget-func} callback
+  function, but this forced all widgets inside the row to be shown, and is no
+  longer the case. Applications should be updated to show the desired row
+  widgets.
+  @begin{pre}
+ lambda (item)
+  @end{pre}
+  @begin[code]{table}
+    @entry[item]{A pointer to the item from the model for which to create a
+       widget for.}
+    @entry[Returns]{A @class{gtk-widget} object that represents @arg{item}.}
+  @end{table}
+  @see-class{gtk-list-box}
+  @see-class{g-list-model}
+  @see-function{gtk-list-box-bind-model}
+  @see-function{gtk-widget-show-all}")
+
+(export 'gtk-list-box-create-widget-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_bind_model ()
-;;;
-;;; void gtk_list_box_bind_model (GtkListBox *box,
-;;;                               GListModel *model,
-;;;                               GtkListBoxCreateWidgetFunc create_widget_func,
-;;;                               gpointer user_data,
-;;;                               GDestroyNotify user_data_free_func);
-;;;
-;;; Binds model to box .
-;;;
-;;; If box was already bound to a model, that previous binding is destroyed.
-;;;
-;;; The contents of box are cleared and then filled with widgets that represent
-;;; items from model . box is updated whenever model changes. If model is NULL,
-;;; box is left empty.
-;;;
-;;; It is undefined to add or remove widgets directly (for example, with
-;;; gtk_list_box_insert() or gtk_container_add()) while box is bound to a model.
-;;;
-;;; Note that using a model is incompatible with the filtering and sorting
-;;; functionality in GtkListBox. When using a model, filtering and sorting
-;;; should be implemented by the model.
-;;;
-;;; box :
-;;;     a GtkListBox
-;;;
-;;; model :
-;;;     the GListModel to be bound to box .
-;;;
-;;; create_widget_func :
-;;;     a function that creates widgets for items or NULL in case you also
-;;;     passed NULL as model .
-;;;
-;;; user_data :
-;;;     user data passed to create_widget_func
-;;;
-;;; user_data_free_func :
-;;;     function for freeing user_data
-;;;
-;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: GListModel ist not implemented
+(defcfun ("gtk_list_box_bind_model" %gtk-list-box-bind-model) :void
+  (listbox (g-object gtk-list-box))
+  (model (g-object g-list-model))
+  (func :pointer)
+  (data :pointer)
+  (notify :pointer))
+
+(defun gtk-list-box-bind-model (listbox model func)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-11-16}
+  @argument[listbox]{a @class{gtk-list-box} widget}
+  @argument[model]{a @class{g-list-model} object to be bound to @arg{listbox}}
+  @argument[func]{a @symbol{gtk-list-box-create-widget-func} callback function
+    that creates widgets for items or @code{nil} in case you also passed
+    @code{nil} as @arg{model}}
+  @begin{short}
+    Binds a model to the list box.
+  @end{short}
+  If the list box was already bound to a model, that previous binding is
+  destroyed.
+
+  The contents of the list box are cleared and then filled with widgets that
+  represent items from the model. The list box is updated whenever the model
+  changes. If the @arg{model} argument is @code{nil}, the list box is left
+  empty.
+
+  It is undefined to add or remove widgets directly, for example, with the
+  @fun{gtk-list-box-insert} or @fun{gtk-container-add} functions, while the
+  list box is bound to a model.
+
+  Note that using a model is incompatible with the filtering and sorting
+  functionality in the list box. When using a model, filtering and sorting
+  should be implemented by the model.
+  @see-class{gtk-list-box}
+  @see-class{g-list-model}
+  @see-symbol{gtk-list-box-create-widget-func}
+  @see-function{gtk-list-box-insert}
+  @see-function{gtk-container-add}"
+  (%gtk-list-box-bind-model listbox
+                            model
+                            (callback gtk-list-box-create-widget-func)
+                            (allocate-stable-pointer func)
+                            (callback stable-pointer-destroy-notify)))
+
+(export 'gtk-list-box-bind-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_new ()
@@ -1218,10 +1236,10 @@
 
 (defun gtk-list-box-row-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @return{A new @class{gtk-list-box-row} widget.}
   @begin{short}
-    Creates a new list box row, to be used as a child of a list box.
+    Creates a new list box row, to be used as a child widget of a list box.
   @end{short}
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}"
@@ -1235,7 +1253,7 @@
 
 (defcfun ("gtk_list_box_row_changed" gtk-list-box-row-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @argument[row]{a @class{gtk-list-box-row} widget}
   @begin{short}
     Marks @arg{row} as changed, causing any state that depends on this to be
@@ -1246,15 +1264,15 @@
   Note that calls to this method must be in sync with the data used for the row
   functions. For instance, if the list box is mirroring some external data set,
   and *two* rows changed in the external data set then when you call the
-  function @sym{gtk-list-box-row-changed} on the first row the sort function
+  @sym{gtk-list-box-row-changed} function on the first row the sort function
   must only read the new data for the first of the two changed rows, otherwise
   the resorting of the rows will be wrong.
 
   This generally means that if you do not fully control the data model you have
   to duplicate the data that affects the list box row functions into the row
-  widgets themselves. Another alternative is to call the function
-  @fun{gtk-list-box-invalidate-sort} on any model change, but that is more
-  expensive.
+  widgets themselves. Another alternative is to call the
+  @fun{gtk-list-box-invalidate-sort} function on any model change, but that is
+  more expensive.
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}
   @see-function{gtk-list-box-invalidate-sort}"
@@ -1295,7 +1313,7 @@
 (defcfun ("gtk_list_box_row_get_header" gtk-list-box-row-header)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-11-15}
   @syntax[]{(gtk-list-box-row-header row) => header}
   @syntax[]{(setf (gtk-list-box-row-header row) header)}
   @argument[row]{a @class{gtk-list-box-row} widget}
@@ -1304,15 +1322,16 @@
     Accessor of the header widget of a list box row.
   @end{short}
 
-  The function @sym{gtk-list-box-row-header} returns the current header of the
+  The @sym{gtk-list-box-row-header} function returns the current header of the
   list box row. This can be used in a @symbol{gtk-list-box-update-header-func}
-  callback to see if there is a header set already, and if so to update the
-  state of it.
+  callback function to see if there is a header set already, and if so to update
+  the state of it.
 
-  The function @sym{(setf gtk-list-box-row-header)} sets the current header of
+  The @sym{(setf gtk-list-box-row-header)} function sets the current header of
   the list box row. This is only allowed to be called from a
-  @symbol{gtk-list-box-update-header-func} callback. It will replace any
-  existing header in the row, and be shown in front of the row in the list box.
+  @symbol{gtk-list-box-update-header-func} callback function. It will replace
+  any existing header in the row, and be shown in front of the row in the list
+  box.
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}
   @see-class{gtk-widget}
@@ -1327,12 +1346,12 @@
 
 (defcfun ("gtk_list_box_row_get_index" gtk-list-box-row-index) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{*2021-11-30}
   @argument[row]{a @class{gtk-list-box-row} widget}
   @return{An integer with the index of the row in the list box, or -1 if the
     row is not in the list box.}
   @begin{short}
-    Gets the current index of the row in its list box container.
+    Gets the current index of the row in its list box.
   @end{short}
   @see-class{gtk-list-box}
   @see-class{gtk-list-box-row}"
