@@ -61,7 +61,7 @@
 61|GTK+ and friends|GTKtoolkit|GTK+ 4.0 and #Clutter 2.0: rainbows and unicorns: http://t.co/SKbl0vQ #gtk #gtk4|1314883483|0||2|14
 62|GTK+ and friends|GTKtoolkit|Some #Glib plans for the next cycle: http://t.co/a6YybK0 #gtk|1314883427|0||0|3
 63|Nat Friedman|natfriedman|RT @natfriedman: Any Gtk+ experts who want to make some consulting money fixing bugs in Gtk/Mac, email me: nat@xamarin.com.|1314355269|0|GTKtoolkit|0|28
-64|Kristian Rietveld|krietvel|RT @krietvel: Blog post: 'Merged “treemodel-fix” branch into GTK+: call for testing, blog post series' http://t.co/yAUnneo #gtk|1314096198|0|GTKtoolkit|0|2
+64|Kristian Rietveld|krietvel|RT @krietvel: Blog post: 'Merged treemodel-fix branch into GTK+: call for testing, blog post series' http://t.co/yAUnneo #gtk|1314096198|0|GTKtoolkit|0|2
 65|GTK+ and friends|GTKtoolkit|@ArcherSeven Help improving the patch here: http://t.co/r74hP79|1313493595|0||0|0
 66|GTK+ and friends|GTKtoolkit|GTK+ 3.1.12 (UNSTABLE) released: http://t.co/3iPAlNq Try the new Font Dialog! #gtk #gtk3|1313493256|0||0|4
 67|GTK+ and friends|GTKtoolkit|@cimi @DanielFore Patches always welcomed!|1313493010|0||0|0
