@@ -1,4 +1,4 @@
-;;;; Example Button Boxes (2021-4-30)
+;;;; Example Button Boxes - 2021-12-4
 
 (in-package :gtk-example)
 
@@ -44,11 +44,12 @@
     (gtk-box-pack-start box bbox)
     box))
 
-(defun example-button-box ()
+(defun example-button-box (&optional (application nil))
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Example Button Box"
+                                 :application application
                                  :default-width 420
                                  :border-width 12))
           (vbox (make-instance 'gtk-box

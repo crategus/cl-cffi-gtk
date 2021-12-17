@@ -1,12 +1,13 @@
-;;;; Example Aspect Frame (2021-5-28)
+;;;; Example Aspect Frame - 2021-12-4
 
 (in-package :gtk-example)
 
-(defun example-aspect-frame ()
+(defun example-aspect-frame (&optional (application nil))
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Example Aspect Frame"
+                                 :application application
                                  :default-width 300
                                  :default-height 240
                                  :border-width 12))

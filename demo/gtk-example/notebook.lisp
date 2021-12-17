@@ -1,11 +1,12 @@
-;;;; Example Notebook (2021-6-4)
+;;;; Example Notebook - 2021-12-4
 
 (in-package :gtk-example)
 
-(defun example-notebook ()
+(defun example-notebook (&optional (application nil))
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :title "Example Notebook"
+                                 :application application
                                  :type :toplevel
                                  :default-width 300
                                  :default-height 210))
