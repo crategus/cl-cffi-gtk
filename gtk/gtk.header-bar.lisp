@@ -200,7 +200,7 @@
   The title should help a user identify the current view. This supersedes any
   title set by the @fun{gtk-header-bar-title} or @fun{gtk-header-bar-subtitle}
   functions. To achieve the same style as the built-in title and subtitle, use
-  the \"title\" and \"subtitle\" style classes.
+  the @code{.title} and @code{.subtitle} style classes.
 
   You should set the custom title to @code{nil}, for the header bar title label
   to be visible again.
@@ -249,11 +249,12 @@
 
   The format of the string is button names, separated by commas. A colon
   separates the buttons that should appear on the left from those on the right.
-  Recognized button names are minimize, maximize, close, icon for the window
-  icon and menu for a menu button for the fallback app menu.
+  Recognized button names are \"minimize\", \"maximize\", \"close\", \"icon\"
+  for the window icon and \"menu\" for a menu button for the fallback
+  application menu.
 
-  For example, \"menu:minimize,maximize,close\" specifies a menu on the left,
-  and minimize, maximize and Close buttons on the right.
+  For example, \"menu:minimize,maximize,close\" specifies a Menu on the left,
+  and Minimize, Maximize and Close buttons on the right.
   @see-class{gtk-header-bar}
   @see-function{gtk-settings-gtk-decoration-layout}")
 
@@ -345,9 +346,10 @@
   @end{short}
 
   The @sym{gtk-header-bar-show-close-button} slot access function returns
-  whether the header bar shows the standard window decorations, including close,
-  maximize, and minimize. The @sym{(setf gtk-header-bar-show-close-button)} slot
-  access function sets whether the header bar shows decorations
+  whether the header bar shows the standard window decorations, including Close,
+  Maximize, and Minimize buttons. The
+  @sym{(setf gtk-header-bar-show-close-button)} slot access function sets
+  whether the header bar shows decorations.
   @see-class{gtk-header-bar}")
 
 ;;; --- gtk-header-bar-spacing -------------------------------------------------
@@ -446,6 +448,9 @@
 ;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkHeaderBar" 'gtk-header-bar))
+
 ;;; --- gtk-header-bar-child-pack-type -----------------------------------------
 
 (define-child-property "GtkHeaderBar"
@@ -460,7 +465,7 @@
   @syntax[]{(gtk-header-bar-child-pack-type object) => pack-type)}
   @syntax[]{(setf (gtk-header-bar-child-pack-type object) pack-type)}
   @argument[container]{a @class{gtk-header-bar} widget}
-  @argument[child]{the @class{gtk-widget} child widget}
+  @argument[child]{a @class{gtk-widget} child widget}
   @argument[pack-type]{a value of the @symbol{gtk-pack-type} enumeration for
     the child widget}
   @begin{short}
@@ -488,7 +493,7 @@
   @syntax[]{(gtk-header-bar-child-position object) => position)}
   @syntax[]{(setf (gtk-header-bar-child-position object) position)}
   @argument[container]{a @class{gtk-header-bar} widget}
-  @argument[child]{the @class{gtk-widget} child widget}
+  @argument[child]{a @class{gtk-widget} child widget}
   @argument[position]{an integer with the index of the child widget in the
     header bar}
   @begin{short}
@@ -524,9 +529,9 @@
 
 (defcfun ("gtk_header_bar_pack_start" gtk-header-bar-pack-start) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-10-14}
+ "@version{*2021-12-17}
   @argument[header]{a @class{gtk-header-bar} widget}
-  @argument[child]{the @class{gtk-widget} child widget to be added to the
+  @argument[child]{a @class{gtk-widget} child widget to be added to the
     header bar}
   @begin{short}
     Adds a child widget to the header bar, packed with reference to the start
@@ -546,9 +551,9 @@
 
 (defcfun ("gtk_header_bar_pack_end" gtk-header-bar-pack-end) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-10-14}
+ "@version{*2021-12-17}
   @argument[header]{a @class{gtk-header-bar} widget}
-  @argument[child]{the @class{gtk-widget} child widget to be added to the
+  @argument[child]{a @class{gtk-widget} child widget to be added to the
     header bar}
   @begin{short}
     Adds a child widget to the header bar, packed with reference to the end of
