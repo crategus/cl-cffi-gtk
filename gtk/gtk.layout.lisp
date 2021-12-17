@@ -77,9 +77,6 @@
 ;;; struct GtkLayout
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkLayout" 'gtk-layout))
-
 (define-g-object-class "GtkLayout" gtk-layout
   (:superclass gtk-container
    :export t
@@ -96,7 +93,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-layout 'type)
- "@version{*2021-4-26}
+ "@version{*2021-12-9}
   @begin{short}
     The @sym{gtk-layout} widget is similar to the @class{gtk-drawing-area}
     widget in that it is a \"blank slate\" and does not do anything but paint
@@ -109,9 +106,9 @@
   overhead.
 
   When handling expose events on a @sym{gtk-layout} widget, you must draw to the
-  @class{gdk-window} object returned by the funcion @fun{gtk-layout-bin-window},
-  rather than to the one returned by the funcion @fun{gtk-widget-window} as you
-  would for a drawing area.
+  @class{gdk-window} object returned by the @fun{gtk-layout-bin-window}
+  function, rather than to the one returned by the @fun{gtk-widget-window}
+  function as you would for a drawing area.
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
       @begin[x]{entry}
@@ -136,6 +133,9 @@
 ;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkLayout" 'gtk-layout))
+
 ;;; --- gtk-layout-height ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -149,7 +149,7 @@
 (setf (gethash 'gtk-layout-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-layout-height 'function)
- "@version{2021-4-26}
+ "@version{2021-12-9}
   @syntax[]{(gtk-layout-height object) => height}
   @syntax[]{(setf (gtk-layout-height object) height)}
   @argument[object]{a @class{gtk-layout} widget}
@@ -159,8 +159,8 @@
     class.
   @end{short}
 
-  The slot access function @sym{gtk-layout-height} gets the height of the
-  layout. The slot access function @sym{(setf gtk-layout-height)} sets the
+  The @sym{gtk-layout-height} slot access function gets the height of the
+  layout. The @sym{(setf gtk-layout-height)} slot access function sets the
   height.
   @see-class{gtk-layout}")
 
@@ -177,7 +177,7 @@
 (setf (gethash 'gtk-layout-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-layout-width 'function)
- "@version{2021-4-26}
+ "@version{2021-12-9}
   @syntax[]{(gtk-layout-width object) => width}
   @syntax[]{(setf (gtk-layout-width object) width)}
   @argument[object]{a @class{gtk-layout} widget}
@@ -187,8 +187,8 @@
     class.
   @end{short}
 
-  The slot access function @sym{gtk-layout-width} gets the width of the layout.
-  The slot access function @sym{(setf gtk-layout-width)} sets the width.
+  The @sym{gtk-layout-width} slot access function gets the width of the layout.
+  The @sym{(setf gtk-layout-width)} slot access function sets the width.
   @see-class{gtk-layout}")
 
 ;;; ----------------------------------------------------------------------------
@@ -205,7 +205,7 @@
 (setf (gethash 'gtk-layout-child-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-layout-child-x 'function)
- "@version{2021-4-26}
+ "@version{2021-12-9}
   @syntax[]{(gtk-layout-child-x container cild) => x}
   @syntax[]{(setf (gtk-layout-child-x container child) x)}
   @argument[container]{a @class{gtk-layout} widget}
@@ -229,7 +229,7 @@
 (setf (gethash 'gtk-layout-child-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-layout-child-y 'function)
- "@version{2021-4-26}
+ "@version{2021-12-9}
   @syntax[]{(gtk-layout-child-y container cild) => y}
   @syntax[]{(setf (gtk-layout-child-y container child) y)}
   @argument[container]{a @class{gtk-layout} widget}
@@ -251,18 +251,19 @@
 
 (defun gtk-layout-new (&optional (hadjustment nil) (vadjustment nil))
  #+cl-cffi-gtk-documentation
- "@version{2021-4-26}
-  @argument[hadjustment]{horizontal scroll @class{gtk-adjustment} object}
-  @argument[vadjustment]{vertical scroll @class{gtk-adjustment} object}
+ "@version{2021-12-9}
+  @argument[hadjustment]{a horizontal scroll @class{gtk-adjustment} object}
+  @argument[vadjustment]{a vertical scroll @class{gtk-adjustment} object}
   @return{A new @class{gtk-layout} widget.}
   @begin{short}
     Creates a new layout.
   @end{short}
   Unless you have a specific adjustment you would like the layout to use for
-  scrolling, pass @code{nil} for @arg{hadjustment} and @arg{vadjustment}.
+  scrolling, pass @code{nil} for the @arg{hadjustment} and @arg{vadjustment}
+  arguments.
   @begin[Lisp binding]{dictionary}
-   In the Lisp binding the adjustments are optional arguments with the default
-   value @code{nil}.
+   In the Lisp binding the adjustments are optional arguments with the
+   @code{nil} default value.
   @end{dictionary}
   @see-class{gtk-layout}
   @see-class{gtk-adjustment}"
@@ -278,7 +279,7 @@
 
 (defcfun ("gtk_layout_put" gtk-layout-put) :void
  #+cl-cffi-gtk-documentation
- "@version{*2021-4-26}
+ "@version{*2021-12-9}
   @argument[layout]{a @class{gtk-layout} widget}
   @argument[child]{a @class{gtk-widget} child widget}
   @argument[x]{an integer with the x position of the child widget}
@@ -303,7 +304,7 @@
 
 (defcfun ("gtk_layout_move" gtk-layout-move) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-4-26}
+ "@version{2021-12-9}
   @argument[layout]{a @class{gtk-layout} widget}
   @argument[child]{a @class{gtk-widget} child widget}
   @argument[x]{an integer with the x position to move to}
@@ -337,7 +338,7 @@
 
 (defun gtk-layout-size (layout)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-26}
+ "@version{2021-12-9}
   @syntax[]{(gtk-layout-size layout) => width, height}
   @syntax[]{(setf (gtk-layout-size layout) '(width height))}
   @argument[layout]{a @class{gtk-layout} widget}
@@ -349,12 +350,12 @@
     Accessor of the width and height of the scrollable area.
   @end{short}
 
-  The function @sym{gtk-layout-size} gets the size in pixels that has been set
-  on the layout, and that determines the total extents of the layout's scrollbar
-  area. The function @sym{(setf gtk-layout-size)} sets the size.
+  The @sym{gtk-layout-size} function gets the size in pixels that has been set
+  on the layout, and that determines the total extents of the scrollbar of the
+  layout area. The @sym{(setf gtk-layout-size)} function sets the size.
   @begin[Lisp binding]{dictionary}
-    In the Lisp binding the slot access functions @fun{gtk-layout-width} and
-    @fun{gtk-layout-height} get or set the width and height of the scrollable
+    In the Lisp binding the @fun{gtk-layout-width} and @fun{gtk-layout-height}
+    slot access functions get or set the width and height of the scrollable
     area.
   @end{dictionary}
   @see-class{gtk-layout}
@@ -373,7 +374,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_layout_get_hadjustment has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
+;;; not be used in newly written code. Use gtk_scrollable_get_hadjustment()
 ;;;
 ;;; This function should only be called after the layout has been placed in a
 ;;; GtkScrolledWindow or otherwise configured for scrolling. It returns the
@@ -397,7 +398,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_layout_get_vadjustment has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
+;;; not be used in newly written code. Use gtk_scrollable_get_vadjustment()
 ;;;
 ;;; This function should only be called after the layout has been placed in a
 ;;; GtkScrolledWindow or otherwise configured for scrolling. It returns the
@@ -422,7 +423,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_layout_set_hadjustment has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_scrollable_set_hadjustment()
+;;; not be used in newly written code. Use gtk_scrollable_set_hadjustment()
 ;;;
 ;;; Sets the horizontal scroll adjustment for the layout.
 ;;;
@@ -444,7 +445,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_layout_set_vadjustment has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_scrollable_set_vadjustment()
+;;; not be used in newly written code. Use gtk_scrollable_set_vadjustment()
 ;;;
 ;;; Sets the vertical scroll adjustment for the layout.
 ;;;
@@ -464,11 +465,11 @@
 (defcfun ("gtk_layout_get_bin_window" gtk-layout-bin-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-26}
+ "@version{2021-12-9}
   @argument[layout]{a @class{gtk-layout} widget}
   @return{A @class{gdk-window} object.}
   @begin{short}
-    Retrieve the bin window of the layout used for drawing operations.
+    Retrieve the GDK window of the layout used for drawing operations.
   @end{short}
   @see-class{gtk-layout}
   @see-class{gdk-window}"

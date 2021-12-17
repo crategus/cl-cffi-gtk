@@ -88,7 +88,6 @@
 (define-g-enum "GtkButtonBoxStyle" gtk-button-box-style
   (:export t
    :type-initializer "gtk_button_box_style_get_type")
-;  (:default-style 0)           ; TODO: not documented, check the implementation
   (:spread 1)
   (:edge 2)
   (:start 3)
@@ -100,7 +99,7 @@
 (setf (gethash 'gtk-button-box-style atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-button-box-style atdoc:*external-symbols*)
- "@version{2021-4-30}
+ "@version{2021-12-9}
   @begin{short}
     Used to dictate the style that a @class{gtk-button-box} widget uses to
     layout the buttons it contains.
@@ -109,7 +108,6 @@
 (define-g-enum \"GtkButtonBoxStyle\" gtk-button-box-style
   (:export t
    :type-initializer \"gtk_button_box_style_get_type\")
-  (:default-style 0)
   (:spread 1)
   (:edge 2)
   (:start 3)
@@ -127,8 +125,8 @@
     @entry[:center]{Buttons are centered in the box.}
     @entry[:expand]{Buttons expand to fill the box. This entails giving buttons
       a \"linked\" appearance, making button sizes homogeneous, and setting
-      spacing to 0, same as calling the functions @fun{gtk-box-homogeneous} and
-      @fun{gtk-box-spacing} manually.}
+      spacing to 0, same as calling the @fun{gtk-box-homogeneous} and
+      @fun{gtk-box-spacing} functions manually.}
   @end{table}
   @see-class{gtk-button-box}
   @see-function{gtk-box-homogeneous}
@@ -137,9 +135,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkButtonBox
 ;;; ----------------------------------------------------------------------------
-
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkButtonBox" 'gtk-button-box))
 
 (define-g-object-class "GtkButtonBox" gtk-button-box
   (:superclass gtk-box
@@ -154,7 +149,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-button-box 'type)
- "@version{2021-4-30}
+ "@version{2021-12-9}
   @begin{short}
     A @sym{gtk-button-box} widget should be used to provide a consistent layout
     of buttons throughout your application.
@@ -162,7 +157,7 @@
   The layout/spacing can be altered by the programmer, or if desired, by the
   user to alter the 'feel' of a program to a small degree.
 
-  The slot access function @fun{gtk-button-box-layout-style} retrieves and
+  The @fun{gtk-button-box-layout-style} slot access function retrieves and
   alters the method used to spread the buttons in a button box across the
   container.
 
@@ -182,13 +177,14 @@
       @begin[non-homogeneous]{entry}
         The @code{non-homogeneous} child property of type @code{:boolean}
         (Read / Write) @br{}
-        If @em{true}, the child will not be subject to homogeneous sizing. @br{}
+        If @em{true}, the child widget will not be subject to homogeneous
+        sizing. @br{}
         Default value: @em{false}
       @end{entry}
       @begin[secondary]{entry}
         The @code{secondary} child property of type @code{:boolean}
         (Read / Write) @br{}
-        If @em{true}, the child appears in a secondary group of children,
+        If @em{true}, the child widget appears in a secondary group of children,
         suitable for, e.g. help buttons. @br{}
         Default value: @em{false}
       @end{entry}
@@ -199,9 +195,9 @@
       @begin[child-internal-pad-x]{entry}
         The @code{child-internal-pad-x} style property of type @code{:int}
         (Read) @br{}
-        Amount to increase child's size on either side. @br{}
+        Amount to increase size of the child widget on either side. @br{}
         @em{Warning:} The @code{child-internal-pad-x} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use CSS padding instead. @br{}
         Allowed values: >= 0 @br{}
         Default value: 4
@@ -209,9 +205,10 @@
       @begin[child-internal-pad-y]{entry}
         The  @code{child-internal-pad-y} style property of type @code{:int}
         (Read) @br{}
-        Amount to increase child's size on the top and bottom. @br{}
+        Amount to increase the size of the child widget on the top and bottom.
+        @br{}
         @em{Warning:} The @code{child-internal-pad-y} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use CSS padding instead. @br{}
         Allowed values: >= 0 @br{}
         Default value: 0
@@ -221,7 +218,7 @@
         @br{}
         Minimum height of buttons inside the box. @br{}
         @em{Warning:} The @code{child-min-height} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use CSS padding instead. @br{}
         Allowed values: >= 0 @br{}
         Default value: 27
@@ -231,7 +228,7 @@
         @br{}
         Minimum width of buttons inside the box. @br{}
         @em{Warning:} The @code{child-min-width} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use CSS padding instead. @br{}
         Allowed values: >= 0 @br{}
         Default value: 85
@@ -260,7 +257,7 @@
 (setf (gethash 'gtk-button-box-layout-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-box-layout-style 'function)
- "@version{2021-4-30}
+ "@version{2021-12-9}
   @syntax[]{(gtk-button-box-layout-style object) => style}
   @syntax[]{(setf (gtk-button-box-layout-style object) style)}
   @argument[object]{a @class{gtk-button-box} widget}
@@ -270,16 +267,19 @@
     @class{gtk-button-box} class.
   @end{short}
 
-  The slot access function @sym{gtk-button-box-layout-style} retrieves the
-  method being used to arrange the buttons in a button box. The slot access
-  function @sym{(setf gtk-button-box-layout-style)} changes the way buttons are
-  arranged.
+  The @sym{gtk-button-box-layout-style} slot access function retrieves the
+  method being used to arrange the buttons in a button box. The
+  @sym{(setf gtk-button-box-layout-style)} slot access function changes the way
+  buttons are arranged.
   @see-class{gtk-button-box}
   @see-symbol{gtk-button-box-style}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkButtonBox" 'gtk-button-box))
 
 ;;; --- gtk-button-box-child-non-homogeneous -----------------------------------
 
@@ -291,7 +291,7 @@
 (setf (gethash 'gtk-button-box-child-non-homogeneous atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-box-child-non-homogeneous 'function)
- "@version{2021-4-30}
+ "@version{2021-12-9}
   @syntax[]{(gtk-button-box-child-non-homogeneous container child) => setting}
   @syntax[]{(setf (gtk-button-box-child-non-homogeneous container child) setting)}
   @argument[container]{a @class{gtk-button-box} widget}
@@ -302,10 +302,10 @@
     Accessor of the @code{non-homogeneous} child property of the button box.
   @end{short}
 
-  The function @sym{gtk-button-box-child-non-homogeneous} returns whether the
-  child widget is exempted from homogeneous sizing. The function
-  @sym{(setf gtk-button-box-child-non-homogeneous)} sets whether the child
-  widget is exempted.
+  The @sym{gtk-button-box-child-non-homogeneous} function returns whether the
+  child widget is exempted from homogeneous sizing. The
+  @sym{(setf gtk-button-box-child-non-homogeneous)} function sets whether the
+  child widget is exempted.
   @see-class{gtk-button-box}
   @see-class{gtk-widget}")
 
@@ -319,31 +319,31 @@
 (setf (gethash 'gtk-button-box-child-secondary atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-box-child-secondary 'function)
- "@version{2021-4-30}
-  @syntax[]{(gtk-button-box-child-secondary container child) => is-secondary}
-  @syntax[]{(setf (gtk-button-box-child-secondary container child) is-secondary)}
+ "@version{2021-12-9}
+  @syntax[]{(gtk-button-box-child-secondary container child) => setting}
+  @syntax[]{(setf (gtk-button-box-child-secondary container child) setting)}
   @argument[container]{a @class{gtk-button-box} widget}
   @argument[child]{a @class{gtk-widget} child widget}
-  @argument[is-secondary]{if @em{true}, the child widget appears in a secondary
+  @argument[setting]{if @em{true}, the child widget appears in a secondary
     group of the button box}
   @begin{short}
     Accessor of the @code{secondary} child property of the button box.
   @end{short}
 
-  The function @sym{gtk-button-box-child-secondary} returns whether the child
-  widget should appear in a secondary group of children. The function
-  @sym{(setf gtk-button-box-child-secondary)} sets whether the child widget
-  should appear in a secondary group of children. A typical use of a secondary
-  child widget is the help button in a dialog.
+  The @sym{gtk-button-box-child-secondary} function returns whether the child
+  widget should appear in a secondary group of children. The
+  @sym{(setf gtk-button-box-child-secondary)} function sets whether the child
+  widget should appear in a secondary group of children. A typical use of a
+  secondary child widget is the help button in a dialog.
 
-  This group appears after the other children if the style is @code{:start},
-  @code{:spread} or @code{:edge}, and before the other children if the style is
-  @code{:end}. For horizontal button boxes, the definition of before/after
-  depends on the direction of the widget, see the function
-  @fun{gtk-widget-direction}. If the style is @code{:start} or @code{:end},
-  then the secondary children are aligned at the other end of the button box
-  from the main children. For the other styles, they appear immediately next
-  to the main children.
+  This group appears after the other children if the style is the @code{:start},
+  @code{:spread} or @code{:edge} style, and before the other children if the
+  style is the @code{:end} style. For horizontal button boxes, the definition
+  of before/after depends on the direction of the widget, see the
+  @fun{gtk-widget-direction} function. If the style is the @code{:start} or
+  @code{:end} style, then the secondary children are aligned at the other end
+  of the button box from the main children. For the other styles, they appear
+  immediately next to the main children.
   @see-class{gtk-button-box}
   @see-class{gtk-widget}
   @see-function{gtk-widget-direction}")
@@ -356,10 +356,10 @@
 
 (defun gtk-button-box-new (orientation)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-12-9}
   @argument[orientation]{a value of the @symbol{gtk-orientation} enumeration}
   @return{A new @class{gtk-button-box} widget.}
-  @short{Creates a new button box container.}
+  @short{Creates a new button box.}
   @see-class{gtk-button-box}
   @see-symbol{gtk-orientation}"
   (make-instance 'gtk-button-box
@@ -377,7 +377,7 @@
 
 (defun gtk-button-box-layout (buttonbox)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-30}
+ "@version{2021-12-9}
   @syntax[]{(gtk-button-box-layout button-box) => style}
   @syntax[]{(setf (gtk-button-box-layout button-box) style)}
   @argument[buttonbox]{a @class{gtk-button-box} widget}
@@ -386,12 +386,12 @@
     Accessor of the layout style of the button box.
   @end{short}
 
-  The function @sym{gtk-button-box-layout} retrieves the method being used to
-  arrange the buttons in a button box. The function
-  @sym{(setf gtk-button-box-layout)} changes the way buttons are arranged.
+  The @sym{gtk-button-box-layout} function retrieves the method being used to
+  arrange the buttons in a button box. The @sym{(setf gtk-button-box-layout)}
+  function changes the way buttons are arranged.
   @begin[Note]{dictionary}
-    The function @sym{gtk-button-box-layout} is an abbreviation for the slot
-    access function @fun{gtk-button-box-layout-style}.
+    The @sym{gtk-button-box-layout} function is an abbreviation for the slot
+    access @fun{gtk-button-box-layout-style} function.
   @end{dictionary}
   @see-class{gtk-button-box}
   @see-symbol{gtk-button-box-style}

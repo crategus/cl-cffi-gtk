@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.paned.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -97,9 +97,6 @@
 ;;; struct GtkPaned
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkPaned" 'gtk-paned))
-
 (define-g-object-class "GtkPaned" gtk-paned
   (:superclass gtk-container
    :export t
@@ -125,67 +122,69 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-paned 'type)
- "@version{2020-4-12}
+ "@version{*2021-12-1}
   @begin{short}
-    @sym{gtk-paned} has two panes, arranged either horizontally or vertically.
-    The division between the two panes is adjustable by the user by dragging a
-    handle.
+    The @sym{gtk-paned} widget has two panes, arranged either horizontally or
+    vertically.
   @end{short}
+  The division between the two panes is adjustable by the user by dragging a
+  handle.
 
   @image[panes]{}
 
-  Child widgets are added to the panes of the widget with the functions
-  @fun{gtk-paned-pack1} and @fun{gtk-paned-pack2}. The division between the two
-  children is set by default from the size requests of the children, but it can
-  be adjusted by the user.
+  Child widgets are added to the panes of the paned widget with the
+  @fun{gtk-paned-pack1} and @fun{gtk-paned-pack2} functions. The division
+  between the two children is set by default from the size requests of the
+  children, but it can be adjusted by the user.
 
   A paned widget draws a separator between the two child widgets and a small
   handle that the user can drag to adjust the division. It does not draw any
   relief around the children or around the separator. The space in which the
-  separator is called the gutter. Often, it is useful to put each child
-  inside a @class{gtk-frame} widget with the shadow type set to @code{:in} so
-  that the gutter appears as a ridge. No separator is drawn if one of the
-  children is missing.
+  separator is called the gutter. Often, it is useful to put each child widget
+  inside a @class{gtk-frame} widget with the shadow type set to the @code{:in}
+  value so that the gutter appears as a ridge. No separator is drawn if one of
+  the children is missing.
 
-  Each child has two options that can be set, @code{resize} and @code{shrink}.
-  If @code{resize} is @em{true}, then when the @sym{gtk-paned} is resized, that
-  child will expand or shrink along with the paned widget. If @code{shrink} is
-  @em{true}, then that child can be made smaller than its requisition by the
-  user. Setting shrink to @em{false} allows the application to set a minimum
-  size. If @code{resize} is @em{false} for both children, then this is treated
-  as if @code{resize} is @em{true} for both children.
+  Each child widget has two child properties that can be set, the @code{resize}
+  and @code{shrink} child properties. If the @code{resize} child property is
+  @em{true}, then when the @sym{gtk-paned} widget is resized, that child widget
+  will expand or shrink along with the paned widget. If the @code{shrink}
+  property is @em{true}, then that child widget can be made smaller than its
+  requisition by the user. Setting the @code{shrink} child property to
+  @em{false} allows the application to set a minimum size. If the @code{resize}
+  child property is @em{false} for both children, then this is treated as if the
+  @code{resize} child property is @em{true} for both children.
 
   The application can set the position of the slider as if it were set by the
-  user, by calling the function @fun{gtk-paned-position}.
+  user, by calling the @fun{gtk-paned-position} function.
   @begin[CSS nodes]{dictionary}
     @begin{pre}
-  paned
-  ├── <child>
-  ├── separator\[.wide\]
-  ╰── <child>
+ paned
+ ├── <child>
+ ├── separator\[.wide\]
+ ╰── <child>
     @end{pre}
-    @sym{gtk-paned} has a main CSS node with name @code{paned}, and a subnode
-    for the separator with name @code{separator}. The subnode gets a
-    @code{.wide} style class when the paned is supposed to be wide.
-
-    In horizontal orientation, the nodes of the children are always arranged
-    from left to right. So @code{:first-child} will always select the leftmost
-    child, regardless of text direction.
+    The @sym{gtk-paned} implementation has a main CSS node with name
+    @code{paned}, and a subnode for the separator with name @code{separator}.
+    The subnode gets a @code{.wide} style class when the paned is supposed to
+    be wide. In horizontal orientation, the nodes of the children are always
+    arranged from left to right. So @code{:first-child} will always select the
+    leftmost child widget, regardless of text direction.
   @end{dictionary}
   @begin[Example]{dictionary}
     Creating a paned widget with minimum sizes.
     @begin{pre}
- (let ((paned (make-instance 'gtk-paned
-                             :orientation :horizontal
-                             :width-request 250
-                             :height-request 150))
-       (frame1 (make-instance 'gtk-frame :shadow-type :in
-                                         :width-request 100))
-       (frame2 (make-instance 'gtk-frame :shadow-type :in
-                                         :width-request 50)))
-     (gtk-paned-pack1 paned frame1 :resize t :shrink nil)
-     (gtk-paned-pack2 paned frame2 :resize nil :shrink nil)
-     ... )
+(let ((paned (make-instance 'gtk-paned
+                            :orientation :horizontal
+                            :width-request 250
+                            :height-request 150))
+      (frame1 (make-instance 'gtk-frame :shadow-type :in
+                                        :width-request 100))
+      (frame2 (make-instance 'gtk-frame :shadow-type :in
+                                        :width-request 50)))
+    (gtk-paned-pack1 paned frame1 :resize t :shrink nil)
+    (gtk-paned-pack2 paned frame2 :resize nil :shrink nil)
+    ... )
     @end{pre}
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
@@ -193,15 +192,15 @@
       @begin[resize]{entry}
         The @code{resize} child property of type @code{:boolean} (Read / Write)
         @br{}
-        The @code{resize} child property determines whether the child expands
-        and shrinks along with the paned widget. @br{}
+        Determines whether the child widget expands and shrinks along with the
+        paned widget. @br{}
         Default value: @em{true} @br{}
       @end{entry}
       @begin[shrink]{entry}
         The @code{shrink} child property of type @code{:boolean} (Read / Write)
         @br{}
-        The @code{shrink} child property determines whether the child can be
-        made smaller than its requisition. @br{}
+        Determines whether the child widget can be made smaller than its
+        requisition. @br{}
         Default value: @em{true} @br{}
       @end{entry}
     @end{table}
@@ -210,7 +209,7 @@
     @begin[code]{table}
       @begin[handle-size]{entry}
         The @code{handle-size} style property of type @code{:int} (Read) @br{}
-        Width of handle. @br{}
+        Width of the handle. @br{}
         Allowed values: >= 0 @br{}
         Default value: 5
       @end{entry}
@@ -234,51 +233,50 @@
       The signal is a keybinding signal which gets emitted to cancel moving the
       position of the handle using key bindings. The position of the handle will
       be reset to the value prior to moving it. The default binding for this
-      signal is the @kbd{Escape}.
+      signal is the @kbd{Escape} key.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-paned} widget that received the signal.}
       @end{table}
     @subheading{The \"cycle-child-focus\" signal}
       @begin{pre}
- lambda (widget reversed)    : Action
+ lambda (widget reversed)    :action
       @end{pre}
-      The \"cycle-child-focus\" signal is a keybinding signal which gets emitted
-      to cycle the focus between the children of the paned. The default binding
-      is F6.
+      The signal is a keybinding signal which gets emitted to cycle the focus
+      between the children of the paned widget. The default binding is the
+      @kbd{F6} key.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-paned} widget that received the signal.}
         @entry[reversed]{A boolean whether cycling backward or forward.}
       @end{table}
     @subheading{The \"cycle-handle-focus\" signal}
       @begin{pre}
- lambda (widget reversed)    : Action
+ lambda (widget reversed)    :action
       @end{pre}
-      The \"cycle-handle-focus\" signal is a keybinding signal which gets
-      emitted to cycle whether the paned should grab focus to allow the user
-      to change position of the handle by using key bindings. The default
-      binding for this signal is F8.
+      The signal is a keybinding signal which gets emitted to cycle whether the
+      paned widget should grab focus to allow the user to change position of the
+      handle by using key bindings. The default binding for this signal is the
+      @kbd{F8} key.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-paned} widget that received the signal.}
         @entry[reversed]{A boolean whether cycling backward or forward.}
       @end{table}
     @subheading{The \"move-handle\" signal}
       @begin{pre}
- lambda (widget scroll-type)    : Action
+ lambda (widget scrolltype)    :action
       @end{pre}
-      The \"move-handle\" signal is a keybinding signal which gets emitted to
-      move the handle when the user is using key bindings to move it.
+      The signal is a keybinding signal which gets emitted to move the handle
+      when the user is using key bindings to move it.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-paned} widget that received the signal.}
-        @entry[scroll-type]{A value of the @symbol{gtk-scroll-type}
-          enumeration.}
+        @entry[scrolltype]{A value of the @symbol{gtk-scroll-type} enumeration.}
       @end{table}
     @subheading{The \"toggle-handle-focus\" signal}
       @begin{pre}
- lambda (widget)    : Action
+ lambda (widget)    :action
       @end{pre}
-      The \"toggle-handle-focus\" is a keybinding signal which gets emitted to
-      accept the current position of the handle and then move focus to the next
-      widget in the focus chain. The default binding is @kbd{Tab}.
+      The signal is a keybinding signal which gets emitted to accept the current
+      position of the handle and then move focus to the next widget in the focus
+      chain. The default binding is the @kbd{Tab} key.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-paned} widget that received the signal.}
       @end{table}
@@ -287,7 +285,8 @@
   @see-slot{gtk-paned-min-position}
   @see-slot{gtk-paned-position}
   @see-slot{gtk-paned-position-set}
-  @see-slot{gtk-paned-wide-handle}")
+  @see-slot{gtk-paned-wide-handle}
+  @see-symbol{gtk-scroll-type}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -299,7 +298,8 @@
 (setf (documentation (atdoc:get-slot-from-name "max-position" 'gtk-paned) 't)
  "The @code{max-position} property of type @code{:int} (Read) @br{}
   The largest possible value for the position property. This property is
-  derived from the size and shrinkability of the widget's children. @br{}
+  derived from the size and shrinkability of the children of the paned widget.
+  @br{}
   Allowed values: >= 0 @br{}
   Default value: 2147483647")
 
@@ -307,16 +307,16 @@
 (setf (gethash 'gtk-paned-max-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-max-position 'function)
- "@version{2020-4-12}
-  @syntax[]{(gtk-paned-max-position object) => max-position}
+ "@version{2021-12-1}
+  @syntax[]{(gtk-paned-max-position object) => position}
   @argument[object]{a @class{gtk-paned} widget}
-  @argument[max-position]{an integer with the largest possible position}
+  @argument[position]{an integer with the largest possible position}
   @begin{short}
     Accessor of the @slot[gtk-paned]{max-position} slot of the
     @class{gtk-paned} class.
   @end{short}
 
-  The slot access function @sym{gtk-paned-max-position} gets the largest
+  The @sym{gtk-paned-max-position} slot access function gets the largest
   possible value for the position property.
   @see-class{gtk-paned}
   @see-function{gtk-paned-position}
@@ -328,7 +328,8 @@
 (setf (documentation (atdoc:get-slot-from-name "min-position" 'gtk-paned) 't)
  "The @code{min-position} property of type @code{:int} (Read) @br{}
   The smallest possible value for the position property. This property is
-  derived from the size and shrinkability of the widget's children. @br{}
+  derived from the size and shrinkability of the children of the paned widget.
+  @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
 
@@ -336,16 +337,16 @@
 (setf (gethash 'gtk-paned-min-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-min-position 'function)
- "@version{2020-4-12}
-  @syntax[]{(gtk-paned-min-position object) => min-position}
+ "@version{2021-12-1}
+  @syntax[]{(gtk-paned-min-position object) => position}
   @argument[object]{a @class{gtk-paned} widget}
-  @argument[min-position]{an integer with the smallest possible position}
+  @argument[position]{an integer with the smallest possible position}
   @begin{short}
     Accessor of the @slot[gtk-paned]{min-position} slot of the
     @class{gtk-paned} class.
   @end{short}
 
-  The slot access function @sym{gtk-paned-min-position} gets the smallest
+  The @sym{gtk-paned-min-position} slot access function gets the smallest
   possible value for the position property.
   @see-class{gtk-paned}
   @see-function{gtk-paned-position}
@@ -365,7 +366,7 @@
 (setf (gethash 'gtk-paned-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-position 'function)
- "@version{2020-4-12}
+ "@version{2021-12-1}
   @syntax[]{(gtk-paned-position object) => position}
   @syntax[]{(setf (gtk-paned-position position) position)}
   @argument[object]{a @class{gtk-paned} widget}
@@ -376,10 +377,9 @@
     class.
   @end{short}
 
-  The slot access function @sym{gtk-paned-position} obtains the position of the
-  divider between the two panes. The slot access function
-  @sym{(setf gtk-paned-position)} sets the position of the divider between the
-  two panes.
+  The @sym{gtk-paned-position} slot access function obtains the position of the
+  divider between the two panes. The @sym{(setf gtk-paned-position)} slot access
+  function sets the position.
   @see-class{gtk-paned}
   @see-function{gtk-paned-max-position}
   @see-function{gtk-paned-min-position}")
@@ -397,21 +397,21 @@
 (setf (gethash 'gtk-paned-position-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-position-set 'function)
- "@version{2020-4-12}
-  @syntax[]{(gtk-paned-position-set object) => position-set}
-  @syntax[]{(setf (gtk-paned-position-set position) position-set)}
+ "@version{2021-12-1}
+  @syntax[]{(gtk-paned-position-set object) => setting}
+  @syntax[]{(setf (gtk-paned-position-set position) setting)}
   @argument[object]{a @class{gtk-paned} widget}
-  @argument[position-set]{a boolean whether the @code{postion} property should
-    be used}
+  @argument[setting]{a boolean whether the @slot[gtk-paned]{position} property
+    should be used}
   @begin{short}
     Accessor of the @slot[gtk-paned]{position-set} slot of the
     @class{gtk-paned} class.
   @end{short}
 
-  The slot access function @sym{gtk-paned-position-set} gets whether the
-  @code{position} property should be used. The slot access function
-  @sym{(setf gtk-paned-position-set)} sets whether the @code{position} property
-  should be used.
+  The @sym{gtk-paned-position-set} slot access function gets whether the
+  @slot[gtk-paned]{position} property should be used. The
+  @sym{(setf gtk-paned-position-set)} slot access function sets whether the
+  @slot[gtk-paned]{position} property should be used.
   @see-class{gtk-paned}
   @see-function{gtk-paned-position}")
 
@@ -420,34 +420,38 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wide-handle" 'gtk-paned) 't)
  "The @code{wide-handled} property of type @code{:boolean} (Read / Write) @br{}
-  Setting this property to @em{true} indicates that the paned needs to provide
-  stronger visual separation, e.g. because it separates between two notebooks,
-  whose tab rows would otherwise merge visually. @br{}
+  Setting this property to @em{true} indicates that the paned widget needs to
+  provide stronger visual separation, e.g. because it separates between two
+  notebooks, whose tab rows would otherwise merge visually. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-wide-handle atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-wide-handle 'function)
- "@version{2020-4-12}
+ "@version{2021-12-1}
   @syntax[]{(gtk-paned-wide-handle object) => wide}
   @syntax[]{(setf (gtk-paned-wide-handle object) wide)}
   @argument[object]{a @class{gtk-paned} widget}
-  @argument[wide]{a boolean with the new value for the @code{wide-handle}
+  @argument[wide]{a boolean with the value of the @slot[gtk-paned]{wide-handle}
     property}
   @begin{short}
     Accessor of the @slot[gtk-paned]{wide-handle} slot of the @class{gtk-paned}
     class.
   @end{short}
 
-  The slot access function @sym{gtk-paned-wide-handled} gets the
-  @code{wide-handle} property. The slot access function
-  @sym{(setf gtk-paned-wide-handled)} sets the @code{wide-handle} property.
+  The @sym{gtk-paned-wide-handled} slot access function gets the
+  @slot[gtk-paned]{wide-handle} property. The
+  @sym{(setf gtk-paned-wide-handled)} slot access function sets the
+  @slot[gtk-paned]{wide-handle} property.
   @see-class{gtk-paned}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkPaned" 'gtk-paned))
 
 ;;; --- gtk-paned-child-resize -------------------------------------------------
 
@@ -458,22 +462,23 @@
 (setf (gethash 'gtk-paned-child-resize atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-child-resize 'function)
- "@version{2020-4-12}
+ "@version{2021-12-1}
   @syntax[]{(gtk-paned-child-resize container child) => resize)}
   @syntax[]{(setf (gtk-paned-child-resize container child) resize)}
   @argument[container]{a @class{gtk-paned} widget}
-  @argument[child]{a @class{gtk-widget} child}
-  @argument[resize]{a boolean whether the child expands and shrinks along with
-    the paned widget}
+  @argument[child]{a @class{gtk-widget} child widget}
+  @argument[resize]{a boolean whether the child widget expands and shrinks along
+    with the paned widget}
   @begin{short}
     Accessor of the @code{resize} child property of the @class{gtk-paned}
     class.
   @end{short}
 
-  The function @sym{gtk-paned-child-resize} gets whether the child expands and
-  shrinks along with the paned widget. The function
-  @sym{(setf gtk-paned-child-resize)} sets the @code{resize} child property.
+  The @sym{gtk-paned-child-resize} function gets whether the child widget
+  expands and shrinks along with the paned widget. The
+  @sym{(setf gtk-paned-child-resize)} function sets the child property.
   @see-class{gtk-paned}
+  @see-class{gtk-widget}
   @see-function{gtk-paned-child-shrink}")
 
 ;;; --- gtk-paned-child-shrink -------------------------------------------------
@@ -485,23 +490,24 @@
 (setf (gethash 'gtk-paned-child-shrink atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-child-shrink 'function)
- "@version{2020-4-12}
-  @syntax[]{(gtk-paned-child-shrink container child) => resize)}
-  @syntax[]{(setf (gtk-paned-child-shrink container child) resize)}
+ "@version{2021-12-1}
+  @syntax[]{(gtk-paned-child-shrink container child) => shrink)}
+  @syntax[]{(setf (gtk-paned-child-shrink container child) shrink)}
   @argument[container]{a @class{gtk-paned} widget}
-  @argument[child]{a @class{gtk-widget} child}
-  @argument[shrink]{a boolean whether the child can be made smaller than its
-    requisition}
+  @argument[child]{a @class{gtk-widget} child widget}
+  @argument[shrink]{a boolean whether the child widget can be made smaller than
+    its requisition}
   @begin{short}
     Accessor of the @code{shrink} child property of the @class{gtk-paned}
     class.
   @end{short}
 
-  The function @sym{gtk-paned-child-shrink} determines whether the child can be
-  made smaller than its requisition. The function
-  @sym{(setf gtk-paned-child-shrink)} gets the value of the @code{shrink} child
+  The @sym{gtk-paned-child-shrink} function determines whether the child widget
+  can be made smaller than its requisition. The
+  @sym{(setf gtk-paned-child-shrink)} function gets the value of the child
   property.
   @see-class{gtk-paned}
+  @see-class{gtk-widget}
   @see-function{gtk-paned-child-resize}")
 
 ;;; ----------------------------------------------------------------------------
@@ -512,9 +518,9 @@
 
 (defun gtk-paned-new (orientation)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-12}
-  @argument[orientation]{the paned's orientation of type
-    @symbol{gtk-orientation}.}
+ "@version{2021-12-1}
+  @argument[orientation]{a @symbol{gtk-orientation} value for the orientation
+    of the paned widget}
   @return{A new @class{gtk-paned} widget.}
   @short{Creates a new paned widget.}
   @see-class{gtk-paned}
@@ -530,14 +536,18 @@
 
 (defun gtk-paned-add1 (paned child)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-12}
+ "@version{2021-12-1}
   @argument[paned]{a @class{gtk-paned} widget}
-  @argument[child]{the @class{gtk-widget} child to add}
+  @argument[child]{a @class{gtk-widget} child widget to add}
   @begin{short}
-    Adds a child to the top or left pane with default parameters.
+    Adds a child widget to the top or left pane with default parameters.
   @end{short}
-  This is equivalent to @code{(gtk-paned-pack1 paned child nil t)}.
+  This is equivalent to:
+  @begin{pre}
+(gtk-paned-pack1 paned child nil t)
+  @end{pre}
   @see-class{gtk-paned}
+  @see-class{gtk-widget}
   @see-function{gtk-paned-add2}
   @see-function{gtk-paned-pack1}
   @see-function{gtk-paned-pack2}"
@@ -551,13 +561,16 @@
 
 (defun gtk-paned-add2 (paned child)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-12}
+ "@version{2021-12-1}
   @argument[paned]{a @class{gtk-paned} widget}
-  @argument[child]{the @class{gtk-widget} child to add}
+  @argument[child]{a @class{gtk-widget} child widget to add}
   @begin{short}
-    Adds a child to the bottom or right pane with default parameters.
+    Adds a child widget to the bottom or right pane with default parameters.
   @end{short}
-  This is equivalent to @code{(gtk-paned-pack2 paned child t t)}.
+  This is equivalent to:
+  @begin{pre}
+(gtk-paned-pack2 paned child t t)
+  @end{pre}
   @see-class{gtk-paned}
   @see-function{gtk-paned-add1}
   @see-function{gtk-paned-pack1}
@@ -578,21 +591,21 @@
 
 (defun gtk-paned-pack1 (paned child &key (resize nil) (shrink t))
  #+cl-cffi-gtk-documentation
- "@version{2020-4-12}
+ "@version{2021-12-1}
   @argument[paned]{a @class{gtk-paned} widget}
-  @argument[child]{the @class{gtk-widget} child to add}
-  @argument[resize]{a boolean whether the child should expand when the paned
-    widget is resized}
-  @argument[shrink]{a boolean whether the child can be made smaller than its
-    requisition}
+  @argument[child]{the @class{gtk-widget} child widget to add}
+  @argument[resize]{a boolean whether the child widget should expand when the
+  paned widget is resized}
+  @argument[shrink]{a boolean whether the child widget can be made smaller than
+    its requisition}
   @begin{short}
-    Adds a child to the top or left pane.
+    Adds a child widget to the top or left pane.
   @end{short}
-
-  The arguments @arg{resize} and @arg{shrink} are keyword arguments.
-  @arg{resize} has the default value @em{false} and @arg{shrink} the default
-  value @em{true}.
+  The @arg{resize} and @arg{shrink} arguments are keyword arguments.
+  The @arg{resize} argument has the @em{false} default value and the
+  @arg{shrink} argument the @em{true} default value.
   @see-class{gtk-paned}
+  @see-class{gtk-widget}
   @see-function{gtk-paned-pack2}"
   (%gtk-paned-pack1 paned child resize shrink))
 
@@ -610,20 +623,20 @@
 
 (defun gtk-paned-pack2 (paned child &key (resize t) (shrink t))
  #+cl-cffi-gtk-documentation
- "@version{2020-4-12}
+ "@version{2021-12-1}
   @argument[paned]{a @class{gtk-paned} widget}
-  @argument[child]{the @class{gtk-widget} child to add}
-  @argument[resize]{a boolean whether the child should expand when the paned
-    widget is resized}
-  @argument[shrink]{a boolean whether the child can be made smaller than its
-    requisition}
+  @argument[child]{a @class{gtk-widget} child widget to add}
+  @argument[resize]{a boolean whether the child widget should expand when the
+    paned widget is resized}
+  @argument[shrink]{a boolean whether the child widget can be made smaller than
+    its requisition}
   @begin{short}
-    Adds a child to the bottom or right pane.
+    Adds a child widget to the bottom or right pane.
   @end{short}
-
-  The arguments @arg{resize} and @arg{shrink} are keyword arguments with the
-  default value @em{true}.
+  The @arg{resize} and @arg{shrink} arguments are keyword arguments with the
+  @em{true} default value.
   @see-class{gtk-paned}
+  @see-class{gtk-widget}
   @see-function{gtk-paned-pack1}"
   (%gtk-paned-pack2 paned child resize shrink))
 
@@ -635,11 +648,13 @@
 
 (defcfun ("gtk_paned_get_child1" gtk-paned-child1) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-12}
+ "@version{2021-12-1}
   @argument[paned]{a @class{gtk-paned} widget}
-  @return{First @class{gtk-widget} child, or @code{nil} if it is not set.}
-  @short{Obtains the first child of the paned widget.}
+  @return{First @class{gtk-widget} child widget, or @code{nil} if it is not
+    set.}
+  @short{Obtains the first child widget of the paned widget.}
   @see-class{gtk-paned}
+  @see-class{gtk-widget}
   @see-function{gtk-paned-child2}"
   (paned (g-object gtk-paned)))
 
@@ -651,11 +666,13 @@
 
 (defcfun ("gtk_paned_get_child2" gtk-paned-child2) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-12}
-  @argument[paned]{a @class{gtk-paned} container}
-  @return{Second @class{gtk-widget} child, or @code{nil} if it is not set.}
-  @short{Obtains the second child of the paned widget.}
+ "@version{2021-12-1}
+  @argument[paned]{a @class{gtk-paned} widget}
+  @return{Second @class{gtk-widget} child widget, or @code{nil} if it is not
+    set.}
+  @short{Obtains the second child widget of the paned widget.}
   @see-class{gtk-paned}
+  @see-class{gtk-widget}
   @see-function{gtk-paned-child1}"
   (paned (g-object gtk-paned)))
 
@@ -668,16 +685,15 @@
 (defcfun ("gtk_paned_get_handle_window" gtk-paned-handle-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-12}
+ "@version{2021-12-1}
   @argument[paned]{a @class{gtk-paned} widget}
-  @return{The paned's @class{gdk-window} handle window.}
+  @return{The @class{gdk-window} handle window of the paned widget.}
   @begin{short}
-    Returns the @class{gdk-window} object of the handle.
+    Returns the GDK window of the handle.
   @end{short}
-
   This function is useful when handling button or motion events because it
-  enables the callback to distinguish between the window of the paned, a child
-  and the handle.
+  enables the callback to distinguish between the window of the paned widget,
+  a child widget and the handle.
   @see-class{gtk-paned}
   @see-class{gdk-window}"
   (paned (g-object gtk-paned)))
@@ -768,8 +784,8 @@
   @short{Create a new @class{gtk-hpaned} container.}
   @begin[Warning]{dictionary}
     The @sym{gtk-hpaned-new} function has been deprecated since version 3.2 and
-    should not be used in newly-written code. Use the @fun{gtk-paned-new}
-    function with @code{:horizontal} instead.
+    should not be used in newly written code. Use the @fun{gtk-paned-new}
+    function with the @code{:horizontal} orientation instead.
   @end{dictionary}
   @see-class{gtk-paned}"
   (make-instance 'gtk-paned
@@ -857,8 +873,8 @@
   @short{Create a new @class{gtk-vpaned} container.}
   @begin[Warning]{dictionary}
     The @sym{gtk-vpaned-new} function has been deprecated since version 3.2 and
-    should not be used in newly-written code. Use the @fun{gtk-paned-new}
-    function with @code{:vertical} instead.
+    should not be used in newly written code. Use the @fun{gtk-paned-new}
+    function with the @code{:vertical} orientation instead.
   @end{dictionary}
   @see-class{gtk-paned}"
   (make-instance 'gtk-paned
