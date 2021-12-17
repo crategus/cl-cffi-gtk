@@ -244,7 +244,7 @@
 (setf (gethash 'gtk-window-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-window-type atdoc:*external-symbols*)
- "@version{2021-9-9}
+ "@version{*2021-9-9}
   @begin{short}
     An enumeration for the possible types of a @class{gtk-window} widget.
   @end{short}
@@ -444,7 +444,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-window 'type)
- "@version{2021-9-9}
+ "@version{*2021-9-9}
   @begin{short}
     A @sym{gtk-window} widget is a toplevel window which can contain other
     widgets.
@@ -486,7 +486,7 @@
  ╰── <child>
     @end{pre}
     The @sym{gtk-window} implementation has a main CSS node with name
-    @code{window} and style class @code{.background}, and a subnode with name
+    @code{window} and @code{.background} style class, and a subnode with name
     @code{decoration}.
 
     Style classes that are typically used with the main CSS node are
@@ -1758,10 +1758,10 @@
 
 (declaim (inline gtk-window-new))
 
-(defun gtk-window-new (type)
+(defun gtk-window-new (wtype)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-12}
-  @argument[type]{a value of the @symbol{gtk-window-type} enumeration}
+ "@version{*2021-12-3}
+  @argument[wtype]{a value of the @symbol{gtk-window-type} enumeration}
   @return{A new @class{gtk-window} widget.}
   @begin{short}
     Creates a new window, which is a toplevel window that can contain other
@@ -1780,7 +1780,7 @@
   @see-class{gtk-window}
   @see-symbol{gtk-window-type}
   @see-function{gtk-window-decorated}"
-  (make-instance 'gtk-window :type type))
+  (make-instance 'gtk-window :type wtype))
 
 (export 'gtk-window-new)
 
@@ -1800,7 +1800,7 @@
 ;;; the window manager to restore window positions when loading a saved session.
 ;;;
 ;;; gtk_window_set_wmclass has been deprecated since version 3.22 and should not
-;;; be used in newly-written code.
+;;; be used in newly written code.
 ;;;
 ;;; window :
 ;;;     a GtkWindow
@@ -3444,7 +3444,7 @@
 
 (defcfun ("gtk_window_get_titlebar" gtk-window-titlebar) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-12}
+ "@version{*2021-12-16}
   @syntax[]{(gtk-window-titlebar window) => widget}
   @syntax[]{(setf (gtk-window-titlebar window) widget)}
   @argument[window]{a @class{gtk-window} widget}

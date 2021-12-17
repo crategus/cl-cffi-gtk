@@ -248,7 +248,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-about-dialog 'type)
- "@version{2021-10-6}
+ "@version{*2021-12-3}
   @begin{short}
     The @sym{gtk-about-dialog} widget offers a simple way to display information
     about a program like its logo, name, copyright, website and license.

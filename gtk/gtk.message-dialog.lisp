@@ -98,7 +98,7 @@
 (setf (gethash 'gtk-message-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-message-type atdoc:*external-symbols*)
- "@version{2021-10-4}
+ "@version{*2021-12-3}
   @begin{short}
     The type of message being displayed in the message dialog.
   @end{short}
@@ -139,7 +139,7 @@
 (setf (gethash 'gtk-buttons-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-buttons-type atdoc:*external-symbols*)
- "@version{2021-10-4}
+ "@version{*2021-12-3}
   @begin{short}
     Prebuilt sets of buttons for the dialog.
   @end{short}
@@ -147,7 +147,8 @@
   and call the @fun{gtk-dialog-add-buttons} function to add your own buttons.
 
   Please note that the @code{:ok}, @code{:yes-no} and @code{:ok-cancel} values
-  are discouraged by the GNOME Human Interface Guidelines.
+  are discouraged by the @url[https://developer.gnome.org/hig/]{GNOME Human
+  Interface Guidelines}.
   @begin{pre}
 (define-g-enum \"GtkButtonsType\" gtk-buttons-type
   (:export t
@@ -207,7 +208,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-message-dialog 'type)
- "@version{2021-10-4}
+ "@version{*2021-12-3}
   @begin{short}
     A @sym{gtk-message-dialog} widget presents a dialog with some message text.
   @end{short}
@@ -292,7 +293,7 @@
  "The @code{buttons} property of type @symbol{gtk-buttons-type}
   (Write / Construct Only) @br{}
   The buttons shown in the message dialog. @br{}
-  @em{Warning:} This property is not accessible from the Lisp binding. @br{}
+  @em{Note:} This property is not accessible from the Lisp binding. @br{}
   Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation

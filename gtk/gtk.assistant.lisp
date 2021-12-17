@@ -131,15 +131,15 @@
 (setf (gethash 'gtk-assistant-page-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-assistant-page-type atdoc:*external-symbols*)
- "@version{2021-11-1}
+ "@version{*2021-12-3}
   @begin{short}
     An enumeration for determining the page role inside the
     @class{gtk-assistant} widget. It is used to handle buttons sensitivity and
     visibility.
   @end{short}
 
-  Note that an assistant needs to end its page flow with a page of type
-  @code{:confirm}, @code{:summary} or @code{:progress} to be correct. The
+  Note that an assistant needs to end its page flow with a page of
+  @code{:confirm}, @code{:summary} or @code{:progress} type to be correct. The
   Cancel button will only be shown if the page is not \"committed\". See the
   @fun{gtk-assistant-commit} function for details.
   @begin{pre}
@@ -176,9 +176,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkAssistant
 ;;; ----------------------------------------------------------------------------
-
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkAssistant" 'gtk-assistant))
 
 (define-g-object-class "GtkAssistant" gtk-assistant
   (:superclass gtk-window
@@ -354,6 +351,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkAssistant" 'gtk-assistant))
 
 ;;; --- gtk-assistant-use-header-bar -------------------------------------------
 

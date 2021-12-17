@@ -219,7 +219,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-dialog 'type)
- "@version{2021-11-2}
+ "@version{*2021-12-3}
   @begin{short}
     Dialogs are a convenient way to prompt the user for a small amount of input,
     e.g. to display a message, ask a question, or anything else that does not
@@ -569,7 +569,7 @@
 
 (defcfun ("gtk_dialog_run" gtk-dialog-run) gtk-response-type
  #+cl-cffi-gtk-documentation
- "@version{2021-9-26}
+ "@version{*2021-12-3}
   @argument[dialog]{a @class{gtk-dialog} widget}
   @return{The response ID, which is a positive integer or a value of the
     @symbol{gtk-response-type} enumeration.}
@@ -652,7 +652,7 @@
 
 (defcfun ("gtk_dialog_add_button" gtk-dialog-add-button) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-11-2}
+ "@version{*2021-12-3}
   @argument[dialog]{a @class{gtk-dialog} widget}
   @argument[text]{a string with the text of the button}
   @argument[response]{response ID for the button, which is a positive integer
@@ -742,7 +742,7 @@
 (defcfun ("gtk_dialog_set_default_response" gtk-dialog-set-default-response)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-26}
+ "@version{*2021-12-3}
   @argument[dialog]{a @class{gtk-dialog} widget}
   @argument[response]{a response ID, which is a positive integer or a value
     of the @symbol{gtk-response-type} enumeration}
@@ -868,7 +868,7 @@
 (defcfun ("gtk_dialog_get_content_area" gtk-dialog-content-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-26}
+ "@version{*2021-12-3}
   @argument[dialog]{a @class{gtk-dialog} widget}
   @begin{return}
     The @class{gtk-box} content area with a @code{:vertical} orientation.

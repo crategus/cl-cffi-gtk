@@ -123,10 +123,10 @@
 (defcfun ("gtk_offscreen_window_get_surface" gtk-offscreen-window-surface)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2021-10-26}
+ "@version{2021-12-10}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
   @return{A @symbol{cairo-surface-t} instance to the @arg{offscreen} surface,
-    or a @code{null}-pointer.}
+    or a @code{null-pointer}.}
   @begin{short}
     Retrieves a snapshot of the contained widget in the form of a
     @symbol{cairo-surface-t} instance.

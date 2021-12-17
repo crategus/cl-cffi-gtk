@@ -390,7 +390,7 @@
   @code{\"name\"} attribute specifies the name of the signal, and the
   @code{\"handler\"} attribute specifies the function to connect to the signal.
   By default, GTK tries to find the handler using the @code{g_module_symbol()}
-  funcion, but this can be changed by passing a custom
+  function, but this can be changed by passing a custom
   @code{GtkBuilderConnectFunc} callback function to the
   @fun{gtk-builder-connect-signals-full} function. The remaining attributes,
   @code{\"after\"}, @code{\"swapped\"} and @code{\"object\"}, have the same
@@ -521,7 +521,7 @@
 (defcfun ("gtk_builder_new_from_file" gtk-builder-new-from-file)
     (g-object gtk-builder)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-23}
+ "@version{*2021-11-30}
   @argument[filename]{a string with the filename}
   @return{A @class{gtk-builder} object containing the described interface.}
   @begin{short}
