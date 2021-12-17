@@ -102,9 +102,6 @@
 ;;; struct GtkBox
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkBox" 'gtk-box))
-
 (define-g-object-class "GtkBox" gtk-box
   (:superclass gtk-container
    :export t
@@ -238,6 +235,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkBox" 'gtk-box))
 
 ;;; --- gtk-box-baseline-position ----------------------------------------------
 

@@ -92,9 +92,6 @@
 ;;; struct GtkGrid
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkGrid" 'gtk-grid))
-
 (define-g-object-class "GtkGrid" gtk-grid
   (:superclass gtk-container
    :export t
@@ -337,6 +334,9 @@
 ;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkGrid" 'gtk-grid))
+
 ;;; --- gtk-grid-child-height --------------------------------------------------
 
 (define-child-property "GtkGrid"
@@ -463,9 +463,9 @@
 
 (defcfun ("gtk_grid_attach" gtk-grid-attach) :void
  #+cl-cffi-gtk-documentation
- "@version{*2021-10-30}
+ "@version{*2021-12-17}
   @argument[grid]{a @class{gtk-grid} widget}
-  @argument[child]{the @class{gtk-widget} object to add}
+  @argument[child]{a @class{gtk-widget} object to add}
   @argument[left]{an integer with the column number to attach the left side of
     @arg{child} to}
   @argument[top]{an integer with the row number to attach the top side of
