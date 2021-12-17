@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.fixed.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -65,9 +65,6 @@
 ;;; struct GtkFixed
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkFixed" 'gtk-fixed))
-
 (define-g-object-class "GtkFixed" gtk-fixed
   (:superclass gtk-container
    :export t
@@ -78,16 +75,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-fixed 'type)
- "@version{*2021-2-9}
+ "@version{*2021-12-17}
   @begin{short}
     The @sym{gtk-fixed} widget is a container which can place child widgets at
     fixed positions and with fixed sizes, given in pixels.
   @end{short}
-  The fixed container performs no automatic layout management.
+  The fixed widget performs no automatic layout management.
 
   For most applications, you should not use this container. It keeps you from
-  having to learn about the other GTK+ containers, but it results in broken
-  applications. With the @sym{gtk-fixed} container, the following things will
+  having to learn about the other GTK containers, but it results in broken
+  applications. With the @sym{gtk-fixed} widget, the following things will
   result in truncated text, overlapping widgets, and other display bugs:
   @begin{itemize}
     @begin{item}
@@ -97,7 +94,7 @@
       Fonts other than the one you used to write the application will of course
       change the size of widgets containing text. Keep in mind that users may
       use a larger font because of difficulty reading the default, or they
-      may be using Windows or the framebuffer port of GTK+, where different
+      may be using Windows or the framebuffer port of GTK, where different
       fonts are available.
     @end{item}
     @begin{item}
@@ -105,10 +102,10 @@
       display of non-English text will use a different font in many cases.
     @end{item}
   @end{itemize}
-  In addition, the fixed container cannot properly be mirrored in right-to-left
-  languages such as Hebrew and Arabic. i.e. normally GTK+ will flip the
+  In addition, the fixed widget cannot properly be mirrored in right-to-left
+  languages such as Hebrew and Arabic. i.e. normally GTK will flip the
   interface to put labels to the right of the thing they label, but it cannot
-  do that with the fixed container. So your application will not be usable in
+  do that with the fixed widget. So your application will not be usable in
   right-to-left languages.
 
   Finally, fixed positioning makes it kind of annoying to add/remove GUI
@@ -116,8 +113,8 @@
   long-term maintenance problem for your application.
 
   If you know none of these things are an issue for your application, and
-  prefer the simplicity of the @sym{gtk-fixed} container, by all means use the
-  fixed container. But you should be aware of the tradeoffs.
+  prefer the simplicity of the @sym{gtk-fixed} widget, by all means use the
+  fixed widget. But you should be aware of the tradeoffs.
 
   See also the @class{gtk-layout} widget, which shares the ability to perform
   fixed positioning of child widgets and additionally adds custom drawing and
@@ -144,6 +141,9 @@
 ;;; Child Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkFixed" 'gtk-fixed))
+
 ;;; --- gtk-fixed-child-x ------------------------------------------------------
 
 (define-child-property "GtkFixed"
@@ -154,18 +154,19 @@
 (setf (gethash 'gtk-fixed-child-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-fixed-child-x 'function)
- "@version{2020-4-30}
+ "@version{2021-12-17}
   @syntax[]{(gtk-fixed-child-x container child) => x}
   @syntax[]{(setf (gtk-fixed-child-x container child) x)}
-  @argument[container]{a @class{gtk-fixed} container}
+  @argument[container]{a @class{gtk-fixed} widget}
   @argument[child]{a @class{gtk-widget} object}
   @argument[x]{an integer with the x position of the child}
   @begin{short}
     Accessor of the @code{x} child property  of the @class{gtk-fixed} class.
   @end{short}
 
-  The x position of the child widget in the fixed container.
+  The x position of the child widget in the fixed widget.
   @see-class{gtk-fixed}
+  @see-class{gtk-widget}
   @see-function{gtk-fixed-child-y}")
 
 ;;; --- gtk-fixed-child-y ------------------------------------------------------
@@ -178,18 +179,19 @@
 (setf (gethash 'gtk-fixed-child-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-fixed-child-y 'function)
- "@version{2020-4-30}
+ "@version{2021-12-17}
   @syntax[]{(gtk-fixed-child-y container child) => y}
   @syntax[]{(setf (gtk-fixed-child-y container child) y)}
-  @argument[container]{a @class{gtk-fixed} container}
+  @argument[container]{a @class{gtk-fixed} widget}
   @argument[child]{a @class{gtk-widget} object}
   @argument[y]{an integer with the y position of the child}
   @begin{short}
     Accessor of the @code{y} child property of the @class{gtk-fixed} class.
   @end{short}
 
-  The y position of the child widget in the fixed container.
+  The y position of the child widget in the fixed widget.
   @see-class{gtk-fixed}
+  @see-class{gtk-widget}
   @see-function{gtk-fixed-child-x}")
 
 ;;; ----------------------------------------------------------------------------
@@ -200,10 +202,10 @@
 
 (defun gtk-fixed-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-4-30}
-  @return{A new @class{gtk-fixed} container.}
+ "@version{2021-12-17}
+  @return{A new @class{gtk-fixed} widget.}
   @begin{short}
-    Creates a new fixed container.
+    Creates a new fixed widget.
   @end{short}
   @see-class{gtk-fixed}"
   (make-instance 'gtk-fixed))
@@ -216,17 +218,18 @@
 
 (defcfun ("gtk_fixed_put" gtk-fixed-put) :void
  #+cl-cffi-gtk-documentation
- "@version{*2021-2-9}
-  @argument[fixed]{a @class{gtk-fixed} container}
+ "@version{*2021-12-17}
+  @argument[fixed]{a @class{gtk-fixed} widget}
   @argument[widget]{the @class{gtk-widget} child widget to add}
   @argument[x]{an integer with the horizontal position to place the child
     widget at}
   @argument[y]{an integer with the vertical position to place the child widget
     at}
   @begin{short}
-    Adds a child widget to a fixed container at the given position.
+    Adds a child widget to a fixed widget at the given position.
   @end{short}
   @see-class{gtk-fixed}
+  @see-class{gtk-widget}
   @see-function{gtk-fixed-move}"
   (fixed (g-object gtk-fixed))
   (widget (g-object gtk-widget))
@@ -241,17 +244,18 @@
 
 (defcfun ("gtk_fixed_move" gtk-fixed-move) :void
  #+cl-cffi-gtk-documentation
- "@version{*2021-2-9}
-  @argument[fixed]{a @class{gtk-fixed} container}
+ "@version{*2021-12-17}
+  @argument[fixed]{a @class{gtk-fixed} widget}
   @argument[widget]{the @class{gtk-widget} child widget}
   @argument[x]{an integer with the horizontal position to move the child widget
     to}
   @argument[y]{an integer with the vertical position to move the child widget
     to}
   @begin{short}
-    Moves a child widget of a fixed container to the given position.
+    Moves a child widget of a fixed widget to the given position.
   @end{short}
   @see-class{gtk-fixed}
+  @see-class{gtk-widget}
   @see-function{gtk-fixed-put}"
   (fixed (g-object gtk-fixed))
   (widget (g-object gtk-widget))

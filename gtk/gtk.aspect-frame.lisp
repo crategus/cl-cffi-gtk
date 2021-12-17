@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.aspect-frame.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -42,10 +42,10 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     gboolean  obey-child  Read / Write
-;;;       gfloat  ratio       Read / Write
-;;;       gfloat  xalign      Read / Write
-;;;       gfloat  yalign      Read / Write
+;;;     gboolean    obey-child    Read / Write
+;;;       gfloat    ratio         Read / Write
+;;;       gfloat    xalign        Read / Write
+;;;       gfloat    yalign        Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -89,17 +89,18 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-aspect-frame 'type)
- "@version{2020-4-30}
+ "@version{2021-12-17}
   @begin{short}
-    The @sym{gtk-aspect-frame} is useful when you want pack a widget so that it
-    can resize but always retains the same aspect ratio.
+    The @sym{gtk-aspect-frame} widget is useful when you want pack a widget so
+    that it can resize but always retains the same aspect ratio.
   @end{short}
   For instance, one might be drawing a small preview of a larger image.
-  @sym{gtk-aspect-frame} derives from @class{gtk-frame}, so it can draw a label
-  and a frame around the child. The frame will be \"shrink-wrapped\" to the
-  size of the child.
+  The @sym{gtk-aspect-frame} class derives from the @class{gtk-frame} class, so
+  it can draw a label and a frame around the child. The frame will be
+  \"shrink-wrapped\" to the size of the child.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-aspect-frame} uses a CSS node with name @code{frame}.
+    The @sym{gtk-aspect-frame} implementation uses a CSS node with name
+    @code{frame}.
   @end{dictionary}
   @see-slot{gtk-aspect-frame-obey-child}
   @see-slot{gtk-aspect-frame-ratio}
@@ -124,10 +125,10 @@
 (setf (gethash 'gtk-aspect-frame-obey-child atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-aspect-frame-obey-child 'function)
- "@version{2020-4-30}
+ "@version{2021-12-17}
   @syntax[]{(gtk-aspect-frame-obey-child object) => obey-child}
   @syntax[]{(setf (gtk-aspect-frame-obey-child object) obey-child)}
-  @argument[object]{a @class{gtk-aspect-frame} container}
+  @argument[object]{a @class{gtk-aspect-frame} widget}
   @argument[obey-child]{a boolean whether to force the aspect ratio}
   @begin{short}
     Accessor of the @slot[gtk-aspect-frame]{obey-child} slot of the
@@ -142,7 +143,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ratio" 'gtk-aspect-frame) 't)
  "The @code{ratio} property of type @code{:float} (Read / Write) @br{}
-  Aspect ratio if @code{obey-child} is @em{false}. @br{}
+  Aspect ratio if the @code{obey-child} property is @em{false}. @br{}
   Allowed values: [0.0001, 10000.0] @br{}
   Default value: 1.0")
 
@@ -150,10 +151,10 @@
 (setf (gethash 'gtk-aspect-frame-ratio atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-aspect-frame-ratio 'function)
- "@version{2020-4-30}
+ "@version{2021-12-17}
   @syntax[]{(gtk-aspect-frame-ratio object) => ratio}
   @syntax[]{(setf (gtk-aspect-frame-ratio object) ratio)}
-  @argument[object]{a @class{gtk-aspect-frame} container}
+  @argument[object]{a @class{gtk-aspect-frame} widget}
   @argument[ratio]{a float with an aspect ratio}
   @begin{short}
     Accessor of the @slot[gtk-aspect-frame]{ratio} slot of the
@@ -177,17 +178,17 @@
 (setf (gethash 'gtk-aspect-frame-xalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-aspect-frame-xalign 'function)
- "@version{2020-4-30}
+ "@version{2021-12-17}
   @syntax[]{(gtk-aspect-frame-xalign object) => xalign}
   @syntax[]{(setf (gtk-aspect-frame-xalign object) xalign)}
-  @argument[object]{a @class{gtk-aspect-frame} container}
-  @argument[xalign]{a float with the x alignment of the child}
+  @argument[object]{a @class{gtk-aspect-frame} widget}
+  @argument[xalign]{a float with the x alignment of the child widget}
   @begin{short}
     Accessor of the @slot[gtk-aspect-frame]{xalign} slot of the
     @class{gtk-aspect-frame} class.
   @end{short}
 
-  The x alignment of the child in the aspect frame container.
+  The x alignment of the child widget in the aspect frame container.
   @see-class{gtk-aspect-frame}")
 
 ;;; --- gtk-aspect-frame-yalign ------------------------------------------------
@@ -203,17 +204,17 @@
 (setf (gethash 'gtk-aspect-frame-yalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-aspect-frame-yalign 'function)
- "@version{2020-4-30}
+ "@version{2021-12-17}
   @syntax[]{(gtk-aspect-frame-yalign object) => yalign}
   @syntax[]{(setf (gtk-aspect-frame-yalign object) yalign)}
-  @argument[object]{a @class{gtk-aspect-frame} container}
-  @argument[yalign]{a float with the y alignment of the child}
+  @argument[object]{a @class{gtk-aspect-frame} widget}
+  @argument[yalign]{a float with the y alignment of the child widget}
   @begin{short}
     Accessor of the @slot[gtk-aspect-frame]{yalign} slot of the
     @class{gtk-aspect-frame} class.
   @end{short}
 
-  The y alignment of the child in the aspect frame container.
+  The y alignment of the child widget in the aspect frame container.
   @see-class{gtk-aspect-frame}")
 
 ;;; ----------------------------------------------------------------------------
@@ -224,7 +225,7 @@
 
 (defun gtk-aspect-frame-new (label xalign yalign ratio obey-child)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-30}
+ "@version{2021-12-17}
   @argument[label]{a string with the label text}
   @argument[xalign]{a float with the horizontal alignment of the child within
     the allocation of the aspect frame, this ranges from 0.0 (left aligned) to
@@ -235,7 +236,7 @@
   @argument[ratio]{a float with the desired aspect ratio}
   @argument[obey-child]{if @em{true}, @arg{ratio} is ignored, and the aspect
     ratio is taken from the requistion of the child}
-  @return{The new @class{gtk-aspect-frame} container.}
+  @return{The new @class{gtk-aspect-frame} widget.}
   @begin{short}
     Create a new aspect frame container.
   @end{short}
@@ -253,10 +254,10 @@
 ;;; gtk_aspect_frame_set ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-aspect-frame-set (aspect-frame xalign yalign ratio obey-child)
+(defun gtk-aspect-frame-set (frame xalign yalign ratio obey-child)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-30}
-  @argument[aspect-frame]{a @class{gtk-aspect-frame} container}
+ "@version{2021-12-17}
+  @argument[frame]{a @class{gtk-aspect-frame} widget}
   @argument[xalign]{a float with the horizontal alignment of the child within
     the allocation of the aspect frame container, this ranges from 0.0
     (left aligned) to 1.0 (right aligned)}
@@ -267,13 +268,13 @@
   @argument[obey-child]{if @em{true}, @arg{ratio} is ignored, and the aspect
     ratio is taken from the requistion of the child}
   @begin{short}
-    Set parameters for an existing aspect frame container.
+    Set parameters for an existing aspect frame.
   @end{short}
   @see-class{gtk-aspect-frame}"
-  (setf (gtk-aspect-frame-xalign aspect-frame) xalign
-        (gtk-aspect-frame-yalign aspect-frame) yalign
-        (gtk-aspect-frame-ratio aspect-frame) ratio
-        (gtk-aspect-frame-obey-child aspect-frame) obey-child))
+  (setf (gtk-aspect-frame-xalign frame) xalign
+        (gtk-aspect-frame-yalign frame) yalign
+        (gtk-aspect-frame-ratio frame) ratio
+        (gtk-aspect-frame-obey-child frame) obey-child))
 
 (export 'gtk-aspect-frame-set)
 
