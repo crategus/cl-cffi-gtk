@@ -118,7 +118,7 @@
 (setf (documentation (atdoc:get-slot-from-name "obey-child"
                                                'gtk-aspect-frame) 't)
  "The @code{obey-child} property of type @code{:boolean} (Read / Write) @br{}
-  Force aspect ratio to match that of the frame's child. @br{}
+  Force aspect ratio to match that of the child widget of the aspect frame.@br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -135,7 +135,8 @@
     @class{gtk-aspect-frame} class.
   @end{short}
 
-  WHether to force the aspect ratio to match that of the frame's child.
+  WHether to force the aspect ratio to match that of the child widget of the
+  aspect frame.
   @see-class{gtk-aspect-frame}")
 
 ;;; --- gtk-aspect-frame-ratio -------------------------------------------------

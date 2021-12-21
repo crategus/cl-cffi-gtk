@@ -227,28 +227,28 @@
   and @fun{gtk-notebook-popup-disable} functions.
   @begin[GtkNotebook as GtkBuildable]{dictionary}
     The @sym{gtk-notebook} implementation of the @class{gtk-buildable}
-    interface supports placing children into tabs by specifying \"tab\" as the
-    \"type\" attribute of a @code{<child>} element. Note that the content of the
-    tab must be created before the tab can be filled. A tab child can be
-    specified without specifying a @code{<child>} type attribute. To add a child
-    widget in the notebooks action area, specify @code{\"action-start\"} or
-    @code{\"action-end\"} as the @code{\"type\"} attribute of the @code{<child>}
-    element.
+    interface supports placing children into tabs by specifying @code{\"tab\"}
+    as the @code{\"type\"} attribute of a @code{<child>} element. Note that the
+    content of the tab must be created before the tab can be filled. A tab child
+    can be specified without specifying a @code{<child>} type attribute. To add
+    a child widget in the notebooks action area, specify @code{\"action-start\"}
+    or @code{\"action-end\"} as the @code{\"type\"} attribute of the
+    @code{<child>} element.
 
     @b{Example:} A UI definition fragment with the @sym{gtk-notebook} widget
     @begin{pre}
- <object class=\"GtkNotebook\">
-   <child>
-     <object class=\"GtkLabel\" id=\"notebook-content\">
-       <property name=\"label\">Content</property>
-     </object>
-   </child>
-   <child type=\"tab\">
-     <object class=\"GtkLabel\" id=\"notebook-tab\">
-       <property name=\"label\">Tab</property>
-     </object>
-   </child>
- </object>
+<object class=\"GtkNotebook\">
+  <child>
+    <object class=\"GtkLabel\" id=\"notebook-content\">
+      <property name=\"label\">Content</property>
+    </object>
+  </child>
+  <child type=\"tab\">
+    <object class=\"GtkLabel\" id=\"notebook-tab\">
+      <property name=\"label\">Tab</property>
+    </object>
+  </child>
+</object>
     @end{pre}
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
@@ -383,10 +383,7 @@
       @begin[has-tab-gap]{entry}
         The @code{has-tab-gap} style property of type @code{:boolean} (Read)
         @br{}
-        Defines whether the active tab is draw with a gap at the bottom. When
-        @em{true} the theme engine uses the @fun{gtk-render-extension} function
-        to draw the active tab. When @em{false} the @fun{gtk-render-background}
-        and @fun{gtk-render-frame} functions are used. @br{}
+        Defines whether the active tab is draw with a gap at the bottom. @br{}
         @em{Warning:} The @code{has-tab-gap} style property has been deprecated
         since version 3.20 and should not be used in newly written code. This
         function always behaves as if it was set to @em{false}. @br{}
@@ -1759,25 +1756,25 @@
     GtkWidget** pointing to the child widget that corresponds to the dropped
     tab.
     @begin{pre}
- static void
- on_drop_zone_drag_data_received (GtkWidget        *widget,
-                                  GdkDragContext   *context,
-                                  gint              x,
-                                  gint              y,
-                                  GtkSelectionData *selection_data,
-                                  guint             info,
-                                  guint             time,
-                                  gpointer          user_data)
- {
-   GtkWidget *notebook;
-   GtkWidget **child;
+static void
+on_drop_zone_drag_data_received (GtkWidget        *widget,
+                                 GdkDragContext   *context,
+                                 gint              x,
+                                 gint              y,
+                                 GtkSelectionData *selection_data,
+                                 guint             info,
+                                 guint             time,
+                                 gpointer          user_data)
+{
+  GtkWidget *notebook;
+  GtkWidget **child;
 
-   notebook = gtk_drag_get_source_widget (context);
-   child = (void*) gtk_selection_data_get_data (selection_data);
+  notebook = gtk_drag_get_source_widget (context);
+  child = (void*) gtk_selection_data_get_data (selection_data);
 
-   process_widget (*child);
-   gtk_container_remove (GTK_CONTAINER (notebook), *child);
- @}
+  process_widget (*child);
+  gtk_container_remove (GTK_CONTAINER (notebook), *child);
+@}
     @end{pre}
     If you want a notebook to accept drags from other widgets, you will have to
     set your own DnD code to do it.

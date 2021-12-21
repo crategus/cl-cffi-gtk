@@ -234,8 +234,7 @@
   @see-slot{gtk-expander-spacing}
   @see-slot{gtk-expander-use-markup}
   @see-slot{gtk-expander-use-underline}
-  @see-class{gtk-bin}
-  @see-class{gtk-tree-view}")
+  @see-class{gtk-bin}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -264,7 +263,7 @@
     @class{gtk-expander} class.
   @end{short}
 
-  The slot access function @sym{gtk-expander-expanded} queries a
+  The @sym{gtk-expander-expanded} slot access function queries a
   @class{gtk-expander} widget and returns its current state. Set to
   @em{true}, if you want the child widget to be revealed, and @em{false} if you
   want the child widget to be hidden.
@@ -287,7 +286,7 @@
   @syntax[]{(gtk-expander-label object) => label}
   @syntax[]{(setf (gtk-expander-label object) label)}
   @argument[object]{a @class{gtk-expander} widget}
-  @argument[label]{a string with the text of the expander's label}
+  @argument[label]{a string with the text of the label of the expander}
   @begin{short}
     Accessor of the @slot[gtk-expander]{label} slot of the @class{gtk-expander}
     class.
@@ -424,8 +423,7 @@
 
   The @sym{gtk-expander-spacing} slot access function returns the spacing
   between the expander and child widget. The @sym{(setf gtk-expander-spacing)}
-  slot access function sets the spacing field of the expander, which is the
-  number of pixels to place between the expander and the child widget.
+  slot access function sets the spacing field of the expander.
   @begin[Warning]{dictionary}
     The @sym{gtk-expander-spacing} function has been deprecated since version
     3.20 and should not be used in newly written code. Use margins on the child
@@ -450,7 +448,7 @@
   @syntax[]{(gtk-expander-use-markup object) => use-markup}
   @syntax[]{(setf (gtk-expander-use-markup object) use-markup)}
   @argument[object]{a @class{gtk-expander} widget}
-  @argument[use-markup]{@em{true} if the label's text should be parsed for
+  @argument[use-markup]{@em{true} if the text of the label should be parsed for
     markup}
   @begin{short}
     Accessor of the @slot[gtk-expander]{use-markup} slot of the
@@ -460,8 +458,7 @@
   The @sym{gtk-expander-use-markup} slot access function returns whether the
   text of the label is interpreted as marked up with the Pango text markup
   language. The @sym{(setf gtk-expander-use-markup)} slot access function sets
-  whether the text of the label contains markup in the text markup language of
-  Pango.
+  whether the text of the label contains markup.
   @see-class{gtk-expander}
   @see-function{gtk-label-set-markup}")
 
@@ -535,10 +532,11 @@
     Creates a new expander using @arg{label} as the text of the label.
   @end{short}
 
-  If characters in label are preceded by an underscore, they are underlined. If
-  you need a literal underscore character in a label, use two underscores '__'.
-  The first underlined character represents a keyboard accelerator called a
-  mnemonic. Pressing Alt and that key activates the button.
+  If characters in @arg{label} are preceded by an underscore, they are
+  underlined. If you need a literal underscore character in a label, use two
+  underscores '__'. The first underlined character represents a keyboard
+  accelerator called a mnemonic. Pressing @kbd{Alt} and that key activates the
+  button.
   @see-class{gtk-expander}
   @see-function{gtk-expander-new}"
   (make-instance 'gtk-expander

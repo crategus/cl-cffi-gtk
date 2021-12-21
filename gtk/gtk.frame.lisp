@@ -140,15 +140,15 @@
  ├── <label widget>
  ╰── <child>
     @end{pre}
-    The @sym{gtk-frame} widget has a main CSS node named @code{frame} and a
-    subnode named @code{border}. The @code{border} node is used to draw the
-    visible border. You can set the appearance of the border using CSS
+    The @sym{gtk-frame} implementation has a main CSS node named @code{frame}
+    and a subnode named @code{border}. The @code{border} node is used to draw
+    the visible border. You can set the appearance of the border using CSS
     properties like @code{border-style} on the @code{border} node.
 
-    The @code{border} node can be given the style class @code{.flat}, which is
+    The @code{border} node can be given the @code{.flat} style class, which is
     used by themes to disable drawing of the border. To do this from code, call
-    the function @fun{gtk-frame-shadow-type} with @code{:none} to add the
-    @code{.flat} class or any other shadow type to remove it.
+    the @fun{gtk-frame-shadow-type} function with the @code{:none} value to add
+    the @code{.flat} style class or any other shadow type to remove it.
   @end{dictionary}
   @see-slot{gtk-frame-label}
   @see-slot{gtk-frame-label-widget}
