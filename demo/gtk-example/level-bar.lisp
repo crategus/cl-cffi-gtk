@@ -31,11 +31,12 @@
     ;; Return the new level bar
     levelbar))
 
-(defun example-level-bar ()
+(defun example-level-bar (&optional application)
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :title "Example Level bar"
+                                  :application application
                                   :border-width 12
                                   :default-width 420
                                   :default-height 240))

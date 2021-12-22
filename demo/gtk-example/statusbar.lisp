@@ -1,12 +1,13 @@
-;;;; Example Statusbar (2021-5-28)
+;;;; Example Statusbar - 2021-12-22
 
 (in-package :gtk-example)
 
-(defun example-statusbar ()
+(defun example-statusbar (&optional application)
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :title "Example Statusbar"
+                                  :application application
                                   :default-width 300
                                   :border-width 12))
            (vbox (make-instance 'gtk-box

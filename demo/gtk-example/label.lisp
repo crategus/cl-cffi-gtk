@@ -1,4 +1,4 @@
-;;;; Example Labels (2021-5-21)
+;;;; Example Labels - 2021-12-21
 
 (in-package :gtk-example)
 
@@ -40,10 +40,11 @@ Maecenas sagittis auctor leo a dictum. Sed at auctor."))
                  :use-markup t
                  :label (format nil "<b>~A</b>" text)))
 
-(defun example-label ()
+(defun example-label (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
+                                 :application application
                                  :title "Example Labels"
                                  :default-width 250
                                  :border-width 18))

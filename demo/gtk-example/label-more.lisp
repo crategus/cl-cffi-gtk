@@ -1,11 +1,12 @@
-;;;; Example More Labels (2021-5-21)
+;;;; Example More Labels - 2021-12-21
 
 (in-package :gtk-example)
 
-(defun example-label-more ()
+(defun example-label-more (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
+                                 :application application
                                  :title "Example More Labels"
                                  :default-width 300
                                  :border-width 12))
@@ -71,7 +72,6 @@
                                          (format nil
                                          "Go to the ~
                                          <a href=\"http://gtk.org/\">~
-                                         GTK+ Website</a> for more ...")))
+                                         GTK Website</a> for more ...")))
       (gtk-container-add window vbox2)
       (gtk-widget-show-all window))))
-

@@ -1,12 +1,13 @@
-;;;; Example Info Bar (2021-5-24)
+;;;; Example Info Bar - 2021-12-22
 
 (in-package :gtk-example)
 
-(defun example-info-bar ()
+(defun example-info-bar (&optional application)
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :title "Example Info bar"
+                                  :application application
                                   :border-width 12
                                   :default-width 250))
            (grid (make-instance 'gtk-grid
@@ -24,10 +25,10 @@
       ;; Add a label to the content area of the info bar
       (gtk-container-add content message)
       ;; Add a button OK to the action area
-      (gtk-info-bar-add-button info-bar "gtk-ok" 1)
+      (gtk-info-bar-add-button info-bar "Ok" 1)
       ;; Add two more buttons to the action area
-      (gtk-info-bar-add-buttons info-bar "gtk-cancel" 2
-                                         "gtk-no" 3)
+      (gtk-info-bar-add-buttons info-bar "Cancel" 2
+                                         "No" 3)
       ;; Connect a handler for the "response" signal of the info bar
       (g-signal-connect info-bar "response"
          (lambda (widget response-id)

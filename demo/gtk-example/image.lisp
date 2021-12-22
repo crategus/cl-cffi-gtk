@@ -1,4 +1,4 @@
-;;;; Example Image Widgets (2021-5-23)
+;;;; Example Image Widgets - 2021-12-21
 ;;;;
 ;;;; GtkImage is used to display an image. The image can be in a number of
 ;;;; formats. Typically, you load an image into a GdkPixbuf, then display the
@@ -53,18 +53,18 @@
     ;; Continue the GSource
     +g-source-continue+)
 
-  (defun example-image ()
+  (defun example-image (&optional application)
     (within-main-loop
       (let* ((timeout nil)
              (window (make-instance 'gtk-window
                                     :type :toplevel
+                                    :application application
                                     :title "Example Image Widgets"
                                     :default-width 320
                                     :border-width 12))
              (vgrid (make-instance 'gtk-grid
                                    :orientation :vertical
                                    :row-spacing 6)))
-
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
@@ -81,7 +81,6 @@
                               (close image-stream)
                               (setf image-stream nil))
                             (leave-gtk-main)))
-
         ;; Image loaded from a file
         (let* ((label (make-instance 'gtk-label
                                      :margin-top 9
@@ -93,7 +92,6 @@
                (image (gtk-image-new-from-pixbuf pixbuf)))
           (gtk-container-add vgrid label)
           (gtk-container-add vgrid image))
-
         ;; Animation loaded from a file
         (let* ((label (make-instance 'gtk-label
                                      :margin-top 9
@@ -104,7 +102,6 @@
                (image (gtk-image-new-from-file (sys-path "spinner.gif"))))
           (gtk-container-add vgrid label)
           (gtk-container-add vgrid image))
-
         ;; Symbolic icon
         (let* ((label (make-instance 'gtk-label
                                      :margin-top 9
@@ -117,7 +114,6 @@
                (image (gtk-image-new-from-gicon gicon :dialog)))
           (gtk-container-add vgrid label)
           (gtk-container-add vgrid image))
-
         ;; Progressive loading
         (let* ((label (make-instance 'gtk-label
                                      :margin-top 18
@@ -126,7 +122,7 @@
                                      :label
                                      (format nil
                                              "<b>Progressive image loading</b>~
-                                              ~%Click to repeat loading")))
+                                             ~%Click Image to repeat loading")))
                (frame (make-instance 'gtk-frame
                                      :shadow-type :none
                                      :width-request 340
@@ -135,15 +131,13 @@
                ;; Create an empty image for now. The progressive loader will
                ;; create the pixbuf and fill it in.
                (image (gtk-image-new-from-pixbuf nil)))
-
           ;; This is obviously totally contrived (we slow down loading on
           ;; purpose to show how incremental loading works). The real purpose
           ;; of incremental loading is the case where you are reading data from
           ;; a slow source such as the network. The timeout simply simulates a
           ;; slow data source by inserting pauses in the reading process.
           (setf timeout
-                (g-timeout-add 100 (lambda () (progressive-timeout image))))
-
+                (g-timeout-add 50 (lambda () (progressive-timeout image))))
           ;; Restart loading the image from the file
           (g-signal-connect event-box "button-press-event"
              (lambda (widget event)
@@ -151,6 +145,7 @@
                (format t "Event Box clicked at (~,2f, ~,2f)~%"
                          (gdk-event-button-x event)
                          (gdk-event-button-y event))
+               (gtk-image-clear image)
                (setf timeout
                      (g-timeout-add 100
                                     (lambda () (progressive-timeout image))))))
@@ -158,6 +153,5 @@
           (gtk-container-add event-box image)
           (gtk-container-add frame event-box)
           (gtk-container-add vgrid frame))
-
         (gtk-container-add window vgrid)
         (gtk-widget-show-all window)))))
