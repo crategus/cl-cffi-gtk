@@ -85,7 +85,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-label 'type)
- "@version{2021-11-13}
+ "@version{*2021-12-22}
   @begin{short}
     The @sym{gtk-accel-label} widget is a subclass of the @class{gtk-label}
     class that also displays an accelerator key on the right of the label text,
@@ -193,7 +193,7 @@
 (setf (gethash 'gtk-accel-label-accel-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-label-accel-widget 'function)
- "@version{2021-11-13}
+ "@version{*2021-11-22}
   @syntax[]{(gtk-accel-label-accel-widget object) => widget}
   @syntax[]{(setf (gtk-accel-label-accel-widget object) widget)}
   @argument[label]{a @class{gtk-accel-label} widget}

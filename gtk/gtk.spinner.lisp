@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.spinner.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2020 Dieter Kaiser
+;;; Copyright (C) 2012 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -70,19 +70,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-spinner 'type)
- "@version{2020-4-17}
+ "@version{2021-12-22}
   @begin{short}
     A @sym{gtk-spinner} widget displays an icon size spinning animation.
   @end{short}
   It is often used as an alternative to a @class{gtk-progress-bar} widget for
   displaying indefinite activity, instead of actual progress.
 
-  To start the animation, use the function @fun{gtk-spinner-start}, to stop it
-  use the function @fun{gtk-spinner-stop}.
+  To start the animation, use the @fun{gtk-spinner-start} function, to stop it
+  use the @fun{gtk-spinner-stop} function.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-spinner} has a single CSS node with the name @code{spinner}. When
-    the animation is active, the @code{:checked} pseudoclass is added to this
-    node.
+    The @sym{gtk-spinner} implementation has a single CSS node with the name
+    @code{spinner}. When the animation is active, the @code{:checked}
+    pseudoclass is added to this node.
   @end{dictionary}
   @see-slot{gtk-spinner-active}
   @see-class{gtk-cell-renderer-spinner}
@@ -101,9 +101,10 @@
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-spinner-active atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-spinner-active atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-spinner-active 'function)
- "@version{2020-4-17}
+ "@version{2021-12-22}
   @syntax[]{(gtk-spinner-active object) => active}
   @syntax[]{(setf (gtk-spinner-active object) active)}
   @argument[object]{a @class{gtk-spinner} widget}
@@ -122,9 +123,9 @@
 
 (defun gtk-spinner-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{*2021-12-22}
   @return{A new @class{gtk-spinner} widget.}
-  @short{Returns a new spinner widget. Not yet started.}
+  @short{Returns a new spinner. Not yet started.}
   @see-class{gtk-spinner}
   @see-class{gtk-spinner-start}"
   (make-instance 'gtk-spinner))
@@ -137,7 +138,7 @@
 
 (defcfun ("gtk_spinner_start" gtk-spinner-start) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{*2021-12-22}
   @argument[spinner]{a @class{gtk-spinner} widget}
   @short{Starts the animation of the spinner.}
   @see-class{gtk-spinner}
@@ -152,7 +153,7 @@
 
 (defcfun ("gtk_spinner_stop" gtk-spinner-stop) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{*2021-12-22}
   @argument[spinner]{a @class{gtk-spinner} widget}
   @short{Stops the animation of the spinner.}
   @see-class{gtk-spinner}

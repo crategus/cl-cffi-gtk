@@ -156,11 +156,11 @@
     @code{progressbar} and subnodes with names @code{text} and @code{trough},
     of which the latter has a subnode named @code{progress}. The @code{text}
     subnode is only present if text is shown. The @code{progress} subnode has
-    the style @code{.pulse} class when in activity mode. It gets the
+    the @code{.pulse} style class when in activity mode. It gets the
     @code{.left}, @code{.right}, @code{.top} or @code{.bottom} style classes
     added when the progress 'touches' the corresponding end of the progress bar.
-    The @code{.osd} class on the progressbar node is for use in overlays like
-    the one Epiphany has for page loading progress.
+    The @code{.osd} style class on the progressbar node is for use in overlays
+    like the one Epiphany has for page loading progress.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}

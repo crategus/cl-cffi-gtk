@@ -370,9 +370,9 @@
     @end{pre}
     The @sym{gtk-label} implementation has a single CSS node with the name
     @code{label}. A wide variety of style classes may be applied to labels, such
-    as @code{.title}, @code{.subtitle}, @code{.dim-label}. In the
-    @class{gtk-shortcuts-window} widget, labels are used wth the @code{.keycap}
-    style class.
+    as the @code{.title}, @code{.subtitle}, @code{.dim-label} style classes. In
+    the @class{gtk-shortcuts-window} widget, labels are used wth the
+    @code{.keycap} style class.
 
     If the label has a selection, it gets a subnode with name @code{selection}.
 
@@ -418,13 +418,13 @@
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (entry step count extend)    :action
+ lambda (label step count extend)    :action
       @end{pre}
       The signal is a keybinding signal which gets emitted when the user
-      initiates a cursor movement. If the cursor is not visible in entry, this
-      signal causes the viewport to be moved instead. Applications should not
-      connect to it, but may emit it with the @fun{g-signal-emit} function if
-      they need to control the cursor programmatically. The default bindings
+      initiates a cursor movement. If the cursor is not visible in the label,
+      this signal causes the viewport to be moved instead. Applications should
+      not connect to it, but may emit it with the @fun{g-signal-emit} function
+      if they need to control the cursor programmatically. The default bindings
       for this signal come in two variants, the variant with the @kbd{Shift}
       modifier extends the selection, the variant without the @kbd{Shift}
       modifer does not. There are too many key combinations to list them all
@@ -435,7 +435,7 @@
         @item{@kbd{Home}/@kbd{End} keys move to the ends of the buffer.}
       @end{itemize}
       @begin[code]{table}
-        @entry[entry]{The @sym{gtk-label} widget which received the signal.}
+        @entry[label]{The @sym{gtk-label} widget which received the signal.}
         @entry[step]{The granularity of the move, as a value of the
           @symbol{gtk-movement-step} enumeration.}
         @entry[count]{An integer with the number of step units to move.}
@@ -757,8 +757,7 @@
   @syntax[]{(gtk-label-max-width-chars object) => n-chars}
   @syntax[]{(setf (gtk-label-max-width-chars object) n-chars)}
   @argument[object]{a @class{gtk-label} widget}
-  @argument[n-chars]{an integer with the new desired maximum width, in
-    characters}
+  @argument[n-chars]{an integer with the desired maximum width, in characters}
   @begin{short}
     Accessor of the @slot[gtk-label]{max-width-chars} slot of the
     @class{gtk-label} class.
@@ -940,10 +939,10 @@
  "The @code{single-line-mode} property of type  @code{:boolean} (Read / Write)
   @br{}
   Whether the label is in single line mode. In single line mode, the height
-  of the label does not depend on the actual text, it is always set to ascent
-  + descent of the font. This can be an advantage in situations where resizing
-  the label because of text changes would be distracting, e.g. in a
-  statusbar. @br{}
+  of the label does not depend on the actual text, it is always set to the
+  @code{(ascent + descent)} value of the font. This can be an advantage in
+  situations where resizing the label because of text changes would be
+  distracting, e.g. in a statusbar. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -1011,7 +1010,7 @@
 (setf (gethash 'gtk-label-use-markup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-label-use-markup 'function)
- "@version{2021-10-31}
+ "@version{*2021-12-3}
   @syntax[]{(gtk-label-use-markup object) => setting}
   @syntax[]{(setf (gtk-label-use-markup object) setting)}
   @argument[object]{a @class{gtk-label} widget}
@@ -1025,10 +1024,8 @@
   The @sym{gtk-label-use-markup} slot access function returns whether the
   text of the label is interpreted as marked up with the Pango text markup
   language. The @sym{(setf gtk-label-use-markup)} slot access function sets
-  whether the text of the label contains markup in the Pango text markup
-  language.
-
-  See the @fun{gtk-label-set-markup} function.
+  whether the text of the label contains markup. See the
+  @fun{gtk-label-set-markup} function.
   @see-class{gtk-label}
   @see-function{gtk-label-set-markup}")
 
@@ -1219,7 +1216,7 @@
 
 (defun gtk-label-new (text)
  #+cl-cffi-gtk-documentation
- "@version{2021-10-31}
+ "@version{*2021-12-22}
   @argument[text]{a string with the text of the label}
   @return{The new @class{gtk-label} widget.}
   @begin{short}
@@ -1459,12 +1456,12 @@
 (defcfun ("gtk_label_new_with_mnemonic" gtk-label-new-with-mnemonic)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-5-31}
+ "@version{*2021-12-22}
   @argument[text]{a string with the text of the label, with an underscore in
     front of the mnemonic character}
   @return{The new @class{gtk-label} widget.}
   @begin{short}
-    Creates a new @class{gtk-label} widget, containing the text in @arg{text}.
+    Creates a new @class{gtk-label} widget, containing the given.
   @end{short}
 
   If characters in @arg{text} are preceded by an underscore, they are

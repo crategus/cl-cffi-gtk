@@ -112,9 +112,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-surface atdoc:*class-name-alias*)
-      "CStruct"
+      "GBoxed"
       (documentation 'cairo-surface 'type)
- "@version{2021-4-5}
+ "@version{2021-12-17}
   @begin{short}
     The @sym{cairo-surface} structure represents a Cairo surface in GTK.
   @end{short}
@@ -145,17 +145,18 @@
   (:surface 7))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-image-type atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-image-type atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-image-type atdoc:*external-symbols*)
- "@version{2020-4-16}
+ "@version{2020-12-17}
   @begin{short}
-    Describes the image data representation used by a @class{gtk-image}.
+    Describes the image data representation used by a @class{gtk-image} widget.
   @end{short}
   If you want to get the image from the widget, you can only get the
-  currently stored representation. e.g. if the slot access function
-  @fun{gtk-image-storage-type} returns @code{:pixbuf}, then you can call the
-  function @fun{gtk-image-pixbuf} but not @fun{gtk-image-stock}. For empty
-  images, you can request any storage type, but they will all return
+  currently stored representation. e.g. if the @fun{gtk-image-storage-type}
+  slot access function returns the @code{:pixbuf} value, then you can call the
+  @fun{gtk-image-pixbuf} function but not the @fun{gtk-image-stock} function.
+  For empty images, you can request any storage type, but they will all return
   @code{nil} values.
   @begin{pre}
 (define-g-enum \"GtkImageType\" gtk-image-type
@@ -244,7 +245,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-image 'type)
- "@version{*2021-2-4}
+ "@version{*2021-12-17}
   @begin{short}
     The @sym{gtk-image} widget displays an image.
   @end{short}
@@ -253,40 +254,34 @@
 
   @image[image]{}
 
-  There is a convenience function @fun{gtk-image-new-from-file} to do this,
+  There is a convenience @fun{gtk-image-new-from-file} function  to do this,
   used as follows:
   @begin{pre}
- (let ((image (gtk-image-new-from-file \"myfile.png\")))
-   ... )
+(let ((image (gtk-image-new-from-file \"myfile.png\")))
+  ... )
   @end{pre}
   If the file is not loaded successfully, the image will contain a
   \"broken image\" icon similar to that used in many web browsers. If you want
   to handle errors in loading the file yourself, for example by displaying an
-  error message, then load the image with the function
-  @fun{gdk-pixbuf-new-from-file}, then create the @sym{gtk-image} widget with
-  the function @fun{gtk-image-new-from-pixbuf}.
+  error message, then load the image with the @fun{gdk-pixbuf-new-from-file}
+  function, then create the @sym{gtk-image} widget with the
+  @fun{gtk-image-new-from-pixbuf} function.
 
   The image file may contain an animation, if so the @sym{gtk-image} widget
-  will display a @class{gdk-pixbuf-animation} animation instead of a static
+  will display a @class{gdk-pixbuf-animation} object instead of a static
   image.
 
-  The @sym{gtk-image} widget is a subclass of the @class{gtk-misc} widget,
-  which implies that you can align it (center, left, right) and add padding to
-  it, using the @class{gtk-misc} methods.
+  The @sym{gtk-image} class is a subclass of the @class{gtk-misc} class, which
+  implies that you can align it (center, left, right) and add padding to it,
+  using the @class{gtk-misc} methods.
 
-  The @sym{gtk-image} widget is a \"no window\" widget (has no
-  @class{gdk-window} object of its own), so by default does not receive events.
-  If you want to receive events on the image, such as button clicks, place the
-  image inside a @class{gtk-event-box} widget, then connect to the event
-  signals on the event box.
-
-  Sometimes an application will want to avoid depending on external data files,
-  such as image files. GTK comes with a program to avoid this, called
-  @code{gdk-pixbuf-csource}. This library allows you to convert an image into a
-  C variable declaration, which can then be loaded into a @class{gdk-pixbuf}
-  object using the function @fun{gdk-pixbuf-new-from-inline}.
+  The @sym{gtk-image} widget is a \"no window\" widget (has no GDK window of
+  its own), so by default does not receive events. If you want to receive events
+  on the image, such as button clicks, place the image inside a
+  @class{gtk-event-box} widget, then connect to the event signals on the event
+  box.
   @begin[Example]{dictionary}
-    Handling button press events on a @sym{gtk-image}.
+    Handling button press events on a @sym{gtk-image} widget.
     @begin{pre}
 (defun create-image ()
   (let ((image (gtk-image-new-from-file (rel-path \"ducky.png\")))
@@ -314,9 +309,9 @@
     origin of the event box.
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-image} widget has a single CSS node with the name @code{image}.
-    The style classes may appear on image CSS nodes:
-    @code{.icon-dropshadow}, @code{.lowres-icon}.
+    The @sym{gtk-image} implementation has a single CSS node with the name
+    @code{image}. The @code{.icon-dropshadow} and @code{.lowres-icon} style
+    classes may appear on @code{image} CSS nodes.
   @end{dictionary}
   @see-slot{gtk-image-file}
   @see-slot{gtk-image-gicon}
@@ -341,7 +336,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "file" 'gtk-image) 't)
- "The @code{file} property of type @code{g-string} (Read / Write) @br{}
+ "The @code{file} property of type @code{:string} (Read / Write) @br{}
   The name of the file to load and display. @br{}
   Default value: @code{nil}")
 
@@ -349,7 +344,7 @@
 (setf (gethash 'gtk-image-file atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-file 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-file object) => filename}
   @syntax[]{(setf (gtk-image-file object) filename)}
   @argument[object]{a @class{gtk-image} widget}
@@ -373,11 +368,11 @@
 (setf (gethash 'gtk-image-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-gicon 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-gicon object) => gicon}
   @syntax[]{(setf (gtk-image-gicon object) gicon)}
   @argument[object]{a @class{gtk-image} widget}
-  @argument[gicon]{a icon of type @class{g-icon}}
+  @argument[gicon]{a @class{g-icon} icon}
   @begin{short}
     Accessor of the @slot[gtk-image]{gicon} slot of the @class{gtk-image} class.
   @end{short}
@@ -392,7 +387,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-image) 't)
- "The @code{icon-name} property of type @code{g-string} (Read / Write) @br{}
+ "The @code{icon-name} property of type @code{:string} (Read / Write) @br{}
   The name of the icon in the icon theme. If the icon theme is changed, the
   image will be updated automatically. @br{}
   Default value: @code{nil}")
@@ -401,7 +396,7 @@
 (setf (gethash 'gtk-image-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-icon-name 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-image-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-image} widget}
@@ -423,18 +418,18 @@
  "The @code{icon-set} property of type @class{gtk-icon-set} (Read / Write) @br{}
   The icon set to display. @br{}
   @em{Warning:} The @code{icon-set} poperty has been deprecated since version
-  3.10 and should not be used in newly-written code. Use the
+  3.10 and should not be used in newly written code. Use the
   @code{icon-name} property instead.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-icon-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-icon-set 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-icon-set object) => icon-set}
   @syntax[]{(setf (gtk-image-icon-set object) icon-set)}
   @argument[object]{a @class{gtk-image} widget}
-  @argument[icon-set]{a icon set of type @class{gtk-icon-set}}
+  @argument[icon-set]{an icon set of type @class{gtk-icon-set}}
   @begin{short}
     Accessor of the @slot[gtk-image]{icon-set} slot of the @class{gtk-image}
     class.
@@ -442,13 +437,12 @@
 
   The icon set to display.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-image-icon-set} has been deprecated since version
-    3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-image-icon-name} instead.
+    The @sym{gtk-image-icon-set} function has been deprecated since version
+    3.10 and should not be used in newly written code. Use the
+    @fun{gtk-image-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-image}
-  @see-function{gtk-image-icon-name}
-  @see-function{gtk-image-get-icon-set}")
+  @see-function{gtk-image-icon-name}")
 
 ;;; --- gtk-image-icon-size ----------------------------------------------------
 
@@ -463,7 +457,7 @@
 (setf (gethash 'gtk-image-icon-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-icon-size 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-icon-size object) => icon-size}
   @syntax[]{(setf (gtk-image-icon-size object) icon-size)}
   @argument[object]{a @class{gtk-image} widget}
@@ -476,8 +470,8 @@
   Symbolic size to use for a stock icon, icon set or named icon.
   @begin[Note]{dictionary}
     In C the @code{icon-size} property is implemented as an integer type.
-    Therefore the accessor @sym{gtk-image-icon-size} returns an integer value
-    and not an keyword value of the @symbol{gtk-icon-size} enumeration.
+    Therefore the @sym{gtk-image-icon-size} accessor returns an integer value
+    and not a keyword value of the @symbol{gtk-icon-size} enumeration.
   @end{dictionary}
   @see-class{gtk-image}")
 
@@ -492,7 +486,7 @@
 (setf (gethash 'gtk-image-pixbuf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-pixbuf 'function)
- "@version{*2021-5-23}
+ "@version{*2021-12-17}
   @syntax[]{(gtk-image-pixbuf object) => pixbuf}
   @syntax[]{(setf (gtk-image-pixbuf object) pixbuf)}
   @argument[object]{a @class{gtk-image} widget}
@@ -502,12 +496,12 @@
     class.
   @end{short}
 
-  The slot access function @sym{gtk-image-pixbuf} gets the pixbuf being
-  displayed by the image. The slot access function @sym{(setf gtk-image-pixbuf)}
+  The @sym{gtk-image-pixbuf} slot access function gets the pixbuf being
+  displayed by the image. The @sym{(setf gtk-image-pixbuf)} slot access function
   sets the pixbuf.
 
   The @symbol{gtk-image-type} storage type of the image must be @code{:empty}
-  or @code{:pixbuf}, see the function @fun{gtk-image-storage-type}.
+  or @code{:pixbuf}, see the @fun{gtk-image-storage-type} function.
   @see-class{gtk-image}
   @see-class{gdk-pixbuf}
   @see-symbol{gtk-image-type}
@@ -526,7 +520,7 @@
 (setf (gethash 'gtk-image-pixbuf-animation atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-pixbuf-animation 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-pixbuf-animation object) => animation}
   @syntax[]{(setf (gtk-image-pixbuf-animation object) animation)}
   @argument[object]{a @class{gtk-image} widget}
@@ -544,7 +538,7 @@
 (setf (documentation (atdoc:get-slot-from-name "pixel-size" 'gtk-image) 't)
  "The @code{pixel-size} property of type @code{:int} (Read / Write) @br{}
   Can be used to specify a fixed size overriding the @code{icon-size} property
-  for images of type @code{:icon-name}. @br{}
+  for images of @code{:icon-name} type. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
@@ -552,27 +546,28 @@
 (setf (gethash 'gtk-image-pixel-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-pixel-size 'function)
- "@version{2020-4-17}
-  @syntax[]{(gtk-image-pixel-size object) => pixel-size}
-  @syntax[]{(setf (gtk-image-pixel-size object) pixel-size)}
+ "@version{*2021-12-17}
+  @syntax[]{(gtk-image-pixel-size object) => size}
+  @syntax[]{(setf (gtk-image-pixel-size object) size)}
   @argument[object]{a @class{gtk-image} widget}
-  @argument[pixel-size]{an integer with the new pixel size}
+  @argument[size]{an integer with the new pixel size}
   @begin{short}
     Accessor of the @slot[gtk-image]{pixel-size} slot of the @class{gtk-image}
     class.
   @end{short}
 
-  The slot access function @sym{gtk-image-pixel-size} sets the pixel size used
-  for named icons. The slot access function @sym{(setf gtk-image-pixel-size)}
-  sets the pixel size to use for named icons. If the pixel size is set to a
-  value not equal to -1, it is used instead of the @code{icon-size} property.
-  @see-class{gtk-image}")
+  The @sym{gtk-image-pixel-size} slot access function sets the pixel size used
+  for named icons. The @sym{(setf gtk-image-pixel-size)} slot access function
+  sets the pixel size. If the pixel size is set to a value not equal to -1, it
+  is used instead of the @slot[gtk-image]{icon-size} property.
+  @see-class{gtk-image}
+  @see-function{gtk-image-icon-size}")
 
 ;;; --- gtk-image-resource -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "resource" 'gtk-image) 't)
- "The @code{resource} property of type @code{g-string} (Read / Write) @br{}
+ "The @code{resource} property of type @code{:string} (Read / Write) @br{}
   A path to a resource file to display. @br{}
   Default value: @code{nil}")
 
@@ -580,7 +575,7 @@
 (setf (gethash 'gtk-image-resource atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-resource 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-resource object) => path}
   @syntax[]{(setf (gtk-image-resource object) path)}
   @argument[object]{a @class{gtk-image} widget}
@@ -596,10 +591,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "stock" 'gtk-image) 't)
- "The @code{stock} property of type @code{g-string} (Read / Write) @br{}
+ "The @code{stock} property of type @code{:string} (Read / Write) @br{}
   The stock ID for a stock image to display. @br{}
   @em{Warning:} The @code{stock} property has been deprecated since version
-  3.10 and should not be used in newly-written code. Use the @code{icon-name}
+  3.10 and should not be used in newly written code. Use the @code{icon-name}
   property instead. @br{}
   Default value: @code{nil}")
 
@@ -607,7 +602,7 @@
 (setf (gethash 'gtk-image-stock atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-stock 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-stock object) => stock-id}
   @syntax[]{(setf (gtk-image-stock object) stock-id)}
   @argument[object]{a @class{gtk-image} widget}
@@ -618,12 +613,12 @@
 
   The stock ID for a stock image to display.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-image-stock} property has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the
-    function @fun{gtk-image-icon-name} instead.
+    The @sym{gtk-image-stock} function property has been deprecated since
+    version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-image-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-image}
-  @see-function{gtk-image-get-stock}")
+  @see-function{gtk-image-icon-name}")
 
 ;;; --- gtk-image-storage-type -------------------------------------------------
 
@@ -637,7 +632,7 @@
 (setf (gethash 'gtk-image-storage-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-storage-type 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-storage-type object) => type}
   @syntax[]{(setf (gtk-image-storage-type object) type)}
   @argument[object]{a @class{gtk-image} widget}
@@ -647,9 +642,9 @@
     class.
   @end{short}
 
-  The slot access function @sym{gtk-image-storage-type} gets the type of
+  The @sym{gtk-image-storage-type} slot access function gets the type of
   representation being used by the @class{gtk-image} widget to store image data.
-  The slot access function @sym{(setf gtk-image-storage-type)} sets the image
+  The @sym{(setf gtk-image-storage-type)} slot access function sets the image
   type.
 
   If the @class{gtk-image} widget has no image data, the return value will be
@@ -668,11 +663,11 @@
 (setf (gethash 'gtk-image-surface atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-surface 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-surface object) => surface}
   @syntax[]{(setf (gtk-image-surface object) surface)}
   @argument[object]{a @class{gtk-image} widget}
-  @argument[surface]{a @class{cairo-surface} structure}
+  @argument[surface]{a @class{cairo-surface} instance}
   @begin{short}
     Accessor of the @slot[gtk-image]{surface} slot of the @class{gtk-image}
     class.
@@ -686,15 +681,15 @@
 (setf (documentation (atdoc:get-slot-from-name "use-fallback" 'gtk-image) 't)
  "The @code{use-fallback} property of type @code{:boolean} (Read / Write) @br{}
   Whether the icon displayed in the image will use standard icon names fallback.
-  The value of this property is only relevant for images of type
-  @code{:icon-name} and @code{:gicon}. @br{}
+  The value of this property is only relevant for images of @code{:icon-name}
+  and @code{:gicon} type. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-use-fallback atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-use-fallback 'function)
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @syntax[]{(gtk-image-use-fallback object) => use-fallback}
   @syntax[]{(setf (gtk-image-use-fallback object) use-fallback)}
   @argument[object]{a @class{gtk-image} widget}
@@ -704,33 +699,34 @@
     class.
   @end{short}
 
-  Whether the icon displayed in the @sym{gtk-image} will use standard icon
-  names fallback. The value of this property is only relevant for images of
-  type @code{:icon-name} and @code{:gicon}.
+  Whether the icon displayed in the @sym{gtk-image} widget will use standard
+  icon names fallback. The value of this property is only relevant for images
+  of @code{:icon-name} and @code{:gicon} type.
   @see-class{gtk-image}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_image_get_icon_set ()
+;;; gtk_image_get_icon_set ()                              not exported
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-image-get-icon-set (image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @begin{return}
-    @code{icon-set} -- a @class{gtk-icon-set} structure @br{}
-    @code{icon-size} -- a icon size of type @symbol{gtk-icon-size}
+    @arg{icon-set} -- a @class{gtk-icon-set} structure @br{}
+    @arg{icon-size} -- an icon size of type @symbol{gtk-icon-size}
   @end{return}
   @begin{short}
-    Gets the icon set and icon size being displayed by the @class{gtk-image}.
+    Gets the icon set and icon size being displayed by the @class{gtk-image}
+    widget.
   @end{short}
 
-  The storage type of the image must be @code{:empty} or @code{:icon-set}. See
-  the function @fun{gtk-image-storage-type}.
+  The storage type of the image must be the @code{:empty} or @code{:icon-set}
+  type. See the @fun{gtk-image-storage-type} function.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-image-get-icon-set} has been deprecated since version
-    3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-image-get-icon-name} instead.
+    The @sym{gtk-image-get-icon-set} function has been deprecated since version
+    3.10 and should not be used in newly written code. Use the
+    @fun{gtk-image-get-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-image}
   @see-class{gtk-icon-set}
@@ -739,29 +735,28 @@
   (values (gtk-image-icon-set image)
           (foreign-enum-keyword 'gtk-icon-size (gtk-image-icon-size image))))
 
-(export 'gtk-image-get-icon-set)
-
 ;;; ----------------------------------------------------------------------------
-;;; gtk_image_get_stock ()
+;;; gtk_image_get_stock ()                                 not exported
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-image-get-stock (image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @begin{return}
-    @code{stock-id} -- a string with a stock icon name @br{}
-    @code{size} -- a stock icon size of type @symbol{gtk-icon-size}
+    @arg{stock-id} -- a string with a stock icon name @br{}
+    @arg{size} -- a stock icon size of type @symbol{gtk-icon-size}
   @end{return}
   @begin{short}
     Gets the stock icon name and icon size being displayed by the image.
   @end{short}
-  The @symbol{gtk-image-type} storage type of the image must be @code{:empty}
-  or @code{:stock}, see the function @fun{gtk-image-storage-type}.
+  The @symbol{gtk-image-type} storage type of the image must be the
+  @code{:empty} or @code{:stock} type, see the @fun{gtk-image-storage-type}
+  function.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-image-get-stock} has been deprecated since version
-    3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-image-get-icon-name} instead.
+    The @sym{gtk-image-get-stock} function has been deprecated since version
+    3.10 and should not be used in newly written code. Use the
+    @fun{gtk-image-get-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-image}
   @see-symbol{gtk-icon-size}
@@ -771,8 +766,6 @@
   (values (gtk-image-stock image)
           (foreign-enum-keyword 'gtk-icon-size (gtk-image-icon-size image))))
 
-(export 'gtk-image-get-stock)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_get_animation ()
 ;;; ----------------------------------------------------------------------------
@@ -780,15 +773,16 @@
 (defcfun ("gtk_image_get_animation" gtk-image-get-animation)
     (g-object gdk-pixbuf-animation)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @return{The displayed animation, or @code{nil} if the image is empty.}
   @begin{short}
     Gets the @class{gdk-pixbuf-animation} object being displayed by the
     @class{gtk-image} widget.
   @end{short}
-  The @symbol{gtk-image-type} storage type of the image must be @code{:empty}
-  or @code{:animation}, see the function @fun{gtk-image-storage-type}.
+  The @symbol{gtk-image-type} storage type of the image must be the
+  @code{:empty} or @code{:animation} type, see the @fun{gtk-image-storage-type}
+  function.
   @see-class{gtk-image}
   @see-class{gdk-pixbuf-animation}
   @see-symbol{gtk-image-type}
@@ -803,17 +797,17 @@
 
 (defun gtk-image-get-icon-name (image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @begin{return}
-    @code{icon-name} -- an icon name @br{}
-    @code{size} -- an icon size of type @symbol{gtk-icon-size}
+    @arg{icon-name} -- an icon name @br{}
+    @arg{size} -- an icon size of type @symbol{gtk-icon-size}
   @end{return}
   @begin{short}
     Gets the icon name and icon size being displayed by the image.
   @end{short}
-  The storage type of the image must be @code{:empty} or @code{:icon-name},
-  see the function @fun{gtk-image-storage-type}.
+  The storage type of the image must be the @code{:empty} or @code{:icon-name}
+  type, see the @fun{gtk-image-storage-type} function.
   @see-class{gtk-image}
   @see-function{gtk-image-storage-type}"
   (values (gtk-image-icon-name image)
@@ -827,18 +821,17 @@
 
 (defun gtk-image-get-gicon (image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @begin{return}
-    @code{gicon} -- a @class{g-icon} object @br{}
-    @code{size} -- an icon size of type @symbol{gtk-icon-size}
+    @arg{gicon} -- a @class{g-icon} object @br{}
+    @arg{size} -- an icon size of type @symbol{gtk-icon-size}
   @end{return}
   @begin{short}
-    Gets the @class{g-icon} object and icon size being displayed by the
-    image.
+    Gets the @class{g-icon} icon and icon size being displayed by the image.
   @end{short}
-  The storage type of the image must be @code{:empty} or @code{:gicon}, see the
-  function @fun{gtk-image-storage-type}.
+  The storage type of the image must be the @code{:empty} or @code{:gicon}
+  type, see the @fun{gtk-image-storage-type} function.
   @see-class{gtk-image}
   @see-class{g-icon}
   @see-function{gtk-image-storage-type}"
@@ -854,7 +847,7 @@
 (defcfun ("gtk_image_new_from_file" gtk-image-new-from-file)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{*2021-3-19}
+ "@version{*2021-12-17}
   @argument[filename]{a string with the name of the file}
   @return{A new @class{gtk-image} widget.}
   @begin{short}
@@ -866,12 +859,12 @@
 
   If the file contains an animation, the image will contain an animation.
 
-  If you need to detect failures to load the file, use the function
-  @fun{gdk-pixbuf-new-from-file} to load the file yourself, then create the
-  @class{gtk-image} widget from the pixbuf. Or for animations, use the function
-  @fun{gdk-pixbuf-animation-new-from-file}.
+  If you need to detect failures to load the file, use the
+  @fun{gdk-pixbuf-new-from-file} function to load the file yourself, then create
+  the @class{gtk-image} widget from the pixbuf. Or for animations, use the
+  @fun{gdk-pixbuf-animation-new-from-file} function.
 
-  The storage type, see the function @fun{gtk-image-storage-type}, of the
+  The storage type, see the @fun{gtk-image-storage-type} function, of the
   returned image is not defined, it will be whatever is appropriate for
   displaying the file.
   @see-class{gtk-image}
@@ -883,40 +876,38 @@
 (export 'gtk-image-new-from-file)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_image_new_from_icon_set ()
+;;; gtk_image_new_from_icon_set ()                         not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_image_new_from_icon_set" gtk-image-new-from-icon-set)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[icon-set]{a @class{gtk-icon-set} structure}
-  @argument[icon-size]{a icon size of type @symbol{gtk-icon-size}}
+  @argument[icon-size]{an icon size of type @symbol{gtk-icon-size}}
   @return{A new @class{gtk-image} widget.}
   @begin{short}
     Creates an image displaying an icon set.
   @end{short}
 
-  Sample icon sizes are @code{:menu}, @code{:small-toolbar}. Instead of using
-  this function, usually it is better to create a @class{gtk-icon-factory}, put
-  your icon sets in the icon factory, add the icon factory to the list of
-  default factories with the function @fun{gtk-icon-factory-add-default}, and
-  then use the function @fun{gtk-image-new-from-stock}. This will allow themes
-  to override the icon you ship with your application.
+  Sample icon sizes are the @code{:menu}, @code{:small-toolbar} values. Instead
+  of using this function, usually it is better to create a
+  @class{gtk-icon-factory} object, put your icon sets in the icon factory, add
+  the icon factory to the list of default factories with the
+  @fun{gtk-icon-factory-add-default} function, and then use the
+  @fun{gtk-image-new-from-stock} function. This will allow themes to override
+  the icon you ship with your application.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-image-new-from-icon-set} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-image-new-from-icon-name} instead.
+    The @sym{gtk-image-new-from-icon-set} function has been deprecated since
+    version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-image-new-from-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-image}
   @see-class{gtk-icon-factory}
   @see-function{gtk-icon-factory-add-default}
-  @see-function{gtk-image-new-from-icon-name}
-  @see-function{gtk-image-new-from-stock}"
+  @see-function{gtk-image-new-from-icon-name}"
   (icon-set (g-boxed-foreign gtk-icon-set))
   (icon-size gtk-icon-size))
-
-(export 'gtk-image-new-from-icon-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_pixbuf ()
@@ -925,7 +916,7 @@
 (defcfun ("gtk_image_new_from_pixbuf" gtk-image-new-from-pixbuf)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-17}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @return{A new @class{gtk-image} widget.}
   @begin{short}
@@ -934,7 +925,7 @@
 
   Note that this function just creates an image from the pixbuf. The image
   created will not react to state changes. Should you want that, you should use
-  the function @fun{gtk-image-new-from-icon-name}.
+  the @fun{gtk-image-new-from-icon-name} function.
   @see-class{gtk-image}
   @see-class{gdk-pixbuf}
   @see-function{gtk-image-new-from-icon-name}"
@@ -943,13 +934,13 @@
 (export 'gtk-image-new-from-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_image_new_from_stock ()
+;;; gtk_image_new_from_stock ()                            not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_image_new_from_stock" gtk-image-new-from-stock)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[stock-id]{a string with the stock icon name}
   @argument[icon-size]{a stock icon size from the @symbol{gtk-icon-size}
     enumeration}
@@ -959,23 +950,21 @@
   @end{short}
 
   Sample stock icon names are @code{\"gtk-open\"}, @code{\"gtk-quit\"}. Sample
-  stock sizes are @code{:menu}, @code{:small-toolbar}. If the stock icon name
-  is not known, the image will be empty. You can register your own stock icon
-  names, see the functions @fun{gtk-icon-factory-add-default} and
-  @fun{gtk-icon-factory-add}.
+  stock sizes are the @code{:menu}, @code{:small-toolbar} values. If the stock
+  icon name is not known, the image will be empty. You can register your own
+  stock icon names, see the @fun{gtk-icon-factory-add-default} and
+  @fun{gtk-icon-factory-add} functions.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-image-new-from-stock} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-image-new-from-icon-name} instead.
+    The @sym{gtk-image-new-from-stock} function has been deprecated since
+    version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-image-new-from-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-image}
   @see-symbol{gtk-icon-size}
   @see-function{gtk-icon-factory-add}
   @see-function{gtk-icon-factory-add-default}"
-  (stock-id g-string)
+  (stock-id :string)
   (icon-size gtk-icon-size))
-
-(export 'gtk-image-new-from-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_animation ()
@@ -984,19 +973,20 @@
 (defcfun ("gtk_image_new_from_animation" gtk-image-new-from-animation)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
-  @argument[animation]{an animation of type @class{gdk-pixbuf-animation}}
+ "@version{2021-12-17}
+  @argument[animation]{a @class{gdk-pixbuf-animation} object}
   @return{A new @class{gtk-image} widget.}
   @begin{short}
     Creates a image displaying the given animation.
   @end{short}
 
-  Note that the animation frames are shown using a timeout with
-  @code{:default}. When using animations to indicate busyness, keep in mind
-  that the animation will only be shown if the main loop is not busy with
-  something that has a higher priority.
+  Note that the animation frames are shown using a timeout with the
+  @var{+g-priority-default+} value. When using animations to indicate busyness,
+  keep in mind that the animation will only be shown if the main loop is not
+  busy with something that has a higher priority.
   @see-class{gtk-image}
-  @see-class{gdk-pixbuf-animation}"
+  @see-class{gdk-pixbuf-animation}
+  @see-variable{+g-priority-default+}"
   (animation (g-object gdk-pixbuf-animation)))
 
 (export 'gtk-image-new-from-animation)
@@ -1008,20 +998,19 @@
 (defcfun ("gtk_image_new_from_icon_name" gtk-image-new-from-icon-name)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
-  @argument[icon-name]{a string with an icon name}
-  @argument[size]{a icon size of type @symbol{gtk-icon-size}}
+ "@version{*2021-12-17}
+  @argument[name]{a string with an icon name}
+  @argument[size]{a @symbol{gtk-icon-size} value for the icon size}
   @return{A new @class{gtk-image} widget displaying the themed icon.}
   @begin{short}
     Creates an image displaying an icon from the current icon theme.
   @end{short}
-
   If the icon name is not known, a \"broken image\" icon will be displayed
   instead. If the current icon theme is changed, the icon will be updated
   appropriately.
   @see-class{gtk-image}
   @see-function{gtk-image-set-from-icon-name}"
-  (icon-name g-string)
+  (name :string)
   (size gtk-icon-size))
 
 (export 'gtk-image-new-from-icon-name)
@@ -1033,7 +1022,7 @@
 (defcfun ("gtk_image_new_from_gicon" gtk-image-new-from-gicon)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-17}
   @argument[icon]{a @class{g-icon} object}
   @argument[size]{an icon size as a value of the @symbol{gtk-icon-size}
     enumeration}
@@ -1060,31 +1049,31 @@
 (defcfun ("gtk_image_new_from_resource" gtk-image-new-from-resource)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
-  @argument[resource-path]{a string with a resource path}
+ "@version{2021-12-17}
+  @argument[resource]{a string with a resource path}
   @return{A new @class{gtk-image} widget.}
   @begin{short}
-    Creates an image displaying the resource file in @arg{resource-path}.
+    Creates an image displaying the resource file in @arg{resource}.
   @end{short}
 
   If the file is not found or can not be loaded, the resulting @class{gtk-image}
-  will display a \"broken image\" icon. This function always returns a valid
-  @class{gtk-image} widget.
+  widget will display a \"broken image\" icon. This function always returns a
+  valid @class{gtk-image} widget.
 
   If the file contains an animation, the image will contain an animation.
 
-  If you need to detect failures to load the file, use the function
-  @fun{gdk-pixbuf-new-from-file} to load the file yourself, then create the
-  @class{gtk-image} from the pixbuf. Or for animations, use the function
-  @fun{gdk-pixbuf-animation-new-from-file}.
+  If you need to detect failures to load the file, use the
+  @fun{gdk-pixbuf-new-from-resource} function to load the file yourself, then
+  create the @class{gtk-image} widget from the pixbuf, or for animations, use
+  the @fun{gdk-pixbuf-animation-new-from-resource} function.
 
-  The storage type, see the function @fun{gtk-image-storage-type}, of the
+  The storage type, see the @fun{gtk-image-storage-type} function, of the
   returned image is not defined, it will be whatever is appropriate for
   displaying the file.
   @see-class{gtk-image}
-  @see-function{gdk-pixbuf-new-from-file}
-  @see-function{gdk-pixbuf-animation-new-from-file}"
-  (resource-path g-string))
+  @see-function{gdk-pixbuf-new-from-resource}
+  @see-function{gdk-pixbuf-animation-new-from-resource}"
+  (resource :string))
 
 (export 'gtk-image-new-from-resource)
 
@@ -1095,7 +1084,7 @@
 (defcfun ("gtk_image_new_from_surface" gtk-image-new-from-surface)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[surface]{a @symbol{cairo-surface-t} instance}
   @return{A new @class{gtk-image} widget.}
   @begin{short}
@@ -1113,45 +1102,42 @@
 
 (defcfun ("gtk_image_set_from_file" gtk-image-set-from-file) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{*2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @argument[filename]{a string with a filename}
   @begin{short}
-    See the function @fun{gtk-image-new-from-file} for details.
+    See the @fun{gtk-image-new-from-file} function for details.
   @end{short}
   @see-class{gtk-image}
   @see-function{gtk-image-new-from-file}"
   (image (g-object gtk-image))
-  (filename g-string))
+  (filename :string))
 
 (export 'gtk-image-set-from-file)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_image_set_from_icon_set ()
+;;; gtk_image_set_from_icon_set ()                         not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_image_set_from_icon_set" gtk-image-set-from-icon-set) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @argument[icon-set]{a @class{gtk-icon-set} structure}
   @argument[icon-size]{a stock icon size of type @symbol{gtk-icon-size}}
   @begin{short}
-    See the function @fun{gtk-image-new-from-icon-set} for details.
+    See the @fun{gtk-image-new-from-icon-set} function for details.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-image-set-from-icon-set} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-image-set-from-icon-name} instead.
+    The @sym{gtk-image-set-from-icon-set} function has been deprecated since
+    version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-image-set-from-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-image}
-  @see-function{gtk-image-new-from-icon-set}
   @see-function{gtk-image-set-from-icon-name}"
   (image (g-object gtk-image))
   (icon-set (g-boxed-foreign gtk-icon-set))
   (icon-size gtk-icon-size))
-
-(export 'gtk-image-set-from-icon-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_pixbuf ()
@@ -1159,13 +1145,13 @@
 
 (defcfun ("gtk_image_set_from_pixbuf" gtk-image-set-from-pixbuf) :void
  #+cl-cffi-gtk-documentation
- "@version{*2021-2-4}
+ "@version{*2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @argument[pixbuf]{a @class{gdk-pixbuf} object}
   @begin{short}
     Creates an image displaying @arg{pixbuf}.
   @end{short}
-  See the function @fun{gtk-image-new-from-pixbuf} for more details.
+  See the @fun{gtk-image-new-from-pixbuf} function for more details.
   @see-class{gtk-image}
   @see-class{gdk-pixbuf}
   @see-function{gtk-image-new-from-pixbuf}"
@@ -1175,31 +1161,28 @@
 (export 'gtk-image-set-from-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_image_set_from_stock ()
+;;; gtk_image_set_from_stock ()                            not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_image_set_from_stock" gtk-image-set-from-stock) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @argument[stock-id]{a string with a stock icon name}
   @argument[icon-size]{a stock icon size of type @symbol{gtk-icon-size}}
   @begin{short}
-    See the function @fun{gtk-image-new-from-stock} for details.
+    See the @fun{gtk-image-new-from-stock} function for details.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-image-set-from-stock} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-image-set-from-icon-name} instead.
+    The @sym{gtk-image-set-from-stock} function has been deprecated since
+    version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-image-set-from-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-image}
-  @see-function{gtk-image-new-from-stock}
   @see-function{gtk-image-set-from-icon-name}"
   (image (g-object gtk-image))
-  (stock-id g-string)
+  (stock-id :string)
   (icon-size gtk-icon-size))
-
-(export 'gtk-image-set-from-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_animation ()
@@ -1207,9 +1190,9 @@
 
 (defcfun ("gtk_image_set_from_animation" gtk-image-set-from-animation) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
-  @argument[animation]{the @class{gdk-pixbuf-animation} object}
+  @argument[animation]{a @class{gdk-pixbuf-animation} object}
   @begin{short}
     Causes the image to display the given animation, or display nothing, if you
     set the animation to @code{nil}.
@@ -1227,17 +1210,17 @@
 
 (defcfun ("gtk_image_set_from_icon_name" gtk-image-set-from-icon-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @argument[icon-name]{a string with an icon name}
   @argument[icon-size]{an icon size of type @symbol{gtk-icon-size}}
   @begin{short}
-    See the function @fun{gtk-image-new-from-icon-name} for details.
+    See the @fun{gtk-image-new-from-icon-name} function for details.
   @end{short}
   @see-class{gtk-image}
   @see-function{gtk-image-new-from-icon-name}"
   (image (g-object gtk-image))
-  (icon-name g-string)
+  (icon-name :string)
   (icon-size gtk-icon-size))
 
 (export 'gtk-image-set-from-icon-name)
@@ -1248,12 +1231,12 @@
 
 (defcfun ("gtk_image_set_from_gicon" gtk-image-set-from-gicon) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
-  @argument[icon]{an icon of type @class{g-icon}}
-  @argument[icon-size]{an icon size of type @symbol{gtk-icon-size}}
+  @argument[icon]{a @class{g-icon} icon}
+  @argument[size]{a value of the @symbol{gtk-icon-size} enumeration}
   @begin{short}
-    See the funcion @fun{gtk-image-new-from-gicon} for details.
+    See the @fun{gtk-image-new-from-gicon} function for details.
   @end{short}
   @see-class{gtk-image}
   @see-class{g-icon}
@@ -1261,7 +1244,7 @@
   @see-function{gtk-image-new-from-gicon}"
   (image (g-object gtk-image))
   (icon (g-object g-icon))
-  (icon-size gtk-icon-size))
+  (size gtk-icon-size))
 
 (export 'gtk-image-set-from-gicon)
 
@@ -1271,16 +1254,16 @@
 
 (defcfun ("gtk_image_set_from_resource" gtk-image-set-from-resource) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
-  @argument[resource-path]{a string with a resource path}
+  @argument[resource]{a string with a resource path}
   @begin{short}
-    See the function @fun{gtk-image-new-from-resource} for details.
+    See the @fun{gtk-image-new-from-resource} function for details.
   @end{short}
   @see-class{gtk-image}
   @see-function{gtk-image-new-from-resource}"
   (image (g-object gtk-image))
-  (resource-path g-string))
+  (resource :string))
 
 (export 'gtk-image-set-from-resource)
 
@@ -1290,11 +1273,11 @@
 
 (defcfun ("gtk_image_set_from_surface" gtk-image-set-from-surface) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @argument[image]{a @class{gtk-image} widget}
   @argument[surface]{a @symbol{cairo-surface-t} instance}
   @begin{short}
-    See the function @fun{gtk-image-new-from-surface} for details.
+    See the @fun{gtk-image-new-from-surface} function for details.
   @end{short}
   @see-class{gtk-image}
   @see-symbol{cairo-surface-t}
@@ -1310,7 +1293,7 @@
 
 (defcfun ("gtk_image_clear" gtk-image-clear) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{*2021-12-22}
   @argument[image]{a @class{gtk-image} widget}
   @short{Resets the image to be empty.}
   @see-class{gtk-image}"
@@ -1326,9 +1309,9 @@
 
 (defun gtk-image-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-4-17}
+ "@version{2021-12-17}
   @return{A newly created @class{gtk-image} widget.}
-  Creates a new image.
+  @short{Creates a new image.}
   @see-class{gtk-image}"
   (make-instance 'gtk-image))
 
