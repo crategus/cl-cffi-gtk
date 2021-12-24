@@ -59,7 +59,7 @@
 ;;; The GtkDialog functions cannot be used on such objects, but we need a
 ;;; similar API in order to drive them. The GtkNativeDialog object is an API
 ;;; that allows you to do this. It allows you to set various common properties
-;;; on the dialog, as well as show and hide it and get a “response” signal when
+;;; on the dialog, as well as show and hide it and get a "response" signal when
 ;;; the user finished with the dialog.
 ;;;
 ;;; There is also a gtk_native_dialog_run() helper that makes it easy to run
@@ -84,7 +84,7 @@
 ;;;
 ;;; Shows the dialog on the display, allowing the user to interact with it.
 ;;; When the user accepts the state of the dialog the dialog will be
-;;; automatically hidden and the “response” signal will be emitted.
+;;; automatically hidden and the "response" signal will be emitted.
 ;;;
 ;;; Multiple calls while the dialog is visible will be ignored.
 ;;;
@@ -101,7 +101,7 @@
 ;;; gtk_native_dialog_hide (GtkNativeDialog *self);
 ;;;
 ;;; Hides the dialog if it is visilbe, aborting any interaction. Once this is
-;;; called the “response” signal will not be emitted until after the next call
+;;; called the "response" signal will not be emitted until after the next call
 ;;; to gtk_native_dialog_show().
 ;;;
 ;;; If the dialog is not visible this does nothing.
@@ -274,7 +274,7 @@
 ;;; gint
 ;;; gtk_native_dialog_run (GtkNativeDialog *self);
 ;;;
-;;; Blocks in a recursive main loop until self emits the “response” signal. It
+;;; Blocks in a recursive main loop until self emits the "response" signal. It
 ;;; then returns the response ID from the ::response signal emission.
 ;;;
 ;;; Before entering the recursive main loop, gtk_native_dialog_run() calls

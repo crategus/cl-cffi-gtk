@@ -553,7 +553,7 @@
 (defcfun ("gtk_main_do_event" gtk-main-do-event) :void
  #+cl-cffi-gtk-documentation
  "@version{2020-8-22}
-  @argument[event]{a @class{gdk-event} structure to process normally passed by
+  @argument[event]{a @class{gdk-event} instance to process normally passed by
     GDK}
   @begin{short}
     Processes a single GDK event.
@@ -884,7 +884,7 @@
     (g-boxed-foreign gdk-event :return)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-22}
-  @return{A copy of the current @class{gdk-event} structure, or @code{nil} if
+  @return{A copy of the current @class{gdk-event} instance, or @code{nil} if
     there is no current event.}
   @short{Obtains a copy of the event currently being processed by GTK.}
 
@@ -990,7 +990,7 @@
 (defcfun ("gtk_get_event_widget" gtk-event-widget) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{2020-8-22}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @return{The @class{gtk-widget} object that originally received @arg{event},
     or @code{nil}.}
   @begin{short}
@@ -1012,7 +1012,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2020-8-22}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[event]{a @class{gdk-event} structure}
+  @argument[event]{a @class{gdk-event} instance}
   @begin{short}
     Sends an event to a widget, propagating the event to parent widgets if the
     event remains unhandled.

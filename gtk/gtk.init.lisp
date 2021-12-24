@@ -77,9 +77,9 @@
 
   (defun join-gtk-main ()
    #+cl-cffi-gtk-documentation
-   "@version{2021-3-21}
+   "@version{2021-11-13}
     @begin{short}
-      Wait until the GTK+ program terminates.
+      Wait until the GTK program terminates.
     @end{short}
     @see-function{within-main-loop}
     @see-function{leave-gtk-main}"
@@ -88,18 +88,16 @@
 
   (defun leave-gtk-main ()
    #+cl-cffi-gtk-documentation
-   "@version{*2021-1-24}
+   "@version{*2021-11-13}
     @begin{short}
       Makes the innermost invocation of the main loop return when it regains
       control.
     @end{short}
 
-    In the Lisp binding to GTK+ the function @fun{gtk-main-quit} is not called,
-    but the function @sym{leave-gtk-main}. The function @sym{leave-gtk-main}
+    In the Lisp binding to GTK the @fun{gtk-main-quit} function is not called,
+    but the @sym{leave-gtk-main} function. The @sym{leave-gtk-main} function
     does some additional bookkeeping, which is necessary to stop a Lisp program
-    safely.
-
-    See the macro @fun{within-main-loop} for an example.
+    safely. See the @fun{within-main-loop} documentation for an example.
     @see-function{within-main-loop}
     @see-function{gtk-main-quit}"
     (bt:with-lock-held (*main-thread-lock*)
@@ -137,28 +135,28 @@
   (glib::%g-idle-add-full priority
                           (callback call-from-main-loop-callback)
                           (glib:allocate-stable-pointer func)
-                          (callback glib:stable-pointer-destroy-notify-cb))
+                          (callback glib:stable-pointer-destroy-notify))
   (ensure-gtk-main))
 
 (defmacro within-main-loop (&body body)
  #+cl-cffi-gtk-documentation
- "@version{*2021-1-24}
+ "@version{*2021-11-13}
   @begin{short}
-    The macro @sym{within-main-loop} is a wrapper around a GTK+ program.
+    The @sym{within-main-loop} macro is a wrapper around a GTK program.
   @end{short}
-  The functionality of the macro corresponds to the C functions
-  @code{gtk_init()} and @code{gtk_main()} which initialize and start a GTK+
-  program. Both functions have corresponding Lisp functions. The function
-  @code{gtk_main()} is exported as the Lisp function @fun{gtk-main}. The
-  corresponding Lisp function to @code{gtk_init()} is called internally when
-  loading the library, but is not exported.
+  The functionality of the macro corresponds to the @code{gtk_init()} and
+  @code{gtk_main()} C functions which initialize and start a GTK program. Both
+  functions have corresponding Lisp functions. The @code{gtk_main()} function is
+  exported as the @fun{gtk-main} Lisp function. The corresponding Lisp function
+  to the @code{gtk_init()} function is called internally when loading the
+  library, but is not exported.
 
-  To stop the execution of the main loop the function @fun{leave-gtk-main} is
+  To stop the execution of the main loop the @fun{leave-gtk-main} function is
   called.
   @begin[Example]{dictionary}
     An example with a simple window from the
-    @url[http://www.crategus.com/books/cl-gtk/gtk-tutorial.html#example-simple-window]{GTK+ Lisp tutorial}
-    which shows the usage of the macro @sym{within-main-loop}:
+    @url[http://www.crategus.com/books/cl-gtk/gtk-tutorial.html#example-simple-window]{GTK Lisp tutorial}
+    which shows the usage of the @sym{within-main-loop} macro:
     @begin{pre}
 (defun example-simple-window ()
   (within-main-loop

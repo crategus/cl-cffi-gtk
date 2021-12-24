@@ -324,26 +324,23 @@
 (setf (gethash 'gtk-message-dialog-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-image 'function)
- "@version{2021-10-4}
+ "@version{2021-12-22}
   @syntax[]{(gtk-message-dialog-image object) => image}
   @syntax[]{(setf (gtk-message-dialog-image object) image)}
   @argument[object]{a @class{gtk-message-dialog} widget}
-  @argument[image]{a @class{gtk-widget} image}
+  @argument[image]{a @class{gtk-image} widget}
   @begin{short}
     Accessor of the @slot[gtk-message-dialog]{image} slot of the
     @class{gtk-message-dialog} class.
   @end{short}
-
-  The @sym{gtk-message-dialog-image} slot access function returns the image of
-  the message dialog. The @sym{(setf gtk-message-dialog-image)} slot access
-  function sets the image.
   @begin[Warning]{dictionary}
     The @sym{gtk-message-dialog-image} function has been deprecated since
     version 3.12 and should not be used in newly written code. Use the
     @class{gtk-dialog} widget to create dialogs with images.
   @end{dictionary}
   @see-class{gtk-message-dialog}
-  @see-class{gtk-widget}")
+  @see-class{gtk-dialog}
+  @see-class{gtk-image}")
 
 ;;; --- gtk-message-dialog-message-area ----------------------------------------
 
