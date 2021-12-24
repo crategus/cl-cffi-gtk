@@ -181,7 +181,7 @@
 ;;;                              gdouble **values);
 ;;;
 ;;; Returns the current values for the requested axes . This function must be
-;;; called from either the “down”, “motion”, “up” or “proximity” signals.
+;;; called from either the "down", "motion", "up" or "proximity" signals.
 ;;;
 ;;; gesture :
 ;;;     a GtkGestureStylus

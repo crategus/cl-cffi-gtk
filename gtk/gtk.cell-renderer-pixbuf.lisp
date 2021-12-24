@@ -145,7 +145,7 @@
   Specifies whether the rendered pixbuf should be colorized according to the
   @symbol{gtk-cell-renderer-state}. @br{}
   @em{Warning:} The @code{follow-state} property has been deprecated since
-  version 3.16 and should not be used in newly-written code. Cell renderers
+  version 3.16 and should not be used in newly written code. Cell renderers
   always follow state. @br{}
   Default value: @em{true}")
 
@@ -168,7 +168,7 @@
   @symbol{gtk-cell-renderer-state} flags.
   @begin[Warning]{dictionary}
     The @code{follow-state} property has been deprecated since version 3.16 and
-    should not be used in newly-written code. Cell renderers always follow
+    should not be used in newly written code. Cell renderers always follow
     state.
   @end{dictionary}
   @see-class{gtk-cell-renderer-pixbuf}
@@ -347,7 +347,7 @@
  "The @code{stock-id} property of type @code{:string} (Read / Write) @br{}
   The stock ID of the stock icon to render. @br{}
   @em{Warning:} The @code{stock-id} property has been deprecated since version
-  3.10 and should not be used in newly-written code. Use the @code{icon-name}
+  3.10 and should not be used in newly written code. Use the @code{icon-name}
   property instead. @br{}
   Default value: @code{nil}")
 
@@ -368,7 +368,7 @@
   The stock ID of the stock icon to render.
   @begin[Warning]{dictionary}
     The @code{stock-id} property has been deprecated since version 3.10 and
-    should not be used in newly-written code. Use the @code{icon-name} property
+    should not be used in newly written code. Use the @code{icon-name} property
     instead.
   @end{dictionary}
   @see-class{gtk-cell-renderer-piybuf}")

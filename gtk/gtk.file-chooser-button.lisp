@@ -136,9 +136,9 @@
     that other interface elements give space to the widget.
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-file-chooser-button} widget has a CSS node with name
+    The @sym{gtk-file-chooser-button} implementation has a CSS node with name
     @code{filechooserbutton}, containing a subnode for the internal button with
-    name @code{button} and style class @code{.file}.
+    name @code{button} and @code{.file} style class.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"file-set\" signal}
@@ -226,9 +226,9 @@
   you do not want the keyboard focus removed from the main area of the
   application.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-file-chooser-button-focus-on-click} has been
-    deprecated since version 3.20 and should not be used in newly-written code.
-    Use the function @fun{gtk-widget-focus-on-click} instead.
+    The @sym{gtk-file-chooser-button-focus-on-click} function has been
+    deprecated since version 3.20 and should not be used in newly written code.
+    Use the @fun{gtk-widget-focus-on-click} function instead.
   @end{dictionary}
   @see-class{gtk-file-chooser-button}
   @see-function{gtk-widget-focus-on-click}")

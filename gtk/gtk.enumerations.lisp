@@ -214,11 +214,11 @@
 (setf (gethash 'gtk-justification atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-justification atdoc:*external-symbols*)
- "@version{2021-5-23}
+ "@version{*2021-12-22}
   @begin{short}
-    Used for justifying the text inside a @class{gtk-label} widget. See also
-    the @class{gtk-alignment} widget.
+    Used for justifying the text inside a @class{gtk-label} widget.
   @end{short}
+  See also the @class{gtk-alignment} widget.
   @begin{pre}
 (define-g-enum \"GtkJustification\" gtk-justification
   (:export t
@@ -257,9 +257,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-movement-step atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-movement-step atdoc:*external-symbols*)
- "@version{2021-3-21}
+ "@version{2021-12-6}
   @begin{short}
     The values of this enumeration are passed as an argument to the
     \"move-cursor\" signal handler.
@@ -292,7 +292,9 @@
     @entry[:horizontal-pages]{Move horizontally by pages.}
   @end{table}
   @see-class{gtk-entry}
-  @see-class{gtk-tree-view}")
+  @see-class{gtk-tree-view}
+  @see-class{gtk-list-box}
+  @see-class{gtk-flow-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkOrientation
@@ -308,7 +310,7 @@
 (setf (gethash 'gtk-orientation atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-orientation atdoc:*external-symbols*)
- "@version{2021-5-13}
+ "@version{*2021-11-13}
   @begin{short}
     Represents the orientation of widgets which can be switched between
     horizontal and vertical orientation on the fly, like the @class{gtk-toolbar}
@@ -377,7 +379,7 @@
 (setf (gethash 'gtk-position-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-position-type atdoc:*external-symbols*)
- "@version{2021-5-20}
+ "@version{*2021-12-22}
   @begin{short}
     Describes which edge of a widget a certain feature is positioned at, e.g.
     the tabs of a @class{gtk-notebook} widget or the label of a
@@ -541,9 +543,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-mode atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'gtk-selection-mode atdoc:*external-symbols*)
- "@version{2021-2-27}
+ "@version{*2021-12-15}
   @short{Used to control what selections users are allowed to make.}
   @begin{pre}
 (define-g-enum \"GtkSelectionMode\" gtk-selection-mode
@@ -559,9 +561,9 @@
     @entry[:single]{Zero or one element may be selected.}
     @entry[:browse]{Exactly one element is selected. In some circumstances, such
       as initially or during a search operation, it is possible for no element
-      to be selected with @code{:browse}. What is really enforced is that the
-      user  cannot deselect a currently selected element except by selecting
-      another element.}
+      to be selected with the @code{:browse} value. What is really enforced is
+      that the user cannot deselect a currently selected element except by
+      selecting another element.}
     @entry[:multiple]{Any number of elements may be selected. The @kbd{Ctrl} key
       may be used to enlarge the selection, and the @kbd{Shift} key to select
       between the focus and the child pointed to. Some widgets may also allow
@@ -589,7 +591,7 @@
 (setf (gethash 'gtk-shadow-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-shadow-type atdoc:*external-symbols*)
- "@version{2021-5-23}
+ "@version{*2021-12-22}
   @begin{short}
     Used to change the appearance of an outline typically provided by a
     @class{gtk-frame} widget.

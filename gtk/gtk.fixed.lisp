@@ -220,7 +220,7 @@
  #+cl-cffi-gtk-documentation
  "@version{*2021-12-17}
   @argument[fixed]{a @class{gtk-fixed} widget}
-  @argument[widget]{the @class{gtk-widget} child widget to add}
+  @argument[widget]{a @class{gtk-widget} child widget to add}
   @argument[x]{an integer with the horizontal position to place the child
     widget at}
   @argument[y]{an integer with the vertical position to place the child widget
@@ -246,7 +246,7 @@
  #+cl-cffi-gtk-documentation
  "@version{*2021-12-17}
   @argument[fixed]{a @class{gtk-fixed} widget}
-  @argument[widget]{the @class{gtk-widget} child widget}
+  @argument[widget]{a @class{gtk-widget} child widget}
   @argument[x]{an integer with the horizontal position to move the child widget
     to}
   @argument[y]{an integer with the vertical position to move the child widget

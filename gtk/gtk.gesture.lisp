@@ -412,7 +412,7 @@
 ;;;
 ;;; Returns TRUE if the gesture is currently recognized. A gesture is recognized
 ;;; if there are as many interacting touch sequences as required by gesture ,
-;;; and “check” returned TRUE for the sequences being currently interpreted.
+;;; and "check" returned TRUE for the sequences being currently interpreted.
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
@@ -464,7 +464,7 @@
 ;;; None → Claimed → Denied
 ;;;
 ;;; Note: Due to event handling ordering, it may be unsafe to set the state on
-;;; another gesture within a “begin” signal handler, as the callback might be
+;;; another gesture within a "begin" signal handler, as the callback might be
 ;;; executed before the other gesture knows about the sequence. A safe way to
 ;;; perform this could be:
 ;;;

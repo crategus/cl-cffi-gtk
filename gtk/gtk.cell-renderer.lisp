@@ -371,7 +371,7 @@
   (Read / Write) @br{}
   Cell background color. @br{}
   @em{Warning:} The @code{cell-background-gdk} property has been deprecated
-  since version 3.4 and should not be used in newly-written code. Use the
+  since version 3.4 and should not be used in newly written code. Use the
   @code{cell-background-rgba} property instead.")
 
 #+cl-cffi-gtk-documentation
@@ -392,9 +392,9 @@
 
   Cell background color.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-cell-renderer-cell-background-gdk} has been deprecated
-    since version 3.4 and should not be used in newly-written code. Use the
-    function @fun{gtk-cell-renderer-cell-background-rgba} instead.
+    The @sym{gtk-cell-renderer-cell-background-gdk} function has been deprecated
+    since version 3.4 and should not be used in newly written code. Use the
+    @fun{gtk-cell-renderer-cell-background-rgba} function instead.
   @end{dictionary}
   @see-class{gtk-cell-renderer}
   @see-function{gtk-cell-renderer-cell-background-rgba}")
@@ -883,9 +883,9 @@
   those in @arg{x-offset} and @arg{y-offset} are inclusive of the
   @slot[gtk-cell-renderer]{xpad} and @slot[gtk-cell-renderer]{ypad} properties.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-cell-renderer-size} has been deprecated since version
-    3.0 and should not be used in newly-written code. Use the function
-    @fun{gtk-cell-renderer-preferred-size} instead.
+    The @sym{gtk-cell-renderer-size} function has been deprecated since version
+    3.0 and should not be used in newly written code. Use the
+    @fun{gtk-cell-renderer-preferred-size} function instead.
   @end{dictionary}
   @see-class{gtk-cell-renderer}
   @see-class{gtk-widget}

@@ -1274,7 +1274,7 @@
               combo
               (callback gtk-tree-view-row-separator-func)
               (allocate-stable-pointer func)
-              (callback stable-pointer-destroy-notify-cb)))
+              (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-combo-box-set-row-separator-func)
 

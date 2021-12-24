@@ -288,7 +288,7 @@
         (Read) @br{}
         Opacity of the selection box. @br{}
         @em{Warning:} The @code{selection-box-alpha} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. The opacity of the selection box is determined by CSS. The value
         of this style property is ignored. @br{}
         Default value: 64
@@ -298,7 +298,7 @@
         (Read) @br{}
         Color of the selection box. @br{}
         @em{Warning:} The @code{selection-box-color} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. The color of the selection box is determined by CSS. The value of
         this style property is ignored.
       @end{entry}
@@ -800,7 +800,7 @@
   @end{short}
 
   The slot access function @sym{gtk-icon-view-reorderable} retrieves whether
-  the user can reorder the list via drag-and-drop. The slot access function
+  the user can reorder the list via drag and drop. The slot access function
   @sym{(setf gtk-icon-view-reorderable)} sets whether the user can reorder the
   list. This function is a convenience function to allow you to reorder models
   that support the @class{gtk-tree-drag-source} and the

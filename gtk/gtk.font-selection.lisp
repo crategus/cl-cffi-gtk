@@ -59,9 +59,6 @@
 ;;; struct GtkFontSelection
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkFontSelection" 'gtk-font-selection))
-
 (define-g-object-class "GtkFontSelection" gtk-font-selection
   (:superclass gtk-box
    :export nil
@@ -151,6 +148,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors of Child Properties
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkFontSelection" 'gtk-font-selection))
 
 ;;; --- gtk-font-selection-child-expand ----------------------------------------
 

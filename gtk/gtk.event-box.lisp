@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.event-box.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
 ;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2019 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -84,17 +84,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-event-box 'type)
- "@version{2020-8-17}
+ "@version{2021-12-22}
   @begin{short}
-    The @sym{gtk-event-box} widget is a subclass of @class{gtk-bin} which also
-    has its own window.
+    The @sym{gtk-event-box} widget is a subclass of the @class{gtk-bin} class
+    which also has its own window.
   @end{short}
   It is useful since it allows you to catch events for widgets which do not
   have their own window.
   @begin[Example]{dictionary}
-    This example demonstrates the usage of a GtkEventBox widget - a label is
-    created and set up so that a mouse-click on the label causes the program to
-    exit.
+    This example demonstrates the usage of a @sym{gtk-event-box} widget - a
+    label is created and set up so that a mouse-click on the label causes the
+    program to exit.
    @begin{pre}
 (defun example-event-box ()
   (within-main-loop
@@ -223,7 +223,7 @@
     below the child. See the function @fun{gtk-event-box-above-child}. Since
     the input-only window is not an ancestor window of any windows that
     descendent widgets of the event box create, events on these windows are not
-    propagated up by the windowing system, but only by GTK+. The practical
+    propagated up by the windowing system, but only by GTK. The practical
     effect of this is if an event is not in the event mask for the descendant
     window, see the function @fun{gtk-widget-add-events}, it will not be
     received by the event box.

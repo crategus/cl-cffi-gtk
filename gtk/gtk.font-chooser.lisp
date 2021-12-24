@@ -391,7 +391,7 @@
 (setf (gethash 'gtk-font-chooser-preview-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-chooser-preview-text 'function)
- "@version{2021-1-20}
+ "@version{2021-12-9}
   @syntax[]{(gtk-font-chooser-preview-text object) => text}
   @syntax[]{(setf (gtk-font-chooser-preview-text object) text)}
   @argument[object]{a @class{gtk-font-chooser} object}
@@ -401,11 +401,11 @@
     @class{gtk-font-chooser} class.
   @end{short}
 
-  The slot access function @sym{gtk-font-chooser-preview-text} gets the text
-  displayed in the preview area. The slot access function
-  @sym{(setf gtk-font-chooser-preview-text)} sets the text displayed in the
-  preview area. The text is used to show how the selected font looks. See the
-  funcion @fun{pango-language-sample-string}.
+  The @sym{gtk-font-chooser-preview-text} slot access function gets the text
+  displayed in the preview area. The @sym{(setf gtk-font-chooser-preview-text)}
+  slot access function sets the text displayed in the preview area. The text is
+  used to show how the selected font looks. See the
+  @fun{pango-language-sample-string} function.
   @see-class{gtk-font-chooser}
   @see-function{pango-language-sample-string}")
 
@@ -593,7 +593,7 @@
           fontchooser
           (callback gtk-font-filter-func)
           (allocate-stable-pointer func)
-          (callback stable-pointer-destroy-notify-cb))
+          (callback stable-pointer-destroy-notify))
       (%gtk-font-chooser-set-filter-func
           fontchooser
           (null-pointer)

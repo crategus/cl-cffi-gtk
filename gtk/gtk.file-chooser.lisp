@@ -1609,7 +1609,7 @@
   @argument[chooser]{a @class{gtk-file-chooser} widget}
   @argument[folder]{a string with a filename of the folder to add}
   @begin{return}
-    @em{True} if the folder could be added successfully, @code{false} otherwise.
+    @em{True} if the folder could be added successfully, @em{false} otherwise.
   @end{return}
   @begin{short}
     Adds a folder to be displayed with the shortcut folders in a file chooser.
@@ -1640,7 +1640,7 @@
   @argument[chooser]{a @class{gtk-file-chooser} widget}
   @argument[folder]{a string with the filename of the folder to remove}
   @begin{return}
-    @em{True} if the operation succeeds, @code{false} otherwise.
+    @em{True} if the operation succeeds, @em{false} otherwise.
   @end{return}
   @begin{short}
     Removes a folder from a file chooser's list of shortcut folders.
@@ -1692,7 +1692,7 @@
   @argument[chooser]{a @class{gtk-file-chooser} widget}
   @argument[uri]{a string with the URI of the folder to add}
   @begin{return}
-    @em{True} if the folder could be added successfully, @code{false} otherwise.
+    @em{True} if the folder could be added successfully, @em{false} otherwise.
   @end{return}
   @begin{short}
     Adds a folder URI to be displayed with the shortcut folders in a file
@@ -1725,7 +1725,7 @@
   @argument[chooser]{a @class{gtk-file-chooser} widget}
   @argument[uri]{a string with the URI of the folder to remove}
   @begin{return}
-    @em{True} if the operation succeeds, @code{false} otherwise.
+    @em{True} if the operation succeeds, @em{false} otherwise.
   @end{return}
   @begin{short}
     Removes a folder URI from a file chooser's list of shortcut folders.

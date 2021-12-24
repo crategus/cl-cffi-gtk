@@ -126,8 +126,8 @@
 
   @image[font-button]{}
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-font-button} widget has a single CSS node with name
-    @code{button} and style class @code{.font}.
+    The @sym{gtk-font-button} implementation has a single CSS node with name
+    @code{button} and @code{.font} style class.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"font-set\" signal}
@@ -162,7 +162,7 @@
  "The @code{font-name} property of type @code{:string} (Read / Write) @br{}
   The name of the currently selected font. @br{}
   @em{Warning:} The @code{font-name} property has been deprecated since version
-  3.22 and should not be used in newly-written code. Use the
+  3.22 and should not be used in newly written code. Use the
   @slot[gtk-font-chooser]{font} property instead. @br{}
   Default value: \"Sans 12\"")
 
@@ -192,9 +192,9 @@
   certain values, family name, style, size, weight, just query these properties
   from the @class{pango-font-description} structure.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-font-button-font-name} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Use the function
-    @fun{gtk-font-chooser-font} instead.
+    The @sym{gtk-font-button-font-name} function has been deprecated since
+    version 3.22 and should not be used in newly written code. Use the
+    @fun{gtk-font-chooser-font} function instead.
   @end{dictionary}
   @see-class{gtk-font-button}
   @see-class{gtk-font-chooser}

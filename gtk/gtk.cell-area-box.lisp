@@ -72,9 +72,6 @@
 ;;; struct GtkCellAreaBox
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkCellAreaBox" 'gtk-cell-area-box))
-
 (define-g-object-class "GtkCellAreaBox" gtk-cell-area-box
   (:superclass gtk-cell-area
    :export t
@@ -180,6 +177,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors of Child Properties
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkCellAreaBox" 'gtk-cell-area-box))
 
 ;;; --- gtk-cell-area-box-child-align ------------------------------------------
 

@@ -92,7 +92,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_im_multicontext_append_menuitems has been deprecated since version 3.10
-;;; and should not be used in newly-written code.
+;;; and should not be used in newly written code.
 ;;;
 ;;; It is better to use the system-wide input method framework for changing
 ;;; input methods. Modern desktop shells offer on-screen displays for this that

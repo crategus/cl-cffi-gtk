@@ -29,7 +29,7 @@
 ;;;
 ;;; GtkFileChooserNative
 ;;;
-;;;     A native file chooser dialog, suitable for “File/Open” or “File/Save”
+;;;     A native file chooser dialog, suitable for "File/Open" or "File/Save"
 ;;;    commands
 ;;;
 ;;; Functions
@@ -44,7 +44,7 @@
 ;;; Description
 ;;;
 ;;; GtkFileChooserNative is an abstraction of a dialog box suitable for use with
-;;; “File/Open” or “File/Save as” commands. By default, this just uses a
+;;; "File/Open" or "File/Save as" commands. By default, this just uses a
 ;;; GtkFileChooserDialog to implement the actual dialog. However, on certain
 ;;; platforms, such as Windows and macOS, the native platform file chooser is
 ;;; used instead. When the application is running in a sandboxed environment
@@ -139,10 +139,10 @@
 ;;; There is no support for the signals that are emitted when the user navigates
 ;;; in the dialog, including:
 ;;;
-;;; “current-folder-changed”
-;;; “selection-changed”
-;;; “file-activated”
-;;; “confirm-overwrite”
+;;; "current-folder-changed"
+;;; "selection-changed"
+;;; "file-activated"
+;;; "confirm-overwrite"
 ;;;
 ;;; You can also not use the methods that directly control user navigation:
 ;;;
@@ -163,7 +163,7 @@
 ;;; are some things it does not handle:
 ;;;
 ;;; Extra widgets added with gtk_file_chooser_set_extra_widget().
-;;; Use of custom previews by connecting to “update-preview”.
+;;; Use of custom previews by connecting to "update-preview".
 ;;; Any GtkFileFilter added using a mimetype or custom filter.
 ;;;
 ;;; If any of these features are used the regular GtkFileChooserDialog will be
@@ -178,7 +178,7 @@
 ;;; not supported and will be silently ignored:
 ;;;
 ;;; Extra widgets added with gtk_file_chooser_set_extra_widget().
-;;; Use of custom previews by connecting to “update-preview”.
+;;; Use of custom previews by connecting to "update-preview".
 ;;; Any GtkFileFilter added with a custom filter.
 ;;;
 ;;; macOS details
@@ -191,7 +191,7 @@
 ;;;   widget is an instance of GtkLabel, in which case the label text will be
 ;;;   used to set the NSSavePanel message instance property.
 ;;;
-;;; * Use of custom previews by connecting to “update-preview”.
+;;; * Use of custom previews by connecting to "update-preview".
 ;;;
 ;;; * Any GtkFileFilter added with a custom filter.
 ;;;
@@ -267,7 +267,7 @@
 ;;; Sets the custom label text for the accept button.
 ;;;
 ;;; If characters in label are preceded by an underscore, they are underlined.
-;;; If you need a literal underscore character in a label, use “__”
+;;; If you need a literal underscore character in a label, use "__"
 ;;; (two underscores). The first underlined character represents a keyboard
 ;;; accelerator called a mnemonic. Pressing Alt and that key activates the
 ;;; button.
@@ -310,7 +310,7 @@
 ;;; Sets the custom label text for the cancel button.
 ;;;
 ;;; If characters in label are preceded by an underscore, they are underlined.
-;;; If you need a literal underscore character in a label, use “__”
+;;; If you need a literal underscore character in a label, use "__"
 ;;; (two underscores). The first underlined character represents a keyboard
 ;;; accelerator called a mnemonic. Pressing Alt and that key activates the
 ;;; button.

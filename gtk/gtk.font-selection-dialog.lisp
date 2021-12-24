@@ -94,7 +94,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_font_selection_dialog_new has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooserDialog
+;;; should not be used in newly written code. Use GtkFontChooserDialog
 ;;;
 ;;; Creates a new GtkFontSelectionDialog.
 ;;;
@@ -114,7 +114,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_font_selection_dialog_get_font_name has been deprecated since version
-;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;; 3.2 and should not be used in newly written code. Use GtkFontChooserDialog
 ;;;
 ;;; Gets the currently selected font name.
 ;;;
@@ -143,7 +143,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_font_selection_dialog_set_font_name has been deprecated since version
-;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;; 3.2 and should not be used in newly written code. Use GtkFontChooserDialog
 ;;;
 ;;; Sets the currently selected font.
 ;;;
@@ -167,7 +167,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_font_selection_dialog_get_preview_text has been deprecated since version
-;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;; 3.2 and should not be used in newly written code. Use GtkFontChooserDialog
 ;;;
 ;;; Gets the text displayed in the preview area.
 ;;;
@@ -189,7 +189,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_font_selection_dialog_set_preview_text has been deprecated since version
-;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;; 3.2 and should not be used in newly written code. Use GtkFontChooserDialog
 ;;;
 ;;; Sets the text displayed in the preview area.
 ;;;
@@ -209,7 +209,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_font_selection_dialog_get_cancel_button has been deprecated since
-;;; version 3.2 and should not be used in newly-written code. Use
+;;; version 3.2 and should not be used in newly written code. Use
 ;;; GtkFontChooserDialog
 ;;;
 ;;; Gets the 'Cancel' button.
@@ -232,7 +232,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_font_selection_dialog_get_ok_button has been deprecated since version
-;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;; 3.2 and should not be used in newly written code. Use GtkFontChooserDialog
 ;;;
 ;;; Gets the 'OK' button.
 ;;;
@@ -254,7 +254,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_font_selection_dialog_get_font_selection has been deprecated since
-;;; version 3.2 and should not be used in newly-written code. Use
+;;; version 3.2 and should not be used in newly written code. Use
 ;;; GtkFontChooserDialog
 ;;;
 ;;; Retrieves the GtkFontSelection widget embedded in the dialog.
@@ -269,4 +269,3 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.font-selection-dialog.lisp -----------------------------
-

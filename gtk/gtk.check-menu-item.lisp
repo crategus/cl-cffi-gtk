@@ -120,7 +120,7 @@
  ├── check.left
  ╰── <child>
     @end{pre}
-    The @sym{gtk-check-menu-item} class has a main CSS node with name
+    The @sym{gtk-check-menu-item} implementation has a main CSS node with name
     @code{menuitem}, and a subnode with name @code{check}, which gets the
     @code{.left} or @code{.right} style class.
   @end{dictionary}
@@ -131,7 +131,7 @@
         @br{}
         Size of check or radio indicator. @br{}
         @em{Warning:} The @code{indicator-size} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use the standard CSS property @code{min-width} on the check or
         radio nodes. The value of this style property is ignored. @br{}
        Allowed values: >= 0 @br{}

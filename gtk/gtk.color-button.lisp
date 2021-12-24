@@ -127,8 +127,8 @@
 
   @image[color-button]{}
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-color-button} class has a single CSS node with name
-    @arg{button}. To differentiate it from a plain @class{gtk-button} class,
+    The @sym{gtk-color-button} implementation has a single CSS node with name
+    @arg{button}. To differentiate it from a plain @class{gtk-button} widget,
     it gets the @code{.color} style class.
   @end{dictionary}
   @begin[Example]{dictionary}
@@ -212,9 +212,9 @@
   alpha value. The slot access function @sym{(setf gtk-color-button-alpha)}
   sets the current opacity to be @arg{alpha}.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-color-button-alpha} has been deprecated since version
-    3.4 and should not be used in newly-written code. Use the function
-    @fun{gtk-color-chooser-rgba} instead.
+    The @sym{gtk-color-button-alpha} function has been deprecated since version
+    3.4 and should not be used in newly written code. Use the
+    @fun{gtk-color-chooser-rgba} function instead.
   @end{dictionary}
   @see-class{gtk-color-button}
   @see-function{gtk-color-chooser-rgba}")
@@ -226,7 +226,7 @@
  "The @code{color} property of type @struct{gdk-color} (Read / Write) @br{}
   The selected color. @br{}
   @em{Warning:} The @code{color} property has been deprecated since version 3.4
-  and should not be used in newly-written code. Use the @code{rgba}
+  and should not be used in newly written code. Use the @code{rgba}
   property instead.")
 
 #+cl-cffi-gtk-documentation
@@ -247,8 +247,8 @@
   in the color button. The slot access function
   @sym{(setf gtk-color-button-color)} sets the current color to be @arg{color}.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-color-button-color} is deprecated and should not be
-    used in newly-written code. Use the function @fun{gtk-color-chooser-rgba}
+    The @sym{gtk-color-button-color} function is deprecated and should not be
+    used in newly written code. Use the @fun{gtk-color-chooser-rgba} function
     instead.
   @end{dictionary}
   @see-class{gtk-color-button}
@@ -280,9 +280,9 @@
   in the color button. The slot access function @sym{(setf gtk-color-button)}
   sets the current color to be @arg{rgba}.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-color-button-rgba} has been deprecated since version
-    3.4 and should not be used in newly-written code. Use the function
-    @fun{gtk-color-chooser-rgba} instead.
+    The @sym{gtk-color-button-rgba} function has been deprecated since version
+    3.4 and should not be used in newly written code. Use the
+    @fun{gtk-color-chooser-rgba} function instead.
   @end{dictionary}
   @see-class{gtk-color-button}
   @see-struct{gdk-rgba}
@@ -377,8 +377,8 @@
 
   Sets whether or not the color button should use the alpha channel.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-color-button-use-alpha} has been deprecated since
-    version 3.4 and should not be used in newly-written code. Use the function
+    The @sym{gtk-color-button-use-alpha} function has been deprecated since
+    version 3.4 and should not be used in newly written code. Use the
     @fun{gtk-color-chooser-use-alpha} function instead.
   @end{dictionary}
   @see-class{gtk-color-button}
@@ -419,9 +419,9 @@
   @return{A new @class{gtk-color-button} widget.}
   @short{Creates a new color button.}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-color-button-new-with-color} has been deprecated
-    since version 3.4 and should not be used in newly-written code. Use the
-    function @fun{gtk-color-button-new-with-rgba} instead.
+    The @sym{gtk-color-button-new-with-color} function has been deprecated
+    since version 3.4 and should not be used in newly written code. Use the
+    @fun{gtk-color-button-new-with-rgba} function instead.
   @end{dictionary}
   @see-class{gtk-color-button}
   @see-struct{gdk-color}

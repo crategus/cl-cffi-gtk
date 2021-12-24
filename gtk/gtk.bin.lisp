@@ -109,7 +109,7 @@
 
 (defcfun ("gtk_bin_get_child" gtk-bin-child) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-12}
+ "@version{*2021-12-3}
   @argument[bin]{a @class{gtk-bin} widget}
   @return{The @class{gtk-widget} child widget of @arg{bin}.}
   @begin{short}

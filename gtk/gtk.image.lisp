@@ -434,8 +434,6 @@
     Accessor of the @slot[gtk-image]{icon-set} slot of the @class{gtk-image}
     class.
   @end{short}
-
-  The icon set to display.
   @begin[Warning]{dictionary}
     The @sym{gtk-image-icon-set} function has been deprecated since version
     3.10 and should not be used in newly written code. Use the
@@ -603,15 +601,13 @@
       "Accessor"
       (documentation 'gtk-image-stock 'function)
  "@version{2021-12-17}
-  @syntax[]{(gtk-image-stock object) => stock-id}
-  @syntax[]{(setf (gtk-image-stock object) stock-id)}
+  @syntax[]{(gtk-image-stock object) => stock}
+  @syntax[]{(setf (gtk-image-stock object) stock)}
   @argument[object]{a @class{gtk-image} widget}
-  @argument[path]{a string with a stock ID}
+  @argument[stock]{a string with a stock ID}
   @begin{short}
     Accessor of the @slot[gtk-image]{stock} slot of the @class{gtk-image} class.
   @end{short}
-
-  The stock ID for a stock image to display.
   @begin[Warning]{dictionary}
     The @sym{gtk-image-stock} function property has been deprecated since
     version 3.10 and should not be used in newly written code. Use the

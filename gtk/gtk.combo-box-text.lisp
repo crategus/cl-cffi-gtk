@@ -133,8 +133,8 @@
      ├── button.combo
      ╰── window.popup
     @end{pre}
-    The @sym{gtk-combo-box-text} widget has a single CSS node with name
-    @code{combobox}. It adds the style class @code{.combo} to the main CSS
+    The @sym{gtk-combo-box-text} implementation has a single CSS node with name
+    @code{combobox}. It adds the @code{.combo} style class to the main CSS
     nodes of its entry and button children, and the @code{.linked} class to the
     node of its internal box.
   @end{dictionary}

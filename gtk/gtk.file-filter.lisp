@@ -493,7 +493,7 @@
                                needed
                                (callback gtk-file-filter-func)
                                (allocate-stable-pointer func)
-                               (callback stable-pointer-destroy-notify-cb)))
+                               (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-file-filter-add-custom)
 

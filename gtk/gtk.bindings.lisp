@@ -542,7 +542,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_binding_set_add_path is deprecated and should not be used in
-;;; newly-written code. 3.0
+;;; newly written code. 3.0
 ;;;
 ;;; This function was used internally by the GtkRC parsing mechanism to assign
 ;;; match patterns to GtkBindingSet structures.

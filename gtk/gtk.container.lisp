@@ -323,7 +323,7 @@
 (setf (gethash 'gtk-container-border-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-container-border-width 'function)
- "@version{2021-9-12}
+ "@version{*2021-12-3}
   @syntax[]{(gtk-container-border-width object) => width}
   @syntax[]{(setf gtk-container-border-width object) width)}
   @argument[object]{a @class{gtk-container} widget}
@@ -930,11 +930,12 @@
 
 (defun gtk-container-child-property (container child property)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-12}
+ "@version{*2021-12-16}
   @syntax[]{(gtk-container-child-property container child property) => value}
   @syntax[]{(setf (gtk-container-child-property container child property) value)}
   @argument[container]{a @class{gtk-container} widget}
-  @argument[child]{a @class{gtk-widget} which is a child of @arg{container}}
+  @argument[child]{a @class{gtk-widget} object which is a child of
+    @arg{container}}
   @argument[property]{a string with the name of the property to get}
   @argument[value]{the value of the property}
   @begin{short}
@@ -1041,7 +1042,7 @@
 ;;;                                           GtkWidget *child,
 ;;;                                           GParamSpec *pspec);
 ;;;
-;;; Emits a “child-notify” signal for the child property specified by pspec on
+;;; Emits a "child-notify" signal for the child property specified by pspec on
 ;;; the child.
 ;;;
 ;;; This is an analogue of g_object_notify_by_pspec() for child properties.
@@ -1069,7 +1070,7 @@
 
 (defun gtk-container-forall (container func)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-12}
+ "@version{*2021-11-18}
   @argument[container]{a @class{gtk-container} widget}
   @argument[func]{a @symbol{gtk-callback} callback function which is passed as
     a callback}

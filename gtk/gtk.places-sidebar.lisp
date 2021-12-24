@@ -254,8 +254,8 @@
   @fun{gtk-places-sidebar-location} when it changes the currently-viewed
   location.
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-places-sidebar} class uses a single CSS node with name
-    @code{placessidebar} and style class @code{.sidebar}.
+    The @sym{gtk-places-sidebar} implementation uses a single CSS node with name
+    @code{placessidebar} and @code{.sidebar} style class.
 
     Among the children of the places sidebar, the following style classes can
     be used:
@@ -278,13 +278,13 @@
         @entry[actions]{An integer with the possible drag actions that need to
           be asked for.}
         @entry[Returns]{An integer with the final drag action that the sidebar
-          should pass to the drag side of the drag-and-drop operation.}
+          should pass to the drag side of the drag and drop operation.}
       @end{table}
     @subheading{The \"drag-action-requested\" signal}
       @begin{pre}
  lambda (sidebar context dest-file source-file-list)    : Run Last
       @end{pre}
-      When the user starts a drag-and-drop operation and the sidebar needs to
+      When the user starts a drag and drop operation and the sidebar needs to
       ask the application for which drag action to perform, then the sidebar
       will emit this signal.
 
@@ -311,11 +311,10 @@
       @begin{pre}
  lambda (sidebar dest-file source-file-list action)    : Run First
       @end{pre}
-      The places sidebar emits this signal when the user completes a
-      drag-and-drop operation and one of the sidebar's items is the destination.
-      This item is in the @arg{dest-file}, and the @arg{source-file-list} has
-      the list of files that are dropped into it and which should be
-      copied/moved/etc. based on the specified @arg{action}.
+      The places sidebar emits this signal when the user completes a drag and
+      drop operation and one of the sidebar's items is the destination. This
+      item is in the @arg{dest-file}, and the @arg{source-file-list} has the
+      list of files that are dropped into it and which should be
       @begin[code]{table}
         @entry[sidebar]{The @sym{gtk-places-sidebar} widget which received the
           signal.}
@@ -894,7 +893,7 @@
 ;;;
 ;;; Creates a new GtkPlacesSidebar widget.
 ;;;
-;;; The application should connect to at least the “open-location” signal to be
+;;; The application should connect to at least the "open-location" signal to be
 ;;; notified when the user makes a selection in the sidebar.
 ;;;
 ;;; Returns :
@@ -912,8 +911,8 @@
 ;;;
 ;;; Applications may want to present some folders in the places sidebar if they
 ;;; could be immediately useful to users. For example, a drawing program could
-;;; add a “/usr/share/clipart” location when the sidebar is being used in an
-;;; “Insert Clipart” dialog box.
+;;; add a "/usr/share/clipart" location when the sidebar is being used in an
+;;; "Insert Clipart" dialog box.
 ;;;
 ;;; This function adds the specified location to a special place for immutable
 ;;; shortcuts. The shortcuts are application specific; they are not shared
@@ -979,7 +978,7 @@
 ;;;
 ;;; This function queries the bookmarks added by the user to the places sidebar,
 ;;; and returns one of them. This function is used by GtkFileChooser to
-;;; implement the “Alt-1”, “Alt-2”, etc. shortcuts, which activate the
+;;; implement the "Alt-1", "Alt-2", etc. shortcuts, which activate the
 ;;; cooresponding bookmark.
 ;;;
 ;;; sidebar :
@@ -1006,7 +1005,7 @@
 ;;;                                 GdkDragContext *context);
 ;;;
 ;;; Make the GtkPlacesSidebar show drop targets, so it can show the available
-;;; drop targets and a "new bookmark" row. This improves the Drag-and-Drop
+;;; drop targets and a "new bookmark" row. This improves the Drag and Drop
 ;;; experience of the user and allows applications to show all available drop
 ;;; targets at once.
 ;;;

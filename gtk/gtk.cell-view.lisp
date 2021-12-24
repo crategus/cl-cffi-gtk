@@ -196,7 +196,7 @@
   @br{}
   The @class{gdk-color} background color. @br{}
   @em{Warning:} The @code{background-gdk} property has been deprecated since
-  version 3.4 and should not be used in newly-written code. Use the
+  version 3.4 and should not be used in newly written code. Use the
   @code{background-rgba} property instead.")
 
 #+cl-cffi-gtk-documentation
@@ -214,7 +214,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The @code{background-gdk} property has been deprecated since version 3.4
-    and should not be used in newly-written code. Use the
+    and should not be used in newly written code. Use the
     @slot[gdk-cell-view]{background-rgba} property instead.
   @end{dictionary}
   @see-class{gtk-tree-view}
@@ -618,12 +618,12 @@
     to by @arg{path}.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-cell-view-size-of-row} has been deprecated since
-    version 3.0 and should not be used in newly-written code. The combo box
+    The @sym{gtk-cell-view-size-of-row} function has been deprecated since
+    version 3.0 and should not be used in newly written code. The combo box
     formerly used this to calculate the sizes for cell views, now you can
     achieve this by either using the @slot[gtk-cell-view]{fit-model} property or
     by setting the currently displayed row of the @class{gtk-cell-view} widget
-    and using the function @fun{gtk-widget-preferred-size}.
+    and using the @fun{gtk-widget-preferred-size} function.
   @end{dictionary}
   @see-class{gtk-cell-view}
   @see-function{gtk-cell-view-fit-model}
@@ -643,7 +643,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_cell_view_set_background_color has been deprecated since version 3.4
-;;; and should not be used in newly-written code. Use
+;;; and should not be used in newly written code. Use
 ;;; gtk_cell_view_set_background_rgba() instead.
 ;;;
 ;;; Sets the background color of view.

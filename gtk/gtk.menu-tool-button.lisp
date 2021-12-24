@@ -212,9 +212,9 @@
   The new menu tool button will contain an icon and label from the stock item
   indicated by @arg{stock-id}.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-menu-tool-button-new-from-stock} has been deprecated
-    since version 3.10 and should not be used in newly-written code. Use the
-    function @fun{gtk-menu-tool-button-new} instead.
+    The @sym{gtk-menu-tool-button-new-from-stock} function has been deprecated
+    since version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-menu-tool-button-new} function instead.
   @end{dictionary}
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-menu-tool-button-new}"
