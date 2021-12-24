@@ -152,7 +152,7 @@
    (:file "gtk.scale-button")          ; GtkScaleButton
    (:file "gtk.volume-button")         ; GtkVolumeButton
    (:file "gtk.switch")                ; GtkSwitch
-   ;; GtkLockButton not implemented
+   (:file "gtk.lock-button")           ; GtkLockButton
    (:file "gtk.model-button")          ; A button that uses a GAction as model
 
    ;; Multiline Text Editor
