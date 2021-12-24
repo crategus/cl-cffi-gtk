@@ -52,8 +52,8 @@
 ;;;     gtk_application_get_menubar                        Accessor
 ;;;     gtk_application_set_menubar                        Accessor
 ;;;     gtk_application_get_menu_by_id
-;;;     gtk_application_add_accelerator
-;;;     gtk_application_remove_accelerator
+;;;     gtk_application_add_accelerator                    not exported
+;;;     gtk_application_remove_accelerator                 not exported
 ;;;     gtk_application_list_action_descriptions
 ;;;     gtk_application_get_accels_for_action
 ;;;     gtk_application_set_accels_for_action
@@ -816,7 +816,7 @@
 (export 'gtk-application-menu-by-id)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_application_add_accelerator ()
+;;; gtk_application_add_accelerator ()                     not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_application_add_accelerator" %gtk-application-add-accelerator)
@@ -873,10 +873,8 @@
                                     name
                                     (if parameter parameter (null-pointer))))
 
-(export 'gtk-application-add-accelerator)
-
 ;;; ----------------------------------------------------------------------------
-;;; gtk_application_remove_accelerator ()
+;;; gtk_application_remove_accelerator ()                  not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_application_remove_accelerator"
@@ -910,8 +908,6 @@
   (%gtk-application-remove-accelerator application
                                        name
                                        (if parameter parameter (null-pointer))))
-
-(export 'gtk-application-remove-accelerator)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_list_action_descriptions ()

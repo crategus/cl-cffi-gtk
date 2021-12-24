@@ -55,10 +55,10 @@
 ;;;     gtk_assistant_get_page_type
 ;;;     gtk_assistant_set_page_title
 ;;;     gtk_assistant_get_page_title
-;;;     gtk_assistant_set_page_header_image                * deprecated
-;;;     gtk_assistant_get_page_header_image                * deprecated
-;;;     gtk_assistant_set_page_side_image                  * deprecated
-;;;     gtk_assistant_get_page_side_image                  * deprecated
+;;;     gtk_assistant_set_page_header_image                deprecated
+;;;     gtk_assistant_get_page_header_image                deprecated
+;;;     gtk_assistant_set_page_side_image                  deprecated
+;;;     gtk_assistant_get_page_side_image                  deprecated
 ;;;     gtk_assistant_set_page_complete
 ;;;     gtk_assistant_get_page_complete
 ;;;     gtk_assistant_set_page_has_padding
@@ -452,9 +452,11 @@
 
 ;;; --- gtk-assistant-child-header-image ---------------------------------------
 
+;; not exported
+
 (define-child-property "GtkAssistant"
                        gtk-assistant-child-header-image
-                       "header-image" "GdkPixbuf" t t t)
+                       "header-image" "GdkPixbuf" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-header-image atdoc:*function-name-alias*)
@@ -510,9 +512,11 @@
 
 ;;; --- gtk-assistant-child-sidebar-image --------------------------------------
 
+;; not exported
+
 (define-child-property "GtkAssistant"
                        gtk-assistant-child-sidebar-image
-                       "sidebar-image" "GdkPixbuf" t t t)
+                       "sidebar-image" "GdkPixbuf" t t nil)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-sidebar-image atdoc:*function-name-alias*)
