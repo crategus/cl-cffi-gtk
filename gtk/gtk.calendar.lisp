@@ -118,7 +118,7 @@
 (setf (gethash 'gtk-calendar-display-options atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gtk-calendar-display-options atdoc:*external-symbols*)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @begin{short}
     These options can be used to influence the display and behaviour of a
     @class{gtk-calendar} widget.
@@ -143,8 +143,8 @@
     @entry[:show-week-numbers]{Displays each week numbers of the current year,
       down the left side of the calendar.}
     @entry[:show-details]{Just show an indicator, not the full details text
-      when details are provided. See the function
-      @fun{gtk-calendar-set-detail-func}.}
+      when details are provided. See the @fun{gtk-calendar-set-detail-func}
+      function.}
   @end{table}
   @see-class{gtk-calendar}
   @see-function{gtk-calendar-set-detail-func}")
@@ -191,27 +191,27 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-calendar 'type)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @begin{short}
     The @sym{gtk-calendar} widget displays a Gregorian calendar, one month at a
     time.
   @end{short}
-  It can be created with the function @fun{gtk-calendar-new}.
+  It can be created with the @fun{gtk-calendar-new} function.
 
-  The month and year currently displayed can be altered with the function
-  @fun{gtk-calendar-select-month}. The exact day can be selected from the
-  displayed month using the function @fun{gtk-calendar-select-day}.
+  The month and year currently displayed can be altered with the
+  @fun{gtk-calendar-select-month} function. The exact day can be selected from
+  the displayed month using the @fun{gtk-calendar-select-day} function.
 
-  To place a visual marker on a particular day, use the function
-  @fun{gtk-calendar-mark-day} and to remove the marker, the function
-  @fun{gtk-calendar-unmark-day}. Alternative, all marks can be cleared with
-  the function @fun{gtk-calendar-clear-marks}.
+  To place a visual marker on a particular day, use the
+  @fun{gtk-calendar-mark-day} function and to remove the marker, the
+  @fun{gtk-calendar-unmark-day} function. Alternative, all marks can be cleared
+  with the @fun{gtk-calendar-clear-marks} function.
 
   The way in which the calendar itself is displayed can be altered using the
-  function @fun{gtk-calendar-display-options}.
+  @fun{gtk-calendar-display-options} function.
 
-  The selected date can be retrieved from a @sym{gtk-calendar} using the
-  function @fun{gtk-calendar-date}.
+  The selected date can be retrieved from a @sym{gtk-calendar} widget using the
+  @fun{gtk-calendar-date} function.
 
   Users should be aware that, although the Gregorian calendar is the legal
   calendar in most countries, it was adopted progressively between 1582 and
@@ -245,7 +245,7 @@
       @begin{pre}
  lambda (calendar)    :run-first
       @end{pre}
-      Emitted when the user selects a day.
+      The signal is emitted when the user selects a day.
       @begin[code]{table}
         @entry[calendar]{The @sym{gtk-calendar} widget which received the
           signal.}
@@ -254,7 +254,7 @@
       @begin{pre}
  lambda (calendar)    :run-first
       @end{pre}
-      Emitted when the user double-clicks a day.
+      The signal is emitted when the user double-clicks a day.
       @begin[code]{table}
         @entry[calendar]{The @sym{gtk-calendar} widget which received the
           signal.}
@@ -263,8 +263,8 @@
       @begin{pre}
  lambda (calendar)    :run-first
       @end{pre}
-      Emitted when the user clicks a button to change the selected month on a
-      calendar.
+      The signal is emitted when the user clicks a button to change the selected
+       month on a calendar.
       @begin[code]{table}
         @entry[calendar]{The @sym{gtk-calendar} widget which received the
           signal.}
@@ -273,7 +273,7 @@
       @begin{pre}
  lambda (calendar)    :run-first
       @end{pre}
-      Emitted when the user switched to the next month.
+      The signal is emitted when the user switched to the next month.
       @begin[code]{table}
         @enty[calendar]{The @sym{gtk-calendar} widget which received the
           signal.}
@@ -282,7 +282,7 @@
       @begin{pre}
  lambda (calendar)    :run-first
       @end{pre}
-      Emitted when user switched to the next year.
+      The signal is emitted when user switched to the next year.
       @begin[code]{table}
         @entry[calendar]{The @sym{gtk-calendar} widget which received the
           signal.}
@@ -291,7 +291,7 @@
       @begin{pre}
  lambda (calendar)    :run-first
       @end{pre}
-      Emitted when the user switched to the previous month.
+      The signal is emitted when the user switched to the previous month.
       @begin[code]{table}
         @entry[calendar]{The @sym{gtk-calendar} widget which received the
           signal.}
@@ -300,7 +300,7 @@
       @begin{pre}
  lambda (calendar)    :run-first
       @end{pre}
-      Emitted when user switched to the previous year.
+      The signal is emitted when user switched to the previous year.
       @begin[code]{table}
         @entry[calendar]{The @sym{gtk-calendar} widget which received the
           signal.}
@@ -337,7 +337,7 @@
 (setf (gethash 'gtk-calendar-day atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-day 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calender-day object) => day}
   @syntax[]{(setf (gtk-calendar-day object) day)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -369,7 +369,7 @@
 (setf (gethash 'gtk-calendar-detail-height-rows atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-detail-height-rows 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-detail-height-rows object) => rows}
   @syntax[]{(setf (gtk-calendar-detail-height-rows object) rows)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -379,10 +379,10 @@
     @class{gtk-calendar} class.
   @end{short}
 
-  The slot access function @sym{gtk-calendar-detail-height-rows} queries the
-  height of detail cells, in rows. The slot access function
-  @sym{(setf gtk-calendar-detail-height-rows)} updates the height of detail
-  cells.
+  The @sym{gtk-calendar-detail-height-rows} slot access function queries the
+  height of detail cells, in rows. The
+  @sym{(setf gtk-calendar-detail-height-rows)} slot access function updates the
+  height of detail cells.
   @see-class{gtk-calendar}")
 
 ;;; --- gtk-calendar-detail-width-chars ----------------------------------------
@@ -390,8 +390,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "detail-width-chars"
                                                'gtk-calendar) 't)
- "The @code{detail-width-chars} property of type @code{:int} (Read / Write)
-  @br{}
+ "The @code{detail-width-chars} property of type @code{:int} (Read / Write)@br{}
   Width of a detail cell, in characters. A value of 0 allows any width. @br{}
   Allowed values: [0, 127] @br{}
   Default value: 0")
@@ -400,7 +399,7 @@
 (setf (gethash 'gtk-calendar-detail-width-chars atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-detail-width-chars 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-detail-width-chars object) => chars}
   @syntax[]{(setf (gtk-calendar-detail-width-chars object) chars)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -410,10 +409,10 @@
     @class{gtk-calendar} class.
   @end{short}
 
-  The slot access function @sym{gtk-calendar-detail-width-chars} queries the
-  width of detail cells, in characters. The slot access function
-  @sym{(setf gtk-calendar-detail-width-chars)} updates the width of detail
-  cells.
+  The @sym{gtk-calendar-detail-width-chars} slot access function queries the
+  width of detail cells, in characters. The
+  @sym{(setf gtk-calendar-detail-width-chars)} slot access function updates the
+  width of detail cells.
   @see-class{gtk-calendar}")
 
 ;;; --- gtk-calendar-month -----------------------------------------------------
@@ -430,7 +429,7 @@
 (setf (gethash 'gtk-calendar-month atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-month 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-month object) => month}
   @syntax[]{(setf (gtk-calendar-month object) month)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -457,7 +456,7 @@
 (setf (gethash 'gtk-calendar-no-month-change atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-no-month-change 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-no-month-change object) => no-change}
   @syntax[]{(setf (gtk-calendar-no-month-change object) no-change)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -484,7 +483,7 @@
 (setf (gethash 'gtk-calendar-show-day-names atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-show-day-names 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-show-day-names object) => show-day-names}
   @syntax[]{(setf (gtk-calendar-show-day-names object) show-day-names)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -512,7 +511,7 @@
 (setf (gethash 'gtk-calendar-show-details atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-show-details 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-show-details object) => show-details}
   @syntax[]{(setf (gtk-calendar-show-details object) show-details)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -540,7 +539,7 @@
 (setf (gethash 'gtk-calendar-show-heading atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-show-heading 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-show-heading object) => show-heading}
   @syntax[]{(setf (gtk-calendar-show-heading object) show-heading)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -567,7 +566,7 @@
 (setf (gethash 'gtk-calendar-show-week-numbers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-show-week-numbers 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-show-week-numbers object) => show-week-numbers}
   @syntax[]{(setf (gtk-calendar-show-week-numbers object) show-week-numbers)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -593,7 +592,7 @@
 (setf (gethash 'gtk-calendar-year atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-year 'function)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-year object) => year}
   @syntax[]{(setf (gtk-calendar-year object) year)}
   @argument[object]{a @class{gtk-calendar} widget}
@@ -616,7 +615,7 @@
 
 (defun gtk-calendar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @return{A newly @class{gtk-calendar} widget.}
   @begin{short}
     Creates a new calendar, with the current date being selected.
@@ -634,7 +633,7 @@
 
 (defun gtk-calendar-select-month (calendar month year)
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @argument[calendar]{a @class{gtk-calendar} widget}
   @argument[month]{an integer with the month between 0 and 11}
   @argument[year]{an integer with the year}
@@ -656,7 +655,7 @@
 
 (defun gtk-calendar-select-day (calendar day)
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @argument[calendar]{a @class{gtk-calendar} widget}
   @argument[day]{an integer with the day between 1 and 31, or 0 to unselect the
     currently selected day}
@@ -675,7 +674,7 @@
 
 (defcfun ("gtk_calendar_mark_day" gtk-calendar-mark-day) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @argument[calendar]{a @class{gtk-calendar} widget}
   @argument[day]{an unsigned integer with the day to mark between 1 and 31}
   @begin{short}
@@ -696,7 +695,7 @@
 
 (defcfun ("gtk_calendar_unmark_day" gtk-calendar-unmark-day) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @argument[calendar]{a @class{gtk-calendar} widget}
   @argument[day]{an unsigned integer with the day to unmark between 1 and 31}
   @begin{short}
@@ -718,7 +717,7 @@
 (defcfun ("gtk_calendar_get_day_is_marked" gtk-calendar-day-is-marked)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @argument[calendar]{a @class{gtk-calendar} widget}
   @argument[day]{an unsigned integer with the day between 1 and 31}
   @return{A boolean whether the day is marked.}
@@ -739,7 +738,7 @@
 
 (defcfun ("gtk_calendar_clear_marks" gtk-calendar-clear-marks) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @argument[calendar]{a @class{gtk-calendar} widget}
   @begin{short}
     Remove all visual markers.
@@ -766,7 +765,7 @@
 (defcfun ("gtk_calendar_get_display_options" gtk-calendar-display-options)
     gtk-calendar-display-options
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @syntax[]{(gtk-calendar-display-options calendar) => flags}
   @syntax[]{(setf (gtk-calendar-display-options calendar) flags)}
   @argument[calendar]{a @class{gtk-calendar} widget}
@@ -775,10 +774,10 @@
     Accessor of the display options of the calendar.
   @end{short}
 
-  The function @sym{gtk-calendar-display-options} returns the current display
-  options of the calendar. The function
-  @sym{(setf gtk-calendar-display-options)} sets display options, e.g.
-  whether to display the heading and the month headings.
+  The @sym{gtk-calendar-display-options} function returns the current display
+  options of the calendar. The @sym{(setf gtk-calendar-display-options)}
+  function sets display options, e.g. whether to display the heading and the
+  month headings.
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}"
   (calendar (g-object gtk-calendar)))
@@ -791,12 +790,12 @@
 
 (defun gtk-calendar-date (calendar)
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @argument[calendar]{a @class{gtk-calendar} widget}
   @begin{return}
-    @code{year} -- the year as a decimal number, e.g. 2021 @br{}
-    @code{month} -- the month number, between 0 and 11 @br{}
-    @code{day} -- the day number, between 1 and 31
+    @arg{year} -- the year as a decimal number, e.g. 2021 @br{}
+    @arg{month} -- the month number, between 0 and 11 @br{}
+    @arg{day} -- the day number, between 1 and 31
   @end{return}
   @begin{short}
     Obtains the selected date from the calendar.
@@ -814,8 +813,8 @@
 ;;; GtkCalendarDetailFunc ()
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-calendar-detail-func (g-string :free-to-foreign nil
-                                                :free-from-foreign nil)
+(defcallback gtk-calendar-detail-func (:string :free-to-foreign nil
+                                               :free-from-foreign nil)
     ((calendar (g-object gtk-calendar))
      (year :uint)
      (month :uint)
@@ -830,7 +829,7 @@
 (setf (gethash 'gtk-calendar-detail-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-calendar-detail-func atdoc:*external-symbols*)
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @begin{short}
     This kind of functions provide Pango markup with detail information for the
     specified day.
@@ -868,7 +867,7 @@
 
 (defun gtk-calendar-set-detail-func (calendar func)
  #+cl-cffi-gtk-documentation
- "@version{2021-6-11}
+ "@version{2021-12-18}
   @argument[calendar]{a @class{gtk-calendar} widget}
   @argument[func]{a @symbol{gtk-calendar-detail-func} callback function
     providing details for each day}
@@ -886,11 +885,14 @@
   @slot[gtk-calendar]{detail-width-chars} and
   @slot[gtk-calendar]{detail-height-rows} properties.
   @see-class{gtk-calendar}
-  @see-symbol{gtk-calendar-detail-func}"
+  @see-symbol{gtk-calendar-detail-func}
+  @see-function{gtk-calendar-show-details}
+  @see-function{gtk-calendar-detail-width-chars}
+  @see-function{gtk-calendar-detail-height-rows}"
   (%gtk-calendar-set-detail-func calendar
                                  (callback gtk-calendar-detail-func)
                                  (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                 (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-calendar-set-detail-func)
 
