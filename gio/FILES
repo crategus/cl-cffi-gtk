@@ -45,6 +45,12 @@ Resources
 
   gio.resource.lisp            - GResource                         - GIO 2.66 &
 
+Permissions
+
+  gio.permission.lisp          - GPermission                       - GIO 2.68 %
+
+  GSimplePermission — A GPermission that does not change value
+
 Data Models
 
   gio.list-model.lisp          - GListModel                        - GIO 2.68

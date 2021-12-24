@@ -353,6 +353,21 @@
     @about-function{g-resources-enumerate-children}
     @about-function{g-resources-info}
   @end{section}
+  @begin[Permissions]{section}
+    @begin[GPermission]{subsection}
+      @about-class{g-permission}
+      @about-generic{g-permission-allowed}
+      @about-generic{g-permission-can-aquire}
+      @about-generic{g-permission-can-release}
+      @about-function{g-permission-acquire}
+      @about-function{g-permission-acquire-async}
+      @about-function{g-permission-acquire-finish}
+      @about-function{g-permission-release}
+      @about-function{g-permission-release-async}
+      @about-function{g-permission-release-finish}
+      @about-function{g-permission-impl-update}
+    @end{subsection}
+  @end{section}
   @begin[Data models]{section}
     @begin[GListModel]{subsection}
       @about-class{g-list-model}
