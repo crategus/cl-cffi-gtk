@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.model-button.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2020 Dieter Kaiser
+;;; Copyright (C) 2019 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -81,11 +81,13 @@
   :radio)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-button-role atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-button-role atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-button-role atdoc:*external-symbols*)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @begin{short}
-    The role specifies the desired appearance of a @class{gtk-model-button}.
+    The role specifies the desired appearance of a @class{gtk-model-button}
+    widget.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkButtonRole\" gtk-button-role
@@ -146,24 +148,26 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-model-button 'type)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @begin{short}
-    @sym{gtk-model-button} is a button class that can use a @class{g-action} as
-    its model.
+    The @sym{gtk-model-button} class is a button class that can use a
+    @class{g-action} object as its model.
   @end{short}
-  In contrast to @class{gtk-toggle-button} or @class{gtk-radio-button}, which
-  can also be backed by a @class{g-action} via the @code{action-name} property,
-  @sym{gtk-model-button} will adapt its appearance according to the kind of
-  action it is backed by, and appear either as a plain, check or radio button.
+  In contrast to the @class{gtk-toggle-button} or @class{gtk-radio-button}
+  classes, which can also be backed by a @class{g-action} object via the
+  @code{action-name} property, the @sym{gtk-model-button} widget will adapt its
+  appearance according to the kind of action it is backed by, and appear either
+  as a plain, check or radio button.
 
-  Model buttons are used with popovers from a menu model with the function
-  @fun{gtk-popover-new-from-model}. They can also be used manually in a
-  @class{gtk-popover-menu}.
+  Model buttons are used with popovers from a menu model with the
+  @fun{gtk-popover-new-from-model} function. They can also be used manually in
+  a @class{gtk-popover-menu} widget.
 
-  When the action is specified via the @code{action-name} and
-  @code{action-target} properties, the role of the button, i.e. whether it is
-  a plain, check or radio button, is determined by the type of the action and
-  does not have to be explicitly specified with the @code{role} property.
+  When the action is specified via the @slot[gtk-actionable]{action-name} and
+  @slot[gtk-actionable]{action-target} properties, the role of the button, i.e.
+  whether it is a plain, check or radio button, is determined by the type of the
+  action and does not have to be explicitly specified with the @code{role}
+  property.
 
   The content of the button is specified by the @code{text} and @code{icon}
   properties.
@@ -171,11 +175,11 @@
   The appearance of model buttons can be influenced with the @code{centered}
   and @code{iconic} properties.
 
-  Model buttons have built-in support for submenus in @class{gtk-popover-menu}.
-  To make a @sym{gtk-model-button} that opens a submenu when activated, set the
-  @code{menu-name} property. To make a button that goes back to the parent menu,
-  you should set the @code{inverted} property to place the submenu indicator at
-  the opposite side.
+  Model buttons have built-in support for submenus in the
+  @class{gtk-popover-menu} widget. To make a @sym{gtk-model-button} widget that
+  opens a submenu when activated, set the @code{menu-name} property. To make a
+  button that goes back to the parent menu, you should set the @code{inverted}
+  property to place the submenu indicator at the opposite side.
   @begin[Example]{dictionary}
     @begin{pre}
 <object class=\"GtkPopoverMenu\">
@@ -223,14 +227,13 @@
  ├── <child>
  ╰── arrow
     @end{pre}
-    @sym{gtk-model-button} has a main CSS node with name @code{modelbutton},
-    and a subnode, which will have the name @code{check}, @code{radio} or
-    @code{arrow}, depending on the role of the button and whether it has a menu
-    name set.
+    The @sym{gtk-model-button} implementation has a main CSS node with name
+    @code{modelbutton}, and a subnode, which will have the name @code{check},
+    @code{radio} or @code{arrow}, depending on the role of the button and
+    whether it has a menu name set.
 
     The subnode is positioned before or after the content nodes and gets the
     @code{.left} or @code{.right} style class, depending on where it is located.
-
     @begin{pre}
  button.model
  ├── <child>
@@ -268,7 +271,7 @@
 (setf (gethash 'gtk-model-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-active 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-model-button-active object) => active}
   @syntax[]{(setf (gtk-model-button-active object) active)}
   @argument[object]{a @class{gtk-model-button} widget}
@@ -297,7 +300,7 @@
 (setf (gethash 'gtk-model-button-centered atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-centered 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-model-button-centered object) => centered}
   @syntax[]{(setf (gtk-model-button-centered object) centered)}
   @argument[object]{a @class{gtk-model-button} widget}
@@ -324,7 +327,7 @@
 (setf (gethash 'gtk-model-button-icon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-icon 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-model-button-icon object) => icon}
   @syntax[]{(setf (gtk-model-button-icon object) icon)}
   @argument[object]{a @class{gtk-model-button} widget}
@@ -354,7 +357,7 @@
 (setf (gethash 'gtk-model-button-iconic atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-iconic 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-model-button-iconic object) => iconic}
   @syntax[]{(setf (gtk-model-button-iconic object) iconic)}
   @argument[object]{a @class{gtk-model-button} widget}
@@ -384,7 +387,7 @@
 (setf (gethash 'gtk-model-button-inverted atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-inverted 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-model-button-inverted object) => inverted}
   @syntax[]{(setf (gtk-model-button-inverted object) inverted)}
   @argument[object]{a @class{gtk-model-button} widget}
@@ -413,7 +416,7 @@
 (setf (gethash 'gtk-model-button-menu-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-menu-name 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-model-button-menu-name object) => menu-name}
   @syntax[]{(setf (gtk-model-button-menu-name object) menu-name)}
   @argument[object]{a @class{gtk-model-button} widget}
@@ -442,7 +445,7 @@
 (setf (gethash 'gtk-model-button-role atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-role 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-model-button-role object) => role}
   @syntax[]{(setf (gtk-model-button-role object) role)}
   @argument[object]{a @class{gtk-model-button} widget}
@@ -471,7 +474,7 @@
 (setf (gethash 'gtk-model-button-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-text 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-model-button-text object) => text}
   @syntax[]{(setf (gtk-model-button-text object) text)}
   @argument[object]{a @class{gtk-model-button} widget}
@@ -499,7 +502,7 @@
 (setf (gethash 'gtk-model-button-use-markup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-model-button-use-markup 'function)
- "@version{2020-4-15}
+ "@version{2021-12-23}
   @syntax[]{(gtk-model-button-use-markup object) => use-markup}
   @syntax[]{(setf (gtk-model-button-use-markup object) use-markup)}
   @argument[object]{a @class{gtk-model-button} widget}
@@ -523,11 +526,9 @@
 
 (defun gtk-model-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @return{A new @class{gtk-model-button} widget.}
-  @begin{short}
-    Creates a new model button widget.
-  @end{short}
+  @short{Creates a new model button widget.}
   @see-class{gtk-model-button}"
   (make-instance 'gtk-model-button))
 

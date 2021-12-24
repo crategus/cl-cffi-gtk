@@ -82,14 +82,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-check-button 'type)
- "@version{*2021-2-5}
+ "@version{*2021-12-23}
   @begin{short}
     A @sym{gtk-check-button} widget places a discrete @class{gtk-toggle-button}
     widget next to a widget, usually a @class{gtk-label} widget.
   @end{short}
-  See the section on @class{gtk-toggle-button} widgets for more information
-  about toggle/check buttons. The important signal \"toggled\" is also
-  inherited from the @class{gtk-toggle-button} widget.
+  See the @class{gtk-toggle-button} documentation for more information about
+  toggle/check buttons. The important \"toggled\" signal is also inherited from
+  the @class{gtk-toggle-button} class.
 
   @image[check-button]{}
   @begin[CSS nodes]{dictionary}
@@ -98,8 +98,8 @@
  ├── check
  ╰── <child>
     @end{pre}
-    A @sym{gtk-check-button} widget with indicator, see the function
-    @fun{gtk-toggle-button-mode}, has a main CSS node with name
+    A @sym{gtk-check-button} widget with indicator, see the
+    @fun{gtk-toggle-button-mode} function, has a main CSS node with name
     @code{checkbutton} and a subnode with name @code{check}.
     @begin{pre}
  button.check
@@ -117,7 +117,7 @@
         @br{}
         Size of check or radio indicator. @br{}
         @em{Warning:} The @code{indicator-size} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use CSS @code{min-width} and @code{min-height} on the indicator
         node. @br{}
         Allowed values: >= 0 @br{}
@@ -128,7 +128,7 @@
         (Read) @br{}
         Spacing around check or radio indicator. @br{}
         @em{Warning:} The @code{indicator-spacing} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use CSS @code{min-width} and @code{min-height} on the indicator
         node. @br{}
         Allowed values: >= 0 @br{}
@@ -148,10 +148,12 @@
 
 (defun gtk-check-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-10}
+ "@version{2021-12-23}
   @return{A @class{gtk-check-button} widget.}
-  @short{Creates a new check button widget.}
-  @see-class{gtk-check-button}"
+  @short{Creates a new check button.}
+  @see-class{gtk-check-button}
+  @see-function{gtk-check-button-new-with-label}
+  @see-function{gtk-check-button-new-with-mnemonic}"
   (make-instance 'gtk-check-button))
 
 (export 'gtk-check-button-new)
@@ -164,7 +166,7 @@
 
 (defun gtk-check-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{*2021-2-5}
+ "@version{*2021-12-23}
   @argument[label]{a string with the text for the check button}
   @return{A @class{gtk-check-button} widget.}
   @begin{short}
@@ -172,6 +174,7 @@
     of it.
   @end{short}
   @see-class{gtk-check-button}
+  @see-class{gtk-label}
   @see-function{gtk-check-button-new}
   @see-function{gtk-check-button-new-with-mnemonic}"
   (make-instance 'gtk-check-button
@@ -189,15 +192,18 @@
            gtk-check-button-new-with-mnemonic)
     (g-object gtk-check-button)
 #+cl-cffi-gtk-documentation
- "@version{2020-5-10}
+ "@version{2021-12-23}
   @argument[label]{a string with the text of the button, with an underscore in
     front of the mnemonic character}
   @return{A @class{gtk-check-button} widget.}
-  @short{Creates a new check button widget containing a label.}
-  The label will be created using the function
-  @fun{gtk-label-new-with-mnemonic}, so underscores in label indicate the
-  mnemonic for the check button.
+  @begin{short}
+    Creates a new check button widget containing a label.
+  @end{short}
+  The label will be created using the @fun{gtk-label-new-with-mnemonic}
+  function, so underscores in label indicate the mnemonic for the check button.
   @see-class{gtk-check-button}
+  @see-function{gtk-check-button-new}
+  @see-function{gtk-check-button-new-with-label}
   @see-function{gtk-label-new-with-mnemonic}"
   (label :string))
 

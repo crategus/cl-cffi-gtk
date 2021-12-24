@@ -96,7 +96,7 @@
 (setf (gethash 'gtk-arrow-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-arrow-type atdoc:*external-symbols*)
- "@version{*2021-7-25}
+ "@version{*2021-12-23}
   @begin{short}
     Used to indicate the direction in which an arrow should point in a
     @class{gtk-menu-button} widget.
@@ -153,21 +153,22 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-button 'type)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @begin{short}
     The @sym{gtk-menu-button} widget is used to display a popup when clicked on.
   @end{short}
-  This popup can be provided either as a @class{gtk-menu}, a @class{gtk-popover}
-  or an abstract @class{g-menu-model}.
+  This popup can be provided either as a @class{gtk-menu} widget, a
+  @class{gtk-popover} widget or an abstract @class{g-menu-model} object.
 
   @image[menu-button]{}
 
   The @sym{gtk-menu-button} widget can hold any valid child widget. That is, it
-  can hold almost any other standard @class{gtk-widget}. The most commonly used
-  child is @class{gtk-image}. If no widget is explicitely added to the
-  @sym{gtk-menu-button}, a @class{gtk-image} is automatically created, using an
-  arrow image oriented according to \"direction\" or the generic
-  \"open-menu-symbolic\" icon if the direction is not set.
+  can hold almost any other standard @class{gtk-widget} object. The most
+  commonly used child is the @class{gtk-image} widget. If no widget is
+  explicitely added to the @sym{gtk-menu-button} widget, a @class{gtk-image}
+  widget is automatically created, using an arrow image oriented according to
+  \"direction\" or the generic \"open-menu-symbolic\" icon if the direction is
+  not set.
 
   The positioning of the popup is determined by the @code{direction} property
   of the menu button.
@@ -180,11 +181,10 @@
   button. If there is not enough space below the button, the menu is popped up
   above the button instead. If the alignment would move part of the menu
   offscreen, it is \"pushed in\".
-
   @begin[CSS nodes]{dictionary}
-    @class{gtk-menu-button} has a single CSS node with name @code{button}. To
-    differentiate it from a plain @class{gtk-button}, it gets the @code{.popup}
-    style class.
+    The @sym{gtk-menu-button} implementation has a single CSS node with name
+    @code{button}. To differentiate it from a plain @class{gtk-button} widget,
+    it gets the @code{.popup} style class.
   @end{dictionary}
   @see-slot{gtk-menu-button-align-widget}
   @see-slot{gtk-menu-button-direction}
@@ -214,28 +214,29 @@
 (setf (gethash 'gtk-menu-button-align-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-button-align-widget 'function)
- "@version{2020-5-12}
-  @syntax[]{(gtk-menu-button-align-widget object) => align-widget}
-  @syntax[]{(setf (gtk-menu-button-align-widget object) align-widget)}
+ "@version{2021-12-23}
+  @syntax[]{(gtk-menu-button-align-widget object) => widget}
+  @syntax[]{(setf (gtk-menu-button-align-widget object) widget)}
   @argument[object]{a @class{gtk-menu-button} widget}
-  @argument[align-widget]{a @class{gtk-widget}}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Accessor of the @slot[gtk-menu-button]{align-widget} slot of the
     @class{gtk-menu-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-button-align-widget} returns the parent
-  widget to use to line up with menu or @code{nil}. The slot access function
-  @sym{(setf gtk-menu-button-align-widget)} sets the widget to use to line the
-  menu with when popped up. Note that the @arg{align-widget} must contain the
-  menu button itself.
+  The @sym{gtk-menu-button-align-widget} slot access function returns the parent
+  widget to use to line up with menu or @code{nil}. The
+  @sym{(setf gtk-menu-button-align-widget)} slot access function sets the widget
+  to use to line the menu with when popped up. Note that the @arg{widget}
+  argument must contain the menu button itself.
 
   Setting it to @code{nil} means that the menu will be aligned with the button
   itself.
 
   Note that this property is only used with menus currently, and not for
   popovers.
-  @see-class{gtk-menu-button}")
+  @see-class{gtk-menu-button}
+  @see-class{gtk-widget}")
 
 ;;; --- gtk-menu-button-direction ----------------------------------------------
 
@@ -251,7 +252,7 @@
 (setf (gethash 'gtk-menu-button-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-button-direction 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-menu-button-direction object) => direction}
   @syntax[]{(setf (gtk-menu-button-direction object) direction)}
   @argument[object]{a @class{gtk-menu-button} widget}
@@ -261,17 +262,18 @@
     @class{gtk-menu-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-button-align-widget} returns the
-  direction the popup will be pointing at when popped up. The slot access
-  function @sym{(setf gtk-menu-button-align-widget)} sets the direction in
-  which the popup will be popped up, as well as changing the direction of the
-  arrow. The child will not be changed to an arrow if it was customized.
+  The @sym{gtk-menu-button-align-widget} slot access function returns the
+  direction the popup will be pointing at when popped up. The
+  @sym{(setf gtk-menu-button-align-widget)} slot access function sets the
+  direction in which the popup will be popped up, as well as changing the
+  direction of the arrow. The child will not be changed to an arrow if it was
+  customized.
 
-  If the popup does not fit in the available space in the given direction, GTK+
+  If the popup does not fit in the available space in the given direction, GTK
   will its best to keep it inside the screen and fully visible.
 
-  If you pass @code{:none} for a direction, the popup will behave as if
-  you passed @code{:down}, although you will not see any arrows.
+  If you pass the @code{:none} value for a direction, the popup will behave as
+  if you passed the @code{:down} value, although you will not see any arrows.
   @see-class{gtk-menu-button}
   @see-symbol{gtk-arrow-type}")
 
@@ -284,42 +286,48 @@
   @br{}
   The menu model from which the popup will be created. Depending on the
   @code{use-popover} property, that may be a menu or a popover. See the
-  function @fun{gtk-menu-button-menu-model} for the interaction with the
+  @fun{gtk-menu-button-menu-model} function for the interaction with the
   @code{popup} property.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-button-menu-model atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-button-menu-model 'function)
- "@version{2020-5-12}
-  @syntax[]{(gtk-menu-button-menu-model object) => menu-model}
-  @syntax[]{(setf (gtk-menu-button-menu-model object) menu-model)}
+ "@version{2021-12-23}
+  @syntax[]{(gtk-menu-button-menu-model object) => model}
+  @syntax[]{(setf (gtk-menu-button-menu-model object) model)}
   @argument[object]{a @class{gtk-menu-button} widget}
-  @argument[menu-model]{a @class{g-menu-model}, or @code{nil} to unset and
+  @argument[model]{a @class{g-menu-model} object, or @code{nil} to unset and
     disable the button}
   @begin{short}
     Accessor of the @slot[gtk-menu-button]{menu-model} slot of the
     @class{gtk-menu-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-button-menu-model} returns the
-  menu model used to generate the popup. The slot access function
-  @sym{(setf gtk-menu-button-menu-model)} sets the menu model from which the
-  popup will be constructed, or @code{nil} to dissociate any existing menu
-  model and disable the button.
+  The @sym{gtk-menu-button-menu-model} slot access function returns the
+  menu model used to generate the popup. The
+  @sym{(setf gtk-menu-button-menu-model)} slot access function sets the menu
+  model from which the popup will be constructed, or @code{nil} to dissociate
+  any existing menu model and disable the button.
 
   Depending on the value of @slot[gtk-menu-button]{use-popover} property,
-  either a @class{gtk-menu} widget will be created with the function
-  @fun{gtk-menu-new-from-model}, or a @class{gtk-popover} widget with the
-  function @fun{gtk-popover-new-from-model}. In either case, actions will be
+  either a @class{gtk-menu} widget will be created with the
+  @fun{gtk-menu-new-from-model} function, or a @class{gtk-popover} widget with
+  the @fun{gtk-popover-new-from-model} function. In either case, actions will be
   connected as documented for these functions.
 
   If the @slot[gtk-menu-button]{popup} or @slot[gtk-menu-button]{popover}
   properties are already set, those widgets are dissociated from the menu
   button, and those properties are set to @code{nil}.
   @see-class{gtk-menu-button}
+  @see-class{g-menu-model}
+  @see-class{gtk-menu}
+  @see-class{gtk-popover}
   @see-function{gtk-menu-new-from-model}
-  @see-function{gtk-popover-new-from-model}")
+  @see-function{gtk-popover-new-from-model}
+  @see-function{gtk-menu-button-use-popover}
+  @see-function{gtk-menu-button-popup}
+  @see-function{gtk-menu-button-popover}")
 
 ;;; --- gtk-menu-button-popover ------------------------------------------------
 
@@ -332,28 +340,30 @@
 (setf (gethash 'gtk-menu-button-popover atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-button-popover 'function)
- "@version{2020-5-13}
+ "@version{2021-12-23}
   @syntax[]{(gtk-menu-button-popover object) => popover}
   @syntax[]{(setf (gtk-menu-button-popover object) popover)}
   @argument[object]{a @class{gtk-menu-button} widget}
-  @argument[popover]{a @lass{gtk-popover}, or @code{nil} to unset and disable
-    the button}
+  @argument[popover]{a @class{gtk-popover} widget, or @code{nil} to unset and
+    disable the button}
   @begin{short}
     Accessor of the @slot[gtk-menu-button]{popover} slot of the
     @class{gtk-menu-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-button-align-widget} returns the
+  The @sym{gtk-menu-button-align-widget} slot access function returns the
   popover that pops out of the button. If the button is not using a popover,
-  this function returns @code{nil}. The slot access function
-  @sym{(setf gtk-menu-button-align-widget)} sets the popover that will be popped
-  up when the menu button is clicked, or @code{nil} to dissociate any existing
-  popover and disable the button.
+  this function returns @code{nil}. The
+  @sym{(setf gtk-menu-button-align-widget)} slot access function sets the
+  popover that will be popped up when the menu button is clicked, or @code{nil}
+  to dissociate any existing popover and disable the button.
 
   If the @slot[gtk-menu-button]{menu-model} or @slot[gtk-menu-button]{popup}
   properties are set, those objects are dissociated from the menu button, and
   those properties are set to @code{nil}.
-  @see-class{gtk-menu-button}")
+  @see-class{gtk-menu-button}
+  @see-function{gtk-menu-button-menu-model}
+  @see-function{gtk-menu-button-popup}")
 
 ;;; --- gtk-menu-button-popup --------------------------------------------------
 
@@ -366,28 +376,30 @@
 (setf (gethash 'gtk-menu-button-popup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-button-popup 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-menu-button-popup object) => popup}
   @syntax[]{(setf (gtk-menu-button-popup object) popup)}
   @argument[object]{a @class{gtk-menu-button} widget}
-  @argument[menu]{a @class{gtk-menu}, or @code{nil} to unset and disable the
-    button}
+  @argument[menu]{a @class{gtk-menu} widget, or @code{nil} to unset and disable
+  the button}
   @begin{short}
     Accessor of the @slot[gtk-menu-button]{popup} slot of the
     @class{gtk-menu-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-button-popup} returns the menu that
+  The @sym{gtk-menu-button-popup} slot access function returns the menu that
   pops out of the button. If the button does not use a menu, this function
-  returns @code{nil}. The slot access function
-  @sym{(setf gtk-menu-button-popup)} sets the menu that will be popped up when
-  the menu button is clicked, or @code{nil} to dissociate any existing menu and
-  disable the button.
+  returns @code{nil}. The @sym{(setf gtk-menu-button-popup)} slot access
+  function sets the menu that will be popped up when the menu button is clicked,
+  or @code{nil} to dissociate any existing menu and disable the button.
 
   If the @slot[gtk-menu-button]{menu-model} or @slot[gtk-menu-button]{popover}
   are set, those objects are dissociated from the menu button, and those
   properties are set to @code{nil}.
-  @see-class{gtk-menu-button}")
+  @see-class{gtk-menu-button}
+  @see-class{gtk-menu}
+  @see-function{gtk-menu-button-menu-model}
+  @see-function{gtk-menu-button-popover}")
 
 ;;; --- gtk-menu-button-use-popover --------------------------------------------
 
@@ -395,15 +407,15 @@
 (setf (documentation (atdoc:get-slot-from-name "use-popover"
                                                'gtk-menu-button) 't)
  "The @code{use-popover} property of type @code{:boolean} (Read / Write) @br{}
-  Whether to construct a @class{gtk-popover} from the menu model, or a
-  @class{gtk-menu}. @br{}
+  Whether to construct a @class{gtk-popover} widget from the menu model, or a
+  @class{gtk-menu} widget. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-button-use-popover atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-button-use-popover 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-menu-button-use-popover object) => use-popover}
   @syntax[]{(setf (gtk-menu-button-use-popover object) use-popover)}
   @argument[object]{a @class{gtk-menu-button} widget}
@@ -413,12 +425,12 @@
     @class{gtk-menu-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-button-use-popover}
-  returns whether a popover or a menu will be constructed from the menu model.
-  The slot access function @sym{(setf gtk-menu-button-use-popover)} sets
-  whether to construct a popover instead of a menu when the function
-  @fun{gtk-menu-button-menu-model} is called. Note that this property is only
-  consulted when a new menu model is set.
+  The @sym{gtk-menu-button-use-popover} slot access function returns whether a
+  popover or a menu will be constructed from the menu model. The
+  @sym{(setf gtk-menu-button-use-popover)} slot access function sets whether to
+  construct a popover instead of a menu when the
+  @fun{gtk-menu-button-menu-model} function is called. Note that this property
+  is only consulted when a new menu model is set.
   @see-class{gtk-menu-button}
   @see-function{gtk-menu-button-menu-model}")
 
@@ -430,7 +442,7 @@
 
 (defun gtk-menu-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @return{The new @class{gtk-menu-button} widget.}
   @begin{short}
     Creates a new menu button with downwards pointing arrow as the only child.

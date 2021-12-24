@@ -250,7 +250,7 @@
 (setf (gethash 'gtk-toggle-button-draw-indicator atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-draw-indicator 'function)
- "@version{2020-6-7}
+ "@version{2021-12-23}
   @syntax[]{(gtk-toggle-button-draw-indicator object) => indicator}
   @syntax[]{(setf (gtk-toggle-button-draw-indicator object) indicator)}
   @argument[object]{a @class{gtk-toggle-button} widget}
@@ -277,7 +277,7 @@
 (setf (gethash 'gtk-toggle-button-inconsistent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-inconsistent 'function)
- "@version{2020-6-7}
+ "@version{2021-12-23}
   @syntax[]{(gtk-toggle-button-inconsistent object) => setting}
   @syntax[]{(setf (gtk-toggle-button-inconsistent object) setting)}
   @argument[object]{a @class{gtk-toggle-button} widget}
@@ -292,9 +292,9 @@
   values in that range are inconsistent, you may want to display the toggle in
   an \"in between\" state. This function turns on \"in between\" display.
   Normally you would turn off the inconsistent state again if the user toggles
-  the toggle button. This has to be done manually, the function
-  @sym{(setf gtk-toggle-button-inconsistent)} only affects visual appearance,
-  it does not affect the semantics of the button.
+  the toggle button. This has to be done manually, the
+  @sym{(setf gtk-toggle-button-inconsistent)} function only affects visual
+  appearance, it does not affect the semantics of the button.
   @see-class{gtk-toggle-button}")
 
 ;;; ----------------------------------------------------------------------------
@@ -305,14 +305,16 @@
 
 (defun gtk-toggle-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-6-7}
+ "@version{2021-12-23}
   @return{A new @class{gtk-toggle-button} widget.}
   @begin{short}
     Creates a new toggle button.
   @end{short}
-  A widget should be packed into the button, as in the function
-  @fun{gtk-button-new}.
+  A widget should be packed into the button, as in the @fun{gtk-button-new}
+  function.
   @see-class{gtk-toggle-button}
+  @see-function{gtk-toggle-button-new-with-label}
+  @see-function{gtk-toggle-button-new-with-mnemonic}
   @see-function{gtk-button-new}"
   (make-instance 'gtk-toggle-button))
 
@@ -326,14 +328,14 @@
 
 (defun gtk-toggle-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-7}
+ "@version{2021-12-23}
   @argument[label]{a string containing the message to be placed in the toggle
     button}
   @return{A new @class{gtk-toggle-button} widget.}
-  @begin{short}
-    Creates a new toggle button with a text label.
-  @end{short}
-  @see-class{gtk-toggle-button}"
+  @short{Creates a new toggle button with a text label.}
+  @see-class{gtk-toggle-button}
+  @see-function{gtk-toggle-button-new}
+  @see-function{gtk-toggle-button-new-with-mnemonic}"
   (make-instance 'gtk-toggle-button
                  :label label))
 
@@ -349,15 +351,19 @@
            gtk-toggle-button-new-with-mnemonic)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-6-7}
-  @argument[label]{the text of the button, with an underscore in front of the
-    mnemonic character}
+ "@version{2021-12-23}
+  @argument[label]{a string with the text of the button, with an underscore in
+    front of the mnemonic character}
   @return{A new @class{gtk-toggle-button} widget.}
-  @short{Creates a new toggle button containing a label.}
-  The label will be created using the function
-  @fun{gtk-label-new-with-mnemonic}, so underscores in label indicate the
-  mnemonic for the button.
+  @begin{short}
+    Creates a new toggle button containing a label.
+  @end{short}
+  The label will be created using the
+  @fun{gtk-label-new-with-mnemonic} function, so underscores in label indicate
+  the mnemonic for the button.
   @see-class{gtk-toggle-button}
+  @see-function{gtk-toggle-button-new}
+  @see-function{gtk-toggle-button-new-with-label}
   @see-function{gtk-label-new-with-mnemonic}"
   (label :string))
 
@@ -373,7 +379,7 @@
 
 (defun gtk-toggle-button-mode (button)
  #+cl-cffi-gtk-documentation
- "@version{2020-5-10}
+ "@version{2021-12-23}
   @syntax[]{(gtk-toggle-button-mode button) => draw-indicator}
   @syntax[]{(setf (gtk-toggle-button-mode button) draw-indicator)}
   @argument[button]{a @class{gtk-toggle-button} widget}
@@ -383,18 +389,19 @@
     Accessor of the mode of the toggle button.
   @end{short}
 
-  The function @sym{gtk-toggle-button-mode} retrieves whether the button is
-  displayed as a separate indicator and label. The function
-  @sym{(setf gtk-toggle-button-mode)} sets whether the button is displayed as
-  a separate indicator and label.
+  The @sym{gtk-toggle-button-mode} function retrieves whether the button is
+  displayed as a separate indicator and label. The
+  @sym{(setf gtk-toggle-button-mode)} function sets whether the button is
+  displayed as a separate indicator and label.
 
   You can call this function on a check button or a radio button with the
-  value @em{false} for @arg{draw-indicator} to make the button look like a
+  @em{false} value for @arg{draw-indicator} to make the button look like a
   normal button.
 
-  This function only affects instances of classes like @class{gtk-check-button}
-  and @class{gtk-radio-button} that derive from @class{gtk-toggle-button}, not
-  instances of @class{gtk-toggle-button} itself.
+  This function only affects instances of classes like the
+  @class{gtk-check-button} and @class{gtk-radio-button} classes that derive from
+  the @class{gtk-toggle-button} class, not instances of the
+  @class{gtk-toggle-button} class itself.
   @begin[Note]{dictionary}
     The function @sym{gtk-toggle-button-mode} is equivalent to the slot access
     function @fun{gtk-toggle-button-draw-indicator}.
@@ -411,7 +418,7 @@
 
 (defcfun ("gtk_toggle_button_toggled" gtk-toggle-button-toggled) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-7}
+ "@version{2021-12-23}
   @argument[button]{a @class{gtk-toggle-button} widget}
   @begin{short}
     Emits the \"toggled\" signal on the toggle button.

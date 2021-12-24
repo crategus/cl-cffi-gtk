@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.volume-button.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -81,11 +81,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-volume-button 'type)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @begin{short}
-    @sym{gtk-volume-button} is a subclass of @class{gtk-scale-button} that has
-    been tailored for use as a volume control widget with suitable icons,
-    tooltips and accessible labels.
+    The @sym{gtk-volume-button} class is a subclass of the
+    @class{gtk-scale-button} class that has been tailored for use as a volume
+    control widget with suitable icons, tooltips and accessible labels.
   @end{short}
   @see-slot{gtk-volume-button-use-symbolic}
   @see-class{gtk-scale-button}")
@@ -107,7 +107,7 @@
 (setf (gethash 'gtk-volume-button-use-symbolic atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-volume-button-use-symbolic 'function)
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @syntax[]{(gtk-volume-button-use-symbolic object) => use-symbolic}
   @syntax[]{(setf (gtk-volume-button-use-symbolic object) use-symbolic)}
   @argument[object]{a @class{gtk-volume-button} widget}
@@ -130,14 +130,14 @@
 
 (defun gtk-volume-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-5-12}
+ "@version{2021-12-23}
   @return{A new @class{gtk-volume-button} widget.}
   @begin{short}
     Creates a volume button, with a range between 0.0 and 1.0, with
     a stepping of 0.02.
   @end{short}
   Volume values can be obtained and modified using the functions from
-  @class{gtk-scale-button}.
+  the @class{gtk-scale-button} class.
   @see-class{gtk-volume-button}
   @see-class{gtk-scale-button}"
   (make-instance 'gtk-volume-button))

@@ -107,7 +107,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scale-button 'type)
- "@version{*2021-4-27}
+ "@version{*2021-12-23}
   @begin{short}
     The @sym{gtk-scale-button} widget provides a button which pops up a scale
     widget.
@@ -116,12 +116,10 @@
   applications, and GTK provides a @class{gtk-volume-button} subclass that is
   tailored for this use case.
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-scale-button} widget has a single CSS node with name
+    The @sym{gtk-scale-button} implementation has a single CSS node with name
     @code{button}. To differentiate it from a plain @class{gtk-button} widget,
-    it gets the @code{.scale} style class.
-
-    The popup widget that contains the scale has a @code{.scale-popup} style
-    class.
+    it gets the @code{.scale} style class. The popup widget that contains the
+    scale has a @code{.scale-popup} style class.
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"popdown\" signal}
@@ -149,7 +147,7 @@
       @begin{pre}
  lambda (button value)    :run-last
       @end{pre}
-      The \"value-changed\" signal is emitted when the value field has changed.
+      The signal is emitted when the value field has changed.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-scale-button} widget which received the
           signal.}
@@ -179,7 +177,7 @@
 (setf (gethash 'gtk-scale-button-adjustment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-button-adjustment 'function)
- "@version{2021-4-27}
+ "@version{2021-12-23}
   @syntax[]{(gtk-scale-button-adjustment object object) => adjustment}
   @syntax[]{(setf (gtk-scale-button-adjustment object) adjustment)}
   @argument[object]{a @class{gtk-scale-button} widget}
@@ -189,9 +187,10 @@
     @class{gtk-scale-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-scale-button-adjustment} gets the
-  adjustment associated with the scale button. The slot access function
-  @sym{(setf gtk-scale-button-adjustment)} sets the adjustment.
+  The @sym{gtk-scale-button-adjustment} slot access function gets the
+  adjustment associated with the scale button. The
+  @sym{(setf gtk-scale-button-adjustment)} slot access function sets the
+  adjustment.
   @see-class{gtk-scale-button}
   @see-class{gtk-adjustment}")
 
@@ -214,7 +213,7 @@
 (setf (gethash 'gtk-scale-button-icons atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-button-icons 'function)
- "@version{2021-4-27}
+ "@version{2021-12-23}
   @syntax[]{(gtk-scale-button-icons object object) => icons}
   @syntax[]{(setf (gtk-scale-button-icons object) icons)}
   @argument[object]{a @class{gtk-scale-button} widget}
@@ -224,9 +223,9 @@
     @class{gtk-scale-button} class.
   @end{short}
 
-  The slot access function @sym{(setf gtk-scale-button-icons} sets the icons to
-  be used by the scale button. The slot access function
-  @sym{(setf gtk-scale-button-icons)} sets the icons.
+  The @sym{(setf gtk-scale-button-icons} slot access function sets the icons to
+  be used by the scale button. The @sym{(setf gtk-scale-button-icons)} slot
+  access function sets the icons.
 
   The names of the icons to be used by the scale button. The first item in
   the list will be used in the button when the current value is the lowest
@@ -251,7 +250,7 @@
 (setf (gethash 'gtk-scale-button-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-button-size 'function)
- "@version{2021-4-27}
+ "@version{2021-12-23}
   @syntax[]{(gtk-scale-button-size object object) => size}
   @syntax[]{(setf (gtk-scale-button-size object) size)}
   @argument[object]{a @class{gtk-scale-button} widget}
@@ -277,7 +276,7 @@
 (setf (gethash 'gtk-scale-button-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-button-value 'function)
- "@version{2021-4-27}
+ "@version{2021-12-23}
   @syntax[]{(gtk-scale-button-value object) => value}
   @syntax[]{(setf (gtk-scale-button-value object) value)}
   @argument[object]{a @class{gtk-scale-button} widget}
@@ -287,9 +286,9 @@
     @class{gtk-scale-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-scale-button-value} gets the current value
-  of the scale button. The slot access function
-  @sym{(setf gtk-scale-button-value)} sets the current value.
+  The @sym{gtk-scale-button-value} slot access function gets the current value
+  of the scale button. The @sym{(setf gtk-scale-button-value)} slot access
+  function sets the current value.
 
   If the value is outside the minimum or maximum range values, it will be
   clamped to fit inside them. The scale button emits the \"value-changed\"
@@ -304,14 +303,14 @@
 
 (defun gtk-scale-button-new (size min max step icons)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-27}
+ "@version{2021-12-23}
   @argument[size]{a value of the @symbol{gtk-icon-size} enumeration}
   @argument[min]{a double float with the minimum value of the scale}
   @argument[max]{a double float with the maximum value of the scale}
   @argument[step]{a double float with the stepping of the value when a
     scroll-wheel event, or up/down arrow event occurs}
   @argument[icons]{a list of strings with the icon names, or @code{nil} if you
-    want to set the list later with the function @fun{gtk-scale-button-icons}}
+    want to set the list later with the @fun{gtk-scale-button-icons} function}
   @return{A new @class{gtk-scale-button} widget.}
   @begin{short}
     Creates a scale button, with a range between @arg{min} and @arg{max}, with
@@ -343,7 +342,7 @@
 (defcfun ("gtk_scale_button_get_popup" gtk-scale-button-popup)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-27}
+ "@version{2021-12-23}
   @argument[button]{a @class{gtk-scale-button} widget}
   @return{The @class{gtk-widget} popup of the scale button.}
   @short{Retrieves the popup of the scale button.}
@@ -360,7 +359,7 @@
 (defcfun ("gtk_scale_button_get_plus_button" gtk-scale-button-plus-button)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-27}
+ "@version{2021-12-23}
   @argument[button]{a @class{gtk-scale-button} widget}
   @return{The @class{gtk-widget} plus button of the scale button.}
   @short{Retrieves the plus button of the scale button.}
@@ -377,7 +376,7 @@
 (defcfun ("gtk_scale_button_get_minus_button" gtk-scale-button-minus-button)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-27}
+ "@version{2021-12-23}
   @argument[button]{a @class{gtk-scale-button} widget}
   @return{The @class{gtk-widget} minus button of the scale button.}
   @short{Retrieves the minus button of the scale button.}
