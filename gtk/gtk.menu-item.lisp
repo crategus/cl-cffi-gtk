@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.menu-item.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -133,27 +133,27 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-item 'type)
- "@version{2020-7-17}
+ "@version{*2021-11-13}
   @begin{short}
     The @sym{gtk-menu-item} widget and the derived widgets are the only valid
     childs for menus. Their function is to correctly handle highlighting,
     alignment, events and submenus.
   @end{short}
 
-  As it derives from @class{gtk-bin} it can hold any valid child widget,
-  although only a few are really useful.
+  As it derives from the @class{gtk-bin} class it can hold any valid child
+  widget, although only a few are really useful.
   @begin[GtkMenuItem as GtkBuildable]{dictionary}
     The @sym{gtk-menu-item} implementation of the @class{gtk-buildable}
     interface supports adding a submenu by specifying @code{\"submenu\"} as the
     @code{\"type\"} attribute of a @code{<child>} element.
 
-    @b{Example:} A UI definition fragment with submenus
+    @b{Example:} A UI definition fragment with submenus.
     @begin{pre}
- <object class=\"GtkMenuItem\">
-   <child type=\"submenu\">
-     <object class=\"GtkMenu\"/>
-   </child>
- </object>
+<object class=\"GtkMenuItem\">
+  <child type=\"submenu\">
+    <object class=\"GtkMenu\"/>
+  </child>
+</object>
     @end{pre}
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
@@ -163,7 +163,7 @@
  ╰── [arrow.right]
     @end{pre}
     The @sym{gtk-menu-item} class has a single CSS node with name
-    @code{menuitem}. If the menuitem has a submenu, it gets another CSS node
+    @code{menuitem}. If the menu item has a submenu, it gets another CSS node
     with name @code{arrow}, which has the @code{.left} or @code{.right} style
     class.
   @end{dictionary}
@@ -172,10 +172,10 @@
       @begin[arrow-scaling]{entry}
         The @code{arrow-scaling} style property of type @code{:float} (Read)
         @br{}
-        Amount of space used up by arrow, relative to the menu item's font
-        size. @br{}
+        Amount of space used up by arrow, relative to the font size of the menu
+        item. @br{}
         @em{Warning:} The @code{arrow-scaling} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use the standard min-width/min-height CSS properties on the arrow
         node. The value of this style property is ignored. @br{}
         Allowed values: [0,2] @br{}
@@ -184,10 +184,10 @@
       @begin[arrow-spacing]{entry}
         The @code{arrow-spacing} style property of type @code{:int} (Read) @br{}
         Space between label and arrow. @br{}
-        @em{Warning:} The @code{arrow-spacing} style property has been deprecated
-        since version 3.20 and should not be used in newly written code. Use the
-        standard margin CSS property on the arrow node. The value of this style
-        property is ignored. @br{}
+        @em{Warning:} The @code{arrow-spacing} style property has been
+        deprecated since version 3.20 and should not be used in newly written
+        code. Use the standard margin CSS property on the arrow node. The value
+        of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 10
       @end{entry}
@@ -196,7 +196,7 @@
         @br{}
         Padding to left and right of the menu item. @br{}
         @em{Warning:} The @code{horizontal-padding} style property has been
-        deprecated since version 3.8 and should not be used in newly-written
+        deprecated since version 3.8 and should not be used in newly written
         code. Use the standard padding CSS property, through objects like
         @class{gtk-style-context} and @class{gtk-css-provider}. The value of
         this style property is ignored. @br{}
@@ -206,9 +206,9 @@
       @begin[selected-shadow-type]{entry}
         The @code{selected-shadow-type} style property of type
         @symbol{gtk-shadow-type} (Read) @br{}
-        Shadow type when item is selected. @br{}
+        Shadow type when the menu item is selected. @br{}
         @em{Warning:} The @code{selected-shadow-type} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use CSS to determine the shadow. The value of this style property
         is ignored. @br{}
         Default value: @code{:none}
@@ -227,7 +227,7 @@
         The @code{width-chars} style property of type @code{:int} (Read) @br{}
         The minimum desired width of the menu item in characters. @br{}
         @em{Warning:} The @code{width-chars} style property has been deprecated
-        since version 3.20 and should not be used in newly-written code. Use the
+        since version 3.20 and should not be used in newly written code. Use the
         standard CSS property min-width. The value of this style property is
         ignored. @br{}
         Allowed values: >= 0 @br{}
@@ -238,55 +238,50 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
- lambda (menuitem)    : Action
+ lambda (item)    :action
       @end{pre}
-      Emitted when the item is activated.
+      Emitted when the menu item is activated.
       @begin[code]{table}
-        @entry[menuitem]{The @class{gtk-menu-item} object which received the
-          signal.}
+        @entry[item]{The @sym{gtk-menu-item} widget which received the signal.}
       @end{table}
     @subheading{The \"activate-item\" signal}
       @begin{pre}
- lambda (menuitem)    : Run First
+ lambda (item)    :run-first
       @end{pre}
-      Emitted when the item is activated, but also if the menu item has a
+      Emitted when the menu item is activated, but also if the menu item has a
       submenu. For normal applications, the relevant signal is \"activate\".
       @begin[code]{table}
-        @entry[menuitem]{The @class{gtk-menu-item} object which received the
-          signal.}
+        @entry[item]{The @sym{gtk-menu-item} widget which received the signal.}
       @end{table}
     @subheading{The \"deselect\" signal}
       @begin{pre}
- lambda (menuitem)    : Run First
+ lambda (item)    :run-first
       @end{pre}
       @begin[code]{table}
-        @entry[menuitem]{The @class{gtk-menu-item} object which received the
-          signal.}
+        @entry[item]{The @sym{gtk-menu-item} widget which received the signal.}
       @end{table}
     @subheading{The \"select\" signal}
       @begin{pre}
- lambda (menuitem)    : Run First
+ lambda (item)    :run-first
       @end{pre}
       @begin[code]{table}
-        @entry[menuitem]{The @class{gtk-menu-item} object which received the
-          signal.}
+        @entry[item]{The @sym{gtk-menu-item} widget which received the signal.}
       @end{table}
     @subheading{The \"toggle-size-allocate\" signal}
       @begin{pre}
- lambda (menuitem arg)    : Run First
+ lambda (item arg)    :run-first
       @end{pre}
       @begin[code]{table}
-        @entry[menuitem]{The @class{gtk-menu-item} object which received the
-          signal.}
+        @entry[item]{The @sym{gtk-menu-item} widget which received the signal.}
         @entry[arg]{An integer which is not documented.}
       @end{table}
     @subheading{The \"toggle-size-request\" signal}
       @begin{pre}
- lambda (menuitem arg)    : Run First
+ lambda (item arg)    :run-first
       @end{pre}
       @begin[code]{table}
-        @entry[menuitem]{The object which received the signal.}
-        @entry[arg]{An pointer which is not documented.}
+        @entry[item]{The @sym{gtk-menu-item} widget which received the signal.}
+        @entry[arg]{A pointer which is not documented.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-menu-item-accel-path}
@@ -295,9 +290,7 @@
   @see-slot{gtk-menu-item-submenu}
   @see-slot{gtk-menu-item-use-underline}
   @see-class{gtk-bin}
-  @see-class{gtk-buildable}
-  @see-class{gtk-style-context}
-  @see-class{gtk-css-provider}")
+  @see-class{gtk-menu-shell}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -309,45 +302,51 @@
 (setf (documentation (atdoc:get-slot-from-name "accel-path" 'gtk-menu-item) 't)
  "The @code{accel-path} property of type @code{:string} (Read / Write) @br{}
   Sets the accelerator path of the menu item, through which runtime changes of
-  the menu item's accelerator caused by the user can be identified and saved
-  to persistant storage. @br{}
+  the accelerator of the menu item caused by the user can be identified and
+  saved to persistant storage. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-accel-path atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-accel-path 'function)
- "@version{2020-7-17}
-  @syntax[]{gtk-menu-item-accel-path object) => accel-path}
-  @syntax[]{(setf (gtk-menu-item-accel-path object) accel-path)}
-  @argument[menu-item]{a valid @class{gtk-menu-item} widget}
-  @argument[accel-path]{a string with the accelerator path, corresponding to
-    this menu item's functionality, or @code{nil} to unset the current path}
+ "@version{2021-11-13}
+  @syntax[]{(gtk-menu-item-accel-path object) => path}
+  @syntax[]{(setf (gtk-menu-item-accel-path object) path)}
+  @argument[item]{a valid @class{gtk-menu-item} widget}
+  @argument[path]{a string with the accelerator path, corresponding to
+    this functionality of the menu item, or @code{nil} to unset the current
+    path}
   @begin{short}
     Accessor of the @slot[gtk-menu-item]{accel-path} slot of the
     @class{gtk-menu-item} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-item-accel-path} retrieve the
-  accelerator path that was previously set on the menu item. The slot access
-  function @sym{(setf gtk-menu-item-accel-path)} sets the accelerator path on
-  the menu item, through which runtime changes of the menu item's accelerator
-  caused by the user can be identified and saved to persistent storage, see the
-  function @fun{gtk-accel-map-save} on this.
+  The @sym{gtk-menu-item-accel-path} slot access function retrieve the
+  accelerator path that was previously set on the menu item. The
+  @sym{(setf gtk-menu-item-accel-path)} slot access function sets the
+  accelerator path on the menu item, through which runtime changes of the
+  accelerator of the menu item caused by the user can be identified and saved to
+  persistent storage, see the @fun{gtk-accel-map-save} function on this.
 
-  To set up a default accelerator for this menu item, call the function
-  @fun{gtk-accel-map-add-entry} with the same @arg{accel-path}. See
-  also the function @fun{gtk-accel-map-add-entry} on the specifics of
-  accelerator paths, and the function @fun{gtk-menu-accel-path} for a more
+  To set up a default accelerator for this menu item, call the
+  @fun{gtk-accel-map-add-entry} function with the same @arg{path}. See
+  also the @fun{gtk-accel-map-add-entry} function on the specifics of
+  accelerator paths, and the @fun{gtk-menu-accel-path} function for a more
   convenient variant of this function.
 
   This function is basically a convenience wrapper that handles calling
-  the function @fun{gtk-widget-set-accel-path} with the appropriate accelerator
+  the @fun{gtk-widget-set-accel-path} function with the appropriate accelerator
   group for the menu item.
 
   Note that you do need to set an accelerator on the parent menu with the
-  function @fun{gtk-menu-accel-group} for this to work.
-  @see-class{gtk-menu-item}")
+  @fun{gtk-menu-accel-group} function for this to work.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-accel-map-save}
+  @see-function{gtk-accel-map-add-entry}
+  @see-function{gtk-menu-accel-path}
+  @see-function{gtk-menu-accel-group}
+  @see-function{gtk-widget-set-accel-path}")
 
 ;;; --- gtk-menu-item-label ----------------------------------------------------
 
@@ -361,7 +360,7 @@
 (setf (gethash 'gtk-menu-item-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-label 'function)
- "@version{2020-7-17}
+ "@version{2021-11-13}
   @syntax[]{(gtk-menu-item-label object) => label}
   @syntax[]{(setf (gtk-menu-item-label object) label)}
   @argument[object]{a @class{gtk-menu-item} widget}
@@ -371,9 +370,9 @@
     @class{gtk-menu-item} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-item-label} gets the text on the menu
-  item label. The slot access function @sym{(setf gtk-menu-item-label)} sets
-  the text on the menu item label.
+  The @sym{gtk-menu-item-label} slot access function gets the text on the menu
+  item label. The @sym{(setf gtk-menu-item-label)} slot access function sets
+  the text.
   @see-class{gtk-menu-item}")
 
 ;;; --- gtk-menu-item-right-justified ------------------------------------------
@@ -391,32 +390,34 @@
 (setf (gethash 'gtk-menu-item-right-justified atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-right-justified 'function)
- "@version{2020-7-17}
-  @syntax[]{(gtk-menu-item-right-justified object) => right-justified}
-  @syntax[]{(setf (gtk-menu-item-right-justified object) right-justified)}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
-  @argument[right-justified]{if @em{true} the menu item will appear at the far
-    right if added to a menu bar}
+ "@version{2021-11-13}
+  @syntax[]{(gtk-menu-item-right-justified object) => justified}
+  @syntax[]{(setf (gtk-menu-item-right-justified object) justified)}
+  @argument[item]{a @class{gtk-menu-item} widget}
+  @argument[justified]{if @em{true} the menu item will appear at the far right
+    if added to a menu bar}
   @begin{short}
     Accessor of the @slot[gtk-menu-item]{right-justified} slot of the
     @class{gtk-menu-item} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-item-right-justified} gets whether the
-  menu item appears justified at the right side of the menu bar. The slot access
-  function @sym{(setf gtk-menu-item-right-justified)} sets whether the menu item
-  appears justified at the right side of a menu bar.
+  The @sym{gtk-menu-item-right-justified} slot access function gets whether the
+  menu item appears justified at the right side of the menu bar. The
+  @sym{(setf gtk-menu-item-right-justified)} slot access function sets whether
+  the menu item appears justified at the right side.
 
   This was traditionally done for \"Help\" menu items, but is now considered a
   bad idea. If the widget layout is reversed for a right-to-left language like
   Hebrew or Arabic, right-justified menu items appear at the left.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-menu-item-right-justified} has been deprecated since
-    version 3.2 and should not be used in newly-written code. If you insist on
-    using it, use the functions @fun{gtk-widget-hexpand} and
-    @fun{gtk-widget-halign} functions.
+    The @sym{gtk-menu-item-right-justified} function has been deprecated since
+    version 3.2 and should not be used in newly written code. If you insist on
+    using it, use the @fun{gtk-widget-hexpand} and @fun{gtk-widget-halign}
+    functions.
   @end{dictionary}
-  @see-class{gtk-menu-item}")
+  @see-class{gtk-menu-item}
+  @see-function{gtk-widget-halign}
+  @see-function{gtk-widget-hexpand}")
 
 ;;; --- gtk-menu-item-submenu --------------------------------------------------
 
@@ -429,21 +430,22 @@
 (setf (gethash 'gtk-menu-item-submenu atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-submenu 'function)
- "@version{2020-7-17}
+ "@version{2021-11-13}
   @syntax[]{(gtk-menu-item-submenu object) => submenu}
   @syntax[]{(setf (gtk-menu-item-submenu object) submenu)}
   @argument[object]{a @class{gtk-menu-item} widget}
-  @argument[submenu]{the @class{gtk-menu} submenu, or @code{nil}}
+  @argument[submenu]{a @class{gtk-menu} submenu, or @code{nil}}
   @begin{short}
     Accessor of the @slot[gtk-menu-item]{submenu} slot of the
     @class{gtk-menu-item} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-item-submenu} gets the submenu
-  underneath this menu item, if any. The slot access function
-  @sym{(setf gtk-menu-item-submenu)} sets or replaces the menu item's submenu,
-  or removes it when a @code{nil} submenu is passed.
-  @see-class{gtk-menu-item}")
+  The @sym{gtk-menu-item-submenu} slot access function gets the submenu
+  underneath this menu item, if any. The @sym{(setf gtk-menu-item-submenu)} slot
+  access function sets or replaces the submenu of the menu item, or removes it
+  when a @code{nil} submenu is passed.
+  @see-class{gtk-menu-item}
+  @see-class{gtk-menu}")
 
 ;;; --- gtk-menu-item-use-underline --------------------------------------------
 
@@ -458,22 +460,20 @@
 (setf (gethash 'gtk-menu-item-use-underline atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-use-underline 'function)
- "@version{2020-7-17}
+ "@version{2021-11-13}
   @syntax[]{(gtk-menu-item-use-underline object) => setting}
   @syntax[]{(setf (gtk-menu-item-use-underline object) setting)}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @argument[item]{a @class{gtk-menu-item} widget}
   @argument[setting]{@em{true} if underlines in the text indicate mnemonics}
   @begin{short}
     Accessor of the @slot[gtk-menu-item]{use-underline} slot of the
     @class{gtk-menu-item} class.
   @end{short}
 
-  The slot access function @sym{gtk-menu-item-use-underline} checks if an
+  The @sym{gtk-menu-item-use-underline} slot access function checks if an
   underline in the text indicates the next character should be used for the
-  mnemonic accelerator key.
-
-  If true, an underline in the text indicates the next character should be
-  used for the mnemonic accelerator key.
+  mnemonic accelerator key. If @em{true}, an underline in the text indicates
+  the next character should be used for the mnemonic accelerator key.
   @see-class{gtk-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
@@ -484,7 +484,7 @@
 
 (defun gtk-menu-item-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-7-17}
+ "@version{2021-11-13}
   @return{The newly created @class{gtk-menu-item} widget.}
   @begin{short}
     Creates a new menu item.
@@ -502,13 +502,14 @@
 
 (defun gtk-menu-item-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2020-7-17}
+ "@version{2021-11-13}
   @argument[label]{a string with the text for the label}
   @return{The newly created @class{gtk-menu-item} widget.}
   @begin{short}
     Creates a new menu item whose child is a @class{gtk-label} widget.
    @end{short}
   @see-class{gtk-menu-item}
+  @see-class{gtk-label}
   @see-function{gtk-menu-item-new-with-mnemonic}"
   (make-instance 'gtk-menu-item
                  :label label))
@@ -522,17 +523,15 @@
 (defcfun ("gtk_menu_item_new_with_mnemonic" gtk-menu-item-new-with-mnemonic)
    (g-object gtk-menu-item)
  #+cl-cffi-gtk-documentation
- "@version{2020-7-17}
+ "@version{2021-11-13}
   @argument[label]{a string with the text of the button, with an underscore in
     front of the mnemonic character}
   @return{A new @class{gtk-menu-item} widget.}
   @begin{short}
     Creates a new menu item containing a label.
   @end{short}
-
-  The label will be created using the function
-  @fun{gtk-label-new-with-mnemonic}, so underscores in label indicate the
-  mnemonic for the menu item.
+  The label will be created using the @fun{gtk-label-new-with-mnemonic}
+  function, so underscores in label indicate the mnemonic for the menu item.
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-new-with-label}
   @see-function{gtk-label-new-with-mnemonic}"
@@ -546,14 +545,14 @@
 
 (defcfun ("gtk_menu_item_select" gtk-menu-item-select) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-7-17}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
+ "@version{2021-11-13}
+  @argument[item]{a @class{gtk-menu-item} widget}
   @begin{short}
     Emits the \"select\" signal on the given menu item.
   @end{short}
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-deselect}"
-  (menu-item (g-object gtk-menu-item)))
+  (item (g-object gtk-menu-item)))
 
 (export 'gtk-menu-item-select)
 
@@ -563,14 +562,14 @@
 
 (defcfun ("gtk_menu_item_deselect" gtk-menu-item-deselect) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-7-17}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
+ "@version{2021-11-13}
+  @argument[item]{a @class{gtk-menu-item} widget}
   @begin{short}
     Emits the \"deselect\" signal on the given menu item.
   @end{short}
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-select}"
-  (menu-item (g-object gtk-menu-item)))
+  (item (g-object gtk-menu-item)))
 
 (export 'gtk-menu-item-deselect)
 
@@ -580,13 +579,13 @@
 
 (defcfun ("gtk_menu_item_activate" gtk-menu-item-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-7-17}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
+ "@version{2021-11-13}
+  @argument[item]{a @class{gtk-menu-item} widget}
   @begin{short}
     Emits the \"activate\" signal on the given menu item.
   @end{short}
   @see-class{gtk-menu-item}"
-  (menu-item (g-object gtk-menu-item)))
+  (item (g-object gtk-menu-item)))
 
 (export 'gtk-menu-item-activate)
 
@@ -597,15 +596,15 @@
 (defcfun ("gtk_menu_item_toggle_size_request" gtk-menu-item-toggle-size-request)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2020-7-17}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
-  @argument[requisition]{an intege with the requisition to use as signal data}
+ "@version{2021-11-13}
+  @argument[item]{a @class{gtk-menu-item} widget}
+  @argument[requisition]{an integer with the requisition to use as signal data}
   @begin{short}
     Emits the \"toggle-size-request\" signal on the given menu item.
   @end{short}
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-toggle-size-allocate}"
-  (menu-item (g-object gtk-menu-item))
+  (item (g-object gtk-menu-item))
   (requisition :int))
 
 (export 'gtk-menu-item-toggle-size-request)
@@ -617,16 +616,16 @@
 (defcfun ("gtk_menu_item_toggle_size_allocate"
            gtk-menu-item-toggle-size-allocate) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-7-17}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
+ "@version{2021-11-13}
+  @argument[item]{a @class{gtk-menu-item} widget}
   @argument[allocation]{an integer with the allocation to use as signal data}
   @begin{short}
     Emits the \"toggle-size-allocate\" signal on the given item.
   @end{short}
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-toggle-size-request}"
-  (menu-item (g-object gtk-menu-item))
-  (allocate :int))
+  (item (g-object gtk-menu-item))
+  (allocation :int))
 
 (export 'gtk-menu-item-toggle-size-allocate)
 
@@ -635,35 +634,32 @@
 ;;; gtk_menu_item_set_reserve_indicator -> gtk-menu-item-reserve-indicator
 ;;; ----------------------------------------------------------------------------
 
-(defun (setf gtk-menu-item-reserve-indicator) (reserve-indicator menu-item)
+(defun (setf gtk-menu-item-reserve-indicator) (reserve item)
   (foreign-funcall "gtk_menu_item_set_reserve_indicator"
-                   (g-object gtk-menu-item) menu-item
-                   :boolean reserve-indicator
+                   (g-object gtk-menu-item) item
+                   :boolean reserve
                    :void)
-  reserve-indicator)
+  reserve)
 
 (defcfun ("gtk_menu_item_get_reserve_indicator" gtk-menu-item-reserve-indicator)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-7-17}
-  @syntax[]{(gtk-menu-item-reserve-indicator menu-item) => reserve-indicator}
-  @syntax[]{(setf (gtk-menu-item-reserve-indicator menu-item) reserve-indicator)}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
+ "@version{2021-11-13}
+  @syntax[]{(gtk-menu-item-reserve-indicator item) => reserve}
+  @syntax[]{(setf (gtk-menu-item-reserve-indicator item) reserve)}
+  @argument[item]{a @class{gtk-menu-item} widget}
   @argument[reserve]{a boolean whether the menu item always reserves space for
     the submenu indicator}
   @begin{short}
     Accessor of the reserve indicator of the menu item.
   @end{short}
-
-  The function @sym{gtk-menu-item-reserve-indicator} returns whether the menu
+  The @sym{gtk-menu-item-reserve-indicator} function returns whether the menu
   item reserves space for the submenu indicator, regardless if it has a submenu
-  or not. The function @sym{(setf gtk-menu-item-reserve-indicator)} sets whether
-  the menu item should reserve space for the submenu indicator.
-
-  There should be little need for applications to call this functions.
-  @see-class{gtk-menu-item}
-  @see-function{gtk-menu-item-set-reverse-indicator}"
-  (menu-item (g-object gtk-menu-item)))
+  or not. The @sym{(setf gtk-menu-item-reserve-indicator)} function sets whether
+  the menu item should reserve space. There should be little need for
+  applications to call this functions.
+  @see-class{gtk-menu-item}"
+  (item (g-object gtk-menu-item)))
 
 (export 'gtk-menu-item-reserve-indicator)
 
