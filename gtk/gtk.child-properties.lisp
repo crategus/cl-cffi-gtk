@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,17 +27,18 @@
 
 (in-package :gtk)
 
-(defun container-call-get-property (container child property-name gtype)
+(defun container-call-get-property (container child property gtype)
   (with-foreign-object (gvalue '(:struct g-value))
     (g-value-init gvalue (gtype gtype))
-    (%gtk-container-child-property container child property-name gvalue)
-    (prog1 (parse-g-value gvalue)
+    (%gtk-container-child-property container child property gvalue)
+    (prog1
+      (parse-g-value gvalue)
       (g-value-unset gvalue))))
 
-(defun container-call-set-property (container child property-name new-value type)
+(defun container-call-set-property (container child property value gtype)
   (with-foreign-object (gvalue '(:struct g-value))
-    (set-g-value gvalue new-value (gtype type) :zero-g-value t)
-    (%gtk-container-child-set-property container child property-name gvalue)
+    (set-g-value gvalue value (gtype gtype) :zero-g-value t)
+    (%gtk-container-child-set-property container child property gvalue)
     (g-value-unset gvalue)
     (values)))
 
@@ -49,20 +50,26 @@
   `(progn
      ,@(when readable
              (list `(defun ,property-name (container child)
-                      (assert (typep container ',container-type))
+                      (assert (typep container ',container-type)
+                              nil
+                              "Type error for ~a in the ~a function"
+                              container ',property-name)
                       (container-call-get-property container
                                                    child
                                                    ,property-gname
                                                    ,property-type))))
      ,@(when writable
-             (list `(defun (setf ,property-name) (new-value container child)
-                      (assert (typep container ',container-type))
+             (list `(defun (setf ,property-name) (value container child)
+                      (assert (typep container ',container-type)
+                              nil
+                              "Type error for ~a in the ~a function"
+                              container ',property-name)
                       (container-call-set-property container
                                                    child
                                                    ,property-gname
-                                                   new-value
+                                                   value
                                                    ,property-type)
-                      new-value)))
+                      value)))
      ,@(when export
              (list `(export ',property-name)))))
 
@@ -72,11 +79,12 @@
                   (string-upcase property-name))
           (find-package package-name)))
 
-(defun generate-child-properties (&optional (type-root "GtkContainer") (package-name "GTK"))
+(defun generate-child-properties (&optional (type-root "GtkContainer")
+                                            (package-name "GTK"))
   (setf type-root (gtype type-root))
-  (append (loop
-             for property in (gtk-container-class-list-child-properties type-root)
-             collect
+  (append
+    (loop for property in (gtk-container-class-list-child-properties type-root)
+          collect
                `(define-child-property
                     ,(gtype-name type-root)
                     ,(child-property-name (gtype-name type-root)
@@ -87,7 +95,6 @@
                   ,(param-spec-readable property)
                   ,(param-spec-writable property)
                   t))
-          (loop
-             for subclass in (g-type-children type-root)
-           appending (generate-child-properties subclass package-name))))
+    (loop for subclass in (g-type-children type-root)
+          appending (generate-child-properties subclass package-name))))
 
