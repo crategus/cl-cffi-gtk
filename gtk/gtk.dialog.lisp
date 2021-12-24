@@ -53,9 +53,9 @@
 ;;;     gtk_dialog_get_action_area
 ;;;     gtk_dialog_get_content_area
 ;;;     gtk_dialog_get_header_bar
-;;;     gtk_alternative_dialog_button_order                deprecated
-;;;     gtk_dialog_set_alternative_button_order            deprecated
-;;;     gtk_dialog_set_alternative_button_order_from_array deprecated
+;;;     gtk_alternative_dialog_button_order                not exported
+;;;     gtk_dialog_set_alternative_button_order            not exported
+;;;     gtk_dialog_set_alternative_button_order_from_array not exported
 ;;;
 ;;; Properties
 ;;;
@@ -904,7 +904,7 @@
 (export 'gtk-dialog-header-bar)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_alternative_dialog_button_order ()
+;;; gtk_alternative_dialog_button_order ()                 not exported
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_alternative_dialog_button_order"
@@ -935,10 +935,8 @@
   @see-function{gtk-settings-gtk-alternative-button-order}"
   (screen (g-object gdk-screen)))
 
-(export 'gtk-alternative-dialog-button-order)
-
 ;;; ----------------------------------------------------------------------------
-;;; gtk_dialog_set_alternative_button_order ()
+;;; gtk_dialog_set_alternative_button_order ()             not exported
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-dialog-set-alternative-button-order (dialog response)
@@ -1000,8 +998,6 @@
                                                          (length response)
                                                          new-order))
   response)
-
-(export 'gtk-dialog-set-alternative-button-order)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_dialog_set_alternative_button_order_from_array ()  not exported
