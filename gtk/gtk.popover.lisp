@@ -99,9 +99,10 @@
   :window)
 
 #+(and gtk-3-20 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-popover-constraint atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-popover-constraint atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-popover-constraint atdoc:*external-symbols*)
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @begin{short}
     Describes constraints to positioning of popovers.
   @end{short}
@@ -119,7 +120,8 @@
     @entry[:window]{Constrain the popover to the boundaries of the window that
       it is attached to.}
   @end{table}
-  Since 3.20")
+  Since 3.20
+  @see-class{gtk-popover}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkPopover
@@ -156,30 +158,31 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-popover 'type)
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @begin{short}
     A @sym{gtk-popover} widget is a bubble-like context window, primarily meant
     to provide context-dependent information or options.
   @end{short}
-  Popovers are attached to a widget, passed at construction time on the function
-  @fun{gtk-popover-new}, or updated afterwards through the function
-  @fun{gtk-popover-relative-to}, by default they will point to the whole widget
-  area, although this behavior can be changed through the function
-  @fun{gtk-popover-pointing-to}.
+  Popovers are attached to a widget, passed at construction time on the
+  @fun{gtk-popover-new} function, or updated afterwards through the
+  @fun{gtk-popover-relative-to} function, by default they will point to the
+  whole widget area, although this behavior can be changed through the
+  @fun{gtk-popover-pointing-to} function.
 
-  The position of a popover relative to the widget it is attached to can also be
-  changed through the function @fun{gtk-popover-position}.
+  The position of a popover relative to the widget it is attached to can also
+  be changed through the @fun{gtk-popover-position} function.
 
-  By default, @sym{gtk-popover} performs a GTK grab, in order to ensure input
-  events get redirected to it while it is shown, and also so the popover is
-  dismissed in the expected situations, clicks outside the popover, or the Esc
-  key being pressed. If no such modal behavior is desired on a popover, the
-  function @fun{gtk-popover-modal} may be called on it to tweak its behavior.
+  By default, the @sym{gtk-popover} widget performs a GTK grab, in order to
+  ensure input events get redirected to it while it is shown, and also so the
+  popover is dismissed in the expected situations, clicks outside the popover,
+  or the @kbd{Escape} key being pressed. If no such modal behavior is desired
+  on a popover, the @fun{gtk-popover-modal} function may be called on it to
+  tweak its behavior.
 
   @subheading{GtkPopover as menu replacement}
   A @sym{gtk-popover} widget is often used to replace menus. To facilitate this,
   it supports being populated from a @class{g-menu-model} object, using the
-  function @fun{gtk-popover-new-from-model}. In addition to all the regular menu
+  @fun{gtk-popover-new-from-model} function. In addition to all the regular menu
   model features, this function supports rendering sections in the model in a
   more compact form, as a row of icon buttons instead of menu items.
 
@@ -209,10 +212,11 @@
     @end{pre}
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-popover} class has a single css node called @code{popover}. It
-    always gets the @code{.background} style class and it gets the @code{.menu}
-    style class if it is menu-like, e.g. a @class{gtk-popover-menu} widget or
-    created using the function @fun{gtk-popover-new-from-model}.
+    The @sym{gtk-popover} implementation has a single css node called
+    @code{popover}. It always gets the @code{.background} style class and it
+    gets the @code{.menu} style class if it is menu-like, e.g. a
+    @class{gtk-popover-menu} widget or created using the
+    @fun{gtk-popover-new-from-model} function.
 
     Particular uses of the @class{gtk-popover} widget, such as touch selection
     popups or magnifiers in @class{gtk-entry} or @class{gtk-text-view} widgets
@@ -255,20 +259,20 @@
 (setf (gethash 'gtk-popover-constrain-to atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-constrain-to 'function)
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @syntax[]{(gtk-popover-constrain-to object) => constraint}
   @syntax[]{(setf (gtk-popover-constrain-to object) constraint)}
   @argument[object]{a @class{gtk-popover} widget}
-  @argument[constraint]{a constraint of type @symbol{gtk-popover-constraint}}
+  @argument[constraint]{a value of the @symbol{gtk-popover-constraint}
+    enumeration}
   @begin{short}
     Accessor of the @slot[gtk-popover]{constrain-to} slot of the
     @class{gtk-popover} class.
   @end{short}
 
-  The slot access function @sym{gtk-popover-constrain-to} returns the constraint
-  for placing this popover. The slot access function
-  @sym{(setf gtk-popover-constrain-to)} sets a constraint for positioning this
-  popover.
+  The @sym{gtk-popover-constrain-to} slot access function returns the constraint
+  for placing this popover. The @sym{(setf gtk-popover-constrain-to)} slot
+  access function sets a constraint for positioning this popover.
 
   Note that not all platforms support placing popovers freely, and may already
   impose constraints.
@@ -290,22 +294,23 @@
 (setf (gethash 'gtk-popover-modal atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-modal 'function)
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @syntax[]{(gtk-popover-modal object) => modal}
   @syntax[]{(setf (gtk-popover-modal object) modal)}
   @argument[object]{a @class{gtk-popover} widget}
-  @argument[modal]{a @code{:boolean}, that is @em{true} to make the popover
-    claim all input within the toplevel}
+  @argument[modal]{a boolean, that is @em{true} to make the popover claim all
+    input within the toplevel}
   @begin{short}
-    Accessor of the @slot[gtk-popover]{modal} slot of the
-    @class{gtk-popover} class.
+    Accessor of the @slot[gtk-popover]{modal} slot of the @class{gtk-popover}
+    class.
   @end{short}
 
-  The slot access function @sym{gtk-popover-modal} returns whether the popover
-  is modal. The slot access function @sym{(setf gtk-popover-modal)} sets whether
-  popover is modal, a modal popover will grab all input within the toplevel and
-  grab the keyboard focus on it when being displayed. Clicking outside the
-  popover area or pressing Esc will dismiss the popover and ungrab input.
+  The @sym{gtk-popover-modal} slot access function returns whether the popover
+  is modal. The @sym{(setf gtk-popover-modal)} slot access function sets whether
+  the popover is modal, a modal popover will grab all input within the toplevel
+  and grab the keyboard focus on it when being displayed. Clicking outside the
+  popover area or pressing the @kbd{Escape} key will dismiss the popover and
+  ungrab input.
   @see-class{gtk-popover}")
 
 ;;; --- gtk-popover-pointing-to ------------------------------------------------
@@ -320,19 +325,19 @@
 (setf (gethash 'gtk-popover-pointing-to atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-pointing-to 'function)
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @syntax[]{(gtk-popover-pointing-to object) => rect}
   @syntax[]{(setf (gtk-popover-pointing-to object) rect)}
   @argument[object]{a @class{gtk-popover} widget}
-  @argument[rect]{a @class{gdk-rectangle} to point to}
+  @argument[rect]{a @class{gdk-rectangle} instance to point to}
   @begin{short}
     Accessor of the @slot[gtk-popover]{pointing-to} slot of the
     @class{gtk-popover} class.
   @end{short}
 
   Sets the rectangle that the popover will point to, in the coordinate space of
-  the widget the popover is attached to, see the function
-  @fun{gtk-popover-relative-to}.
+  the widget the popover is attached to, see the @fun{gtk-popover-relative-to}
+  function.
   @see-class{gtk-popover}
   @see-class{gdk-rectangle}
   @see-function{gtk-popover-relative-to}")
@@ -350,26 +355,25 @@
 (setf (gethash 'gtk-popover-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-position 'function)
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @syntax[]{(gtk-popover-pointing-to object) => position}
   @syntax[]{(setf (gtk-popover-pointing-to object) position)}
   @argument[object]{a @class{gtk-popover} widget}
-  @argument[position]{preferred popover position of type
-    @symbol{gtk-position-type}}
+  @argument[position]{a @symbol{gtk-position-type} value with the preferred
+    popover position}
   @begin{short}
     Accessor of the @slot[gtk-popover]{position} slot of the
     @class{gtk-popover} class.
   @end{short}
 
-  The slot access function @sym{gtk-popover-position} returns the preferred
-  position of the popover. The slot access function
-  @sym{(setf gtk-popover-position)} sets the preferred position for the popover
-  to appear. If the popover is currently visible, it will be immediately
-  updated.
+  The @sym{gtk-popover-position} slot access function returns the preferred
+  position of the popover. The @sym{(setf gtk-popover-position)} slot access
+  function sets the preferred position for the popover to appear. If the popover
+  is currently visible, it will be immediately updated.
 
   This preference will be respected where possible, although on lack of space,
-  e.g. if close to the window edges, the @class{gtk-popover} may choose to
-  appear on the opposite side.
+  e.g. if close to the window edges, the @class{gtk-popover} widget may choose
+  to appear on the opposite side.
   @see-class{gtk-popover}
   @see-symbol{gtk-position-type}")
 
@@ -385,7 +389,7 @@
 (setf (gethash 'gtk-popover-relative-to atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-relative-to 'function)
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @syntax[]{(gtk-popover-relative-to object) => relative-to}
   @syntax[]{(setf (gtk-popover-relative-to object) relative-to)}
   @argument[object]{a @class{gtk-popover} widget}
@@ -395,15 +399,15 @@
     @class{gtk-popover} class.
   @end{short}
 
-  The slot access function @sym{gtk-popover-relative-to} returns the widget
-  the popover is currently attached to. The slot access function
-  @sym{(setf gtk-popover-relative-to)} sets a new widget to be attached to the
-  popover. If the popover is visible, the position will be updated.
+  The @sym{gtk-popover-relative-to} slot access function returns the widget
+  the popover is currently attached to. The @sym{(setf gtk-popover-relative-to)}
+  slot access function sets a new widget to be attached to the popover. If the
+  popover is visible, the position will be updated.
   @begin[Note]{dictionary}
     The ownership of popovers is always given to their @arg{relative-to}
-    widget, so if @arg{relative-to} is set to @code{nil} on an attached popover,
-    it will be detached from its previous widget, and consequently destroyed
-    unless extra references are kept.
+    widget, so if the @arg{relative-to} argument is set to @code{nil} on an
+    attached popover, it will be detached from its previous widget, and
+    consequently destroyed unless extra references are kept.
   @end{dictionary}
   @see-class{gtk-popover}
   @see-class{gtk-widget}")
@@ -417,18 +421,17 @@
   @br{}
   Whether show/hide transitions are enabled for this popover. @br{}
   @em{Warning:} The @code{transitions-enabled} property has been deprecated
-  since version 3.22 and should not be used in newly-written code. You can show
-  or hide the popover without transitions using the functions
-  @fun{gtk-widget-show} and @fun{gtk-widget-hide} while the functions
-  @fun{gtk-popover-popup} and @fun{gtk-popover-popdown} will use transitions.
-  @br{}
+  since version 3.22 and should not be used in newly written code. You can show
+  or hide the popover without transitions using the @fun{gtk-widget-show} and
+  @fun{gtk-widget-hide} functions while the @fun{gtk-popover-popup} and
+  @fun{gtk-popover-popdown} functions will use transitions. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-popover-transitions-enabled atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-popover-transitions-enabled 'function)
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @syntax[]{(gtk-popover-transitions-enabled object) => enabled}
   @syntax[]{(setf (gtk-popover-transitions-enabled object) enabled)}
   @argument[object]{a @class{gtk-popover} widget}
@@ -438,18 +441,21 @@
     @class{gtk-popover} class.
   @end{short}
 
-  The slot access function @sym{gtk-popover-transitions-enabled} returns whether
-  show/hide transitions are enabled on this popover. The slot access function
-  @sym{(setf gtk-popover-transitions-enabled)} sets whether show/hide
-  transitions are enabled on this popover.
+  The @sym{gtk-popover-transitions-enabled} slot access function returns whether
+  show/hide transitions are enabled on this popover. The
+  @sym{(setf gtk-popover-transitions-enabled)} slot access function sets whether
+  show/hide transitions are enabled on this popover.
   @begin[Warning]{dictionary}
-    The slot access function @sym{gtk-popover-transitions-enabled} has been
-    deprecated since version 3.22 and should not be used in newly-written code.
-    You can show or hide the popover without transitions using the functions
-    @fun{gtk-widget-show} and @fun{gtk-widget-hide} while the functions
-    @fun{gtk-popover-popup} and @fun{gtk-popover-popdown} will use transitions.
+    The @sym{gtk-popover-transitions-enabled} slot access function has been
+    deprecated since version 3.22 and should not be used in newly written code.
+    You can show or hide the popover without transitions using the
+    @fun{gtk-widget-show} and @fun{gtk-widget-hide} functions while the
+    @fun{gtk-popover-popup} and @fun{gtk-popover-popdown} functions will use
+    transitions.
   @end{dictionary}
   @see-class{gtk-popover}
+  @see-function{gtk-widget-show}
+  @see-function{gtk-widget-hide}
   @see-function{gtk-popover-popup}
   @see-function{gtk-popover-popdown}")
 
@@ -461,12 +467,10 @@
 
 (defun gtk-popover-new (relative-to)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @argument[relative-to]{a @class{gtk-widget} the popover is related to}
   @return{A new @class{gtk-popover} widget.}
-  @begin{short}
-    Creates a new popover to point to @arg{relative-to}.
-  @end{short}
+  @short{Creates a new popover to point to @arg{relative-to}.}
   @see-class{gtk-popover}
   @see-class{gtk-widget}"
   (make-instance 'gtk-popover
@@ -481,7 +485,7 @@
 (defcfun ("gtk_popover_new_from_model" gtk-popover-new-from-model)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @argument[relative-to]{a @class{gtk-widget} the popover is related to}
   @argument[model]{a @class{g-menu-model} object}
   @return{A new @class{gtk-popover} widget.}
@@ -491,13 +495,12 @@
   The popover is pointed to the @arg{relative-to} widget.
 
   The created buttons are connected to actions found in the
-  @class{gtk-application-window} to which the popover belongs - typically by
-  means of being attached to a widget that is contained within the
+  @class{gtk-application-window} widget to which the popover belongs - typically
+  by means of being attached to a widget that is contained within the
   @class{gtk-application-window} widget hierarchy.
 
-  Actions can also be added using the function
-  @fun{gtk-widget-insert-action-group} on the menus attach widget or on any of
-  its parent widgets.
+  Actions can also be added using the @fun{gtk-widget-insert-action-group}
+  function on the menus attach widget or on any of its parent widgets.
   @see-class{gtk-popover}
   @see-class{gtk-widget}
   @see-class{gtk-application-window}
@@ -514,12 +517,11 @@
 
 (defcfun ("gtk_popover_bind_model" gtk-popover-bind-model) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @argument[popover]{a @class{gtk-popover} widget}
   @argument[model]{a @class{g-menu-model} object to bind to or @code{nil} to
     remove the binding}
-  @argument[action-namespace]{a @code{:string} with the namespace for actions
-    in @arg{model}}
+  @argument[namespace]{a string with the namespace for actions in @arg{model}}
   @begin{short}
     Establishes a binding between a popover and a menu model.
   @end{short}
@@ -531,20 +533,21 @@
   If the model is @code{nil} then any previous binding is undone and all
   children are removed.
 
-  If @arg{action-namespace} is non-@code{nil} then the effect is as if all
+  If the @arg{namespace} argument is non-@code{nil} then the effect is as if all
   actions mentioned in the model have their names prefixed with the namespace,
-  plus a dot. For example, if the action \"quit\" is mentioned and
-  @arg{action-namespace} is \"app\" then the effective action name is
+  plus a dot. For example, if the action \"quit\" is mentioned and the
+  @arg{namespace} argument is \"app\" then the effective action name is
   \"app.quit\".
 
-  This function uses @class{gtk-actionable} to define the action name and
-  target values on the created menu items. If you want to use an action group
-  other than \"app\" and \"win\", or if you want to use a @class{gtk-menu-shell}
-  outside of a @class{gtk-application-window}, then you will need to attach your
-  own action group to the widget hierarchy using the function
-  @fun{gtk-widget-insert-action-group}. As an example, if you created a group
-  with a \"quit\" action and inserted it with the name \"mygroup\" then you
-  would use the action name \"mygroup.quit\" in your @class{g-menu-model}.
+  This function uses the @class{gtk-actionable} interface to define the action
+  name and target values on the created menu items. If you want to use an action
+  group other than \"app\" and \"win\", or if you want to use a
+  @class{gtk-menu-shell} widget outside of a @class{gtk-application-window}
+  widget, then you will need to attach your own action group to the widget
+  hierarchy using the @fun{gtk-widget-insert-action-group} function. As an
+  example, if you created a group with a \"quit\" action and inserted it with
+  the name \"mygroup\" then you would use the action name \"mygroup.quit\" in
+  your @class{g-menu-model} object.
   @see-class{gtk-popover}
   @see-class{g-menu-model}
   @see-class{gtk-actionable}
@@ -553,7 +556,7 @@
   @see-function{gtk-widget-insert-action-group}"
   (popover (g-object gtk-popover))
   (model (g-object g-menu-model))
-  (action-namespace :string))
+  (namespace :string))
 
 (export 'gtk-popover-bind-model)
 
@@ -564,14 +567,14 @@
 #+gtk-3-22
 (defcfun ("gtk_popover_popup" gtk-popover-popup) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @argument[popover]{a @class{gtk-popover} widget}
   @begin{short}
     Pops the popover up.
   @end{short}
   This is different than a @fun{gtk-widget-show} call in that it shows the
   popover with a transition. If you want to show the popover without a
-  transition, use the function @fun{gtk-widget-show}.
+  transition, use the @fun{gtk-widget-show} function.
 
   Since 3.22
   @see-class{gtk-popover}
@@ -588,14 +591,14 @@
 #+gtk-3-22
 (defcfun ("gtk_popover_popdown" gtk-popover-popdown) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @argument[popover]{a @class{gtk-popover} widget}
   @begin{short}
     Pops the popover down.
   @end{short}
   This is different than a @fun{gtk-widget-hide} call in that it shows the
   popover with a transition. If you want to hide the popover without a
-  transition, use the function @fun{gtk-widget-hide}.
+  transition, use the @fun{gtk-widget-hide} function.
 
   Since 3.22
   @see-class{gtk-popover}
@@ -622,22 +625,22 @@
 (defcfun ("gtk_popover_get_default_widget" gtk-popover-default-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-3}
+ "@version{2021-12-25}
   @syntax[]{(gtk-popover-default-widget popover) => widget}
   @syntax[]{(setf (gtk-popover-default-widget popover) widget)}
   @argument[popover]{a @class{gtk-popover} widget}
-  @argument[widget]{the new default @class{gtk-widget} object, or @code{nil}}
+  @argument[widget]{a default @class{gtk-widget} object, or @code{nil}}
   @begin{short}
     Accessor of the default widget.
   @end{short}
 
-  The function @sym{gtk-popover-default-widget} gets the widget that should be
-  set as the default while the popover is shown. The function
-  @sym{(setf gtk-popover-default-widget)} sets the widget that should be set as
-  default widget while the popover is shown.
+  The @sym{gtk-popover-default-widget} function gets the widget that should be
+  set as the default while the popover is shown. The
+  @sym{(setf gtk-popover-default-widget)} function sets the widget that should
+  be set as default widget while the popover is shown.
 
-  @class{gtk-popover} remembers the previous default widget and reestablishes
-  it when the popover is dismissed.
+  The @class{gtk-popover} widget remembers the previous default widget and
+  reestablishes it when the popover is dismissed.
 
   Since 3.18
   @see-class{gtk-popover}
