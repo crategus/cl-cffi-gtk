@@ -32,9 +32,6 @@
 (glib-init::push-library-version-features gtk
     (cffi:foreign-funcall "gtk_get_major_version" :int)
     (cffi:foreign-funcall "gtk_get_minor_version" :int)
-    3 10
-    3 12
-    3 14
     3 16   ; Since 23.03.2015
     3 18   ; Since 22.09.2015
     3 20   ; Since 21.03.2016
