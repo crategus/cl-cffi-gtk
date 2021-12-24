@@ -357,7 +357,7 @@
     @begin[GPermission]{subsection}
       @about-class{g-permission}
       @about-generic{g-permission-allowed}
-      @about-generic{g-permission-can-aquire}
+      @about-generic{g-permission-can-acquire}
       @about-generic{g-permission-can-release}
       @about-function{g-permission-acquire}
       @about-function{g-permission-acquire-async}

@@ -75,7 +75,7 @@
     g-permission-allowed
     "allowed" "gboolean" t nil)
    (can-acquire
-    g-permission-can-aquire
+    g-permission-can-acquire
     "can-acquire" "gboolean" t nil)
    (can-release
     g-permission-can-release
@@ -100,7 +100,7 @@
   unlock\" button in a dialog and to provide the mechanism to invoke when that
   button is clicked.
   @see-slot{g-permission-allowed}
-  @see-slot{g-permission-can-aquire}
+  @see-slot{g-permission-can-acquire}
   @see-slot{g-permission-can-release}
   @see-class{g-simple-permission}")
 
@@ -137,19 +137,19 @@
   permission to perform.
   @see-class{g-permission}")
 
-;;; --- g-permission-can-acquire ------------------------------------------------
+;;; --- g-permission-can-acquire -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "can-aquire" 'g-permission) 't)
+(setf (documentation (atdoc:get-slot-from-name "can-acquire" 'g-permission) 't)
  "The @code{can-acquire} property of type @code{:boolean} (Read) @br{}
   @em{True} if it is generally possible to acquire the permission by calling
   the @fun{g-permission-acquire} function. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-permission-can-aquire atdoc:*function-name-alias*)
+(setf (gethash 'g-permission-can-acquire atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'g-permission-can-aquire 'function)
+      (documentation 'g-permission-can-acquire 'function)
  "@version{2021-12-23}
   @syntax[]{(g-permission-can-acquire object) => can-acquire}
   @argument[object]{a @class{g-permission} object}
