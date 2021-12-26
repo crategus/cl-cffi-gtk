@@ -90,6 +90,23 @@
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
+;;; GtkPrintBackend
+;;; ----------------------------------------------------------------------------
+
+(define-g-object-class "GtkPrintBackend" gtk-print-backend
+  (:superclass g-object
+    :export t
+    :interfaces nil
+    :type-initializer "gtk_print_backend_get_type")
+  nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-print-backend 'type)
+ "@version{2021-12-25}
+  @short{No documentation.}
+  @see-class{gtk-printer}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GtkPrinter
 ;;; ----------------------------------------------------------------------------
 
@@ -134,7 +151,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-printer 'type)
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @begin{short}
     A @sym{gtk-printer} object represents a printer.
   @end{short}
@@ -190,7 +207,7 @@
 (setf (gethash 'gtk-printer-accepting-jobs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-accepting-jobs 'function)
- "@version{2021-5-4}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-accepting-jobs object) => accepting-jobs}
   @argument[object]{a @class{gtk-printer} object}
   @argument[accepting-jobs]{a boolean whether the printer is accepting jobs}
@@ -207,14 +224,14 @@
 (setf (documentation (atdoc:get-slot-from-name "accepts-pdf" 'gtk-printer) t)
  "The @code{accepts-pdf} property of type @code{:boolean}
   (Read / Write / Construct Only) @br{}
-  @em{True} if this printer can accept PDF. @br{}
+  @em{True} if the printer can accept PDF. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-printer-accepts-pdf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-accepts-pdf 'function)
- "@version{2021-5-4}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-accepts-pdf object) => accepts-pdf}
   @argument[object]{a @class{gtk-printer} object}
   @argument[accepts-pdf]{a boolean whether the printer can accept PDF}
@@ -231,14 +248,14 @@
 (setf (documentation (atdoc:get-slot-from-name "accepts-ps" 'gtk-printer) t)
  "The @code{accepts-ps} property of type @code{:boolean}
   (Read / Write / Construct Only) @br{}
-  @em{True} if this printer can accept PostScript. @br{}
+  @em{True} if the printer can accept PostScript. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-printer-accepts-ps atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-accepts-ps 'function)
- "@version{2021-5-4}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-accepts-ps object) => accepts-ps}
   @argument[object]{a @class{gtk-printer} object}
   @argument[accepts-ps]{a boolean whether the printer can accept PostScript}
@@ -261,23 +278,24 @@
 (setf (gethash 'gtk-printer-backend atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-backend 'function)
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-backend object) => backend}
   @argument[object]{a @class{gtk-printer} object}
   @argument[backend]{a @class{gtk-print-backend} object}
-  @return{The backend of printer.}
+  @return{The @class{gtk-print-backend} backend of printer.}
   @begin{short}
     Accessor of the @slot[gtk-printer]{backend} slot of the
     @class{gtk-printer} class.
   @end{short}
   Returns the backend of the printer.
-  @see-class{gtk-printer}")
+  @see-class{gtk-printer}
+  @see-class{gtk-print-backend}")
 
 ;;; --- gtk-printer-icon-name --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-printer) t)
- "The @code{icon-name} property of type @code{g-string} (Read) @br{}
+ "The @code{icon-name} property of type @code{:string} (Read) @br{}
   The icon name to use for the printer. @br{}
   Default value: \"\"")
 
@@ -285,7 +303,7 @@
 (setf (gethash 'gtk-printer-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-icon-name 'function)
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-icon-name object) => icon-name}
   @argument[object]{a @class{gtk-printer} object}
   @argument[icon-name]{a string with the icon name}
@@ -309,7 +327,7 @@
 (setf (gethash 'gtk-printer-is-virtual atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-is-virtual 'function)
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-is-virtual object) => is-virtual}
   @argument[object]{a @class{gtk-printer} object}
   @argument[is-virtual]{a boolean whether the printer is real hardware printer}
@@ -334,10 +352,10 @@
 (setf (gethash 'gtk-printer-job-count atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-job-count 'function)
- "@version{2021-5-4}
-  @syntax[]{(gtk-printer-job-count object) => job-count}
+ "@version{2021-12-25}
+  @syntax[]{(gtk-printer-job-count object) => count}
   @argument[object]{a @class{gtk-printer} object}
-  @argument[job-count]{an integer with he number of jobs queued on the printer}
+  @argument[count]{an integer with he number of jobs queued on the printer}
   @begin{short}
     Accessor of the @slot[gtk-printer]{job-count} slot of the
     @class{gtk-printer} class.
@@ -349,7 +367,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "location" 'gtk-printer) t)
- "The @code{location} property of type @code{g-string} (Read) @br{}
+ "The @code{location} property of type @code{:string} (Read) @br{}
   The location of the printer. @br{}
   Default value: \"\"")
 
@@ -357,7 +375,7 @@
 (setf (gethash 'gtk-printer-location atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-location 'function)
- "@version{2021-5-4}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-location object) => location}
   @argument[object]{a @class{gtk-printer} object}
   @argument[location]{a string with the location of the printer}
@@ -372,8 +390,8 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-printer) t)
- "The @code{name} property of type @code{g-string}
-  (Read / Write / Construct) @br{}
+ "The @code{name} property of type @code{:string} (Read / Write / Construct)
+  @br{}
   Name of the printer. @br{}
   Default value: \"\"")
 
@@ -381,7 +399,7 @@
 (setf (gethash 'gtk-printer-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-name 'function)
- "@version{2021-5-4}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-name object) => name}
   @argument[object]{a @class{gtk-printer} object}
   @argument[name]{a string with the name of the printer}
@@ -405,7 +423,7 @@
 (setf (gethash 'gtk-printer-paused atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-paused 'function)
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-paused object) => paused}
   @argument[object]{a @class{gtk-printer} object}
   @argument[paused]{a boolean whether the printer is paused}
@@ -420,7 +438,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "state-message" 'gtk-printer) t)
- "The @code{state-message} property of type @code{g-string} (Read) @br{}
+ "The @code{state-message} property of type @code{:string} (Read) @br{}
   String giving the current state of the printer. @br{}
   Default value: \"\"")
 
@@ -428,7 +446,7 @@
 (setf (gethash 'gtk-printer-state-message atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-printer-state-message 'function)
- "@version{2021-5-4}
+ "@version{2021-12-25}
   @syntax[]{(gtk-printer-state-message object) => message}
   @argument[object]{a @class{gtk-printer} object}
   @argument[message]{a string with the current state of the printer}
@@ -440,23 +458,6 @@
   @see-class{gtk-printer}")
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkPrintBackend
-;;; ----------------------------------------------------------------------------
-
-(define-g-object-class "GtkPrintBackend" gtk-print-backend
-  (:superclass g-object
-    :export t
-    :interfaces nil
-    :type-initializer "gtk_print_backend_get_type")
-  nil)
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-print-backend 'type)
- "@version{2020-4-9}
-  @short{No documentation.}
-  @see-class{gtk-printer}")
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_printer_new ()
 ;;; ----------------------------------------------------------------------------
 
@@ -464,12 +465,12 @@
 
 (defun gtk-printer-new (name backend virtual)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[name]{a string with the name of the printer}
   @argument[backend]{a @class{gtk-print-backend} object}
   @argument[virtual]{a boolean whether the printer is virtual}
   @return{A new @class{gtk-printer} object.}
-  @short{Creates a new @class{gtk-printer} object.}
+  @short{Creates a new printer.}
   @see-class{gtk-printer}
   @see-class{gtk-print-backend}"
   (make-instance 'gtk-printer
@@ -483,9 +484,9 @@
 ;;; gtk_printer_get_description ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_printer_get_description" gtk-printer-description) g-string
+(defcfun ("gtk_printer_get_description" gtk-printer-description) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @return{A string with the description of @arg{printer}.}
   @short{Gets the description of the printer.}
@@ -500,7 +501,7 @@
 
 (defcfun ("gtk_printer_is_active" gtk-printer-is-active) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @return{@em{True} if @arg{printer} is active.}
   @begin{short}
@@ -517,7 +518,7 @@
 
 (defcfun ("gtk_printer_is_paused" gtk-printer-is-paused) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @return{@em{True} if @arg{printer} is paused.}
   @begin{short}
@@ -536,7 +537,7 @@
 (defcfun ("gtk_printer_is_accepting_jobs" gtk-printer-is-accepting-jobs)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @return{@em{True} if @arg{printer} is accepting jobs.}
   @short{Returns whether the printer is accepting jobs.}
@@ -551,12 +552,10 @@
 
 (defcfun ("gtk_printer_is_default" gtk-printer-is-default) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @return{@em{True} if @arg{printer} is the default.}
-  @begin{short}
-    Returns whether the printer is the default printer.
-  @end{short}
+  @short{Returns whether the printer is the default printer.}
   @see-class{gtk-printer}"
   (printer (g-object gtk-printer)))
 
@@ -581,14 +580,17 @@
 (defcfun ("gtk_printer_list_papers" gtk-printer-list-papers)
     (g-list (g-object gtk-page-setup))
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @return{A list of @class{gtk-page-setup} objects.}
-  @short{Lists all the paper sizes the printer supports.}
-  This will return an empty list unless the printer's details are available,
-  see the functions @fun{gtk-printer-has-details} and
-  @fun{gtk-printer-request-details}.
+  @begin{short}
+     Lists all the paper sizes the printer supports.
+  @end{short}
+  This will return an empty list unless the details of the printer are
+  available, see the @fun{gtk-printer-has-details} and
+  @fun{gtk-printer-request-details} functions.
   @see-class{gtk-printer}
+  @see-class{gtk-page-setup}
   @see-function{gtk-printer-has-details}
   @see-function{gtk-printer-request-details}"
   (printer (g-object gtk-printer)))
@@ -601,17 +603,17 @@
 
 (defcfun ("gtk_printer_compare" gtk-printer-compare) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
-  @argument[a]{a @class{gtk-printer} object}
-  @argument[b]{another @class{gtk-printer} object}
+ "@version{2021-12-25}
+  @argument[printer1]{a @class{gtk-printer} object}
+  @argument[printer2]{another @class{gtk-printer} object}
   @begin{return}
     0 if the printer match, a negative value if @arg{a} < @arg{b}, or a
     positive value if @arg{a} > @arg{b}.
   @end{return}
   @short{Compares two printers.}
   @see-class{gtk-printer}"
-  (a (g-object gtk-printer))
-  (b (g-object gtk-printer)))
+  (printer1 (g-object gtk-printer))
+  (printer2 (g-object gtk-printer)))
 
 (export 'gtk-printer-compare)
 
@@ -621,12 +623,10 @@
 
 (defcfun ("gtk_printer_has_details" gtk-printer-has-details) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @return{@em{True} if @arg{printer} details are available.}
-  @begin{short}
-    Returns whether the printer details are available.
-  @end{short}
+  @short{Returns whether the printer details are available.}
   @see-class{gtk-printer}
   @see-function{gtk-printer-request-details}"
   (printer (g-object gtk-printer)))
@@ -639,13 +639,13 @@
 
 (defcfun ("gtk_printer_request_details" gtk-printer-request-details) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @begin{short}
     Requests the printer details.
   @end{short}
   When the details are available, the \"details-acquired\" signal will be
-  emitted on printer.
+  emitted on the printer.
   @see-class{gtk-printer}
   @see-function{gtk-printer-has-details}"
   (printer (g-object gtk-printer)))
@@ -659,23 +659,24 @@
 (defcfun ("gtk_printer_get_capabilities" gtk-printer-capabilities)
     gtk-print-capabilities
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
-  @return{The printer's capabilities of type @symbol{gtk-print-capabilities}.}
+  @return{The @symbol{gtk-print-capabilities} capabilities of the printer.}
   @begin{short}
-    Returns the printer's capabilities.
+    Returns the capabilities of the printer.
   @end{short}
-
   This is useful when you are using the
-  @slot[gtk-print-unix-dialog]{manual-capabilities} setting of
-  @class{gtk-print-unix-dialog} and need to know which settings the printer can
-  handle and which you must handle yourself.
+  @slot[gtk-print-unix-dialog]{manual-capabilities} setting of the
+  @class{gtk-print-unix-dialog} widget and need to know which settings the
+  printer can handle and which you must handle yourself.
 
-  This will return 0 unless the printer's details are available, see the
-  functions @fun{gtk-printer-has-details} and @fun{gtk-printer-request-details}.
+  This will return 0 unless the details of the printer are available, see the
+  @fun{gtk-printer-has-details} and @fun{gtk-printer-request-details} functions.
   @see-class{gtk-printer}
   @see-symbol{gtk-print-capabilities}
-  @see-class{gtk-print-unix-dialog}"
+  @see-class{gtk-print-unix-dialog}
+  @see-function{gtk-printer-has-details}
+  @see-function{gtk-printer-request-details}"
   (printer (g-object gtk-printer)))
 
 (export 'gtk-printer-capabilities)
@@ -687,7 +688,7 @@
 (defcfun ("gtk_printer_get_default_page_size" gtk-printer-default-page-size)
     (g-object gtk-page-setup)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @return{A @class{gtk-page-setup} object with the default page size of the
     printer.}
@@ -711,22 +712,22 @@
 
 (defun gtk-printer-hard-margins (printer)
  #+cl-cffi-gtk-documentation
- "@version{2020-4-9}
+ "@version{2021-12-25}
   @argument[printer]{a @class{gtk-printer} object}
   @begin{return}
-    @code{top} -- a @code{:double} with the top margin @br{}
-    @code{bottom} -- a @code{:double} with the bottom margin @br{}
-    @code{left} -- a @code{:double} with the left margin in @br{}
-    @code{right} -- a @code{:double} with the right margin
+    @arg{top} -- a double float with the top margin @br{}
+    @arg{bottom} -- a double float with the bottom margin @br{}
+    @arg{left} -- a double float with the left margin in @br{}
+    @arg{right} -- a double float with the right margin
   @end{return}
   @begin{short}
     Retrieve the hard margins of the printer, i.e. the margins that define
     the area at the borders of the paper that the printer cannot print to.
   @end{short}
   @begin[Note]{dictionary}
-    This will not succeed unless the printer's details are available,
-    see the functions @fun{gtk-printer-has-details} and
-    @fun{gtk-printer-request-details}.
+    This will not succeed unless the details of the printer are available,
+    see the @fun{gtk-printer-has-details} and @fun{gtk-printer-request-details}
+    functions.
   @end{dictionary}
   @see-class{gtk-printer}
   @see-function{gtk-printer-has-details}
@@ -756,9 +757,9 @@
 (setf (gethash 'gtk-printer-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-printer-func atdoc:*external-symbols*)
- "@version{2021-5-4}
+ "@version{2021-12-25}
   @begin{short}
-    The type of function passed to the function @fun{gtk-enumerate-printers}.
+    The type of function passed to the @fun{gtk-enumerate-printers} function.
   @end{short}
   @begin{pre}
  lambda (printer)
@@ -787,7 +788,7 @@
  "@version{2020-4-9}
   @argument[func]{a function to call for each printer}
   @argument[wait]{if @em{true}, wait in a recursive main loop until all printers
-    are enumerated; otherwise return early}
+    are enumerated, otherwise return early}
   @begin{short}
     Calls a function for all printers.
   @end{short}
@@ -795,7 +796,7 @@
   @see-class{gtk-printer}"
   (%gtk-enumerate-printers (callback gtk-printer-func)
                            (allocate-stable-pointer func)
-                           (callback stable-pointer-destroy-notify-cb)
+                           (callback stable-pointer-destroy-notify)
                            wait))
 
 (export 'gtk-enumerate-printers)
