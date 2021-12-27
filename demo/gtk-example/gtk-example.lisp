@@ -1,10 +1,12 @@
 (defpackage :gtk-example
   (:use :gtk :gdk :gdk-pixbuf :gobject
    :glib :gio :pango :cairo :cffi :split-sequence :common-lisp)
-  (:export #:create-page-setup-dialog
+  (:export #:create-expander-dialog
+           #:create-page-setup-dialog
            #:create-print-dialog
            #:do-print-operation
            #:list-content-types
+           #:example-action-bar
            #:example-alignment
            #:example-alignment-interactive
            #:example-arrow-button
@@ -46,6 +48,7 @@
            #:example-event-box
            #:example-file-chooser-button               ; Selecting Colors, ...
            #:example-fixed                             ; Layout Widgets
+           #:example-flow-box                          ; Layout Widgets
            #:example-font-button
            #:example-font-button-label                 ; Selecting Colors, ...
            #:example-frame                             ; Layout Widgets
@@ -57,17 +60,16 @@
            #:create-file-chooser-widget
            #:example-getting-started                   ; Getting started
            #:example-grab
-           #:example-grid-interactive
-           #:example-grid-packing
+           #:example-grid-packing                      ; Layout Containers
            #:example-grid-simple                       ; Packing Widgets
            #:example-grid-spacing                      ; Packing Widgets
+           #:example-header-bar                        ; Layout Widgets
            #:example-hello-world                       ; Getting started
            #:example-hello-world-upgraded              ; Getting started
            #:example-hello-world-upgraded-2            ; Getting started
            #:example-icon-view                         ; Tree and List Widgets
            #:example-image                             ; Display Widgets
            #:example-image-button-press
-           #:example-image-menu-item
            #:example-info-bar                          ; Display Widgets
            #:example-label                             ; Display Widgets
            #:example-label-more                        ; Display Widgets
@@ -77,6 +79,7 @@
            #:example-list-box
            #:example-menu
            #:example-menu-builder
+           #:example-menu-item                         ; Menus and Toolbars
            #:example-menu-by-hand                      ; Menus and Toolbars
            #:example-menu-popup                        ; Menus and Toolbars
            #:example-message-dialog-get-message-area
@@ -88,6 +91,9 @@
            #:example-message-dialog-ui
            #:example-notebook                          ; Layout Widgets
            #:example-numerable-icon
+           #:example-overlay-decorative                ; Layout Widgets
+           #:example-overlay-interactive               ; Layout Widgets
+           #:example-overlay-transparent               ; Layout Widgets
            #:example-paned-window                      ; Layout Widgets
            #:example-pixbufs
            #:exmaple-pixbuf-scale
@@ -109,6 +115,9 @@
            #:example-show-about-dialog
            #:example-simple-list-store
            #:example-spin-button
+           #:example-spinner
+           #:example-stack                             ; Layout Widgets
+           #:example-stack-sidebar                     ; Layout Widgets
            #:example-statusbar                         ; Display Widgets
            #:example-switch                            ; Button Widgets
            #:example-table-packing                     ; Deprecated
@@ -139,7 +148,6 @@
            #:example-tree-view-drag-and-drop           ; Tree and List Widgets
            #:example-widget-align
            #:example-widget-pointer
-           #:example-window-application                ; Deprecated
            #:example-window-simple                     ; Getting started
            #:example-window-simple-demo
            #:sys-path

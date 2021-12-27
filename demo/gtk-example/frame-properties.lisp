@@ -1,4 +1,4 @@
-;;;; Example Frame Widget (2021-5-28)
+;;;; Example Frame Widget - 2021-12-21
 ;;;;
 ;;;; This example allows to change interactively the appearance of the frame.
 
@@ -9,40 +9,37 @@
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :application application
-                                  :title "Demo GtkFrame"
+                                  :title "Example GtkFrame"
                                   :border-width 12))
-           ;; A horizontal Box for the content of the window.
+           ;; A horizontal Box for the content of the window
            (content (make-instance 'gtk-grid
                                    :orientation :horizontal
                                    :column-spacing 24))
-           ;; A vertical Grid for the actions.
+           ;; A vertical Grid for the actions
            (action (make-instance 'gtk-grid
                                   :orientation :vertical
                                   :row-spacing 6))
-           ;; A Frame with a label.
+           ;; A Frame with a label
            (frame (make-instance 'gtk-frame
                                  :label "Label"
                                  :label-xalign 0.1
                                  :width-request 200
                                  :height-request 200))
-           ;; Store the Label Widget of the Frame.
+           ;; Store the Label Widget of the Frame
            (label-widget (gtk-frame-label-widget frame))
            ;; The entry for input the text for the Frame Label
            (entry (make-instance 'gtk-entry
                                   :secondary-icon-stock "gtk-ok"
                                   :secondary-icon-tooltip-text
                                   "Change the Label of the Frame")))
-
-      ;; Signal handler for the window to handle the signal "destroy".
+      ;; Signal handler for the window to handle the signal "destroy"
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-
-      ;; Put some text into the Frame.
+      ;; Put some text into the Frame
       (gtk-container-add frame (gtk-label-new "Test Frame"))
-
-      ;; Set the Frame Label.
+      ;; Set the Frame Label
       (let () ; The entry is already defined
         (g-signal-connect entry "icon-press"
                           (lambda (entry icon-pos event)
@@ -59,8 +56,7 @@
         (setf (gtk-entry-text entry) (gtk-frame-label frame))
         ;; Pack the entry in the action widget.
         (gtk-container-add action entry))
-
-      ;; Set the Label alignment.
+      ;; Set the Label alignment
       (let ((hbox (make-instance 'gtk-grid
                                   :orientation :horizontal
                                   :column-homogenous t
@@ -115,7 +111,6 @@
         (gtk-container-add hbox x-spin)
         (gtk-container-add hbox y-spin)
         (gtk-container-add action hbox))
-
       ;; Change the Shadow Type
       (let ((combo (make-instance 'gtk-combo-box-text)))
         (gtk-combo-box-text-append-text combo "NONE")
@@ -128,7 +123,6 @@
            (lambda (combobox)
              (let ((text (gtk-combo-box-text-active-text combobox)))
                (setf (gtk-frame-shadow-type frame) (intern text :keyword)))))
-
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -137,13 +131,13 @@
                                           :label
                                           "<b>Shadow Type</b>"))
         (gtk-container-add action combo))
-
       ;; Set a Label Widget
-      (let ((toggle (gtk-check-button-new-with-label "Show Stock Image")))
+      (let ((toggle (gtk-check-button-new-with-label "Show Themed Icon")))
         (g-signal-connect toggle "toggled"
            (lambda (widget)
              (if (gtk-toggle-button-active widget)
-                 (let ((image (gtk-image-new-from-stock "gtk-home" :button)))
+                 (let ((image (gtk-image-new-from-icon-name "gtk-home"
+                                                            :button)))
                    ;; Store the actual Label Widget.
                    (setf label-widget (gtk-frame-label-widget frame))
                    (setf (gtk-widget-sensitive entry) nil)
@@ -161,17 +155,6 @@
                                           :label
                                           "<b>Change Label Widget</b>"))
         (gtk-container-add action toggle))
-
-      ;; A Quit button
-      (let ((button (make-instance 'gtk-button
-                                   :label "Quit"
-                                   :margin-top 12)))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (gtk-widget-destroy window)))
-        (gtk-container-add action button))
-
       ;; Add frame, content, and action to the window.
       (gtk-container-add content frame)
       (gtk-container-add content action)

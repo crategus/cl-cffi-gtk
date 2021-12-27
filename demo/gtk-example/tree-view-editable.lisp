@@ -20,7 +20,7 @@
         obj
         (list obj)))
 
-  (defun create-and-fill-list-store (data)
+  (defun create-and-fill-list-store-editable (data)
     (let ((model (apply #'gtk-list-store-new (mklist (first data)))))
       (dolist (entry (rest data))
         (let ((iter (gtk-list-store-append model)))
@@ -38,7 +38,7 @@
       (sort values #'string-lessp)))
 
   (defun create-view-and-model-editable ()
-    (let* ((model (create-and-fill-list-store *shoppinglist*))
+    (let* ((model (create-and-fill-list-store-editable *shoppinglist*))
            (view (gtk-tree-view-new-with-model model)))
 
       ;; Create renderer for Done column
@@ -79,7 +79,7 @@
 
       ;; Create renderer for Unit column
       (let* ((data '("gchararray" "mg" "g" "ml" "l" "Piece" "Glass"))
-             (combo (create-and-fill-list-store data))
+             (combo (create-and-fill-list-store-editable data))
              (renderer (gtk-cell-renderer-combo-new))
              (column (gtk-tree-view-column-new-with-attributes "Unit"
                                                                renderer
@@ -113,7 +113,7 @@
 
       ;; Create renderer for Product column
       (let* ((data '("gchararray" "Apples" "Bread" "Cucumbers"))
-             (completion (create-and-fill-list-store data))
+             (completion (create-and-fill-list-store-editable data))
              (entry (gtk-entry-completion-new))
              (renderer (gtk-cell-renderer-text-new))
              (column (gtk-tree-view-column-new-with-attributes "Product"

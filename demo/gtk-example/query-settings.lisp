@@ -2,7 +2,7 @@
 
 (let ((col-setting 0) (col-type 1) (col-value 2) (col-desc 3))
 
-  (defun create-and-fill-list-store (data)
+  (defun create-and-fill-list-store-settings (data)
     (flet ((mklist (obj)
              (if (listp obj)
                  obj
@@ -27,7 +27,7 @@
                                 (format nil "~a" value)
                                 (g-param-spec-nick setting))))
       (push (list "gchararray" "gchararray" "gchararray" "gchararray") data)
-      (create-and-fill-list-store data)))
+      (create-and-fill-list-store-settings data)))
 
   (defun create-view-and-model-settings ()
     (let* ((model (create-and-fill-model-settings))

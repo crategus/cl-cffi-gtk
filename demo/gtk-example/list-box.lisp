@@ -105,9 +105,9 @@
     (setf (gtk-label-label (gtk-message-row-content-label row))
           (gtk-message-message message))
 
-    (multiple-value-bind
-        (second minute hour date month year day-of-week dst-p tz)
-        (decode-universal-time (gtk-message-time message))
+    (multiple-value-bind-some
+        (second minute hour date month year nil nil nil)
+      (decode-universal-time (gtk-message-time message))
       (setf (gtk-label-label (gtk-message-row-short-time-label row))
             (format nil "~a.~a.~a" date month (+ year 70)))
       (setf (gtk-label-label (gtk-message-row-detailed-time-label row))
@@ -140,9 +140,7 @@
 (defun gtk-message-row-new (message)
   (let* ((builder (gtk-builder-new-from-file (sys-path "list-box.ui")))
          (row (gtk-builder-object builder "messagerow")))
-
     (setf (gtk-message-row-message row) message)
-
     (setf (gtk-message-row-details-revealer row)
           (gtk-builder-object builder "details_revealer"))
     (setf (gtk-message-row-avatar-image row)
@@ -159,45 +157,38 @@
           (gtk-builder-object builder "short_time_label"))
     (setf (gtk-message-row-detailed-time-label row)
           (gtk-builder-object builder "detailed_time_label"))
-
     (setf (gtk-message-row-resent-box row)
           (gtk-builder-object builder "resent_box"))
     (setf (gtk-message-row-resent-by-button row)
           (gtk-builder-object builder "resent_by_button"))
-
     (setf (gtk-message-row-n-favorites-label row)
           (gtk-builder-object builder "n_favorites_label"))
     (setf (gtk-message-row-n-reshares-label row)
           (gtk-builder-object builder "n_reshares_label"))
     (setf (gtk-message-row-expand-button row)
           (gtk-builder-object builder "expand_button"))
-
     (gtk-message-row-update row)
-
     (g-signal-connect (gtk-builder-object builder "expand_button") "clicked"
         (lambda (button)
-          (format t "in EXPAND_CLICKED: ~a~%" button)
+          (declare (ignore button))
           (gtk-message-row-expand row)))
-
     (g-signal-connect (gtk-builder-object builder "reshare_button") "clicked"
         (lambda (button)
+          (declare (ignore button))
           (let ((message (gtk-message-row-message row)))
             (incf (gtk-message-n-reshares message))
             (gtk-message-row-update row))))
-
     (g-signal-connect (gtk-builder-object builder "favorite_button") "clicked"
         (lambda (button)
+          (declare (ignore button))
           (let ((message (gtk-message-row-message row)))
             (incf (gtk-message-n-favorites message))
             (gtk-message-row-update row))))
-
     row))
 
 (defun example-list-box (&optional application)
   (within-main-loop
-    (let ((avatar-pixbuf-other (gdk-pixbuf-new-from-file
-                                 (sys-path "apple-red.png")))
-          (window (make-instance 'gtk-window
+    (let ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :application application
                                   :title "Example List Box"

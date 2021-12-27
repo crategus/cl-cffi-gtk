@@ -1,3 +1,5 @@
+;;;; Example Image Menu Item - 2021-12-22
+
 (in-package :gtk-example)
 
 (defun create-image-menu-item ()
@@ -22,26 +24,24 @@
                                                  :xalign 0.0))
           (menu-item (make-instance 'gtk-menu-item))
           (accel-group (make-instance 'gtk-accel-group)))
-
       (gtk-widget-add-accelerator menu-item
                                   "activate"
                                   accel-group
                                   (gdk-keyval-from-name "o")
                                   :control-mask
                                   :visible)
-
       (setf (gtk-accel-label-accel-widget label) menu-item)
-
       (gtk-container-add box icon)
       (gtk-box-pack-end box label :expand t :fill t :padding 0)
       (gtk-container-add menu-item box)
       menu-item))
 
-(defun example-image-menu-item ()
+(defun example-menu-item (&optional application)
   (within-main-loop
     (let (;; Create a toplevel window.
           (window (make-instance 'gtk-window :type :toplevel
                                              :title "Example Image Menu Item"
+                                             :application application
                                              :default-height 200
                                              :default-width 350
                                              :border-width 12))

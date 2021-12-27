@@ -2,7 +2,7 @@
 
 (in-package :gtk-example)
 
-(defun license-text ()
+(defun dialog-license-text ()
   (format nil
           "This program is free software: you can redistribute it and/or ~
           modify it under the terms of the GNU Lesser General Public ~
@@ -73,7 +73,7 @@
                                :website
                                "github.com/crategus/cl-cffi-gtk"
                                :website-label "Project web site"
-                               :license (license-text)
+                               :license (dialog-license-text)
                                :authors '("Kalyanov Dmitry"
                                           "Dieter Kaiser")
                                :documenters '("Dieter Kaiser")

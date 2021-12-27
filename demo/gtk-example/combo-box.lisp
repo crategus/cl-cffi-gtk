@@ -11,7 +11,7 @@
                 ("" "separator")
                 ("document-open" "Open")))
 
-(defun create-and-fill-list-store (data)
+(defun create-and-fill-list-store-combo-box (data)
   (flet ((mklist (obj) (if (listp obj) obj (list obj))))
     (let ((model (apply #'gtk-list-store-new (mklist (first data)))))
       (dolist (entry (rest data))
@@ -42,7 +42,7 @@
                                 :orientation :horizontal
                                 :spacing 24))
            (label (make-instance 'gtk-label :label "label"))
-           (model (create-and-fill-list-store *icon-list*))
+           (model (create-and-fill-list-store-combo-box *icon-list*))
            (combo (make-instance 'gtk-combo-box
                                  :model model)))
       ;; Setup Cell Renderer for icon

@@ -86,7 +86,7 @@
 (defun example-message-dialog-set-image ()
   (let ((response))
     (within-main-loop
-      (let ((image (gtk-image-new-from-stock "gtk-ok" :dialog))
+      (let ((image (gtk-image-new-from-icon-name "gtk-ok" :dialog))
             (dialog (gtk-message-dialog-new nil
                                             '(:modal)
                                             :info

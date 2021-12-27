@@ -4,6 +4,10 @@
 ;;;; and support sorting and filtering.
 ;;;;
 ;;;; The children of a GtkFlowBox are regular widgets.
+;;;;
+;;;; TODO:
+;;;;
+;;;; Implement different sorting algorithms and a ComboBox for selection.
 
 (in-package :gtk-example)
 
@@ -164,12 +168,13 @@
                               :label color)))
     (g-signal-connect area "draw"
         (lambda (widget cr)
-        (let ((cr (pointer cr))
-              (rgba (gdk-rgba-parse color)))
-          (when rgba
-            (gdk-cairo-set-source-rgba cr rgba)
-            (cairo-paint cr))
-          (cairo-destroy cr))))
+          (declare (ignore widget))
+          (let ((cr (pointer cr))
+                (rgba (gdk-rgba-parse color)))
+            (when rgba
+              (gdk-cairo-set-source-rgba cr rgba)
+              (cairo-paint cr))
+            (cairo-destroy cr))))
     (gtk-box-pack-start vbox area)
     (gtk-box-pack-start vbox label)
     (gtk-container-add button vbox)
@@ -207,6 +212,16 @@
                    (color (gtk-widget-name button))
                    (text (gtk-entry-text entry)))
               (search (string-downcase text) color))))
+
+      (gtk-flow-box-set-sort-func flowbox
+          (lambda (child1 child2)
+            (let* ((color1 (gtk-widget-name (gtk-bin-child child1)))
+                   (color2 (gtk-widget-name (gtk-bin-child child2))))
+              (if (string> (gdk-rgba-to-string (gdk-rgba-parse color1))
+                           (gdk-rgba-to-string (gdk-rgba-parse color2)))
+                  0
+                  1))))
+
       (dolist (color *colors*)
         (gtk-container-add flowbox (color-swatch-new color)))
       (gtk-box-pack-start vbox entry :expand nil)

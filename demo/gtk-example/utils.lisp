@@ -83,4 +83,22 @@ sem venenatis, vitae ultricies arcu laoreet."))
                                           0))
     (:pixbuf (gtk-image-pixbuf image))))
 
-;;;; 2021-9-24
+;; Multiple value bind without compiler warnings
+
+(defun make-vars (vars &aux syms)
+  "Creates uninterned symbols for vars named NIL.
+   Returns a list with those replaced and a list of the new syms."
+  (values (loop for var in vars
+                if (eq var NIL)
+                collect (let ((sym (gensym "ignore"))) (push sym syms) sym)
+                else collect var)
+          syms))
+
+(defmacro multiple-value-bind-some (vars form &body body)
+  "Similar to MULTIPLE-VALUE-BIND, but variables named NIL will be ignored."
+  (multiple-value-bind (vars syms) (make-vars vars)
+    `(multiple-value-bind ,vars ,form
+       (declare (ignore ,@syms))
+         ,@body)))
+
+;;;; 2021-12-17

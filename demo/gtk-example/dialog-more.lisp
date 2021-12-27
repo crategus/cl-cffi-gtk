@@ -37,9 +37,6 @@
                                (lambda (widget)
                                  (declare (ignore widget))
                                  (gtk-dialog-response dialog 9))))
-    ;; Change the order of the buttons
-    (gtk-dialog-set-alternative-button-order dialog
-                                             (list :yes :cancel :no))
     ;; Run the dialog and print the message on the console
     (format t "Response was: ~S~%" (gtk-dialog-run dialog))
     ;; Destroy the dialog

@@ -163,7 +163,7 @@
        "window-simple-demo.lisp"
        "EXAMPLE-WINDOW-SIMPLE-DEMO"
        t)
-      ("Simple Message"
+      ("Message Dialog"
        "gtk-example"
        "message-dialog-simple.lisp"
        "EXAMPLE-MESSAGE-DIALOG-SIMPLE"
@@ -183,89 +183,153 @@
      (("Simple Box"
        "gtk-example"
        "box-simple.lisp"
-       "EXAMPLE-BOX-SIMPLE")
+       "EXAMPLE-BOX-SIMPLE"
+       t)
       ("Box packing"
        "gtk-example"
        "box-packing.lisp"
-       "EXAMPLE-BOX-PACKING")
+       "EXAMPLE-BOX-PACKING"
+       t)
+      ("Simple Grid"
+       "gtk-example"
+       "grid-simple.lisp"
+       "EXAMPLE-GRID-SIMPLE"
+       t)
+      ("Grid with spacing"
+       "gtk-example"
+       "grid-spacing.lisp"
+       "EXAMPLE-GRID-SPACING"
+       t)
       ("Grid packing"
        "gtk-example"
        "grid-packing.lisp"
-       "EXAMPLE-GRID-PACKING")
-      ("Grid Interactive"
-       "gtk-example"
-       "grid-interactive.lisp"
-       "EXAMPLE-GRID-INTERACTIVE"
+       "EXAMPLE-GRID-PACKING"
        t)
-      ("Button Boxes"
-       "gtk-example"
-       "button-box.lisp"
-       "EXAMPLE-BUTTON-BOX")
-      ("Paned Window"
-       "gtk-example"
-       "paned-window.lisp"
-       "EXAMPLE-PANED-WINDOW")
       ("Revealer"
        "gtk-example"
        "revealer.lisp"
-       "EXAMPLE-REVEALER")
+       "EXAMPLE-REVEALER"
+       t)
       ("Revealer Icon"
        "gtk-example"
        "revealer-icon.lisp"
        "EXAMPLE-REVEALER-ICON"
-        nil
-        "revealer-icon.ui")
-      ("Fixed Container"
+       t
+       "revealer-icon.ui")
+      ("List Box"
        "gtk-example"
-       "fixed.lisp"
-       "EXAMPLE-FIXED")
-      ("Frame Widget"
+       "list-box.lisp"
+       "EXAMPLE-LIST-BOX"
+       t
+       "list-box.ui")
+      ("Flow Box"
        "gtk-example"
-       "frame.lisp"
-       "EXAMPLE-FRAME")
-      ("Frame Properties"
-       "gtk-example"
-       "frame-properties.lisp"
-       "EXAMPLE-FRAME-PROPERTIES"
+       "flow-box.lisp"
+       "EXAMPLE-FLOW-BOX"
        t)
-      ("Aspect Frame"
+      ("Stack"
        "gtk-example"
-       "aspect-frame.lisp"
-       "EXAMPLE-ASPECT-FRAME")
+       "stack.lisp"
+       "EXAMPLE-STACK"
+       t)
+      ("Stack Sidebar"
+       "gtk-example"
+       "stack-sidebar.lisp"
+       "EXAMPLE-STACK-SIDEBAR"
+       t)
+      ("Action Bar"
+       "gtk-example"
+       "action-bar.lisp"
+       "EXAMPLE-ACTION-BAR"
+       t)
+      ("Header Bar"
+       "gtk-example"
+       "header-bar.lisp"
+       "EXAMPLE-HEADER-BAR"
+       t)
+      ("Overlay Interactive"
+       "gtk-example"
+       "overlay-interactive.lisp"
+       "EXAMPLE-OVERLAY-INTERACTIVE"
+       t)
+      ("Overlay Decorative"
+       "gtk-example"
+       "overlay-decorative.lisp"
+       "EXAMPLE-OVERLAY-DECORATIVE"
+       t)
+      ("Button Boxes"
+       "gtk-example"
+       "button-box.lisp"
+       "EXAMPLE-BUTTON-BOX"
+       t)
+      ("Paned Window"
+       "gtk-example"
+       "paned-window.lisp"
+       "EXAMPLE-PANED-WINDOW"
+       t)
       ("Notebook"
        "gtk-example"
        "notebook.lisp"
-       "EXAMPLE-NOTEBOOK"))
+       "EXAMPLE-NOTEBOOK"
+       t)
+      ("Expander"
+       "gtk-example"
+       "expander.lisp"
+       "CREATE-EXPANDER-DIALOG"
+       nil)
+      ("Aspect Frame"
+       "gtk-example"
+       "aspect-frame.lisp"
+       "EXAMPLE-ASPECT-FRAME"
+       t)
+      ("Fixed Container"
+       "gtk-example"
+       "fixed.lisp"
+       "EXAMPLE-FIXED"
+       t))
 
+     ;; Display Widgets
      "Display Widgets"
      (("Labels"
        "gtk-example"
        "label.lisp"
-       "EXAMPLE-LABEL")
+       "EXAMPLE-LABEL"
+       t)
       ("More Labels"
        "gtk-example"
        "label-more.lisp"
-       "EXAMPLE-LABEL-MORE")
+       "EXAMPLE-LABEL-MORE"
+       t)
       ("Images"
        "gtk-example"
        "image.lisp"
-       "EXAMPLE-IMAGE")
+       "EXAMPLE-IMAGE"
+       t)
+      ("Spinner"
+       "gtk-example"
+       "spinner.lisp"
+       "EXAMPLE-SPINNER"
+       t)
       ("Info Bar"
        "gtk-example"
        "info-bar.lisp"
-       "EXAMPLE-INFO-BAR")
+       "EXAMPLE-INFO-BAR"
+       t)
       ("Progress Bar"
        "gtk-example"
        "progress-bar.lisp"
-       "EXAMPLE-PROGRESS-BAR")
+       "EXAMPLE-PROGRESS-BAR"
+       t)
       ("Level Bar"
        "gtk-example"
        "level-bar.lisp"
-       "EXAMPLE-LEVEL-BAR")
+       "EXAMPLE-LEVEL-BAR"
+       t)
       ("Statusbar"
        "gtk-example"
        "statusbar.lisp"
-       "EXAMPLE-STATUSBAR"))
+       "EXAMPLE-STATUSBAR"
+       t))
 
      "Button and Toggle Widgets"
      (("Simple Button"
@@ -381,6 +445,11 @@
        "menu.lisp"
        "EXAMPLE-MENU"
        t)
+      ("Menu Item with Image and Accel"
+       "gtk-example"
+       "menu-item.lisp"
+       "EXAMPLE-MENU-ITEM"
+       t)
       ("Menu Popup"
        "gtk-example"
        "menu-popup.lisp"
@@ -448,6 +517,18 @@
        "gtk-example"
        "font-button-label.lisp"
        "EXAMPLE-FONT-BUTTON-LABEL"
+       t))
+
+     ;; Ornaments
+     "Ornaments"
+     (("Frame Widget"
+       "gtk-example"
+       "frame.lisp"
+       "EXAMPLE-FRAME")
+      ("Frame Properties"
+       "gtk-example"
+       "frame-properties.lisp"
+       "EXAMPLE-FRAME-PROPERTIES"
        t))
 
      ;; Scrolling
@@ -532,7 +613,12 @@
        "DEMO-CAIRO-CLOCK"))
 
      "Miscellaneous"
-     (("Drawing in response to input"
+     (("Drawing Area"
+       "gtk-example"
+       "drawing-area.lisp"
+       "EXAMPLE-DRAWING-AREA"
+       t)
+      ("Drawing in response to input"
        "gtk-example"
        "drawing-area-input.lisp"
        "EXAMPLE-DRAWING-AREA-INPUT")
@@ -715,10 +801,6 @@
        "gtk-example"
        "table-packing-2.lisp"
        "EXAMPLE-TABLE-PACKING-2")
-      ("Application Window"
-       "gtk-example"
-       "window-application.lisp"
-       "EXAMPLE-WINDOW-APPLICATION")
       ("Numerable Icons"
        "gtk-example"
        "numerable-icon.lisp"

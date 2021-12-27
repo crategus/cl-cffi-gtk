@@ -7,6 +7,7 @@
   :depends-on (:cl-cffi-gtk :split-sequence)
   :components ((:file "gtk-example")
                (:file "utils")
+               (:file "action-bar")
                (:file "css-accordion")
                (:file "css-basics")
                (:file "css-blendmodes")
@@ -44,29 +45,30 @@
                (:file "drawing-area-input")            ; Getting started
                (:file "event-box")
                (:file "event-handler")
+               (:file "expander")                      ; Layout Widgets
                (:file "file-chooser-button")           ; Selecting Colors, ...
                (:file "file-chooser-custom-filter")
                (:file "file-chooser-dialog")
                (:file "file-chooser-preview")
                (:file "file-chooser-widget")
                (:file "fixed")                         ; Layout Widgets
+               (:file "flow-box")                      ; Layout Widgets
                (:file "font-button")
                (:file "font-button-label")             ; Selecting Colors, ...
                (:file "frame")                         ; Layout Widgets
                (:file "frame-properties")              ; Layout Widgets
                (:file "getting-started")               ; Getting started
                (:file "grab")
-               (:file "grid-interactive")
                (:file "grid-packing")                  ; Packing Widgets
                (:file "grid-simple")                   ; Packing Widgets
                (:file "grid-spacing")                  ; Packing Widgets
+               (:file "header-bar")                    ; Layout Widgets
                (:file "hello-world")                   ; Getting started
                (:file "hello-world-upgraded")          ; Getting started
                (:file "hello-world-upgraded-2")        ; Getting started
                (:file "icon-view")                     ; Tree and List Widgets
                (:file "image")                         ; Display Widgets
                (:file "image-button-press")
-               (:file "image-menu-item")
                (:file "info-bar")                      ; Display Widgets
                (:file "label")                         ; Display Widgets
                (:file "label-more")                    ; Display Widgets
@@ -79,11 +81,15 @@
                (:file "menu")
                (:file "menu-by-hand")                  ; Menus and Toolbars
                (:file "menu-builder")
+               (:file "menu-item")                     ; Menus and Toolbars
                (:file "menu-popup")                    ; Menus and Toolbars
                (:file "message-dialog-new")
                (:file "message-dialog-simple")
                (:file "notebook")                      ; Layout Widgets
                (:file "numerable-icon")
+               (:file "overlay-decorative")            ; Layout Widgets
+               (:file "overlay-interactive")           ; Layout Widgets
+               (:file "overlay-transparent")           ; Layout Widgets
                (:file "page-setup-dialog")
                (:file "paned-window")                  ; Layout Widgets
                (:file "pixbufs")
@@ -103,6 +109,9 @@
                (:file "search-entry")
                (:file "show-about-dialog")
                (:file "spin-button")
+               (:file "spinner")                       ; Display Widgets
+               (:file "stack")                         ; Layout Widgets
+               (:file "stack-sidebar")                 ; Layout Widgets
                (:file "statusbar")                     ; Display Widgets
                (:file "switch")                        ; Button widgets
                (:file "table-packing")                 ; Deprecated
@@ -133,7 +142,6 @@
                (:file "tree-view-drag-and-drop")       ; Tree and List Widgets
                (:file "widget-align")
                (:file "widget-pointer")
-               (:file "window-application")            ; Deprecated
                (:file "window-simple")                 ; Getting started
                (:file "window-simple-demo")
               ))

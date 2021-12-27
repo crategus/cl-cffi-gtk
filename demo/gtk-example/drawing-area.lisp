@@ -1,11 +1,12 @@
-;;;; Example Drawing area (2021-5-13)
+;;;; Example Drawing area - 2021-11-30
 
 (in-package :gtk-example)
 
-(defun example-drawing-area ()
+(defun example-drawing-area (&optional application)
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
+                                 :application application
                                  :title "Example Drawing Area"
                                  :default-width 400
                                  :default-height 300))

@@ -1,9 +1,12 @@
-;;;; Example Application Window (2021-7-24)
+;;;; Example Application Window - 2021-12-24
 ;;;;
 ;;;; Demonstrates a window with a menubar, a toolbar, and a statusbar.
 ;;;;
 ;;;; This example uses the deprecated GtkUIManager, GtkActionGroup, and
 ;;;; GtkAction classes.
+
+;; TODO: The functions for gtk-action-group are deprecated and no longer
+;; exported. Update this example?
 
 (in-package :gtk-example)
 
