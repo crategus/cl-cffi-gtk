@@ -278,15 +278,6 @@
 ;;;     gtk_application_add_accelerator
 ;;;     gtk_application_remove_accelerator
 
-(test gtk-application-accelerator
-  (let ((application (make-instance 'gtk-application)))
-    (is-false (gtk-application-add-accelerator application
-                                               "<Primary>q" "action" nil))
-    (is (equal '("action")
-               (gtk-application-list-action-descriptions application)))
-    (is-false (gtk-application-remove-accelerator application "action" nil))
-    (is (equal '() (gtk-application-list-action-descriptions application)))))
-
 ;;;     gtk_application_list_action_descriptions
 
 (test gtk-applicaton-list-action-descriptions

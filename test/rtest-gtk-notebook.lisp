@@ -25,14 +25,14 @@
   ;; Check the class properties
   (is (equal '("enable-popup" "group-name" "page" "scrollable" "show-border"
                "show-tabs" "tab-pos")
-             (list-class-property-names "GtkNotebook")))   
+             (list-class-property-names "GtkNotebook")))
   ;; Get the names of the style properties.
   (is (equal '("arrow-spacing" "has-backward-stepper" "has-forward-stepper"
                "has-secondary-backward-stepper" "has-secondary-forward-stepper"
                "has-tab-gap" "initial-gap" "tab-curvature" "tab-overlap")
              (list-class-style-property-names "GtkNotebook")))
   ;; Get the names of the child properties
-  (is (equal '("detachable" "menu-label" "position" "reorderable" "tab-expand" 
+  (is (equal '("detachable" "menu-label" "position" "reorderable" "tab-expand"
                "tab-fill" "tab-label")
              (list-class-child-property-names "GtkNotebook")))
   ;; Check the class definition
@@ -180,11 +180,11 @@
     (is (= 0 (gtk-notebook-add-page notebook page2 label2 :position :start)))
     (is (= 1 (gtk-notebook-add-page notebook page3 label3 :position 1)))
 
-    (is (= 3 (gtk-notebook-add-page notebook page4 label4 :menu-label menu-label1)))
+    (is (= 3 (gtk-notebook-add-page notebook page4 label4 :menu menu-label1)))
     (is (= 0 (gtk-notebook-add-page notebook page5 label5 :position :start
-                                                          :menu-label menu-label2)))
+                                                          :menu menu-label2)))
     (is (= 1 (gtk-notebook-add-page notebook page6 label6 :position 1
-                                                          :menu-label menu-label3)))))
+                                                          :menu menu-label3)))))
 
 ;;;     gtk_notebook_detach_tab
 ;;;     gtk_notebook_page_num

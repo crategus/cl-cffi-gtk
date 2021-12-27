@@ -75,11 +75,27 @@
 
 ;;; --- Child Properties -------------------------------------------------------
 
-;;;                      gchar  icon-name            Read / Write
-;;;                      gchar  name                 Read / Write
-;;;                   gboolean  needs-attention      Read / Write
-;;;                       gint  position             Read / Write
-;;;                      gchar  title                Read / Write
+(test gtk-stack-child-properties
+  (let ((stack (make-instance 'gtk-stack))
+        (child1 (make-instance 'gtk-button))
+        (child2 (make-instance 'gtk-button)))
+    (is (typep stack 'gtk-stack))
+    (is (g-type-is-a (g-type-from-instance stack) "GtkContainer"))
+    ;; Add two buttons to the stack
+    (is-false (gtk-stack-add-named stack child1 "button1"))
+    (is-false (gtk-stack-add-titled stack child2 "button2" "title"))
+    ;; Check the child properties for the first button
+    (is-false (gtk-stack-child-icon-name stack child1))
+    (is (string= "button1" (gtk-stack-child-name stack child1)))
+    (is-false (gtk-stack-child-needs-attention stack child1))
+    (is (= 0 (gtk-stack-child-position stack child1)))
+    (is-false (gtk-stack-child-title stack child1))
+    ;; Check the child properties for the second button
+    (is-false (gtk-stack-child-icon-name stack child2))
+    (is (string= "button2" (gtk-stack-child-name stack child2)))
+    (is-false (gtk-stack-child-needs-attention stack child2))
+    (is (= 1 (gtk-stack-child-position stack child2)))
+    (is (string= "title" (gtk-stack-child-title stack child2)))))
 
 ;;; --- Functions --------------------------------------------------------------
 
@@ -106,4 +122,4 @@
 ;;;     gtk_stack_get_interpolate_size                     Accessor
 ;;;     gtk_stack_set_interpolate_size                     Accessor
 
-;;; 2021-10-20
+;;; 2021-12-16

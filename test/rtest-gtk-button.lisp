@@ -26,13 +26,13 @@
              (mapcar #'g-type-name (g-type-interfaces "GtkButton"))))
   ;; Check the class properties
   (is (equal '("action-name" "action-target" "always-show-image" "image"
-               "image-position" "label" "related-action" "relief"  
+               "image-position" "label" "related-action" "relief"
                "use-action-appearance" "use-stock" "use-underline" "xalign"
                "yalign")
              (list-class-property-names "GtkButton")))
   ;; Get the names of the style properties
   (is (equal '("child-displacement-x" "child-displacement-y" "default-border"
-               "default-outside-border" "displace-focus" "image-spacing" 
+               "default-outside-border" "displace-focus" "image-spacing"
                "inner-border")
              (list-class-style-property-names "GtkButton")))
   ;; Get the names of the child properties
@@ -145,19 +145,7 @@
     (is (= 0.5 (gtk-button-xalign button)))
     (is (= 0.5 (gtk-button-yalign button)))))
 
-;;;     gtk-button-new-from-stock
-
-(test gtk-button-new-from-stock
-  (let ((button (gtk-button-new-from-stock "gtk-close")))
-    (is-false (gtk-button-always-show-image button))
-    (is (typep (gtk-button-image button) 'gtk-image))
-    (is (eq :left (gtk-button-image-position button)))
-    (is (string= "gtk-close" (gtk-button-label button)))
-    (is (eq :normal (gtk-button-relief button)))
-    (is-true (gtk-button-use-stock button))
-    (is-true (gtk-button-use-underline button))
-    (is (= 0.5 (gtk-button-xalign button)))
-    (is (= 0.5 (gtk-button-yalign button)))))
+;;;     gtk-button-new-from-stock                          deprecated
 
 ;;;     gtk-button-clicked
 
@@ -177,14 +165,6 @@
 
 ;;;     gtk-button-alignment                               deprecated
 
-(test gtk-button-alignment
-  (let ((button (make-instance 'gtk-button))
-        (label (make-instance 'gtk-label)))
-    (is-false (gtk-container-add button label))
-    (is (equal '(0.5 0.5) (gtk-button-alignment button)))
-    (is (equal '(0.1 0.9) (setf (gtk-button-alignment button) '(0.1 0.9))))
-    (is (equal '(0.1 0.9) (gtk-button-alignment button)))))
-
 ;;;     gtk-button-event-window
 
 (test gtk-button-event-window
@@ -195,4 +175,4 @@
     (is-false (gtk-widget-realize button))
     (is (typep (gtk-button-event-window button) 'gdk-window))))
 
-;;; 2021-10-19
+;;; 2021-12-23

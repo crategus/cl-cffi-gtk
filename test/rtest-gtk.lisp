@@ -108,7 +108,7 @@
 ;    gtk.tree-model-sort.lisp
 ;    gtk.tree-model-filter.lisp
 (load "rtest-gtk-cell-layout.lisp")
-;    gtk.cell-area.lisp
+(load "rtest-gtk-cell-area.lisp")
 ;    gtk.cell-area-box.lisp
 ;    gtk.cell-area-context.lisp
 (load "rtest-gtk-cell-renderer.lisp")

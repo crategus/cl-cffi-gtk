@@ -20,35 +20,20 @@
   (is (equal '()
              (mapcar #'g-type-name (g-type-children "GtkRadioToolButton"))))
   ;; Check the interfaces
-  (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkActivatable" "GtkActionable")
+  (is (equal '("AtkImplementorIface" "GtkBuildable" "GtkActivatable"
+               "GtkActionable")
              (mapcar #'g-type-name (g-type-interfaces "GtkRadioToolButton"))))
+
   ;; Check the class properties
-  (is (equal '("action-name" "action-target" "active" "app-paintable" "border-width"
-               "can-default" "can-focus" "child" "composite-child" "double-buffered" "events"
-               "expand" "focus-on-click" "group" "halign" "has-default" "has-focus"
-               "has-tooltip" "height-request" "hexpand" "hexpand-set" "icon-name"
-               "icon-widget" "is-focus" "is-important" "label" "label-widget" "margin"
-               "margin-bottom" "margin-end" "margin-left" "margin-right" "margin-start"
-               "margin-top" "name" "no-show-all" "opacity" "parent" "receives-default"
-               "related-action" "resize-mode" "scale-factor" "sensitive" "stock-id" "style"
-               "tooltip-markup" "tooltip-text" "use-action-appearance" "use-underline"
-               "valign" "vexpand" "vexpand-set" "visible" "visible-horizontal"
-               "visible-vertical" "width-request" "window")
-             (stable-sort (mapcar #'g-param-spec-name
-                                  (g-object-class-list-properties "GtkRadioToolButton"))
-                          #'string-lessp)))
-  ;; Get the names of the style properties.
-  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
-               "focus-padding" "interior-focus" "link-color" "scroll-arrow-hlength"
-               "scroll-arrow-vlength" "secondary-cursor-color" "separator-height"
-               "separator-width" "text-handle-height" "text-handle-width"
-               "visited-link-color" "wide-separators" "window-dragging" "icon-spacing")
-             (mapcar #'g-param-spec-name
-                     (gtk-widget-class-list-style-properties "GtkRadioToolButton"))))
+  (is (equal '("group")
+             (list-class-property-names "GtkRadioToolButton")))
+  ;; Check the style properties
+  (is (equal '()
+             (list-class-style-property-names "GtkRadioToolButton")))
   ;; Get the names of the child properties
   (is (equal '()
-             (mapcar #'g-param-spec-name
-                     (gtk-container-class-list-child-properties "GtkRadioToolButton"))))
+             (list-class-child-property-names "GtkRadioToolButton")))
+
   ;; Check the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkRadioToolButton" GTK-RADIO-TOOL-BUTTON
                        (:SUPERCLASS GTK-TOGGLE-TOOL-BUTTON :EXPORT T
@@ -78,16 +63,19 @@
 (test gtk-radio-tool-button-new
   (let (button)
   ;; First radio button
-  (is (eq 'gtk-radio-tool-button
-          (type-of (setf button (gtk-radio-tool-button-new nil)))))
+  (is (typep (setf button (gtk-radio-tool-button-new nil))
+             'gtk-radio-tool-button))
   ;; Second radio button
-  (is (eq 'gtk-radio-tool-button
-          (type-of (setf button (gtk-radio-tool-button-new (gtk-radio-tool-button-get-group button))))))
+  (is (typep (setf button
+                   (gtk-radio-tool-button-new
+                       (gtk-radio-tool-button-get-group button)))
+             'gtk-radio-tool-button))
   ;; Check group list
   (is (= 2 (length (gtk-radio-tool-button-get-group button))))
-  (is (eq 'gtk-radio-button (type-of (first (gtk-radio-tool-button-get-group button)))))
+  (is (typep (first (gtk-radio-tool-button-get-group button))
+             'gtk-radio-button))
   ;; No bin child
-  (is (eq 'gtk-radio-button (type-of (gtk-bin-child button))))))
+  (is (typep (gtk-bin-child button) 'gtk-radio-button))))
 
 ;;;     gtk_radio_tool_button_new_from_stock
 
@@ -96,16 +84,17 @@
 (test gtk-radio-tool-button-new-from-widget
   (let (button)
   ;; First radio button
-  (is (eq 'gtk-radio-tool-button
-          (type-of (setf button (gtk-radio-tool-button-new-from-widget nil)))))
+  (is (typep (setf button (gtk-radio-tool-button-new-from-widget nil))
+             'gtk-radio-tool-button))
   ;; Second radio button
-  (is (eq 'gtk-radio-tool-button
-          (type-of (setf button (gtk-radio-tool-button-new-from-widget button)))))
+  (is (typep (setf button (gtk-radio-tool-button-new-from-widget button))
+             'gtk-radio-tool-button))
   ;; Check group list
   (is (= 2 (length (gtk-radio-tool-button-get-group button))))
-  (is (eq 'gtk-radio-button (type-of (first (gtk-radio-tool-button-get-group button)))))
+  (is (typep (first (gtk-radio-tool-button-get-group button))
+             'gtk-radio-button))
   ;; No bin child
-  (is (eq 'gtk-radio-button (type-of (gtk-bin-child button))))))
+  (is (typep (gtk-bin-child button) 'gtk-radio-button))))
 
 ;;;     gtk_radio_tool_button_new_with_stock_from_widget
 
@@ -115,20 +104,29 @@
 (test gtk-radio-tool-button-group
   (let (button)
     ;; First radio button
-    (is (eq 'gtk-radio-tool-button (type-of (setf button (gtk-radio-tool-button-new nil)))))
+    (is (typep (setf button (gtk-radio-tool-button-new nil))
+               'gtk-radio-tool-button))
     (is (listp (gtk-radio-tool-button-get-group button)))
     (is (= 1 (length (gtk-radio-tool-button-get-group button))))
-    (is (eq 'gtk-radio-button (type-of (first (gtk-radio-tool-button-get-group button)))))
+    (is (typep (first (gtk-radio-tool-button-get-group button))
+               'gtk-radio-button))
     ;; Second radio button
-    (is (eq 'gtk-radio-tool-button
-            (type-of (setf button (gtk-radio-tool-button-new (gtk-radio-tool-button-get-group button))))))
+    (is (typep (setf button
+                     (gtk-radio-tool-button-new
+                         (gtk-radio-tool-button-get-group button)))
+               'gtk-radio-tool-button))
     (is (listp (gtk-radio-tool-button-get-group button)))
     (is (= 2 (length (gtk-radio-tool-button-get-group button))))
-    (is (eq 'gtk-radio-button (type-of (first (gtk-radio-tool-button-get-group button)))))
+    (is (typep (first (gtk-radio-tool-button-get-group button))
+               'gtk-radio-button))
     ;; Third radio button
-    (is (eq 'gtk-radio-tool-button
-            (type-of (setf button (gtk-radio-tool-button-new (gtk-radio-tool-button-get-group button))))))
+    (is (typep (setf button
+                     (gtk-radio-tool-button-new
+                         (gtk-radio-tool-button-get-group button)))
+               'gtk-radio-tool-button))
     (is (listp (gtk-radio-tool-button-get-group button)))
     (is (= 3 (length (gtk-radio-tool-button-get-group button))))
-    (is (eq 'gtk-radio-button (type-of (first (gtk-radio-tool-button-get-group button)))))))
+    (is (typep (first (gtk-radio-tool-button-get-group button))
+               'gtk-radio-button))))
 
+;;; 2021-12-1

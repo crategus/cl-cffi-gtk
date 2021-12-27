@@ -295,4 +295,4 @@
 ;;;     gtk_dialog_set_alternative_button_order
 ;;;     gtk_dialog_set_alternative_button_order_from_array
 
-;;; 2021-10-15
+;;; 2021-12-22

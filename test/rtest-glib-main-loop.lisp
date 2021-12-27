@@ -228,16 +228,19 @@
 
 ;; This functionality is no longer exported
 
+#+nil
 (defcallback prepare :boolean ((source :pointer)
                                (timeout :int))
   (declare (ignore source))
   (setf timeout -1)
   t)
 
+#+nil
 (defcallback check :boolean ((source :pointer))
   (declare (ignore source))
   t)
 
+#+nil
 (defcallback dispatch :boolean ((source :pointer)
                                 (callback :pointer)
                                 (user-data :pointer))

@@ -63,7 +63,7 @@
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'g-type-name (g-type-interfaces "GtkImage"))))
   ;; Check the class properties
-  (is (equal '("file" "gicon" "icon-name" "icon-set" "icon-size" "pixbuf" 
+  (is (equal '("file" "gicon" "icon-name" "icon-set" "icon-size" "pixbuf"
                "pixbuf-animation" "pixel-size" "resource" "stock" "storage-type"
                "surface" "use-fallback")
              (list-class-property-names "GtkImage")))
@@ -129,27 +129,7 @@
 ;;; --- Functions --------------------------------------------------------------
 
 ;;;     gtk_image_get_icon_set
-
-(test gtk-image-get-icon-set
-  (let ((image (gtk-image-new-from-icon-set
-                   (gtk-icon-factory-lookup-default "gtk-ok") :dialog)))
-    (is (typep image 'gtk-image))
-    (is (typep (gtk-image-get-icon-set image) 'gtk-icon-set))
-    (multiple-value-bind (icon-set icon-size)
-        (gtk-image-get-icon-set image)
-      (is (typep icon-set 'gtk-icon-set))
-      (is (eq :dialog icon-size)))))
-
 ;;;     gtk_image_get_stock
-
-(test gtk-image-get-stock
-  (let ((image (gtk-image-new-from-stock "gtk-ok" :dialog)))
-    (is (typep image 'gtk-image))
-    (is (string= "gtk-ok" (gtk-image-get-stock image)))
-    (multiple-value-bind (icon-set icon-size)
-        (gtk-image-get-stock image)
-      (is (string= "gtk-ok" icon-set))
-      (is (eq :dialog icon-size)))))
 
 ;;;     gtk_image_get_animation
 
@@ -204,25 +184,6 @@
 
 ;;;     gtk_image_new_from_icon_set
 
-(test gtk-image-new-from-icon-set
-  (let ((image (gtk-image-new-from-icon-set
-                   (gtk-icon-factory-lookup-default "gtk-ok") :dialog)))
-    (is (typep image 'gtk-image))
-    (is-false (gtk-image-file image))
-    (is-false (gtk-image-gicon image))
-    (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
-    (is (= 6 (gtk-image-icon-size image)))
-    (is-false (gtk-image-pixbuf image))
-    (is-false (gtk-image-pixbuf-animation image))
-    (is (= -1 (gtk-image-pixel-size image)))
-    (is-false (gtk-image-resource image))
-    (is-false (gtk-image-stock image))
-    (is (eq :icon-set (gtk-image-storage-type image)))
-    ;; at this point surface is a null-pointer, this causes an error
-    (is-false (gtk-image-surface image))
-    (is-false (gtk-image-use-fallback image))))
-
 ;;;     gtk_image_new_from_pixbuf
 
 (test gtk-image-new-from-pixbuf
@@ -245,24 +206,6 @@
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new_from_stock
-
-(test gtk-image-new-from-stock
-  (let ((image (gtk-image-new-from-stock "gtk-ok" :dialog)))
-    (is (typep image 'gtk-image))
-    (is-false (gtk-image-file image))
-    (is-false (gtk-image-gicon image))
-    (is-false (gtk-image-icon-name image))
-    (is-false (gtk-image-icon-set image))
-    (is (= 6 (gtk-image-icon-size image)))
-    (is-false (gtk-image-pixbuf image))
-    (is-false (gtk-image-pixbuf-animation image))
-    (is (= -1 (gtk-image-pixel-size image)))
-    (is-false (gtk-image-resource image))
-    (is (string= "gtk-ok" (gtk-image-stock image)))
-    (is (eq :stock (gtk-image-storage-type image)))
-    ;; at this point surface is a null-pointer, this causes an error
-    (is-false (gtk-image-surface image))
-    (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_new_from_animation
 
@@ -399,28 +342,6 @@
 
 ;;;     gtk_image_set_from_icon_set
 
-(test gtk-image-set-from-icon-set
-  (let ((image (make-instance 'gtk-image)))
-    ;; Set image from icon set
-    (is-false (gtk-image-set-from-icon-set image
-                  (gtk-icon-factory-lookup-default "gtk-ok") :dialog))
-    ;; Check the properties
-    (is (typep image 'gtk-image))
-    (is-false (gtk-image-file image))
-    (is-false (gtk-image-gicon image))
-    (is-false (gtk-image-icon-name image))
-    (is (typep (gtk-image-icon-set image) 'gtk-icon-set))
-    (is (= 6 (gtk-image-icon-size image)))
-    (is-false (gtk-image-pixbuf image))
-    (is-false (gtk-image-pixbuf-animation image))
-    (is (= -1 (gtk-image-pixel-size image)))
-    (is-false (gtk-image-resource image))
-    (is-false (gtk-image-stock image))
-    (is (eq :icon-set (gtk-image-storage-type image)))
-    ;; at this point surface is a null-pointer, this causes an error
-    (is-false (gtk-image-surface image))
-    (is-false (gtk-image-use-fallback image))))
-
 ;;;     gtk_image_set_from_pixbuf
 
 (test gtk-image-set-from-pixbuf
@@ -446,27 +367,6 @@
     (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_stock
-
-(test gtk-image-set-from-stock
-  (let ((image (make-instance 'gtk-image)))
-    ;; Set image from stock
-    (is-false (gtk-image-set-from-stock image "gtk-ok" :dialog))
-    ;; Check the properties
-    (is (typep image 'gtk-image))
-    (is-false (gtk-image-file image))
-    (is-false (gtk-image-gicon image))
-    (is-false (gtk-image-icon-name image))
-    (is-false (gtk-image-icon-set image))
-    (is (= 6 (gtk-image-icon-size image)))
-    (is-false (gtk-image-pixbuf image))
-    (is-false (gtk-image-pixbuf-animation image))
-    (is (= -1 (gtk-image-pixel-size image)))
-    (is-false (gtk-image-resource image))
-    (is (string= "gtk-ok" (gtk-image-stock image)))
-    (is (eq :stock (gtk-image-storage-type image)))
-    ;; at this point surface is a null-pointer, this causes an error
-    (is-false (gtk-image-surface image))
-    (is-false (gtk-image-use-fallback image))))
 
 ;;;     gtk_image_set_from_animation
 
@@ -636,4 +536,4 @@
 (test gtk-image-new
   (is (typep (gtk-image-new) 'gtk-image)))
 
-;;; 2021-10-19
+;;; 2021-12-21
