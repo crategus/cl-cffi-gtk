@@ -73,7 +73,7 @@
 
 (defun gdk-pixbuf-new-from-file (filename)
  #+cl-cffi-gtk-documentation
- "@version{*2021-7-24}
+ "@version{*2021-12-15}
   @argument[filename]{a string with the name of a file to load, in the GLib
     file name encoding}
   @begin{return}

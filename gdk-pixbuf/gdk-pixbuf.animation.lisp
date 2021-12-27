@@ -139,7 +139,7 @@
  "@version{2021-12-12}
   @syntax[]{(gdk-pixbuf-animation-loop object) => loop}
   @syntax[]{(setf (gdk-pixbuf-animation-loop object) loop)}
-  @argument[object]{a @class{gdk-pixbuf-animation} structure}
+  @argument[object]{a @class{gdk-pixbuf-animation} object}
   @argument[loop]{a boolean whether the animation should loop}
   @begin{short}
     Accessor of the @slot[gdk-pixbuf-animation]{loop} of the
@@ -184,30 +184,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_new_from_resource ()
-;;;
-;;; GdkPixbufAnimation * gdk_pixbuf_animation_new_from_resource
-;;;                                                  (const char *resource_path,
-;;;                                                   GError **error);
-;;;
-;;; Creates a new pixbuf animation by loading an image from an resource.
-;;;
-;;; The file format is detected automatically. If NULL is returned, then error
-;;; will be set.
-;;;
-;;; resource_path :
-;;;     the path of the resource file
-;;;
-;;; error :
-;;;     Return location for an error
-;;;
-;;; Returns :
-;;;     A newly-created animation, or NULL if any of several error conditions
-;;;     occurred: the file could not be opened, the image format is not
-;;;     supported, there was not enough memory to allocate the image buffer, the
-;;;     stream contained invalid data, or the operation was cancelled.
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_animation_new_from_resource"
+          %gdk-pixbuf-animation-new-from-resource)
+    (g-object gdk-pixbuf-animation)
+  (resource :string)
+  (err :pointer))
+
+(defun gdk-pixbuf-animation-new-from-resource (resource)
+ #+cl-cffi-gtk-documentation
+ "@version{2021-12-21}
+  @argument[resource]{a string with the path of the resource file}
+  @begin{return}
+    A newly-created animation, or @code{nil} if any of several error conditions
+    occurred: the file could not be opened, the image format is not supported,
+    there was not enough memory to allocate the image buffer, the stream
+    contained invalid data, or the operation was cancelled.
+  @end{return}
+  @begin{short}
+    Creates a new pixbuf animation by loading an image from an resource.
+  @end{short}
+  The file format is detected automatically.
+  @see-class{gdk-pixbuf-animation}"
+  (with-g-error (err)
+    (%gdk-pixbuf-animation-new-from-resource resource err)))
+
+(export 'gdk-pixbuf-animation-new-from-resource)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_new_from_stream ()
@@ -441,7 +444,7 @@
            gdk-pixbuf-animation-static-image) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
  "@version{2021-12-12}
-  @argument[animation]{a @class{gdk-pixbuf-animation} structure}
+  @argument[animation]{a @class{gdk-pixbuf-animation} object}
   @return{Unanimated @class{gdk-pixbuf} image representing the animation.}
   @begin{short}
     If an animation is really just a plain image, has only one frame, this

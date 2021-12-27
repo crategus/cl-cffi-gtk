@@ -195,7 +195,7 @@
 
 (defun gdk-pixbuf-loader-new ()
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-22}
   @return{A newly-created @class{gdk-pixbuf-loader} object.}
   @short{Creates a new pixbuf loader object.}
   @see-class{gdk-pixbuf-loader}"
@@ -294,7 +294,7 @@
 
 (defun gdk-pixbuf-loader-write (loader buffer count)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-22}
   @argument[loader]{a @class{gdk-pixbuf-loader} object}
   @argument[buffer]{a Lisp array for image data}
   @argument[count]{an integer with the length of @arg{buffer} in bytes}
@@ -399,7 +399,7 @@
 (defcfun ("gdk_pixbuf_loader_get_pixbuf" gdk-pixbuf-loader-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-22}
   @argument[loader]{a @class{gdk-pixbuf-loader} object}
   @begin{return}
     The @class{gdk-pixbuf} object that the loader is creating, or @code{nil} if
@@ -412,12 +412,12 @@
   In general it only makes sense to call this function after the
   \"area-prepared\" signal has been emitted by the loader. This means that
   enough data has been read to know the size of the image that will be
-  allocated. If the loader has not received enough data via the function
-  @fun{gdk-pixbuf-loader-write}, then this function returns @code{nil}. The
-  returned pixbuf will be the same in all future calls to the loader.
+  allocated. If the loader has not received enough data via the
+  @fun{gdk-pixbuf-loader-write} function, then this function returns @code{nil}.
+  The returned pixbuf will be the same in all future calls to the loader.
   Additionally, if the loader is an animation, it will return the
-  \"static image\" of the animation, see the function
-  @fun{gdk-pixbuf-animation-static-image}.
+  \"static image\" of the animation, see the
+  @fun{gdk-pixbuf-animation-static-image} function.
   @see-class{gdk-pixbuf-loader}
   @see-class{gdk-pixbuf}
   @see-function{gdk-pixbuf-loader-write}
@@ -463,16 +463,16 @@
 
 (defun gdk-pixbuf-loader-close (loader)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-22}
   @argument[loader]{a @class{gdk-pixbuf-loader} object}
   @begin{return}
     @em{True} if all image data written so far was successfully passed out via
     the \"update-area\" signal.
   @end{return}
   @begin{short}
-    Informs a pixbuf loader that no further writes with the function
-    @fun{gdk-pixbuf-loader-write} will occur, so that it can free its internal
-    loading structures.
+    Informs a pixbuf loader that no further writes with the
+    @fun{gdk-pixbuf-loader-write} function will occur, so that it can free its
+    internal loading structures.
   @end{short}
   Also, tries to parse any data that has not yet been parsed.
   @see-class{gdk-pixbuf-loader}
