@@ -155,15 +155,16 @@
       "Enum"
       (gethash 'gtk-rc-token-type atdoc:*external-symbols*)
  "@version{2013-3-18}
-  @subheading{Warning}
-    @sym{gtk-rc-token-type} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use @class{gtk-css-provider} instead.
-
   @begin{short}
     The @sym{gtk-rc-token-type} enumeration represents the tokens in the RC
     file. It is exposed so that theme engines can reuse these tokens when
     parsing the theme-engine specific portions of a RC file.
   @end{short}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-rc-token-type} enumeration has been deprecated since version
+    3.0 and should not be used in newly written code. Use the
+    @class{gtk-css-provider} API instead.
+  @end{dictionary}
   @begin{pre}
 (define-g-enum \"GtkRcTokenType\" gtk-rc-token-type
   (:export t
@@ -234,7 +235,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The @sym{gtk-path-priority-type} enumeration has been deprecated since
-    version 3.0 and should not be used in newly-written code.
+    version 3.0 and should not be used in newly written code.
   @end{dictionary}
   @begin{pre}
 (define-g-enum \"GtkPathPriorityType\" gtk-path-priority-type
@@ -267,7 +268,7 @@
   @short{Widget path types.}
   @begin[Warning]{dictionary}
     The @sym{gtk-path-type} enumeration has been deprecated since version 3.0
-    and should not be used in newly-written code.
+    and should not be used in newly written code.
   @end{dictionary}
   @begin{pre}
 (define-g-enum \"GtkPathType\" gtk-path-type
@@ -711,7 +712,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_scanner_new has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use GtkCssProvider instead
+;;;    be used in newly written code. Use GtkCssProvider instead
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -722,7 +723,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_get_style has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use GtkStyleContext instead
+;;;    be used in newly written code. Use GtkStyleContext instead
 ;;;
 ;;;    Finds all matching RC styles for a given widget, composites them
 ;;;    together, and then creates a GtkStyle representing the composite
@@ -749,7 +750,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_get_style_by_paths has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use GtkStyleContext
+;;;    should not be used in newly written code. Use GtkStyleContext
 ;;;    instead
 ;;;
 ;;;    Creates up a GtkStyle from styles defined in a RC file by
@@ -797,7 +798,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_parse has been deprecated since version 3.0 and should not be
-;;;    used in newly-written code. Use GtkCssProvider instead.
+;;;    used in newly written code. Use GtkCssProvider instead.
 ;;;
 ;;;    Parses a given resource file.
 ;;;
@@ -814,7 +815,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_parse_string has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use GtkCssProvider instead.
+;;;    not be used in newly written code. Use GtkCssProvider instead.
 ;;;
 ;;;    Parses resource information directly from a string.
 ;;;
@@ -830,7 +831,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_reparse_all has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use GtkCssProvider instead.
+;;;    be used in newly written code. Use GtkCssProvider instead.
 ;;;
 ;;;    If the modification time on any previously read file for the default
 ;;;    GtkSettings has changed, discard all style information and then
@@ -849,7 +850,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_reparse_all_for_settings has been deprecated since version 3.0
-;;;    and should not be used in newly-written code. Use GtkCssProvider
+;;;    and should not be used in newly written code. Use GtkCssProvider
 ;;;    instead.
 ;;;
 ;;;    If the modification time on any previously read file for the given
@@ -874,7 +875,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_reset_styles has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use GtkCssProvider instead.
+;;;    not be used in newly written code. Use GtkCssProvider instead.
 ;;;
 ;;;    This function recomputes the styles for all widgets that use a
 ;;;    particular GtkSettings object. (There is one GtkSettings
@@ -901,7 +902,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_add_default_file has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use GtkStyleContext with
+;;;    should not be used in newly written code. Use GtkStyleContext with
 ;;;    a custom GtkStyleProvider instead
 ;;;
 ;;;    Adds a file to the list of files to be parsed at the end of
@@ -920,7 +921,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_get_default_files has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use GtkStyleContext
+;;;    should not be used in newly written code. Use GtkStyleContext
 ;;;    instead
 ;;;
 ;;;    Retrieves the current list of RC files that will be parsed at the end
@@ -940,7 +941,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_set_default_files has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use GtkStyleContext with
+;;;    should not be used in newly written code. Use GtkStyleContext with
 ;;;    a custom GtkStyleProvider instead
 ;;;
 ;;;    Sets the list of files that GTK+ will read at the end of gtk_init().
@@ -958,7 +959,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_parse_color has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use GtkCssProvider instead
+;;;    be used in newly written code. Use GtkCssProvider instead
 ;;;
 ;;;    Parses a color in the format expected in a RC file.
 ;;;
@@ -986,7 +987,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_parse_color_full has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use GtkCssProvider
+;;;    should not be used in newly written code. Use GtkCssProvider
 ;;;    instead
 ;;;
 ;;;    Parses a color in the format expected in a RC file. If style is not
@@ -1018,7 +1019,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_parse_state has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use GtkCssProvider instead
+;;;    be used in newly written code. Use GtkCssProvider instead
 ;;;
 ;;;    Parses a GtkStateType variable from the format expected in a RC file.
 ;;;
@@ -1042,7 +1043,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_parse_priority has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use GtkCssProvider instead
+;;;    not be used in newly written code. Use GtkCssProvider instead
 ;;;
 ;;;    Parses a GtkPathPriorityType variable from the format expected in
 ;;;    a RC file.
@@ -1067,7 +1068,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_find_module_in_path has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use GtkCssProvider
+;;;    should not be used in newly written code. Use GtkCssProvider
 ;;;    instead.
 ;;;
 ;;;    Searches for a theme engine in the GTK+ search path. This function is
@@ -1090,7 +1091,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_find_pixmap_in_path has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use GtkCssProvider
+;;;    should not be used in newly written code. Use GtkCssProvider
 ;;;    instead.
 ;;;
 ;;;    Looks up a file in pixmap path for the specified GtkSettings. If
@@ -1119,7 +1120,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_get_module_dir has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use GtkCssProvider instead.
+;;;    not be used in newly written code. Use GtkCssProvider instead.
 ;;;
 ;;;    Returns a directory in which GTK+ looks for theme engines. For full
 ;;;    information about the search for theme engines, see the docs for
@@ -1137,7 +1138,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_get_im_module_path has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use GtkCssProvider instead.
+;;;    should not be used in newly written code. Use GtkCssProvider instead.
 ;;;
 ;;;    Obtains the path in which to look for IM modules. See the documentation
 ;;;    of the GTK_PATH environment variable for more details about looking up
@@ -1157,7 +1158,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_get_im_module_file has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use GtkCssProvider
+;;;    should not be used in newly written code. Use GtkCssProvider
 ;;;    instead.
 ;;;
 ;;;    Obtains the path to the IM modules file. See the documentation of the
@@ -1176,7 +1177,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_get_theme_dir has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use GtkCssProvider instead.
+;;;    not be used in newly written code. Use GtkCssProvider instead.
 ;;;
 ;;;    Returns the standard directory in which themes should be installed.
 ;;;    (GTK+ does not actually use this directory itself.)
@@ -1193,7 +1194,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_style_new has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use GtkCssProvider instead.
+;;;    be used in newly written code. Use GtkCssProvider instead.
 ;;;
 ;;;    Creates a new GtkRcStyle with no fields set and a reference count of 1.
 ;;;
@@ -1209,7 +1210,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_rc_style_copy has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use GtkCssProvider instead.
+;;;    be used in newly written code. Use GtkCssProvider instead.
 ;;;
 ;;;    Makes a copy of the specified GtkRcStyle. This function will
 ;;;    correctly copy an RC style that is a member of a class derived from

@@ -757,7 +757,7 @@
 (defcfun ("gtk_style_context_add_provider_for_screen"
            gtk-style-context-add-provider-for-screen) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-11-26}
+ "@version{*2021-11-30}
   @argument[screen]{a @class{gdk-screen} object}
   @argument[provider]{a @class{gtk-style-provider} object}
   @argument[priority]{an unsigned integer with the priority of the style
@@ -1721,7 +1721,7 @@
 (defcfun ("gtk_style_context_reset_widgets" gtk-style-context-reset-widgets)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2021-11-26}
+ "@version{*2021-11-30}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{short}
     This function recomputes the styles for all widgets under a particular
@@ -1816,7 +1816,7 @@
 
 (defcfun ("gtk_style_context_add_class" gtk-style-context-add-class) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-11-26}
+ "@version{*2021-12-17}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[classname]{a string with a class name to use in styling}
   @begin{short}
@@ -1828,11 +1828,11 @@
     In the CSS file format, a GtkEntry defining an \"entry\" class, would be
     matched by:
     @begin{pre}
- GtkEntry.entry { ... @}
+GtkEntry.entry { ... @}
   @end{pre}
   While any widget defining an \"entry\" class would be matched by:
   @begin{pre}
- .entry { ... @}
+.entry { ... @}
     @end{pre}
   @end{dictionary}
   @see-class{gtk-style-context}
@@ -2167,7 +2167,7 @@
 
 (defun gtk-render-background (context cr x y width height)
  #+cl-cffi-gtk-documentation
- "@version{2021-11-26}
+ "@version{*2021-11-30}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x]{a number, coerced to a double float, with the x origin of the
@@ -2416,7 +2416,7 @@
 
 (defun gtk-render-frame (context cr x y width height)
  #+cl-cffi-gtk-documentation
- "@version{2021-11-26}
+ "@version{*2021-11-30}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[x]{a number, coerced to a double float, with the x origin of the

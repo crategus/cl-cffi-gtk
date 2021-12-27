@@ -148,7 +148,7 @@
 (setf (gethash 'gtk-image-type atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-image-type atdoc:*external-symbols*)
- "@version{2020-12-17}
+ "@version{2021-12-17}
   @begin{short}
     Describes the image data representation used by a @class{gtk-image} widget.
   @end{short}

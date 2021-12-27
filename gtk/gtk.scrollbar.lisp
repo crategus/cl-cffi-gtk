@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.scrollbar.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -81,7 +81,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scrollbar 'type)
- "@version{2021-3-19}
+ "@version{2021-12-27}
   @begin{short}
     The @sym{gtk-scrollbar} widget is a horizontal or vertical scrollbar,
     depending on the value of the @slot[gtk-orientable]{orientation} property.
@@ -94,10 +94,9 @@
   adjustment - for the @sym{gtk-scrollbar} widget, the
   @slot[gtk-adjustment]{value} property represents the position of the
   scrollbar, which must be between the @slot[gtk-adjustment]{lower} value and
-  the difference @slot[gtk-adjustment]{upper} -
-  @slot[gtk-adjustment]{page-size}. The @slot[gtk-adjustment]{page-size}
-  property represents the size of the visible scrollable area. The
-  @slot[gtk-adjustment]{step-increment} and
+  the @code{(@slot[gtk-adjustment]{upper} - @slot[gtk-adjustment]{page-size})}
+  difference. The @slot[gtk-adjustment]{page-size} property represents the size
+  of the visible scrollable area. The @slot[gtk-adjustment]{step-increment} and
   @slot[gtk-adjustment]{page-increment} properties are used when the user asks
   to step down, using the small stepper arrows, or page down, using for example
   the PageDown key.
@@ -112,22 +111,22 @@
      ├── [button.up]
      ╰── [button.down]
     @end{pre}
-    The @sym{gtk-scrollbar} widget has a main CSS node with name
+    The @sym{gtk-scrollbar} implementation has a main CSS node with name
     @code{scrollbar} and a subnode for its contents, with subnodes named
     @code{trough} and @code{slider}.
 
-    The main node gets the style class @code{.fine-tune} added when the
+    The main node gets the @code{.fine-tune} style class added when the
     scrollbar is in \"fine-tuning\" mode.
 
     If steppers are enabled, they are represented by up to four additional
-    subnodes with name @code{button}. These get the style classes @code{.up}
-    and @code{.down} to indicate in which direction they are moving.
+    subnodes with name @code{button}. These get the @code{.up} and @code{.down}
+    style classes to indicate in which direction they are moving.
 
     Other style classes that may be added to scrollbars inside the
-    @class{gtk-scrolled-window} widget include the positional classes
-    @code{.left}, @code{.right}, @code{.top}, @code{.bottom} and style classes
-    related to overlay scrolling @code{.overlay-indicator}, @code{.dragging},
-    @code{.hovering}.
+    @class{gtk-scrolled-window} implmentation include the @code{.left},
+    @code{.right}, @code{.top}, @code{.bottom} positional classes and style
+    classes related to overlay scrolling @code{.overlay-indicator},
+    @code{.dragging}, @code{.hovering}.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
@@ -168,7 +167,7 @@
         @br{}
         Minimum length of scrollbar slider. @br{}
         @em{Warning:} The @code{min-slider-length} style property has been
-        deprecated since version 3.20 and should not be used in newly-written
+        deprecated since version 3.20 and should not be used in newly written
         code. Use min-height/min-width CSS properties on the slider element
         instead. The value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
@@ -187,10 +186,10 @@
 
 (defun gtk-scrollbar-new (orientation &optional (adjustment nil))
  #+cl-cffi-gtk-documentation
- "@version{2021-3-19}
-  @argument[orientation]{a @symbol{gtk-orientation} value for the scrollbar's
-    orientation}
-  @argument[adjustment]{the optional @class{gtk-adjustment} object to use,
+ "@version{2021-12-27}
+  @argument[orientation]{a @symbol{gtk-orientation} value for the orientation
+    of the scrollbar}
+  @argument[adjustment]{an optional @class{gtk-adjustment} object to use,
     the default is to create a new adjustment}
   @return{The new @class{gtk-scrollbar} widget.}
   @short{Creates a new scrollbar with the given @arg{orientation}.}
@@ -264,9 +263,9 @@
   @return{The new @class{gtk-hscrollbar} widget.}
   @short{Creates a new horizontal scrollbar.}
   @begin[Warning]{dictionary}
-    @sym{gtk-hscrollbar-new} has been deprecated since version 3.2 and should
-    not be used in newly-written code. Use the @fun{gtk-scrollbar-new} function
-    with @code{:horizontal} instead.
+    The @sym{gtk-hscrollbar-new} function has been deprecated since version 3.2
+    and should not be used in newly written code. Use the
+    @fun{gtk-scrollbar-new} function with @code{:horizontal} instead.
   @end{dictionary}
   @see-class{scrollbar}
   @see-function{gtk-scrollbar-new}"
@@ -335,9 +334,9 @@
   @return{The new @class{gtk-vscrollbar} widget.}
   @short{Creates a new vertical scrollbar.}
   @begin[Warning]{dictionary}
-    @sym{gtk-vscrollbar-new} has been deprecated since version 3.2 and should
-    not be used in newly-written code. Use the @fun{gtk-scrollbar-new} function
-    with @code{:vertical} instead.
+    The @sym{gtk-vscrollbar-new} function has been deprecated since version 3.2
+    and should not be used in newly written code. Use the
+    @fun{gtk-scrollbar-new} function with @code{:vertical} instead.
   @end{dictionary}
   @see-class{gtk-scrollbar}
   @see-function{gtk-scrollbar-new}"

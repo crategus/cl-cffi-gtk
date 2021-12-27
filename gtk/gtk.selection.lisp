@@ -170,7 +170,7 @@
 ;;;
 ;;; guint info:
 ;;;     an application-assigned integer ID which will get passed as a parameter
-;;;     to e.g the “selection-get” signal. It allows the application to identify
+;;;     to e.g the "selection-get" signal. It allows the application to identify
 ;;;     the target type without extensive string compares.
 ;;; ----------------------------------------------------------------------------
 
@@ -233,7 +233,7 @@
 ;;;
 ;;; guint info;
 ;;; an application-assigned integer ID which will get passed as a parameter to
-;;; e.g the “selection-get” signal. It allows the application to identify the
+;;; e.g the "selection-get" signal. It allows the application to identify the
 ;;; target type without extensive string compares.
 ;;; ----------------------------------------------------------------------------
 

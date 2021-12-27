@@ -261,10 +261,10 @@ spinbutton.vertical
 ╰── button.down
     @end{pre}
   @end{dictionary}
-  The @sym{gtk-spin-button} widgets main CSS node has the name
+  The @sym{gtk-spin-button} implementation main CSS node has the name
   @code{spinbutton}. It creates subnodes for the entry and the two buttons,
-  with these names. The button nodes have the style classes @code{.up} and
-  @code{.down}. The @class{gtk-entry} subnodes (if present) are put below the
+  with these names. The button nodes have the @code{.up} and @code{.down} style
+  classes. The @class{gtk-entry} subnodes, if present, are put below the
   entry node. The orientation of the spin button is reflected in the
   @code{.vertical} or @code{.horizontal} style class on the main node.
   @begin[Example]{dictionary}
@@ -300,7 +300,7 @@ spinbutton.vertical
         (Read) @br{}
         Style of bevel around the spin button. @br{}
         @em{Warning:} The @code{shadow-type} style property has been deprecated
-        since version 3.20 and should not be used in newly-written code. Use CSS
+        since version 3.20 and should not be used in newly written code. Use CSS
         to determine the style of the border. The value of this style property
         is ignored. @br{}
         Default value: @code{:in}

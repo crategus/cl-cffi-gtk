@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.separator.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -74,7 +74,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-separator 'type)
- "@version{2020-9-5}
+ "@version{*2021-12-16}
   @begin{short}
     The @sym{gtk-separator} widget is a horizontal or vertical separator widget,
     depending on the value of the @slot[gtk-orientable]{orientation} property of
@@ -84,7 +84,7 @@
   It displays a line with a shadow to make it appear sunken into the
   interface.
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-separator} class has a single CSS node with name
+    The @sym{gtk-separator} implementation has a single CSS node with name
     @code{separator}. The node gets one of the @code{.horizontal} or
     @code{.vertical} style classes.
   @end{dictionary}
@@ -176,7 +176,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The @sym{gtk-hseparator-new} function has been deprecated since version 3.2
-    and should not be used in newly-written code. Use the
+    and should not be used in newly written code. Use the
     @fun{gtk-separator-new} function with an orientation @code{:horizontal}
     instead.
   @end{dictionary}
@@ -240,7 +240,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The @sym{gtk-vseparator-new} function has been deprecated since version 3.2
-    and should not be used in newly-written code. Use the
+    and should not be used in newly written code. Use the
     @fun{gtk-separator-new} function with the orientation @code{:vertical}
     instead.
   @end{dictionary}

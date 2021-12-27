@@ -93,7 +93,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_clear has been deprecated since version 3.16 and should
-;;; not be used in newly-written code.
+;;; not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;
@@ -113,7 +113,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_get has been deprecated since version 3.16 and should
-;;; not be used in newly-written code.
+;;; not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;
@@ -143,7 +143,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_get_property has been deprecated since version 3.16 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;
@@ -177,7 +177,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_get_valist has been deprecated since version 3.16 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;
@@ -203,7 +203,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_lookup_color has been deprecated since version 3.8 and
-;;; should not be used in newly-written code. GtkSymbolicColor is deprecated.
+;;; should not be used in newly written code. GtkSymbolicColor is deprecated.
 ;;;
 ;;; Returns the symbolic color that is mapped to name.
 ;;;
@@ -230,7 +230,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_lookup_property has been deprecated since version 3.8
-;;; and should not be used in newly-written code. This code could only look up
+;;; and should not be used in newly written code. This code could only look up
 ;;; custom properties and those are deprecated.
 ;;;
 ;;; Returns TRUE if a property has been registered, if pspec or parse_func are
@@ -261,7 +261,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_map_color has been deprecated since version 3.8 and
-;;; should not be used in newly-written code. GtkSymbolicColor is deprecated.
+;;; should not be used in newly written code. GtkSymbolicColor is deprecated.
 ;;;
 ;;; Maps color so it can be referenced by name. See
 ;;; gtk_style_properties_lookup_color()
@@ -292,7 +292,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_merge has been deprecated since version 3.16 and should
-;;; not be used in newly-written code.
+;;; not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;
@@ -318,7 +318,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_new has been deprecated since version 3.16 and should
-;;; not be used in newly-written code.
+;;; not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;
@@ -344,7 +344,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_register_property has been deprecated since version 3.8
-;;; and should not be used in newly-written code. Code should use the default
+;;; and should not be used in newly written code. Code should use the default
 ;;; properties provided by CSS.
 ;;;
 ;;; Registers a property so it can be used in the CSS file format. This function
@@ -373,7 +373,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_set has been deprecated since version 3.16 and should
-;;; not be used in newly-written code.
+;;; not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;
@@ -402,7 +402,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_set_property has been deprecated since version 3.16 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;
@@ -433,7 +433,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_set_valist has been deprecated since version 3.16 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;
@@ -461,7 +461,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_properties_unset_property has been deprecated since version 3.16
-;;; and should not be used in newly-written code.
+;;; and should not be used in newly written code.
 ;;;
 ;;; GtkStyleProperties are deprecated.
 ;;;

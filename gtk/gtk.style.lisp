@@ -238,7 +238,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_style_attach has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_widget_style_attach()
+;;;    be used in newly written code. Use gtk_widget_style_attach()
 ;;;    instead
 ;;;
 ;;; Attaches a style to a window; this process allocates the colors and
@@ -270,7 +270,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_style_detach has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use GtkStyleContext instead
+;;;    be used in newly written code. Use GtkStyleContext instead
 ;;;
 ;;;    Detaches a style from a window. If the style is not attached to any
 ;;;    windows anymore, it is unrealized. See gtk_style_attach().
@@ -305,7 +305,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_style_set_background has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use
+;;;    should not be used in newly written code. Use
 ;;;    gtk_style_context_set_background() instead
 ;;;
 ;;;    Sets the background of window to the background color or pixmap
@@ -336,7 +336,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_style_apply_default_background has been deprecated since version
-;;;    3.0 and should not be used in newly-written code. Use
+;;;    3.0 and should not be used in newly written code. Use
 ;;;    GtkStyleContext instead
 ;;; ----------------------------------------------------------------------------
 
@@ -350,7 +350,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_style_lookup_color has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use
+;;;    not be used in newly written code. Use
 ;;;    gtk_style_context_lookup_color() instead
 ;;;
 ;;;    Looks up color_name in the style's logical color mappings, filling in
@@ -390,9 +390,9 @@
     @code{nil}.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-style-lookup-icon-set} has been deprecated since
-    version 3.0 and should not be used in newly-written code. Use the function
-    @fun{gtk-style-context-lookup-icon-set} instead.
+    The @sym{gtk-style-lookup-icon-set} function has been deprecated since
+    version 3.0 and should not be used in newly written code. Use the
+    @fun{gtk-style-context-lookup-icon-set} function instead.
   @end{short}
   @see-class{gtk-style}
   @see-class{gtk-icon-set}
@@ -414,7 +414,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_render_icon has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_render_icon_pixbuf()
+;;; not be used in newly written code. Use gtk_render_icon_pixbuf()
 ;;; instead
 ;;;
 ;;; Renders the icon specified by source at the given size according to the
@@ -457,7 +457,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_style_get_style_property is deprecated and should not be used in
-;;;    newly-written code.
+;;;    newly written code.
 ;;;
 ;;;    Queries the value of a style property corresponding to a widget class
 ;;;    is in the given style.
@@ -489,7 +489,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_style_get_valist is deprecated and should not be used in
-;;;    newly-written code.
+;;;    newly written code.
 ;;;
 ;;;    Non-vararg variant of gtk_style_get(). Used primarily by language
 ;;;    bindings.
@@ -520,7 +520,7 @@
 ;;;
 ;;; Warning
 ;;;
-;;;    gtk_style_get is deprecated and should not be used in newly-written
+;;;    gtk_style_get is deprecated and should not be used in newly written
 ;;;    code.
 ;;;
 ;;;    Gets the values of a multiple style properties for widget_type from
@@ -561,7 +561,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_arrow has been deprecated since version 3.0 and should not be
-;;;    used in newly-written code. Use gtk_render_arrow() instead
+;;;    used in newly written code. Use gtk_render_arrow() instead
 ;;;
 ;;;    Draws an arrow in the given rectangle on cr using the given parameters.
 ;;;    arrow_type determines the direction of the arrow.
@@ -620,7 +620,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_box has been deprecated since version 3.0 and should not be
-;;;    used in newly-written code. Use gtk_render_frame() and
+;;;    used in newly written code. Use gtk_render_frame() and
 ;;;    gtk_render_background() instead
 ;;;
 ;;;    Draws a box on cr with the given parameters.
@@ -676,7 +676,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_box_gap has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_render_frame_gap() instead
+;;;    be used in newly written code. Use gtk_render_frame_gap() instead
 ;;;
 ;;;    Draws a box in cr using the given style and state and shadow type,
 ;;;    leaving a gap in one side.
@@ -738,7 +738,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_check has been deprecated since version 3.0 and should not be
-;;;    used in newly-written code. Use gtk_render_check() instead
+;;;    used in newly written code. Use gtk_render_check() instead
 ;;;
 ;;;    Draws a check button indicator in the given rectangle on cr with the
 ;;;    given parameters.
@@ -791,7 +791,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_diamond has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use cairo instead
+;;;    be used in newly written code. Use cairo instead
 ;;;
 ;;;    Draws a diamond in the given rectangle on window using the given
 ;;;    parameters.
@@ -845,7 +845,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_extension has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use gtk_render_extension()
+;;;    not be used in newly written code. Use gtk_render_extension()
 ;;;    instead
 ;;;
 ;;;    Draws an extension, i.e. a notebook tab.
@@ -901,7 +901,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_flat_box has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_render_frame() and
+;;;    be used in newly written code. Use gtk_render_frame() and
 ;;;    gtk_render_background() instead
 ;;;
 ;;;    Draws a flat box on cr with the given parameters.
@@ -953,7 +953,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_focus has been deprecated since version 3.0 and should not be
-;;;    used in newly-written code. Use gtk_render_focus() instead
+;;;    used in newly written code. Use gtk_render_focus() instead
 ;;;
 ;;;    Draws a focus indicator around the given rectangle on cr using the
 ;;;    given style.
@@ -1004,7 +1004,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_handle has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_render_handle() instead
+;;;    be used in newly written code. Use gtk_render_handle() instead
 ;;;
 ;;;    Draws a handle as used in GtkHandleBox and GtkPaned.
 ;;;
@@ -1057,7 +1057,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_hline has been deprecated since version 3.0 and should not be
-;;;    used in newly-written code. Use gtk_render_line() instead
+;;;    used in newly written code. Use gtk_render_line() instead
 ;;;
 ;;;    Draws a horizontal line from (x1, y) to (x2, y) in cr using the given
 ;;;    style and state.
@@ -1104,7 +1104,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_option has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_render_option() instead
+;;;    be used in newly written code. Use gtk_render_option() instead
 ;;;
 ;;;    Draws a radio button indicator in the given rectangle on cr with the
 ;;;    given parameters.
@@ -1157,7 +1157,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_shadow has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_render_frame() instead
+;;;    be used in newly written code. Use gtk_render_frame() instead
 ;;;
 ;;;    Draws a shadow around the given rectangle in cr using the given style
 ;;;    and state and shadow type.
@@ -1213,7 +1213,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_shadow_gap has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use gtk_render_frame_gap()
+;;;    not be used in newly written code. Use gtk_render_frame_gap()
 ;;;    instead
 ;;;
 ;;;    Draws a shadow around the given rectangle in cr using the given style
@@ -1277,7 +1277,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_slider has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_render_slider() instead
+;;;    be used in newly written code. Use gtk_render_slider() instead
 ;;;
 ;;;    Draws a slider in the given rectangle on cr using the given style and
 ;;;    orientation.
@@ -1333,7 +1333,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_spinner has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_render_activity() instead
+;;;    be used in newly written code. Use gtk_render_activity() instead
 ;;;
 ;;;    Draws a spinner on window using the given parameters.
 ;;;
@@ -1385,7 +1385,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_tab has been deprecated since version 3.0 and should not be
-;;;    used in newly-written code. Use cairo instead
+;;;    used in newly written code. Use cairo instead
 ;;;
 ;;;    Draws an option menu tab (i.e. the up and down pointing arrows) in the
 ;;;    given rectangle on cr using the given parameters.
@@ -1436,7 +1436,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_vline has been deprecated since version 3.0 and should not be
-;;;    used in newly-written code. Use gtk_render_line() instead
+;;;    used in newly written code. Use gtk_render_line() instead
 ;;;
 ;;;    Draws a vertical line from (x, y1_) to (x, y2_) in cr using the given
 ;;;    style and state.
@@ -1481,7 +1481,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_expander has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_render_expander() instead
+;;;    be used in newly written code. Use gtk_render_expander() instead
 ;;;
 ;;;    Draws an expander as used in GtkTreeView. x and y specify the
 ;;;    center the expander. The size of the expander is determined by the
@@ -1534,7 +1534,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_layout has been deprecated since version 3.0 and should not
-;;;    be used in newly-written code. Use gtk_render_layout() instead
+;;;    be used in newly written code. Use gtk_render_layout() instead
 ;;;
 ;;;    Draws a layout on cr using the given parameters.
 ;;;
@@ -1583,7 +1583,7 @@
 ;;; Warning
 ;;;
 ;;;    gtk_paint_resize_grip has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use gtk_render_handle() instead
+;;;    not be used in newly written code. Use gtk_render_handle() instead
 ;;;
 ;;;    Draws a resize grip in the given rectangle on cr using the given
 ;;;    parameters.

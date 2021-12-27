@@ -201,12 +201,12 @@
   If @em{true}, unmapped widgets are ignored when determining the size of the
   group. @br{}
   @em{Warning:} The @code{ignore-hidden} property has been deprecated since
-  version 3.22 and should not be used in newly-written code. Measuring the size
+  version 3.22 and should not be used in newly written code. Measuring the size
   of hidden widgets has not worked reliably for a long time. In most cases, they
   will report a size of 0 nowadays, and thus, their size will not affect the
   other size group members. In effect, size groups will always operate as if
-  this property was @em{true}. Use a @class{gtk-stack} instead to hide widgets
-  while still having their size taken into account. @br{}
+  this property was @em{true}. Use a @class{gtk-stack} widget instead to hide
+  widgets while still having their size taken into account. @br{}
   Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
@@ -229,13 +229,13 @@
   function @sym{(setf gtk-size-group-ignore-hidden)} sets whether unmapped
   widgets should be ignored when calculating the size.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-size-group-ignore-hidden} has been deprecated since
-    version 3.22 and should not be used in newly-written code. Measuring the
+    The @sym{gtk-size-group-ignore-hidden} function has been deprecated since
+    version 3.22 and should not be used in newly written code. Measuring the
     size of hidden widgets has not worked reliably for a long time. In most
     cases, they will report a size of 0 nowadays, and thus, their size will not
     affect the other size group members. In effect, size groups will always
-    operate as if this property was @em{true}. Use a @class{gtk-stack} instead
-    to hide widgets while still having their size taken into account.
+    operate as if this property was @em{true}. Use a @class{gtk-stack} widget
+    instead to hide widgets while still having their size taken into account.
   @end{dictionary}
   @see-class{gtk-size-group}")
 

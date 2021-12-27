@@ -202,7 +202,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_provider_get_icon_factory has been deprecated since version 3.8
-;;; and should not be used in newly-written code.
+;;; and should not be used in newly written code.
 ;;;
 ;;; Will always return NULL for all GTK-provided style providers.
 ;;;
@@ -231,7 +231,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_style_provider_get_style has been deprecated since version 3.8 and
-;;; should not be used in newly-written code.
+;;; should not be used in newly written code.
 ;;;
 ;;; Will always return NULL for all GTK-provided style providers as the
 ;;; interface cannot correctly work the way CSS is specified.
