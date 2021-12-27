@@ -127,11 +127,11 @@
 (setf (gethash 'gdk-rectangle-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rectangle-y 'function)
- "@version{*2021-12-13}
+ "@version{*2021-12-17}
   @syntax[]{(gdk-rectangle-y instance) => y}
   @syntax[]{(setf (gdk-rectangle-y instance) y)}
   @argument[instance]{a @class{gdk-rectangle} instance}
-  @argument[x]{an integer with the y coordinate of the rectangle}
+  @argument[y]{an integer with the y coordinate of the rectangle}
   @begin{short}
     Accessor of the @code{y} slot of the @class{gdk-rectangle} structure.
   @end{short}
@@ -145,11 +145,11 @@
 (setf (gethash 'gdk-rectangle-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rectangle-width 'function)
- "@version{2021-12-13}
+ "@version{*2021-12-17}
   @syntax[]{(gdk-rectangle-width instance) => width}
   @syntax[]{(setf (gdk-rectangle-width instance) width)}
   @argument[instance]{a @class{gdk-rectangle} instance}
-  @argument[x]{an integer with the width of the rectangle}
+  @argument[width]{an integer with the width of the rectangle}
   @begin{short}
     Accessor of the @code{width} slot of the @class{gdk-rectangle} structure.
   @end{short}
@@ -160,13 +160,14 @@
 ;;; --- gtk-rectangle-height ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-rectangle-height atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-rectangle-height atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gdk-rectangle-height 'function)
- "@version{2021-12-13}
+ "@version{*2021-12-17}
   @syntax[]{(gdk-rectangle-height instance) => height}
   @syntax[]{(setf (gdk-rectangle-height instance) height)}
   @argument[instance]{a @class{gdk-rectangle} instance}
-  @argument[x]{an integer with the height of the rectangle}
+  @argument[height]{an integer with the height of the rectangle}
   @begin{short}
     Accessor of the @code{height} slot of the @class{gdk-rectangle} structure.
   @end{short}

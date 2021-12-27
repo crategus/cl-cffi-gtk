@@ -229,14 +229,14 @@
 
 (defun gdk-rgba-parse (str)
  #+cl-cffi-gtk-documentation
- "@version{*2021-1-24}
+ "@version{*2021-12-15}
   @argument[str]{a string specifying the color}
   @return{A @struct{gdk-rgba} color with the filled in values.}
   @begin{short}
-    Parses a textual representation of a color, and returns a RGBA structure
-    filling in the red, green, blue and alpha fields.
+    Parses a textual representation of a color, and returns a RGBA instance
+    filling in the @code{red}, @code{green}, @code{blue} and @code{alpha}
+    fields.
   @end{short}
-
   The string can be either one of:
   @begin{itemize}
     @item{A standard name taken from the X11 @code{rgb.txt} file.}
@@ -253,13 +253,13 @@
   0.0 to 1.0.
   @begin[Example]{dictionary}
     @begin{pre}
- (gdk-rgba-parse \"LightGreen\")
+(gdk-rgba-parse \"LightGreen\")
 => #S(GDK-RGBA
       :RED 0.5647058823529412d0
       :GREEN 0.9333333333333333d0
       :BLUE 0.5647058823529412d0
       :ALPHA 1.0d0)
- (gdk-rgba-parse \"#90ee90\")
+(gdk-rgba-parse \"#90ee90\")
 => #S(GDK-RGBA
       :RED 0.5647058823529412d0
       :GREEN 0.9333333333333333d0

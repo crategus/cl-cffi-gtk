@@ -731,7 +731,7 @@
 (setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*)
       "GFlags"
       (gethash 'gdk-modifier-type atdoc:*external-symbols*)
- "@version{2021-12-13}
+ "@version{*2021-12-22}
   @begin{short}
     A set of bit-flags to indicate the state of modifier keys and mouse buttons
     in various event types.

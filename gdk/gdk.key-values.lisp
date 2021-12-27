@@ -814,7 +814,7 @@ if (keyval == GDK_PLUS &&
 
 (defcfun ("gdk_keyval_name" gdk-keyval-name) (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2021-12-13}
+ "@version{2021-12-22}
   @argument[keyval]{an unsigned integer with a key value}
   @begin{return}
    A string containing the name of the key, or @code{nil} if @arg{keyval} is
@@ -823,8 +823,16 @@ if (keyval == GDK_PLUS &&
   @begin{short}
     Converts a key value into a symbolic name.
   @end{short}
-  The names are the same as those in the @code{<gdk/gdkkeysyms.h>} header file
+  The names are the same as those in the @file{gdk/gdkkeysyms.h} header file
   but without the leading @code{\"GDK_KEY_\"}.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+(gdk-keyval-name 97) => \"a\"
+(gdk-keyval-name 61) => \"equal\"
+(gdk-keyval-name 65470) => \"F1\"
+(gdk-keyval-from-name 16777215) => \"0xffffff\"
+    @end{pre}
+  @end{dictionary}
   @see-class{gdk-keymap}"
   (keyval :uint))
 
@@ -836,17 +844,25 @@ if (keyval == GDK_PLUS &&
 
 (defcfun ("gdk_keyval_from_name" gdk-keyval-from-name) :uint
  #+cl-cffi-gtk-documentation
- "@version{2021-12-13}
+ "@version{*2021-12-22}
   @argument[name]{a string with the key name}
   @begin{return}
-    An unsigned integer with the corresponding key value, or the value of
-    @code{GDK_KEY_VoidSymbol} if the key name is not a valid key.
+    An unsigned integer with the corresponding key value, or the @code{#xffffff}
+    value if the key name is not a valid key.
   @end{return}
   @begin{short}
     Converts a key name to a key value.
   @end{short}
-  The names are the same as those in the @code{<gdk/gdkkeysyms.h>} header file
+  The names are the same as those in the @file{gdk/gdkkeysyms.h} header file
   but without the leading @code{\"GDK_KEY_\"}.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+(gdk-keyval-from-name \"a\") => 97
+(gdk-keyval-from-name \"equal\") => 61
+(gdk-keyval-from-name \"F1\") => 65470
+(gdk-keyval-from-name \"unknown\") => 16777215
+    @end{pre}
+  @end{dictionary}
   @see-class{gdk-keymap}"
   (name :string))
 

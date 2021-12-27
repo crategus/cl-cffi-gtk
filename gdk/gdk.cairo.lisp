@@ -298,7 +298,7 @@ cairo_surface_t *surface =
 
 (defcfun ("gdk_cairo_set_source_rgba" gdk-cairo-set-source-rgba) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-12-11}
+ "@version{*2021-12-15}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[rgba]{a @class{gdk-rgba} color}
   @begin{short}
