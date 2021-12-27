@@ -98,8 +98,6 @@
       @about-function{gtk-application-is-inhibited}
       @about-function{gtk-application-prefers-app-menu}
       @about-function{gtk-application-menu-by-id}
-      @about-function{gtk-application-add-accelerator}
-      @about-function{gtk-application-remove-accelerator}
       @about-function{gtk-application-list-action-descriptions}
       @about-function{gtk-application-accels-for-action}
       @about-function{gtk-application-actions-for-accel}
@@ -112,15 +110,6 @@
       @about-function{gtk-application-window-new}
       @about-function{gtk-application-window-id}
       @about-function{gtk-application-window-help-overlay}
-    @end{subsection}
-    @begin[GtkActionable]{subsection}
-      An interface for widgets that can be associated with actions.
-
-      @about-class{gtk-actionable}
-      @about-generic{gtk-actionable-action-name}
-      @about-generic{gtk-actionable-action-target}
-      @about-function{gtk-actionable-set-action-target}
-      @about-function{gtk-actionable-set-detailed-action-name}
     @end{subsection}
   @end{section}
   @begin[Interface builder]{section}
@@ -154,21 +143,6 @@
       @about-function{gtk-builder-type-from-name}
       @about-function{gtk-builder-value-from-string}
       @about-function{gtk-builder-value-from-string-type}
-    @end{subsection}
-    @begin[GtkBuildable]{subsection}
-      Interface for objects that can be built by a @class{gtk-builder} UI
-      description.
-
-      @about-class{gtk-buildable}
-      @about-function{gtk-buildable-name}
-      @about-function{gtk-buildable-add-child}
-      @about-function{gtk-buildable-set-buildable-property}
-      @about-function{gtk-buildable-construct-child}
-      @about-function{gtk-buildable-custom-tag-start}
-      @about-function{gtk-buildable-custom-tag-end}
-      @about-function{gtk-buildable-custom-finished}
-      @about-function{gtk-buildable-parser-finished}
-      @about-function{gtk-buildable-internal-child}
     @end{subsection}
   @end{section}
   @begin[Windows]{section}
@@ -290,9 +264,6 @@
       @about-function{gtk-dialog-action-area}
       @about-function{gtk-dialog-content-area}
       @about-function{gtk-dialog-header-bar}
-      @about-function{gtk-alternative-dialog-button-order}
-      @about-function{gtk-dialog-set-alternative-button-order}
-      @about-function{gtk-dialog-set-alternative-button-order-from-array}
     @end{subsection}
     @begin[GtkMessageDialog]{subsection}
       A convenient message window.
@@ -346,9 +317,7 @@
       @about-generic{gtk-assistant-use-header-bar}
       @about-function{gtk-assistant-child-complete}
       @about-function{gtk-assistant-child-has-padding}
-      @about-function{gtk-assistant-child-header-image}
       @about-function{gtk-assistant-child-page-type}
-      @about-function{gtk-assistant-child-sidebar-image}
       @about-function{gtk-assistant-child-title}
       @about-function{gtk-assistant-new}
       @about-function{gtk-assistant-current-page}
@@ -491,6 +460,7 @@
       @about-function{gtk-list-box-set-sort-func}
       @about-function{gtk-list-box-drag-highlight-row}
       @about-function{gtk-list-box-drag-unhighlight-row}
+      @about-symbol{gtk-list-box-create-widget-func}
       @about-function{gtk-list-box-bind-model}
       @about-class{gtk-list-box-row}
       @about-generic{gtk-list-box-row-activatable}
@@ -518,18 +488,21 @@
       @about-function{gtk-flow-box-child-at-pos}
       @about-function{gtk-flow-box-set-hadjustment}
       @about-function{gtk-flow-box-set-vadjustment}
+      @about-symbol{gtk-flow-box-foreach-func}
       @about-function{gtk-flow-box-selected-foreach}
       @about-function{gtk-flow-box-selected-children}
       @about-function{gtk-flow-box-select-child}
       @about-function{gtk-flow-box-unselect-child}
       @about-function{gtk-flow-box-select-all}
       @about-function{gtk-flow-box-unselect-all}
+      @about-symbol{gtk-flow-box-filter-func}
       @about-function{gtk-flow-box-set-filter-func}
       @about-function{gtk-flow-box-invalidate-filter}
+      @about-symbol{gtk-flow-box-sort-func}
       @about-function{gtk-flow-box-set-sort-func}
       @about-function{gtk-flow-box-invalidate-sort}
+      @about-symbol{gtk-flow-box-create-widget-func}
       @about-function{gtk-flow-box-bind-model}
-
       @about-class{gtk-flow-box-child}
       @about-function{gtk-flow-box-child-new}
       @about-function{gtk-flow-box-child-index}
@@ -562,11 +535,11 @@
       @about-function{gtk-stack-set-visible-child-full}
     @end{subsection}
     @begin[GtkStackSwitcher]{subsection}
-      A controller for GtkStack.
+      A controller for the @class{gtk-stack} widget.
 
       @about-class{gtk-stack-switcher}
-      @about-generic{gtk-stack-switcher-stack}
       @about-generic{gtk-stack-switcher-icon-size}
+      @about-generic{gtk-stack-switcher-stack}
       @about-function{gtk-stack-switcher-new}
     @end{subsection}
     @begin[GtkStackSidebar]{subsection}
@@ -721,12 +694,6 @@
       @about-function{gtk-expander-new}
       @about-function{gtk-expander-new-with-mnemonic}
     @end{subsection}
-    @begin[GtkOrientable]{subsection}
-      An interface for flippable widgets.
-
-      @about-class{gtk-orientable}
-      @about-generic{gtk-orientable-orientation}
-    @end{subsection}
     @begin[GtkAspectFrame]{subsection}
       A frame that constrains its child to a particular aspect ratio.
 
@@ -809,24 +776,18 @@
       @about-generic{gtk-image-storage-type}
       @about-generic{gtk-image-surface}
       @about-generic{gtk-image-use-fallback}
-      @about-function{gtk-image-get-icon-set}
-      @about-function{gtk-image-get-stock}
       @about-function{gtk-image-get-animation}
       @about-function{gtk-image-get-icon-name}
       @about-function{gtk-image-get-gicon}
       @about-function{gtk-image-new-from-file}
-      @about-function{gtk-image-new-from-icon-set}
       @about-function{gtk-image-new-from-pixbuf}
-      @about-function{gtk-image-new-from-stock}
       @about-function{gtk-image-new-from-animation}
       @about-function{gtk-image-new-from-icon-name}
       @about-function{gtk-image-new-from-gicon}
       @about-function{gtk-image-new-from-resource}
       @about-function{gtk-image-new-from-surface}
       @about-function{gtk-image-set-from-file}
-      @about-function{gtk-image-set-from-icon-set}
       @about-function{gtk-image-set-from-pixbuf}
-      @about-function{gtk-image-set-from-stock}
       @about-function{gtk-image-set-from-animation}
       @about-function{gtk-image-set-from-icon-name}
       @about-function{gtk-image-set-from-gicon}
@@ -935,13 +896,7 @@
       @about-function{gtk-button-new-with-label}
       @about-function{gtk-button-new-with-mnemonic}
       @about-function{gtk-button-new-from-icon-name}
-      @about-function{gtk-button-new-from-stock}
-      @about-function{gtk-button-pressed}
-      @about-function{gtk-button-released}
       @about-function{gtk-button-clicked}
-      @about-function{gtk-button-enter}
-      @about-function{gtk-button-leave}
-      @about-function{gtk-button-alignment}
       @about-function{gtk-button-event-window}
     @end{subsection}
     @begin[GtkCheckButton]{subsection}
@@ -1031,7 +986,16 @@
       @about-function{gtk-volume-button-new}
     @end{subsection}
     @begin[GtkLockButton]{subsection}
-      not implemented
+      A widget to unlock or lock privileged operations.
+
+      @about-class{gtk-lock-button}
+      @about-generic{gtk-lock-button-permission}
+      @about-generic{gtk-lock-button-text-lock}
+      @about-generic{gtk-lock-button-text-unlock}
+      @about-generic{gtk-lock-button-tooltip-lock}
+      @about-generic{gtk-lock-button-tooltip-not-authorized}
+      @about-generic{gtk-lock-button-tooltip-unlock}
+      @about-function{gtk-lock-button-new}
     @end{subsection}
     @begin[GtkModelButton]{subsection}
       A button that uses a GAction as model.
@@ -1584,13 +1548,13 @@
       @about-function{gtk-text-buffer-remove-selection-clipboard}
       @about-symbol{gtk-text-buffer-deserialize-func}
       @about-function{gtk-text-buffer-deserialize}
+      @about-function{gtk-text-buffer-deserialize-can-create-tags}
       @about-function{gtk-text-buffer-register-deserialize-format}
       @about-function{gtk-text-buffer-register-deserialize-tagset}
       @about-symbol{gtk-text-buffer-serialize-func}
       @about-function{gtk-text-buffer-serialize}
       @about-function{gtk-text-buffer-register-serialize-format}
       @about-function{gtk-text-buffer-register-serialize-tagset}
-      @about-function{gtk-text-buffer-deserialize-can-create-tags}
       @about-function{gtk-text-buffer-deserialize-formats}
       @about-function{gtk-text-buffer-serialize-formats}
       @about-function{gtk-text-buffer-unregister-deserialize-format}
@@ -2449,33 +2413,35 @@ setup_tree (void)
       @about-function{gtk-cell-layout-clear-attributes}
     @end{subsection}
     @begin[GtkCellArea]{subsection}
-      An abstract class for laying out @class{gtk-cell-renderer}'s.
+      An abstract class for laying out @class{gtk-cell-renderer} objects.
 
       @about-class{gtk-cell-area}
       @about-generic{gtk-cell-area-edit-widget}
       @about-generic{gtk-cell-area-edited-cell}
       @about-generic{gtk-cell-area-focus-cell}
-      @about-symbol{GTK-CELL-AREA-WARN-INVALID-CELL-PROPERTY-ID}
       @about-function{gtk-cell-area-add}
       @about-function{gtk-cell-area-remove}
       @about-function{gtk-cell-area-has-renderer}
+      @about-symbol{gtk-cell-callback}
       @about-function{gtk-cell-area-foreach}
+      @about-symbol{gtk-cell-alloc-callback}
       @about-function{gtk-cell-area-foreach-alloc}
       @about-function{gtk-cell-area-event}
       @about-function{gtk-cell-area-render}
-      @about-function{gtk-cell-area-get-cell-allocation}
-      @about-function{gtk-cell-area-get-cell-at-position}
+      @about-function{gtk-cell-area-cell-allocation}
+      @about-function{gtk-cell-area-cell-at-position}
       @about-function{gtk-cell-area-create-context}
       @about-function{gtk-cell-area-copy-context}
-      @about-function{gtk-cell-area-get-request-mode}
+      @about-function{gtk-cell-area-request-mode}
       @about-function{gtk-cell-area-preferred-width}
       @about-function{gtk-cell-area-preferred-height-for-width}
       @about-function{gtk-cell-area-preferred-height}
       @about-function{gtk-cell-area-preferred-width-for-height}
-      @about-function{gtk-cell-area-get-current-path-string}
+      @about-function{gtk-cell-area-current-path-string}
       @about-function{gtk-cell-area-apply-attributes}
       @about-function{gtk-cell-area-attribute-connect}
       @about-function{gtk-cell-area-attribute-disconnect}
+      @about-function{gtk-cell-area-attribute-column}
       @about-function{gtk-cell-area-class-install-cell-property}
       @about-function{gtk-cell-area-class-find-cell-property}
       @about-function{gtk-cell-area-class-list-cell-properties}
@@ -2484,28 +2450,23 @@ setup_tree (void)
       @about-function{gtk-cell-area-cell-get}
       @about-function{gtk-cell-area-cell-set-valist}
       @about-function{gtk-cell-area-cell-get-valist}
-      @about-function{gtk-cell-area-cell-set-property}
-      @about-function{gtk-cell-area-cell-get-property}
+      @about-function{gtk-cell-area-cell-property}
       @about-function{gtk-cell-area-is-activatable}
       @about-function{gtk-cell-area-activate}
       @about-function{gtk-cell-area-focus}
-      @about-function{gtk-cell-area-set-focus-cell}
-      @about-function{gtk-cell-area-get-focus-cell}
       @about-function{gtk-cell-area-add-focus-sibling}
       @about-function{gtk-cell-area-remove-focus-sibling}
       @about-function{gtk-cell-area-is-focus-sibling}
-      @about-function{gtk-cell-area-get-focus-siblings}
-      @about-function{gtk-cell-area-get-focus-from-sibling}
-      @about-function{gtk-cell-area-get-edited-cell}
-      @about-function{gtk-cell-area-get-edit-widget}
+      @about-function{gtk-cell-area-focus-siblings}
+      @about-function{gtk-cell-area-focus-from-sibling}
       @about-function{gtk-cell-area-activate-cell}
       @about-function{gtk-cell-area-stop-editing}
       @about-function{gtk-cell-area-inner-cell-area}
       @about-function{gtk-cell-area-request-renderer}
     @end{subsection}
     @begin[GtkCellAreaBox]{subsection}
-      A cell area that renders @class{gtk-cell-renderer}s into a row or a
-      column.
+      A cell area that renders @class{gtk-cell-renderer} objects into a row or
+      a column.
 
       @about-class{gtk-cell-area-box}
       @about-generic{gtk-cell-area-box-spacing}
@@ -2878,6 +2839,7 @@ setup_tree (void)
       @about-function{gtk-menu-popup-at-rect}
       @about-function{gtk-menu-popup-at-widget}
       @about-function{gtk-menu-popup-at-pointer}
+      @about-symbol{gtk-menu-position-func}
       @about-function{gtk-menu-popup-for-device}
       @about-function{gtk-menu-popup}
       @about-function{gtk-menu-place-on-monitor}
@@ -2888,8 +2850,8 @@ setup_tree (void)
       @about-function{gtk-menu-for-attach-widget}
     @end{subsection}
     @begin[GtkMenuBar]{subsection}
-      A subclass of @class{gtk-menu-shell} which holds @class{gtk-menu-item}
-      widgets.
+      A subclass of the @class{gtk-menu-shell} class which holds
+      @class{gtk-menu-item} widgets.
 
       @about-symbol{gtk-pack-direction}
       @about-class{gtk-menu-bar}
@@ -3245,7 +3207,7 @@ setup_tree (void)
       @about-function{gtk-file-chooser-button-new-with-dialog}
     @end{subsection}
     @begin[GtkFileChooserNative]{subsection}
-      A native file chooser dialog, suitable for “File/Open” or “File/Save”
+      A native file chooser dialog, suitable for \"File/Open\" or \"File/Save\"
       commands.
 
       @about-function{gtk-file-chooser-native-new}
@@ -3649,6 +3611,7 @@ setup_tree (void)
       @about-function{gtk-print-job-status}
       @about-function{gtk-print-job-set-source-file}
       @about-function{gtk-print-job-surface}
+      @about-symbol{gtk-print-job-complete-func}
       @about-function{gtk-print-job-send}
       @about-function{gtk-print-job-pages}
       @about-function{gtk-print-job-page-ranges}
@@ -3846,6 +3809,38 @@ setup_tree (void)
     @end{subsection}
     @begin[GtkAccessible]{subsection}
       not implemented
+    @end{subsection}
+  @end{section}
+  @begin[Interfaces]{section}
+    @begin[GtkActionable]{subsection}
+      An interface for widgets that can be associated with actions.
+
+      @about-class{gtk-actionable}
+      @about-generic{gtk-actionable-action-name}
+      @about-generic{gtk-actionable-action-target}
+      @about-function{gtk-actionable-set-action-target}
+      @about-function{gtk-actionable-set-detailed-action-name}
+    @end{subsection}
+    @begin[GtkBuildable]{subsection}
+      Interface for objects that can be built by a @class{gtk-builder} UI
+      description.
+
+      @about-class{gtk-buildable}
+      @about-function{gtk-buildable-name}
+      @about-function{gtk-buildable-add-child}
+      @about-function{gtk-buildable-set-buildable-property}
+      @about-function{gtk-buildable-construct-child}
+      @about-function{gtk-buildable-custom-tag-start}
+      @about-function{gtk-buildable-custom-tag-end}
+      @about-function{gtk-buildable-custom-finished}
+      @about-function{gtk-buildable-parser-finished}
+      @about-function{gtk-buildable-internal-child}
+    @end{subsection}
+    @begin[GtkOrientable]{subsection}
+      An interface for flippable widgets.
+
+      @about-class{gtk-orientable}
+      @about-generic{gtk-orientable-orientation}
     @end{subsection}
   @end{section}
   @begin[Abstract Base Classes]{section}
@@ -4234,6 +4229,7 @@ setup_tree (void)
       @about-generic{gtk-recent-chooser-show-private}
       @about-generic{gtk-recent-chooser-show-tips}
       @about-generic{gtk-recent-chooser-sort-type}
+      @about-symbol{gtk-recent-sort-func}
       @about-function{gtk-recent-chooser-set-sort-func}
       @about-function{gtk-recent-chooser-current-uri}
       @about-function{gtk-recent-chooser-current-item}
@@ -4275,16 +4271,16 @@ setup_tree (void)
       @about-symbol{gtk-recent-filter-flags}
       @about-class{gtk-recent-filter}
       @about-function{gtk-recent-filter-new}
-      @about-function{gtk-recent-filter-get-name}
-      @about-function{gtk-recent-filter-set-name}
+      @about-function{gtk-recent-filter-name}
       @about-function{gtk-recent-filter-add-mime-type}
       @about-function{gtk-recent-filter-add-pattern}
       @about-function{gtk-recent-filter-add-pixbuf-formats}
       @about-function{gtk-recent-filter-add-application}
       @about-function{gtk-recent-filter-add-group}
       @about-function{gtk-recent-filter-add-age}
+      @about-symbol{gtk-recent-filter-func}
       @about-function{gtk-recent-filter-add-custom}
-      @about-function{gtk-recent-filter-get-needed}
+      @about-function{gtk-recent-filter-needed}
       @about-function{gtk-recent-filter-filter}
     @end{subsection}
   @end{section}
@@ -5023,7 +5019,8 @@ setup_tree (void)
       @about-function{gtk-css-section-start-position}
     @end{subsection}
     @begin[GtkStyleProvider]{subsection}
-      Interface to provide style information to @class{gtk-style-context}.
+      Interface to provide style information to a @class{gtk-style-context}
+      object.
 
       @about-variable{+gtk-style-provider-priority-fallback+}
       @about-variable{+gtk-style-provider-priority-theme+}
@@ -5715,6 +5712,59 @@ setup_tree (void)
       No symbols und functions for GtkStyleProperties are implemented in the
       Lisp binding.
     @end{subsection}
+  @end{section}
+  @begin[Symbols not implemented or exported]{section}
+    The following symbols in the C library have been deprecated since version
+    3.16 or longer. These symbols are not implemented in or not exported from
+    the Lisp library.
+    @begin{pre}
+gtk_action_group_new
+gtk_action_group_get_action
+gtk_action_group_list_actions
+gtk_action_group_add_action
+gtk_action_group_add_action_with_accel
+gtk_action_group_remove_action
+gtk_action_group_add_actions
+gtk_action_group_add_actions_full
+gtk_action_group_add_toggle_actions
+gtk_action_group_add_toggle_actions_full
+gtk_action_group_add_radio_actions
+gtk_action_group_add_radio_actions_full
+gtk_action_group_set_translate_func
+gtk_action_group_set_translation_domain
+gtk_action_group_translate_string
+
+gtk_application_add_accelerator
+gtk_application_remove_accelerator
+
+gtk_alternative_dialog_button_order
+
+gtk_assistant_set_page_header_image
+gtk_assistant_get_page_header_image
+gtk_assistant_set_page_side_image
+gtk_assistant_get_page_side_image
+
+gtk_button_new_from_stock
+gtk_button_pressed
+gtk_button_released
+gtk_button_enter
+gtk_button_leave
+gtk_button_set_alignment
+gtk_button_get_alignment
+
+gtk_dialog_set_alternative_button_order
+gtk_dialog_set_alternative_button_order_from_array
+
+gtk_image_get_icon_set
+gtk_image_get_stock
+gtk_image_new_from_icon_set
+gtk_image_new_from_stock
+gtk_image_set_from_icon_set
+gtk_image_set_from_stock
+
+gtk_notebook_get_tab_hborder
+gtk_notebook_get_tab_vborder
+    @end{pre}
   @end{section}")
 
 ;;; --- End of file gtk.package.lisp -------------------------------------------
