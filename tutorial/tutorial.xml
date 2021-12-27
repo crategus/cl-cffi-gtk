@@ -1965,7 +1965,7 @@ int main( int argc, char *argv[] )
      available width.
     </para>
     <para>
-     Note that the interpretation of “width-chars” and “max-width-chars” has changed a bit with the
+     Note that the interpretation of "width-chars" and "max-width-chars" has changed a bit with the
      introduction of width-for-height geometry management.
     </para>
     <para>
@@ -4108,8 +4108,8 @@ int main( int argc, char *argv[] )
      Unlike inserting an image, inserting a widget is a two step process. The additional complexity is due
      to the functionality split between the &gtk-text-view; class and the &gtk-text-buffer; class. The first
      step is to create and insert a &gtk-text-child-anchor; object. A widget is held in a text buffer using a
-     &gtk-text-child-anchor; object. A child anchor is a spot in the text buffer where child widgets can be
-     anchored. A child anchor can be created and inserted into a text buffer using the function
+     &gtk-text-child-anchor; object. An anchor is a spot in the text buffer where child widgets can be
+     anchored. An anchor can be created and inserted into a text buffer using the function
      &gtk-text-buffer-create-child-anchor; with the arguments <code>buffer</code> and <code>iter</code>,
      where the argument <code>iter</code> specifies the position in the buffer, where the widget is to be
      inserted. The next step is to add a child widget to the text view, at the anchor location with the
@@ -4123,13 +4123,12 @@ int main( int argc, char *argv[] )
     </para>
 
     <para>
-     Child anchors are represented in the text buffer using the object replacement character
-     <code>0xFFFC</code>. Retrieving a widget is also a two step process. First, the child anchor has to be
-     retrieved. This can be done using the function &gtk-text-iter-child-anchor;. Next, the widget associated
-     with the child anchor has to be retrieved. This can be done using the function
-     &gtk-text-child-anchor-widgets;. The function returns a list of widgets. As mentioned earlier, if you
-     are not doing tricky things like multiple views for the same text buffer, you will find only one widget
-     in this list.
+     Anchors are represented in the text buffer using the object replacement character <code>0xFFFC</code>.
+     Retrieving a widget is also a two step process. First, the anchor has to be retrieved. This can be done
+     using the &gtk-text-iter-child-anchor; function. Next, the widget associated with the anchor has to be
+     retrieved. This can be done using the &gtk-text-child-anchor-widgets; function. The function returns a
+     list of widgets. As mentioned earlier, if you are not doing tricky things like multiple views for the
+     same text buffer, you will find only one widget in this list.
     </para>
 
     <figure id="figure-text-view-insert-widget">
@@ -4578,7 +4577,7 @@ lambda (buffer location text len)
      is a special case that is dealt with further below.
     </para>
     <para>
-     Here is an example of how to create a list store with the funcion &gtk-list-store-new;:
+     Here is an example of how to create a list store with the function &gtk-list-store-new;:
     </para>
     <programlisting>
 (let ((model (gtk-list-store-new "gchararray" "gchararray" "guint")))
@@ -5626,7 +5625,7 @@ lambda (buffer location text len)
     <para>
      One of the most basic features of a list or tree view is that rows can be selected or unselected.
      Selections are handled using the &gtk-tree-selection; object of a tree view. Every tree view
-     automatically has a &gtk-tree-selection; object associated with it, and you can get it using the funcion
+     automatically has a &gtk-tree-selection; object associated with it, and you can get it using the function
      &gtk-tree-view-selection;. Selections are handled completely on the tree view side, which means that the
      model knows nothing about which rows are selected or not. There is no particular reason why selection
      handling could not have been implemented with functions that access the tree view widget directly, but
