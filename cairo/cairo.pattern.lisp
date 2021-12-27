@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 - 2020 Dieter Kaiser
+;;; Copyright (C) 2013 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -362,7 +362,7 @@
 
 (defun cairo-pattern-add-color-stop-rgba (pattern offset red green blue alpha)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
+ "@version{*2021-12-17}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @argument[offset]{a double float with an offset in the range [0.0 .. 1.0]}
   @argument[red]{a double float red component of color}
@@ -372,22 +372,20 @@
   @begin{short}
     Adds a translucent color stop to a gradient pattern.
   @end{short}
-  The offset specifies the location along the gradient's control vector. For
-  example, a linear gradient's control vector is from (x0,y0) to (x1,y1) while
-  a radial gradient's control vector is from any point on the start circle to
-  the corresponding point on the end circle.
-
-  The color is specified in the same way as in the function
-  @fun{cairo-set-source-rgba}.
+  The offset specifies the location along the control vector of the gradient.
+  For example, a linear control vector of the gradient is from (x0,y0) to
+  (x1,y1) while a radial control vector of the gradient is from any point on the
+  start circle to the corresponding point on the end circle. The color is
+  specified in the same way as in the @fun{cairo-set-source-rgba} function.
 
   If two or more stops are specified with identical offset values, they will
   be sorted according to the order in which the stops are added, stops added
   earlier will compare less than stops added later. This can be useful for
   reliably making sharp color transitions instead of the typical blend.
   @begin[Note]{dictionary}
-    If @arg{pattern} is not a gradient pattern, e.g. a linear or radial pattern,
-    then @arg{pattern} will be put into an error status with a status of
-    @code{:pattern-type-mismatch}.
+    If the @arg{pattern} argument is not a gradient pattern, e.g. a linear or
+    radial pattern, then @arg{pattern} will be put into an error status with a
+    @code{:pattern-type-mismatch} status.
   @end{dictionary}
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-set-source-rgba}"
@@ -679,7 +677,7 @@
 
 (defun cairo-pattern-create-linear (x0 y0 x1 y1)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-25}
+ "@version{*2021-12-17}
   @argument[x0]{a double float x coordinate of the start point}
   @argument[y0]{a double float y coordinate of the start point}
   @argument[x1]{a double float x coordinate of the end point}
@@ -687,22 +685,22 @@
   @begin{return}
     The newly created @symbol{cairo-pattern-t} instance if successful, or an
     error pattern in case of no memory. The caller owns the returned instance
-    and should call the function @fun{cairo-pattern-destroy} when finished with
+    and should call the @fun{cairo-pattern-destroy} function when finished with
     it. This function will always return a valid pointer, but if an error
     occurred the pattern status will be set to an error. To inspect the status
-    of a pattern use the function @fun{cairo-pattern-status}.
+    of a pattern use the @fun{cairo-pattern-status} function.
   @end{return}
   @begin{short}
     Create a new linear gradient @symbol{cairo-pattern-t} instance along the
     line defined by (@arg{x0}, @arg{y0}) and (@arg{x1}, @arg{y1}).
   @end{short}
   Before using the gradient pattern, a number of color stops should be defined
-  using the functions @fun{cairo-pattern-add-color-stop-rgb} or
-  @fun{cairo-pattern-add-color-stop-rgba}.
+  using the @fun{cairo-pattern-add-color-stop-rgb} or
+  @fun{cairo-pattern-add-color-stop-rgba} functions.
   @begin[Note]{dictionary}
     The coordinates here are in pattern space. For a new pattern, pattern
     space is identical to user space, but the relationship between the spaces
-    can be changed with the function @fun{cairo-pattern-set-matrix}.
+    can be changed with the @fun{cairo-pattern-set-matrix} function.
   @end{dictionary}
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-pattern-destroy}
@@ -762,42 +760,42 @@
 
 (defcfun ("cairo_pattern_create_radial" %cairo-pattern-create-radial)
     (:pointer (:struct cairo-pattern-t))
-  (cx0 :double)
-  (cy0 :double)
+  (x0 :double)
+  (y0 :double)
   (radius0 :double)
-  (cx1 :double)
-  (cy1 :double)
+  (x1 :double)
+  (y1 :double)
   (radius1 :double))
 
-(defun cairo-pattern-create-radial (cx0 cy0 radius0 cx1 cy1 radius1)
+(defun cairo-pattern-create-radial (x0 y0 radius0 x1 y1 radius1)
  #+cl-cffi-gtk-documentation
- "@version{2020-12-12}
-  @argument[cx0]{a double float x coordinate for the center of the start circle}
-  @argument[cy0]{a double float y coordinate for the center of the start circle}
+ "@version{*2021-12-17}
+  @argument[x0]{a double float x coordinate for the center of the start circle}
+  @argument[y0]{a double float y coordinate for the center of the start circle}
   @argument[radius0]{a double float  with the radius of the start circle}
-  @argument[cx1]{a double float x coordinate for the center of the end circle}
-  @argument[cy1]{a double float y coordinate for the center of the end circle}
+  @argument[x1]{a double float x coordinate for the center of the end circle}
+  @argument[y1]{a double float y coordinate for the center of the end circle}
   @argument[radius1]{a double float radius of the end circle}
   @begin{return}
     The newly created @symbol{cairo-pattern-t} instance if successful, or an
     error pattern in case of no memory. The caller owns the returned object and
-    should call the function @fun{cairo-pattern-destroy} when finished with it.
+    should call the @fun{cairo-pattern-destroy} function when finished with it.
     This function will always return a valid pointer, but if an error occurred
     the pattern status will be set to an error. To inspect the status of a
-    pattern use the function @fun{cairo-pattern-status}.
+    pattern use the @fun{cairo-pattern-status} function.
   @end{return}
   @begin{short}
     Creates a new radial gradient @symbol{cairo-pattern-t} instance between the
-    two circles defined by (@arg{cx0}, @arg{cy0}, @arg{radius0}) and (@arg{cx1},
-    @arg{cy1}, @arg{radius1}).
+    two circles defined by (@arg{x0}, @arg{y0}, @arg{radius0}) and (@arg{x1},
+    @arg{y1}, @arg{radius1}).
   @end{short}
   Before using the gradient pattern, a number of color stops should be defined
-  using the functions @fun{cairo-pattern-add-color-stop-rgb} or
-  @fun{cairo-pattern-add-color-stop-rgba}.
+  using the @fun{cairo-pattern-add-color-stop-rgb} or
+  @fun{cairo-pattern-add-color-stop-rgba} functions.
   @begin[Note]{dictionary}
     The coordinates here are in pattern space. For a new pattern, pattern
     space is identical to user space, but the relationship between the spaces
-    can be changed with the function @fun{cairo-pattern-set-matrix}.
+    can be changed with the @fun{cairo-pattern-set-matrix} function.
   @end{dictionary}
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-pattern-destroy}
@@ -805,11 +803,11 @@
   @see-function{cairo-pattern-add-color-stop-rgb}
   @see-function{cairo-pattern-add-color-stop-rgba}
   @see-function{cairo-pattern-set-matrix}"
-  (%cairo-pattern-create-radial (coerce cx0 'double-float)
-                                (coerce cy0 'double-float)
+  (%cairo-pattern-create-radial (coerce x0 'double-float)
+                                (coerce y0 'double-float)
                                 (coerce radius0 'double-float)
-                                (coerce cx1 'double-float)
-                                (coerce cy1 'double-float)
+                                (coerce x1 'double-float)
+                                (coerce y1 'double-float)
                                 (coerce radius1 'double-float)))
 
 (export 'cairo-pattern-create-radial)
@@ -1527,13 +1525,13 @@ cairo_mesh_pattern_end_patch (pattern)
 
 (defcfun ("cairo_pattern_destroy" cairo-pattern-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-13}
+ "@version{*2020-12-17}
   @argument[pattern]{a @symbol{cairo-pattern-t} instance}
   @begin{short}
     Decreases the reference count on @arg{pattern} by one.
   @end{short}
   If the result is zero, then @arg{pattern} and all associated resources are
-  freed. See the function @fun{cairo-pattern-reference}.
+  freed. See the @fun{cairo-pattern-reference} function.
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-pattern-reference}"
   (pattern (:pointer (:struct cairo-pattern-t))))

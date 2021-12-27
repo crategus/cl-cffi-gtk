@@ -975,7 +975,7 @@
 
 (defun cairo-set-source-rgba (cr red green blue alpha)
  #+cl-cffi-gtk-documentation
- "@version{2021-12-12}
+ "@version{*2021-12-17}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[red]{a double float red component of the color}
   @argument[green]{a double float green component of the color}
@@ -985,10 +985,9 @@
     Sets the source pattern within @arg{cr} to a translucent color.
   @end{short}
   This color will then be used for any subsequent drawing operation until a new
-  source pattern is set.
-
-  The color and alpha components are floating point numbers in the range 0.0 to
-  1.0. If the values passed in are outside that range, they will be clamped.
+  source pattern is set. The color and alpha components are floating point
+  numbers in the range 0.0 to 1.0. If the values passed in are outside that
+  range, they will be clamped.
 
   The default source pattern is opaque black, that is, it is equivalent to
   @begin{pre}
@@ -1015,7 +1014,7 @@
 
 (defcfun ("cairo_set_source" cairo-set-source) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-12-12}
+ "@version{*2021-12-17}
   @argument[cr]{a @symbol{cairo-t} context}
   @argument[source]{a @symbol{cairo-pattern-t} instance to be used as the
     source for subsequent drawing operations}
