@@ -37,7 +37,6 @@
 (in-package :atdoc-gtk)
 
 (unexport 'glib:allocate-stable-pointer :glib)
-(unexport 'glib:stable-pointer-destroy-notify-cb :glib)
 (unexport 'glib:stable-pointer-destroy-notify :glib)
 (unexport 'glib:get-stable-pointer-value :glib)
 (unexport 'glib:free-stable-pointer :glib)
