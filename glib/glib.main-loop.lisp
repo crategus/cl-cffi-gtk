@@ -3078,8 +3078,8 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
 
 (defcfun ("g_source_remove" g-source-remove) :boolean
  #+cl-cffi-gtk-documentation
- "@version{*2021-12-10}
-  @argument[source-]{the unsigned integer ID of the source to remove}
+ "@version{*2021-12-15}
+  @argument[source]{an unsigned integer ID for the source to remove}
   @return{@em{True} if the source was found and removed.}
   @begin{short}
     Removes the source with the given ID from the default main context.
@@ -3092,6 +3092,9 @@ if (g_atomic_int_dec_and_test (&tasks_remaining))
   non-default main context.
   @see-type{g-source}
   @see-function{g-source-id}
+  @see-function{g-source-attach}
+  @see-function{g-idle-add}
+  @see-function{g-timeout-add}
   @see-function{g-source-destroy}"
   (source :uint))
 

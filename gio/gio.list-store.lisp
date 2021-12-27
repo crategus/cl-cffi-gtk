@@ -290,11 +290,11 @@
 ;;;                      guint n_additions);
 ;;;
 ;;; Changes store by removing n_removals items and adding n_additions items to
-;;; it. additions must contain n_additions items of type “item-type”. NULL is
+;;; it. additions must contain n_additions items of type "item-type". NULL is
 ;;; not permitted.
 ;;;
 ;;; This function is more efficient than g_list_store_insert() and
-;;; g_list_store_remove(), because it only emits “items-changed” once for the
+;;; g_list_store_remove(), because it only emits "items-changed" once for the
 ;;; change.
 ;;;
 ;;; This function takes a ref on each item in additions .

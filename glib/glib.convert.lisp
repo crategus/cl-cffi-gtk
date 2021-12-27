@@ -104,7 +104,7 @@
 ;;; Glib provides the functions g_filename_to_utf8() and g_filename_from_utf8()
 ;;; to perform the necessary conversions. These functions convert file names
 ;;; from the encoding specified in G_FILENAME_ENCODING to UTF-8 and vice-versa.
-;;; Figure 2, “Conversion between File Name Encodings” illustrates how these
+;;; Figure 2, "Conversion between File Name Encodings" illustrates how these
 ;;; functions are used to convert between UTF-8 and the encoding for file names
 ;;; in the file system.
 ;;;

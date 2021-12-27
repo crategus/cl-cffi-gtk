@@ -206,7 +206,7 @@
 
 (defun g-themed-icon-new (name)
  #+cl-cffi-gtk-documentation
- "@version{2021-4-21}
+ "@version{*2021-12-17}
   @argument[name]{a string containing an icon name}
   @return{A new @class{g-themed-icon} object.}
   @begin{short}
@@ -250,7 +250,7 @@
 
 (defun g-themed-icon-new-with-default-fallbacks (name)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-23}
+ "@version{*2021-12-22}
   @argument[name]{a string containing an icon name}
   @return{A new @class{g-themed-icon} object.}
   @begin{short}

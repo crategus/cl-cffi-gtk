@@ -2498,132 +2498,118 @@
 ;;;     the data to pass to callback function.
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_set_display_name_finish ()
-;;;GFile *
-;;;g_file_set_display_name_finish (GFile *file,
-;;;                                GAsyncResult *res,
-;;;                                GError **error);
-;;;Finishes setting a display name started with g_file_set_display_name_async().
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_display_name_finish ()
+;;;
+;;; GFile *
+;;; g_file_set_display_name_finish (GFile *file,
+;;;                                 GAsyncResult *res,
+;;;                                 GError **error);
+;;;
+;;; Finishes setting a display name started with
+;;; g_file_set_display_name_async().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; res :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     a GFile or NULL on error. Free the returned object with
+;;;     g_object_unref().
+;;; ----------------------------------------------------------------------------
 
-;;;Parameters
-;;;file
+;;; ----------------------------------------------------------------------------
+;;; g_file_delete ()
+;;;
+;;; gboolean
+;;; g_file_delete (GFile *file,
+;;;                GCancellable *cancellable,
+;;;                GError **error);
+;;;
+;;; Deletes a file. If the file is a directory, it will only be deleted if it is
+;;; empty. This has the same semantics as g_unlink().
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; Virtual: delete_file
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the file was deleted. FALSE otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;input GFile
-
-
-;;;res
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;a GFile or NULL on error. Free the returned object with g_object_unref().
-
-;;;[transfer full]
-
-;;;g_file_delete ()
-;;;gboolean
-;;;g_file_delete (GFile *file,
-;;;               GCancellable *cancellable,
-;;;               GError **error);
-;;;Deletes a file. If the file is a directory, it will only be deleted if it is empty. This has the same semantics as g_unlink().
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Virtual: delete_file
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the file was deleted. FALSE otherwise.
-
-;;;g_file_delete_async ()
-;;;void
-;;;g_file_delete_async (GFile *file,
-;;;                     int io_priority,
-;;;                     GCancellable *cancellable,
-;;;                     GAsyncReadyCallback callback,
-;;;                     gpointer user_data);
-;;;Asynchronously delete a file. If the file is a directory, it will only be deleted if it is empty. This has the same semantics as g_unlink().
-
-;;;Virtual: delete_file_async
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied
-
-
-;;;user_data
-
-;;;the data to pass to callback function
-
-
+;;; ----------------------------------------------------------------------------
+;;; g_file_delete_async ()
+;;;
+;;; void
+;;; g_file_delete_async (GFile *file,
+;;;                      int io_priority,
+;;;                      GCancellable *cancellable,
+;;;                      GAsyncReadyCallback callback,
+;;;                      gpointer user_data);
+;;;
+;;; Asynchronously delete a file. If the file is a directory, it will only be
+;;; deleted if it is empty. This has the same semantics as g_unlink().
+;;;
+;;; Virtual: delete_file_async
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied
+;;;
+;;; user_data :
+;;;     the data to pass to callback function
+;;;
 ;;; Since 2.34
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_delete_finish ()
-;;;gboolean
-;;;g_file_delete_finish (GFile *file,
-;;;                      GAsyncResult *result,
-;;;                      GError **error);
-;;;Finishes deleting a file started with g_file_delete_async().
-
-;;;Virtual: delete_file_finish
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the file was deleted. FALSE otherwise.
-
+;;; ----------------------------------------------------------------------------
+;;; g_file_delete_finish ()
+;;;
+;;; gboolean
+;;; g_file_delete_finish (GFile *file,
+;;;                       GAsyncResult *result,
+;;;                       GError **error);
+;;;
+;;; Finishes deleting a file started with g_file_delete_async().
+;;;
+;;; Virtual: delete_file_finish
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the file was deleted. FALSE otherwise.
+;;;
 ;;; Since 2.34
 ;;; ----------------------------------------------------------------------------
 
@@ -2662,303 +2648,295 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;;g_file_trash_async ()
-;;;void
-;;;g_file_trash_async (GFile *file,
+;;; g_file_trash_async ()
+;;;
+;;; void
+;;; g_file_trash_async (GFile *file,
+;;;                     int io_priority,
+;;;                     GCancellable *cancellable,
+;;;                     GAsyncReadyCallback callback,
+;;;                     gpointer user_data);
+;;;
+;;; Asynchronously sends file to the Trash location, if possible.
+;;;
+;;; Virtual: trash_async
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied
+;;;
+;;; user_data :
+;;;     the data to pass to callback function
+;;;
+;;; Since 2.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_file_trash_finish ()
+;;;
+;;; gboolean
+;;; g_file_trash_finish (GFile *file,
+;;;                      GAsyncResult *result,
+;;;                      GError **error);
+;;;
+;;; Finishes an asynchronous file trashing operation, started with
+;;; g_file_trash_async().
+;;;
+;;; Virtual: trash_finish
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE on successful trash, FALSE otherwise.
+;;;
+;;; Since 2.38
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_file_copy ()
+;;;
+;;; gboolean
+;;; g_file_copy (GFile *source,
+;;;              GFile *destination,
+;;;              GFileCopyFlags flags,
+;;;              GCancellable *cancellable,
+;;;              GFileProgressCallback progress_callback,
+;;;              gpointer progress_callback_data,
+;;;              GError **error);
+;;;
+;;; Copies the file source to the location specified by destination . Can not
+;;; handle recursive copies of directories.
+;;;
+;;; If the flag G_FILE_COPY_OVERWRITE is specified an already existing
+;;; destination file is overwritten.
+;;;
+;;; If the flag G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks will be
+;;; copied as symlinks, otherwise the target of the source symlink will be
+;;; copied.
+;;;
+;;; If the flag G_FILE_COPY_ALL_METADATA is specified then all the metadata that
+;;; is possible to copy is copied, not just the default subset (which, for
+;;; instance, does not include the owner, see GFileInfo).
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; If progress_callback is not NULL, then the operation can be monitored by
+;;; setting this to a GFileProgressCallback function. progress_callback_data
+;;; will be passed to this function. It is guaranteed that this callback will be
+;;; called after all data has been transferred with the total number of bytes
+;;; copied during the operation.
+;;;
+;;; If the source file does not exist, then the G_IO_ERROR_NOT_FOUND error is
+;;; returned, independent on the status of the destination .
+;;;
+;;; If G_FILE_COPY_OVERWRITE is not specified and the target exists, then the
+;;; error G_IO_ERROR_EXISTS is returned.
+;;;
+;;; If trying to overwrite a file over a directory, the G_IO_ERROR_IS_DIRECTORY
+;;; error is returned. If trying to overwrite a directory with a directory the
+;;; G_IO_ERROR_WOULD_MERGE error is returned.
+;;;
+;;; If the source is a directory and the target does not exist, or
+;;; G_FILE_COPY_OVERWRITE is specified and the target is a file, then the
+;;; G_IO_ERROR_WOULD_RECURSE error is returned.
+;;;
+;;; If you are interested in copying the GFile object itself (not the on-disk
+;;; file), see g_file_dup().
+;;;
+;;; source :
+;;;     input GFile
+;;;
+;;; destination :
+;;;     destination GFile
+;;;
+;;; flags :
+;;;     set of GFileCopyFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; progress_callback :
+;;;     function to callback with progress information, or NULL if progress
+;;;     information is not needed.
+;;;
+;;; progress_callback_data :
+;;;     user data to pass to progress_callback .
+;;;
+;;; error :
+;;;     GError to set on error, or NULL
+;;;
+;;; Returns :
+;;;     TRUE on success, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_file_copy_async ()
+;;;
+;;; void
+;;; g_file_copy_async (GFile *source,
+;;;                    GFile *destination,
+;;;                    GFileCopyFlags flags,
 ;;;                    int io_priority,
 ;;;                    GCancellable *cancellable,
+;;;                    GFileProgressCallback progress_callback,
+;;;                    gpointer progress_callback_data,
 ;;;                    GAsyncReadyCallback callback,
 ;;;                    gpointer user_data);
-;;;Asynchronously sends file to the Trash location, if possible.
-
-;;;Virtual: trash_async
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied
-
-
-;;;user_data
-
-;;;the data to pass to callback function
-
-
-;;; Since 2.38
+;;;
+;;; Copies the file source to the location specified by destination
+;;; asynchronously. For details of the behaviour, see g_file_copy().
+;;;
+;;; If progress_callback is not NULL, then that function that will be called
+;;; just like in g_file_copy(). The callback will run in the default main
+;;; context of the thread calling g_file_copy_async() — the same context as
+;;; callback is run in.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_copy_finish() to get the result of the operation.
+;;;
+;;; source :
+;;;     input GFile
+;;;
+;;; destination :
+;;;     destination GFile
+;;;
+;;; flags :
+;;;     set of GFileCopyFlags
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; progress_callback :
+;;;     function to callback with progress information, or NULL if progress
+;;;     information is not needed.
+;;;
+;;; progress_callback_data :
+;;;     user data to pass to progress_callback .
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;;g_file_trash_finish ()
-;;;gboolean
-;;;g_file_trash_finish (GFile *file,
-;;;                     GAsyncResult *result,
+;;; g_file_copy_finish ()
+;;;
+;;; gboolean
+;;; g_file_copy_finish (GFile *file,
+;;;                     GAsyncResult *res,
 ;;;                     GError **error);
-;;;Finishes an asynchronous file trashing operation, started with g_file_trash_async().
-
-;;;Virtual: trash_finish
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE on successful trash, FALSE otherwise.
-
-;;; Since 2.38
+;;;
+;;; Finishes copying the file started with g_file_copy_async().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; res :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     a TRUE on success, FALSE on error.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;;g_file_copy ()
-;;;gboolean
-;;;g_file_copy (GFile *source,
-;;;             GFile *destination,
-;;;             GFileCopyFlags flags,
-;;;             GCancellable *cancellable,
-;;;             GFileProgressCallback progress_callback,
-;;;             gpointer progress_callback_data,
-;;;             GError **error);
-;;;Copies the file source to the location specified by destination . Can not handle recursive copies of directories.
-
-;;;If the flag G_FILE_COPY_OVERWRITE is specified an already existing destination file is overwritten.
-
-;;;If the flag G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks will be copied as symlinks, otherwise the target of the source symlink will be copied.
-
-;;;If the flag G_FILE_COPY_ALL_METADATA is specified then all the metadata that is possible to copy is copied, not just the default subset (which, for instance, does not include the owner, see GFileInfo).
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;If progress_callback is not NULL, then the operation can be monitored by setting this to a GFileProgressCallback function. progress_callback_data will be passed to this function. It is guaranteed that this callback will be called after all data has been transferred with the total number of bytes copied during the operation.
-
-;;;If the source file does not exist, then the G_IO_ERROR_NOT_FOUND error is returned, independent on the status of the destination .
-
-;;;If G_FILE_COPY_OVERWRITE is not specified and the target exists, then the error G_IO_ERROR_EXISTS is returned.
-
-;;;If trying to overwrite a file over a directory, the G_IO_ERROR_IS_DIRECTORY error is returned. If trying to overwrite a directory with a directory the G_IO_ERROR_WOULD_MERGE error is returned.
-
-;;;If the source is a directory and the target does not exist, or G_FILE_COPY_OVERWRITE is specified and the target is a file, then the G_IO_ERROR_WOULD_RECURSE error is returned.
-
-;;;If you are interested in copying the GFile object itself (not the on-disk file), see g_file_dup().
-
-;;;Parameters
-;;;source
-
-;;;input GFile
-
-
-;;;destination
-
-;;;destination GFile
-
-
-;;;flags
-
-;;;set of GFileCopyFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;progress_callback
-
-;;;function to callback with progress information, or NULL if progress information is not needed.
-
-;;;[nullable][scope call]
-;;;progress_callback_data
-
-;;;user data to pass to progress_callback .
-
-;;;[closure]
-;;;error
-
-;;;GError to set on error, or NULL
-
-
-;;;Returns
-;;;TRUE on success, FALSE otherwise.
-
-;;;g_file_copy_async ()
-;;;void
-;;;g_file_copy_async (GFile *source,
-;;;                   GFile *destination,
-;;;                   GFileCopyFlags flags,
-;;;                   int io_priority,
-;;;                   GCancellable *cancellable,
-;;;                   GFileProgressCallback progress_callback,
-;;;                   gpointer progress_callback_data,
-;;;                   GAsyncReadyCallback callback,
-;;;                   gpointer user_data);
-;;;Copies the file source to the location specified by destination asynchronously. For details of the behaviour, see g_file_copy().
-
-;;;If progress_callback is not NULL, then that function that will be called just like in g_file_copy(). The callback will run in the default main context of the thread calling g_file_copy_async() — the same context as callback is run in.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_copy_finish() to get the result of the operation.
-
-;;;Parameters
-;;;source
-
-;;;input GFile
-
-
-;;;destination
-
-;;;destination GFile
-
-
-;;;flags
-
-;;;set of GFileCopyFlags
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;progress_callback
-
-;;;function to callback with progress information, or NULL if progress information is not needed.
-
-;;;[nullable][scope notified]
-;;;progress_callback_data
-
-;;;user data to pass to progress_callback .
-
-;;;[closure progress_callback][nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied.
-
-;;;[scope async]
-;;;user_data
-
-;;;the data to pass to callback function.
-
-;;;[closure callback]
-;;;g_file_copy_finish ()
-;;;gboolean
-;;;g_file_copy_finish (GFile *file,
-;;;                    GAsyncResult *res,
-;;;                    GError **error);
-;;;Finishes copying the file started with g_file_copy_async().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;res
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;a TRUE on success, FALSE on error.
-
-;;;g_file_move ()
-;;;gboolean
-;;;g_file_move (GFile *source,
-;;;             GFile *destination,
-;;;             GFileCopyFlags flags,
-;;;             GCancellable *cancellable,
-;;;             GFileProgressCallback progress_callback,
-;;;             gpointer progress_callback_data,
-;;;             GError **error);
-;;;Tries to move the file or directory source to the location specified by destination . If native move operations are supported then this is used, otherwise a copy + delete fallback is used. The native implementation may support moving directories (for instance on moves inside the same filesystem), but the fallback code does not.
-
-;;;If the flag G_FILE_COPY_OVERWRITE is specified an already existing destination file is overwritten.
-
-;;;If the flag G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks will be copied as symlinks, otherwise the target of the source symlink will be copied.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;If progress_callback is not NULL, then the operation can be monitored by setting this to a GFileProgressCallback function. progress_callback_data will be passed to this function. It is guaranteed that this callback will be called after all data has been transferred with the total number of bytes copied during the operation.
-
-;;;If the source file does not exist, then the G_IO_ERROR_NOT_FOUND error is returned, independent on the status of the destination .
-
-;;;If G_FILE_COPY_OVERWRITE is not specified and the target exists, then the error G_IO_ERROR_EXISTS is returned.
-
-;;;If trying to overwrite a file over a directory, the G_IO_ERROR_IS_DIRECTORY error is returned. If trying to overwrite a directory with a directory the G_IO_ERROR_WOULD_MERGE error is returned.
-
-;;;If the source is a directory and the target does not exist, or G_FILE_COPY_OVERWRITE is specified and the target is a file, then the G_IO_ERROR_WOULD_RECURSE error may be returned (if the native move operation isn't available).
-
-;;;Parameters
-;;;source
-
-;;;GFile pointing to the source location
-
-
-;;;destination
-
-;;;GFile pointing to the destination location
-
-
-;;;flags
-
-;;;set of GFileCopyFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;progress_callback
-
-;;;GFileProgressCallback function for updates.
-
-;;;[nullable][scope call]
-;;;progress_callback_data
-
-;;;gpointer to user data for the callback function.
-
-;;;[closure]
-;;;error
-
-;;;GError for returning error conditions, or NULL
-
-
-;;;Returns
-;;;TRUE on successful move, FALSE otherwise.
+;;; g_file_move ()
+;;;
+;;; gboolean
+;;; g_file_move (GFile *source,
+;;;              GFile *destination,
+;;;              GFileCopyFlags flags,
+;;;              GCancellable *cancellable,
+;;;              GFileProgressCallback progress_callback,
+;;;              gpointer progress_callback_data,
+;;;              GError **error);
+;;;
+;;; Tries to move the file or directory source to the location specified by
+;;; destination . If native move operations are supported then this is used,
+;;; otherwise a copy + delete fallback is used. The native implementation may
+;;; support moving directories (for instance on moves inside the same
+;;; filesystem), but the fallback code does not.
+;;;
+;;; If the flag G_FILE_COPY_OVERWRITE is specified an already existing
+;;; destination file is overwritten.
+;;;
+;;; If the flag G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks will
+;;; be copied as symlinks, otherwise the target of the source symlink will be
+;;; copied.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; If progress_callback is not NULL, then the operation can be monitored by
+;;; setting this to a GFileProgressCallback function. progress_callback_data
+;;; will be passed to this function. It is guaranteed that this callback will
+;;; be called after all data has been transferred with the total number of
+;;; bytes copied during the operation.
+;;;
+;;; If the source file does not exist, then the G_IO_ERROR_NOT_FOUND error is
+;;; returned, independent on the status of the destination .
+;;;
+;;; If G_FILE_COPY_OVERWRITE is not specified and the target exists, then the
+;;; error G_IO_ERROR_EXISTS is returned.
+;;;
+;;; If trying to overwrite a file over a directory, the G_IO_ERROR_IS_DIRECTORY
+;;; error is returned. If trying to overwrite a directory with a directory the
+;;; G_IO_ERROR_WOULD_MERGE error is returned.
+;;;
+;;; If the source is a directory and the target does not exist, or
+;;; G_FILE_COPY_OVERWRITE is specified and the target is a file, then the
+;;; G_IO_ERROR_WOULD_RECURSE error may be returned (if the native move operation
+;;; isn't available).
+;;;
+;;; source :
+;;;     GFile pointing to the source location
+;;;
+;;; destination :
+;;;     GFile pointing to the destination location
+;;;
+;;; flags :
+;;;     set of GFileCopyFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; progress_callback :
+;;;     GFileProgressCallback function for updates.
+;;;
+;;; progress_callback_data :
+;;;     gpointer to user data for the callback function.
+;;;
+;;; error :
+;;;     GError for returning error conditions, or NULL
+;;;
+;;; Returns :
+;;;     TRUE on successful move, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_make_directory ()
@@ -2996,143 +2974,132 @@
 ;;;     TRUE on successful creation, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_make_directory_async ()
-;;;void
-;;;g_file_make_directory_async (GFile *file,
-;;;                             int io_priority,
-;;;                             GCancellable *cancellable,
-;;;                             GAsyncReadyCallback callback,
-;;;                             gpointer user_data);
-;;;Asynchronously creates a directory.
-
-;;;Virtual: make_directory_async
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied
-
-
-;;;user_data
-
-;;;the data to pass to callback function
-
-
+;;; ----------------------------------------------------------------------------
+;;; g_file_make_directory_async ()
+;;;
+;;; void
+;;; g_file_make_directory_async (GFile *file,
+;;;                              int io_priority,
+;;;                              GCancellable *cancellable,
+;;;                              GAsyncReadyCallback callback,
+;;;                              gpointer user_data);
+;;;
+;;; Asynchronously creates a directory.
+;;;
+;;; Virtual: make_directory_async
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied
+;;;
+;;; user_data :
+;;;     the data to pass to callback function
+;;;
 ;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_make_directory_finish ()
-;;;gboolean
-;;;g_file_make_directory_finish (GFile *file,
-;;;                              GAsyncResult *result,
-;;;                              GError **error);
-;;;Finishes an asynchronous directory creation, started with g_file_make_directory_async().
-
-;;;Virtual: make_directory_finish
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE on successful directory creation, FALSE otherwise.
-
+;;; ----------------------------------------------------------------------------
+;;; g_file_make_directory_finish ()
+;;;
+;;; gboolean
+;;; g_file_make_directory_finish (GFile *file,
+;;;                               GAsyncResult *result,
+;;;                               GError **error);
+;;;
+;;; Finishes an asynchronous directory creation, started with
+;;; g_file_make_directory_async().
+;;;
+;;; Virtual: make_directory_finish
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE on successful directory creation, FALSE otherwise.
+;;;
 ;;; Since 2.38
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_make_directory_with_parents ()
-;;;gboolean
-;;;g_file_make_directory_with_parents (GFile *file,
-;;;                                    GCancellable *cancellable,
-;;;                                    GError **error);
-;;;Creates a directory and any parent directories that may not exist similar to 'mkdir -p'. If the file system does not support creating directories, this function will fail, setting error to G_IO_ERROR_NOT_SUPPORTED. If the directory itself already exists, this function will fail setting error to G_IO_ERROR_EXISTS, unlike the similar g_mkdir_with_parents().
-
-;;;For a local GFile the newly created directories will have the default (current) ownership and permissions of the current process.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if all directories have been successfully created, FALSE otherwise.
-
+;;; ----------------------------------------------------------------------------
+;;; g_file_make_directory_with_parents ()
+;;;
+;;; gboolean
+;;; g_file_make_directory_with_parents (GFile *file,
+;;;                                     GCancellable *cancellable,
+;;;                                     GError **error);
+;;;
+;;; Creates a directory and any parent directories that may not exist similar
+;;; to 'mkdir -p'. If the file system does not support creating directories,
+;;; this function will fail, setting error to G_IO_ERROR_NOT_SUPPORTED. If the
+;;; directory itself already exists, this function will fail setting error to
+;;; G_IO_ERROR_EXISTS, unlike the similar g_mkdir_with_parents().
+;;;
+;;; For a local GFile the newly created directories will have the default
+;;; (current) ownership and permissions of the current process.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if all directories have been successfully created, FALSE otherwise.
+;;;
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_make_symbolic_link ()
-;;;gboolean
-;;;g_file_make_symbolic_link (GFile *file,
-;;;                           const char *symlink_value,
-;;;                           GCancellable *cancellable,
-;;;                           GError **error);
-;;;Creates a symbolic link named file which contains the string symlink_value .
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;a GFile with the name of the symlink to create
-
-
-;;;symlink_value
-
-;;;a string with the path for the target of the new symlink.
-
-;;;[type filename]
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError
-
-
-;;;Returns
-;;;TRUE on the creation of a new symlink, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
+;;; g_file_make_symbolic_link ()
+;;;
+;;; gboolean
+;;; g_file_make_symbolic_link (GFile *file,
+;;;                            const char *symlink_value,
+;;;                            GCancellable *cancellable,
+;;;                            GError **error);
+;;;
+;;; Creates a symbolic link named file which contains the string symlink_value .
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     a GFile with the name of the symlink to create
+;;;
+;;; symlink_value :
+;;;     a string with the path for the target of the new symlink.
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError
+;;;
+;;; Returns :
+;;;     TRUE on the creation of a new symlink, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_query_settable_attributes ()
@@ -3167,1161 +3134,1050 @@
 ;;;     are done with it, release it with g_file_attribute_info_list_unref()
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_query_writable_namespaces ()
-;;;GFileAttributeInfoList *
-;;;g_file_query_writable_namespaces (GFile *file,
-;;;                                  GCancellable *cancellable,
-;;;                                  GError **error);
-;;;Obtain the list of attribute namespaces where new attributes can be created by a user. An example of this is extended attributes (in the "xattr" namespace).
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;a GFileAttributeInfoList describing the writable namespaces. When you are done with it, release it with g_file_attribute_info_list_unref()
-
-;;;g_file_set_attribute ()
-;;;gboolean
-;;;g_file_set_attribute (GFile *file,
-;;;                      const char *attribute,
-;;;                      GFileAttributeType type,
-;;;                      gpointer value_p,
-;;;                      GFileQueryInfoFlags flags,
-;;;                      GCancellable *cancellable,
-;;;                      GError **error);
-;;;Sets an attribute in the file with attribute name attribute to value .
-
-;;;Some attributes can be unset by setting type to G_FILE_ATTRIBUTE_TYPE_INVALID and value_p to NULL.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;attribute
-
-;;;a string containing the attribute's name
-
-
-;;;type
-
-;;;The type of the attribute
-
-
-;;;value_p
-
-;;;a pointer to the value (or the pointer itself if the type is a pointer type).
-
-;;;[nullable]
-;;;flags
-
-;;;a set of GFileQueryInfoFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the attribute was set, FALSE otherwise.
-
-;;;g_file_set_attributes_from_info ()
-;;;gboolean
-;;;g_file_set_attributes_from_info (GFile *file,
-;;;                                 GFileInfo *info,
-;;;                                 GFileQueryInfoFlags flags,
-;;;                                 GCancellable *cancellable,
-;;;                                 GError **error);
-;;;Tries to set all attributes in the GFileInfo on the target values, not stopping on the first error.
-
-;;;If there is any error during this operation then error will be set to the first error. Error on particular fields are flagged by setting the "status" field in the attribute value to G_FILE_ATTRIBUTE_STATUS_ERROR_SETTING, which means you can also detect further errors.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;info
-
-;;;a GFileInfo
-
-
-;;;flags
-
-;;;GFileQueryInfoFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;FALSE if there was any error, TRUE otherwise.
-
-;;;g_file_set_attributes_async ()
-;;;void
-;;;g_file_set_attributes_async (GFile *file,
-;;;                             GFileInfo *info,
-;;;                             GFileQueryInfoFlags flags,
-;;;                             int io_priority,
-;;;                             GCancellable *cancellable,
-;;;                             GAsyncReadyCallback callback,
-;;;                             gpointer user_data);
-;;;Asynchronously sets the attributes of file with info .
-
-;;;For more details, see g_file_set_attributes_from_info(), which is the synchronous version of this call.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_set_attributes_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;info
-
-;;;a GFileInfo
-
-
-;;;flags
-
-;;;a GFileQueryInfoFlags
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback.
-
-;;;[scope async]
-;;;user_data
-
-;;;a gpointer.
-
-;;;[closure]
-;;;g_file_set_attributes_finish ()
-;;;gboolean
-;;;g_file_set_attributes_finish (GFile *file,
-;;;                              GAsyncResult *result,
-;;;                              GFileInfo **info,
-;;;                              GError **error);
-;;;Finishes setting an attribute started in g_file_set_attributes_async().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;info
-
-;;;a GFileInfo.
-
-;;;[out][transfer full]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the attributes were set correctly, FALSE otherwise.
-
-;;;g_file_set_attribute_string ()
-;;;gboolean
-;;;g_file_set_attribute_string (GFile *file,
-;;;                             const char *attribute,
-;;;                             const char *value,
-;;;                             GFileQueryInfoFlags flags,
-;;;                             GCancellable *cancellable,
-;;;                             GError **error);
-;;;Sets attribute of type G_FILE_ATTRIBUTE_TYPE_STRING to value . If attribute is of a different type, this operation will fail.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;attribute
-
-;;;a string containing the attribute's name
-
-
-;;;value
-
-;;;a string containing the attribute's value
-
-
-;;;flags
-
-;;;GFileQueryInfoFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the attribute was successfully set, FALSE otherwise.
-
-;;;g_file_set_attribute_byte_string ()
-;;;gboolean
-;;;g_file_set_attribute_byte_string (GFile *file,
-;;;                                  const char *attribute,
-;;;                                  const char *value,
+;;; ----------------------------------------------------------------------------
+;;; g_file_query_writable_namespaces ()
+;;;
+;;; GFileAttributeInfoList *
+;;; g_file_query_writable_namespaces (GFile *file,
+;;;                                   GCancellable *cancellable,
+;;;                                   GError **error);
+;;;
+;;; Obtain the list of attribute namespaces where new attributes can be created
+;;; by a user. An example of this is extended attributes (in the "xattr"
+;;; namespace).
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     a GFileAttributeInfoList describing the writable namespaces. When you
+;;;     are done with it, release it with g_file_attribute_info_list_unref()
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attribute ()
+;;;
+;;; gboolean
+;;; g_file_set_attribute (GFile *file,
+;;;                       const char *attribute,
+;;;                       GFileAttributeType type,
+;;;                       gpointer value_p,
+;;;                       GFileQueryInfoFlags flags,
+;;;                       GCancellable *cancellable,
+;;;                       GError **error);
+;;;
+;;; Sets an attribute in the file with attribute name attribute to value .
+;;;
+;;; Some attributes can be unset by setting type to
+;;; G_FILE_ATTRIBUTE_TYPE_INVALID and value_p to NULL.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; attribute :
+;;;     a string containing the attribute's name
+;;;
+;;; type :
+;;;     The type of the attribute
+;;;
+;;; value_p :
+;;;     a pointer to the value (or the pointer itself if the type is a pointer
+;;;     type).
+;;;
+;;; flags :
+;;;     a set of GFileQueryInfoFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the attribute was set, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attributes_from_info ()
+;;;
+;;; gboolean
+;;; g_file_set_attributes_from_info (GFile *file,
+;;;                                  GFileInfo *info,
 ;;;                                  GFileQueryInfoFlags flags,
 ;;;                                  GCancellable *cancellable,
 ;;;                                  GError **error);
-;;;Sets attribute of type G_FILE_ATTRIBUTE_TYPE_BYTE_STRING to value . If attribute is of a different type, this operation will fail, returning FALSE.
+;;;
+;;; Tries to set all attributes in the GFileInfo on the target values, not
+;;; stopping on the first error.
+;;;
+;;; If there is any error during this operation then error will be set to the
+;;; first error. Error on particular fields are flagged by setting the "status"
+;;; field in the attribute value to G_FILE_ATTRIBUTE_STATUS_ERROR_SETTING, which
+;;; means you can also detect further errors.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; info :
+;;;     a GFileInfo
+;;;
+;;; flags :
+;;;     GFileQueryInfoFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     FALSE if there was any error, TRUE otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attributes_async ()
+;;;
+;;; void
+;;; g_file_set_attributes_async (GFile *file,
+;;;                              GFileInfo *info,
+;;;                              GFileQueryInfoFlags flags,
+;;;                              int io_priority,
+;;;                              GCancellable *cancellable,
+;;;                              GAsyncReadyCallback callback,
+;;;                              gpointer user_data);
+;;;
+;;; Asynchronously sets the attributes of file with info .
+;;;
+;;; For more details, see g_file_set_attributes_from_info(), which is the
+;;; synchronous version of this call.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_set_attributes_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; info :
+;;;     a GFileInfo
+;;;
+;;; flags :
+;;;     a GFileQueryInfoFlags
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback
+;;;
+;;; user_data :
+;;;     a gpointer
+;;; ----------------------------------------------------------------------------
 
-;;;Parameters
-;;;file
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attributes_finish ()
+;;;
+;;; gboolean
+;;; g_file_set_attributes_finish (GFile *file,
+;;;                               GAsyncResult *result,
+;;;                               GFileInfo **info,
+;;;                               GError **error);
+:::
+;;; Finishes setting an attribute started in g_file_set_attributes_async().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; info :
+;;;     a GFileInfo.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the attributes were set correctly, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;input GFile
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attribute_string ()
+;;;
+;;; gboolean
+;;; g_file_set_attribute_string (GFile *file,
+;;;                              const char *attribute,
+;;;                              const char *value,
+;;;                              GFileQueryInfoFlags flags,
+;;;                              GCancellable *cancellable,
+;;;                              GError **error);
+;;;
+;;; Sets attribute of type G_FILE_ATTRIBUTE_TYPE_STRING to value . If attribute
+;;; is of a different type, this operation will fail.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; attribute :
+;;;     a string containing the attribute's name
+;;;
+;;; value :
+;;;     a string containing the attribute's value
+;;;
+;;; flags :
+;;;     GFileQueryInfoFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the attribute was successfully set, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attribute_byte_string ()
+;;;
+;;; gboolean
+;;; g_file_set_attribute_byte_string (GFile *file,
+;;;                                   const char *attribute,
+;;;                                   const char *value,
+;;;                                   GFileQueryInfoFlags flags,
+;;;                                   GCancellable *cancellable,
+;;;                                   GError **error);
+;;;
+;;; Sets attribute of type G_FILE_ATTRIBUTE_TYPE_BYTE_STRING to value . If
+;;; attribute is of a different type, this operation will fail, returning FALSE.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; attribute :
+;;;     a string containing the attribute's name
+;;;
+;;; value :
+;;;     a string containing the attribute's new value
+;;;
+;;; flags :
+;;;     a GFileQueryInfoFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the attribute was successfully set to value in the file , FALSE
+;;;     otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;attribute
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attribute_uint32 ()
+;;;
+;;; gboolean
+;;; g_file_set_attribute_uint32 (GFile *file,
+;;;                              const char *attribute,
+;;;                              guint32 value,
+;;;                              GFileQueryInfoFlags flags,
+;;;                              GCancellable *cancellable,
+;;;                              GError **error);
+;;;
+;;; Sets attribute of type G_FILE_ATTRIBUTE_TYPE_UINT32 to value . If attribute
+;;; is of a different type, this operation will fail.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; attribute :
+;;;     a string containing the attribute's name
+;;;
+;;; value :
+;;;     a guint32 containing the attribute's new value
+;;;
+;;; flags :
+;;;     a GFileQueryInfoFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the attribute was successfully set to value in the file , FALSE
+;;;     otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;a string containing the attribute's name
-
-
-;;;value
-
-;;;a string containing the attribute's new value
-
-
-;;;flags
-
-;;;a GFileQueryInfoFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the attribute was successfully set to value in the file , FALSE otherwise.
-
-;;;g_file_set_attribute_uint32 ()
-;;;gboolean
-;;;g_file_set_attribute_uint32 (GFile *file,
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attribute_int32 ()
+;;;
+;;; gboolean
+;;; g_file_set_attribute_int32 (GFile *file,
 ;;;                             const char *attribute,
-;;;                             guint32 value,
+;;;                             gint32 value,
 ;;;                             GFileQueryInfoFlags flags,
 ;;;                             GCancellable *cancellable,
 ;;;                             GError **error);
-;;;Sets attribute of type G_FILE_ATTRIBUTE_TYPE_UINT32 to value . If attribute is of a different type, this operation will fail.
+;;;
+;;; Sets attribute of type G_FILE_ATTRIBUTE_TYPE_INT32 to value . If attribute
+;;; is of a different type, this operation will fail.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; attribute :
+;;;     a string containing the attribute's name
+;;;
+;;; value :
+;;;     a gint32 containing the attribute's new value
+;;;
+;;; flags :
+;;;     a GFileQueryInfoFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the attribute was successfully set to value in the file , FALSE
+;;;     otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attribute_uint64 ()
+;;;
+;;; gboolean
+;;; g_file_set_attribute_uint64 (GFile *file,
+;;;                              const char *attribute,
+;;;                              guint64 value,
+;;;                              GFileQueryInfoFlags flags,
+;;;                              GCancellable *cancellable,
+;;;                              GError **error);
+:::
+;;; Sets attribute of type G_FILE_ATTRIBUTE_TYPE_UINT64 to value . If attribute
+;;; is of a different type, this operation will fail.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; attribute :
+;;;     a string containing the attribute's name
+;;;
+;;; value :
+;;;     a guint64 containing the attribute's new value
+;;;
+;;; flags :
+;;;     a GFileQueryInfoFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the attribute was successfully set to value in the file , FALSE
+;;;     otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;attribute
-
-;;;a string containing the attribute's name
-
-
-;;;value
-
-;;;a guint32 containing the attribute's new value
-
-
-;;;flags
-
-;;;a GFileQueryInfoFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the attribute was successfully set to value in the file , FALSE otherwise.
-
-;;;g_file_set_attribute_int32 ()
-;;;gboolean
-;;;g_file_set_attribute_int32 (GFile *file,
-;;;                            const char *attribute,
-;;;                            gint32 value,
-;;;                            GFileQueryInfoFlags flags,
-;;;                            GCancellable *cancellable,
-;;;                            GError **error);
-;;;Sets attribute of type G_FILE_ATTRIBUTE_TYPE_INT32 to value . If attribute is of a different type, this operation will fail.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;attribute
-
-;;;a string containing the attribute's name
-
-
-;;;value
-
-;;;a gint32 containing the attribute's new value
-
-
-;;;flags
-
-;;;a GFileQueryInfoFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the attribute was successfully set to value in the file , FALSE otherwise.
-
-;;;g_file_set_attribute_uint64 ()
-;;;gboolean
-;;;g_file_set_attribute_uint64 (GFile *file,
+;;; ----------------------------------------------------------------------------
+;;; g_file_set_attribute_int64 ()
+;;;
+;;; gboolean
+;;; g_file_set_attribute_int64 (GFile *file,
 ;;;                             const char *attribute,
-;;;                             guint64 value,
+;;;                             gint64 value,
 ;;;                             GFileQueryInfoFlags flags,
 ;;;                             GCancellable *cancellable,
 ;;;                             GError **error);
-;;;Sets attribute of type G_FILE_ATTRIBUTE_TYPE_UINT64 to value . If attribute is of a different type, this operation will fail.
+;;;
+;;; Sets attribute of type G_FILE_ATTRIBUTE_TYPE_INT64 to value . If attribute
+;;; is of a different type, this operation will fail.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; attribute :
+;;;     a string containing the attribute's name
+;;;
+;;; value :
+;;;     a guint64 containing the attribute's new value
+;;;
+;;; flags :
+;;;     a GFileQueryInfoFlags
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the attribute was successfully set, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;; ----------------------------------------------------------------------------
+;;; g_file_mount_mountable ()
+;;;
+;;; void
+;;; g_file_mount_mountable (GFile *file,
+;;;                         GMountMountFlags flags,
+;;;                         GMountOperation *mount_operation,
+;;;                         GCancellable *cancellable,
+;;;                         GAsyncReadyCallback callback,
+;;;                         gpointer user_data);
+;;;
+;;; Mounts a file of type G_FILE_TYPE_MOUNTABLE. Using mount_operation , you can
+;;; request callbacks when, for instance, passwords are needed during
+;;; authentication.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_mount_mountable_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; flags :
+;;;     flags affecting the operation
+;;;
+;;; mount_operation :
+;;;     a GMountOperation, or NULL to avoid user interaction.
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;; ----------------------------------------------------------------------------
 
-;;;Parameters
-;;;file
+;;; ----------------------------------------------------------------------------
+;;; g_file_mount_mountable_finish ()
+;;;
+;;; GFile *
+;;; g_file_mount_mountable_finish (GFile *file,
+;;;                                GAsyncResult *result,
+;;;                                GError **error);
+;;;
+;;; Finishes a mount operation. See g_file_mount_mountable() for details.
+;;;
+;;; Finish an asynchronous mount operation that was started with
+;;; g_file_mount_mountable().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     a GFile or NULL on error. Free the returned object with
+;;;     g_object_unref().
+;;; ----------------------------------------------------------------------------
 
-;;;input GFile
+;;; ----------------------------------------------------------------------------
+;;; g_file_unmount_mountable ()
+;;;
+;;; void
+;;; g_file_unmount_mountable (GFile *file,
+;;;                           GMountUnmountFlags flags,
+;;;                           GCancellable *cancellable,
+;;;                           GAsyncReadyCallback callback,
+;;;                           gpointer user_data);
+;;;
+;;; g_file_unmount_mountable has been deprecated since version 2.22 and should
+;;; not be used in newly written code.
+;;;
+;;; Use g_file_unmount_mountable_with_operation() instead.
+;;;
+;;; Unmounts a file of type G_FILE_TYPE_MOUNTABLE.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_unmount_mountable_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; flags :
+;;;     flags affecting the operation
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
+;;; g_file_unmount_mountable_finish ()
+;;;
+;;; gboolean
+;;; g_file_unmount_mountable_finish (GFile *file,
+;;;                                  GAsyncResult *result,
+;;;                                  GError **error);
+;;;
+;;; g_file_unmount_mountable_finish has been deprecated since version 2.22 and
+;;; should not be used in newly written code.
+;;;
+;;; Use g_file_unmount_mountable_with_operation_finish() instead.
+;;;
+;;; Finishes an unmount operation, see g_file_unmount_mountable() for details.
+;;;
+;;; Finish an asynchronous unmount operation that was started with
+;;; g_file_unmount_mountable().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the operation finished successfully. FALSE otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;attribute
+;;; ----------------------------------------------------------------------------
+;;; g_file_unmount_mountable_with_operation ()
+;;;
+;;; void
+;;; g_file_unmount_mountable_with_operation
+;;;                                (GFile *file,
+;;;                                 GMountUnmountFlags flags,
+;;;                                 GMountOperation *mount_operation,
+;;;                                 GCancellable *cancellable,
+;;;                                 GAsyncReadyCallback callback,
+;;;                                 gpointer user_data);
+;;;
+;;; Unmounts a file of type G_FILE_TYPE_MOUNTABLE.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_unmount_mountable_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; flags :
+;;;     flags affecting the operation
+;;;
+;;; mount_operation :
+;;;     a GMountOperation, or NULL to avoid user interaction.
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
-;;;a string containing the attribute's name
+;;; ----------------------------------------------------------------------------
+;;; g_file_unmount_mountable_with_operation_finish ()
+;;;
+;;; gboolean
+;;; g_file_unmount_mountable_with_operation_finish
+;;;                                (GFile *file,
+;;;                                 GAsyncResult *result,
+;;;                                 GError **error);
+;;;
+;;; Finishes an unmount operation, see g_file_unmount_mountable_with_operation()
+;;; for details.
+;;;
+;;; Finish an asynchronous unmount operation that was started with
+;;; g_file_unmount_mountable_with_operation().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the operation finished successfully. FALSE otherwise.
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
+;;; g_file_eject_mountable ()
+;;;
+;;; void
+;;; g_file_eject_mountable (GFile *file,
+;;;                         GMountUnmountFlags flags,
+;;;                         GCancellable *cancellable,
+;;;                         GAsyncReadyCallback callback,
+;;;                         gpointer user_data);
+;;;
+;;; g_file_eject_mountable has been deprecated since version 2.22 and should not
+;;; be used in newly written code.
+;;;
+;;; Use g_file_eject_mountable_with_operation() instead.
+;;;
+;;; Starts an asynchronous eject on a mountable. When this operation has
+;;; completed, callback will be called with user_user data, and the operation
+;;; can be finalized with g_file_eject_mountable_finish().
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; flags :
+;;;     flags affecting the operation
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;; ----------------------------------------------------------------------------
 
-;;;value
+;;; ----------------------------------------------------------------------------
+;;; g_file_eject_mountable_finish ()
+;;;
+;;; gboolean
+;;; g_file_eject_mountable_finish (GFile *file,
+;;;                                GAsyncResult *result,
+;;;                                GError **error);
+;;;
+;;; g_file_eject_mountable_finish has been deprecated since version 2.22 and
+;;; should not be used in newly written code.
+;;;
+;;; Use g_file_eject_mountable_with_operation_finish() instead.
+;;;
+;;; Finishes an asynchronous eject operation started by
+;;; g_file_eject_mountable().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the file was ejected successfully. FALSE otherwise.
+;;; ----------------------------------------------------------------------------
 
-;;;a guint64 containing the attribute's new value
+;;; ----------------------------------------------------------------------------
+;;;g_file_eject_mountable_with_operation ()
+;;;
+;;; void
+;;; g_file_eject_mountable_with_operation (GFile *file,
+;;;                                        GMountUnmountFlags flags,
+;;;                                        GMountOperation *mount_operation,
+;;;                                        GCancellable *cancellable,
+;;;                                        GAsyncReadyCallback callback,
+;;;                                        gpointer user_data);
+;;;
+;;; Starts an asynchronous eject on a mountable. When this operation has
+;;; completed, callback will be called with user_user data, and the operation
+;;; can be finalized with g_file_eject_mountable_with_operation_finish().
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; flags :
+;;;     flags affecting the operation
+;;;
+;;; mount_operation :
+;;;     a GMountOperation, or NULL to avoid user interaction.
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
+;;; g_file_eject_mountable_with_operation_finish ()
+;;;
+;;; gboolean
+;;; g_file_eject_mountable_with_operation_finish
+;;;                                (GFile *file,
+;;;                                 GAsyncResult *result,
+;;;                                 GError **error);
+;;;
+;;; Finishes an asynchronous eject operation started by
+;;; g_file_eject_mountable_with_operation().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the file was ejected successfully. FALSE otherwise.
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
-;;;flags
+;;; ----------------------------------------------------------------------------
+;;; g_file_start_mountable ()
+;;;
+;;; void
+;;; g_file_start_mountable (GFile *file,
+;;;                         GDriveStartFlags flags,
+;;;                         GMountOperation *start_operation,
+;;;                         GCancellable *cancellable,
+;;;                         GAsyncReadyCallback callback,
+;;;                         gpointer user_data);
+;;;
+;;; Starts a file of type G_FILE_TYPE_MOUNTABLE. Using start_operation , you can
+;;; request callbacks when, for instance, passwords are needed during
+;;; authentication.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_mount_mountable_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; flags :
+;;;     flags affecting the operation
+;;;
+;;; start_operation :
+;;;     a GMountOperation, or NULL to avoid user interaction.
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
-;;;a GFileQueryInfoFlags
+;;; ----------------------------------------------------------------------------
+;;; g_file_start_mountable_finish ()
+;;;
+;;; gboolean
+;;; g_file_start_mountable_finish (GFile *file,
+;;;                                GAsyncResult *result,
+;;;                                GError **error);
+;;;
+;;; Finishes a start operation. See g_file_start_mountable() for details.
+;;;
+;;; Finish an asynchronous start operation that was started with
+;;; g_file_start_mountable().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the operation finished successfully. FALSE otherwise.
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the attribute was successfully set to value in the file , FALSE otherwise.
-
-;;;g_file_set_attribute_int64 ()
-;;;gboolean
-;;;g_file_set_attribute_int64 (GFile *file,
-;;;                            const char *attribute,
-;;;                            gint64 value,
-;;;                            GFileQueryInfoFlags flags,
-;;;                            GCancellable *cancellable,
-;;;                            GError **error);
-;;;Sets attribute of type G_FILE_ATTRIBUTE_TYPE_INT64 to value . If attribute is of a different type, this operation will fail.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;attribute
-
-;;;a string containing the attribute's name
-
-
-;;;value
-
-;;;a guint64 containing the attribute's new value
-
-
-;;;flags
-
-;;;a GFileQueryInfoFlags
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the attribute was successfully set, FALSE otherwise.
-
-;;;g_file_mount_mountable ()
-;;;void
-;;;g_file_mount_mountable (GFile *file,
-;;;                        GMountMountFlags flags,
+;;; ----------------------------------------------------------------------------
+;;; g_file_stop_mountable ()
+;;;
+;;; void
+;;; g_file_stop_mountable (GFile *file,
+;;;                        GMountUnmountFlags flags,
 ;;;                        GMountOperation *mount_operation,
 ;;;                        GCancellable *cancellable,
 ;;;                        GAsyncReadyCallback callback,
 ;;;                        gpointer user_data);
-;;;Mounts a file of type G_FILE_TYPE_MOUNTABLE. Using mount_operation , you can request callbacks when, for instance, passwords are needed during authentication.
+;;;
+;;; Stops a file of type G_FILE_TYPE_MOUNTABLE.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_stop_mountable_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; flags :
+;;;     flags affecting the operation
+;;;
+;;; mount_operation :
+;;;     a GMountOperation, or NULL to avoid user interaction.
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_mount_mountable_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;flags
-
-;;;flags affecting the operation
-
-
-;;;mount_operation
-
-;;;a GMountOperation, or NULL to avoid user interaction.
-
-;;;[nullable]
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied, or NULL.
-
-;;;[scope async][nullable]
-;;;user_data
-
-;;;the data to pass to callback function.
-
-;;;[closure]
-;;;g_file_mount_mountable_finish ()
-;;;GFile *
-;;;g_file_mount_mountable_finish (GFile *file,
+;;; ----------------------------------------------------------------------------
+;;; g_file_stop_mountable_finish ()
+;;;
+;;; gboolean
+;;; g_file_stop_mountable_finish (GFile *file,
 ;;;                               GAsyncResult *result,
 ;;;                               GError **error);
-;;;Finishes a mount operation. See g_file_mount_mountable() for details.
+;;;
+;;; Finishes a stop operation, see g_file_stop_mountable() for details.
+;;;
+;;; Finish an asynchronous stop operation that was started with
+;;; g_file_stop_mountable().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the operation finished successfully. FALSE otherwise.
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
-;;;Finish an asynchronous mount operation that was started with g_file_mount_mountable().
+;;; ----------------------------------------------------------------------------
+;;; g_file_poll_mountable ()
+;;;
+;;; void
+;;; g_file_poll_mountable (GFile *file,
+;;;                        GCancellable *cancellable,
+;;;                        GAsyncReadyCallback callback,
+;;;                        gpointer user_data);
+;;;
+;;; Polls a file of type G_FILE_TYPE_MOUNTABLE.
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_mount_mountable_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
-;;;Parameters
-;;;file
+;;; ----------------------------------------------------------------------------
+;;; g_file_poll_mountable_finish ()
+;;;
+;;; gboolean
+;;; g_file_poll_mountable_finish (GFile *file,
+;;;                               GAsyncResult *result,
+;;;                               GError **error);
+;;;
+;;; Finishes a poll operation. See g_file_poll_mountable() for details.
+;;;
+;;; Finish an asynchronous poll operation that was polled with
+;;; g_file_poll_mountable().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if the operation finished successfully. FALSE otherwise.
+;;;
+;;; Since 2.22
+;;; ----------------------------------------------------------------------------
 
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;a GFile or NULL on error. Free the returned object with g_object_unref().
-
-;;;[transfer full]
-
-;;;g_file_unmount_mountable ()
-;;;void
-;;;g_file_unmount_mountable (GFile *file,
-;;;                          GMountUnmountFlags flags,
-;;;                          GCancellable *cancellable,
-;;;                          GAsyncReadyCallback callback,
-;;;                          gpointer user_data);
-;;;g_file_unmount_mountable has been deprecated since version 2.22 and should not be used in newly-written code.
-
-;;;Use g_file_unmount_mountable_with_operation() instead.
-
-;;;Unmounts a file of type G_FILE_TYPE_MOUNTABLE.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_unmount_mountable_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;flags
-
-;;;flags affecting the operation
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied, or NULL.
-
-;;;[scope async][nullable]
-;;;user_data
-
-;;;the data to pass to callback function.
-
-;;;[closure]
-;;;g_file_unmount_mountable_finish ()
-;;;gboolean
-;;;g_file_unmount_mountable_finish (GFile *file,
-;;;                                 GAsyncResult *result,
-;;;                                 GError **error);
-;;;g_file_unmount_mountable_finish has been deprecated since version 2.22 and should not be used in newly-written code.
-
-;;;Use g_file_unmount_mountable_with_operation_finish() instead.
-
-;;;Finishes an unmount operation, see g_file_unmount_mountable() for details.
-
-;;;Finish an asynchronous unmount operation that was started with g_file_unmount_mountable().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the operation finished successfully. FALSE otherwise.
-
-;;;g_file_unmount_mountable_with_operation ()
-;;;void
-;;;g_file_unmount_mountable_with_operation
-;;;                               (GFile *file,
-;;;                                GMountUnmountFlags flags,
+;;; ----------------------------------------------------------------------------
+;;; g_file_mount_enclosing_volume ()
+;;;
+;;; void
+;;; g_file_mount_enclosing_volume (GFile *location,
+;;;                                GMountMountFlags flags,
 ;;;                                GMountOperation *mount_operation,
 ;;;                                GCancellable *cancellable,
 ;;;                                GAsyncReadyCallback callback,
 ;;;                                gpointer user_data);
-;;;Unmounts a file of type G_FILE_TYPE_MOUNTABLE.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_unmount_mountable_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;flags
-
-;;;flags affecting the operation
-
-
-;;;mount_operation
-
-;;;a GMountOperation, or NULL to avoid user interaction.
-
-;;;[nullable]
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied, or NULL.
-
-;;;[scope async][nullable]
-;;;user_data
-
-;;;the data to pass to callback function.
-
-;;; Since 2.22
+;;;
+;;; Starts a mount_operation , mounting the volume that contains the file
+;;; location .
+;;;
+;;; When this operation has completed, callback will be called with user_user
+;;; data, and the operation can be finalized with
+;;; g_file_mount_enclosing_volume_finish().
+;;;
+;;; If cancellable is not NULL, then the operation can be cancelled by
+;;; triggering the cancellable object from another thread. If the operation was
+;;; cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+;;;
+;;; location :
+;;;     input GFile
+;;;
+;;; flags :
+;;;     flags affecting the operation
+;;;
+;;; mount_operation :
+;;;     a GMountOperation or NULL to avoid user interaction.
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied, or NULL.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_unmount_mountable_with_operation_finish ()
-;;;gboolean
-;;;g_file_unmount_mountable_with_operation_finish
-;;;                               (GFile *file,
-;;;                                GAsyncResult *result,
-;;;                                GError **error);
-;;;Finishes an unmount operation, see g_file_unmount_mountable_with_operation() for details.
-
-;;;Finish an asynchronous unmount operation that was started with g_file_unmount_mountable_with_operation().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the operation finished successfully. FALSE otherwise.
-
-;;; Since 2.22
+;;; ----------------------------------------------------------------------------
+;;; g_file_mount_enclosing_volume_finish ()
+;;;
+;;; gboolean
+;;; g_file_mount_enclosing_volume_finish (GFile *location,
+;;;                                       GAsyncResult *result,
+;;;                                       GError **error);
+;;;
+;;; Finishes a mount operation started by g_file_mount_enclosing_volume().
+;;;
+;;; location :
+;;;     input GFile
+;;;
+;;; result :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     TRUE if successful. If an error has occurred, this function will return
+;;;     FALSE and set error appropriately if present.
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_eject_mountable ()
-;;;void
-;;;g_file_eject_mountable (GFile *file,
-;;;                        GMountUnmountFlags flags,
-;;;                        GCancellable *cancellable,
-;;;                        GAsyncReadyCallback callback,
-;;;                        gpointer user_data);
-;;;g_file_eject_mountable has been deprecated since version 2.22 and should not be used in newly-written code.
-
-;;;Use g_file_eject_mountable_with_operation() instead.
-
-;;;Starts an asynchronous eject on a mountable. When this operation has completed, callback will be called with user_user data, and the operation can be finalized with g_file_eject_mountable_finish().
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;flags
-
-;;;flags affecting the operation
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied, or NULL.
-
-;;;[scope async][nullable]
-;;;user_data
-
-;;;the data to pass to callback function.
-
-;;;[closure]
-;;;g_file_eject_mountable_finish ()
-;;;gboolean
-;;;g_file_eject_mountable_finish (GFile *file,
-;;;                               GAsyncResult *result,
-;;;                               GError **error);
-;;;g_file_eject_mountable_finish has been deprecated since version 2.22 and should not be used in newly-written code.
-
-;;;Use g_file_eject_mountable_with_operation_finish() instead.
-
-;;;Finishes an asynchronous eject operation started by g_file_eject_mountable().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the file was ejected successfully. FALSE otherwise.
-
-;;;g_file_eject_mountable_with_operation ()
-;;;void
-;;;g_file_eject_mountable_with_operation (GFile *file,
-;;;                                       GMountUnmountFlags flags,
-;;;                                       GMountOperation *mount_operation,
-;;;                                       GCancellable *cancellable,
-;;;                                       GAsyncReadyCallback callback,
-;;;                                       gpointer user_data);
-;;;Starts an asynchronous eject on a mountable. When this operation has completed, callback will be called with user_user data, and the operation can be finalized with g_file_eject_mountable_with_operation_finish().
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;flags
-
-;;;flags affecting the operation
-
-
-;;;mount_operation
-
-;;;a GMountOperation, or NULL to avoid user interaction.
-
-;;;[nullable]
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied, or NULL.
-
-;;;[scope async][nullable]
-;;;user_data
-
-;;;the data to pass to callback function.
-
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
-
-;;;g_file_eject_mountable_with_operation_finish ()
-;;;gboolean
-;;;g_file_eject_mountable_with_operation_finish
-;;;                               (GFile *file,
-;;;                                GAsyncResult *result,
-;;;                                GError **error);
-;;;Finishes an asynchronous eject operation started by g_file_eject_mountable_with_operation().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the file was ejected successfully. FALSE otherwise.
-
-;;; Since 2.22
-;;; ----------------------------------------------------------------------------
-
-;;;g_file_start_mountable ()
-;;;void
-;;;g_file_start_mountable (GFile *file,
-;;;                        GDriveStartFlags flags,
-;;;                        GMountOperation *start_operation,
-;;;                        GCancellable *cancellable,
-;;;                        GAsyncReadyCallback callback,
-;;;                        gpointer user_data);
-;;;Starts a file of type G_FILE_TYPE_MOUNTABLE. Using start_operation , you can request callbacks when, for instance, passwords are needed during authentication.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_mount_mountable_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;flags
-
-;;;flags affecting the operation
-
-
-;;;start_operation
-
-;;;a GMountOperation, or NULL to avoid user interaction.
-
-;;;[nullable]
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied, or NULL.
-
-;;;[nullable]
-;;;user_data
-
-;;;the data to pass to callback function
-
-
-;;; Since 2.22
-;;; ----------------------------------------------------------------------------
-
-;;;g_file_start_mountable_finish ()
-;;;gboolean
-;;;g_file_start_mountable_finish (GFile *file,
-;;;                               GAsyncResult *result,
-;;;                               GError **error);
-;;;Finishes a start operation. See g_file_start_mountable() for details.
-
-;;;Finish an asynchronous start operation that was started with g_file_start_mountable().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the operation finished successfully. FALSE otherwise.
-
-;;; Since 2.22
-;;; ----------------------------------------------------------------------------
-
-;;;g_file_stop_mountable ()
-;;;void
-;;;g_file_stop_mountable (GFile *file,
-;;;                       GMountUnmountFlags flags,
-;;;                       GMountOperation *mount_operation,
-;;;                       GCancellable *cancellable,
-;;;                       GAsyncReadyCallback callback,
-;;;                       gpointer user_data);
-;;;Stops a file of type G_FILE_TYPE_MOUNTABLE.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_stop_mountable_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;flags
-
-;;;flags affecting the operation
-
-
-;;;mount_operation
-
-;;;a GMountOperation, or NULL to avoid user interaction.
-
-;;;[nullable]
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied, or NULL.
-
-;;;[nullable]
-;;;user_data
-
-;;;the data to pass to callback function
-
-
-;;; Since 2.22
-;;; ----------------------------------------------------------------------------
-
-;;;g_file_stop_mountable_finish ()
-;;;gboolean
-;;;g_file_stop_mountable_finish (GFile *file,
-;;;                              GAsyncResult *result,
-;;;                              GError **error);
-;;;Finishes a stop operation, see g_file_stop_mountable() for details.
-
-;;;Finish an asynchronous stop operation that was started with g_file_stop_mountable().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the operation finished successfully. FALSE otherwise.
-
-;;; Since 2.22
-;;; ----------------------------------------------------------------------------
-
-;;;g_file_poll_mountable ()
-;;;void
-;;;g_file_poll_mountable (GFile *file,
-;;;                       GCancellable *cancellable,
-;;;                       GAsyncReadyCallback callback,
-;;;                       gpointer user_data);
-;;;Polls a file of type G_FILE_TYPE_MOUNTABLE.
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_mount_mountable_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore
-
-
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied, or NULL.
-
-;;;[nullable]
-;;;user_data
-
-;;;the data to pass to callback function
-
-
-;;; Since 2.22
-;;; ----------------------------------------------------------------------------
-
-;;;g_file_poll_mountable_finish ()
-;;;gboolean
-;;;g_file_poll_mountable_finish (GFile *file,
-;;;                              GAsyncResult *result,
-;;;                              GError **error);
-;;;Finishes a poll operation. See g_file_poll_mountable() for details.
-
-;;;Finish an asynchronous poll operation that was polled with g_file_poll_mountable().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if the operation finished successfully. FALSE otherwise.
-
-;;; Since 2.22
-;;; ----------------------------------------------------------------------------
-
-;;;g_file_mount_enclosing_volume ()
-;;;void
-;;;g_file_mount_enclosing_volume (GFile *location,
-;;;                               GMountMountFlags flags,
-;;;                               GMountOperation *mount_operation,
-;;;                               GCancellable *cancellable,
-;;;                               GAsyncReadyCallback callback,
-;;;                               gpointer user_data);
-;;;Starts a mount_operation , mounting the volume that contains the file location .
-
-;;;When this operation has completed, callback will be called with user_user data, and the operation can be finalized with g_file_mount_enclosing_volume_finish().
-
-;;;If cancellable is not NULL, then the operation can be cancelled by triggering the cancellable object from another thread. If the operation was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
-
-;;;Parameters
-;;;location
-
-;;;input GFile
-
-
-;;;flags
-
-;;;flags affecting the operation
-
-
-;;;mount_operation
-
-;;;a GMountOperation or NULL to avoid user interaction.
-
-;;;[nullable]
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied, or NULL.
-
-;;;[nullable]
-;;;user_data
-
-;;;the data to pass to callback function
-
-
-;;;g_file_mount_enclosing_volume_finish ()
-;;;gboolean
-;;;g_file_mount_enclosing_volume_finish (GFile *location,
-;;;                                      GAsyncResult *result,
-;;;                                      GError **error);
-;;;Finishes a mount operation started by g_file_mount_enclosing_volume().
-
-;;;Parameters
-;;;location
-
-;;;input GFile
-
-
-;;;result
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
-
 ;;;g_file_monitor_directory ()
 ;;;GFileMonitor *
 ;;;g_file_monitor_directory (GFile *file,
@@ -4361,7 +4217,9 @@
 ;;;a GFileMonitor for the given file , or NULL on error. Free the returned object with g_object_unref().
 
 ;;;[transfer full]
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_monitor_file ()
 ;;;GFileMonitor *
 ;;;g_file_monitor_file (GFile *file,
@@ -4399,7 +4257,9 @@
 ;;;a GFileMonitor for the given file , or NULL on error. Free the returned object with g_object_unref().
 
 ;;;[transfer full]
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_monitor ()
 ;;;GFileMonitor *
 ;;;g_file_monitor (GFile *file,
@@ -4437,6 +4297,7 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_load_bytes ()
 ;;;GBytes *
 ;;;g_file_load_bytes (GFile *file,
@@ -4478,6 +4339,7 @@
 ;;; Since 2.56
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_load_bytes_async ()
 ;;;void
 ;;;g_file_load_bytes_async (GFile *file,
@@ -4515,6 +4377,7 @@
 ;;; Since 2.56
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_load_bytes_finish ()
 ;;;GBytes *
 ;;;g_file_load_bytes_finish (GFile *file,
@@ -4556,6 +4419,7 @@
 ;;; Since 2.56
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_load_contents ()
 ;;;gboolean
 ;;;g_file_load_contents (GFile *file,
@@ -4601,7 +4465,9 @@
 
 ;;;Returns
 ;;;TRUE if the file 's contents were successfully loaded. FALSE if there were errors.
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_load_contents_async ()
 ;;;void
 ;;;g_file_load_contents_async (GFile *file,
@@ -4635,8 +4501,9 @@
 ;;;user_data
 
 ;;;the data to pass to callback function
+;;; ----------------------------------------------------------------------------
 
-
+;;; ----------------------------------------------------------------------------
 ;;;g_file_load_contents_finish ()
 ;;;gboolean
 ;;;g_file_load_contents_finish (GFile *file,
@@ -4680,7 +4547,9 @@
 
 ;;;Returns
 ;;;TRUE if the load was successful. If FALSE and error is present, it will be set appropriately.
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_load_partial_contents_async ()
 ;;;void
 ;;;g_file_load_partial_contents_async (GFile *file,
@@ -4720,8 +4589,9 @@
 ;;;user_data
 
 ;;;the data to pass to the callback functions
+;;; ----------------------------------------------------------------------------
 
-
+;;; ----------------------------------------------------------------------------
 ;;;g_file_load_partial_contents_finish ()
 ;;;gboolean
 ;;;g_file_load_partial_contents_finish (GFile *file,
@@ -4765,7 +4635,9 @@
 
 ;;;Returns
 ;;;TRUE if the load was successful. If FALSE and error is present, it will be set appropriately.
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_replace_contents ()
 ;;;gboolean
 ;;;g_file_replace_contents (GFile *file,
@@ -4835,7 +4707,9 @@
 
 ;;;Returns
 ;;;TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_replace_contents_async ()
 ;;;void
 ;;;g_file_replace_contents_async (GFile *file,
@@ -4901,6 +4775,7 @@
 ;;;user_data
 
 ;;;the data to pass to callback function
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_file_replace_contents_bytes_async ()
@@ -4951,6 +4826,7 @@
 ;;; Since 2.40
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_replace_contents_finish ()
 ;;;gboolean
 ;;;g_file_replace_contents_finish (GFile *file,
@@ -4982,7 +4858,9 @@
 
 ;;;Returns
 ;;;TRUE on success, FALSE on failure.
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_copy_attributes ()
 ;;;gboolean
 ;;;g_file_copy_attributes (GFile *source,
@@ -5022,7 +4900,9 @@
 
 ;;;Returns
 ;;;TRUE if the attributes were copied successfully, FALSE otherwise.
+;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_create_readwrite ()
 ;;;GFileIOStream *
 ;;;g_file_create_readwrite (GFile *file,
@@ -5066,6 +4946,7 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_create_readwrite_async ()
 ;;;void
 ;;;g_file_create_readwrite_async (GFile *file,
@@ -5113,6 +4994,7 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_create_readwrite_finish ()
 ;;;GFileIOStream *
 ;;;g_file_create_readwrite_finish (GFile *file,
@@ -5142,6 +5024,7 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_open_readwrite ()
 ;;;GFileIOStream *
 ;;;g_file_open_readwrite (GFile *file,
@@ -5175,6 +5058,7 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
 ;;;g_file_open_readwrite_async ()
 ;;;void
 ;;;g_file_open_readwrite_async (GFile *file,
@@ -5216,32 +5100,30 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_open_readwrite_finish ()
-;;;GFileIOStream *
-;;;g_file_open_readwrite_finish (GFile *file,
-;;;                              GAsyncResult *res,
-;;;                              GError **error);
-;;;Finishes an asynchronous file read operation started with g_file_open_readwrite_async().
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;res
-
-;;;a GAsyncResult
-
-
-;;;error
-
-;;;a GError, or NULL
-
-
-;;;Returns
-;;;a GFileIOStream or NULL on error. Free the returned object with g_object_unref().
-
+;;; ----------------------------------------------------------------------------
+;;; g_file_open_readwrite_finish ()
+;;;
+;;; GFileIOStream *
+;;; g_file_open_readwrite_finish (GFile *file,
+;;;                               GAsyncResult *res,
+;;;                               GError **error);
+;;;
+;;; Finishes an asynchronous file read operation started with
+;;; g_file_open_readwrite_async().
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; res :
+;;;     a GAsyncResult
+;;;
+;;; error :
+;;;     a GError, or NULL
+;;;
+;;; Returns :
+;;;     a GFileIOStream or NULL on error. Free the returned object with
+;;;     g_object_unref().
+;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
@@ -5292,62 +5174,52 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
-;;;g_file_replace_readwrite_async ()
-;;;void
-;;;g_file_replace_readwrite_async (GFile *file,
-;;;                                const char *etag,
-;;;                                gboolean make_backup,
-;;;                                GFileCreateFlags flags,
-;;;                                int io_priority,
-;;;                                GCancellable *cancellable,
-;;;                                GAsyncReadyCallback callback,
-;;;                                gpointer user_data);
-;;;Asynchronously overwrites the file in read-write mode, replacing the contents, possibly creating a backup copy of the file first.
-
-;;;For more details, see g_file_replace_readwrite() which is the synchronous version of this call.
-
-;;;When the operation is finished, callback will be called. You can then call g_file_replace_readwrite_finish() to get the result of the operation.
-
-;;;Parameters
-;;;file
-
-;;;input GFile
-
-
-;;;etag
-
-;;;an entity tag for the current GFile, or NULL to ignore.
-
-;;;[nullable]
-;;;make_backup
-
-;;;TRUE if a backup should be created
-
-
-;;;flags
-
-;;;a set of GFileCreateFlags
-
-
-;;;io_priority
-
-;;;the I/O priority of the request
-
-
-;;;cancellable
-
-;;;optional GCancellable object, NULL to ignore.
-
-;;;[nullable]
-;;;callback
-
-;;;a GAsyncReadyCallback to call when the request is satisfied.
-
-;;;[scope async]
-;;;user_data
-
-;;;the data to pass to callback function.
-
+;;; ----------------------------------------------------------------------------
+;;; g_file_replace_readwrite_async ()
+;;;
+;;; void
+;;; g_file_replace_readwrite_async (GFile *file,
+;;;                                 const char *etag,
+;;;                                 gboolean make_backup,
+;;;                                 GFileCreateFlags flags,
+;;;                                 int io_priority,
+;;;                                 GCancellable *cancellable,
+;;;                                 GAsyncReadyCallback callback,
+;;;                                 gpointer user_data);
+;;;
+;;; Asynchronously overwrites the file in read-write mode, replacing the
+;;; contents, possibly creating a backup copy of the file first.
+;;;
+;;; For more details, see g_file_replace_readwrite() which is the synchronous
+;;; version of this call.
+;;;
+;;; When the operation is finished, callback will be called. You can then call
+;;; g_file_replace_readwrite_finish() to get the result of the operation.
+;;;
+;;; file :
+;;;     input GFile
+;;;
+;;; etag :
+;;;     an entity tag for the current GFile, or NULL to ignore.
+;;;
+;;; make_backup :
+;;;     TRUE if a backup should be created
+;;;
+;;; flags :
+;;;     a set of GFileCreateFlags
+;;;
+;;; io_priority :
+;;;     the I/O priority of the request
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
