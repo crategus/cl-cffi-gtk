@@ -341,8 +341,7 @@
     child widgets can be \"anchored\", inserted inline, as if they were
     characters.
   @end{short}
-  The child anchor can have multiple widgets anchored, to allow for multiple
-  views.
+  The anchor can have multiple widgets anchored, to allow for multiple views.
   @see-class{gtk-text-view}")
 
 ;;; ----------------------------------------------------------------------------
@@ -446,10 +445,10 @@
  ╰── [window.popup]
     @end{pre}
     The @sym{gtk-text-view} implementation has a main CSS node with name
-    @code{textview} and style class @code{.view}, and subnodes for each of the
+    @code{textview} and @code{.view} style class, and subnodes for each of the
     border windows, and the main text area, with names @code{border} and
-    @code{text}, respectively. The border nodes each get one of the style
-    classes @code{.left}, @code{.right}, @code{.top} or @code{.bottom}.
+    @code{text}, respectively. The border nodes each get one of the
+    @code{.left}, @code{.right}, @code{.top} or @code{.bottom} style classes.
 
     A node representing the selection will appear below the text node. If a
     context menu is opened, the window node will appear as a subnode of the
@@ -533,14 +532,14 @@
       @end{table}
     @subheading{The \"insert-at-cursor\" signal}
       @begin{pre}
- lambda (view string)    :action
+ lambda (view text)    :action
       @end{pre}
       The signal is a keybinding signal which gets emitted when the user
-      initiates the insertion of a string at the cursor. The signal has no
-      default bindings.
+      initiates the insertion of text at the cursor. The signal has no default
+      bindings.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget which received the signal.}
-        @entry[string]{The string to insert.}
+        @entry[text]{The string with the text to insert.}
       @end{table}
     @subheading{The \"insert-emoji\" signal}
       @begin{pre}
@@ -616,7 +615,7 @@
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} widget on which the signal is
           emitted.}
-        @entry[popup]{The @class{gtk-widget} container that is being populated.}
+        @entry[popup]{The @class{gtk-widget} object that is being populated.}
       @end{table}
     @subheading{The \"preedit-changed\" signal}
       @begin{pre}
@@ -628,7 +627,7 @@
       given position is actually editable.
       @begin[code]{table}
         @entry[view]{The @sym{gtk-text-view} object which received the signal.}
-        @entry[preedit]{A string with the current preedit string.}
+        @entry[preedit]{A string with the current preedit text.}
       @end{table}
     @subheading{The \"select-all\" signal}
       @begin{pre}
@@ -713,11 +712,11 @@
       "Accessor"
       (documentation 'gtk-text-view-accepts-tab 'function)
  "@version{2021-10-16}
-  @syntax[]{(gtk-text-view-accepts-tab object) => accepts-tab}
-  @syntax[]{(setf (gtk-text-view-accepts-tab object) accepts-tab)}
+  @syntax[]{(gtk-text-view-accepts-tab object) => accepts}
+  @syntax[]{(setf (gtk-text-view-accepts-tab object) accepts)}
   @argument[object]{a @class{gtk-text-view} widget}
-  @argument[accepts-tab]{@em{true} if pressing the @kbd{Tab} key should insert
-    a tab character, @em{false}, if pressing the @kbd{Tab} key should move the
+  @argument[accepts]{@em{true} if pressing the @kbd{Tab} key should insert a
+    tab character, @em{false}, if pressing the @kbd{Tab} key should move the
     keyboard focus}
   @begin{short}
     Accessor of the @slot[gtk-text-view]{accepts-tab} slot of the
@@ -728,9 +727,9 @@
   of the text view when the @kbd{Tab} key is pressed. The
   @sym{(setf gtk-text-view-accepts-tab)} slot access function sets the behavior.
 
-  If the @arg{accepts-tab} argument is @em{true}, a tab character is inserted.
-  If the @arg{accepts-tab} argument is @em{false} the keyboard focus is moved
-  to the next widget in the focus chain.
+  If the @arg{accepts} argument is @em{true}, a tab character is inserted. If
+  the @arg{accepts} argument is @em{false} the keyboard focus is moved to the
+  next widget in the focus chain.
   @see-class{gtk-text-view}")
 
 ;;; --- gtk-text-view-bottom-margin --------------------------------------------
@@ -867,9 +866,9 @@
 (setf (documentation (atdoc:get-slot-from-name "im-module" 'gtk-text-view) 't)
  "The @code{im-module} property of type @code{:string} (Read / Write) @br{}
   Which IM (input method) module should be used for this entry. See the
-  @class{gtk-im-context} class. Setting this to a non-@code{nil} value overrides
-  the system-wide IM module setting. See the @slot[gtk-settings]{gtk-im-module}
-  setting. @br{}
+  @class{gtk-im-context} documentation. Setting this to a non-@code{nil} value
+  overrides the system-wide IM module setting. See the
+  @slot[gtk-settings]{gtk-im-module} setting. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -1434,7 +1433,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_text_view_get_hadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_get_hadjustment()
 ;;;
 ;;; Gets the horizontal-scrolling GtkAdjustment.
@@ -1456,7 +1455,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_text_view_get_vadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_get_vadjustment()
 ;;;
 ;;; Gets the vertical-scrolling GtkAdjustment.
@@ -1504,6 +1503,10 @@
   arguments, the text scrolls the minimal distance to get the mark onscreen,
   possibly not scrolling at all. The effective screen for purposes of this
   function is reduced by a margin of size @arg{margin}.
+  @begin[Note]{dictionary}
+    The double float arguments take any number, which is coerced to a double
+    float.
+  @end{dictionary}
   @see-class{gtk-text-view}
   @see-class{gtk-text-mark}"
   (%gtk-text-view-scroll-to-mark view
@@ -1557,6 +1560,10 @@
   computations. To avoid oddness, consider using the
   @fun{gtk-text-view-scroll-to-mark} function which saves a point to be scrolled
   to after line validation.
+  @begin[Note]{dictionary}
+    The double float arguments take any number, which is coerced to a double
+    float.
+  @end{dictionary}
   @see-class{gtk-text-view}
   @see-class{gtk-text-iter}
   @see-function{gtk-text-view-scroll-to-mark}"
@@ -2012,6 +2019,7 @@
   Windows are @code{nil} and nonexistent if their width or height is 0, and are
   nonexistent before the widget has been realized.
   @see-class{gtk-text-view}
+  @see-class{gdk-window}
   @see-symbol{gtk-text-window-type}"
   (view (g-object gtk-text-view))
   (wtype gtk-text-window-type))
@@ -2070,13 +2078,14 @@
 
   The @sym{gtk-text-view-border-window-size} function gets the width of the
   specified border window. The @sym{(setf gtk-text-view-border-window-size)}
-  function sets the width of the @code{:left} or @code{:right} border size, or
-  the height of the @code{:top} or @code{:bottom} border size.
+  function sets the width of the @code{:left} or @code{:right} size of the
+  border window, or the height of the @code{:top} or @code{:bottom} size of the
+  border window.
 
   Automatically destroys the corresponding window if the size is set to 0, and
   creates the window if the size is set to non-zero. This function can only be
   used for the \"border windows\", it does not work with the @code{:widget},
-  @code{:text}, or @code{:private} windows.
+  @code{:text}, or @code{:private} text windows.
   @see-class{gtk-text-view}
   @see-symbol{gtk-text-window-type}"
   (view (g-object gtk-text-view))
@@ -2094,7 +2103,7 @@
  "@version{2021-10-21}
   @argument[view]{a @class{gtk-text-view} widget}
   @argument[iter]{a @class{gtk-text-iter} iterator}
-  @argument[direction]{the keyword @code{:forward} or @code{:backward}, the
+  @argument[direction]{the @code{:forward} or @code{:backward} keyword, the
     default value is @code{:forward}}
   @argument[start-or-end]{@em{true} to go the end of the next or the start of
     the previous display line, the default value is @em{false}}
@@ -2304,7 +2313,7 @@
   @argument[anchor]{a @class{gtk-text-child-anchor} object in the text buffer
     for @arg{view}}
   @begin{short}
-    Adds a child widget in the text buffer, at the given child anchor.
+    Adds a child widget in the text buffer, at the given anchor.
   @end{short}
   @see-class{gtk-text-view}
   @see-class{gtk-widget}
@@ -2349,9 +2358,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2021-10-16}
   @argument[anchor]{a @class{gtk-text-child-anchor} object}
-  @return{List of widgets anchored at @arg{anchor}.}
+  @return{List of @class{gtk-widget} objects anchored at @arg{anchor}.}
   @begin{short}
-    Gets a list of all widgets anchored at the child anchor.
+    Gets a list of all widgets anchored at the anchor.
   @end{short}
   @see-class{gtk-text-child-anchor}
   @see-class{gtk-widget}"
@@ -2368,13 +2377,13 @@
  #+cl-cffi-gtk-documentation
  "@version{2021-10-16}
   @argument[anchor]{a @class{gtk-text-child-anchor} object}
-  @return{@em{True} if the child anchor has been deleted from its text buffer.}
+  @return{@em{True} if the anchor has been deleted from its text buffer.}
   @begin{short}
-    Determines whether a child anchor has been deleted from the text buffer.
+    Determines whether a anchor has been deleted from the text buffer.
   @end{short}
-  Keep in mind that the child anchor will be unreferenced when removed from the
-  text buffer, so you need to hold your own reference if you plan to use this
-  function - otherwise all deleted child anchors will also be finalized.
+  Keep in mind that the anchor will be unreferenced when removed from the text
+  buffer, so you need to hold your own reference if you plan to use this
+  function - otherwise all deleted anchors will also be finalized.
   @see-class{gtk-text-child-anchor}"
   (anchor (g-object gtk-text-child-anchor)))
 

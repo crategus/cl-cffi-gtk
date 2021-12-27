@@ -428,10 +428,11 @@
  │
  ╰── [rubberband]
     @end{pre}
-    The @sym{gtk-tree-view} widget has a main CSS node with name @code{treeview}
-    and style class @code{.view}. It has a subnode with name @code{header},
-    which is the parent for all the column header widgets' CSS nodes. For
-    rubberband selection, a subnode with name @code{rubberband} is used.
+    The @sym{gtk-tree-view} implementation has a main CSS node with name
+    @code{treeview} and @code{.view} style class. It has a subnode with name
+    @code{header}, which is the parent for all the column header widgets' CSS
+    nodes. For rubberband selection, a subnode with name @code{rubberband} is
+    used.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
@@ -1812,7 +1813,7 @@
                                    view
                                    (callback gtk-tree-view-column-drop-func)
                                    (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-tree-view-set-column-drag-function)
 
@@ -2762,7 +2763,7 @@
   @begin{short}
     Turns the tree view into a drop destination for automatic DND.
   @end{short}
-  Calling this method sets \"reorderable\" to the @code{false} value.
+  Calling this method sets \"reorderable\" to the @em{false} value.
   @see-class{gtk-tree-view}
   @see-symbol{gdk-drag-action}
   @see-function{gtk-tree-view-reorderable}"
@@ -2810,7 +2811,7 @@
     Turns the tree view into a drag source for automatic DND.
   @end{short}
   Calling this method sets the @slot[gtk-tree-view]{reorderable} property to
-  the @code{false} value.
+  the @em{false} value.
   @see-class{gtk-tree-view}
   @see-symbol{gdk-modifier-type}
   @see-symbol{gdk-drag-action}
@@ -3094,7 +3095,7 @@
                                    view
                                    (callback gtk-tree-view-search-equal-func)
                                    (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-tree-view-set-search-equal-func)
 
@@ -3215,7 +3216,7 @@
                                view
                                (callback gtk-tree-view-set-search-position-func)
                                (allocate-stable-pointer func)
-                               (callback stable-pointer-destroy-notify-cb))
+                               (callback stable-pointer-destroy-notify))
       (%gtk-tree-view-set-search-position-func view
                                                (null-pointer)
                                                (null-pointer)
@@ -3347,7 +3348,7 @@
                                      view
                                      (callback gtk-tree-view-row-separator-func)
                                      (allocate-stable-pointer func)
-                                     (callback stable-pointer-destroy-notify-cb))
+                                     (callback stable-pointer-destroy-notify))
       (%gtk-tree-view-set-row-separator-func view
                                              (null-pointer)
                                              (null-pointer)

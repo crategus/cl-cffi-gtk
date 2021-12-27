@@ -154,7 +154,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_theming_engine_get_direction has been deprecated since version 3.8 and
-;;; should not be used in newly-written code. Use gtk_theming_engine_get_state()
+;;; should not be used in newly written code. Use gtk_theming_engine_get_state()
 ;;; and check for GTK_STATE_FLAG_DIR_LTR and GTK_STATE_FLAG_DIR_RTL instead.
 ;;;
 ;;; Returns the widget direction used for rendering.
@@ -473,7 +473,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_theming_engine_get_font has been deprecated since version 3.8 and should
-;;; not be used in newly-written code. Use gtk_theming_engine_get()
+;;; not be used in newly written code. Use gtk_theming_engine_get()
 ;;;
 ;;; Returns the font description for a given state.
 ;;;
@@ -568,7 +568,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_theming_engine_state_is_running has been deprecated since version 3.6
-;;; and should not be used in newly-written code. Always returns FALSE
+;;; and should not be used in newly written code. Always returns FALSE
 ;;;
 ;;; Returns TRUE if there is a transition animation running for the current
 ;;; region (see gtk_style_context_push_animatable_region()).
@@ -617,7 +617,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_theming_engine_register_property has been deprecated since version 3.8
-;;; and should not be used in newly-written code. Code should use the default
+;;; and should not be used in newly written code. Code should use the default
 ;;; properties provided by CSS.
 ;;;
 ;;; Registers a property so it can be used in the CSS file format, on the CSS

@@ -38,7 +38,7 @@
                       millisec
                       (callback call-timeout-from-main-loop-callback)
                       (glib::allocate-stable-pointer func)
-                      (callback glib::stable-pointer-destroy-notify-cb)))
+                      (callback glib::stable-pointer-destroy-notify)))
 
 (defclass timer ()
   ((fn :initform nil :initarg :fn :accessor timer-fn)

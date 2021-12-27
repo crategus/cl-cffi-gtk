@@ -75,18 +75,18 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-tag-table 'type)
- "@version{2021-8-20}
+ "@version{2021-11-18}
   @begin{short}
     A tag table defines a set of tags that can be used together.
   @end{short}
-  Each tag is stored in a @class{gtk-text-tag-table} object. Each text buffer
-  has one tag table associated with it. Only tags from that tag table can be
-  used with the text buffer. A single tag table can be shared between multiple
-  text buffers, however.
-  @begin[GtkTextTagTables as GtkBuildable]{dictionary}
-    The @sym{gtk-text-tag-table} class implementation of the
-    @class{gtk-buildable} interface supports adding tags by specifying
-    @code{\"tag\"} as the @code{type} attribute of a @code{<child>} element.
+  Each tag is stored in a @sym{gtk-text-tag-table} object. Each text buffer has
+  one tag table associated with it. Only tags from that tag table can be used
+  with the text buffer. A single tag table can be shared between multiple text
+  buffers, however.
+  @begin[GtkTextTagTable as GtkBuildable]{dictionary}
+    The @sym{gtk-text-tag-table} implementation of the @class{gtk-buildable}
+    interface supports adding tags by specifying @code{\"tag\"} as the
+    @code{type} attribute of a @code{<child>} element.
 
     @b{Example:} A UI definition fragment specifying tags.
     @begin{pre}
@@ -143,10 +143,10 @@
 (setf (gethash 'gtk-text-tag-table-foreach-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-text-tag-table-foreach-func atdoc:*external-symbols*)
- "@version{2021-8-20}
+ "@version{2021-11-18}
   @begin{short}
-    The type of callback function passed to the function
-    @fun{gtk-text-table-foreach}.
+    The type of callback function passed to the @fun{gtk-text-table-foreach}
+    function.
   @end{short}
   @begin{pre}
  lambda (tag)
@@ -167,7 +167,7 @@
 
 (defun gtk-text-tag-table-new ()
  #+cl-cffi-gtk-documentation
- "@version{2021-8-20}
+ "@version{2021-11-18}
   @return{A new @class{gtk-text-tag-table} object.}
   @begin{short}
     Creates a new tag table.
@@ -184,17 +184,16 @@
 
 (defcfun ("gtk_text_tag_table_add" gtk-text-tag-table-add) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-8-20}
+ "@version{*2021-11-18}
   @argument[table]{a @class{gtk-text-tag-table} object}
   @argument[tag]{a @class{gtk-text-tag} object}
   @return{A boolean which is @em{true} on success.}
   @begin{short}
     Adds a tag to the tag table.
   @end{short}
-  The tag is assigned the highest priority in the tag table.
-
-  The tag must not be in a tag table already, and may not have the same name as
-  an already added tag.
+  The tag is assigned the highest priority in the tag table. The tag must not
+  be in a tag table already, and may not have the same name as an already added
+  tag.
   @see-class{gtk-text-tag-table}
   @see-class{gtk-text-tag}"
   (table (g-object gtk-text-tag-table))
@@ -208,14 +207,14 @@
 
 (defcfun ("gtk_text_tag_table_remove" gtk-text-tag-table-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-8-20}
+ "@version{2021-11-18}
   @argument[table]{a @class{gtk-text-tag-table} object}
   @argument[tag]{a @class{gtk-text-tag} object}
   @begin{short}
     Remove a tag from the tag table.
   @end{short}
-  This will remove the reference of the tag table to the tag, so be careful
-  - the tag will end up destroyed if you do not have a reference to it.
+  This will remove the reference of the tag table to the tag, so be careful -
+  the tag will end up destroyed if you do not have a reference to it.
   @see-class{gtk-text-tag-table}
   @see-class{gtk-text-tag}"
   (table (g-object gtk-text-tag-table))
@@ -230,7 +229,7 @@
 (defcfun ("gtk_text_tag_table_lookup" gtk-text-tag-table-lookup)
     (g-object gtk-text-tag)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-20}
+ "@version{2021-11-18}
   @argument[table]{a @class{gtk-text-tag-table} object}
   @argument[name]{a string with the name of a tag}
   @return{The tag, or @code{nil} if none by that @arg{name} is in the tag
@@ -255,7 +254,7 @@
 
 (defun gtk-text-tag-table-foreach (table func)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-20}
+ "@version{2021-11-18}
   @argument[table]{a @class{gtk-text-tag-table} object}
   @argument[func]{a @symbol{gtk-text-tag-table-foreach-func} callback function
     to call on each tag}
@@ -279,7 +278,7 @@
 
 (defcfun ("gtk_text_tag_table_get_size" gtk-text-tag-table-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-8-20}
+ "@version{2021-11-18}
   @argument[table]{a @class{gtk-text-tag-table} object}
   @return{An integer with the number of tags in @arg{table}.}
   @begin{short}

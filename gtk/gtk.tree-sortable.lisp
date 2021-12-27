@@ -356,7 +356,7 @@
               column-id
               (callback gtk-tree-iter-compare-func)
               (allocate-stable-pointer func)
-              (callback stable-pointer-destroy-notify-cb)))
+              (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-tree-sortable-set-sort-func)
 
@@ -396,7 +396,7 @@
               sortable
               (callback gtk-tree-iter-compare-func)
               (allocate-stable-pointer func)
-              (callback stable-pointer-destroy-notify-cb)))
+              (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-tree-sortable-set-default-sort-func)
 

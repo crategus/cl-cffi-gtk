@@ -277,7 +277,7 @@
                                    selection
                                    (callback gtk-tree-selection-func)
                                    (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-tree-selection-set-select-function)
 

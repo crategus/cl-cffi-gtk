@@ -1193,7 +1193,7 @@
                                    renderer
                                    (callback gtk-tree-cell-data-func)
                                    (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-tree-view-column-set-cell-data-func)
 

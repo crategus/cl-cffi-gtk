@@ -281,7 +281,7 @@
 (defcfun ("gtk_text_iter_copy" gtk-text-iter-copy)
     (g-boxed-foreign gtk-text-iter)
  #+cl-cffi-gtk-documentation
- "@version{2021-6-13}
+ "@version{*2021-12-17}
   @argument[iter]{a @class{gtk-text-iter} instance}
   @return{A copy of @arg{iter}.}
   @begin{short}
@@ -336,23 +336,22 @@
 
 (defcfun ("gtk_text_iter_get_offset" gtk-text-iter-offset) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-6-13}
-  @syntax[]{(gtk-text-iter-offset iter) => char-offset}
-  @syntax[]{(setf (gtk-text-iter-offset iter) char-offset)}
+ "@version{2021-12-9}
+  @syntax[]{(gtk-text-iter-offset iter) => offset}
+  @syntax[]{(setf (gtk-text-iter-offset iter) offset)}
   @argument[iter]{a @class{gtk-text-iter} instance}
-  @argument[char-offset]{an integer with a character offset}
+  @argument[offset]{an integer with a character offset}
   @begin{short}
     Accessor of the character offset of the iterator.
   @end{short}
 
-  The function @sym{gtk-text-iter-offset} returns the character offset of an
-  iterator. The funcion @sym{(setf gtk-text-iter-offset)} sets the iterator
+  The @sym{gtk-text-iter-offset} function returns the character offset of an
+  iterator. The @sym{(setf gtk-text-iter-offset)} function sets the iterator
   to point to the character offset.
 
   Each character in a text buffer has an offset, starting with 0 for the first
-  character in the text buffer. Use the function
-  @fun{gtk-text-buffer-iter-at-offset} to convert an character offset back into
-  an iterator.
+  character in the text buffer. Use the @fun{gtk-text-buffer-iter-at-offset}
+  function to convert an character offset back into an iterator.
   @see-class{gtk-text-iter}
   @see-class{gtk-text-buffer}
   @see-function{gtk-text-buffer-iter-at-offset}"
@@ -768,8 +767,7 @@
   @argument[iter]{a @class{gtk-text-iter} instance}
   @return{The @class{gtk-text-child-anchor} object at the iterator.}
   @begin{short}
-    If the location at the iterator contains a child anchor, the anchor is
-   returned.
+    If the location at the iterator contains an anchor, the anchor is returned.
   @end{short}
   Otherwise, @code{nil} is returned.
   @see-class{gtk-text-iter}
@@ -1383,7 +1381,7 @@
 
 (defun gtk-text-iter-move (iter &key (count 1) (by :char) (direction :forward))
  #+cl-cffi-gtk-documentation
- "@version{2021-6-15}
+ "@version{*2021-12-17}
   @argument[iter]{a @class{gtk-text-iter} instance}
   @argument[count]{an integer with the default value 1}
   @argument[by]{a keyword which determines the operation to perform, the
@@ -1476,8 +1474,8 @@
       equivalent of say the letter \"a\" with an accent mark will be represented
       as two characters, first the letter then a \"combining mark\" that causes
       the accent to be rendered. So the cursor cannot go between those two
-      characters. See also the @class{pango-log-attr} structure and the function
-      @fun{pango-default-break}.
+      characters. See also the @class{pango-log-attr} structure and the
+      @fun{pango-default-break} function.
 
       Returns @em{true} if we moved and the new position is dereferenceable.
 

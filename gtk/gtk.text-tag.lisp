@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.text-tag.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -377,7 +377,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-tag 'type)
- "@version{*2021-2-21}
+ "@version{*2021-11-17}
   @begin{short}
     You may wish to begin by reading the text widget conceptual overview which
     gives an overview of all the objects and data types related to the text
@@ -386,19 +386,19 @@
 
   Tags should be in the @class{gtk-text-tag-table} object for a given
   @class{gtk-text-buffer} object before using them with that text buffer. The
-  function @fun{gtk-text-buffer-create-tag} is the best way to create tags.
+  @fun{gtk-text-buffer-create-tag} function is the best way to create tags.
 
   For each property of the @sym{gtk-text-tag} class, there is a \"set\"
   property, e.g. \"font-set\" corresponds to \"font\". These \"set\" properties
-  reflect whether a property has been set or not. They are maintained by GTK+
+  reflect whether a property has been set or not. They are maintained by GTK
   and you should not set them independently.
   @begin[Signal Details]{dictionary}
     @subheading{The \"event\" signal}
       @begin{pre}
- lambda (tag object event iter)    : Run Last
+ lambda (tag object event iter)    :run-last
       @end{pre}
-      The signal is emitted when an event occurs on a region of the text
-      buffer marked with this tag.
+      The signal is emitted when an event occurs on a region of the text buffer
+      marked with this tag.
       @begin[code]{table}
         @entry[tag]{The @sym{gtk-text-tag} object on which the signal is
           emitted.}
@@ -499,7 +499,7 @@
 (setf (gethash 'gtk-text-tag-accumulative-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-accumulative-margin 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-accumulative-margin object) => setting}
   @syntax[]{(setf (gtk-text-tag-accumulative-margin object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -527,7 +527,7 @@
 (setf (gethash 'gtk-text-tag-background atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-background object) => background}
   @syntax[]{(setf (gtk-text-tag-background object) background)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -557,7 +557,7 @@
 (setf (gethash 'gtk-text-tag-background-full-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-full-height 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-background-full-height object) => setting}
   @syntax[]{(setf (gtk-text-tag-background-full-height object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -588,7 +588,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-full-height-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-background-full-height-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-background-full-height-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -611,14 +611,14 @@
   @br{}
   The background color. @br{}
   @em{Warning:} The @code{background-gdk} property has been deprecated since
-  version 3.4 and should not be used in newly-written code. Use the
+  version 3.4 and should not be used in newly written code. Use the
   @code{background-rgba} property instead.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-background-gdk atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-gdk 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-background-gdk object) => color}
   @syntax[]{(setf (gtk-text-tag-background-gdk object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -630,9 +630,9 @@
 
   The background color.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-text-tag-background-gdk} has been deprecated since
-    version 3.4 and should not be used in newly-written code. Use the funcion
-    @fun{gtk-text-tag-background-rgba} instead.
+    The @sym{gtk-text-tag-background-gdk} function has been deprecated since
+    version 3.4 and should not be used in newly written code. Use the
+    @fun{gtk-text-tag-background-rgba} function instead.
   @end{dictionary}
   @see-class{gtk-text-tag}
   @see-class{gdk-color}
@@ -651,7 +651,7 @@
 (setf (gethash 'gtk-text-tag-background-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-rgba 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-background-rgba object) => color}
   @syntax[]{(setf (gtk-text-tag-background-rgba object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -681,7 +681,7 @@
 (setf (gethash 'gtk-text-tag-background-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-background-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-background-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-background-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -702,14 +702,14 @@
 (setf (documentation (atdoc:get-slot-from-name "direction" 'gtk-text-tag) 't)
  "The @code{direction} property of type @symbol{gtk-text-direction}
   (Read / Write) @br{}
-  Text direction, e.g. @code{:ltr} for left-to-right. @br{}
+  Text direction, e.g. the @code{:ltr} value for left-to-right. @br{}
   Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-direction 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-direction object) => direction}
   @syntax[]{(setf (gtk-text-tag-direction object) direction)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -735,7 +735,7 @@
 (setf (gethash 'gtk-text-tag-editable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-editable 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-editable object) => editable}
   @syntax[]{(setf (gtk-text-tag-editable object) editable)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -761,7 +761,7 @@
 (setf (gethash 'gtk-text-tag-editable-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-editable-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-editable-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-editable-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -788,7 +788,7 @@
 (setf (gethash 'gtk-text-tag-fallback atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-fallback 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-fallback object) => fallback}
   @syntax[]{(setf (gtk-text-tag-fallback object) fallback)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -815,7 +815,7 @@
 (setf (gethash 'gtk-text-tag-fallback-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-fallback-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-fallback-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-fallback-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -839,7 +839,7 @@
 (setf (gethash 'gtk-text-tag-family atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-family 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-family object) => family}
   @syntax[]{(setf (gtk-text-tag-family object) family)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -865,7 +865,7 @@
 (setf (gethash 'gtk-text-tag-family-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-family-set 'function)
- "@version{2021-1-7}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-family-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-family-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -893,7 +893,7 @@
 (setf (gethash 'gtk-text-tag-font atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-font 'function)
- "@version{2021-1-7}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-font object) => font}
   @syntax[]{(setf (gtk-text-tag-font object) font)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -921,7 +921,7 @@
 (setf (gethash 'gtk-text-tag-font-desc atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-font-desc 'function)
- "@version{2021-1-7}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-font-desc object) => font-desc}
   @syntax[]{(setf (gtk-text-tag-font object) font-desc)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -949,7 +949,7 @@
 (setf (gethash 'gtk-text-tag-font-features atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-font-features 'function)
- "@version{2021-1-7}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-font-features object) => features}
   @syntax[]{(setf (gtk-text-tag-font-features object) features)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -979,7 +979,7 @@
 (setf (gethash 'gtk-text-tag-font-features-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-font-features-set 'function)
- "@version{2021-1-7}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-font-features-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-font-features-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1007,7 +1007,7 @@
 (setf (gethash 'gtk-text-tag-foreground atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-foreground 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-foreground object) => color}
   @syntax[]{(setf (gtk-text-tag-foreground object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1031,14 +1031,14 @@
   @br{}
   The foreground color. @br{}
   @em{Warning:} The @code{foreground-gdk} property has been deprecated since
-  version 3.4 and should not be used in newly-written code. Use the
+  version 3.4 and should not be used in newly written code. Use the
   @code{foreground-rgba} property instead.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-foreground-gdk atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-foreground-gdk 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-foreground-gdk object) => color}
   @syntax[]{(setf (gtk-text-tag-foreground-gdk object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1050,9 +1050,9 @@
 
   The foreground color.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-text-tag-foreground-gdk} has been deprecated since
-    version 3.4 and should not be used in newly-written code. Use the function
-    @fun{gtk-text-tag-foreground-rgba} instead.
+    The @sym{gtk-text-tag-foreground-gdk} function has been deprecated since
+    version 3.4 and should not be used in newly written code. Use the
+    @fun{gtk-text-tag-foreground-rgba} function instead.
   @end{dictionary}
   @see-class{gtk-text-tag}
   @see-class{gdk-color}
@@ -1071,7 +1071,7 @@
 (setf (gethash 'gtk-text-tag-foreground-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-foreground-rgba 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-foreground-rgba object) => color}
   @syntax[]{(setf (gtk-text-tag-foreground-rgba object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1101,7 +1101,7 @@
 (setf (gethash 'gtk-text-tag-foreground-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-foreground-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-foreground-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-foreground-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1128,7 +1128,7 @@
 (setf (gethash 'gtk-text-tag-indent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-indent 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-indent object) => indent}
   @syntax[]{(setf (gtk-text-tag-indent object) indent)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1154,7 +1154,7 @@
 (setf (gethash 'gtk-text-tag-indent-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-indent-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-indent-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-indent-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1182,7 +1182,7 @@
 (setf (gethash 'gtk-text-tag-invisible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-invisible 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-invisible object) => invisible}
   @syntax[]{(setf (gtk-text-tag-invisible object) invisible)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1211,7 +1211,7 @@
 (setf (gethash 'gtk-text-tag-invisible-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-invisible-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-invisible-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-invisible-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1252,6 +1252,7 @@
 
   Left, right, or center justification.
   @see-class{gtk-text-tag}
+  @see-symbol{gtk-justification}
   @see-function{gtk-text-tag-justification-set}")
 
 ;;; --- gtk-text-tag-justification-set -----------------------------------------
@@ -1290,14 +1291,14 @@
   The language this text is in, as an ISO code. Pango can use this as a hint
   when rendering the text. If not set, an appropriate default will be used.
   Note that the initial value of this property depends on the current locale,
-  see also the function @fun{gtk-default-language}. @br{}
+  see also the @fun{gtk-default-language} function. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-language atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-language 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-language object) => language}
   @syntax[]{(setf (gtk-text-tag-language object) language)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1310,7 +1311,7 @@
   The language this text is in, as an ISO code. Pango can use this as a hint
   when rendering the text. If not set, an appropriate default will be used.
   Note that the initial value of this property depends on the current locale,
-  see also the function @fun{gtk-default-language}.
+  see also the @fun{gtk-default-language} function.
   @see-class{gtk-text-tag}
   @see-function{gtk-default-language}
   @see-function{gtk-text-tag-language-set}")
@@ -1327,7 +1328,7 @@
 (setf (gethash 'gtk-text-tag-language-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-language-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-language-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-language-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1354,7 +1355,7 @@
 (setf (gethash 'gtk-text-tag-left-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-left-margin 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-left-margin object) => margin}
   @syntax[]{(setf (gtk-text-tag-left-margin object) margin)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1382,7 +1383,7 @@
 (setf (gethash 'gtk-text-tag-left-margin-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-left-margin-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-left-margin-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-left-margin-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1410,7 +1411,7 @@
 (setf (gethash 'gtk-text-tag-letter-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-letter-spacing 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-letter-spacing object) => spacing}
   @syntax[]{(setf (gtk-text-tag-letter-spacing object) spacing)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1439,7 +1440,7 @@
 (setf (gethash 'gtk-text-tag-letter-spacing-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-letter-spacing-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-letter-spacing-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-letter-spacing-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1466,7 +1467,7 @@
 (setf (gethash 'gtk-text-tag-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-name 'function)
- "@version{*2021-2-21}
+ "@version{*2021-11-17}
   @syntax[]{(gtk-text-tag-name name) => name}
   @argument[object]{a @class{gtk-text-tag} object}
   @argument[name]{a string with the name of the text tag}
@@ -1492,7 +1493,7 @@
 (setf (gethash 'gtk-text-tag-paragraph-background atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-paragraph-background object) => color}
   @syntax[]{(setf (gtk-text-tag-paragraph-background object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1516,7 +1517,7 @@
   (Read / Write) @br{}
   The paragraph background color as a as a @sym{gdk-color}. @br{}
   @em{Warning:} The @code{paragraph-background-gdk} property has been deprecated
-  since version 3.4 and should not be used in newly-written code. Use the
+  since version 3.4 and should not be used in newly written code. Use the
   @code{paragraph-background-rgba} property instead.")
 
 #+cl-cffi-gtk-documentation
@@ -1524,7 +1525,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background-gdk 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-paragraph-background-gdk object) => color}
   @syntax[]{(setf (gtk-text-tag-paragraph-background-gdk object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1536,9 +1537,9 @@
 
   The paragraph background color.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-text-tag-paragraph-background-gdk} has been deprecated
-    since version 3.4 and should not be used in newly-written code. Use the
-    funtion @fun{gtk-text-tag-paragraph-background-rgba} instead.
+    The @sym{gtk-text-tag-paragraph-background-gdk} function has been deprecated
+    since version 3.4 and should not be used in newly written code. Use the
+    @fun{gtk-text-tag-paragraph-background-rgba} funtion instead.
   @end{dictionary}
   @see-class{gtk-text-tag}
   @see-class{gdk-color}
@@ -1558,7 +1559,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background-rgba 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-paragraph-background-rgba object) => color}
   @syntax[]{(setf (gtk-text-tag-paragraph-background-rgba object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1589,7 +1590,7 @@
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-paragraph-background-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-paragraph-background-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-paragraph-background-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1620,7 +1621,7 @@
 (setf (gethash 'gtk-text-tag-pixels-above-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-above-lines 'function)
- "@version{2021-2-21}
+ "@version{*2021-12-17}
   @syntax[]{(gtk-text-tag-pixels-above-lines object) => pixels}
   @syntax[]{(setf (gtk-text-tag-pixels-above-lines object) pixels)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1648,7 +1649,7 @@
 (setf (gethash 'gtk-text-tag-pixels-above-lines-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-above-lines-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-pixels-above-lines-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-pixels-above-lines-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1678,7 +1679,7 @@
 (setf (gethash 'gtk-text-tag-pixels-below-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-below-lines 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-pixels-below-lines object) => pixels}
   @syntax[]{(setf (gtk-text-tag-pixels-below-lines object) pixels)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1689,7 +1690,7 @@
   @end{short}
 
   Pixels of blank space below paragraphs.
-  @see-clas{gtk-text-tag}
+  @see-class{gtk-text-tag}
   @see-function{gtk-text-tag-pixels-below-lines-set}")
 
 ;;; --- gtk-text-tag-pixels-below-lines-set ------------------------------------
@@ -1706,7 +1707,7 @@
 (setf (gethash 'gtk-text-tag-pixels-below-lines-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-below-lines-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-pixels-below-lines-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-pixels-below-lines-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1736,7 +1737,7 @@
 (setf (gethash 'gtk-text-tag-pixels-inside-wrap atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-inside-wrap 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-pixels-inside-wrap object) => pixels}
   @syntax[]{(setf (gtk-text-tag-pixels-inside-wrap object) pixels)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1765,7 +1766,7 @@
 (setf (gethash 'gtk-text-tag-pixels-inside-wrap-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-pixels-inside-wrap-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-pixels-inside-wrap-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-pixels-inside-wrap-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1793,7 +1794,7 @@
 (setf (gethash 'gtk-text-tag-right-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-right-margin 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-right-margin object) => margin}
   @syntax[]{(setf (gtk-text-tag-right-margin object) margin)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1821,7 +1822,7 @@
 (setf (gethash 'gtk-text-tag-right-margin-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-right-margin-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-right-margin-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-right-margin-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1848,7 +1849,7 @@
 (setf (gethash 'gtk-text-tag-rise atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-rise 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-rise object) => rise}
   @syntax[]{(setf (gtk-text-tag-rise object) rise)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1876,7 +1877,7 @@
 (setf (gethash 'gtk-text-tag-rise-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-rise-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-rise-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-rise-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1897,7 +1898,7 @@
  "The @code{scale} property of type @code{:double} (Read / Write) @br{}
   Font size as a scale factor relative to the default font size. This properly
   adapts to theme changes etc. so is recommended. Pango predefines some scales
-  such as @code{PANGO_SCALE_X_LARGE}. @br{}
+  such as the @var{+pango-scale-x-large+} value. @br{}
   Allowed values: >= 0 @br{}
   Default value: 1")
 
@@ -1905,7 +1906,7 @@
 (setf (gethash 'gtk-text-tag-scale atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-scale 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-scale object) => scale}
   @syntax[]{(setf (gtk-text-tag-scale object) scale)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1917,7 +1918,7 @@
 
   Font size as a scale factor relative to the default font size. This properly
   adapts to theme changes etc. so is recommended. Pango predefines some scales
-  such as @var{+pango-scale-x-large+}.
+  such as the @var{+pango-scale-x-large+} value.
   @see-class{gtk-text-tag}
   @see-function{gtk-text-tag-scale-set}")
 
@@ -1933,7 +1934,7 @@
 (setf (gethash 'gtk-text-tag-scale-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-scale-set 'function)
- "@version{2021-2-21}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-scale-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-scale-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1960,7 +1961,7 @@
 (setf (gethash 'gtk-text-tag-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-size 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-size object) => size}
   @syntax[]{(setf (gtk-text-tag-size object) size)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -1988,7 +1989,7 @@
 (setf (gethash 'gtk-text-tag-size-points atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-size-points 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-size-points object) => size}
   @syntax[]{(setf (gtk-text-tag-size-points object) size)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2015,7 +2016,7 @@
 (setf (gethash 'gtk-text-tag-size-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-size-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-size-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-size-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2036,15 +2037,14 @@
 (setf (documentation (atdoc:get-slot-from-name "stretch" 'gtk-text-tag) 't)
  "The @code{stretch} property of type @symbol{pango-stretch} (Read / Write)
   @br{}
-  Font stretch as a value of the @symbol{pango-stretch} enumeration, e.g.
-  the value @code{:condensed}. @br{}
+  Font stretch, e.g. the @code{:condensed} value. @br{}
   Default value: @code{:normal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-stretch atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-stretch 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-stretch object) => stretch}
   @syntax[]{(setf (gtk-text-tag-stretch object) stretch)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2055,7 +2055,7 @@
   @end{short}
 
   Font stretch as a value of the @symbol{pango-stretch} enumeration, e.g. the
-  value @code{:condensed}.
+  @code{:condensed} value.
   @see-class{gtk-text-tag}
   @see-symbol{pango-stretch}
   @see-function{gtk-text-tag-stretch-set}")
@@ -2072,7 +2072,7 @@
 (setf (gethash 'gtk-text-tag-stretch-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-stretch-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-stretch-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-stretch-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2099,7 +2099,7 @@
 (setf (gethash 'gtk-text-tag-strikethrough atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-strikethrough object) => strikethrough}
   @syntax[]{(setf (gtk-text-tag-strikethrough object) strikethrough)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2128,7 +2128,7 @@
 (setf (gethash 'gtk-text-tag-strikethrough-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough-rgba 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-strikethrough-rgba object) => color}
   @syntax[]{(setf (gtk-text-tag-strikethrough-rgba object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2158,7 +2158,7 @@
 (setf (gethash 'gtk-text-tag-strikethrough-rgba-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough-rgba-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-strikethrough-rgba-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-strikethrough-rgba-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2187,7 +2187,7 @@
 (setf (gethash 'gtk-text-tag-strikethrough-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-strikethrough-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-strikethrough-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-strikethrough-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2206,15 +2206,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "style" 'gtk-text-tag) 't)
  "The @code{style} property of type @symbol{pango-style} (Read / Write) @br{}
-  Font style as a value of the @sym{pango-style} enumeration, e.g.
-  @code{:italic}. @br{}
+  Font style, e.g. the @code{:italic} value. @br{}
   Default value: @code{:normal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-style 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-style object) => style}
   @syntax[]{(setf (gtk-text-tag-style object) style)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2224,8 +2223,8 @@
     class.
   @end{short}
 
-  Font style as a value of the @symbol{pango-style} enumeration, e.g.
-  @code{:italic}.
+  Font style as a value of the @symbol{pango-style} enumeration, e.g. the
+  @code{:italic} value.
   @see-class{gtk-text-tag}
   @see-symbol{pango-style}
   @see-function{gtk-text-tag-style-set}")
@@ -2242,7 +2241,7 @@
 (setf (gethash 'gtk-text-tag-style-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-style-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-style-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-style-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2267,7 +2266,7 @@
 (setf (gethash 'gtk-text-tag-tabs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-tabs 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-tabs object) => tabs}
   @syntax[]{(setf (gtk-text-tag-tabs object) tabs)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2294,7 +2293,7 @@
 (setf (gethash 'gtk-text-tag-tabs-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-tabs-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-tabs-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-tabs-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2321,7 +2320,7 @@
 (setf (gethash 'gtk-text-tag-underline atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-underline object) => underline}
   @syntax[]{(setf (gtk-text-tag-underline object) underline)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2345,16 +2344,16 @@
  "The @code{underline-rgba} property of type @class{gdk-rgba} (Read / Write)
   @br{}
   This property modifies the color of underlines. If not set, underlines will
-  use the forground color. If the @code{underline} property is set to the value
-  @code{:error} of the @symbol{pango-underline} enumeration, an alternate color
-  may be applied instead of the foreground. Setting this property will always
-  override those defaults.")
+  use the forground color. If the @code{underline} property is set to the
+  @code{:error} value of the @symbol{pango-underline} enumeration, an alternate
+  color may be applied instead of the foreground. Setting this property will
+  always override those defaults.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-underline-rgba atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline-rgba 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-underline-rgba object) => color}
   @syntax[]{(setf (gtk-text-tag-underline-rgba object) color)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2366,7 +2365,7 @@
 
   This property modifies the color of underlines. If not set, underlines will
   use the forground color. If the @slot[gtk-text-tag]{underline} property is
-  set to the value @code{:error} of the @symbol{pango-underline} enumeration,
+  set to the @code{:error} value of the @symbol{pango-underline} enumeration,
   an alternate color may be applied instead of the foreground. Setting this
   property will always override those defaults.
   @see-class{gtk-text-tag}
@@ -2389,7 +2388,7 @@
 (setf (gethash 'gtk-text-tag-underline-rgba-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline-rgba-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-underline-rgba-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-underline-rgba-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2417,7 +2416,7 @@
 (setf (gethash 'gtk-text-tag-underline-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-underline-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-underline-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-underline-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2438,15 +2437,14 @@
 (setf (documentation (atdoc:get-slot-from-name "variant" 'gtk-text-tag) 't)
  "The @code{variant} property of type @symbol{pango-variant}
   (Read / Write) @br{}
-  Font variant as a value of the @sym{pango-variant} enumeration, e.g.
-  @code{:small-caps}. @br{}
+  Font variant, e.g. the @code{:small-caps} value. @br{}
   Default value: @code{:normal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-tag-variant atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-variant 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-variant object) => variant}
   @syntax[]{(setf (gtk-text-tag-variant object) variant)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2456,8 +2454,8 @@
     @class{gtk-text-tag} class.
   @end{short}
 
-  Font variant as a value of the @symbol{pango-variant} enumeration, e.g.
-  @code{:small-caps}.
+  Font variant as a value of the @symbol{pango-variant} enumeration, e.g. the
+  @code{:small-caps} value.
   @see-class{gtk-text-tag}
   @see-symbol{pango-variant}
   @see-function{gtk-text-tag-variant-set}")
@@ -2474,7 +2472,7 @@
 (setf (gethash 'gtk-text-tag-variant-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-variant-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-variant-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-variant-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2494,7 +2492,7 @@
 (setf (documentation (atdoc:get-slot-from-name "weight" 'gtk-text-tag) 't)
  "The @code{weight} property of type @code{:int} (Read / Write) @br{}
   Font weight as an integer, see predefined values in the @symbol{pango-weight}
-  enumeration, for example, @code{:bold}. @br{}
+  enumeration, for example, the @code{:bold} value. @br{}
   Allowed values: >= 0 @br{}
   Default value: 400")
 
@@ -2502,7 +2500,7 @@
 (setf (gethash 'gtk-text-tag-weight atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-weight 'function)
- "@version{2021-2-4}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-weight object) => weight}
   @syntax[]{(setf (gtk-text-tag-weight object) weight)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2513,7 +2511,7 @@
   @end{short}
 
   Font weight as an integer, see predefined values in the @symbol{pango-weight}
-  enumeration, for example, @code{:bold}.
+  enumeration, for example, the @code{:bold} value.
   @see-class{gtk-text-tag}
   @see-symbol{pango-weight}
   @see-function{gtk-text-tag-weight-set}")
@@ -2530,7 +2528,7 @@
 (setf (gethash 'gtk-text-tag-weight-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-weight-set 'function)
- "@version{2021-2-4}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-weight-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-weight-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2558,7 +2556,7 @@
 (setf (gethash 'gtk-text-tag-wrap-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-wrap-mode 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-wrap-mode object) => wrap-mode}
   @syntax[]{(setf (gtk-text-tag-wrap-mode object) wrap-mode)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2586,7 +2584,7 @@
 (setf (gethash 'gtk-text-tag-wrap-mode-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-tag-wrap-mode-set 'function)
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-wrap-mode-set object) => setting}
   @syntax[]{(setf (gtk-text-tag-wrap-mode-set object) setting)}
   @argument[object]{a @class{gtk-text-tag} object}
@@ -2606,7 +2604,7 @@
 
 (defun gtk-text-tag-new (name &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @argument[name]{a string with the tag name, or @code{nil}}
   @argument[args]{list of property keywords and values}
   @return{A new @class{gtk-text-tag} object.}
@@ -2637,7 +2635,7 @@
 
 (defcfun ("gtk_text_tag_get_priority" gtk-text-tag-priority) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @syntax[]{(gtk-text-tag-priority tag) => priority}
   @syntax[]{(setf (gtk-text-tag-priority tag) priority)}
   @argument[tag]{a @class{gtk-text-tag} object}
@@ -2646,19 +2644,19 @@
     Accessor for the priority of a @class{gtk-text-tag} object.
   @end{short}
 
-  The function @sym{gtk-text-tag-priority} gets the tag priority. The function
-  @sym{(setf gtk-text-tag-priority)} sets the priority.
+  The @sym{gtk-text-tag-priority} function gets the tag priority. The
+  @sym{(setf gtk-text-tag-priority)} function sets the priority.
 
   Valid priorities are start at 0 and go to one less than the value of the
-  result of the function @fun{gtk-text-tag-table-size}. Each tag in a tag table
+  result of the @fun{gtk-text-tag-table-size} function. Each tag in a tag table
   has a unique priority. Setting the priority of one tag shifts the priorities
   of all the other tags in the tag table to maintain a unique priority for each
   tag. Higher priority tags \"win\" if two tags both set the same text
   attribute. When adding a tag to a tag table, it will be assigned the highest
   priority in the tag table by default. So normally the precedence of a set of
   tags is the order in which they were added to the tag table, or created with
-  the function @fun{gtk-text-buffer-create-tag}, which adds the tag to the
-  text buffer's tag table automatically.
+  the @fun{gtk-text-buffer-create-tag} function, which adds the tag to the tag
+  table of the text buffer automatically.
   @see-class{gtk-text-tag}
   @see-class{gtk-text-tag-table}
   @see-function{gtk-text-tag-table-size}
@@ -2673,9 +2671,9 @@
 
 (defcfun ("gtk_text_tag_event" gtk-text-tag-event) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @argument[tag]{a @class{gtk-text-tag} object}
-  @argument[object]{the @class{g-object} object that received the event}
+  @argument[object]{the @class{g-object} instance that received the event}
   @argument[event]{the @class{gdk-event} event}
   @argument[iter]{a @class{gtk-text-iter} iterator with the location where the
     event was received}
@@ -2700,9 +2698,9 @@
 #+gtk-3-20
 (defcfun ("gtk_text_tag_changed" gtk-text-tag-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-2-22}
+ "@version{2021-11-17}
   @argument[tag]{a @class{gtk-text-tag} object}
-  @argument[size-changed]{a boolean whether the change affects the
+  @argument[changed]{a boolean whether the change affects the
     @class{gtk-text-view} layout}
   @begin{short}
     Emits the \"tag-changed\" signal on the @class{gtk-text-tag-table} object
@@ -2718,7 +2716,7 @@
   @see-class{gtk-text-iter}
   @see-class{gdk-event}"
   (tag (g-object gtk-text-tag))
-  (size-changed :boolean))
+  (changed :boolean))
 
 #+gtk-3-20
 (export 'gtk-text-tag-changed)

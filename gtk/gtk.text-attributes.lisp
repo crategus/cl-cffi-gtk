@@ -51,7 +51,7 @@
 (setf (gethash 'gtk-wrap-mode atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-wrap-mode atdoc:*external-symbols*)
- "@version{2021-8-19}
+ "@version{2021-11-17}
   @short{Describes a type of line wrapping.}
   @begin{pre}
 (define-g-enum \"GtkWrapMode\" gtk-wrap-mode
@@ -66,7 +66,7 @@
     @entry[:none]{Do not wrap lines, just make the text area wider.}
     @entry[:char]{Wrap text, breaking lines anywhere the cursor can appear
       between characters, usually. If you want to be technical, between
-      graphemes, see the function @fun{pango-log-attrs}.}
+      graphemes, see the @fun{pango-log-attrs} function.}
     @entry[:word]{Wrap text, breaking lines in between words.}
     @entry[:word-char]{Wrap text, breaking lines in between words, or if that
       is not enough, also between graphemes.}

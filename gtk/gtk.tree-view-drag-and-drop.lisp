@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-view-drag-and-drop.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -73,11 +73,11 @@
       (documentation 'gtk-tree-drag-source 'type)
  "@version{2021-3-5}
   @begin{short}
-    GTK+ supports Drag-and-Drop in tree views with a high-level and a low-level
+    GTK supports drag and drop in tree views with a high-level and a low-level
     API.
   @end{short}
 
-  The low-level API consists of the GTK+ DND API, augmented by some tree view
+  The low-level API consists of the GTK DND API, augmented by some tree view
   utility functions:
   @fun{gtk-tree-view-set-drag-dest-row},
   @fun{gtk-tree-view-get-drag-dest-row},
@@ -223,11 +223,11 @@
       (documentation 'gtk-tree-drag-dest 'type)
  "@version{2021-3-5}
   @begin{short}
-    GTK+ supports Drag-and-Drop in tree views with a high-level and a low-level
+    GTK supports Drag-and-Drop in tree views with a high-level and a low-level
     API.
   @end{short}
 
-  The low-level API consists of the GTK+ DND API, augmented by some tree view
+  The low-level API consists of the GTK DND API, augmented by some tree view
   utility functions: @fun{gtk-tree-view-set-drag-dest-row},
   @fun{gtk-tree-view-get-drag-dest-row},
   @fun{gtk-tree-view-get-dest-row-at-pos},

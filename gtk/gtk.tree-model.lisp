@@ -1740,10 +1740,10 @@
 (setf (gethash 'gtk-tree-model-foreach-func atdoc:*symbol-name-alias*)
       "Callback"
       (gethash 'gtk-tree-model-foreach-func atdoc:*external-symbols*)
- "@version{2021-3-4}
+ "@version{2021-12-9}
   @begin{short}
-    Type of the callback function passed to the funcion
-    @fun{gtk-tree-model-foreach} to iterate over the rows in a tree model.
+    Type of the callback function passed to the @fun{gtk-tree-model-foreach}
+    function to iterate over the rows in a tree model.
   @end{short}
   @begin{pre}
  lambda (model path iter)
@@ -1935,7 +1935,7 @@
 ;;;                                 gint *new_order,
 ;;;                                 gint length);
 ;;;
-;;; Emits the “rows-reordered” signal on tree_model .
+;;; Emits the "rows-reordered" signal on tree_model .
 ;;;
 ;;; This should be called by models when their rows have been reordered.
 ;;;

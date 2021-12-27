@@ -465,7 +465,7 @@
 (setf (gethash 'gtk-align atdoc:*symbol-name-alias*)
       "GEnum"
       (gethash 'gtk-align atdoc:*external-symbols*)
- "@version{2021-9-14}
+ "@version{*2021-11-30}
   @begin{short}
     Controls how a widget deals with extra space in a single x or y dimension.
   @end{short}
@@ -2485,7 +2485,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-halign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-halign 'function)
- "@version{2021-9-15}
+ "@version{*2021-12-17}
   @syntax[]{(gtk-widget-halign object) => align}
   @syntax[]{(setf (gtk-widget-halign object) align)}
   @argument[object]{a @class{gtk-widget} object}
@@ -2610,8 +2610,8 @@ drag_data_received (GtkWidget        *widget,
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "height-request" 'gtk-widget) 't)
  "The @code{height-request} property of type @code{:int} (Read / Write) @br{}
-  Override for height request of the widget, or -1 if natural request
-  should be used. @br{}
+  Override for height request of the widget, or -1 if natural request should be
+  used. @br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
@@ -2619,7 +2619,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-height-request atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-height-request 'function)
- "@version{2021-9-15}
+ "@version{*2021-12-8}
   @syntax[]{(gtk-widget-height-request object) => height}
   @syntax[]{(setf (gtk-widget-height-request object) height)}
   @argument[object]{a @class{gtk-widget} object}
@@ -3018,7 +3018,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-name 'function)
- "@version{2021-9-15}
+ "@version{*2021-12-15}
   @syntax[]{(gtk-widget-name object) => name}
   @syntax[]{(setf (gtk-widget-name object) name)}
   @argument[object]{a @class{gtk-widget} object}
@@ -3380,7 +3380,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-valign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-valign 'function)
- "@version{2021-9-15}
+ "@version{*2021-12-17}
   @syntax[]{(gtk-widget-valign object) => align}
   @syntax[]{(setf (gtk-widget-valign object) align)}
   @argument[object]{a @class{gtk-widget} object}
@@ -3476,7 +3476,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-visible 'function)
- "@version{2021-9-15}
+ "@version{*2021-12-15}
   @syntax[]{(gtk-widget-visible object) => setting}
   @syntax[]{(setf (gtk-widget-visible object) setting)}
   @argument[object]{a @class{gtk-widget} object}
@@ -3512,7 +3512,7 @@ drag_data_received (GtkWidget        *widget,
 (setf (gethash 'gtk-widget-width-request atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-width-request 'function)
- "@version{2021-9-15}
+ "@version{*2021-12-8}
   @syntax[]{(gtk-widget-width-request object) => width}
   @syntax[]{(setf (gtk-widget-width-request object) width)}
   @argument[object]{a @class{gtk-widget} object}
@@ -3550,7 +3550,7 @@ drag_data_received (GtkWidget        *widget,
   of the widget if it is realized, @code{nil} otherwise.
   @begin[Lisp implementation]{dictionary}
     The @slot[gtk-widget]{window} slot is only readable. The C library has the
-    @code{gtk_widget_set_window()} function to set a GDK window. This funcion
+    @code{gtk_widget_set_window()} function to set a GDK window. This function
     is only used in a \"realize\" implementation of a widget and not
     implemented in the Lisp library.
   @end{dictionary}
@@ -3678,7 +3678,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_show" gtk-widget-show) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-16}
+ "@version{*2021-12-3}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Flags a widget to be displayed.
@@ -3726,7 +3726,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_hide" gtk-widget-hide) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-16}
+ "@version{*2021-12-22}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Reverses the effects of the @fun{gtk-widget-show} function, causing the
@@ -4119,7 +4119,7 @@ drag_data_received (GtkWidget        *widget,
   (%gtk-widget-add-tick-callback widget
                                  (callback gtk-tick-callback)
                                  (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                 (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-widget-add-tick-callback)
 
@@ -4259,16 +4259,16 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_add_accelerator" gtk-widget-add-accelerator) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-16}
+ "@version{*2021-12-22}
   @argument[widget]{a @class{gtk-widget} object to install an accelerator on}
   @argument[signal]{a string with the widget signal to emit on accelerator
     activation}
   @argument[group]{a @class{gtk-accel-group} object for @arg{widget}, added to
     its toplevel}
   @argument[key]{an unsigned integer with the GDK keyval of the accelerator}
-  @argument[mods]{the @symbol{gdk-modifier-type} flags with the modifier key
-    combination of the accelerator}
-  @argument[flags]{the @symbol{gtk-accel-flags} flags with the accelerators}
+  @argument[mods]{a @symbol{gdk-modifier-type} modifier key combination of the
+    accelerator}
+  @argument[flags]{a @symbol{gtk-accel-flags} value with the accelerators}
   @begin{short}
     Installs an accelerator for this widget in the accelerator group that
     causes the signal to be emitted if the accelerator is activated.
@@ -4526,7 +4526,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_grab_focus" gtk-widget-grab-focus) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-9-16}
+ "@version{*2021-11-30}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Causes the widget to have the keyboard focus for the @class{gtk-window}
@@ -7445,7 +7445,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_get_allocated_width" gtk-widget-allocated-width) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-9-20}
+ "@version{*2021-11-30}
   @argument[widget]{the @class{gtk-widget} object to query}
   @return{An integer with the width of the widget.}
   @begin{short}
@@ -7472,7 +7472,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_get_allocated_height" gtk-widget-allocated-height) :int
  #+cl-cffi-gtk-documentation
- "@version{2021-9-20}
+ "@version{*2021-11-30}
   @argument[widget]{the @class{gtk-widget} object to query}
   @return{An integer with the height of the widget.}
   @begin{short}
@@ -7515,7 +7515,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defun gtk-widget-allocation (widget)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-20}
+ "@version{*2021-12-7}
   @syntax[]{(gtk-widget-allocation widget) => allocation}
   @syntax[]{(setf (gtk-widget-allocation widget) allocation}
   @argument[widget]{a @class{gtk-widget} object}
@@ -7557,9 +7557,9 @@ drag_data_received (GtkWidget        *widget,
     C implementation the type @code{GtkAllocation} is a synonym for the type
     @class{gdk-rectangle}.
 
-    In most cases, it is more convenient to use the functions
-    @fun{gtk-widget-allocated-width} and @fun{gtk-widget-allocated-height} to
-    retrieve the allocated width and height of the widget.
+    In most cases, it is more convenient to use the
+    @fun{gtk-widget-allocated-width} and @fun{gtk-widget-allocated-height}
+    functions to retrieve the allocated width and height of the widget.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-container}
@@ -7992,7 +7992,7 @@ drag_data_received (GtkWidget        *widget,
 
 (defcfun ("gtk_widget_get_mapped" gtk-widget-mapped) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2021-9-20}
+ "@version{*2021-12-15}
   @syntax[]{(gtk-widget-mapped widget) => mapped}
   @syntax[]{(setf (gtk-widget-mapped widget) mapped)}
   @argument[widget]{a @class{gtk-widget} object}
@@ -8188,7 +8188,7 @@ drag_data_received (GtkWidget        *widget,
 (defcfun ("gtk_widget_get_style_context" gtk-widget-style-context)
     (g-object gtk-style-context)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-20}
+ "@version{*2021-11-18}
   @argument[widget]{a @class{gtk-widget} object}
   @return{A @class{gtk-style-context} object.}
   @begin{short}
@@ -9021,10 +9021,10 @@ drag_data_received (GtkWidget        *widget,
 ;;;     A GtkWidgetClass
 ;;;
 ;;; name
-;;;     The “id” of the child defined in the template XML
+;;;     The "id" of the child defined in the template XML
 ;;;
 ;;; internal_child
-;;;     Whether the child should be accessible as an “internal-child” when this
+;;;     Whether the child should be accessible as an "internal-child" when this
 ;;;     class is used in GtkBuilder XML
 ;;;
 ;;; struct_offset

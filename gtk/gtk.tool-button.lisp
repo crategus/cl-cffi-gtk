@@ -122,30 +122,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-button 'type)
- "@version{*2021-3-14}
+ "@version{*2021-11-30}
   @begin{short}
     The @sym{gtk-tool-button} widgets are @class{gtk-tool-item} widgets
     containing buttons.
   @end{short}
-
-  Use the function @fun{gtk-tool-button-new} to create a new
+  Use the @fun{gtk-tool-button-new} function to create a new
   @sym{gtk-tool-button} widget.
 
-  The label of a @sym{gtk-tool-button} widget is determined by the properties
-  @code{label-widget}, @code{label}, @code{icon-name}, and @code{stock-id}.
-  If @code{label-widget} is non-@code{nil}, then that widget is used as the
-  label. Otherwise, if @code{label} is non-@code{nil}, that string is used
-  as the label. Otherwise, if @code{stock-id} is non-@code{nil}, the label
-  is determined by the stock item. Otherwise, the button does not have a label.
+  The label of a @sym{gtk-tool-button} widget is determined by the
+  @code{label-widget}, @code{label}, @code{icon-name}, and @code{stock-id}
+  properties. If the @code{label-widget} property is non-@code{nil}, then that
+  widget is used as the label. Otherwise, if the @code{label} property is
+  non-@code{nil}, that string is used as the label. Otherwise, if the
+  @code{stock-id} property is non-@code{nil}, the label is determined by the
+  stock item. Otherwise, the button does not have a label.
 
-  The icon of a @sym{gtk-tool-button} is determined by the properties
-  @code{icon-widget}, @code{icon-name}, and @code{stock-id}. If
-  @code{icon-widget} is non-@code{nil}, then that widget is used as the icon.
-  Otherwise, if @code{icon-name} or @code{stock-id} is non-@code{nil}, the
-  icons are determined by the icon name or the stock item. Otherwise, the
-  button does not have a icon.
+  The icon of a @sym{gtk-tool-button} widget is determined by the
+  @code{icon-widget}, @code{icon-name}, and @code{stock-id} properties. If the
+  @code{icon-widget} property is non-@code{nil}, then that widget is used as the
+  icon. Otherwise, if the @code{icon-name} or @code{stock-id} properties are
+  non-@code{nil}, the icons are determined by the icon name or the stock item.
+  Otherwise, the button does not have a icon.
   @begin[CSS nodes]{dictionary}
-    The @sym{gtk-tool-button} widget has a single CSS node with name
+    The @sym{gtk-tool-button} implementation has a single CSS node with name
     @code{toolbutton}.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
@@ -194,7 +194,7 @@
 (setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-tool-button) 't)
  "The @code{icon-name} property of type @code{:string} (Read / Write) @br{}
   The name of the themed icon displayed on the item. This property only has an
-  effect if not overridden by @code{label}, @code{icon-widget} or
+  effect if not overridden by the @code{label}, @code{icon-widget} or
   @code{stock-id} properties. @br{}
   Default value: @code{nil}")
 
@@ -202,27 +202,31 @@
 (setf (gethash 'gtk-tool-button-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-icon-name 'function)
- "@version{2020-9-5}
+ "@version{2021-11-30}
   @syntax[]{(gtk-tool-button-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-tool-button-icon-name object) icon-name)}
   @argument[object]{a @class{gtk-tool-button} widget}
-  @argument[icon-name]{a @code{:string} with the name of the themed icon}
+  @argument[icon-name]{a string with the name of the themed icon}
   @begin{short}
     Accessor of the @slot[gtk-tool-button]{icon-name} slot of the
     @class{gtk-tool-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-tool-button-icon-name} returns the name of
-  the themed icon for the tool button. The slot access function
-  @sym{(setf gtk-tool-button-icon-name)} sets the icon for the tool button from
-  a named themed icon.
+  The @sym{gtk-tool-button-icon-name} slot access function returns the name of
+  the themed icon for the tool button. The
+  @sym{(setf gtk-tool-button-icon-name)} slot access function sets the icon for
+  the tool button from a named themed icon.
 
-  See the docs for @class{gtk-icon-theme} for more details. The
+  See the docs for the @class{gtk-icon-theme} object for more details. The
   @slot[gtk-tool-button]{icon-name} property only has an effect if not
   overridden by non-@code{nil} @slot[gtk-tool-button]{label},
   @slot[gtk-tool-button]{icon-widget} and @slot[gtk-tool-button]{stock-id}
   properties.
-  @see-class{gtk-tool-button}")
+  @see-class{gtk-tool-button}
+  @see-class{gtk-icon-theme}
+  @see-function{gtk-tool-button-label}
+  @see-function{gtk-tool-button-icon-widget}
+  @see-function{gtk-tool-button-stock-id}")
 
 ;;; --- gtk-tool-button-icon-widget --------------------------------------------
 
@@ -237,27 +241,29 @@
 (setf (gethash 'gtk-tool-button-icon-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-icon-widget 'function)
- "@version{2020-9-5}
+ "@version{2021-11-30}
   @syntax[]{(gtk-tool-button-icon-widget object) => icon-widget}
   @syntax[]{(setf (gtk-tool-button-icon-widget object) icon-widget)}
   @argument[button]{a @class{gtk-tool-button} widget}
-  @argument[icon-widget]{the @class{gtk-widget} object used as icon, or
+  @argument[icon-widget]{a @class{gtk-widget} object used as icon, or
     @code{nil}}
   @begin{short}
     Accessor of the @slot[gtk-tool-button]{icon-widget} slot of the
     @class{gtk-tool-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-tool-button-icon-widget} returns the widget
-  used as icon widget on the tool button. The slot access function
-  @sym{(setf gtk-tool-button-icon-widget)} sets icon as the widget used as icon
-  on the tool button.
+  The @sym{gtk-tool-button-icon-widget} slot access function returns the widget
+  used as icon widget on the tool button. The
+  @sym{(setf gtk-tool-button-icon-widget)} slot access function sets icon as the
+  widget used as icon on the tool button.
 
-  If @arg{icon-widget} is @code{nil} the icon is determined by the
+  If the @arg{icon-widget} argument is @code{nil} the icon is determined by the
   @slot[gtk-tool-button]{stock-id} property. If the
-  @slot[gtk-tool-button]{stock-id} property is also @code{nil}, @arg{button}
+  @slot[gtk-tool-button]{stock-id} property is also @code{nil}, the tool button
   will not have an icon.
-  @see-class{gtk-tool-button}")
+  @see-class{gtk-tool-button}
+  @see-class{gtk-widget}
+  @see-function{gtk-tool-button-stock-id}")
 
 ;;; --- gtk-tool-button-label --------------------------------------------------
 
@@ -271,7 +277,7 @@
 (setf (gethash 'gtk-tool-button-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-label 'function)
- "@version{*2021-2-21}
+ "@version{*2021-11-30}
   @syntax[]{(gtk-tool-button-label object) => label}
   @syntax[]{(setf (gtk-tool-button-label object) label)}
   @argument[button]{a @class{gtk-tool-button} widget}
@@ -281,10 +287,10 @@
     @class{gtk-tool-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-tool-button-label} returns the label used
+  The @sym{gtk-tool-button-label} slot access function returns the label used
   by the tool button, or @code{nil} if the tool button does not have a label or
-  uses a label from a stock item. The slot access function
-  @sym{(setf gtk-tool-button-label)} sets the label.
+  uses a label from a stock item. The @sym{(setf gtk-tool-button-label)} slot
+  access function sets the label.
 
   The @slot[gtk-tool-button]{label} property only has an effect if not
   overridden by a non-@code{nil} @slot[gtk-tool-button]{label-widget} property.
@@ -310,28 +316,33 @@
 (setf (gethash 'gtk-tool-button-label-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-label-widget 'function)
- "@version{2020-9-5}
+ "@version{2021-11-30}
   @syntax[]{(gtk-tool-button-label-widget object) => label-widget}
   @syntax[]{(setf (gtk-tool-button-label-widget object) label-widget)}
   @argument[button]{a @class{gtk-tool-button} widget}
-  @argument[label-widget]{the @class{gtk-widget} object used as label, or
+  @argument[label-widget]{a @class{gtk-widget} object used as label, or
     @code{nil}}
   @begin{short}
     Accessor of the @slot[gtk-tool-button]{label-widget} slot of the
     @class{gtk-tool-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-tool-button-label-widget} returns the
-  widget used as label on the tool button. The slot access function
-  @sym{(setf gtk-tool-button-label-widget)} sets @arg{label-widget} as the
-  widget that will be used as the label for the tool button.
+  The @sym{gtk-tool-button-label-widget} slot access function returns the
+  widget used as label on the tool button. The
+  @sym{(setf gtk-tool-button-label-widget)} slot access function sets
+  @arg{label-widget} as the widget that will be used as the label for the tool
+  button.
 
-  If @arg{label-widget} is @code{nil} the @slot[gtk-tool-button]{label} property
-  is used as label. If @slot[gtk-tool-button]{label} is also @code{nil}, the
-  label in the stock item determined by the @slot[gtk-tool-button]{stock-id}
-  property is used as label. If @slot[gtk-tool-button]{stock-id} is also
-  @code{nil}, @arg{button} does not have a label.
-  @see-class{gtk-tool-button}")
+  If the @arg{label-widget} argument is @code{nil} the
+  @slot[gtk-tool-button]{label} property is used as label. If
+  @slot[gtk-tool-button]{label} is also @code{nil}, the label in the stock item
+  determined by the @slot[gtk-tool-button]{stock-id} property is used as label.
+  If @slot[gtk-tool-button]{stock-id} is also @code{nil}, @arg{button} does not
+  have a label.
+  @see-class{gtk-tool-button}
+  @see-class{gtk-widget}
+  @see-function{gtk-tool-button-label}
+  @see-function{gtk-tool-button-stock-id}")
 
 ;;; --- gtk-tool-button-stock-id -----------------------------------------------
 
@@ -340,7 +351,7 @@
  "The @code{stock-id} property of type @code{:string} (Read / Write) @br{}
   The stock icon displayed on the item. @br{}
   @em{Warning:} The @code{stock-id} property has been deprecated since version
-  3.10 and should not be used in newly-written code. Use the @code{icon-name}
+  3.10 and should not be used in newly written code. Use the @code{icon-name}
   property instead. @br{}
   Default value: @code{nil}")
 
@@ -348,7 +359,7 @@
 (setf (gethash 'gtk-tool-button-stock-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-stock-id 'function)
- "@version{2021-3-14}
+ "@version{2021-11-30}
   @syntax[]{(gtk-tool-button-stock-id object) => stock-id}
   @syntax[]{(setf (gtk-tool-button-stock-id object) stock-id)}
   @argument[object]{a @class{gtk-tool-button} widget}
@@ -358,8 +369,8 @@
     @class{gtk-tool-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-tool-button-stock-id} returns the name of
-  the stock item. The slot access function @sym{(setf gtk-tool-button-stock-id)}
+  The @sym{gtk-tool-button-stock-id} slot access function returns the name of
+  the stock item. The @sym{(setf gtk-tool-button-stock-id)} slot access function
   sets the name.
 
   The @slot[gtk-tool-button]{stock-id} property only has an effect if not
@@ -367,11 +378,13 @@
   @slot[gtk-tool-button]{icon-name}, and @slot[gtk-tool-button]{icon-widget}
   properties.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-tool-button stock-id} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-tool-button-icon-name} instead.
+    The @sym{gtk-tool-button stock-id} function has been deprecated since
+    version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-tool-button-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-label}
+  @see-function{gtk-tool-button-icon-widget}
   @see-function{gtk-tool-button-icon-name}")
 
 ;;; --- gtk-tool-button-use-underline ------------------------------------------
@@ -388,7 +401,7 @@
 (setf (gethash 'gtk-tool-button-use-underline atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-use-underline 'function)
- "@version{2020-9-5}
+ "@version{2021-11-30}
   @syntax[]{(gtk-tool-button-use-underline object) => use-underline}
   @syntax[]{(setf (gtk-tool-button-use-underline) use-underline)}
   @argument[button]{a @class{gtk-tool-button} widget}
@@ -399,7 +412,7 @@
     @class{gtk-tool-button} class.
   @end{short}
 
-  The slot access function @sym{gtk-tool-button-use-underline} returns whether
+  The @sym{gtk-tool-button-use-underline} slot access function returns whether
   underscores in the @slot[gtk-tool-button]{label} property are used as
   mnemonics on menu items on the overflow menu.
 
@@ -413,30 +426,31 @@
 
   Labels shown on tool buttons never have mnemonics on them. This property
   only affects the menu item on the overflow menu.
-  @see-class{gtk-tool-button}")
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-label}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-tool-button-new (icon-widget label)
+(defun gtk-tool-button-new (icon label)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
-  @argument[icon-widget]{a @class{gtk-widget} object that will be used as the
-    button contents, or @code{nil}}
-  @argument[label]{a @code{:string} that will be used as label, or @code{nil}}
+ "@version{2021-11-30}
+  @argument[icon]{a @class{gtk-widget} object that will be used as the button
+    contents, or @code{nil}}
+  @argument[label]{a string that will be used as label, or @code{nil}}
   @return{A new @class{gtk-tool-button} widget.}
   @begin{short}
-    Creates a new tool button using @arg{icon-widget} as contents
-    and @arg{label} as label.
+    Creates a new tool button using @arg{icon} as contents and @arg{label} as
+    label.
   @end{short}
   @see-class{gtk-tool-button}"
-  (let ((tool-button (make-instance 'gtk-tool-button)))
-    (when icon-widget
-      (setf (gtk-tool-button-icon-widget tool-button) icon-widget))
+  (let ((button (make-instance 'gtk-tool-button)))
+    (when icon
+      (setf (gtk-tool-button-icon-widget button) icon))
     (when label
-      (setf (gtk-tool-button-label tool-button) label))
-    tool-button))
+      (setf (gtk-tool-button-label button) label))
+    button))
 
 (export 'gtk-tool-button-new)
 
@@ -444,27 +458,27 @@
 ;;; gtk_tool_button_new_from_stock ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-tool-button-new-from-stock (stock-id)
+(defun gtk-tool-button-new-from-stock (stock)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-5}
-  @argument[stock-id]{a @code{:string} with the name of the stock item}
+ "@version{2021-11-30}
+  @argument[stock]{a string with the name of the stock item}
   @return{A new @class{gtk-tool-button} widget.}
   @begin{short}
     Creates a new tool button containing the image and text from a stock item.
   @end{short}
 
-  It is an error if @arg{stock-id} is not a name of a stock item.
+  It is an error if the @arg{stock} argument is not a name of a stock item.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-tool-button-new-from-stock} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-tool-button-new} together with the function
-    @fun{gtk-image-new-from-icon-name} instead.
+    The @sym{gtk-tool-button-new-from-stock} function has been deprecated since
+    version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-tool-button-new} function together with the
+    @fun{gtk-image-new-from-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-tool-button}
   @see-function{gtk-tool-button-new}
   @see-function{gtk-image-new-from-icon-name}"
   (make-instance 'gtk-tool-button
-                 :stock-id stock-id))
+                 :stock-id stock))
 
 (export 'gtk-tool-button-new-from-stock)
 

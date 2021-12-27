@@ -936,7 +936,7 @@
 (setf (gethash 'gtk-window-focus-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-focus-visible 'function)
- "@version{2020-9-9}
+ "@version{2021-9-9}
   @syntax[]{(gtk-window-focus-visible object) => setting}
   @syntax[]{(setf (gtk-window-focus-visible object) setting)}
   @argument[object]{a @class{gtk-window} widget}

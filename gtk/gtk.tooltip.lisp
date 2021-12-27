@@ -171,15 +171,16 @@
 
 (defcfun ("gtk_tooltip_set_icon" gtk-tooltip-set-icon) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
+ "@version{2021-12-12}
   @argument[tooltip]{a @class{gtk-tooltip} object}
-  @argument[pixbuf]{a @class{gdk-pixbuf} structure, or @code{nil}}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object, or @code{nil}}
   @begin{short}
     Sets the icon of the tooltip, which is in front of the text, to be
     @arg{pixbuf}.
   @end{short}
-  If @arg{pixbuf} is @code{nil}, the image will be hidden.
-  @see-class{gtk-tooltip}"
+  If the @arg{pixbuf} argument is @code{nil}, the image will be hidden.
+  @see-class{gtk-tooltip}
+  @see-class{gdk-pixbuf}"
   (tooltip (g-object gtk-tooltip))
   (pixbuf (g-object gdk-pixbuf)))
 
@@ -203,9 +204,9 @@
   @end{short}
   If @arg{stock-id} is @code{nil}, the image will be hidden.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-tooltip-set-icon-from-stock} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-tooltip-set-icon-from-icon-name} instead.
+    The @sym{gtk-tooltip-set-icon-from-stock} function has been deprecated since
+    version 3.10 and should not be used in newly written code. Use the
+    @fun{gtk-tooltip-set-icon-from-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-tooltip}"
   (tooltip (g-object gtk-tooltip))
@@ -314,9 +315,9 @@
 
 (defcfun ("gtk_tooltip_set_tip_area" gtk-tooltip-set-tip-area) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-6-3}
+ "@version{2021-12-11}
   @argument[tooltip]{a @class{gtk-tooltip} object}
-  @argument[rectangle]{a @class{gdk-rectangle} object}
+  @argument[rectangle]{a @class{gdk-rectangle} instance}
   @begin{short}
     Sets the area of the widget, where the contents of the tooltip apply, to be
     @arg{rectangle} in widget coordinates.
@@ -324,7 +325,7 @@
   This is especially useful for properly setting tooltips on
   @class{gtk-tree-view} rows and cells, @class{gtk-icon-view} widgets, etc.
 
-  For setting tooltips on @class{gtk-tree-view}, please refer to the
+  For setting tooltips on the @class{gtk-tree-view} widget, please refer to the
   convenience functions for this: @fun{gtk-tree-view-set-tooltip-row} and
   @fun{gtk-tree-view-set-tooltip-cell}.
   @see-class{gtk-tooltip}

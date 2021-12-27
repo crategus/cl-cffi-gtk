@@ -95,9 +95,6 @@
 ;;; struct GtkToolItemGroup
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkToolItemGroup" 'gtk-tool-item-group))
-
 (define-g-object-class "GtkToolItemGroup" gtk-tool-item-group
   (:superclass gtk-container
    :export t
@@ -361,6 +358,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors of Child Properties
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkToolItemGroup" 'gtk-tool-item-group))
 
 ;;; --- gtk-tool-item-group-child-expand ---------------------------------------
 

@@ -322,7 +322,7 @@
               filter
               (callback gtk-tree-model-filter-visible-func)
               (allocate-stable-pointer func)
-              (callback stable-pointer-destroy-notify-cb)))
+              (callback stable-pointer-destroy-notify)))
 
 (export 'gtk-tree-model-filter-set-visible-func)
 
@@ -413,7 +413,7 @@
                   types-ar
                   (callback gtk-tree-model-filter-modify-func)
                   (allocate-stable-pointer func)
-                  (callback stable-pointer-destroy-notify-cb)))))
+                  (callback stable-pointer-destroy-notify)))))
 
 (export 'gtk-tree-model-filter-set-modify-func)
 

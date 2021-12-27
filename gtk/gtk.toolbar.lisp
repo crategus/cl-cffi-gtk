@@ -132,9 +132,6 @@
 ;;; struct GtkToolbar
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkToolbar" 'gtk-toolbar))
-
 (define-g-object-class "GtkToolbar" gtk-toolbar
   (:superclass gtk-container
    :export t
@@ -461,6 +458,9 @@
 ;;; Accessors of Child Properties
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkToolbar" 'gtk-toolbar))
+
 ;;; --- gtk-toolbar-child-expand -----------------------------------------------
 
 (define-child-property "GtkToolbar"
@@ -533,7 +533,7 @@
 
 (defcfun ("gtk_toolbar_insert" gtk-toolbar-insert) :void
  #+cl-cffi-gtk-documentation
- "@version{2021-10-30}
+ "@version{*2021-11-30}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
   @argument[item]{a @class{gtk-tool-item} widget}
   @argument[pos]{an integer with the position of the new item}

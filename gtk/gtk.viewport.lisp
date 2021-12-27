@@ -178,7 +178,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_viewport_get_hadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_get_hadjustment()
 ;;;
 ;;; Returns the horizontal adjustment of the viewport.
@@ -198,7 +198,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_viewport_get_vadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_get_vadjustment()
 ;;;
 ;;; Returns the vertical adjustment of the viewport.
@@ -219,7 +219,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_viewport_set_hadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_set_hadjustment()
 ;;;
 ;;; Sets the horizontal adjustment of the viewport.
@@ -240,7 +240,7 @@
 ;;; Warning
 ;;;
 ;;; gtk_viewport_set_vadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_set_vadjustment()
 ;;;
 ;;; Sets the vertical adjustment of the viewport.

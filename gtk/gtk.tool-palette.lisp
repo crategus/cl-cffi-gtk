@@ -124,9 +124,6 @@
 ;;; struct GtkToolPalette
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkToolPalette" 'gtk-tool-palette))
-
 (define-g-object-class "GtkToolPalette" gtk-tool-palette
   (:superclass gtk-container
    :export t
@@ -349,6 +346,9 @@ gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
 ;;; ----------------------------------------------------------------------------
 ;;; Accessors of Child Properties
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkToolPalette" 'gtk-tool-palette))
 
 ;;; --- gtk-tool-palette-child-exclusive ---------------------------------------
 
@@ -735,7 +735,7 @@ gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
 ;;; Warning
 ;;;
 ;;; gtk_tool_palette_get_hadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_get_hadjustment()
 ;;;
 ;;; Gets the horizontal adjustment of the tool palette.
@@ -757,7 +757,7 @@ gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
 ;;; Warning
 ;;;
 ;;; gtk_tool_palette_get_vadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code. Use
+;;; should not be used in newly written code. Use
 ;;; gtk_scrollable_get_vadjustment()
 ;;;
 ;;; Gets the vertical adjustment of the tool palette.
