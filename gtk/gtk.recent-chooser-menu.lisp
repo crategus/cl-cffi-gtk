@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.recent-chooser-menu.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -68,9 +68,6 @@
 ;;; struct GtkRecentChooserMenu
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkRecentChooserMenu" 'gtk-recent-chooser-menu))
-
 (define-g-object-class "GtkRecentChooserMenu" gtk-recent-chooser-menu
   (:superclass gtk-menu
    :export t
@@ -85,30 +82,29 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-recent-chooser-menu 'type)
- "@version{2020-9-13}
+ "@version{2021-12-26}
   @begin{short}
-    @sym{gtk-recent-chooser-menu} is a widget suitable for displaying recently
-    used files inside a menu.
+    The @sym{gtk-recent-chooser-menu} widget is a widget suitable for displaying
+    recently used files inside a menu.
   @end{short}
-  It can be used to set a sub-menu of a @class{gtk-menu-item} using the slot
-  access function @fun{gtk-menu-item-submenu}, or as the menu of a
-  @class{gtk-menu-tool-button}.
+  It can be used to set a sub-menu of a @class{gtk-menu-item} widget using the
+  @fun{gtk-menu-item-submenu} slot access function, or as the menu of a
+  @class{gtk-menu-tool-button} widget.
 
-  Note that @sym{gtk-recent-chooser-menu} does not have any methods of its own.
-  Instead, you should use the functions that work on a
-  @class{gtk-recent-chooser}.
+  Note that the @sym{gtk-recent-chooser-menu} widget does not have any methods
+  of its own. Instead, you should use the functions that work on a
+  @class{gtk-recent-chooser} widget.
 
-  Note also that @sym{gtk-recent-chooser-menu} does not support multiple
-  filters, as it has no way to let the user choose between them as the
+  Note also that the @sym{gtk-recent-chooser-menu} widget does not support
+  multiple filters, as it has no way to let the user choose between them as the
   @class{gtk-recent-chooser-widget} and @class{gtk-recent-chooser-dialog}
-  widgets do. Thus using the function @fun{gtk-recent-chooser-add-filter} on a
+  widgets do. Thus using the @fun{gtk-recent-chooser-add-filter} function on a
   @sym{gtk-recent-chooser-menu} widget will yield the same effects as using the
-  function @fun{gtk-recent-chooser-filter}, replacing any currently set
-  filter with the supplied filter; the function
-  @fun{gtk-recent-chooser-remove-filter} will remove any currently set
-  @class{gtk-recent-filter} object and will unset the current filter; the
-  function @fun{gtk-recent-chooser-list-filters} will return a list containing
-  a single @class{gtk-recent-filter} object.
+  @fun{gtk-recent-chooser-filter} function, replacing any currently set filter
+  with the supplied filter. The @fun{gtk-recent-chooser-remove-filter} function
+  will remove any currently set @class{gtk-recent-filter} object and will unset
+  the current filter. The @fun{gtk-recent-chooser-list-filters} function will
+  return a list containing a single @class{gtk-recent-filter} object.
   @see-class{gtk-recent-chooser}")
 
 ;;; ----------------------------------------------------------------------------
@@ -129,7 +125,7 @@
 (setf (gethash 'gtk-recent-choose-menu-show-numbers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-menu-show-numbers 'function)
- "@version{2020-9-13}
+ "@version{2021-12-26}
   @syntax[]{(gtk-recent-chooser-menu-show-numbers object) => show-numbers}
   @syntax[]{(setf (gtk-recent-chooser-menu-show-numbers object) show-numbers)}
   @argument[obect]{a @class{gtk-recent-chooser-menu} widget}
@@ -139,14 +135,14 @@
     slot of the @class{gtk-recent-chooser-menu} class.
   @end{short}
 
-  The slot access function @sym{gtk-recent-chooser-menu-show-numbers} returns
-  whether a number should be added to the items of menu. The slot access
-  function @sym{(setf gtk-recent-chooser-menu-show-numbers)} sets whether a
-  number should be added to the items of menu.
+  The @sym{gtk-recent-chooser-menu-show-numbers} slot access function returns
+  whether a number should be added to the items of menu. The
+  @sym{(setf gtk-recent-chooser-menu-show-numbers)} slot access function sets
+  whether a number should be added to the items of menu.
 
   The numbers are shown to provide a unique character for a mnemonic to be used
-  inside ten menu item's label. Only the first the items get a number to avoid
-  clashes.
+  inside ten menu label of the item. Only the first the items get a number to
+  avoid clashes.
   @see-class{gtk-recent-chooser-menu}")
 
 ;;; ----------------------------------------------------------------------------
@@ -180,7 +176,7 @@
 
 (defun gtk-recent-chooser-menu-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-9-13}
+ "@version{2021-12-26}
   @return{A new @class{gtk-recent-chooser-menu} widget.}
   @begin{short}
     Creates a new @class{gtk-recent-chooser-menu} widget.
@@ -212,9 +208,9 @@
 
 (defun gtk-recent-chooser-menu-new-for-manager (manager)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-13}
+ "@version{2021-12-26}
   @argument[manager]{a @class{gtk-recent-manager} object}
-  @return{A new @class{gtk-recent-chooser-menu}, bound to @arg{manager}.}
+  @return{A new @class{gtk-recent-chooser-menu} widget, bound to @arg{manager}.}
   @begin{short}
     Creates a new @class{gtk-recent-chooser-menu} widget using @arg{manager} as
     the underlying recently used resources manager.

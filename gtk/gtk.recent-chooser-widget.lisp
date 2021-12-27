@@ -1,13 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.recent-chooser-widget.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -61,9 +61,6 @@
 ;;; struct GtkRecentChooserWidget
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkRecentChooserWidget" 'gtk-recent-chooser-widget))
-
 (define-g-object-class "GtkRecentChooserWidget" gtk-recent-chooser-widget
   (:superclass gtk-box
    :export t
@@ -76,19 +73,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-recent-chooser-widget 'type)
- "@version{2020-9-13}
+ "@version{2021-12-27}
   @begin{short}
-    @sym{gtk-recent-chooser-widget} is a widget suitable for selecting recently
-    used files.
+    The @sym{gtk-recent-chooser-widget} widget is a widget suitable for
+    selecting recently used files.
   @end{short}
-  It is the main building block of a @class{gtk-recent-chooser-dialog}. Most
-  applications will only need to use the latter; you can use
-  @sym{gtk-recent-chooser-widget} as part of a larger window if you have special
-  needs.
+  It is the main building block of a @class{gtk-recent-chooser-dialog} widget.
+  Most applications will only need to use the latter. You can use
+  @sym{gtk-recent-chooser-widget} widget as part of a larger window if you have
+  special needs.
 
-  Note that @sym{gtk-recent-chooser-widget} does not have any methods of its
-  own. Instead, you should use the functions that work on a
-  @class{gtk-recent-chooser}.
+  Note that the @sym{gtk-recent-chooser-widget} widget does not have any methods
+  of its own. Instead, you should use the functions that work on a
+  @class{gtk-recent-chooser} widget.
   @see-class{gtk-recent-chooser}")
 
 ;;; ----------------------------------------------------------------------------
@@ -126,7 +123,7 @@
 
 (defun gtk-recent-chooser-widget-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-9-13}
+ "@version{2021-12-27}
   @return{A new @class{gtk-recent-chooser-widget} widget.}
   @begin{short}
     Creates a new @class{gtk-recent-chooser-widget} widget.
@@ -146,7 +143,7 @@
 
 (defun gtk-recent-chooser-widget-new-for-manager (manager)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-13}
+ "@version{2021-12-27}
   @argument[manager]{a @class{gtk-recent-manager} object}
   @return{A new @class{gtk-recent-chooser-widget} widget.}
   @begin{short}

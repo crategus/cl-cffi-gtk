@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.recent-manager.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
+;;; The documentation of this file is taken from the GTK 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -104,15 +104,16 @@
   :alloc (error "GtkRecentInfo cannot be created from the Lisp side."))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-recent-info atdoc:*class-name-alias*) "CStruct"
+(setf (gethash 'gtk-recent-info atdoc:*class-name-alias*)
+      "GBoxed"
       (documentation 'gtk-recent-info 'type)
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @begin{short}
-    @sym{gtk-recent-info} constains all the meta-data associated with an entry
-    in the recently used files list.
+    The @sym{gtk-recent-info} structure constains all the meta-data associated
+    with an entry in the recently used files list.
   @end{short}
-  @sym{gtk-recent-info} is an opaque data structure whose members can only be
-  accessed using the provided API.
+  The @sym{gtk-recent-info} structure is an opaque data structure whose members
+  can only be accessed using the provided API.
   @begin{pre}
 (define-g-boxed-opaque gtk-recent-info \"GtkRecentInfo\"
   :alloc (error \"GtkRecentInfo cannot be created from the Lisp side.\"))
@@ -195,9 +196,10 @@
   (:unknown 6))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-recent-manager-error atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-recent-manager-error atdoc:*symbol-name-alias*)
+      "GEnum"
       (gethash 'gtk-recent-manager-error atdoc:*external-symbols*)
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @short{Error codes for @class{gtk-recent-manager} operations.}
   @begin{pre}
 (define-g-enum \"GtkRecentManagerError\" gtk-recent-manager-error
@@ -241,10 +243,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-recent-manager 'type)
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @begin{short}
-    @sym{gtk-recent-manager} provides a facility for adding, removing and
-    looking up recently used files.
+    The @sym{gtk-recent-manager} object provides a facility for adding, removing
+    and looking up recently used files.
   @end{short}
   Each recently used file is identified by its URI, and has meta-data associated
   to it, like the names and command lines of the applications that have
@@ -254,9 +256,9 @@
 
   The recently used files list is per user.
 
-  The @sym{gtk-recent-nanager} acts like a database of all the recently used
-  files. You can create new @sym{gtk-recent-manager} objects, but it is more
-  efficient to use the default manager created by GTK+.
+  The @sym{gtk-recent-manager} object acts like a database of all the recently
+  used files. You can create new @sym{gtk-recent-manager} objects, but it is
+  more efficient to use the default manager created by GTK.
 
   Adding a new recently used file is as simple as:
   @begin{pre}
@@ -288,12 +290,12 @@ else
    gtk_recent_info_unref (info);
  @}
   @end{pre}
-  In order to retrieve the list of recently used files, you can use the function
-  @fun{gtk-recent-manager-items}, which returns a list of
-  @class{gtk-recent-info} structures.
+  In order to retrieve the list of recently used files, you can use the
+  @fun{gtk-recent-manager-items} function, which returns a list of
+  @class{gtk-recent-info} instances.
 
-  A @sym{gtk-recent-manager} is the model used to populate the contents of
-  one, or more @class{gtk-recent-chooser} implementations.
+  A @sym{gtk-recent-manager} object is the model used to populate the contents
+  of one, or more @class{gtk-recent-chooser} implementations.
 
   The maximum age of the recently used files list is controllable through the
   @slot[gtk-settings]{gtk-recent-files-max-age} settting of the
@@ -301,14 +303,14 @@ else
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (recent-manager)    : Run First
+ lambda (manager)    :run-first
       @end{pre}
       Emitted when the current recently used resources manager changes its
-      contents, either by calling the function @fun{gtk-recent-manager-add-item}
+      contents, either by calling the @fun{gtk-recent-manager-add-item} function
       or by another application.
       @begin[code]{table}
-        @entry[recent-manager]{The @sym{gtk-recent-manager} object which
-          received the signal.}
+        @entry[manager]{The @sym{gtk-recent-manager} object which received the
+          signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-recent-manager-filename}
@@ -333,11 +335,11 @@ else
 (setf (gethash 'gtk-recent-manager-filename atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-manager-filename 'function)
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @syntax[]{(gtk-recent-manager-filename object) => filename}
   @syntax[]{(setf (gtk-recent-manager-filename object) filename)}
   @argument[object]{a @class{gtk-recent-manager} object}
-  @argument[filename]{a @code{:string} with the full path to the file}
+  @argument[filename]{a string with the full path to the file}
   @begin{short}
     Accessor of the @slot[gtk-recent-manager]{filename} slot of the
     @class{gtk-recent-manager} class.
@@ -360,11 +362,11 @@ else
 (setf (gethash 'gtk-recent-manager-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-manager-size 'function)
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @syntax[]{(gtk-recent-manager-size object) => size}
   @syntax[]{(setf (gtk-recent-manager-size object) size)}
   @argument[object]{a @class{gtk-recent-manager} object}
-  @argument[size]{a @code{:int} with the size of the resources list}
+  @argument[size]{an integer with the size of the resources list}
   @begin{short}
     Accessor of the @slot[gtk-recent-manager]{size} slot of the
     @class{gtk-recent-manager} class.
@@ -381,7 +383,7 @@ else
 
 (defun gtk-recent-manager-new ()
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @return{A newly created @class{gtk-recent-manager} object.}
   @begin{short}
     Creates a new recent manager object.
@@ -390,8 +392,8 @@ else
   A @class{gtk-recent-manager} object monitors the recently used resources list,
   and emits the \"changed\" signal each time something inside the list changes.
 
-  @class{gtk-recent-manager} objects are expensive: be sure to create them only
-  when needed. You should use the function @fun{gtk-recent-manager-default}
+  The @class{gtk-recent-manager} object is expensive: be sure to create them
+  only when needed. You should use the @fun{gtk-recent-manager-default} function
   instead.
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-manager-default}"
@@ -406,7 +408,7 @@ else
 (defcfun ("gtk_recent_manager_get_default" gtk-recent-manager-default)
     (g-object gtk-recent-manager)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @return{A unique @class{gtk-recent-manager} object.}
   @begin{short}
     Gets a unique instance of the default recent manager.
@@ -421,9 +423,9 @@ else
 
 (defcfun ("gtk_recent_manager_add_item" gtk-recent-manager-add-item) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @argument[manager]{a @class{gtk-recent-manager} object}
-  @argument[uri]{a @code{:string} with a valid URI}
+  @argument[uri]{a string with a valid URI}
   @begin{return}
     @em{True} if the new item was successfully added to the recently used
     resources list.
@@ -435,9 +437,9 @@ else
 
   This function automatically retrieves some of the needed metadata and
   setting other metadata to common default values. It then feeds the data to
-  the function @fun{gtk-recent-manager-add-full}.
+  the @fun{gtk-recent-manager-add-full} function.
 
-  See the function @fun{gtk-recent-manager-add-full} if you want to explicitly
+  See the @fun{gtk-recent-manager-add-full} function if you want to explicitly
   define the metadata for the resource pointed by @arg{uri}.
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-manager-add-full}"
@@ -495,13 +497,13 @@ else
     :boolean
   (manager (g-object gtk-recent-manager))
   (uri :string)
-  (error :pointer))
+  (err :pointer))
 
 (defun gtk-recent-manager-remove-item (manager uri)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @argument[manager]{a @class{gtk-recent-manager} object}
-  @argument[uri]{a @code{:string} with the URI of the item you wish to remove}
+  @argument[uri]{a string with the URI of the item you wish to remove}
   @begin{return}
     @em{True} if the item pointed by @arg{uri} has been successfully removed by
     the recently used resources list, and @em{false} otherwise.
@@ -525,15 +527,15 @@ else
     (g-boxed-foreign gtk-recent-info)
   (manager (g-object gtk-recent-manager))
   (uri :string)
-  (error :pointer))
+  (err :pointer))
 
 (defun gtk-recent-manager-lookup-item (manager uri)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @argument[manager]{a @class{gtk-recent-manager} object}
-  @argument[uri]{a @code{:string} with the URI}
+  @argument[uri]{a string with the URI}
   @begin{return}
-    A @class{gtk-recent-info} structure containing information about the
+    A @class{gtk-recent-info} instance containing information about the
     resource pointed by @arg{uri}, or @code{nil} if the URI was not registered
     in the recently used resources list.
   @end{return}
@@ -555,9 +557,9 @@ else
 
 (defcfun ("gtk_recent_manager_has_item" gtk-recent-manager-has-item) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @argument[manager]{a @class{gtk-recent-manager} object}
-  @argument[uri]{a @code{:string} with the URI}
+  @argument[uri]{a string with the URI}
   @return{@em{True} if the resource was found, @em{false} otherwise.}
   @begin{short}
     Checks whether there is a recently used resource registered with @arg{uri}
@@ -582,11 +584,11 @@ else
 
 (defun gtk-recent-manager-move-item (manager uri new-uri)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @argument[manager]{a @class{gtk-recent-manager} object}
-  @argument[uri]{a @code{:string} with the URI of a recently used resource}
-  @argument[new-uri]{a @code{:string} with the new URI of the recently used
-    resource, or @code{nil} to remove the item pointed by @arg{uri} in the list}
+  @argument[uri]{a string with the URI of a recently used resource}
+  @argument[new-uri]{a string with the new URI of the recently used resource,
+    or @code{nil} to remove the item pointed by @arg{uri} in the list}
   @return{@em{True} on success.}
   @begin{short}
     Changes the location of a recently used resource from @arg{uri}
@@ -608,10 +610,10 @@ else
 (defcfun ("gtk_recent_manager_get_items" gtk-recent-manager-items)
     (g-list (g-boxed-foreign gtk-recent-info :free-from-foreign t))
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @argument[manager]{a @class{gtk-recent-manager} object}
   @begin{return}
-    A list of newly allocated @class{gtk-recent-info} structures.
+    A list of newly allocated @class{gtk-recent-info} instances.
   @end{return}
   @begin{short}
     Gets the list of recently used resources.
@@ -628,14 +630,14 @@ else
 
 (defcfun ("gtk_recent_manager_purge_items" %gtk-recent-manager-purge-items) :int
   (manager (g-object gtk-recent-manager))
-  (error :pointer))
+  (err :pointer))
 
 (defun gtk-recent-manager-purge-items (manager)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
+ "@version{2021-12-27}
   @argument[manager]{a @class{gtk-recent-manager} object}
   @begin{return}
-    A @code{:int} with the number of items that have been removed from the
+    An integer with the number of items that have been removed from the
     recently used resources list.
   @end{return}
   @begin{short}
@@ -648,16 +650,14 @@ else
 (export 'gtk-recent-manager-purge-items)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_recent_info_ref ()
+;;; gtk_recent_info_ref ()                                 not exported
 ;;; ----------------------------------------------------------------------------
-
-;; We do not export this function.
 
 (defcfun ("gtk_recent_info_ref" gtk-recent-info-ref)
     (g-boxed-foreign gtk-recent-info)
  #+cl-cffi-gtk-documentation
  "@version{2013-11-22}
-  @argument[info]{a @class{gtk-recent-info} structure}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @return{The recent info object with its reference count increased by one.}
   @begin{short}
     Increases the reference count of @arg{info} by one.
@@ -667,15 +667,13 @@ else
   (info (g-boxed-foreign gtk-recent-info)))
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_recent_info_unref ()
+;;; gtk_recent_info_unref ()                               not exported
 ;;; ----------------------------------------------------------------------------
-
-;; We do not export this function.
 
 (defcfun ("gtk_recent_info_unref" gtk-recent-info-unref) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-22}
-  @argument[info]{a @class{gtk-recent-info} structure}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @begin{short}
     Decreases the reference count of info by one.
   @end{short}
@@ -692,9 +690,9 @@ else
 (defcfun ("gtk_recent_info_get_uri" gtk-recent-info-uri)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @return{A @code{:string} with the URI of the resource.}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @return{A string with the URI of the resource.}
   @short{Gets the URI of the resource.}
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
@@ -708,9 +706,9 @@ else
 (defcfun ("gtk_recent_info_get_display_name" gtk-recent-info-display-name)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @return{A @code{:string} with the display name of the resource.}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @return{A string with the display name of the resource.}
   @begin{short}
     Gets the name of the resource.
   @end{short}
@@ -727,12 +725,10 @@ else
 (defcfun ("gtk_recent_info_get_description" gtk-recent-info-description)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @return{A @code{:string} with the description of the resource.}
-  @begin{short}
-    Gets the (short) description of the resource.
-  @end{short}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @return{A string with the description of the resource.}
+  @short{Gets the (short) description of the resource.}
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -745,9 +741,9 @@ else
 (defcfun ("gtk_recent_info_get_mime_type" gtk-recent-info-mime-type)
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @return{A @code{:string} with the MIME type of the resource.}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @return{A string with the MIME type of the resource.}
   @short{Gets the MIME type of the resource.}
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
@@ -760,10 +756,10 @@ else
 
 (defcfun ("gtk_recent_info_get_added" gtk-recent-info-added) :long
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @begin{return}
-    A @code{:long} with the number of seconds elapsed from system's Epoch when
+    A long integer with the number of seconds elapsed from system's Epoch when
     the resource was added to the list, or -1 on failure.
   @end{return}
   @begin{short}
@@ -781,10 +777,10 @@ else
 
 (defcfun ("gtk_recent_info_get_modified" gtk-recent-info-modified) :long
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @begin{return}
-    A @code{:long} with the number of seconds elapsed from system's Epoch when
+    A long integer with the number of seconds elapsed from system's Epoch when
     the resource was last modified, or -1 on failure.
   @end{return}
   @begin{short}
@@ -802,10 +798,10 @@ else
 
 (defcfun ("gtk_recent_info_get_visited" gtk-recent-info-visited) :long
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @begin{return}
-    A @code{:long} with the number of seconds elapsed from system's Epoch when
+    A long integer with the number of seconds elapsed from system's Epoch when
     the resource was last visited, or -1 on failure.
   @end{return}
   @begin{short}
@@ -824,8 +820,8 @@ else
 (defcfun ("gtk_recent_info_get_private_hint" gtk-recent-info-private-hint)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @return{@em{True} if the private flag was found, @em{false} otherwise.}
   @begin{short}
     Gets the value of the \"private\" flag.
@@ -844,35 +840,34 @@ else
 (defcfun ("gtk_recent_info_get_application_info"
           %gtk-recent-info-application-info) :boolean
   (info (g-boxed-foreign gtk-recent-info))
-  (app-name :string)
-  (app-exec (:pointer (:string :free-from-foreign nil)))
+  (name :string)
+  (exec (:pointer (:string :free-from-foreign nil)))
   (count (:pointer :int))
   (time (:pointer :long)))
 
-(defun gtk-recent-info-application-info (info app-name)
+(defun gtk-recent-info-application-info (info name)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @argument[app-name]{a @code{:string} with the name of the application that
-    has registered this item}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @argument[name]{a string with the name of the application that has registered
+    this item}
   @begin{return}
-    @code{app-exec} -- the string containing the command line @br{}
-    @code{count}    -- a @code{:int} with the number of times this item was
-                       registered @br{}
-    @code{time}     -- a @code{:long} with the timestamp this item was last
-                       registered for this application
+    @arg{exec} -- a string containing the command line @br{}
+    @arg{count} -- an integer with the number of times this item was registered
+    @br{}
+    @arg{time} -- an long integer with the timestamp this item was last
+    registered for this application
   @end{return}
   @begin{short}
     Gets the data regarding the application that has registered the resource
     pointed by info.
   @end{short}
-
   If the command line contains any escape characters defined inside the
   storage specification, they will be expanded.
   @see-class{gtk-recent-info}"
-  (with-foreign-objects ((app-exec :string) (count :uint) (time :long))
-    (%gtk-recent-info-application-info info app-name app-exec count time)
-    (values (mem-ref app-exec :string)
+  (with-foreign-objects ((exec :string) (count :uint) (time :long))
+    (%gtk-recent-info-application-info info name exec count time)
+    (values (mem-ref exec :string)
             (mem-ref count :uint)
             (mem-ref time :long))))
 
@@ -889,8 +884,8 @@ else
 
 (defun gtk-recent-info-applications (info)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @return{A list of strings.}
   @begin{short}
     Retrieves the list of applications that have registered this resource.
@@ -908,12 +903,12 @@ else
 (defcfun ("gtk_recent_info_last_application" gtk-recent-info-last-application)
     (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @return{A @code{:string} with an application name.}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @return{A string with an application name.}
   @begin{short}
     Gets the name of the last application that have registered the recently used
-    resource represented by info.
+    resource represented by @arg{info}.
   @end{short}
   @see-class{gtk-recent-manager}"
   (info (g-boxed-foreign gtk-recent-info)))
@@ -927,17 +922,17 @@ else
 (defcfun ("gtk_recent_info_has_application" gtk-recent-info-has-application)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @argument[app-name]{a string containing an application name}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @argument[name]{a string containing an application name}
   @return{@em{True} if an application with name @arg{app-name} was found,
     @em{false} otherwise.}
   @begin{short}
-    Checks whether an application registered this resource using @arg{app-name}.
+    Checks whether an application registered this resource using @arg{name}.
   @end{short}
   @see-class{gtk-recent-manager}"
   (info (g-boxed-foreign gtk-recent-info))
-  (app-name :string))
+  (name :string))
 
 (export 'gtk-recent-info-has-application)
 
@@ -948,27 +943,27 @@ else
 (defcfun ("gtk_recent_info_create_app_info" %gtk-recent-info-create-app-info)
     (g-object g-app-info)
   (info (g-boxed-foreign gtk-recent-info))
-  (app-name :string)
-  (error :pointer))
+  (name :string)
+  (err :pointer))
 
-(defun gtk-recent-info-create-app-info (info app-name)
+(defun gtk-recent-info-create-app-info (info name)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @argument[app-name]{a @code{:string} with the name of the application that
-    should be mapped to a @class{g-app-info} object, if @code{nil} is used then
-    the default application for the MIME type is used}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @argument[name]{a string with the name of the application that should be
+    mapped to a @class{g-app-info} object, if @code{nil} is used then the
+    default application for the MIME type is used}
   @begin{return}
     The newly created @class{g-app-info} object, or @code{nil}.
   @end{return}
   @begin{short}
     Creates a @class{g-app-info} object for the specified
-    @class{gtk-recent-info}.
+    @class{gtk-recent-info} instance.
   @end{short}
   @see-class{gtk-recent-info}
   @see-class{g-app-info}"
   (with-g-error (err)
-    (%gtk-recent-info-create-app-info info app-name err)))
+    (%gtk-recent-info-create-app-info info name err)))
 
 (export 'gtk-recent-info-create-app-info)
 
@@ -982,8 +977,8 @@ else
 
 (defun gtk-recent-info-groups (info)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @return{A list of strings.}
   @begin{short}
     Returns all groups registered for the recently used item info.
@@ -1000,17 +995,17 @@ else
 
 (defcfun ("gtk_recent_info_has_group" gtk-recent-info-has-group) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @argument[group-name]{a @code{:string} with the name of a group}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @argument[group]{a string with the name of a group}
   @return{@em{True} if the group was found.}
   @begin{short}
-    Checks whether @arg{group-name} appears inside the groups registered for
-    the recently used item info.
+    Checks whether @arg{group} appears inside the groups registered for the
+    recently used item info.
   @end{short}
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info))
-  (group-name :string))
+  (group :string))
 
 (export 'gtk-recent-info-has-group)
 
@@ -1021,11 +1016,11 @@ else
 (defcfun ("gtk_recent_info_get_icon" gtk-recent-info-icon)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2020-11-21}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @argument[size]{an integer with the size of the icon in pixels}
   @begin{return}
-    A @class{gdk-pixbuf} structure containing the icon, or @code{nil}.
+    A @class{gdk-pixbuf} object containing the icon, or @code{nil}.
   @end{return}
   @begin{short}
     Retrieves the icon of size @arg{size} associated to the resource MIME type.
@@ -1044,9 +1039,9 @@ else
 (defcfun ("gtk_recent_info_get_gicon" gtk-recent-info-gicon)
     (g-object g-icon)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
-  @return{A @class{g-icon} containing the icon, or @code{nil}.}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
+  @return{A @class{g-icon} icon containing the icon, or @code{nil}.}
   @begin{short}
     Retrieves the icon associated to the resource MIME type.
   @end{short}
@@ -1063,8 +1058,8 @@ else
 (defcfun ("gtk_recent_info_get_short_name" gtk-recent-info-short-name)
     (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @return{A string in UTF-8 encoding.}
   @begin{short}
     Computes a valid UTF-8 string that can be used as the name of the item in a
@@ -1084,8 +1079,8 @@ else
 (defcfun ("gtk_recent_info_get_uri_display" gtk-recent-info-uri-display)
     (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @begin{return}
     A UTF-8 string containing the resource's URI or @code{nil}.
   @end{return}
@@ -1107,8 +1102,8 @@ else
 
 (defcfun ("gtk_recent_info_get_age" gtk-recent-info-age) :int
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @begin{return}
     A positive integer containing the number of days elapsed since the time
     this resource was last modified.
@@ -1128,8 +1123,8 @@ else
 
 (defcfun ("gtk_recent_info_is_local" gtk-recent-info-is-local) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @return{@em{True} if the resource is local.}
   @begin{short}
     Checks whether the resource is local or not by looking at the scheme of its
@@ -1146,8 +1141,8 @@ else
 
 (defcfun ("gtk_recent_info_exists" gtk-recent-info-exists) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info]{a @class{gtk-recent-info} structure}
+ "@version{2021-12-27}
+  @argument[info]{a @class{gtk-recent-info} instance}
   @return{@em{True} if the resource exists.}
   @begin{short}
     Checks whether the resource pointed by info still exists.
@@ -1164,20 +1159,20 @@ else
 
 (defcfun ("gtk_recent_info_match" gtk-recent-info-match) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-9-12}
-  @argument[info-a]{a @class{gtk-recent-info}}
-  @argument[info-b]{a @class{gtk-recent-info}}
+ "@version{2021-12-27}
+  @argument[info1]{a @class{gtk-recent-info}}
+  @argument[info2]{a @class{gtk-recent-info}}
   @begin{return}
-    @em{True} if both @class{gtk-recent-info} structures point to se same
+    @em{True} if both @class{gtk-recent-info} instances point to se same
     resource, @em{false} otherwise.
   @end{return}
   @begin{short}
-    Checks whether two @class{gtk-recent-info} structures point to the same
+    Checks whether two @class{gtk-recent-info} instances point to the same
     resource.
   @end{short}
   @see-class{gtk-recent-info}"
-  (info-a (g-boxed-foreign gtk-recent-info))
-  (info-b (g-boxed-foreign gtk-recent-info)))
+  (info1 (g-boxed-foreign gtk-recent-info))
+  (info2 (g-boxed-foreign gtk-recent-info)))
 
 (export 'gtk-recent-info-match)
 
