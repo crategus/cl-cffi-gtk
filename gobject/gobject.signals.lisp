@@ -7,7 +7,7 @@
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2020 Dieter Kaiser
+;;; Copyright (C) 2011 - 2021 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -152,7 +152,7 @@
 ;;; detail argument passed in to emission.
 ;;;
 ;;; While the detail argument is typically used to pass an object property name
-;;; (as with “notify”), no specific format is mandated for the detail string,
+;;; (as with "notify"), no specific format is mandated for the detail string,
 ;;; other than that it must be non-empty.
 ;;;
 ;;; Memory management of signal handlers
@@ -374,13 +374,14 @@
   :deprecated)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-signal-flags atdoc:*symbol-name-alias*) "Bitfield"
+(setf (gethash 'g-signal-flags atdoc:*symbol-name-alias*)
+      "Bitfield"
       (gethash 'g-signal-flags atdoc:*external-symbols*)
- "@version{2020-10-2}
+ "@version{2021-12-14}
   @begin{short}
-    The signal flags are used to specify a signal's behaviour, the overall
-    signal description outlines how especially the RUN flags control the stages
-    of a signal emission.
+    The signal flags are used to specify the behaviour of the signal, the
+    overall signal description outlines how especially the RUN flags control
+    the stages of a signal emission.
   @end{short}
   @begin{pre}
 (defbitfield g-signal-flags
@@ -407,7 +408,7 @@
     @entry[:detailed]{The signal supports \"::detail\" appendices to the
       signal name upon handler connections and emissions.}
     @entry[:action]{Action signals are signals that may freely be emitted on
-      alive objects from user code via the function @fun{g-signal-emit} and
+      alive objects from user code via the @fun{g-signal-emit} function and
       friends, without the need of being embedded into extra code that performs
       pre or post emission adjustments on the object. They can also be thought
       of as object methods which can be called generically by third-party code.}
@@ -439,14 +440,15 @@
   :unblocked)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-signal-match-type atdoc:*symbol-name-alias*) "Bitfield"
+(setf (gethash 'g-signal-match-type atdoc:*symbol-name-alias*)
+      "Bitfield"
       (gethash 'g-signal-match-type atdoc:*external-symbols*)
  "@version{2013-7-31}
   @begin{short}
-    The match types specify what the functions
+    The match types specify what the
     @fun{g-signal-handlers-block-matched},
     @fun{g-signal-handlers-unblock-matched} and
-    @fun{g-signal-handlers-disconnect-matched} match signals by.
+    @fun{g-signal-handlers-disconnect-matched} functions match signals by.
   @end{short}
   @begin{pre}
 (defbitfield g-signal-match-type
@@ -484,11 +486,11 @@
 
 (defstruct g-signal-query
  #+cl-cffi-gtk-documentation
- "@version{2020-10-2}
+ "@version{2021-12-14}
   @begin{short}
     A structure holding in-depth information for a specific signal.
   @end{short}
-  It is filled in by the function @fun{g-signal-query}.
+  It is filled in by the @fun{g-signal-query} function.
   @begin{pre}
 (defstruct g-signal-query
   signal-id
@@ -500,7 +502,7 @@
   signal-detail)
   @end{pre}
   @begin[code]{table}
-    @entry[signal-id]{A @code{:uint} with the signal ID of the signal being
+    @entry[signal-id]{A unsinged integer with the signal ID of the signal being
       queried, or 0 if the signal to be queried was unknown.}
     @entry[signal-name]{A string with the signal name.}
     @entry[owner-type]{The interface/instance @class{g-object} type that this
@@ -549,16 +551,16 @@
 (setf (gethash 'g-signal-query-signal-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-signal-query-signal-id 'function)
- "@version{2020-10-3}
+ "@version{2021-12-14}
   @syntax[]{(g-signal-query-signal-id instance) => signal-id}
   @argument[instance]{a @struct{g-signal-query} structure}
-  @argument[signal-id]{a @code{:uint} with the signal ID of the signal being
-      queried, or 0 if the signal to be queried was unknown}
+  @argument[signal-id]{an unsigned integer with the signal ID of the signal
+    being queried, or 0 if the signal to be queried was unknown}
   @begin{short}
     Accessor of the @code{signal-id} slot of the @class{g-signal-query}
     structure.
   @end{short}
-  See the function @fun{g-signal-query}.
+  See the @fun{g-signal-query} function.
   @see-function{g-signal-query}")
 
 (export 'g-signal-query-signal-id)
@@ -569,7 +571,7 @@
 (setf (gethash 'g-signal-query-signal-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-signal-query-signal-name 'function)
- "@version{2020-10-3}
+ "@version{2021-12-14}
   @syntax[]{(g-signal-query-signal-name instance) => signal-name}
   @argument[instance]{a @struct{g-signal-query} structure}
   @argument[signal-name]{a string with the signal name}
@@ -577,7 +579,7 @@
     Accessor of the @code{signal-name} slot of the @class{g-signal-query}
     structure.
   @end{short}
-  See the function @fun{g-signal-query}.
+  See the @fun{g-signal-query} function.
   @see-function{g-signal-query}")
 
 (export 'g-signal-query-signal-name)
@@ -588,7 +590,7 @@
 (setf (gethash 'g-signal-query-owner-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-signal-query-owner-type 'function)
- "@version{2020-10-3}
+ "@version{2021-12-14}
   @syntax[]{(g-signal-query-owner-type instance) => owner-type}
   @argument[instance]{a @struct{g-signal-query} structure}
   @argument[owner-type]{the interface/instance @class{g-object} type that this
@@ -597,7 +599,7 @@
     Accessor of the @code{owner-type} slot of the @class{g-signal-query}
     structure.
   @end{short}
-  See the function @fun{g-signal-query}.
+  See the @fun{g-signal-query} function.
   @see-class{g-object}
   @see-function{g-signal-query}")
 
@@ -609,7 +611,7 @@
 (setf (gethash 'g-signal-query-signal-flags atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-signal-query-signal-flags 'function)
- "@version{2020-10-3}
+ "@version{2021-12-14}
   @syntax[]{(g-signal-query-signal-flags instance) => signal-flags}
   @argument[instance]{a @struct{g-signal-query} structure}
   @argument[signal-flags]{the signal flags of type @symbol{g-signal-flags}}
@@ -617,7 +619,7 @@
     Accessor of the @code{signal-flags} slot of the @class{g-signal-query}
     structure.
   @end{short}
-  See the function @fun{g-signal-query}.
+  See the @fun{g-signal-query} function.
   @see-symbol{g-signal-flags}
   @see-function{g-signal-query}")
 
@@ -629,7 +631,7 @@
 (setf (gethash 'g-signal-query-return-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-signal-query-return-type 'function)
- "@version{2020-10-3}
+ "@version{2021-12-14}
   @syntax[]{(g-signal-query-return-type instance) => return-type}
   @argument[instance]{a @struct{g-signal-query} structure}
   @argument[return-type]{the return @class{g-type} for user callbacks}
@@ -637,7 +639,7 @@
     Accessor of the @code{return-type} slot of the @class{g-signal-query}
     structure.
   @end{short}
-  See the function @fun{g-signal-query}.
+  See the @fun{g-signal-query} function.
   @see-function{g-signal-query}")
 
 (export 'g-signal-query-return-type)
@@ -648,7 +650,7 @@
 (setf (gethash 'g-signal-query-param-types atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-signal-query-param-types 'function)
- "@version{2020-10-3}
+ "@version{2021-12-14}
   @syntax[]{(g-signal-query-param-types instance) => param-types}
   @argument[instance]{a @struct{g-signal-query} structure}
   @argument[param-types]{a list with the individual parameter types for user
@@ -657,7 +659,7 @@
     Accessor of the @code{param-types} slot of the @class{g-signal-query}
     structure.
   @end{short}
-  See the function @fun{g-signal-query}.
+  See the @fun{g-signal-query} function.
   @see-function{g-signal-query}")
 
 (export 'g-signal-query-param-types)
@@ -668,7 +670,7 @@
 (setf (gethash 'g-signal-query-signal-detail atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-signal-query-signal-detail 'function)
- "@version{2020-10-3}
+ "@version{2021-12-14}
   @syntax[]{(g-signal-query-signal-detail instance) => signal-detail}
   @argument[instance]{a @struct{g-signal-query} structure}
   @argument[signal-detail]{a string with the signal detail}
@@ -676,7 +678,7 @@
     Accessor of the @code{signal-detail} slot of the @class{g-signal-query}
     structure.
   @end{short}
-  See the function @fun{g-signal-query}.
+  See the @fun{g-signal-query} function.
   @see-function{g-signal-query}")
 
 (export 'g-signal-query-signal-detail)
@@ -693,7 +695,7 @@
 (setf (gethash 'g-connect-flags atdoc:*symbol-name-alias*)
       "Bitfield"
       (gethash 'g-connect-flags atdoc:*external-symbols*)
- "@version{2021-9-23}
+ "@version{2021-12-14}
   @begin{short}
     The connection flags are used to specify the behaviour of the connection
     of the signal.
@@ -1034,9 +1036,9 @@
 
 (defun g-signal-query (signal-id)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-3}
-  @argument[signal-id]{a @code{:uint} with the signal ID of the signal to query
-    information for}
+ "@version{2021-12-14}
+  @argument[signal-id]{an unsigned integer with the signal ID of the signal to
+    query information for}
   @return{A @struct{g-signal-query} structure with the signal info.}
   @begin{short}
     Returns the signal info.
@@ -1047,41 +1049,41 @@
   @begin[Example]{dictionary}
     Retrieve information for the \"draw\" signal of a widget:
     @begin{pre}
-  (setq query (g-signal-query (g-signal-lookup \"show\" \"GtkWidget\")))
+(setq query (g-signal-query (g-signal-lookup \"show\" \"GtkWidget\")))
 => #<Signal [#36] void GtkWidget.show () [RUN-FIRST]>
-  (g-signal-query-signal-id query)
+(g-signal-query-signal-id query)
 => 36
-  (g-signal-query-signal-name query)
+(g-signal-query-signal-name query)
 => \"show\"
-  (g-signal-query-owner-type query)
+(g-signal-query-owner-type query)
 => #<GTYPE :name \"GtkWidget\" :id 18826464>
-  (g-signal-query-signal-flags query)
+(g-signal-query-signal-flags query)
 => (:RUN-FIRST)
-  (g-signal-query-return-type query)
+(g-signal-query-return-type query)
 => #<GTYPE :name \"void\" :id 4>
-  (g-signal-query-param-types query)
+(g-signal-query-param-types query)
 => NIL
-  (g-signal-query-signal-detail query)
+(g-signal-query-signal-detail query)
 => NIL
     @end{pre}
     A second example for the \"drag-drop\" signal of a widget:
     @begin{pre}
-  (setq query (g-signal-query (g-signal-lookup \"drag-drop\" \"GtkWidget\")))
+(setq query (g-signal-query (g-signal-lookup \"drag-drop\" \"GtkWidget\")))
 => #<Signal [#91] gboolean GtkWidget.drag-drop (GdkDragContext, gint, gint, guint) [RUN-LAST]>
-  (g-signal-query-signal-id query)
+(g-signal-query-signal-id query)
 => 91
-  (g-signal-query-signal-name query)
+(g-signal-query-signal-name query)
 => \"drag-drop\"
-  (g-signal-query-owner-type query)
+(g-signal-query-owner-type query)
 => #<GTYPE :name \"GtkWidget\" :id 18826464>
-  (g-signal-query-signal-flags query)
+(g-signal-query-signal-flags query)
 => (:RUN-LAST)
-  (g-signal-query-return-type query)
+(g-signal-query-return-type query)
 => #<GTYPE :name \"gboolean\" :id 20>
-  (g-signal-query-param-types query)
+(g-signal-query-param-types query)
 => (#<GTYPE :name \"GdkDragContext\" :id 18798624> #<GTYPE :name \"gint\" :id 24>
  #<GTYPE :name \"gint\" :id 24> #<GTYPE :name \"guint\" :id 28>)
-  (g-signal-query-signal-detail query)
+(g-signal-query-signal-detail query)
 => NIL
     @end{pre}
   @end{dictionary}
@@ -1131,11 +1133,11 @@
 
 (defcfun ("g_signal_lookup" g-signal-lookup) :uint
  #+cl-cffi-gtk-documentation
- "@version{2020-10-2}
+ "@version{2021-12-14}
   @argument[name]{a string with the signal's name}
   @argument[itype]{the @class{g-type} that the signal operates on}
-  @return{A @code{:uint} with the signal's identifying number, or 0 if no
-    signal was found.}
+  @return{A unsigned integer with the identifying number of the signal, or 0
+    if no signal was found.}
   @begin{short}
     Given the name of the signal and the type of object it connects to, gets
     the signal's identifying integer.
@@ -1144,11 +1146,11 @@
   time. Also tries the ancestors of the given type.
   @begin[Example]{dictionary}
     @begin{pre}
-  (g-signal-lookup \"notify\" \"GObject\")
+(g-signal-lookup \"notify\" \"GObject\")
 => 1
-  (g-signal-lookup \"notify\" \"GtkWidget\")
+(g-signal-lookup \"notify\" \"GtkWidget\")
 => 1
-  (g-signal-lookup \"unknown\" \"GObject\")
+(g-signal-lookup \"unknown\" \"GObject\")
 => 0
     @end{pre}
   @end{dictionary}
@@ -1167,27 +1169,28 @@
 
 (defcfun ("g_signal_name" g-signal-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2020-10-3}
-  @argument[signal-id]{a @code{:uint} with the signal's identifying number}
+ "@version{2021-12-14}
+  @argument[signal-id]{an unsigned integer with the identifying number of the
+    signal}
   @return{A string with the signal name, or @code{nil} if the signal number was
     invalid.}
   @begin{short}
-    Given the signal's identifier, finds its name.
+    Given the identifier of the signal, finds its name.
   @end{short}
   Two different signals may have the same name, if they have differing types.
   @begin[Example]{dictionary}
     Get the signal ID for the \"draw\" signal and then get the name for the ID:
     @begin{pre}
-  (g-signal-lookup \"draw\" \"GtkWidget\")
+(g-signal-lookup \"draw\" \"GtkWidget\")
 => 52
-  (g-signal-name *)
+(g-signal-name *)
 => \"draw\"
     @end{pre}
     List the IDs for a button widget and retrieves the names of the signals:
     @begin{pre}
-  (g-signal-list-ids \"GtkButton\")
+(g-signal-list-ids \"GtkButton\")
 => (230 227 225 226 228 229)
-  (mapcar #'g-signal-name *)
+(mapcar #'g-signal-name *)
 => (\"activate\" \"clicked\" \"pressed\" \"released\" \"enter\" \"leave\")
     @end{pre}
   @end{dictionary}
@@ -1208,18 +1211,18 @@
 
 (defun g-signal-list-ids (itype)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-3}
+ "@version{2021-12-14}
   @argument[itype]{a instance or interface @class{g-type}}
-  @return{A list of signal IDs of type @code{:uint}.}
+  @return{A list of signal IDs of type unsigned integer.}
   @begin{short}
     Lists the signals by ID that a certain instance or interface type created.
   @end{short}
-  Further information about the signals can be acquired through the function
-  @fun{g-signal-query}.
+  Further information about the signals can be acquired through the
+  @fun{g-signal-query} function.
   @begin[Example]{dictionary}
     Get the IDs for a window widget and show the names of the signals:
     @begin{pre}
-  (mapcar #'g-signal-name (g-signal-list-ids \"GtkWindow\"))
+(mapcar #'g-signal-name (g-signal-list-ids \"GtkWindow\"))
 => (\"keys-changed\" \"set-focus\" \"activate-focus\" \"activate-default\"
     \"enable-debugging\")
     @end{pre}
@@ -1237,21 +1240,21 @@
 ;;; g_signal_emit ()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-signal-emit (instance detailed-signal &rest args)
+(defun g-signal-emit (instance detailed &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-3}
-  @argument[instance]{the @class{g-object} instance the signal is being emitted
+ "@version{*2021-12-14}
+  @argument[instance]{a @class{g-object} instance the signal is being emitted
     on}
-  @argument[detailed-signal]{a string with the detailed signal name}
+  @argument[detailed]{a string with the detailed signal name}
   @argument[args]{parameters to be passed to the signal}
   @return{The return value of the signal.}
   @short{Emits a signal.}
-  Note that the function @sym{g-signal-emit} resets the return value to the
+  Note that the @sym{g-signal-emit} function resets the return value to the
   default if no handlers are connected.
   @begin[Lisp implementation]{dictionary}
     In the Lisp implementation this function takes not the signal ID but the
     detailed signal name as an argument. For this case the C library has the
-    function @code{g_signal_emit_by_name()}, which is not implemented in the
+    @code{g_signal_emit_by_name()} function, which is not implemented in the
     Lisp binding.
 
     At this time setting a @code{GParam} value is not implemented in the
@@ -1259,23 +1262,23 @@
     signal on an instance.
   @end{dictionary}
   @see-class{g-object}"
-  (let* ((instance-type (g-type-from-instance (pointer instance)))
-         (query (g-signal-parse-name instance-type detailed-signal)))
+  (let* ((itype (g-type-from-instance (pointer instance)))
+         (query (g-signal-parse-name itype detailed)))
     (unless query
-      (error "Signal ~A not found on instance ~A" detailed-signal instance))
-    (let ((params-count (length (g-signal-query-param-types query))))
-      (assert (= params-count (length args)))
-      (with-foreign-object (params '(:struct g-value) (1+ params-count))
+      (error "Signal ~A not found on instance ~A" detailed instance))
+    (let ((count (length (g-signal-query-param-types query))))
+      (assert (= count (length args)))
+      (with-foreign-object (params '(:struct g-value) (1+ count))
         (set-g-value (mem-aptr params '(:struct g-value) 0)
                      instance
-                     instance-type
+                     itype
                      :zero-g-value t)
-        (iter (for i from 0 below params-count)
+        (iter (for i from 0 below count)
               (for arg in args)
-              (for type in (g-signal-query-param-types query))
+              (for gtype in (g-signal-query-param-types query))
               (set-g-value (mem-aptr params '(:struct g-value) (1+ i))
                            arg
-                           type
+                           gtype
                            :zero-g-value t))
         (prog1
           (if (equal (g-signal-query-return-type query)
@@ -1299,7 +1302,7 @@
                   ;; Return value of the signal
                   (parse-g-value return-value)
                   (g-value-unset return-value))))
-          (iter (for i from 0 below (1+ params-count))
+          (iter (for i from 0 below (1+ count))
                 (g-value-unset (mem-aptr params '(:struct g-value) i))))))))
 
 (export 'g-signal-emit)
@@ -1393,10 +1396,10 @@
 
 (defun g-signal-connect (instance signal handler &key after)
  #+cl-cffi-gtk-documentation
- "@version{*2021-10-8}
-  @argument[instance]{the @class{g-object} instance to connect to}
+ "@version{*2021-12-14}
+  @argument[instance]{a @class{g-object} instance to connect to}
   @argument[signal]{a string of the form \"signal-name::detail\"}
-  @argument[handler]{the Lisp callback function to connect}
+  @argument[handler]{a Lisp callback function to connect}
   @argument[after]{if @em{true} the handler is called after the default handler}
   @return{A unsigned long integer with the handler ID.}
   @begin{short}
@@ -1464,20 +1467,20 @@
 
 (defun g-signal-connect-after (instance detailed-signal handler)
  #+cl-cffi-gtk-documentation
- "@version{2021-1-24}
-  @argument[instance]{the @class{g-object} instance to connect to}
+ "@version{2021-12-14}
+  @argument[instance]{a @class{g-object} instance to connect to}
   @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
-  @argument[handler]{the Lisp callback function to connect}
+  @argument[handler]{a Lisp callback function to connect}
   @return{A unsigned long with the handler ID.}
   @begin{short}
     Connects a Lisp callback function to a signal for a particular object.
   @end{short}
   The handler will be called after the default handler of the signal.
   @begin[Lisp implementation]{dictionary}
-    In the Lisp implementation the function @fun{g-signal-connect} has a
-    keyword argument @arg{after}. This function is implemented as:
+    In the Lisp implementation the @fun{g-signal-connect} function has a
+    @arg{after} keyword argument. This function is implemented as:
     @begin{pre}
- (g-signal-connect instance detailed-signal handler :after t)
+(g-signal-connect instance detailed-signal handler :after t)
     @end{pre}
   @end{dictionary}
   @see-class{g-object}
@@ -1662,10 +1665,11 @@
 
 (defcfun ("g_signal_handler_block" g-signal-handler-block) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-10-3}
-  @argument[instance]{the @class{g-object} instance to block the signal handler
+ "@version{2021-12-14}
+  @argument[instance]{a @class{g-object} instance to block the signal handler
     of}
-  @argument[handler-id]{a @code{:ulong} handler ID of the handler to be blocked}
+  @argument[handler-id]{an unsigned integer handler ID of the handler to be
+    blocked}
   @begin{short}
     Blocks a handler of an instance so it will not be called during any signal
     emissions unless it is unblocked again.
@@ -1689,23 +1693,23 @@
 
 (defcfun ("g_signal_handler_unblock" g-signal-handler-unblock) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-10-3}
-  @argument[instance]{the @class{g-object} instance to unblock the signal
+ "@version{2021-12-14}
+  @argument[instance]{a @class{g-object} instance to unblock the signal
     handler of}
-  @argument[handler-id]{a @code{:ulong} handler ID of the handler to be
+  @argument[handler-id]{an unsigned integer handler ID of the handler to be
     unblocked}
   @begin{short}
-    Undoes the effect of a previous call of the function
-    @fun{g-signal-handler-block}.
+    Undoes the effect of a previous call of the @fun{g-signal-handler-block}
+    function.
   @end{short}
   A blocked handler is skipped during signal emissions and will not be invoked,
   unblocking it (for exactly the amount of times it has been blocked before)
   reverts its \"blocked\" state, so the handler will be recognized by the signal
-  system and is called upon future or currently ongoing signal emissions
-  (since the order in which handlers are called during signal emissions is
+  system and is called upon future or currently ongoing signal emissions, since
+  the order in which handlers are called during signal emissions is
   deterministic, whether the unblocked handler in question is called as part
   of a currently ongoing emission depends on how far that emission has
-  proceeded yet).
+  proceeded yet.
 
   The @arg{handler-id} has to be a valid ID of a signal handler that is
   connected to a signal of instance and is currently blocked.
@@ -1722,11 +1726,11 @@
 
 (defcfun ("g_signal_handler_disconnect" %g-signal-handler-disconnect) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-12-6}
-  @argument[instance]{the @class{g-object} instance to remove the signal
-    handler from}
-  @argument[handler-id]{a @code{:ulong} handler ID of the handler to be
-    disconnected}
+ "@version{2021-12-14}
+  @argument[instance]{a @class{g-object} instance to remove the signal handler
+    from}
+  @argument[handler-id]{an unsigned long integer with the handler ID of the
+    handler to be disconnected}
   @begin{short}
     Disconnects a handler from an instance so it will not be called during any
     future or currently ongoing emissions of the signal it has been connected
@@ -1765,10 +1769,10 @@
 
 (defun g-signal-handler-find (instance signal-id)
  #+cl-cffi-gtk-documentation
- "@version{2020-10-1}
-  @argument[instance]{the @class{g-object} instance owning the signal handler
+ "@version{2021-12-14}
+  @argument[instance]{a @class{g-object} instance owning the signal handler
     to be found}
-  @argument[signal-id]{a @code{:unit} with a signal the handler has to be
+  @argument[signal-id]{an unsigned integer with a signal the handler has to be
     connected to}
   @return{A valid non-0 signal handler ID of type @code{:ulong} for a
     successful match.}
@@ -1934,10 +1938,10 @@
 (defcfun ("g_signal_handler_is_connected" g-signal-handler-is-connected)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-10-1}
-  @argument[instance]{the @class{g-object} instance where a signal handler is
+ "@version{2021-12-14}
+  @argument[instance]{a @class{g-object} instance where a signal handler is
     sought}
-  @argument[handler-id]{a @code{:ulong} with the handler ID}
+  @argument[handler-id]{an unsigned long integer with the handler ID}
   @return{A boolean whether @arg{handler-id} identifies a handler connected to
     instance.}
   @begin{short}
@@ -2036,10 +2040,10 @@
 
 (defcfun ("g_signal_has_handler_pending" g-signal-has-handler-pending) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2020-10-1}
-  @argument[instance]{the @class{g-object} instance whose signal handlers are
+ "@version{2021-12-14}
+  @argument[instance]{a @class{g-object} instance whose signal handlers are
     sought}
-  @argument[signal-id]{a @code{:uint} with the signal ID}
+  @argument[signal-id]{an unsigned integer with the signal ID}
   @argument[detail]{a string with the detail}
   @argument[may-be-blocked]{a boolean whether blocked handlers should count as
     match}
@@ -2077,15 +2081,15 @@
 
 (defcfun ("g_signal_stop_emission" g-signal-stop-emission) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-10-1}
-  @argument[instance]{the @class{g-object} instance whose signal handlers you
+ "@version{2021-12-14}
+  @argument[instance]{a @class{g-object} instance whose signal handlers you
     wish to stop}
-  @argument[signal-id]{a @code{:uint} with the signal identifier, as returned
-    by the function @fun{g-signal-lookup}}
+  @argument[signal-id]{an unsigned integer with the signal identifier, as
+    returned by the @fun{g-signal-lookup} function}
   @argument[detail]{a @type{g-quark} with the detail which the signal was
     emitted with}
   @begin{short}
-    Stops a signal's current emission.
+    Stops a current emission of the signal.
   @end{short}
   This will prevent the default method from running, if the signal was
   @code{:run-last} and you connected normally (i.e. without the \"after\"
@@ -2107,14 +2111,14 @@
 
 (defcfun ("g_signal_stop_emission_by_name" g-signal-stop-emission-by-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2020-10-1}
-  @argument[instance]{the @class{g-object} instance whose signal handlers you
+ "@version{2021-12-14}
+  @argument[instance]{a @class{g-object} instance whose signal handlers you
     wish to stop}
   @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
   @begin{short}
-    Stops a signal's current emission.
+    Stops a current emission of the signal.
   @end{short}
-  This is just like the function @fun{g-signal-stop-emission} except it will
+  This is just like the @fun{g-signal-stop-emission} function except it will
   look up the signal ID for you.
   @see-class{g-object}
   @see-function{g-signal-stop-emission}"

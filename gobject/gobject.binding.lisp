@@ -78,12 +78,13 @@
   (:invert-boolean 4))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-binding-flags atdoc:*symbol-name-alias*) "Flags"
+(setf (gethash 'g-binding-flags atdoc:*symbol-name-alias*)
+      "GFlags"
       (gethash 'g-binding-flags atdoc:*external-symbols*)
- "@version{2020-10-18}
+ "@version{*2021-12-15}
   @begin{short}
-    Flags to be passed to the functions @fun{g-object-bind-property} or
-    @fun{g-object-bind-property-full}.
+    Flags to be passed to the @fun{g-object-bind-property} or
+    @fun{g-object-bind-property-full} functions.
   @end{short}
 
   This enumeration can be extended at later date.
@@ -105,10 +106,10 @@
       properties when creating the binding. The direction of the synchronization
       is always from the source to the target.}
     @entry[:invert-bool]{If the two properties being bound are booleans, setting
-      one to @em{true} will result in the other being set to @code{false} and
+      one to @em{true} will result in the other being set to @em{false} and
       vice versa. This flag will only work for boolean properties, and cannot be
-      used when passing custom transformation functions to the function
-      @fun{g-object-bind-property-full}.}
+      used when passing custom transformation functions to the
+      @fun{g-object-bind-property-full} function.}
   @end{table}
   @see-class{g-binding}
   @see-function{g-object-bind-property}
@@ -369,12 +370,15 @@ object3:propertyC -> object1:propertyA
 ;;; g_object_bind_property ()
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Consider exporting the g-object-ref and g-object-unref functions
+;; to handle cases like the one in this function.
+
 (defcfun ("g_object_bind_property" g-object-bind-property) (g-object g-binding)
  #+cl-cffi-gtk-documentation
- "@version{*2021-4-16}
-  @argument[source]{the @class{g-object} source instance}
+ "@version{*2021-12-15}
+  @argument[source]{a @class{g-object} source instance}
   @argument[source-prop]{a string with the property on @arg{source} to bind}
-  @argument[target]{the @class{g-object} target instance}
+  @argument[target]{a @class{g-object} target instance}
   @argument[target-prop]{a string with the property on @arg{target} to bind}
   @argument[flags]{a @symbol{g-binding-flags} value to pass to the binding}
   @begin{return}
@@ -390,22 +394,23 @@ object3:propertyC -> object1:propertyA
   @begin{pre}
 (g-object-bind-property action \"active\" widget \"sensitive\" :default)
   @end{pre}
-  will result in the @code{sensitive} property of the widget @class{g-object}
-  instance to be updated with the same value of the @code{active} property of
-  the action @class{g-object} instance.
+  will result in the @code{sensitive} property of the widget to be updated with
+  the same value of the @code{active} property of the action.
 
-  If @arg{flags} contains @code{:bidirectional} then the binding will be
-  mutual. If @arg{target-prop} on @arg{target} changes then the
-  @arg{source-prop} on @arg{source} will be updated as well.
+  If the @arg{flags} argument contains the @code{:bidirectional} value then the
+  binding will be mutual. If the @arg{target-prop} property on @arg{target}
+  changes then the @arg{source-prop} property on @arg{source} will be updated
+  as well.
 
   The binding will automatically be removed when either the source or the
   target instances are finalized. To remove the binding without affecting the
-  source and the target you can just call @code{g_object_unref()} on the
-  returned @class{g-binding} instance.
+  source and the target you can just call the @code{g_object_unref()} function
+  on the returned @class{g-binding} instance.
 
   A @class{g-object} instance can have multiple bindings.
   @see-class{g-binding}
-  @see-class{g-object}"
+  @see-class{g-object}
+  @see-symbol{g-binding-flags}"
   (source g-object)
   (source-prop :string)
   (target g-object)

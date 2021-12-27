@@ -211,11 +211,11 @@
 (setf (gethash '+g-type-invalid+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-invalid+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{0}
   @begin{short}
     An invalid type used as error return value in some functions which return
-    a @class{g-type}.
+    a @class{g-type} type.
   @end{short}
   @see-class{g-type}")
 
@@ -231,7 +231,7 @@
 (setf (gethash '+g-type-none+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-none+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{4}
   @begin{short}
     A fundamental type which is used as a replacement for the C @code{void}
@@ -251,7 +251,7 @@
 (setf (gethash '+g-type-interface+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-interface+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{8}
   @begin{short}
     The fundamental type from which all interface types are derived.
@@ -270,7 +270,7 @@
 (setf (gethash '+g-type-char+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-char+ 'variable)
- "@version{2020-11-13}
+ "@version{2021-12-14}
   @variable-value{12}
   @begin{short}
     The fundamental type corresponding to @code{gchar}.
@@ -291,7 +291,7 @@
 (setf (gethash '+g-type-uchar+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-uchar+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{16}
   @begin{short}
     The fundamental type corresponding to @code{guchar}.
@@ -310,7 +310,7 @@
 (setf (gethash '+g-type-boolean+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-boolean+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{20}
   @begin{short}
     The fundamental type corresponding to @code{gboolean}.
@@ -329,7 +329,7 @@
 (setf (gethash '+g-type-int+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-int+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{24}
   @begin{short}
     The fundamental type corresponding to @code{gint}.
@@ -348,7 +348,7 @@
 (setf (gethash '+g-type-uint+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-uint+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{28}
   @begin{short}
     The fundamental type corresponding to @code{guint}.
@@ -367,7 +367,7 @@
 (setf (gethash '+g-type-long+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-long+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{32}
   @begin{short}
     The fundamental type corresponding to @code{glong}.
@@ -386,7 +386,7 @@
 (setf (gethash '+g-type-ulong+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-ulong+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{36}
   @begin{short}
     The fundamental type corresponding to @code{gulong}.
@@ -405,7 +405,7 @@
 (setf (gethash '+g-type-int64+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-int64+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{40}
   @begin{short}
     The fundamental type corresponding to @code{gint64}.
@@ -424,7 +424,7 @@
 (setf (gethash '+g-type-uint64+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-uint64+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{44}
   @begin{short}
     The fundamental type corresponding to @code{guint64}.
@@ -443,7 +443,7 @@
 (setf (gethash '+g-type-enum+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-enum+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{48}
   @begin{short}
     The fundamental type from which all enumeration types are derived.
@@ -462,7 +462,7 @@
 (setf (gethash '+g-type-flags+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-flags+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{52}
   @begin{short}
     The fundamental type from which all flags types are derived.
@@ -481,7 +481,7 @@
 (setf (gethash '+g-type-float+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-float+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{56}
   @begin{short}
     The fundamental type corresponding to @code{gfloat}.
@@ -500,7 +500,7 @@
 (setf (gethash '+g-type-double+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-double+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{60}
   @begin{short}
     The fundamental type corresponding to @code{gdouble}.
@@ -519,7 +519,7 @@
 (setf (gethash '+g-type-string+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-string+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{64}
   @begin{short}
     The fundamental type corresponding to nul-terminated C strings.
@@ -538,7 +538,7 @@
 (setf (gethash '+g-type-pointer+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-pointer+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{68}
   @begin{short}
     The fundamental type corresponding to @code{gpointer}.
@@ -557,7 +557,7 @@
 (setf (gethash '+g-type-boxed+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-boxed+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{72}
   @begin{short}
     The fundamental type from which all boxed types are derived.
@@ -576,7 +576,7 @@
 (setf (gethash '+g-type-param+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-param+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{76}
   @begin{short}
     The fundamental type from which all @code{GParamSpec} types are derived.
@@ -596,7 +596,7 @@
 (setf (gethash '+g-type-object+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-object+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{80}
   @begin{short}
     The fundamental type for @code{GObject}.
@@ -618,7 +618,7 @@
 (setf (gethash '+g-type-gtype+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-gtype+ 'variable)
- "@version{2020-10-11}
+ "@version{2021-12-14}
   @begin{short}
     The fundamental type for @code{GType}.
   @end{short}
@@ -636,7 +636,7 @@
 (setf (gethash '+g-type-variant+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-variant+ 'variable)
- "@version{2020-11-13}
+ "@version{2021-12-14}
   @variable-value{84}
   @short{The fundamental type corresponding to @code{GVariant}.}
 
@@ -660,7 +660,7 @@
 (setf (gethash '+g-type-checksum+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-checksum+ 'variable)
- "@version{2020-10-11}
+ "@version{2021-12-14}
   @begin{short}
     The @class{g-type} for a boxed type holding a @code{GChecksum}.
   @end{short}
@@ -678,7 +678,7 @@
 (setf (gethash '+g-type-reserved-glib-first+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-reserved-glib-first+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{22}
   @begin{short}
     First fundamental type number to create a new fundamental type ID with
@@ -696,7 +696,7 @@
 (setf (gethash '+g-type-reserved-glib-last+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-reserved-glib-last+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{31}
   @begin{short}
     Last fundamental type number reserved for GLib.
@@ -713,7 +713,7 @@
 (setf (gethash '+g-type-reserved-bse-first+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-reserved-bse-first+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{32}
   @begin{short}
     First fundamental type number to create a new fundamental type ID with
@@ -732,7 +732,7 @@
 (setf (gethash '+g-type-reserved-bse-last+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-reserved-bse-last+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{48}
   @begin{short}
     Last fundamental type number reserved for BSE.
@@ -749,7 +749,7 @@
 (setf (gethash '+g-type-reserved-user-first+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-type-reserved-user-first+ 'variable)
- "@version{2020-10-5}
+ "@version{2021-12-14}
   @variable-value{49}
   @begin{short}
     First available fundamental type number to create new fundamental type ID
@@ -1855,14 +1855,14 @@
 
 (defun g-type-from-instance (instance)
  #+cl-cffi-gtk-documentation
- "@version{*2021-5-15}
-  @argument[instance]{a valid @symbol{g-type-instance} structure}
+ "@version{*2021-11-18}
+  @argument[instance]{a valid @symbol{g-type-instance} instance}
   @return{The @class{g-type} ID of @arg{instance}.}
-  @short{Get the type identifier from a given instance structure.}
+  @short{Get the type identifier from a given instance.}
   This function should only be used in type implementations.
   @begin[Note]{dictionary}
-    Signals an error if @arg{instance} is not a valid @symbol{g-type-instance}
-    structure.
+    Signals an error if the @arg{instance} argument is not a valid
+    @symbol{g-type-instance} instance.
   @end{dictionary}
   @begin[Examples]{dictionary}
     @begin{pre}
@@ -2435,7 +2435,7 @@
 
 (defun g-type-is-a (gtype is-a-type)
  #+cl-cffi-gtk-documentation
- "@version{2021-9-10}
+ "@version{*2021-11-18}
   @argument[gtype]{the @class{g-type} type ID to check anchestry for}
   @argument[is-a-type]{possible anchestor of @arg{gtype} or the interface
     that @arg{gtype} could conform to}

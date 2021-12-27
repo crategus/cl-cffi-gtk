@@ -351,7 +351,7 @@
 (setf (gethash 'g-object-pointer atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-object-pointer 'function)
- "@version{2021-9-11}
+ "@version{*2021-11-30}
   @begin{short}
     Accessor of the @code{pointer} slot of the @class{g-object} class.
   @end{short}
