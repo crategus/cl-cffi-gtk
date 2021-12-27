@@ -505,7 +505,7 @@
   fills in.
   @begin[Warning]{dictionary}
     The @sym{pango-font} class is deprecated and should not be used in
-    newly-written code.
+    newly written code.
   @end{dictionary}
   @see-class{pango-font-map}")
 
@@ -531,7 +531,7 @@
   width and other aspects.
   @begin[Warning]{dictionary}
     The @sym{pango-font-family} class is deprecated and should not be used
-    in newly-written code.
+    in newly written code.
   @end{dictionary}
   @see-class{pango-font}
   @see-class{pango-font-face}")
@@ -556,7 +556,7 @@
   @end{short}
   @begin[Warning]{dictionary}
     The @sym{pango-font-face} class is deprecated and should not be used in
-    newly-written code.
+    newly written code.
   @end{dictionary}
   @see-class{pango-font}
   @see-class{pango-font-family}")
@@ -1755,7 +1755,7 @@
 ;;; Warning
 ;;;
 ;;; pango_font_find_shaper is deprecated and should not be used in
-;;; newly-written code. Shape engines are no longer used.
+;;; newly written code. Shape engines are no longer used.
 ;;;
 ;;; font :
 ;;;     a PangoFont

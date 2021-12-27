@@ -181,8 +181,8 @@
 ;;;   return 0;
 ;;; }
 ;;;
-;;; Figure 2. Output of Example 1, “Using Pango with Cairo”
-;;; Output of Example 1, “Using Pango with Cairo”
+;;; Figure 2. Output of Example 1, "Using Pango with Cairo"
+;;; Output of Example 1, "Using Pango with Cairo"
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
@@ -425,9 +425,9 @@
     Create a Pango context for the given @arg{fontmap}.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{pango-cairo-font-map-create-context} has been deprecated
-    since version 1.22 and should not be used in newly-written code. Use the
-    function @fun{pango-font-map-create-context} instead.
+    The @sym{pango-cairo-font-map-create-context} function has been deprecated
+    since version 1.22 and should not be used in newly written code. Use the
+    @fun{pango-font-map-create-context} function instead.
   @end{dictionary}
   @see-class{pango-cairo-font-map}
   @see-class{pango-context}
@@ -594,7 +594,7 @@
                    (g-object pango-context) context
                    :pointer (callback pango-cairo-shape-renderer-func-cb)
                    :pointer (allocate-stable-pointer func)
-                   :pointer (callback stable-pointer-destroy-notify-cb)
+                   :pointer (callback stable-pointer-destroy-notify)
                    :void)
   func)
 

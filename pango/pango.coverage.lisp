@@ -199,101 +199,96 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;;pango_coverage_max ()
-;;;void
-;;;pango_coverage_max (PangoCoverage *coverage,
-;;;                    PangoCoverage *other);
-;;;pango_coverage_max has been deprecated since version 1.44 and should not be used in newly-written code.
-
-;;;This function does nothing
-
-;;;Set the coverage for each index in coverage to be the max (better) value of the current coverage for the index and the coverage for the corresponding index in other .
-
-;;;Parameters
-;;;coverage
-
-;;;a PangoCoverage
-
+;;; pango_coverage_max ()
 ;;;
-;;;other
-
-;;;another PangoCoverage
-
+;;; void
+;;; pango_coverage_max (PangoCoverage *coverage,
+;;;                     PangoCoverage *other);
 ;;;
-;;;pango_coverage_set ()
-;;;void
-;;;pango_coverage_set (PangoCoverage *coverage,
-;;;                    int index_,
-;;;                    PangoCoverageLevel level);
-;;;Modify a particular index within coverage
-
-;;;Parameters
-;;;coverage
-
-;;;a PangoCoverage
-
+;;; pango_coverage_max has been deprecated since version 1.44 and should not be
+;;; used in newly written code.
 ;;;
-;;;index_
-
-;;;the index to modify
-
+;;; This function does nothing
 ;;;
-;;;level
-
-;;;the new level for index_
-
+;;; Set the coverage for each index in coverage to be the max (better) value of
+;;; the current coverage for the index and the coverage for the corresponding
+;;; index in other .
 ;;;
+;;; coverage :
+;;;     a PangoCoverage
+;;;
+;;; other :
+;;;     another PangoCoverage
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; pango_coverage_set ()
+;;;
+;;; void
+;;; pango_coverage_set (PangoCoverage *coverage,
+;;;                     int index_,
+;;;                     PangoCoverageLevel level);
+;;;
+;;; Modify a particular index within coverage
+;;;
+;;; coverage :
+;;;     a PangoCoverage
+;;;
+;;; index_ :
+;;;     the index to modify
+;;;
+;;; level :
+;;;     the new level for index_
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;;pango_coverage_to_bytes ()
-;;;void
-;;;pango_coverage_to_bytes (PangoCoverage *coverage,
-;;;                         guchar **bytes,
-;;;                         int *n_bytes);
-;;;pango_coverage_to_bytes has been deprecated since version 1.44 and should not be used in newly-written code.
-
-;;;This returns NULL
-
-;;;Convert a PangoCoverage structure into a flat binary format
-
-;;;Parameters
-;;;coverage
-
-;;;a PangoCoverage
-
 ;;;
-;;;bytes
-
-;;;location to store result (must be freed with g_free()).
-
-;;;[out][array length=n_bytes][element-type guint8]
-;;;n_bytes
-
-;;;location to store size of result.
-
-;;;[out]
-;;;pango_coverage_from_bytes ()
-;;;PangoCoverage *
-;;;pango_coverage_from_bytes (guchar *bytes,
-;;;                           int n_bytes);
-;;;pango_coverage_from_bytes has been deprecated since version 1.44 and should not be used in newly-written code.
-
-;;;This returns NULL
-
-;;;Convert data generated from pango_coverage_to_bytes() back to a PangoCoverage
-
-;;;Parameters
-;;;bytes
-
-;;;binary data representing a PangoCoverage.
-
-;;;[array length=n_bytes][element-type guint8]
-;;;n_bytes
-
-;;;the size of bytes in bytes
-
+;;; void
+;;; pango_coverage_to_bytes (PangoCoverage *coverage,
+;;;                          guchar **bytes,
+;;;                          int *n_bytes);
 ;;;
-;;;Returns
-;;;a newly allocated PangoCoverage, or NULL if the data was invalid.
+;;; pango_coverage_to_bytes has been deprecated since version 1.44 and should
+;;; not be used in newly written code.
+;;;
+;;; This returns NULL
+;;;
+;;; Convert a PangoCoverage structure into a flat binary format
+;;;
+;;; coverage :
+;;;     a PangoCoverage
+;;;
+;;; bytes :
+;;;     location to store result (must be freed with g_free()).
+;;;
+;;; n_bytes :
+;;;     location to store size of result.
+;;; ----------------------------------------------------------------------------
 
-;;;[transfer full][nullable]
+;;; ----------------------------------------------------------------------------
+;;; pango_coverage_from_bytes ()
+;;;
+;;; PangoCoverage *
+;;; pango_coverage_from_bytes (guchar *bytes,
+;;;                            int n_bytes);
+;;;
+;;; pango_coverage_from_bytes has been deprecated since version 1.44 and should
+;;; not be used in newly written code.
+;;;
+;;; This returns NULL
+;;;
+;;; Convert data generated from pango_coverage_to_bytes() back to a
+;;; PangoCoverage
+;;;
+;;; bytes :
+;;;     binary data representing a PangoCoverage.
+;;;
+;;; n_bytes :
+;;;     the size of bytes in bytes
+;;;
+;;; Returns :
+;;;     a newly allocated PangoCoverage, or NULL if the data was invalid.
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file pango.coverage.lisp ----------------------------------------

@@ -572,9 +572,9 @@
   @end{short}
   For most purposes you may want to use the function @fun{pango-log-attrs}.
   @begin[Warning]{dictionary}
-    The function @sym{pango-break} has been deprecated since version 1.44 and
-    should not be used in newly-written code. Use the functions
-    @fun{pango-default-break} and @fun{pango-tailor-break}.
+    The @sym{pango-break} function has been deprecated since version 1.44 and
+    should not be used in newly written code. Use the @fun{pango-default-break}
+    and @fun{pango-tailor-break} functions.
   @end{dictionary}
   @see-symbol{pango-analysis}
   @see-symbol{pango-log-attr}

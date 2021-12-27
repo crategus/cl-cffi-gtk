@@ -760,9 +760,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-underline atdoc:*symbol-name-alias*)
-      "Enum"
+      "GEnum"
       (gethash 'pango-underline atdoc:*external-symbols*)
- "@version{2021-1-17}
+ "@version{*2021-11-18}
   @begin{short}
     The @sym{pango-underline} enumeration is used to specify whether text
     should be underlined, and if so, the type of underlining.
@@ -786,17 +786,17 @@
     @entry[:double]{A double underline should be drawn.}
     @entry[:low]{A single underline should be drawn at a position beneath the
       ink extents of the text being underlined. This should be used only for
-      underlining single characters, such as for keyboard accelerators.
-      @code{:single} should be used for extended portions of text.}
+      underlining single characters, such as for keyboard accelerators. The
+      @code{:single} value should be used for extended portions of text.}
     @entry[:error]{A wavy underline should be drawn below. This underline is
       typically used to indicate an error such as a possible mispelling. In
       some cases a contrasting color may automatically be used.}
-    @entry[:single-line]{Like @code{:single}, but drawn continuously across
-      multiple runs. Since 1.46}
-    @entry[:double-line]{Like @code{:double}, but drawn continuously across
-      multiple runs. Since 1.46}
-    @entry[:error-line]{Like @code{:error}, but drawn continuously across
-      multiple runs. Since 1.46}
+    @entry[:single-line]{Like the @code{:single} value, but drawn continuously
+      across multiple runs. Since 1.46}
+    @entry[:double-line]{Like the @code{:double} value, but drawn continuously
+      across multiple runs. Since 1.46}
+    @entry[:error-line]{Like the @code{:error} value, but drawn continuously
+      across multiple runs. Since 1.46}
   @end{table}
   @see-symbol{pango-overline}")
 

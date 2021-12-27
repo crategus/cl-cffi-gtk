@@ -162,7 +162,7 @@
 ;;; Warning
 ;;;
 ;;; PangoBidiType has been deprecated since version 1.44 and should not be used
-;;; in newly-written code. Use fribidi for this information
+;;; in newly written code. Use fribidi for this information
 ;;;
 ;;; PANGO_BIDI_TYPE_L
 ;;;     Left-to-Right
@@ -240,7 +240,7 @@
 ;;; Warning
 ;;;
 ;;; pango_unichar_direction is deprecated and should not be used in
-;;; newly-written code.
+;;; newly written code.
 ;;;
 ;;; ch :
 ;;;     a Unicode character
@@ -259,7 +259,7 @@
 ;;;
 ;;; Warning
 ;;;
-;;; pango_find_base_dir is deprecated and should not be used in newly-written
+;;; pango_find_base_dir is deprecated and should not be used in newly written
 ;;; code.
 ;;;
 ;;; text :
@@ -282,7 +282,7 @@
 ;;;
 ;;; Warning
 ;;;
-;;; pango_get_mirror_char is deprecated and should not be used in newly-written
+;;; pango_get_mirror_char is deprecated and should not be used in newly written
 ;;; code.
 ;;;
 ;;; If ch has the Unicode mirrored property and there is another Unicode
@@ -294,7 +294,7 @@
 ;;;
 ;;; Warning
 ;;;
-;;; pango_get_mirror_char is deprecated and should not be used in newly-written
+;;; pango_get_mirror_char is deprecated and should not be used in newly written
 ;;; code.
 ;;;
 ;;; ch :
@@ -322,7 +322,7 @@
 ;;; Warning
 ;;;
 ;;; pango_bidi_type_for_unichar is deprecated and should not be used in
-;;; newly-written code.
+;;; newly written code.
 ;;;
 ;;; ch :
 ;;;     a Unicode character

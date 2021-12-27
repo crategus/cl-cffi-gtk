@@ -728,7 +728,7 @@
 ;;; Warning
 ;;;
 ;;; pango_script_for_unichar has been deprecated since version 1.44. and should
-;;; not be used in newly-written code. Use g_unichar_get_script()
+;;; not be used in newly written code. Use g_unichar_get_script()
 ;;;
 ;;; Looks up the PangoScript for a particular character (as defined by Unicode
 ;;; Standard Annex 24). No check is made for ch being a valid Unicode character;
