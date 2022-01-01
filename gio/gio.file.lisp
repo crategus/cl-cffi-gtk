@@ -3302,7 +3302,7 @@
 ;;;                               GAsyncResult *result,
 ;;;                               GFileInfo **info,
 ;;;                               GError **error);
-:::
+;;;
 ;;; Finishes setting an attribute started in g_file_set_attributes_async().
 ;;;
 ;;; file :
@@ -3494,7 +3494,7 @@
 ;;;                              GFileQueryInfoFlags flags,
 ;;;                              GCancellable *cancellable,
 ;;;                              GError **error);
-:::
+;;;
 ;;; Sets attribute of type G_FILE_ATTRIBUTE_TYPE_UINT64 to value . If attribute
 ;;; is of a different type, this operation will fail.
 ;;;
