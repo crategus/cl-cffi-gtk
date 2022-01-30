@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2019 - 2021 Dieter Kaiser
+;;; Copyright (C) 2019 - 2022 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -344,20 +344,22 @@
 
 (defun g-resource-load (filename)
  #+cl-cffi-gtk-documentation
- "@version{2021-8-16}
+ "@version{2022-1-21}
   @argument[filename]{a string with the path of a filename to load, in the
     GLib filenname encoding}
-  @return{A new @class{g-resource} instance, or @code{nil} on error.}
+  @return{A new @class{g-resource} instance.}
   @begin{short}
     Loads a binary resource bundle and creates a @class{g-resource} instance
     representation of it, allowing you to query it for data.
   @end{short}
 
   If you want to use this resource in the global resource namespace you need
-  to register it with the function @fun{g-resources-register}.
+  to register it with the @fun{g-resources-register} function.
+
+  The function signals an error if the resource file does not exist.
   @see-class{g-resource}
   @see-function{g-resources-register}"
-  (with-ignore-g-error (err)
+  (with-g-error (err)
     (%g-resource-load filename err)))
 
 (export 'g-resource-load)
@@ -657,7 +659,7 @@
 (export 'g-resources-unregister)
 
 ;;; ----------------------------------------------------------------------------
-;;; g_resources_lookup_data ()
+;;; g_resources_lookup_data
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_resources_lookup_data" %g-resources-lookup-data) :pointer
@@ -665,11 +667,12 @@
   (lookup g-resource-lookup-flags)
   (err :pointer))
 
-(defun g-resources-lookup-data (path lookup)
+(defun g-resources-lookup-data (path &optional (lookup :none))
  #+cl-cffi-gtk-documentation
- "@version{2021-8-16}
+ "@version{2022-1-15}
   @argument[path]{a string with a pathname inside the resource}
-  @argument[lookup]{the @symbol{g-resource-lookup-flags} flags}
+  @argument[lookup]{an optional @symbol{g-resource-lookup-flags} value,
+    the default value is @code{:none}}
   @return{A pointer or @code{null-pointer}.}
   @begin{short}
     Looks for a file at the specified path in the set of globally registered
@@ -685,7 +688,7 @@
   binary. For compressed files we allocate memory on the heap and automatically
   uncompress the data.
 
-  The argument @arg{lookup} controls the behaviour of the lookup.
+  The @arg{lookup} argument controls the behaviour of the lookup.
   @see-class{g-resource}
   @see-symbol{g-resource-lookup-flags}"
   (with-g-error (err)
